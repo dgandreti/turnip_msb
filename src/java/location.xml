@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : usrajax
+       Author       : Nagireddy Seerapu
+       Description  : usrajax Actions.
+    -->
+    <package name="location" namespace="/location" extends="json-default">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>
+
+        <action class="com.mss.msp.location.LocationAction" name="getStates" method="getStatesForCountry">
+            <result type="json" name="success">
+                <param name="root">states</param>
+            </result>
+
+        </action>
+
+        <action class="com.mss.msp.location.LocationAction" name="getStockSymbol"
+                method="getStockSymbol">
+            <result type="json" name="success">
+                <param name="root">stockSymbolString</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

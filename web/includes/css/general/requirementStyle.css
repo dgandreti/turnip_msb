@@ -1,0 +1,169 @@
+.reqSelectStyle{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url("../../../includes/images/drop_down.png") no-repeat scroll 95% 8px #fff;
+    border-radius: 5px;
+    color: #4c4c4c;
+    font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;
+    height: 27px;
+    padding: 0 5px;
+    width: 160px;
+    border: 1px solid silver;
+    margin-right: 20px;
+}
+
+.reqInputStyle{
+    width: 160px;
+    margin-right: 20px;
+    background-color: #fff;
+    border: 1px solid silver;
+    border-radius: 3px;
+    color: #000;
+    
+}
+.reqAreaStyle{
+    width: 50%;
+    border: 1px solid #CCCCCC;
+    margin-right: 20px;
+
+}
+.inner-reqdiv-elements{
+    padding-left:20px;
+    text-align:left;
+    padding-top: 5px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width:auto;
+}
+.labelStylereq{
+    width: 80px;
+}
+.submitDiv{
+    float: left;
+}
+.checkboxAlign{
+    margin-right: 100px;
+    float: left;
+
+
+}
+div#reqBox{
+
+    position: relative;
+    z-index: 2;
+    margin-bottom: 5px;
+    width: 100%; 
+    height: 100%;
+    background: #f9f9f9;
+    color: green;
+    border-radius: 3px; 
+    border: 1px solid #5bc0de;
+    float: left; 
+    margin-top: 5px
+    
+}
+div#skillShowBoxOverlay {
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    height: auto;
+    overflow-x: hidden;
+}
+div#addVendorConsultantOverlay {
+    z-index: 3;
+    background: #f9f9f9;
+    display: none;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    height: auto;
+    overflow-x: hidden;
+}
+
+.addConInputStyle{
+    width: 160px;
+    background-color: #fff;
+    border: 1px solid silver;
+    border-radius: 3px;
+    color: #000;
+}
+
+.addConInputStyle80{
+    width: 80px;
+    background-color: #fff;
+    border: 1px solid silver;
+    border-radius: 3px;
+    color: #000;
+}
+#mainAddConDiv{
+    margin: 20px;
+    padding: 20px;
+
+}
+.innerAddConElements{
+    margin-top: 10px;
+}
+.labelStyleAddCon{
+    width: 100px;
+}
+
+#ppId{
+    visibility: hidden;
+}
+#primaryAssign2
+{
+  margin-left: 20px;
+  color:#2148f0 ; 
+}
+#primaryAssign1
+{
+   margin-left: 5px; 
+}
+
+div#EditVendorTierOverlay {
+    display: none;
+    z-index: 3;
+
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+}
+div#AddVendorTierOverlay {
+
+    display: none;
+    z-index: 3;
+
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#AddLocationOverlay {
+
+    display: none;
+    z-index: 3;
+
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+.vendorTierlabelStyle{
+    width: 100px;
+}
+#VendorTierDiv{
+    margin: 10px;
+    padding: 10px;
+}
+
+#mainAddConsultantDiv{
+       padding: 20px;
+}

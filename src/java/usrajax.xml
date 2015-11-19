@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : usrajax
+       Author       : Nagireddy Seerapu
+       Description  : usrajax Actions.
+    -->
+    <package name="ajaxHandle" extends="default">
+        <default-interceptor-ref name="crudStack" />
+        <action name="forgotPassword" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="processForgotPassword"/>
+        <!-- <action name="loginIdCheckservice" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="doLoginIdChecheck"/> -->
+        <action name="getEmployeeDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getEmployeeDetails"/>
+        <action name="getExternalEmployeeDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getExternalEmployeeDetails"/>
+        <action name="getTechEmployeeDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getTechEmployeeDetails"/>
+        <action name="getEmpRecruitment" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getEmpRecruitment"/>
+        <action name="getExternalEmployee2Details" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getExternalEmployee2Details"/>
+        <action name="getVendorNamesAutoPopulate" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getVendorNames"/>
+        <action name="getCsrNamesAutoPopulate" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getCsrNames"/>
+        
+        <action name="getAccountNamesForHomeRedirection" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getAccountNames"/>
+        <action name="getQuestion" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getQuestion"/>
+    </package>
+ 
+    <package name="struts2" extends="json-default">  
+        <action name="loginIdCheckservice" class="com.mss.msp.usrajax.UserJSONAjaxHandlerAction" method="doLoginIdChecheck">  
+         
+            <result type="json" name="success">  
+                <param name="contentType">text/html</param> 
+            </result>  
+            <result type="json" name="error">  
+                <param name="contentType">text/html</param>
+            </result> 
+        </action>  
+        
+        <action name="doUserRegister" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="doUserRegister">  
+            <!--  <result type="json" />-->
+            <result type="json" name="success">  
+                <param name="contentType">text/html</param> 
+            </result>  
+            <result type="json" name="error">  
+                <param name="contentType">text/html</param>
+            </result> 
+        </action>  
+        <!-- contact information update Details action start by Rk -->
+        <action name="addressDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getAddressDetails">
+              
+        </action>
+
+        <action name="updateAddressDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="setAddressDetails">
+              
+        </action>
+        <action name="updateCAddressDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="setCAddressDetails">
+              
+        </action>
+
+
+        <!-- contact information update Details action end -->
+        
+        <!-- Skill Details action -->
+        <action name="skillDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getskillDetails">  
+         
+        </action>  
+        
+        <action name="seteditskillDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="seteditSkillDetails">  
+              
+        </action>  
+        
+        <action name="editoverlay" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method=" geteditOverlayDetails ">  
+         
+        </action>
+          
+        <action name="addSkills" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getaddSkills">
+            
+        </action>
+        <action name="updateInfo" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="updateMiscellaneousInfo">
+                        
+        </action>
+    </package> 
+    <package name="usrajax" namespace="/users/general" extends="default">
+      
+        <action name="doUserGroupingMethod" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="doUserGroupingMethod">  
+         
+        </action> 
+        <action name="checkIsExitOrNotForGrouping" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="checkIsExitOrNotForGrouping">  
+         
+        </action> 
+        <action name="getCategoryList" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getCategoryList">  
+         
+        </action>
+        <!-- Education Details action -->
+        <action name="qualificationDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getEduDetails">  
+         
+        </action>  
+        
+        <!-- for add  Qualification details -->
+        <action name="addQualification" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="addQualificationDetails">
+                        
+        </action> 
+        
+        
+        <!-- for Update Qualification -->
+        <action name="editQualificationOverlay" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getEditEduDetails">
+                        
+        </action>
+    
+        <action name="UpdateQualificationDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getEduUpdate">
+                        
+        </action>
+        <action name="reportAction" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getReportData">
+                        
+        </action>
+        <!-- added by praveen-->
+        <action name="getTitles" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getTitles">
+                        
+        </action>
+        
+        
+        <action name="getSecurityInfo" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getSecurityDetails"/>
+           
+        <action name="updateSecurityDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="addSecurityDetails">
+            <result name="success"></result>
+            <result name="input"></result>
+        </action>
+        <action name="getTask" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getTaskTypeData">
+                        
+        </action>
+        
+        <!-- end, for select task in add task functionality, add by aklakh -->
+        <action name="getRelatedNames" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getRelatedToNames">
+                        
+        </action>
+        <!--added by jagan-->
+        <action name="addLeave" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="addLeaveDetails">
+            <result name="success"></result>          
+        </action>
+        
+        <!-- attachment ajax actions start-->
+        <action name="getAttachment" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getAttachment">
+                        
+        </action>
+        <action name="doDeactiveAttachment" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="doDeactiveAttachment">
+                        
+        </action>
+        
+        <action name="downloadAttachment" class="com.mss.msp.general.DownloadAction" method="downloadAttachment">
+            <result type="redirectAction" name="input">
+                <param name="actionName">../../users/tasks/getTaskDetails.action</param>
+                <param name="taskid">${taskid}</param>
+                <param name="downloadFlag">${downloadFlag}</param>
+            </result>
+            <!-- <result>TaskDetails.jsp</result>     -->
+        </action>
+        <!-- attachment ajax actions end-->
+        <action name="getEmployeeNames" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getEmployeeNames"/>
+        <action name="getState" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getStatesOfCountry">
+             
+        </action>
+        <action name="getLeavesList" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="LeavesListOfUser">
+            
+        </action>
+        
+        <action name="csrTermination" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="csrTermination">
+            
+        </action>
+        <action name="changeCsrAccountStatus" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="changeCsrAccountStatus">
+            
+        </action>
+        <action name="getCsrAccount" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getCsrAccount">
+            
+        </action>
+        <action name="getEmpCategories" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getEmpCategories">
+            
+        </action>
+        <action name="empCategoryTermination" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="empCategoryTermination">
+            
+        </action>
+        <action name="getEmpCategoryNames" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getEmpCategoryNames">
+            
+        </action>
+    </package>   
+  
+    <!-- end   -->  
+
+     
+</struts>

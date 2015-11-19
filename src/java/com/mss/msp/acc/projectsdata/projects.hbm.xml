@@ -1,0 +1,30 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.mss.msp.acc.projectsdata.ProjectsVTO" table="acc_projects" >
+        <id name="projectID" column="project_id" type="integer">
+            <generator class="increment"/>
+        </id>
+ 
+            <property name="accountID" column="acc_id" />
+            <property name="projectName"            column="proj_name"/>
+            <property name="projectType"            column="proj_type"/>
+            <property name="projectReqSkillSet"     column="proj_req_skillset"/>
+            <property name="project_description"    column="proj_desc"/>
+            <property name="projectStartDate"       column="proj_stdate"/>
+            <property name="projectTargetDate"      column="proj_trdate"/>
+            <property name="project_status"         column="proj_status"/>
+            <property name="parentProjectID"        column="parent_project_id" />
+            <property name="projectCreatedDate"     column="created_date"/>
+            <property name="projectCreatedBy"       column="created_by"/>
+            <property name="projectModifiedBy"      column="modified_by"/>
+            <property name="projectModifiedDate"    column="modified_date"/>
+            <property name="costCenterName"         column="cccode"/>
+            <property name="projectTargetHrs"       column="targethrs"/>
+            <property name="projectWorkedHrs"       column="workedhrs"/>
+    </class>
+    
+</hibernate-mapping>

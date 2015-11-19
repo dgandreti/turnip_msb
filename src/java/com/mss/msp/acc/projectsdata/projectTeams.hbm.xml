@@ -1,0 +1,21 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.mss.msp.acc.projectsdata.ProjectTeamsVTO" table="Project_team" >
+        <composite-id name="projectTeamID" > 
+            <key-property name="projectID" column="project_id" />
+            <key-property name="userID" column="usr_id" />
+            <key-property name="currentStatus" column="current_status"/>
+            <key-property name="createdDate" column="created_date"/>
+            <key-property name="createdBy" column="created_by"/>
+            <key-property name="modifiedDate" column="modified_date"/>
+            <key-property name="modifiedBy" column="modified_by"/>
+            <key-property name="reportsTo1" column="reportsto1"/>
+            <key-property name="reportsTo2" column="reportsto2"/>
+            <key-property name="accountID" column="account_id"/>
+        </composite-id>
+        
+    </class>
+</hibernate-mapping>

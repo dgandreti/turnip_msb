@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : projectSearch
+       Author       : Riza Erbas
+       Description  : projectSearch Actions.
+    -->
+    <package name="projectSearch" namespace="/" extends="default">
+        
+        <action name="getTeamMemberDetails" class="com.mss.msp.acc.projectsdata.ProjectTeamsDataHandlerAction" method="getTeamMemberDetails">
+
+        </action>
+        <action name="showResourceDetails" class="com.mss.msp.acc.projectsdata.ProjectTeamsDataHandlerAction" method="showResourceDetails">
+
+        </action>
+        <action name="projectsSearch" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="getProjectSearchDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">/acc/projects.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <action name="mainProjectsSearch" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="getProjectSearchDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">/acc/mainProjectsPageWScript.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="subProjectsSearch" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="getProjectSearchDetails">
+            <interceptor-ref name="crudStack" />
+            <result name="success">/acc/subProjects.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+      
+        <action name="getAccountProjects" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="getProjectsByAccID">
+            <interceptor-ref name="crudStack" />
+            <result name="success">/acc/projects.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getMainProjects" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="getProjectsByAccID">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">/acc/mainProjects.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <action name="addProject" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="addProject">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="chain">getAccountProjects</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="addMainProject" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="addProject">
+            <interceptor-ref name="crudStack" />
+            <result name="success">acc/mainProjects.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="addSubProject" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="addSubProject">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="redirect" >projectDetails.action?projectID=${projectID}&amp;accountID=${accountID}</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name="checkProjectNames" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="checkProjectNames">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">inputStream</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="projectDetails" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="getProjectDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">/acc/projectDetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <action name="updateProject" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="updateProject">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" type="chain">projectDetails</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <action name="getSubProjects" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="getSubProjects">
+            <interceptor-ref name="crudStack" />
+            <result name="success">/acc/subProjects.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getProjectsTeamMembers" class="com.mss.msp.acc.projectsdata.ProjectTeamsDataHandlerAction" method="getProjectsTeam">
+            <interceptor-ref name="crudStack" />
+            <result name="success">/acc/projectTeam.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="EmpReleasefromProject" class="com.mss.msp.acc.projectsdata.ProjectTeamsDataHandlerAction" method="EmpReleasefromProject">
+
+        </action>
+        
+        <action name="projectDashBoardDetails" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="getProjectsDashboard">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">/acc/projectsDashboard.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        
+        <action name="getProjectDashboardList" class="com.mss.msp.acc.projectsdata.ProjectTeamsDataHandlerAction" method="getProjectDashboardList">
+        </action> 
+       
+        <action name="getProjectsForYear" class="com.mss.msp.acc.projectsdata.ProjectTeamsDataHandlerAction" method="getProjectsForYear">
+        </action> 
+       
+        
+    </package>
+    <package name="json" namespace="/" extends="json-default" >
+        <action name="getTeamReportsTo" class="com.mss.msp.acc.projectsdata.ProjectTeamsDataHandlerAction" converter="" method="getTeamReportsTo">
+            <result type="json"/>
+        </action>
+    </package>
+
+</struts>

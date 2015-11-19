@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    
+    <package name="sag" namespace="/sag" extends="default">
+        <action name="getTotalHoursTooltip" class="com.mss.msp.sagAjax.InvoiceAjaxAction" method="getTotalHoursTooltip">
+            
+        </action>
+        
+        <action name="getInvoice" class="com.mss.msp.sag.InvoiceAction" method="getInvoice">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">invoiceSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>  
+       
+        <action name="deleteInvoice" class="com.mss.msp.sag.InvoiceAction" method="deleteInvoice">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" type="redirect" >getInvoice.action</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>  
+        <action name="doSearchInvoice" class="com.mss.msp.sag.InvoiceAction" method="doSearchInvoice">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" >invoiceSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>  
+       
+        <action name="goInvoiceEditDetails" class="com.mss.msp.sag.InvoiceAction" method="goInvoiceEditDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" >invoiceEdit.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>  
+        <action name="doEditInvoiceDetatils" class="com.mss.msp.sag.InvoiceAction" method="doEditInvoiceDetatils">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" type="redirect" >getInvoice.action</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action> 
+    </package>
+    <package name="sow" namespace="/sag/sow" extends="default">
+        <action name="getSowList" class="com.mss.msp.sag.sow.SOWAction" method="getSowList">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">sowSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>  
+        <action name="SOWSearchAction" class="com.mss.msp.sag.sow.SOWAction" method="getSOWSearchResults">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">sowSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action> 
+        <action name="SOWEditAction" class="com.mss.msp.sag.sow.SOWAction" method="getSOWEditDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">sowEdit.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action> 
+        <action name="SOWInsertAction" class="com.mss.msp.sag.sow.SOWAction" method="doAddUpdateSOWDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            
+            <result type="redirectAction" name="success">
+                <param name="actionName">getSowList</param>
+                <param name="resultMessage">${resultMessage}</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="addSOWAttachments" class="com.mss.msp.sag.sow.SOWAction" method="addSOWAttachments">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result type="redirectAction" name="success">
+                <param name="actionName">SOWEditAction</param>
+                <param name="consultantId">${consultantId}</param>
+                <param name="requirementId">${requirementId}</param>
+                <param name="customerId">${customerId}</param>
+                <param name="vendorId">${vendorId}</param>
+                <param name="rateSalary">${rateSalary}</param>
+                <param name="consultantName">${consultantName}</param>
+                <param name="customerName">${customerName}</param>
+                <param name="vendorName">${vendorName}</param>
+                <param name="requirementName">${requirementName}</param>
+                <param name="status">${status}</param>
+                <param name="tabFlag">${tabFlag}</param>
+                <param name="uploadRes">${uploadRes}</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="input"></result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="sowDownloadAttachment" class="com.mss.msp.sag.sow.SOWAttachmentDownloadAction" method="downloadSOWAttachment"> 
+            <interceptor-ref name="authorizationcheckStack" />
+            <result type="redirectAction" name="input">
+                <param name="actionName">SOWEditAction</param>
+                <param name="consultantId">${consultantId}</param>
+                <param name="requirementId">${requirementId}</param>
+                <param name="customerId">${customerId}</param>
+                <param name="vendorId">${vendorId}</param>
+                <param name="rateSalary">${rateSalary}</param>
+                <param name="consultantName">${consultantName}</param>
+                <param name="customerName">${customerName}</param>
+                <param name="vendorName">${vendorName}</param>
+                <param name="requirementName">${requirementName}</param>
+                <param name="status">${status}</param>
+                <param name="fileExists">${fileExists}</param>
+                <param name="tabFlag">${tabFlag}</param>
+            </result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="doInsertSAGRecord" class="com.mss.msp.sag.sow.SOWAction" method="doInsertSAGRecord">
+           
+        </action> 
+        <action name="SOWSaveOrSubmit" class="com.mss.msp.sag.sow.SOWAction" method="SOWSaveOrSubmit">
+           <interceptor-ref name="authorizationcheckStack" />
+            <result type="redirectAction" name="success">
+                <param name="actionName">getSowList</param>
+                <param name="resultMessage">${resultMessage}</param>
+            </result>
+            <result type="redirectAction" name="successRedirect">
+                <param name="actionName">SOWEditAction</param>
+                <param name="serviceTypeRedirect">${serviceTypeRedirect}</param>
+                <param name="serviceType">${serviceTypeRedirect}</param>
+                <param name="status">${status}</param>
+                <param name="serviceId">${serviceId}</param>
+                <param name="consultantName">${consultantName}</param>
+                <param name="customerName">${customerName}</param>
+                <param name="vendorName">${vendorName}</param>
+                <param name="requirementName">${requirementName}</param>
+                <param name="tabFlag">recreatedList</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="sowRecreateEdit" class="com.mss.msp.sag.sow.SOWAction" method="sowRecreateEdit">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">sowRecreateEdit.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action> 
+    </package>
+    
+    
+</struts>

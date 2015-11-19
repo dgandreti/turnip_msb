@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.mss.msp.acc.projectsdata.UsersOrganizationsVTO" table="users_organizations" >
+        <id column="uoid" type="integer">
+            <generator class="increment"/>
+        </id>
+            <property name="uoID" column="uoid" insert="false" update="false" />
+            <property name="userID" column="user_id" insert="false" update="false" />
+            <property name="organizationID" column="organization_id" insert="false" update="false" />
+            <property name="projectID" column="project_id" insert="false" update="false" />
+    </class>
+    
+</hibernate-mapping>

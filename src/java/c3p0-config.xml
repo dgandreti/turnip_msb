@@ -1,0 +1,84 @@
+<c3p0-config>
+    <default-config>
+        
+        <!-- START: Basic Pool Configuration -->
+        <property name="maxPoolSize">500</property>
+        <property name="initialPoolSize">50</property>
+        <property name="minPoolSize">25</property>
+        <property name="acquireIncrement">5</property>
+        <!-- END: Basic Pool Configuration -->
+        
+        <!-- START: Managing Pool Size and Connection Age -->
+
+        <!-- Previous value: 1800 seconds,Default: 0 seconds, Don't change this value -->
+        <property name="maxIdleTime">1800</property>
+        
+        <!-- Previous Value: 1200 seconds,Default: 0 seconds Should be smaller than maxIdleTime-->
+        <property name="maxIdleTimeExcessConnections">1200</property>
+        <!-- END: Managing Pool Size and Connection Age -->
+        
+        
+        <!-- START: Configuring Connection Testing -->
+        <property name="automaticTestTable">ConnectionTest</property>
+        <property name="idleConnectionTestPeriod">900</property><!-- seconds -->
+        <property name="testConnectionOnCheckin">true</property>
+        <property name="testConnectionOnCheckout">false</property>
+        <!-- END: Configuring Connection Testing -->
+        
+        <!-- START: Configuring Statement Pooling -->
+        <property name="maxStatements">0</property>
+        <property name="maxStatementsPerConnection">0</property>
+        <!-- END: Configuring Statement Pooling -->
+        
+        <!-- START: Configuring Recovery From Database Outages -->
+        <property name="acquireRetryAttempts">30</property><!-- number :default Value-->
+        <property name="acquireRetryDelay">1000</property><!-- Millis Seconds :default Value-->
+        <!-- END: Configuring Recovery From Database Outages -->
+        
+        <!-- START: Configuring to Debug and Workaround Broken Client Applications -->
+        <!-- Default Values
+        <property name="debugUnreturnedConnectionStackTraces">false</property>-->
+        <property name="unreturnedConnectionTimeout">1800</property>
+        
+        <!-- END: Configuring to Debug and Workaround Broken Client Applications -->
+        
+        
+        <!-- START: Other DataSource Configuration -->
+	 
+        <property name="checkoutTimeout">60000</property><!-- milli seconds -->
+        <property name="numHelperThreads">3</property><!-- Default: 3 threads per Datasource-->
+        <property name="maxAdministrativeTaskTime">0</property><!-- Seconds -->
+        <!-- END: Other DataSource Configuration -->
+        
+        <!--
+        <user-overrides user="test-user">
+            <property name="maxPoolSize">10</property>
+            <property name="minPoolSize">1</property> 
+            <property name="maxStatements">0</property>
+        </user-overrides>
+        -->
+    </default-config> 
+    <!-- This app is massive! 
+<named-config name="intergalactoApp"> 
+    <property name="acquireIncrement">50</property>
+    <property name="initialPoolSize">100</property> 
+    <property name="minPoolSize">50</property>
+    <property name="maxPoolSize">1000</property>
+    --> 
+    <!-- intergalactoApp adopts a different approach to configuring statement caching -->
+    <!--
+        <property name="maxStatements">0</property>
+        <property name="maxStatementsPerConnection">5</property> 
+    --> 
+    <!-- he's important, but there's only one of him --> 
+    <!--
+        <user-overrides user="master-of-the-universe"> 
+            <property name="acquireIncrement">1</property>
+            <property name="initialPoolSize">1</property> 
+            <property name="minPoolSize">1</property>  
+            <property name="maxPoolSize">5</property>
+            <property name="maxStatementsPerConnection">50</property>
+        </user-overrides>  
+    </named-config>
+    -->
+</c3p0-config>

@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : acc
+       Author       : Nagireddy Seerapu
+       Description  : usrajax Actions.
+    -->
+    <package name= "costCenter" namespace="/costCenter" extends="default">
+        <action name ="costCenterSearch" class="com.mss.msp.acc.costCenter.CostCenterAction" method="costCenterSearch">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">/acc/costCenterSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name ="costCenterInfo" class="com.mss.msp.acc.costCenter.CostCenterAction" method="costCenterInfoSearch">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">/acc/costCenterInfo.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+         <action name ="costCenterDashBoardDetails" class="com.mss.msp.acc.costCenter.CostCenterAction" method="costCenterDashBoardDetails">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">/acc/costCenterDashboard.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name ="addCostCenterBudget" class="com.mss.msp.acc.costCenterAjax.CostCenterAjaxHandlerAction" method="addCostCenterBudget">
+        </action>
+        <action name ="addCostCenter" class="com.mss.msp.acc.costCenterAjax.CostCenterAjaxHandlerAction" method="addCostCenter">
+        </action>
+        <action name ="getCostCenterBudgetDetails" class="com.mss.msp.acc.costCenterAjax.CostCenterAjaxHandlerAction" method="getCostCenterBudgetDetails">
+        </action>
+        <action name="costCenterInfoSearchList" class="com.mss.msp.acc.costCenterAjax.CostCenterAjaxHandlerAction" method="costCenterInfoSearchList">
+        </action>
+        <action name="getCostCenterDashboardList" class="com.mss.msp.acc.costCenterAjax.CostCenterAjaxHandlerAction" method="getCostCenterDashboardList">
+        </action>
+        <action name ="getProjectNamesInCostCenter" class="com.mss.msp.acc.costCenterAjax.CostCenterAjaxHandlerAction" method="getProjectNamesInCostCenter">
+        </action>
+        <action name="getCostCentersDashboardForOrg" class="com.mss.msp.acc.costCenterAjax.CostCenterAjaxHandlerAction" method="getCostCentersDashboardForOrg">
+        </action>
+        
+    </package>
+    <package name="dashboard" namespace="/dashboard" extends="default">
+        <action name="dashBoardDetails" class="com.mss.msp.general.GeneralAction" method="dashBoardDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">reqDashboardForCSR.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getRequirementDashBoardDetails" class="com.mss.msp.requirement.RequirementAction" method="getRequirementDashBoardDetails">
+        </action>
+        
+        <action name="getRequirementDashBoardDetailsOnOverlay" class="com.mss.msp.requirement.RequirementAction" method="getRequirementDashBoardDetailsOnOverlay">
+        </action>
+        
+        <action name="getVendorRequirementDashBoardDetails" class="com.mss.msp.requirement.RequirementAction" method="getVendorRequirementDashBoardDetails">
+        </action>
+        
+        <action name="getVendorRequirementsDashBoard" class="com.mss.msp.requirement.RequirementAction" method="getVendorRequirementsDashBoard">
+        </action>
+        
+        <action name="getVendorDashBoardDetailsOnOverlay" class="com.mss.msp.requirement.RequirementAction" method="getVendorDashBoardDetailsOnOverlay">
+        </action>
+        
+        <!-- For customer dashboard -->
+        <action name="customerDashBoardDetails" class="com.mss.msp.requirement.RequirementAction" method="customerDashBoardDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">customerDashBoard.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name="getCustomerRequirementDashBoardDetails" class="com.mss.msp.requirement.RequirementAction" method="getCustomerRequirementDashBoardDetails">
+        </action>
+        
+         <action name="getVendorRequirementsDashboards" class="com.mss.msp.recruitment.RecruitmentAction" method="getVendorRequirementsDashboard">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">vendorReqDashBoard.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+    </package>
+    <package name="acc" namespace="/acc" extends="default">
+        <!-- shanker-->
+        <action name="addContact" class="com.mss.msp.acc.AccountAction" method="addContact">
+            <interceptor-ref name="authorizationcheckStack" />
+            <interceptor-ref name="completeStack" />
+            <interceptor-ref name="fileUpload">
+            </interceptor-ref>
+            <interceptor-ref name="validation"/>
+            <interceptor-ref name="workflow"/>
+            <result type="redirect" name="success">../acc/viewAccount.action?accountSearchID=${AccountSearchOrgId}&amp;accFlag=${"conSearch"}</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">/error.jsp</result>
+            <result name="input">../exception/AccessFailed.jsp</result>
+
+        </action>
+                 <action name="doAddAccountToCsr" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="doAddAccountToCsr">
+
+        </action>
+        <action name="mailext_Check" class="com.mss.msp.general.GeneralAction" method="doMailExtensionVerify">
+        </action>
+        <action name="goAddintAccToCsr" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="goAddintAccToCsr">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result  name="success">addingAccToCsr.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">/error.jsp</result>
+            <result name="input">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getCsrDetailsTable" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getCsrDetailsTable">
+
+        </action>
+        <action name="csrStatusChange" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="csrStatusChange">
+
+        </action>
+
+        <action name="contactEmailCheck" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="doEmailVerify">
+
+        </action>
+        <action name="getConState" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getContactState">
+
+        </action>
+        <!-- shanker-->
+        <action name="setTeamMembersForProject" class="com.mss.msp.acc.AccountAction" method="setTeamMembersForProject">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">addTeamMembers.jsp</result>
+            <result type="redirect" name="login">/../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="addTeamMemberToProject" class="com.mss.msp.acc.AccountAction" method="addTeamMemberToProject">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" type="redirectAction">
+                <param name="actionName">setTeamMembersForProject</param>
+                <param name="projectID">${projectID}</param>
+                <param name="projectFlag">${projectFlag}</param>
+                <param name="userID">${userID}</param>
+                  <param name="resultMessage">${resultMessage}</param>
+            </result>
+            
+            <result type="redirect" name="login">/../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name="ProfileImageUpdate" class="com.mss.msp.acc.AccountAction" method="ProfileImageUpdate">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="redirectAction">
+                <param name="actionName">accountcontactedit</param>
+                <param name="contactId">${contactId}</param>
+                <param name="accountSearchID">${accountSearchID}</param>
+                <param name="accountType">${accountType}</param>
+                <param name="flag">${flag}</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="accountadd" class="com.mss.msp.acc.AddAccountAction" method="getAddAccount">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">AccountAdd.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="doAllAccountSearch" class="com.mss.msp.acc.AccountAction" method="doAddAllAccountSearch">
+            <interceptor-ref name="crudStack" />
+            <result name="success">SearchAccount.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="searchAccount" class="com.mss.msp.acc.AccountSearchAction" method="searchAccount">
+            <interceptor-ref name="crudStack" />
+            <result name="success">SearchAccount.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="viewAccount" class="com.mss.msp.acc.details.AccountDetailsAction" method="view">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">AccountDetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="searchAccountsBy" class="com.mss.msp.acc.AccountSearchAction" method="searchAccountBy">
+            <interceptor-ref name="authorizationcheckStack" />
+            <!--<interceptor-ref name="crudStack" />-->
+            <result name="success">SearchAccount.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="ajaxAccountUpdate" class="com.mss.msp.acc.detailsAjax.AccountDetailsAjaxAction" method="updateAccount">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" type="redirectAction">
+                <param name="actionName">viewAccount</param>
+                <param name="namespace">/acc</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="assignedRoles" class="com.mss.msp.acc.AccountSearchAction" method="assignedRoles">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">assignAccounts.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="addVendorForCustomer" class="com.mss.msp.acc.AccountAction" method="addVendorForCustomer">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" >addVendor.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="ajaxAccountNameCheck" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="checkForName">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="httpheader">
+                <param name="status">200</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="ajaxAccountURLCheck" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="checkForURL">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="httpheader">
+                <param name="status">200</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <!--<action name="ajaxLoadContactsTab" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="ajaxLoadContacts">
+            <result name="success" >AccountContacts.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>-->
+        <action name="updateAccTeam" class="com.mss.msp.acc.details.AccountDetailsAction" method="updateAccTeam">
+            <interceptor-ref name="crudStack" />
+            <result type="redirectAction" name="success">
+                <param name="actionName">viewAccount</param>
+                <param name="accountSearchID">${accountSearchID}</param>
+                <param name="accFlag">${"assignTeamUpdate"}</param>
+            </result>
+            <!-- <result name="success" type="redirect">viewAccount.action?accountSearchID=${accountSearchID}</result>-->
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="ajaxLoadContactsTab" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="searchContacts">
+
+        </action>
+
+
+        <action name="getContacts" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getContactDetails">
+
+        </action>
+         <action name="getLocations" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getLocations">
+
+        </action>
+        <action name="editLocations" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="editLocations">
+
+        </action>
+        <action name="addOrUpdateLocations" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="addOrUpdateLocations">
+
+        </action>
+        <action name="saveContacts" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="saveUserContacts">
+
+        </action>
+         <action name="checkContactExist" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="checkContactExist">
+
+        </action>
+         <!--action name="getContactEmail" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getContactEmailId">
+
+        </action-->
+      
+        <action name="getContactSearchResults" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getContactSearchResults">
+
+        </action>
+        <action name="assignAccount" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="accountTransferOrCopy">
+             
+        </action>
+       
+
+        <action name="searchRequirement" class="com.mss.msp.requirement.RequirementAction" method="getRequirementDetails">
+
+        </action>
+        <action name="getReqDetailsBySearch" class="com.mss.msp.requirement.RequirementAction" method="getReqDetailsBySearch"></action>
+        <action name="getSkillDetaisls" class="com.mss.msp.requirement.RequirementAction" method="getSkillDetaisls"></action>
+        <action name="getPreferedSkillDetails" class="com.mss.msp.requirement.RequirementAction" method="getPreferedSkillDetails"></action>
+        <action name="getEmailPhoneDetails" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getEmailPhoneDetails"></action>
+
+        <action name="getDefaultVendorTiers" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getDefaultVendorTiers"></action>
+        <action name="addVendorTierToCustmer" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="addVendorTierToCustmer"></action>
+        <action name="editVendorTierDetails" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="editVendorTierDetails"></action>
+        <action name="searchVendorTierDetails" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="searchVendorTierDetails"></action>
+        <action name="editVendorTierOverlay" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="editVendorTierOverlay"></action>
+
+        <action name="accountcontactedit" class="com.mss.msp.acc.details.AccountDetailsAction" method="getAccountContactDetailsForEdit">
+            <interceptor-ref name="crudStack" />
+            <result name="success">AccountContactEdit.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+
+        <action name="updateAccountContact" class="com.mss.msp.acc.details.AccountDetailsAction" method="updateAccountContactDetails">
+            <interceptor-ref name="crudStack" />
+            <!--<result type="redirect" name="success">../acc/accountcontactedit.action?contactId=${contactId}</result> -->
+            <result type="redirectAction" name="success">
+                <param name="actionName">accountcontactedit</param>
+                <param name="contactId">${contactId}</param>
+                <param name="accountSearchID">${accountSearchID}</param>
+                <param name="account_name">${account_name}</param>
+                <param name="accountType">${accountType}</param>
+                <param name="resultFlag">${"update"}</param>
+                <param name="flag">${flagname}</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getTitlesForDepartments" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getTitles">
+
+        </action>
+        
+        <action name="getConsultantSkillCSR" class="com.mss.msp.requirement.RequirementAction" method="getConsultantSkillCSR"></action>
+        <action name="setReportingPerson" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="setReportingPerson"></action>
+        <action name="getVendorDetails" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getVendorDetails"></action>
+        <action name="saveVendorTierDetails" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="saveVendorTierDetails"></action>
+        
+        <action name="setContacts" class="com.mss.msp.acc.AccountAction" method="setContacts">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">addAccountContact.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="doVendorFormAttachmentDownload" class="com.mss.msp.reccruitmentAjax.ConsultantDownloadAction" method="doVendorFormAttachmentDownload"> 
+            <result name="input" type="redirect">
+                ../acc/viewAccount.action?accountSearchID=${accountSearchID}&amp;accFlag=${"attachDetails"}&amp;downloadFlag=${resume}
+            </result>
+            <result name="error">/error.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>  
+        </action>
+        <action name="getAttachments" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getAttachmentDetails">
+
+        </action>
+        
+        <action name="getVendorFormEditDetails" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getVendorFormEditDetails">
+
+        </action>
+        
+        <action name="getAttachmentsSearchDetails" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getAttachmentsSearchDetails">
+
+        </action>
+    </package>
+    
+    <package name="Requirements" namespace="" extends="default">
+        <action name="addRequirements" class="com.mss.msp.requirement.RequirementAction" method="addRequirements">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="success">RequirementAdd.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <action name="doCopyRequirement" class="com.mss.msp.requirement.RequirementAction" method="doCopyRequirement">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="success">RequirementAdd.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <action name="addRequirementDetails" class="com.mss.msp.requirement.RequirementAction" method="addRequirementDetails">
+
+        </action>
+        <action name="requirementedit" class="com.mss.msp.requirement.RequirementAction" method="setrequirementedit">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">requirementedit.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <action name="updateRequirements" class="com.mss.msp.requirement.RequirementAction" method="updateRequirements">
+        </action>
+        <action name="getVendorsListByTireType" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getVendorsListByTireType">
+
+        </action>
+        <action name="SaveVendorsAssociationDetals" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="SaveVendorsAssociationDetals">
+
+        </action>
+        <action name="SoftwareCheckBoxListAction"
+                class="com.mss.msp.acc.SoftwareCheckBoxListAction" method="display">
+            <!-- if recieving an error:
+            The requested list key 'softwares' could not be resolved
+            uncomment the following -->
+            <!--      <interceptor-ref name="params"/>
+            <interceptor-ref name="prepare"/>
+            <interceptor-ref name="basicStack"/>-->
+            <result name="none">accountSoftwareTab.jsp</result>
+        </action>
+        <action name="checkBoxResultAction" class="com.mss.msp.acc.SoftwareCheckBoxListAction">
+            <result name="success">accountSoftwareTab.jsp</result>
+        </action>
+
+        <action name="saveToDB" class="com.mss.msp.acc.SoftwareCheckBoxListAction" method="saveToDB">
+            <result name="save">accountSoftwareTab.jsp</result>
+            <result name="success">accountSoftwareTab.jsp</result>
+        </action>
+
+
+        <action name="getVendorAssociationDetails" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getVendorAssociationDetails">
+
+        </action>
+        <action name="searchVendorAssociationDetails" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="searchVendorAssociationDetails">
+
+        </action>
+        <action name="getSearchRequirementsList" class="com.mss.msp.requirement.RequirementAction" method="getSearchRequirementsList"></action>
+        <action name="getRecruiterOverlay" class="com.mss.msp.requirement.RequirementAction" method="getRecruiterOverlay"></action>
+        <action name="getSkillOverlay" class="com.mss.msp.requirement.RequirementAction" method="getSkillOverlay"></action>
+        <action name="getPreSkillOverlay" class="com.mss.msp.requirement.RequirementAction" method="getPreSkillOverlay"></action>
+        <action name="storeProofData" class="com.mss.msp.requirement.RequirementAction" method="storeProofData">
+
+        </action>
+        <action name="checkConsultantExist" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="checkConsultantExist"></action>
+        <action name="getConsultantList" class="com.mss.msp.recruitment.RecruitmentAction" method="getDefaultConsultantListDetails"></action>
+        <action name="getConsultantListBySearch" class="com.mss.msp.recruitment.RecruitmentAction" method="getConsultantListDetailsBySearch"></action>
+        <action name="techReview" class="com.mss.msp.recruitment.RecruitmentAction" method="techReview">
+            
+            <result name="success">techReviewSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="input"></result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <action name="techReviewForward" class="com.mss.msp.recruitment.RecruitmentAction" method="techReviewForward"></action>
+        <action name="getSearchTechReviewList" class="com.mss.msp.recruitment.RecruitmentAction" method="getSearchTechReviewList"></action>
+        <action name="getConsultDetailsOnOverlay" class="com.mss.msp.recruitment.RecruitmentAction" method="getConsultDetailsOnOverlay"></action>
+        <action name="saveTechReviewResults" class="com.mss.msp.recruitment.RecruitmentAction" method="saveTechReviewResults"></action>
+    
+    
+        <action name="getConsultantTechReviews" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="getConsultantTechReviews"></action>
+        <action name="forwardTechReview" class="com.mss.msp.recruitment.RecruitmentAction" method="forwardTechReview">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">techReview.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="input"></result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <!-- Add by Aklakh  -->
+        <action name="updateTeamMembersForProject" class="com.mss.msp.acc.AccountAction" method="updateTeamMembersForProject">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" type="redirect">setTeamMembersForProject.action?projectID=${projectID}&amp;userID=${userID}&amp;projectName=${projectName}&amp;projectEmpName=${projectEmpName}&amp;validateMessage=${validateMessage}&amp;teamMemberFlag=${teamMemberFlag}</result>
+            <result type="redirect" name="login">/../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="input">../exception/403.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+          
+        </action>
+        <action name="techReviewCommentsOverlay" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="techReviewCommentsOverlay"></action>
+        <action name="getTechReviewResultOnOverlay" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="getTechReviewResultOnOverlay"></action>
+        <action name="onlineExamStatusSave" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="onlineExamStatusSave"></action>
+        <action name="userMigration" class="com.mss.msp.recruitment.RecruitmentAction" method="userMigration"></action>
+        <action name="addVendorFormAttachments" class="com.mss.msp.recruitment.RecruitmentAction" method="addVendorFormAttachments">
+            <interceptor-ref name="completeStack" />
+           
+            <interceptor-ref name="fileUpload">
+            </interceptor-ref>
+            <interceptor-ref name="validation"/>
+            <interceptor-ref name="workflow"/>
+            <result name="success" type="redirect">../acc/viewAccount.action?accountSearchID=${viewAccountID}&amp;accFlag=${"attachDetails"}</result>
+            <result name="error">/error.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>  
+        </action>
+        <action name="updateVendorFormAttachments" class="com.mss.msp.recruitment.RecruitmentAction" method="updateVendorFormAttachments">
+            <interceptor-ref name="completeStack" />
+           
+            <interceptor-ref name="fileUpload">
+            </interceptor-ref>
+            <interceptor-ref name="validation"/>
+            <interceptor-ref name="workflow"/>
+            <result name="success" type="redirect">../acc/viewAccount.action?accountSearchID=${viewAccountID}&amp;accFlag=${"attachDetails"}</result>
+            <result name="error">/error.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>  
+        </action>
+        
+        <action name="questionsCount" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="questionsCount"></action>
+        <action name="questionsCountCheck" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="questionsCountCheck"></action>
+        <action name="skillsQuestions" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="skillsQuestions"></action>
+    </package>
+
+</struts>

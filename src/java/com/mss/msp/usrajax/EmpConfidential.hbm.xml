@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.mss.msp.usrajax.EmpConfidentialVTO" table="usr_securityinfo">
+        <id name="userid" column="usr_id" type="int">
+            
+        </id>
+        
+        <property name="ssnPanNo" column="ssn_pan_no"/>
+        <property name="panName" column="name_per_pan"/>
+        <property name="empBankName" column="bank_name"/>
+        <property name="empBankAccNo" column="bank_acc_no"/>
+        <property name="empBankAccName" column="bank_acc_name"/>
+        <property name="empBankIfsc" column="bank_ifsc_code"/>
+        <property name="empUan" column="uan_no"/>
+        <property name="empPfNo" column="pf_no"/>
+        <property name="empPassportNo" column="passport_no"/>
+        <property name="empPassportExpDate" column="passport_exp_date"/>
+    </class>
+
+
+   
+</hibernate-mapping>
+
+ 
+
+

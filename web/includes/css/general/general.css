@@ -1,0 +1,66 @@
+/* 
+    Document   : success
+    Created on : 4 Mar, 2015, 2:37:37 AM
+    Author     : miracle
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{
+    overflow-x: hidden;
+}
+
+
+.logfailed{
+text-shadow:4px 2px 4px #C2C2C2;
+font-size:50px;
+
+
+}
+
+.success{
+text-shadow:4px 2px 4px #C2C2C2;
+font-size:50px;
+
+
+}
+.success1{
+text-shadow:4px 2px 4px #C2C2C2;
+font-size:40px;
+
+color: #30D630;
+font-family:Averia Serif Libre;
+}
+
+.adenied{
+text-shadow:4px 2px 4px #C2C2C2;
+font-size:50px;
+
+
+
+}
+
+.adenied1{
+text-shadow:4px 2px 4px #C2C2C2;
+font-size:40px;
+
+color: #E33926;
+font-family:Averia Serif Libre;
+}
+
+.logfailed1{
+text-shadow:4px 2px 4px #C2C2C2;
+font-size:20px;
+color: #E33926;
+
+font-family:Averia Serif Libre;
+}
+.linkexpired{
+
+font-size:35px;
+color: #E33926;
+font-family:Averia Serif Libre;
+}
+/*.headerAlingment{
+    margin-left: 2%;
+    margin-right:2%;
+}*/

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : recruitment
+       Author       : Nagireddy Seerapu
+       Description  : recruitment Actions.
+    -->
+    <package name="recruitment" namespace="/recruitment/consultant" extends="default">
+        <action name="doAddConsultantForReq" class="com.mss.msp.recruitment.RecruitmentAction" method="doAddConsultantForReq">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">consultantAddingForReq.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="storeProofData" class="com.mss.msp.requirement.RequirementAction" method="storeProofData">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success" type="redirect">doAddConsultantForReq.action?requirementId=${reqId}&amp;jdId=${jdId}&amp;orgid=${orgId}&amp;jobTitle=${jobTitle}&amp;targetRate=${targetRate}&amp;resultFlag=${"added"}&amp;maxRate=${requirementMaxRate}</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="getMyConsultantSearch" class="com.mss.msp.recruitment.RecruitmentAction" method="getMyConsultantSearch">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">ConsultantSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="getConsultant" class="com.mss.msp.recruitment.RecruitmentAction" method="getConsultant">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">ConsultantSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="getConsultantAttachments" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="getAttachmentList">
+            
+        </action>
+        
+        <!-- added by triveni -->    
+        <action name="editConsultantDetails" class="com.mss.msp.recruitment.RecruitmentAction" method="getupdateConsultantDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">ConsultantDetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="updateConsultantDetails" class="com.mss.msp.recruitment.RecruitmentAction" method="doupdateConsultantDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <!--    <result name="success">ConsultantDetails.jsp</result>  -->
+            <result name="success" type="redirect">editConsultantDetails.action?consult_id=${consult_id}&amp;consultFlag=${consultFlag}&amp;updateMessage=${updateMessage}&amp;consultantFlag=${consultantFlag}&amp;requirementId=${requirementId}&amp;accountSearchID=${accountSearchID}&amp;accountFlag=${accountFlag}&amp;customerFlag=${customerFlag}&amp;jdId=${jdId}&amp;vendor=${vendor}</result> 
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action> 
+        <action name="getConsultantDetails" class="com.mss.msp.recruitment.RecruitmentAction" method="getupdateConsultantDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">CustomerConsultantDetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>  
+        <!-- Add Consultant JSP page by Aklakh -->
+        <action name="addConsultant" class="com.mss.msp.recruitment.RecruitmentAction" method="doAddConsultant">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">addConsultant.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+        </action>
+        <!-- Email Id varify by Aklakh -->           
+        <action name="consultantEmailVerify" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="doEmailVerify">
+           
+        </action> 
+        <!-- Add new consultant by Aklakh -->
+        <action name="addConsultantDetails" class="com.mss.msp.recruitment.RecruitmentAction" method="addNewConsultant">
+            <interceptor-ref name="completeStack" />
+            <interceptor-ref name="authorizationcheckStack" />
+            <interceptor-ref name="fileUpload">
+            </interceptor-ref>
+            <interceptor-ref name="validation"/>
+            <interceptor-ref name="workflow"/>
+            <result name="success" type="redirect">./addConsultant.action?consultFlag=${consultFlag}</result>
+            <result name="error">/error.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>  
+        </action> 
+        <!-- To get the State add by Aklakh   -->       
+        <action name="getState" class="com.mss.msp.general.GeneralAction" method="getState">
+            
+        </action> 
+        <action name="getAllRequirementList" class="com.mss.msp.recruitment.RecruitmentAction" method="getAllRequirementList">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">RequirementListAll.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="getLoginUserRequirementList" class="com.mss.msp.recruitment.RecruitmentAction" method="getLoginUserRequirementList">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">RequirementListAll.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result> 
+        </action>
+        <action name="consultDownloadAttachment" class="com.mss.msp.reccruitmentAjax.ConsultantDownloadAction" method="downloadResume"> 
+            <result type="redirectAction" name="input">
+                <param name="actionName">../../Requirements/requirementedit.action</param>
+                <param name="requirementId">${requirementId}</param>
+                <param name="accountFlag">${accountFlag}</param>
+                <param name="accountSearchID">${accountSearchID}</param>
+                <param name="customerFlag">${customerFlag}</param>
+                <param name="downloadFlag">${resume}</param>
+                <param name="consult_name">${consult_name}</param>
+                <param name="consult_email">${consult_email}</param>
+                <param name="consult_skill">${consult_skill}</param>
+                <param name="consult_phno">${consult_phno}</param>
+                <param name="techSearch">${techSearch}</param>
+                <param name="jdId">${jdId}</param>
+                <param name="vendor">${vendor}</param>
+            </result>
+        </action>
+        <action name="downloadConsultantAttachment" class="com.mss.msp.reccruitmentAjax.ConsultantDownloadAction" method="downloadResume"> 
+            <result type="redirectAction" name="input">
+                <param name="actionName">../../recruitment/consultant/editConsultantDetails.action?consultantFlag=${consultantFlag}</param>
+                <param name="consult_id">${consult_id}</param>
+                <param name="consultFlag">${consultFlag}</param>
+                <param name="downloadFlag">${resume}</param>
+                <param name="${consultantFlag}">${consultantFlag}</param>
+               
+            </result>
+        </action>
+         <!-- Add By Aklakh -->
+        <action name="downloadConsultantAttachedDocument" class="com.mss.msp.reccruitmentAjax.ConsultantDownloadAction" method="downloadResume"> 
+            <result type="redirectAction" name="input">
+                <param name="actionName">../../recruitment/consultant/getConsultantDetails.action</param>
+                <param name="consult_id">${consult_id}</param>
+                <param name="consultFlag">${consultFlag}</param>
+                <param name="downloadFlag">${resume}</param>
+                 <param name="requirementId">${requirementId}</param>
+                <param name="jdId">${jdId}</param>
+                <param name="accountSearchID">${accountSearchID}</param>
+            </result>
+        </action>
+        <action name="downloadAttachmentTechReview" class="com.mss.msp.reccruitmentAjax.ConsultantDownloadAction" method="downloadResume"> 
+            <result type="redirectAction" name="input">
+                <param name="actionName">../../recruitment/consultant/getTechReviewDetails.action</param>
+                <param name="downloadFlag">${resume}</param>
+                <param name="techSearch">${techSearch}</param>
+                <param name="techReviewStatus">${techReviewStatus}</param>
+                <param name="reviewEndDate">${reviewEndDate}</param>
+                <param name="reviewStartDate">${reviewStartDate}</param>                
+            </result>
+        </action>
+        <action name="addConsultAttachment" class="com.mss.msp.recruitment.RecruitmentAction" method="addConsultAttachment">
+            <interceptor-ref name="crudStack" />
+            <result type="redirect" name="success">editConsultantDetails.action?consult_id=${consult_id}&amp;consultFlag=${consultFlag}</result> 
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <!-- Added By Kiran To get consultant Activity -->
+        
+        <action name="activityDetails" class="com.mss.msp.recruitment.RecruitmentAction" method="getActivityDetails">  
+         
+        </action>
+        <action name="addNewActivity" class="com.mss.msp.recruitment.RecruitmentAction" method="doAddConsultantActivityDetails">
+            
+        </action>
+        <action name="editActivity" class="com.mss.msp.recruitment.RecruitmentAction" method="doEditConsultantActivityDetails">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="redirect">editConsultantDetails.action?consult_id=${consult_id}</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name="getConsultantActivity" class="com.mss.msp.recruitment.RecruitmentAction" method="dogetConsultantActivitydetails">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="redirect">editConsultantDetails.action?consult_id=${consult_id}</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <!-- consultant edit activity by activity -->
+        <action name="getConsultActivitybyActivity" class="com.mss.msp.recruitment.RecruitmentAction" method="dogetConsultActivitydetailsbyActivity">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="redirect">editConsultantDetails.action?consult_id=${consult_id}</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="input"></result>
+        </action>
+        <action name="getTechReviewDetails" class="com.mss.msp.recruitment.RecruitmentAction" method="getTechReviewDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">techReviewDetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <!-- consultant Login Details , add by Aklakh -->
+        <action name="consultantLoginDetails" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="consultantLoginDetails">       
+        </action>
+        <action name="doReleaseRequirements" class="com.mss.msp.requirement.RequirementAction" method="doReleaseRequirements"> 
+        </action>   
+        <action name="getConsultanceExistance" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="getConsultanceExistance"></action>
+        
+        <action name="downloadResults" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="doDownloadResults">
+            <!--<interceptor-ref name="crudStack" />-->
+            <!--<interceptor-ref name="authorizationcheckStack" />-->
+            <result name="input" >/error.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+        
+    </package>
+    <package name="" namespace="/recruitment/consultantLogin" extends="default">
+        <action name="doResumeDownload" class="com.mss.msp.reccruitmentAjax.ConsultantDownloadAction" method="downloadResume"> 
+            <result type="redirectAction" name="input">
+                <param name="actionName">../../recruitment/consultantLogin/getCurrentStatus.action</param>
+                <param name="resumeDownlaod">${resume}</param>
+            </result>
+        </action>
+       
+        <action name="consultantLogin" >
+            <interceptor-ref name="crudStack" />
+            <result >  consultant_login.jsp</result>
+        </action>
+        <action name="getCurrentStatus" class="com.mss.msp.recruitment.RecruitmentAction" method="getCurrentStatus">
+            <interceptor-ref name="crudStack" />
+            <result name="success" >current_status.jsp</result>
+            <result type="redirect" name="login">consultant_login.jsp</result>
+            <result name="error">../../exception/403.jsp</result>
+            <result name="accessFailed">../../exception/AccessFailed.jsp</result>
+            <result name="input"></result>
+        </action>
+        <action name="loginCheckConsultant" class="com.mss.msp.general.LoginAction">
+            <interceptor-ref name="crudStack" />
+            <result  name="success">consultant_home.jsp
+            </result>
+            <!-- <result type="redirect" name="success">/homeredirect.Action</result>-->
+            <result name="input">consultant_login.jsp</result>
+            <result type="redirect" name="login">consultant_login.jsp</result>
+            <result name="error">../../exception/403.jsp</result>
+            <result name="accessFailed">../../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="logoutConsultant" class="com.mss.msp.general.LoginAction" method="doLogout" >
+            <interceptor-ref name="crudStack" />
+           
+            <result type="redirect" name="success">consultantLogin.action</result>
+            <param name="org_id" >10001</param><!--this is for temparary org id -->
+            
+        </action>
+        <action name="getConsultantStatus" class="com.mss.msp.recruitment.RecruitmentAction" method="getConsultantStatus">
+            <interceptor-ref name="crudStack" />
+            <result name="success" >consultantStatus.jsp</result>
+            <result type="redirect" name="login">consultant_login.jsp</result>
+            <result name="error">../../exception/403.jsp</result>
+            <result name="accessFailed">../../exception/AccessFailed.jsp</result>
+            <result name="input"></result>
+        </action>
+        
+        <action name="deleteConsultantAttachment" class="com.mss.msp.recruitment.RecruitmentAction" method="deleteConsultantAttachment">
+            <interceptor-ref name="crudStack" />
+            <result type="redirect" name="success">getCurrentStatus.action</result>
+            <result type="redirect" name="login">consultant_login.jsp</result>
+            <result name="error">../../exception/403.jsp</result>
+            <result name="accessFailed">../../exception/AccessFailed.jsp</result>
+            <result name="input"></result>
+        </action>
+        <action name="UploadConsultantAttachments" class="com.mss.msp.recruitment.RecruitmentAction" method="UploadConsultantAttachments">
+            <interceptor-ref name="crudStack" />
+            <result type="redirect" name="success">getCurrentStatus.action</result>
+            <result type="redirect" name="login">consultant_login.jsp</result>
+            <result name="error">../../exception/403.jsp</result>
+            <result name="accessFailed">../../exception/AccessFailed.jsp</result>
+            <result name="input"></result>
+        </action>
+        
+    </package>
+</struts>

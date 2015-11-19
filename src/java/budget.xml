@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    
+    <package name="budgets" namespace="/budgets" extends="default">
+        
+        <action name="ProjectBudgetDetails" class="com.mss.msp.budget.BudgetAction" method="getProjectBudgetDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">/budgets/projectBudget.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getProjectBudgetSearchResults" class="com.mss.msp.budget.BudgetAction" method="getProjectBudgetSearchResults">
+            
+        </action>
+        <action name="saveProjectBudgetDetails" class="com.mss.msp.budget.BudgetAction" method="saveProjectBudgetDetails">
+            
+        </action>
+        
+        <action name="getProjectBudgetDetailsToViewOnOverlay" class="com.mss.msp.budget.BudgetAction" method="getProjectBudgetDetailsToViewOnOverlay">
+            
+        </action>
+        <action name="doBudgetRecordDelete" class="com.mss.msp.budget.BudgetAction" method="doBudgetRecordDelete">
+            
+        </action>
+        <action name="getCostCenterNameByProjectId" class="com.mss.msp.budget.BudgetAction" method="getCostCenterNameByProjectId">
+            
+        </action>
+    </package>
+    
+    
+</struts>

@@ -1,0 +1,16 @@
+/* 
+    Document   : opportunityDetails
+    Created on : May 28, 2015, 6:04:05 PM
+    Author     : Franklins
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.oppTextArea{
+    width: 400px;
+    height: 200px;
+}
+
+.oppTextField{
+    width: 300px;
+}

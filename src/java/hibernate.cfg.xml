@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!--
+    Document   : hibernate.cfg.xml
+    Created on : August 31, 2007, 10:58 PM
+    Author     : rajasekhar
+    Description:
+        Purpose of the document follows.
+-->
+<hibernate-configuration>
+  <session-factory>
+    <!--Local DataSource-->
+    <property name="hibernate.connection.datasource">java:/comp/env/jndi/msb</property>
+    <!--Production DataSource-->
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    
+            <property name="hibernate.show_sql">true</property>
+         <!--   <property name="hibernate.format_sql">false</property>
+        -->
+    <!-- configuration pool via c3p0 -->
+    <!--
+        <property name="hibernate.c3p0.max_size">10</property>
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.acquire_increment">2</property>
+        <property name="hibernate.c3p0.max_statements">10</property>
+        <property name="hibernate.c3p0.timeout">300</property>-->
+    <!-- seconds -->
+    <!-- <property name="hibernate.c3p0.idle_test_period">900</property>-->
+    <!-- seconds -->
+    <!-- DEPRECATED very expensive property name="c3p0.validate>-->
+    <!--Caching the Result In local memory -->
+    <!--  <property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>-->
+    <!--
+        <property name="hibernate.hbm2ddl.auto">insert</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>-->
+    <!-- including file for mapping an HibernateDataProvider.hbm.xml -->
+    <mapping resource="com/mss/msp/usrajax/EmpConfidential.hbm.xml"/>
+    <mapping resource="com/mss/msp/acc/account.hbm.xml"/>
+    <mapping resource="com/mss/msp/location/country.hbm.xml"/>
+    <mapping resource="com/mss/msp/location/state.hbm.xml"/>
+    <mapping resource="com/mss/msp/acc/projectsdata/projects.hbm.xml"/>
+    <mapping resource="com/mss/msp/acc/projectsdata/org_rel.hbm.xml"/>
+    <mapping resource="com/mss/msp/acc/details/accountdetails.hbm.xml"/>
+    <mapping resource="com/mss/msp/opp/opportunity.hbm.xml"/>
+    <mapping resource="com/mss/msp/acc/csrAccount.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

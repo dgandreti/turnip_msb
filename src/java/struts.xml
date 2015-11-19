@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+ 
+<struts>
+    
+    <constant name="struts.devMode" value="false" /><!-- Please Make it false on Production -->
+    <constant name="struts.freemarker.templatesCache" value="true" />
+    <constant name="struts.configuration.xml.reload" value="true" />
+    <constant name="struts.multipart.saveDir" value="/home/msb/ProjectFiles"/>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.multipart.maxSize" value="20000000" />
+     
+     
+    <package name="default" extends="struts-default" namespace="/">
+        <interceptors>
+            <interceptor name="login" class="com.mss.msp.general.LoginInterceptor" />
+            <interceptor name="authorizationcheck" class="com.mss.msp.authorizationcheck.AuthorizationcheckInterceptor"/> 
+            <interceptor-stack name="crudStack">
+                <interceptor-ref name="login"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="params"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+            <interceptor-stack name="authorizationcheckStack">
+                <interceptor-ref name="authorizationcheck"/>
+                <interceptor-ref name="crudStack"/>  
+            </interceptor-stack>                
+        </interceptors>
+       
+        <global-results>
+            <result  name="sessionExpire">/general/home.jsp</result>
+            <result name="accessDenied" type="redirect">../general/deneid.action</result>
+        </global-results>
+    </package> 
+    
+    
+    <package name="exception" extends="default" namespace="/exception">
+        <action name="exception">
+            <result>403.jsp</result>
+        </action>
+        <action name="accessFailed">
+            <result>AccessFailed.jsp</result>
+        </action>
+    </package>
+    
+    <!-- Add packages here -->
+    <include file="general.xml"/>
+    <include file="usrajax.xml"/> 
+    <include file="renderImage.xml"/>
+    <include file="users.xml"/>
+    <include file="acc.xml"/>
+    <!--<include file="accajax.xml"/>-->
+    <include file="recruitment.xml"/>
+    <include file="location.xml" />
+    <include file="projects.xml"/>
+    <include file="vendor.xml"/>
+    <include file="opportunity.xml"/>
+    <include file="budget.xml"/>
+    <include file="accauth.xml"/>
+    <include file="sag.xml"/>
+    <include file="sagajax.xml"/>
+       <include file="onlineExam.xml"/>
+    <!-- <include file="recruitmentajax.xml"/>-->
+    <!-- end of packages -->
+    
+</struts>

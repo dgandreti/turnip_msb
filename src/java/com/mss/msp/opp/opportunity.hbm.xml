@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.mss.msp.opp.OpportunityVTO" table="acc_oppurtunities" >
+        <id name="opportunityID" column="acc_opp_id">
+            <generator class="increment"/>
+        </id>
+            
+        <property name="accountID"                  column="acc_id"             />
+        <property name="opportunityType"            column="opp_type"           />
+        <property name="opportunityName"            column="opp_name"           />
+        <property name="opportunityDesc"     column="opp_desc"           />
+        <property name="opportunityCreatedDate"      column="opp_created_date"   />
+        <property name="opportunityCreatedBy"        column="opp_created_by"     />
+        <property name="opportunityComments"        column="opp_comments"       />
+        <property name="opportunityModifiedBy"      column="modified_by"        />
+        <property name="opportunityModifiedDate"    column="modified_date"      />     
+    </class>
+</hibernate-mapping>

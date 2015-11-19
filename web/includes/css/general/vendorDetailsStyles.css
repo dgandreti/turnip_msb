@@ -1,0 +1,82 @@
+.vendorSelectStyle{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url("../../../includes/images/drop_down.png") no-repeat scroll 95% 8px #fff;
+    border-radius: 5px;
+    color: #4c4c4c;
+    font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;
+    height: 27px;
+    padding: 0 5px;
+    width: 140px;
+    border: 1px solid silver;
+    margin-right: 20px;
+}
+
+.vendorInputStyle{
+    width: 140px;
+    margin-right: 20px;
+    background-color: #fff;
+    border: 1px solid silver;
+    border-radius: 3px;
+    color: #000;
+    
+}
+.vendorAreaStyle{
+    width: 50%;
+    border: 1px solid #CCCCCC;
+    margin-right: 20px;
+
+}
+.inner-vendordiv-elements{
+    padding-left:11px;
+    text-align:left;
+    padding-top: 5px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width:auto;
+}
+.labelStyleVendor{
+    width: 110px;
+}
+.submitDiv{
+    float: left;
+}
+.checkboxAlign{
+    margin-right: 100px;
+    float: left;
+
+
+}
+div#vendorBox{
+
+    position: relative;
+    z-index: 2;
+    margin-bottom: 5px;
+    width: 100%; 
+    height: 100%;
+    background: #f9f9f9;
+    color: green;
+    border-radius: 3px; 
+    border: 1px solid #5bc0de;
+    float: left; 
+    margin-top: 5px
+    
+}
+
+.vendor_menu_heading{
+    background: none repeat scroll 0 0 #3bb9ff;
+    border: medium none;
+    border-radius: 5px;
+    color: #fff;
+    margin-right:  18%;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    padding: 5px 14%;
+    width:50%;
+    display: inline;
+    text-decoration: inherit;
+    -webkit-box-shadow: inset 1px 1px 0px 0px #BEE2F9;
+    -moz-box-shadow: inset 1px 1px 0px 0px #BEE2F9;
+
+} 
+

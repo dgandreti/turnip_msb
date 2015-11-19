@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : accauth
+       Author       : Nagireddy Seerapu
+       Description  : accauth Actions.
+    -->
+    <package name="accauth" namespace="/accauth" extends="default">
+        <action name="getAccAuthrization" class="com.mss.msp.accauth.AccAuthAction" method="getAccAuthrization">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">AccAuth.jsp</result>
+            <result type="redirect" name="login">/general/logout.action</result>
+            
+        </action>
+        <action name="searchAccAuthorization" class="com.mss.msp.accauth.AccAuthAction" method="searchAccAuthorization">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">AccAuth.jsp</result>
+            <result type="redirect" name="login">/general/logout.action</result>
+        </action>
+        
+        <action name="insertOrUpdateAccAuth" class="com.mss.msp.accauthajax.AccAuthAjaxHandlerAction" method="insertOrUpdateAccAuth">
+            
+        </action>
+        <action name="searchActionResources" class="com.mss.msp.accauth.AccAuthAction" method="searchActionResources">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">ResourcesSearch.jsp</result>
+            <result type="redirect" name="login">/general/logout.action</result>
+        </action>
+        
+        <action name="getRolesForAccType" class="com.mss.msp.accauthajax.AccAuthAjaxHandlerAction" method="getRolesForAccType">
+            
+        </action>
+        <action name="getAccountNames" class="com.mss.msp.accauthajax.AccAuthAjaxHandlerAction" method="getAccountNames">
+            
+        </action>
+        
+        <action name="getActionResorucesSearchResults" class="com.mss.msp.accauthajax.AccAuthAjaxHandlerAction" method="getActionResorucesSearchResults">
+            
+        </action>
+        
+        <action name="actionResourcesForAddOrUpdate" class="com.mss.msp.accauth.AccAuthAction" method="actionResourcesForAddOrUpdate">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">addOrUpdateResources.jsp</result>
+            <result type="redirect" name="login">/general/logout.action</result>
+        </action>
+        
+        <action name="insertOrUpdateActionResources" class="com.mss.msp.accauthajax.AccAuthAjaxHandlerAction" method="insertOrUpdateActionResources">
+            
+        </action>
+        <action name="actionResourceTermination" class="com.mss.msp.accauthajax.AccAuthAjaxHandlerAction" method="actionResourceTermination">
+            
+        </action>
+        
+        
+        
+    </package>
+  
+
+</struts>

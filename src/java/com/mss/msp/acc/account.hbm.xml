@@ -1,0 +1,59 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.mss.msp.acc.Account" table="accounts" >
+        <id       name="id"             column="account_id"           type="int"/>
+        <property name="name"           column="account_name"             />
+        <property name="url"            column="account_url"              />
+        <property name="status"         column="status"                   />
+        <property name="lastAccessDate" column="last_access_date"        />
+        <property name="lastAccessById" column="last_access_by"             />
+        <join table="acc_basic_info" optional="true"
+              subselect="select * from acc_basic_info as basic join lk_acc_industry_type as t where basic.acc_industry_type = t.id" >
+            <key column="acc_id"   update="false"                     />
+            <property name="region"       column="acc_region"         />
+            <property name="territory"    column="acc_territory"      />
+            <property name="stockSymbol"  column="acc_stock_symbol"   />
+            <property name="description"  column="acc_description"    />
+            <property name="industry"     column="acc_industry_name"  />
+            <property name="industryId"   column="acc_industry_type"  />
+            <property name="tax_id"       column="acc_tax_id"         />
+            <property name="revenue"      column="acc_revenue"        />
+            <property name="budget"       column="acc_it_budget"      />
+            <property name="phone"        column="acc_phone"          />
+            <property name="fax"          column="acc_fax"            />
+            <property name="noemp"      		  column="acc_no_of_employees"/>
+        </join>
+        <join table="acc_address" optional="true">
+            <key column="acc_id"  update="false"                         />
+            <property name="zip"            column="acc_zip"                />
+            <property name="city"           column="acc_city"               />
+            <property name="address1"       column="acc_address1"           />
+            <property name="address2"       column="acc_address2"           />
+            <property column="is_primary"   name="isPrimary" />
+            <many-to-one  name="state"      column="acc_state"    cascade="none"
+                          class="com.mss.msp.location.State"  lazy="false"  update="false" />
+            <many-to-one  name="country"    column="acc_country"  cascade="none"
+                          class="com.mss.msp.location.Country"  lazy="false" update="false" />
+        </join>
+        <join table="org_rel" optional="true"
+              subselect="select t.acc_type_name, rel.related_org_Id, rel.org_id, rel.type_of_relation, rel.acc_type from lk_acc_type as t join org_rel as rel
+                    where rel.acc_type = t.id">
+            <key column="related_org_Id"                  update="false"                              />
+            <property name="org_rel_id"  column="org_id"    />
+            <property name="type"     column="acc_type_name"                    />
+            <property   name="typeId"  column="acc_type"               />
+            <property   name="org_typeOfRelation" column="type_of_relation"     />
+        </join>
+        <join table="users" fetch="select" optional="true"
+              subselect="SELECT CONCAT(u.first_name,' ',u.last_name) AS NAME, a.account_id FROM accounts as a join users as u WHERE u.usr_id=last_access_by">
+            <key column="account_id" />
+            <property column="NAME" name="lastAccessBy" />        
+        </join>
+              
+        
+    </class>
+    
+</hibernate-mapping>

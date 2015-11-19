@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : General
+       Author       : Nagireddy Seerapu
+       Description  : General Actions.
+    -->
+   
+    
+    <package name="general" namespace="/general" extends="default">
+        <action name="login">
+            <result>home.jsp</result>
+        </action>
+      
+      <action name="loginCheck" class="com.mss.msp.general.LoginAction">
+            <interceptor-ref name="crudStack" />
+            <result type="redirect" name="success">${redirectAction}</result>
+           <!-- <result type="redirect" name="success">/homeredirect.Action</result>-->
+            <result name="input">home.jsp</result>
+            <result type="redirect" name="login">/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="officeEmailCheck" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="doOfficeEmailVerify">
+
+        </action>
+        <action name="mailextensionCheck" class="com.mss.msp.general.GeneralAction" method="doMailExtensionVerify">
+        </action>
+        <action name="register" class="com.mss.msp.general.GeneralAction" method="register">
+            <result name="success">RegistrationForm.jsp</result>
+            <result name="error">../exception/403.jsp</result>
+        </action>
+        <action name="orgWebAddressCheck" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="checkForRegistrationURL">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="httpheader">
+                <param name="status">200</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="orgNameCheck" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="checkVendorName">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="httpheader">
+                <param name="status">200</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+      
+      <action name="userRegistration" class="com.mss.msp.general.GeneralAction" method="UserRegistration">
+            <interceptor-ref name="crudStack" />
+            <result name="success">../exception/RegistrationSuccess.jsp</result>
+            <result name="error">../exception/403.jsp?resultMessage=${resultMessage}</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+       <!-- <action name="homeredirect" class="com.mss.msp.general.LoginAction" method="getMyhomePage">
+                <interceptor-ref name="crudStack" />
+               <result type="success">${${accountSearchAction}}.action</result>
+                <result name="accessFailed">../exception/AccessFailed.jsp</result>
+                
+               <result name="error" type="redirect">./login.action</result>
+        </action>-->
+        
+        <action name="logout" class="com.mss.msp.general.LoginAction" method="doLogout">
+            <interceptor-ref name="crudStack" />
+            <result type="redirect">./login.action</result>
+            <result name="error" type="redirect">./login.action</result>
+        </action>
+         
+         <action name="deneid" class="com.mss.msp.general.LoginAction" method="accessDeneid">
+            <result name="success">home.jsp</result>
+        </action>
+        
+        <action name="forGotPasswordRequest" class="com.mss.msp.general.GeneralAction" method="dosetPassword">
+            <result name="success">./ForGotPassword.jsp</result>
+            <result name="LinkExperied">../exception/linkexpired.jsp</result>
+            <result name="error">../exception/403.jsp</result>
+        </action>
+        
+        <action name="registration">
+            <result>registration.jsp</result>
+        </action>
+        <action name="resetPassword"  class="com.mss.msp.general.GeneralAction" method="doResetPassword">
+            <result name="success">../exception/success.jsp</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessfailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <!--Reset user and my passwords-->
+        <action name="resetUserPassword" class="com.mss.msp.general.GeneralAction" method="resetUserPassword">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result>ResetUserPwd.jsp</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessfailed">../exception/AccessFailed.jsp</result>
+            <result name="login" type="redirect">./login.action</result>
+        </action>
+        
+        <action name="changeMyPassword" class="com.mss.msp.general.GeneralAction" method="changeMyPassword">
+            <interceptor-ref name="crudStack" />
+            <result>ChangeMyPasword.jsp</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessfailed">../exception/AccessFailed.jsp</result>
+            <result name="login" type="redirect">./login.action</result>
+        </action>
+        
+        
+        <action name="resetMyPassword" class="com.mss.msp.general.GeneralAction" method="doResetMyPassword">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="redirect">changeMyPassword.action?resultMessage=${resultMessage}</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessfailed">../exception/AccessFailed.jsp</result>
+            <result name="login" type="redirect">./login.action</result>
+        </action>
+        
+        <action name="changeUserPassword" class="com.mss.msp.general.GeneralAction" method="doResetUserPassword">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="redirect">resetUserPassword.action?resultMessage=${resultMessage}</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessfailed">../exception/AccessFailed.jsp</result>
+            <result name="login" type="redirect">./login.action</result>
+        </action>
+        <!--end of reset user and my passwords-->
+        <action name="addRegistration"  class="com.mss.msp.general.GeneralAction" method="doAddRegistration">
+            <result name="success">../exception/success.jsp</result>
+            <result name="error">../exception/403.jsp</result>
+           
+        </action>
+        
+        <action name="regSuccessDirect" class="com.mss.msp.general.GeneralAction" method="dosetSuccessMessage"> 
+            <result name="success">../exception/success.jsp</result>
+        </action>
+        <action name="regerrorDirect" class="com.mss.msp.general.GeneralAction" method="doseterrorMessage"> 
+            <result name="success">../exception/403.jsp</result>
+        </action>
+        <!-- new atcion for role submit -->
+        <action name="roleSubmit" class="com.mss.msp.general.HomeAction">
+            <interceptor-ref name="crudStack" />
+            <result type="redirect">..${defaultAction} </result>
+            <result type="redirect" name="login">login.action</result>
+            <result name="error" type="redirect">../exception/exception.action</result>
+        </action>
+        <!-- Email Id varify by Aklakh -->           
+        <action name="resetEmailVerify" class="com.mss.msp.general.GeneralAction" method="resetEmailVerify">
+        </action>
+        <action name="verfiyCurrentPassword" class="com.mss.msp.general.GeneralAction" method="verfiyCurrentPassword">
+        </action>
+    
+    </package>
+    
+</struts>

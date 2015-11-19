@@ -1,0 +1,100 @@
+/*
+    Document   : projects
+    Created on : May 21, 2015, 9:14:41 AM
+    Author     : Kyle Bissell
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.overlay {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px solid #708090;
+    border-radius: 3px;
+    color: #56a5ec;
+    display: none;
+    height: auto;
+    overflow-x: hidden;
+    width: auto;
+    z-index: auto;
+}
+
+.projectLabelStyle{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 200px;
+
+}
+
+div#projectSkillSetBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+
+div#projectDescBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#subprojectSkillSetBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+
+div#subprojectDescBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+.projectNamelabel
+{
+    white-space: nowrap;
+    padding-right: 86px;
+    margin-right: 20px;
+}
+.projectStatuslabel
+{
+    margin-right: 40px;
+   
+}
+.projectNoOfResources
+{
+    white-space: nowrap;
+    padding-right:129px;
+}
+.projectStartDateLabel
+{
+    margin-right:-92px;
+    margin-top:0px;
+}
+.projectlabel
+{
+    width: 15px;
+    margin: 6px 35px 0px 0px;
+}

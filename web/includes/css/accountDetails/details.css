@@ -1,0 +1,102 @@
+li.active_details{
+    background-color :#3BB9FF;
+    line-height: 1.42857;
+    border:0px;
+    margin-left: .1em;
+    margin-right:.1em;
+
+    border-radius: 5px 5px 5px 5px;
+}
+.nav li.active_details > a{
+    width:100%;
+    color:white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    text-transform: none;
+    border-radius: 5px 5px 5px 5px;
+    line-height: 1.42857;
+}
+.form-group > label.task-label{
+    font-size:12px;
+}
+.account_property{
+    border:1px solid;
+    border-color: #000000;
+    color:#56A5EC;
+    width:100%;
+    height: 90%;
+    margin-left: 1em;
+}
+.labelStyle2{
+    font-size:12px;
+    vertical-align: baseline;
+    /*margin-bottom:1em;*/
+}
+/*To check*/
+/*div input{
+    width:11.5em;
+}*/
+a.active_details{
+
+    width: -2em;
+}
+select.form-control.selectEmployeeList{
+    width:10em;
+}
+div > select.selectstyle, div > input{
+    width: 9em;
+    font-size: 12px;
+    font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans';
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    color: rgb(85, 85, 85);
+
+}
+div > select.selectstyle:focus, div > input:focus{
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+}
+div.col-sm-4.accounts_second_col > div.row > label.labelStyle2 {
+    width: 4em;
+    font-size: 12px;
+}
+div.first_column{
+    width:40%;
+}
+div.col_three{
+    clear: right;
+    float: left;
+}
+.details_button{
+    background-color :#3BB9FF;
+    border-radius: 5px;
+    padding: .5em;
+    line-height: 1.42857;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    text-transform: none;
+    display:inline-block;
+}
+.details_button:hover{
+
+    background-color :#5BD9FF;
+    border-radius: 5px;
+    /*padding: 1em;*/
+    line-height: 1.42857;
+
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    text-transform: none;
+    display:inline-block;
+}
+.accDetailsError{
+  color:red;
+}
+
+.accDetailsSuccess{
+  color:green;
+}
+.accDetailsExists{
+    color:red;
+}

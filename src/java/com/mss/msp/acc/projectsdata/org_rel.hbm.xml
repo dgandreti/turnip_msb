@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.mss.msp.acc.projectsdata.Org_RelVTO" table="org_rel" >
+        <id column="id" type="integer">
+            <generator class="increment"/>
+        </id>
+ 
+            <property name="orgID" column="org_id" insert="false" update="false" />
+            <property name="relatedOrgID" column="related_org_id" insert="false" update="false" />
+            <property name="orgStatus" column="status" insert="false" update="false" />
+            <property name="typeOfRelation" column="type_of_relation" insert="false" update="false"/>
+            
+    </class>
+    
+</hibernate-mapping>

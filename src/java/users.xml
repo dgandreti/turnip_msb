@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : usrajax
+       Author       : Nagireddy Seerapu
+       Description  : usrajax Actions.
+    -->
+    <package name="users" namespace="/users/general" extends="default">
+        <action name="loadDataForUser" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="loadData">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">userXlxUploading.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="loadData" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="loadData">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">xlsuploading.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+         <action name="userXlsFileUpload" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="doXlsFileUpload">
+           <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">userContentAddingByXls.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+             <result name="input" type="redirectAction">
+                <param name="actionName">loadDataForUser</param>
+                <param name="contactAccountType">${contactAccountType}</param>
+                <param name="accountSearchOrgId">${accountSearchOrgId}</param>
+                <param name="fileExist">${fileExist}</param>
+            </result>
+        </action>
+         <action name="xlsFileUpload" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="doXlsFileUpload">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">contentAddingbyXls.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+             <result name="input" type="redirectAction">
+                <param name="actionName">loadData</param>
+                <param name="accountType">${accountType}</param>
+                <param name="fileExist">${fileExist}</param>
+            </result>
+        </action>
+        <action name="getCellContentValues" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getCellContentValues">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">loadingXlsData.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="getCellContentValuesForUser" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getCellContentValuesForUser">
+           <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">loadingXlsData.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="downloadXlsRecords" class="com.mss.msp.usersdata.DownloadExcel" method="downloadExcelAttachment">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="input" type="redirectAction">
+                <param name="actionName">searchLogger</param>
+                <param name="downloadFlag">${downloadFlag}</param>
+                <param name="loggerFlag">${loggerFlag}</param>
+            </result>
+             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="downloadSample" class="com.mss.msp.usersdata.DownloadExcel" method="downloadSample">
+        </action>
+        <action name="searchLogger" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="searchLogger">
+           <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">loadingXlsData.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        
+        
+        <action name="getUserGroping" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getUserGroping">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">userGrouping.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="doEmployeeSearch" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="employeeSearch">
+            <interceptor-ref name="crudStack" />
+            <result name="success">EmployeeSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="searchEmployee" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="doGetEmployeeSearchDetails">
+            <interceptor-ref name="crudStack" />
+            <result name="success">EmployeeSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <!-- new actions -->
+        <action name="getempProfile" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getempProfile">
+            <interceptor-ref name="crudStack" />
+            <result name="success">empdetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getUserRoles" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getUserRoles">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">userRoles.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        
+        
+        <action name="myprofile" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getMyProfile">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">myprofile.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="updateEmpDetails" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="updateEmpProfile">
+            <interceptor-ref name="crudStack" />
+            <result type="redirectAction" name="success">
+                <param name="actionName">getempProfile</param>
+                <param name="userid">${userid}</param>
+                <param name="resultFlag">${"1"}</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name="getHomeRedirectDetails" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getHomeRedirectDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">homeRedirectDetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="getActionNames" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getActionNames">
+        </action>
+        <action name="getActionDescription" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getActionDescription">
+        </action>
+        <action name="getHomeRedirectSearchDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getHomeRedirectSearchDetails">
+            <interceptor-ref name="crudStack" />
+            
+        </action>
+        <action name="getRolesByAccountType" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getRolesByAccountType">
+            <interceptor-ref name="crudStack" />
+            
+        </action>
+        
+        <action name="storeAddOrEditHomeRedirectDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="storeAddOrEditHomeRedirectDetails">
+            <interceptor-ref name="crudStack" />
+            
+        </action>
+        <action name="getHomeRedirectCommentsDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getHomeRedirectCommentsDetails">
+            <interceptor-ref name="crudStack" />
+            
+        </action>
+        <action name="doAddOrEditHomeRedirect" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="doAddOrEditHomeRedirect">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">AddEditHomeRedirect.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        
+        
+        <!-- do add or update Roles action -->
+        <action name="doAddOrUpdateRoles" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="doAddOrUpdateEmpRoles">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <!-- <result name="success">empdetails.jsp</result> -->
+            <result type="redirect" name="success">../../users/general/getUserRoles.action?userid=${userid}&amp;accountSearchID=${accountSearchID}</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../../exception/403.jsp</result>
+            <result name="accessFailed">../../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <!--for miscellous info using hibernate added by maniknanta
+        <action name="getMiscellaneousInfo" class="com.mss.msp.usr.miscellaneous.UserMiscellaneousAction" method="getMisscellousDetails">
+            <interceptor-ref name="crudStack" />
+           
+        </action>-->
+        
+        <action name="csrList" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getCsrList">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">csrSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="getCsrAccounts" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getCsrAccounts">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">csrDetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="getEmployeeCategorization" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getEmployeeCategorization">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">employeeCategorization.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+    </package>
+
+ 
+    <package name="users-tasks" namespace="/users/tasks" extends="default">
+     
+        <action name="doTasksSearch" class="com.mss.msp.usr.task.TaskHandlerAction" method="tasksSearch">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">TasksSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+            
+        </action>
+        <action name="showTaskSearchDetails" class="com.mss.msp.usr.task.TaskHandlerAction" method="showTaskSearchDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">TasksSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+            
+            
+        </action>
+        <action name="showTeamTaskSearchDetails" class="com.mss.msp.usr.task.TaskHandlerAction" method="showTeamTaskSearchDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">teamTaskSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <!-- new actions -->
+        <action name="getTaskDetails" class="com.mss.msp.usr.task.TaskHandlerAction" method="getTaskDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">editTask.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <!-- adding new task by rk-->
+        <action name="addNewTask" class="com.mss.msp.usr.task.TaskHandlerAction" method="addNewTaskDetails">
+            <interceptor-ref name="authorizationcheckStack" />
+            <interceptor-ref name="completeStack" />
+      
+            <interceptor-ref name="fileUpload">
+            </interceptor-ref>
+            <interceptor-ref name="validation"/>
+            <interceptor-ref name="workflow"/>
+            <result name="success" type="redirect">./doTasksSearch.action</result>
+            <result name="error">/error.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+            
+        </action>
+        <!-- adding new task by rk-->
+        <action name="doTeamTasksSearch" class="com.mss.msp.usr.task.TaskHandlerAction" method="getTeamTaskDetails">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">teamTaskSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+            
+        </action>
+        
+        <action name="getCommentsOnOverlay" class="com.mss.msp.usr.task.TaskHandlerAction" method="getCommentsOnOverlay">
+            
+        </action>
+       
+        <action name="doupdateTaskDetails" class="com.mss.msp.usr.task.TaskHandlerAction" method="updateTaskDetails">
+            
+        </action>
+        <action name="addAttachment" class="com.mss.msp.usr.task.TaskHandlerAction" method="addAttachment">
+            <interceptor-ref name="crudStack" />
+            <result type="redirect" name="success">../../users/tasks/getTaskDetails.action?taskid=${taskid}</result> 
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="addTask" class="com.mss.msp.usr.task.TaskHandlerAction" method="addTask">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">addTask.jsp</result> 
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+            
+        </action>
+        
+        <action name="getNotesDetails" class="com.mss.msp.usr.task.TaskHandlerAction" method="getNotesDetails">
+           
+        </action>
+        <action name="doGetNotesDetailsOverlay" class="com.mss.msp.usr.task.TaskHandlerAction" method="getNotesDetailsOverlay">
+           
+        </action>
+        <action name="doUpdateNotesDetails" class="com.mss.msp.usr.task.TaskHandlerAction" method="UpdateNotesDetails">
+           
+        </action>
+        <action name="DoInsertNotesDetails" class="com.mss.msp.usr.task.TaskHandlerAction" method="DoInsertNotesDetails">
+           
+        </action>
+        <action name="getNotesDetailsBySearch" class="com.mss.msp.usr.task.TaskHandlerAction" method="getNotesDetailsBySearch">
+           
+        </action>
+        
+        
+        
+    </package>
+    
+    <package name="users-leaves" namespace="/users/leaves" extends="default">
+        <action name="leavesSearch" class="com.mss.msp.usr.leaves.UserLeavesAction" method="defaultMyLeavesList">
+            <interceptor-ref name="crudStack" />
+            <result name="success">LeavesSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getMyLeavesList" class="com.mss.msp.usr.leaves.UserLeavesAction" method="MyLeavesList">
+            <interceptor-ref name="crudStack" />
+            <result name="success">LeavesSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="editLeaves" class="com.mss.msp.usr.leaves.UserLeavesAction" method="editLeaves">
+            <interceptor-ref name="crudStack" />
+            <result name="success">leaveedit.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="updateLeaves" class="com.mss.msp.usr.leaves.UserLeavesAction" method="updateLeaves">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="redirect">./leavesSearch.action</result>
+            <result name="input" type="redirect">./getMyTeamLeaveList.action</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getMyTeamLeaveList" class="com.mss.msp.usr.leaves.UserLeavesAction" method="getTeamLeaveList">
+            <interceptor-ref name="crudStack" />
+            <result name="success">TeamLeavesSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name="showTeamMemberSearchDetails" class="com.mss.msp.usr.leaves.UserLeavesAction" method="getTeamMemberSearchDetails">
+            <interceptor-ref name="crudStack" />
+            <result name="success">TeamLeavesSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="leavesDashboard" class="com.mss.msp.usr.leaves.UserLeavesAction" method="getLeavesDashboardList">
+            <result name="success">leavesDashboard.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name="showLeaveDashboardSearchDetails" class="com.mss.msp.usr.leaves.UserLeavesAction" method="getLeavesDashboardSearchList">
+            <result name="success">leavesDashboard.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+    </package>
+    <package name="users-timesheets" namespace="/users/timesheets" extends="default">
+        <action name="timesheetSearch" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="doTimesheetSearch">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">timesheetSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="myTimesheetSearch" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="doSearch">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">timesheetSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="deleteTimesheet" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="deleteTimeSheet">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result type="redirectAction">
+                <param name="actionName">timesheetSearch</param>
+                <param name="resultMessage">${resultMessage}</param>
+            </result>
+            
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error" type="redirect">../../exception/403.jsp</result>
+            <result type="redirect" name="accessFailed">../exception/accessFailed.action</result>  
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="addTimeSheet" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="getAddTimeSheetAdd">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="login">AddTimeSheet.jsp</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="success">AddTimeSheet.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="timeSheetCheck" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="getTimeSheetCheck">
+        </action> 
+        <action name="getProjects" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="getTimeSheetBeforeAdd">
+        </action> 
+        <action name="AddTimesheet" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="addTimesheet">
+            <interceptor-ref name="authorizationcheckStack" />  
+            <result type="redirectAction">
+                <param name="actionName">timesheetSearch</param>
+                <param name="resultMessage">${resultMessage}</param>
+            </result>
+            
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error" type="redirect">../../exception/403.jsp</result>
+            <result type="redirect" name="accessFailed">../exception/accessFailed.action</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <!-- Added by Kiran and Jagan -->
+        <action name="teamTimesheet" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="doTeamTimesheetSearch">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">teamTimesheetSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="teamTimesheetSearch" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="doTeamTMSearch">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">teamTimesheetSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="getTimeSheets" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="getUserTimeSheets">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">editTimeSheets.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+        <action name="editTimeSheets" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="editTimeSheets">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result type="redirectAction" name="success">
+                <param name="actionName">timesheetSearch</param>
+                <param name="resultMessage">${resultMessage}</param>
+            </result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+            
+        </action>
+        <action name="newapprove" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="newapprove">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result type="redirectAction" name="success">
+                <param name="actionName">teamTimesheet</param>
+                <param name="resultMessage">${resultMessage}</param>
+            </result> 
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>            
+        </action>
+        <action name="getAllTimeSheets" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="getAllTimeSheets">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">AllTimeSheets.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+    
+        <action name="getAllTimeSheetsSearch" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="getAllTimeSheetsSearch">
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">AllTimeSheets.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
+ 
+    
+    </package>
+</struts>

@@ -1,0 +1,1221 @@
+div#profileBox{
+
+    position: relative;
+    z-index: 2;
+    margin-bottom: 5px;
+    width: 100%; 
+    height: 100%;
+    background: #f9f9f9;
+    color: #56a5ec;
+    border-radius: 3px; 
+    border: 1px solid #FFF;
+
+
+}
+div#selectivityProfileBox{
+
+    position: unset;
+    z-index: 2;
+    margin-bottom: 5px;
+    width: 100%; 
+    height: 100%;
+    background: #f9f9f9;
+    color: #56a5ec;
+    border-radius: 3px; 
+    border: 1px solid #FFF;
+}
+div#profileBox1{
+
+    position: relative;
+    z-index: 2;
+    margin-bottom: 5px;
+    width: 100%; 
+    height: 100%;
+    background: #f9f9f9;
+    color: green;
+    border-radius: 3px; 
+    border: 1px solid #FFF;
+    float: left; 
+    margin-top: 5px
+
+}
+div#profileBox2{
+
+    position: relative;
+    z-index: 2;
+    margin-bottom: 5px;
+    width: 100%; 
+    height: 100%;
+    background: #f9f9f9;
+    color: gray;
+    border-radius: 3px; 
+    border: 1px solid #FFF;
+    float: left; 
+    margin-top: 5px
+
+}
+.backgroundcolor1{
+    background-color: #30D630;
+    border-radius:4px 4px 0px 0px;
+    padding-left: 15px;
+}
+div#picture
+{
+    position: relative;
+    margin: 2px 2px;
+    width:120px;
+    height:125px;
+    border-radius: 3px;
+}
+.margins{
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+div#margins1{
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+div#overlayProfile {
+    display: none;
+    z-index: 2;
+    background: none repeat scroll 0 0 #000;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+    cursor:wait;
+
+}
+div#profileBoxOverlay {
+
+    display: none;
+    z-index: 3;
+
+    background: #cccccc;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#reportingBoxOverlay {
+
+    display: none;
+    z-index: 3;
+
+    background: #E8E8E1;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+
+}
+
+div#reportingBox{
+
+    position: relative;
+    z-index: 2;
+    margin-bottom: 10px;
+    width: 100%; 
+    height: 100%;
+    background: #f9f9f9;
+    color: #56a5ec;
+    border-radius: 3px; 
+    border: 0px solid #ccc;
+
+}
+
+
+.tabs {
+    width:auto;
+    display:inline-block;
+    background-color: #696969;
+    border-radius: 3px;
+
+}
+
+/*----- Tab Links -----*/
+/* Clearfix */
+.tab-links:after {
+    display:block;
+    clear:both;
+    content:'';
+}
+
+.tab-links li {
+    margin:0px 5px;
+    float:left;
+    list-style:none;
+}
+
+.tab-links a {
+    padding:3px 15px;
+    display:inline-block;
+    border-radius:0px 20px 0px 0px;
+    background:#7FB5DA;
+    font-size:14px;
+    font-weight:300;
+    color:#4c4c4c;
+    transition:all linear 0.15s;
+}
+
+.tab-links a:hover {
+    background:#a7cce5;
+    text-decoration:none;
+}
+
+li.active a, li.active a:hover {
+    background:#fff;
+    color:#4c4c4c;
+}
+
+/*----- Content of Tabs -----*/
+.tab-content {
+    padding:15px;
+    border-radius:0px;
+    box-shadow:0px 0px 0px rgba(0,0,0,0.15);
+    background:#fff;
+    margin:-20px 0px;
+}
+
+.tab {
+    display:none;
+}
+
+.tab.active {
+    display:block;
+}
+
+#my_popup_background {
+    transition: all 0.3s 0.3s;
+}
+#my_popup,
+#my_popup_wrapper {
+    transition: all 0.3s ease-out;
+}
+#mu_popup {
+    transform: translateX(0) translateY(40%);
+}
+.popup_visible #my_popup {
+    transform: translateX(0) translateY(0);
+}
+
+
+div#educationBoxOverlay {
+    display: none;
+    z-index: 3;
+    background: #EBEFF8;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+
+}
+div#educationBox{
+
+    position: relative;
+    z-index: 2;
+    background: #A0CFEC;
+    margin-bottom: 10px;
+    width: 100%; 
+    height: 100%;
+
+
+    border-radius:4px 4px 0px 0px;
+
+
+}
+
+div#AddressBox{
+    float: left;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 10px;
+    width: 100%; 
+    height: 100%;
+    background: #F9f9f9;
+    color: #56a5ec;
+    border-radius: 3px; 
+    border: 0px solid #ccc;
+}
+div#eduSecondry{
+    float: left;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 10px;
+    width: 100%; 
+    height: 100%;
+    background:#F9f9f9;
+    color: #56a5ec;
+    border-radius: 3px; 
+    border: 0px solid #ccc;
+
+}
+div#eduGraduation{
+
+    position: relative;
+    z-index: 2;
+    margin-bottom: 10px;
+    width: 100%; 
+    height: 100%;
+    background: #fff;
+    color: #56a5ec;
+    border-radius: 0px; 
+    border: 1px solid #ccc;
+}
+
+table.Edu tr:nth-child(even) {
+    background-color: #eee;
+    text-align: center;
+
+}
+table.Edu tr:nth-child(odd) {
+    background-color:#fff;
+    text-align: center;
+}
+table.Edu th	{
+    background-color: transparent;
+    color: #c0a16b;
+    text-align: center;
+}
+table.Edu th td{
+
+    text-align: center;
+    padding-right: 5px;
+}
+
+
+.textfieldLabel label{
+    color: #56a5ec;
+    font-size: 12px;
+    margin-top: 5px;
+
+    font-family: lucida-sans;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    padding: 3px 6px 3px 6px;
+    text-align: right;
+}
+label
+{
+    color: #56a5ec;
+    font-size: 14px;
+}
+div#permanentAddressOverlay
+{
+    display: none;
+    z-index: 2;
+    background: none repeat scroll 0 0 #000;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+    cursor:wait;
+
+}
+
+.backgroundcolor{
+    background-color: #3BB9FF;
+    border-radius:4px 4px 0px 0px;
+    padding-left: 15px;
+}
+.backgroundcolorforBtn{
+    background-color: #3BB9FF;
+    border-radius:0px 0px 0px 0px;
+}
+
+
+.actionMessagecolor  {
+    color: green;
+}
+
+.updateCss{
+    float: left;
+    margin-top: 5px;
+}
+.reportCss{
+    margin-left: 15px;
+}
+.titleColor{
+    color: #fff;
+    font-family: Arial;
+}
+
+
+
+/*skill css file*/
+
+/* Skill Box*/
+div#skillBox{
+
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    margin-bottom: 10px;
+    width: 100%; 
+    height: 100%;
+    border-radius: 0px; 
+
+
+}
+
+div#skilleditBoxOverlay {
+
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+
+
+    height: auto;
+    overflow-x: hidden;
+
+
+}
+
+.textfieldLabeledit Label{
+    font-size:16px;
+}
+
+#savebtn{
+    background-color:#3bb9ff;
+    margin-right:13px;
+    margin-bottom:20px;
+    color:white;
+    width:25%;
+    font-size:17px;
+}
+
+/*triveni*/
+
+#seditlabel{
+    width:auto;
+    margin:10px;
+
+}
+
+#eskilltext{
+    margin:10px;
+}
+
+#editoverlay{
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width:auto;
+}
+
+div#skilladdBoxOverlay {
+
+
+    z-index: auto;
+    background: #F9F9F9;
+    color: #56A5EC;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+    height: auto;
+    width: auto;
+
+}
+
+.inner-addSkillDiv-elements{
+    padding-left:20px;
+    text-align:left;
+    padding-top: 5px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width:auto;
+}
+
+.skillInputStyle{
+    width:420px;
+}
+
+.skilllabelStyle{
+    width: 105px;
+}
+
+/* here over*/
+
+/*contact address update css start */
+#updateResultp{
+    visibility: hidden;
+    color: #30D630;
+}
+#updateResultc{
+    visibility: hidden;
+    color: #30D630;
+}
+
+#spanUpdatep{
+    visibility: hidden;
+    color: #DE9E2F;
+}
+#spanUpdatec{
+    visibility: hidden;
+    color: #DE9E2F;
+}
+#trStyleContact{
+    font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
+    font-size: 16px;
+    color: #FF8A14;
+    font-weight: bold;
+}
+.contactInfoDiv{
+    background-color:  #EBF4FA;
+    padding: 6px;
+}
+.contactUpdateAnchor{
+    color: #DE9E2F;
+    font-weight: bold;
+}
+/*contact address update css send */
+/* here from aklak*/
+
+
+div#eduBoxOverlay {
+
+    display: none;
+    z-index: auto;
+    background: #F9F9F9;
+    color: #56A5EC;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+    height: auto;
+    width: 100%;
+}
+
+div#eduEditBoxOverlay {
+
+    display: none;
+    z-index: auto;
+    background: #F9F9F9;
+    color: #56A5EC;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+    height: auto;
+    width: 100%;
+}
+
+/* miscelleneous check boxes */
+.row1 {
+
+    overflow: hidden;
+    padding: 10px;
+
+}
+
+.col1 {
+
+    float: left;
+    padding: 5px;
+    margin-right: 80px;
+}
+
+#updatebutton{
+    background: #3BB9FF;
+    border-radius: 5px;
+    color: #FFFFFF;
+    margin-top: 18px;
+    border: none;
+    padding: 5px 15px;
+    margin-right: 15px;
+}
+
+.form-control{
+    height: 27px;
+    padding: 0px 12px;
+}
+.SelectBoxStyles{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url("../../../includes/images/drop_down.png") no-repeat scroll 98% 10px #fff;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    color: #000;
+    font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;
+    height: 27px;
+    padding: 0 10px 0 4px;
+    /*    padding: 0 5px;*/
+    width: 100%;
+}
+
+
+
+
+/*  --miscellaneous check boxes and update button--  */
+.row_checkbox {
+
+    overflow: hidden;
+    padding: 10px;
+
+}
+
+.col {
+
+    float: left;
+    padding: 5px;
+    margin-right: 40px;
+}
+
+#updatebutton{
+    background: #3BB9FF;
+    border-radius: 5px;
+    color: #FFFFFF;
+    margin-top: 18px;
+    border: none;
+    padding: 5px 15px;
+    margin-right: 0px;
+}
+/*.inner-addEduDiv-elements{
+    padding-left:20px;
+    text-align:left;
+    padding-top: 5px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width:auto;
+}*/
+.inner-addEduDiv-elements{
+    padding-left:2px;
+    text-align:justify;
+    padding-top: 5px;
+    padding-right: 2px;
+    padding-bottom: 7px;
+    width:auto;
+}
+.inner-updateConDiv-elements{
+    padding-left:90px;
+    text-align:left;
+    padding-top: 5px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width:auto;
+}
+
+
+
+#MiscellaneousResult{
+    visibility: hidden;
+    color: #30D630;
+}
+.dateImage{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url("../../../includes/images/calendar.gif") no-repeat scroll 95% 4px #fff;
+    border-radius: 5px;
+    color: #000;
+    font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;
+    height: 27px;
+    padding: 0 5px;
+    width: 100%;
+}
+.successInforesult{
+    text-decoration-color: green;
+}
+/* for leave search and  overlay*/
+.leavefield-margin {
+    float: left;
+    margin: -11px 3px 0;
+}
+.leavefieldbtn-margin {
+    float: left;
+    margin: -7% 71% 2% 4%;
+}
+.leavefield-margin {
+    float: left;
+    /*margin: 0 4% 9%;*/
+    margin: 0 6% 3%;
+}
+.txtleavefield-margin{
+    float: left;
+    margin: 1px 40px;
+}
+.leavebox { 
+    border: 2px solid #468ccf; 
+    outline:0; 
+    border-radius:10px;
+    color:  #33334C;
+    padding-left: 25px;
+    height:25px; 
+    width: 170px; 
+}  
+#labelLevelStatus
+{
+    white-space: nowrap;
+    margin-right: 5px;
+}
+
+div#leaveBoxOverlay{
+    display: none;
+    z-index: auto;
+    background: #F9F9F9;
+    color: #56A5EC;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+    height: auto;
+    width: 100%;
+}
+/* for leave overlay*/
+
+#charNum
+{
+    margin-left: 15px;
+    font-family: sans-serif;
+    font-size: 13px;
+    color: #3A3A3A;
+}
+/* End leave overlay*/
+
+.csslabel1{
+    float: left;
+    margin: 2px -30px 0 24px;
+    margin-right:27%;
+    margin-left:6%
+}
+#leavetype
+{
+    padding: 0px;
+
+}
+.csslabel2 {
+    float: left;
+    margin: 14px -28px 0 2px;
+}
+.employeefield-margin {
+    float: left;
+    /*margin: 0 4% 9%;*/
+    /* margin: 0 6% 3%;*/
+}
+#labelLevelStatusReq
+{
+    white-space: nowrap;
+    margin-right: 20px;
+    margin-left: 1px;
+}
+#requirement_submit
+{
+    float:right;
+}
+div#emailPhoneShowBoxOverlay {
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    height: auto;
+    overflow-x: hidden;
+}
+.req-textarea{
+    margin-left:20px; margin-right: 20px;
+}
+
+.SmallTextBox{
+    width:100px;margin-right:2px;
+}
+
+#requirement_submit
+{
+    float:right;
+}#requirementRows
+{
+    margin-right: 3%;  
+}
+.charNum
+{
+    margin-left: 15px;
+    font-family: sans-serif;
+    font-size: 13px;
+    color: #3A3A3A;
+}
+div#vendorAssocitaionOverlay{
+
+    display: none;
+    z-index: 3;
+
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+
+}
+
+div#recruiterBox {
+
+    display: none;
+    z-index: 3;
+
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#csrVenBox {
+
+    display: none;
+    z-index: 3;
+
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#reqskillBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+
+div#preskillBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#vendorAssocitaionEditOverlay{
+
+    display: none;
+    z-index: 3;
+
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+
+}
+.contactlabelStyle{
+
+    margin-right:-20px;
+}
+
+.form-controlacc{
+
+    width: 200px;
+
+}div#ContactBoxOverlay {
+
+    display: none;
+    z-index: auto;
+    background: #F9F9F9;
+    color: #56A5EC;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+    height: auto;
+    width: auto;
+
+}
+/* Added by kiran for activity overlay start */
+div#ActivityEditBoxOverlay{
+    display: none;
+    z-index: 1;
+    background: #F9F9F9;
+    color: #56A5EC;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+    height: auto;
+    width: 100%;
+}
+div#ActivityBoxOverlay{
+    display: none;
+    z-index: 1;
+    background: #F9F9F9;
+    color: #56A5EC;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+    height: auto;
+    width: 100%;
+}
+.activityTextAreacss{
+    width: 70%;
+    border: 1px solid;
+}
+.ActivitySelect{
+    background-color: #f0f0e9;
+    border-radius: 3px;
+    height: 32px;
+    margin-right: 100px;
+    padding: 5px;
+    width: 160px;
+}
+/* Added by kiran for activity overlay end */
+div#addTimeSheetOverlay {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+
+}
+.contact_margin{
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+.accountLabel{
+    width: 80px;
+}
+div#imageupdateOverlay{
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+.contactSelectBoxStyles{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url("../../../includes/images/drop_down.png") no-repeat scroll 95% 8px #fff;
+    border-radius: 5px;
+    color: #4c4c4c;
+    font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;
+    height: 27px;
+    padding: 0 5px;
+    width: 140px;
+    border: 1px solid silver;
+    margin-right: 17px;
+}
+.actionContactMessagecolor {
+    color: green;
+    margin-left: -35px;
+}
+.overlaytimesheet{
+    padding-left: 10px;
+    padding-right: 0px;
+}
+.overlaytimesheetMis{
+    padding-left: 10px;
+    padding-right: 100px;
+}
+
+.tsDate{
+    width:75px;
+}
+.required label:before{
+    content:"*";
+    color: red;
+}
+
+#alertContent{
+    display: none;
+}
+div#resourceOverlay {
+    display: none;
+    z-index: 3;
+    background: #cccccc;
+    color: #3711F5;
+    overflow-x: hidden;
+
+}
+.imgcol { 
+    display: table;
+    width: 105px;height:115px; border: 1px solid; margin:1px;
+    text-align: center;
+    color: #56a5ec;
+    background-color: #f9f9f9;
+    z-index: auto;
+
+}
+.req-textarea1{
+    margin-left:6px; margin-right: 6px;
+}
+.req_margin{
+    margin-top: 5%;
+}
+div#csraccoutsoverlay{
+
+    display: none;
+    z-index: 3;
+    background: #fff;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#csrTerminateBox
+{
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+}
+
+div#InvoiceGenerationOverlay
+{
+    display: none;
+    z-index: 3;
+    background: #fff;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+}
+.SearchBoximg{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url("../../../includes/images/jumpbar_next.gif") no-repeat scroll 95% 8px #fff;
+    border-radius: 5px;
+    color: #000;
+    font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;
+    height: 27px;
+    padding: 0 5px;
+    width: 100%;
+}
+
+
+div#accLoadBox{
+
+    position: relative;
+    z-index: 2;
+    margin-bottom: 5px;
+    background: #f9f9f9;
+    color: #56a5ec;
+    border-radius: 3px; 
+    border: 1px solid #3BB9FF;
+
+
+}
+
+.import{
+    width: 479px;
+    height: 43px;
+    float: left; 
+    border: 1px solid #c2c2c2;
+    border-radius: 6px; 
+    color: #fff;
+/*    cursor: pointer;*/
+    font-family:Open Sans;
+    font-size: 12px;
+    margin-left: 22px;
+}
+
+.import img{
+    float: left;
+    height: 40px;
+    width: 40px;
+    left: 15px;
+    position: absolute;
+}
+
+.import a{
+    color:#fff;
+}
+
+.import label{
+    color:#fff;
+}
+.push_button {
+    position: relative;
+    width:220px;
+    height:40px;
+    text-align:center;
+    color:#FFF;
+    text-decoration:none;
+    /*                line-height:43px;*/
+    font-family:'Oswald', Helvetica;
+    display: block;
+    margin: 30px;
+}
+.push_button:before {
+    background:#f0f0f0;
+    background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#D0D0D0), to(#f0f0f0));
+
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+
+    -webkit-box-shadow:0 1px 2px rgba(0, 0, 0, .5) inset, 0 1px 0 #FFF; 
+    -moz-box-shadow:0 1px 2px rgba(0, 0, 0, .5) inset, 0 1px 0 #FFF; 
+    box-shadow:0 1px 2px rgba(0, 0, 0, .5) inset, 0 1px 0 #FFF;
+
+    position: absolute;
+    content: "";
+    left: -6px; right: -6px;
+    top: -6px; bottom: -10px;
+    z-index: -1;
+}
+
+.push_button:active {
+    -webkit-box-shadow:0 1px 0 rgba(255, 255, 255, .5) inset, 0 -1px 0 rgba(255, 255, 255, .1) inset;
+    top:5px;
+}
+.push_button:active:before{
+    top: -11px;
+    bottom: -5px;
+    content: "";
+}
+
+
+div#budgetCommentsBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#editAttachmentBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#attachmentBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+
+div#hoursInfoBox
+{
+    display: none;
+    z-index: 3;
+    width:auto;
+    height: auto;
+    background: #fff    ;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;  
+}
+
+.hoursOverlay {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px solid #708090;
+    border-radius: 3px;
+    color: #56a5ec;
+    display: none;
+    height: auto;
+    overflow-x: hidden;
+    width: auto;
+    z-index: auto;
+}
+.row2 {
+
+    padding-right:20px;
+    padding-left: 20px;
+
+}
+
+div#quesOverlayBox {
+
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+
+
+.quesDescOverlay {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px solid #708090;
+    border-radius: 3px;
+    color: #56a5ec;
+    display: none;
+    height: auto;
+    overflow-x: hidden;
+    width: auto;
+    z-index: auto;
+}
+
+.dotteddiv {
+border: 2px dotted red; 
+border-style: dotted;
+}
+
+.consultantAlingment {
+    color: #5C85FF;
+    margin-right: 0vw;
+    border: 0px;
+    background-color: #dfdfdf;
+}
+
+.ConsultBoxStyles {
+    -moz-appearance: none;
+    background: #dfdfdf url("../.././includes/images/drop_down.png") no-repeat scroll 98% 10px;
+/*    border: 1px solid #ccc;*/
+    border-radius: 5px;
+    color: #5C85FF;
+    font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;
+    height: 27px;
+    padding: 0 10px 0 4px;
+/*    width: 100%; */
+}
+
+div#ConsultantAddressBox {
+    background: #dfdfdf none repeat scroll 0 0;
+    border: 0 solid #ccc;
+    border-radius: 3px;
+/*    color: #56a5ec;*/
+    float: left;
+    height: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}

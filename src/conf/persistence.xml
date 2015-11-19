@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="MSBPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.mss.msp.entity.LkusrGrpcategory</class>
+    <class>com.mss.msp.entity.AccBasicInfo</class>
+    <class>com.mss.msp.entity.LkActivites</class>
+    <class>com.mss.msp.entity.AccRequirements</class>
+    <class>com.mss.msp.entity.AccNotes</class>
+    <class>com.mss.msp.entity.AcResources</class>
+    <class>com.mss.msp.entity.TaskList</class>
+    <class>com.mss.msp.entity.Roles</class>
+    <class>com.mss.msp.entity.Users</class>
+    <class>com.mss.msp.entity.AccAddress</class>
+    <class>com.mss.msp.entity.LkReqCategory</class>
+    <class>com.mss.msp.entity.Vwtimesheetlist</class>
+    <class>com.mss.msp.entity.Csrorgrel</class>
+    <class>com.mss.msp.entity.LkCountry</class>
+    <class>com.mss.msp.entity.Usrtimesheets</class>
+    <class>com.mss.msp.entity.AccRecActivities</class>
+    <class>com.mss.msp.entity.HisServiceagreements</class>
+    <class>com.mss.msp.entity.CustomerVenRel</class>
+    <class>com.mss.msp.entity.LkReqStatus</class>
+    <class>com.mss.msp.entity.Forgotpasswordlink</class>
+    <class>com.mss.msp.entity.AccRecAttachment</class>
+    <class>com.mss.msp.entity.Usrsow</class>
+    <class>com.mss.msp.entity.LkTimesheetstatustype</class>
+    <class>com.mss.msp.entity.ConTechreview</class>
+    <class>com.mss.msp.entity.Notes</class>
+    <class>com.mss.msp.entity.Vwcustomersag</class>
+    <class>com.mss.msp.entity.UsrReg</class>
+    <class>com.mss.msp.entity.AccProjects</class>
+    <class>com.mss.msp.entity.TaskAttachments</class>
+    <class>com.mss.msp.entity.LkTaskTypes</class>
+    <class>com.mss.msp.entity.Invoice</class>
+    <class>com.mss.msp.entity.LkTaskrelatedTo</class>
+    <class>com.mss.msp.entity.UtilityLogger</class>
+    <class>com.mss.msp.entity.Serviceagreements</class>
+    <class>com.mss.msp.entity.Prjbudget</class>
+    <class>com.mss.msp.entity.AcAction</class>
+    <class>com.mss.msp.entity.LkTaskStatus</class>
+    <class>com.mss.msp.entity.SiteaccessMailExt</class>
+    <class>com.mss.msp.entity.LkusrGroup</class>
+    <class>com.mss.msp.entity.SiteAccessRules</class>
+    <class>com.mss.msp.entity.AccOppurtunities</class>
+    <class>com.mss.msp.entity.Vwopttimesheets</class>
+    <class>com.mss.msp.entity.UsrAddress</class>
+    <class>com.mss.msp.entity.EmailLogger</class>
+    <class>com.mss.msp.entity.UsrGrouping</class>
+    <class>com.mss.msp.entity.LogUserAccess</class>
+    <class>com.mss.msp.entity.LkStates</class>
+    <class>com.mss.msp.entity.Accounts</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.17.0.149:3306/servicebay?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.password" value="lokam001"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="miracledb"/>
+    </properties>
+  </persistence-unit>
+</persistence>

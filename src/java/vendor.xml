@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="vendor" namespace="/vendor" extends="default">
+        <!-- If you want authorizationcheckStack interceptor then remove comment below statement-->
+        <!--<default-interceptor-ref name="authorizationcheckStack"/>-->
+        <action name="searchVendor" class="com.mss.msp.vendor.VendorAction" method="getVendorDetails">
+            <interceptor-ref name="crudStack" />
+            <result name="success">vendorsSearch.jsp</result>
+            
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>  
+        <action name="getStateByCountry" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getVendorStates"></action>
+        
+        <action name="getVendorSearchDetails" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getVendorSearchDetails"></action>
+        <action name="vendorDetails" class="com.mss.msp.vendor.VendorAction" method="showVendorDetails">
+            <interceptor-ref name="crudStack" />
+            <result name="success">vendorDetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action> 
+        <action name="vendorSalesUpdate" class="com.mss.msp.vendor.VendorAction" method="vendorSalesUpdate">
+            <interceptor-ref name="crudStack" />
+            <result type="redirectAction" name="success">
+                <param name="actionName">vendorDetails</param>
+                <param name="vendorId">${vendorId}</param>
+                <param name="venFlag">${"vendorAssignTeamUpdate"}</param>
+            </result>
+            <!-- <result name="success" type="redirect">vendorDetails.action?vendorId=${vendorId}</result>-->
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name="getStatesForCountry" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getStatesStringByCountry">
+                        
+        </action>
+        <action name="updateVendorDetails" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="updateVendorDetails">
+                        
+        </action>
+        <action name="getVendorContacts" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getVendorContacts">
+                        
+        </action>
+        
+        <action name="saveVendorContacts" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="saveVendorContacts">
+                        
+        </action>
+        
+        <action name="getVendorContactSearchResults" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getVendorContactSearchResults">
+                        
+        </action>
+        <!-- added by Aklakh  -->
+        <action name="editVendorAssociation" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="editVendorAssociation">
+                        
+        </action>
+        <action name="getVendorNames" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getVendorNames">
+                        
+        </action>
+        <action name="updateVendorDetails" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="updateVendorAssociationDetails">
+                        
+        </action>
+        
+        <action name="vendorDashboard" class="com.mss.msp.vendor.VendorAction" method="showVendorDashboard"> <!-- not enabling -->
+            <result name="success">vendorDashboard.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+         
+        <action name="getVendorDashboardList" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getVendorDashboardList">
+                        
+        </action>
+        
+         <action name="getVendorReqDashBoardGrid" class="com.mss.msp.vendor.vendorajax.VendorAjaxHandler" method="getVendorReqDashBoardGrid">
+                        
+        </action>
+        
+        
+    </package>
+    
+</struts>

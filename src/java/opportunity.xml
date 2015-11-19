@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : opportunity
+       Author       : Anton Franklin
+       Description  : opportunity Actions.
+    -->
+    <package name="opportunity" namespace="/" extends="default">
+        
+        <action name="opportunitySearch" class="com.mss.msp.opp.OpportunityDataHandlerAction" method="getOpportunitySearchDetails">
+            <interceptor-ref name="crudStack" />
+            <result name="success">/opportunity/opportunity.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result> 
+        </action>
+        
+        <action name="getAccountOpportunity" class="com.mss.msp.opp.OpportunityDataHandlerAction" method="getOpportunitiesByAccID">
+            <interceptor-ref name="crudStack" />
+            <result name="success">/opportunity/opportunity.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result> 
+        </action>
+        
+        <action name="addOpportunity" class="com.mss.msp.opp.OpportunityDataHandlerAction" method="addOpportunity">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="chain">getAccountOpportunity</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name="opportunityDetails" class="com.mss.msp.opp.OpportunityDataHandlerAction" method="getOpportunityDetails">
+            <interceptor-ref name="crudStack" />
+            <result name="success">/opportunity/opportunityDetails.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name="updateOpportunity" class="com.mss.msp.opp.OpportunityDataHandlerAction" method="updateOpportunity">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="chain">opportunityDetails</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            
+        </action>
+        <!--<action name="getAccountOpportunityById" class="com.mss.msp.opp.OpportunityDataHandlerAction" method="getOpportunityByOpportunityID">
+            <interceptor-ref name="crudStack" />
+            <result name="success" type="chain">opportunitySearch</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>-->
+        
+    </package>
+</struts>
