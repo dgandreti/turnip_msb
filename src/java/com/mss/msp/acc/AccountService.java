@@ -75,7 +75,7 @@ public interface AccountService {
     // public ProjectTeamDetailsVTO getProjectEmpDetails(AccountAction accountAction, HttpServletRequest httpServletRequest) throws ServiceLocatorException;
     // Add by Aklakh
     public Account getSubProjectDetails(HttpServletRequest httpServletRequest, AccountAction accountAction) throws ServiceLocatorException;
-
+    // Added By vinod Testing
     public int updateAssignTeam(AccountAction accountAction, String[] project) throws ServiceLocatorException;
 
     public Account getProjectTeamDetails(HttpServletRequest httpServletRequest, AccountAction accountAction) throws ServiceLocatorException;
