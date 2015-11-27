@@ -131,9 +131,9 @@ public class CostCenterAjaxHandlerServiceImpl implements CostCenterAjaxHandlerSe
                     
                     budgetAmt = budgetAmt + resultSet.getDouble("budgetAmount");
                     spentAmt = spentAmt + resultSet.getDouble("spentAmount");
-                    balanceAmt = balanceAmt + (budgetAmt - spentAmt);
+                    balanceAmt = balanceAmt + (resultSet.getDouble("budgetAmount") - resultSet.getDouble("spentAmount"));
 
-                    resultString += resultSet.getString("QUARTER") + "|" + resultSet.getDouble("budgetAmount") + "|" + resultSet.getDouble("spentAmount") + "|" + (budgetAmt - spentAmt) + "^";
+                    resultString += resultSet.getString("QUARTER") + "|" + resultSet.getDouble("budgetAmount") + "|" + resultSet.getDouble("spentAmount") + "|" + (resultSet.getDouble("budgetAmount") - resultSet.getDouble("spentAmount")) + "^";
 
 
                 }
@@ -225,6 +225,7 @@ public class CostCenterAjaxHandlerServiceImpl implements CostCenterAjaxHandlerSe
         }
         return resultString;
     }
+	
     /**
      * *****************************************************************************
      * Date : October 14, 2015, 04:13 PM EST

@@ -1153,7 +1153,7 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
         } else if ("C".equalsIgnoreCase(userAjaxHandlerAction.getResourceType())) {
 
             queryString = "SELECT CONCAT(TRIM(first_name),'.',TRIM(last_name)) AS FullName,usr_id FROM con_or_ven_mig_rel cvm LEFT OUTER JOIN USERS u ON (cvm.consultantid=u.usr_id) "
-                    + "WHERE accountId=" + userAjaxHandlerAction.getSessionOrgId() + " AND curStatus!='Released' AND Afrtypeofusr LIKE 'VC' and (last_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%' OR first_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%') ORDER BY FullName LIMIT 30 ";
+                    + "WHERE u.cur_status='Active' and accountId=" + userAjaxHandlerAction.getSessionOrgId() + " AND curStatus!='Released' AND Afrtypeofusr LIKE 'VC' and (last_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%' OR first_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%') ORDER BY FullName LIMIT 30 ";
         } else {
             queryString = "SELECT concat(trim(u.first_name),'.',trim(u.last_name)) AS FullName,u.usr_id FROM users u LEFT OUTER JOIN usr_roles ur ON (u.usr_id=ur.usr_id) "
                     + "WHERE (u.last_name LIKE '%" + userAjaxHandlerAction.getEmpName() + "%' OR u.first_name LIKE '%" + userAjaxHandlerAction.getEmpName() + "%')"

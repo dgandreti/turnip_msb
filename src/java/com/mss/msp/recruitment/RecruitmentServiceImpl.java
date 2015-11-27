@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -81,11 +82,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             if ("My".equalsIgnoreCase(recruitmentAction.getConsultantFlag())) {
                 queryString = queryString + " and created_by=" + recruitmentAction.getUserSessionId();
             }
-             if ("All".equalsIgnoreCase(recruitmentAction.getConsultantFlag()) || "Team".equalsIgnoreCase(recruitmentAction.getConsultantFlag()) ) {
-             queryString = queryString + " and created_by in(" + retrunValue + ")";
-             System.out.println("queryString helloooo -->" + queryString);
+            if ("All".equalsIgnoreCase(recruitmentAction.getConsultantFlag()) || "Team".equalsIgnoreCase(recruitmentAction.getConsultantFlag())) {
+                queryString = queryString + " and created_by in(" + retrunValue + ")";
+                System.out.println("queryString helloooo -->" + queryString);
 
-             }
+            }
             queryString = queryString + " LIMIT 100";
             System.out.println("queryString helloooo -->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
@@ -205,15 +206,14 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             if ("My".equalsIgnoreCase(recruitmentAction.getConsultantFlag())) {
                 queryString = queryString + " and c.created_by = '" + recruitmentAction.getUserSessionId() + "'";
             }
-             if ("All".equalsIgnoreCase(recruitmentAction.getConsultantFlag()) || "Team".equalsIgnoreCase(recruitmentAction.getConsultantFlag()) ) {
-                
+            if ("All".equalsIgnoreCase(recruitmentAction.getConsultantFlag()) || "Team".equalsIgnoreCase(recruitmentAction.getConsultantFlag())) {
+
                 // System.out.println("getTeamMembers -->" + recruitmentAction.getTeamMembers()+"<--");
                 if (!"".equalsIgnoreCase(recruitmentAction.getEnameForRecruitment())) {
                     //queryString = queryString + "AND(t.task_created_by="+userLeavesAction.getTeamMember()+" )";
                     queryString = queryString + " and c.created_by =" + recruitmentAction.getEnameIdForRecruitment() + "";
-                }else
-                {
-                 queryString = queryString + " and c.created_by in(" + retrunValue + ")";   
+                } else {
+                    queryString = queryString + " and c.created_by in(" + retrunValue + ")";
                 }
 
             }
@@ -415,12 +415,14 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             String typeofusr = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
             // if (!com.mss.msp.util.DataSourceDataProvider.getInstance().isVendor(recruitmentAction.getSessionOrgId())) {
             if (typeofusr.equalsIgnoreCase("VC")) {
-                queryString = "SELECT jdid,requirement_id,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,req_created_by FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id WHERE ven_id=" + recruitmentAction.getSessionOrgId() + " AND  NOW() >= req_access_time AND  STATUS LIKE 'Active' AND  req_status LIKE 'R' ";
+                queryString = "SELECT created_date,jdid,requirement_id,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,req_created_by FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id WHERE ven_id=" + recruitmentAction.getSessionOrgId() + " AND  NOW() >= req_access_time AND  STATUS LIKE 'Active' AND  req_status LIKE 'R' ";
             } else {
-                queryString = "SELECT * "
-                        + "FROM acc_requirements where req_status IN ('o','R','C') and acc_id=" + recruitmentAction.getSessionOrgId();
+                // queryString = "SELECT * FROM acc_requirements where req_status IN ('o','R','C') and acc_id=" + recruitmentAction.getSessionOrgId();
+                queryString = "SELECT DISTINCT(requirement_id),req_created_by,created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                        + " WHERE 1=1 AND req_status IN ('o','R','C') and acc_id=" + recruitmentAction.getSessionOrgId();// + "  GROUP BY requirement_id order by req_name,FIELD(req_status,'O','R','C','F','I','H','W','S','L'),req_created_date desc LIMIT 100";
+
             }
-            queryString += " order by req_name,FIELD(req_status,'O','R','C'),req_created_date desc LIMIT 100";
+            queryString += " GROUP BY requirement_id  order by req_name,FIELD(req_status,'O','R','C'),req_created_date desc LIMIT 100";
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -443,6 +445,12 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 requirementListVTO.setReqSkillSet(resultSet.getString("req_skills"));
                 requirementListVTO.setStartDate(resultSet.getString("req_st_date"));
                 requirementListVTO.setStatus(status);
+                Date myDate = resultSet.getDate("created_date");
+                if (myDate != null) {
+                    requirementListVTO.setPostedDate(com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(myDate));
+                } else {
+                    requirementListVTO.setPostedDate("---");
+                }
                 requirementListVTO.setReq_contact1(resultSet.getString("req_contact1"));
                 requirementListVTO.setReq_contact2(resultSet.getString("req_contact2"));
                 requirementListVTO.setReqContactName1(com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("req_contact1")));
@@ -1005,8 +1013,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 queryString = "SELECT Distinct(c.usr_id) AS consultant_id,"
                         + "CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME,c.phone1,aat.acc_attachment_id,"
                         + "c.email1,rc.STATUS,rc.con_skill AS consultant_skills,rc.createdbyOrgId as created_by_org_id,"
-                        + "rc.rate_salary,r.acc_id "
-                        + "FROM req_con_rel rc "
+                        + "rc.rate_salary,r.acc_id,rc.created_Date,rc.Comments "
+                        + " FROM req_con_rel rc "
                         + "LEFT OUTER JOIN users c ON (rc.consultantId=c.usr_id) "
                         + "LEFT OUTER JOIN acc_requirements r ON (r.requirement_id=rc.reqId) "
                         + "LEFT OUTER JOIN acc_rec_attachment aat ON (c.usr_id=aat.object_id) ";
@@ -1022,8 +1030,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 queryString = "SELECT Distinct(c.usr_id) AS consultant_id,"
                         + "CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME,c.phone1,aat.acc_attachment_id,"
                         + "c.email1,rc.STATUS,rc.con_skill AS consultant_skills,rc.createdbyOrgId as created_by_org_id,"
-                        + "rc.rate_salary,r.acc_id "
-                        + "FROM req_con_rel rc "
+                        + "rc.rate_salary,r.acc_id,rc.created_Date,rc.Comments "
+                        + " FROM req_con_rel rc "
                         + "LEFT OUTER JOIN users c ON (rc.consultantId=c.usr_id) "
                         + "LEFT OUTER JOIN acc_requirements r ON (r.requirement_id=rc.reqId) "
                         + "LEFT OUTER JOIN acc_rec_attachment aat ON (c.usr_id=aat.object_id) ";
@@ -1033,11 +1041,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             System.out.println("query=========by nag=======" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
+
             while (resultSet.next()) {
-                resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("consultant_skills") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("created_by_org_id")) + "|" + resultSet.getString("rate_salary") + "|" + resultSet.getInt("created_by_org_id") + "|" + resultSet.getInt("acc_id") + "^";
+                String postedDate = "";
+                Date myDate = resultSet.getDate("rc.created_Date");
+                if (myDate != null) {
+                    postedDate = com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(myDate);
+                } else {
+                    postedDate = "---";
+                }
+                resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("consultant_skills") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("created_by_org_id")) + "|" + resultSet.getString("rate_salary") + "|" + resultSet.getInt("created_by_org_id") + "|" + resultSet.getInt("acc_id") + "|" + postedDate + "|" + resultSet.getString("Comments") + "^";
+                // resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("consultant_skills") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("created_by_org_id")) + "|" + resultSet.getString("rate_salary") + "|" + postedDate + "|" + resultSet.getString("Comments") + "|" + resultSet.getInt("created_by_org_id") + "|" + resultSet.getInt("acc_id") + "^";
             }
-
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -1089,7 +1104,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             // if (!com.mss.msp.util.DataSourceDataProvider.getInstance().isVendor(recruitmentAction.getSessionOrgId())) {
             if (typeofusr.equalsIgnoreCase("VC")) {
                 queryString = " SELECT Distinct(c.usr_id) as consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME, "
-                        + "c.phone1,acc_attachment_id,c.email1,rc.status,rc.con_skill,rc.createdbyOrgId,rc.rate_salary FROM users c LEFT OUTER JOIN "
+                        + "c.phone1,acc_attachment_id,c.email1,rc.status,rc.con_skill,rc.createdbyOrgId,rc.rate_salary,rc.created_Date,"
+                        + " rc.Comments,ar.acc_id FROM users c LEFT OUTER JOIN "
                         + "usr_details cd ON (c.usr_id=cd.usr_id) LEFT OUTER JOIN req_con_rel rc"
                         + " ON (c.usr_id=rc.consultantId) LEFT OUTER JOIN accounts a ON(a.account_id=rc.createdbyOrgId)"
                         + " LEFT OUTER JOIN acc_requirements ar "
@@ -1102,7 +1118,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 }
             } else {
                 queryString = " SELECT Distinct(c.usr_id) as consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME, "
-                        + "c.phone1,acc_attachment_id,c.email1,rc.status,rc.con_skill,rc.createdbyOrgId,rc.rate_salary FROM users c LEFT OUTER JOIN "
+                        + "c.phone1,acc_attachment_id,c.email1,rc.status,rc.con_skill,rc.createdbyOrgId,rc.rate_salary,rc.created_Date,"
+                        + " rc.Comments,ar.acc_id FROM users c LEFT OUTER JOIN "
                         + "usr_details cd ON (c.usr_id=cd.usr_id) LEFT OUTER JOIN req_con_rel rc"
                         + " ON (c.usr_id=rc.consultantId) LEFT OUTER JOIN accounts a ON(a.account_id=rc.createdbyOrgId)"
                         + " LEFT OUTER JOIN acc_requirements ar "
@@ -1118,7 +1135,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
              }*/
 
             if (recruitmentAction.getConsult_name().trim().isEmpty() == false) {
-                queryString = queryString + " and (c.first_name like'%" + recruitmentAction.getConsult_name().trim() + "%' or c.middle_name like'%" + recruitmentAction.getConsult_name().trim() + "%' or c.last_name like'%" + recruitmentAction.getConsult_name().trim() + "%') ";
+                queryString = queryString + " and c.first_name like'%" + recruitmentAction.getConsult_name().trim() + "%' ";
+            }
+            if (recruitmentAction.getConsult_lstname().trim().isEmpty() == false) {
+                queryString = queryString + " and c.last_name like'%" + recruitmentAction.getConsult_lstname().trim() + "%' ";
             }
             if (recruitmentAction.getConsult_email().trim().isEmpty() == false) {
                 queryString = queryString + " and c.email1 like'%" + recruitmentAction.getConsult_email().trim() + "%' ";
@@ -1142,7 +1162,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("con_skill") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("createdbyOrgId")) + "|" + resultSet.getString("rate_salary") + "^";
+                resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("con_skill") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("createdbyOrgId")) + "|" + resultSet.getString("rate_salary") + "|" + resultSet.getInt("createdbyOrgId") + "|" + resultSet.getInt("acc_id") + "|" + com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(resultSet.getDate("created_date")) + "|" + resultSet.getString("Comments") + "^";
+                //  resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("con_skill") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("createdbyOrgId")) + "|" + resultSet.getString("rate_salary") + "^";
             }
 
 
@@ -1596,7 +1617,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             if (typeofusr.equalsIgnoreCase("VC")) {
                 joined = "Job Id" + "|" + "Jog Title" + "|" + "Customer" + "|" + "Skills Set" + "|" + "Status" + "^"; // for grid download
                 resultantString = joined;
-                queryString = "SELECT tax_term,req_type,target_rate,jdid,requirement_id,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                queryString = "SELECT created_date,req_created_date,tax_term,req_type,target_rate,jdid,requirement_id,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
                         + "WHERE ven_id=" + recruitmentAction.getSessionOrgId() + " AND  NOW() >= req_access_time AND  STATUS LIKE 'Active' "
                         + "AND  req_status LIKE 'R' ";
                 if (sessionusrPrimaryrole != 3 && sessionusrPrimaryrole != 2 && sessionusrPrimaryrole != 13 && sessionusrPrimaryrole != 1) {
@@ -1611,17 +1632,20 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 resultantString = joined;
                 // queryString = "SELECT * FROM acc_requirements WHERE 1=1 AND (req_contact1=" + recruitmentAction.getUserSessionId() + " OR req_contact2=" + recruitmentAction.getUserSessionId() + " or req_created_by=" + recruitmentAction.getUserSessionId() + ") and acc_id=" + recruitmentAction.getSessionOrgId() + " order by req_name,FIELD(req_status,'O','R','C'),req_created_date desc LIMIT 100";
                 if (recruitmentAction.getTypeOfUser() == 3) {
-                    queryString = "SELECT * FROM acc_requirements WHERE 1=1 AND  req_created_by=" + recruitmentAction.getUserSessionId() + " and acc_id=" + recruitmentAction.getSessionOrgId() + " order by req_name,FIELD(req_status,'O','R','C'),req_created_date desc LIMIT 100";
+                    queryString = "SELECT DISTINCT(requirement_id),created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                            + " WHERE 1=1 AND  req_created_by=" + recruitmentAction.getUserSessionId() + " and acc_id=" + recruitmentAction.getSessionOrgId() + "  GROUP BY requirement_id order by req_name,FIELD(req_status,'O','R','C'),req_created_date desc LIMIT 100";
                 } else if (recruitmentAction.getTypeOfUser() == 13 || recruitmentAction.getTypeOfUser() == 2) {
-                    queryString = "SELECT * FROM acc_requirements WHERE 1=1 AND acc_id=" + recruitmentAction.getSessionOrgId() + " order by req_name,FIELD(req_status,'O','R','C','F','I','H','W','S','L'),req_created_date desc LIMIT 100";
+                    queryString = "SELECT DISTINCT(requirement_id),created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                            + " WHERE 1=1 AND acc_id=" + recruitmentAction.getSessionOrgId() + "  GROUP BY requirement_id order by req_name,FIELD(req_status,'O','R','C','F','I','H','W','S','L'),req_created_date desc LIMIT 100";
                 } else {
-                    queryString = "SELECT * FROM acc_requirements  WHERE 1=1 "
+                    queryString = "SELECT DISTINCT(requirement_id),created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                            + " WHERE 1=1 "
                             + "and acc_id=" + recruitmentAction.getSessionOrgId();
 
                     if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_CATEGORY_LIST) != null) {
                         queryString += " and req_category IN (" + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_CATEGORY_LIST).toString() + ") ";
                     }
-                    queryString = queryString + " order by req_name,FIELD(req_status,'O','R','C','F','I','H','W','S','L'),req_created_date desc LIMIT 100";
+                    queryString = queryString + " GROUP BY requirement_id order by req_name,FIELD(req_status,'O','R','C','F','I','H','W','S','L'),req_created_date desc LIMIT 100";
                 }
             }
 
@@ -1655,6 +1679,12 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 requirementListVTO.setId(resultSet.getInt("requirement_id"));
                 requirementListVTO.setTitle(resultSet.getString("req_name"));
                 requirementListVTO.setNoOfPosition(resultSet.getString("no_of_resources"));
+                Date myDate = resultSet.getDate("created_date");
+                if (myDate != null) {
+                    requirementListVTO.setPostedDate(com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(myDate));
+                } else {
+                    requirementListVTO.setPostedDate("---");
+                }
 
                 String preSkills = resultSet.getString("preferred_skills");
                 System.out.println("preferred_skills" + preSkills);
@@ -1683,12 +1713,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 requirementListVTO.setRequirementMaxRate(resultSet.getString("max_rate"));
                 list.add(requirementListVTO);
                 if (typeofusr.equalsIgnoreCase("VC")) {
-                   joined = requirementListVTO.getJdId() + "|" + requirementListVTO.getTitle() + "|" + requirementListVTO.getCustomerName() + "|" + requirementListVTO.getReqSkillSet()  + "|" + requirementListVTO.getStatus() + "^";
-                resultantString += joined; 
-                }
-                else{
+                    joined = requirementListVTO.getJdId() + "|" + requirementListVTO.getTitle() + "|" + requirementListVTO.getCustomerName() + "|" + requirementListVTO.getReqSkillSet() + "|" + requirementListVTO.getStatus() + "^";
+                    resultantString += joined;
+                } else {
                     joined = requirementListVTO.getJdId() + "|" + requirementListVTO.getTitle() + "|" + requirementListVTO.getNoOfPosition() + "|" + requirementListVTO.getReqSkillSet() + "|" + requirementListVTO.getReqContactName1() + "|" + requirementListVTO.getReqContactName2() + "|" + requirementListVTO.getStatus() + "^";
-                resultantString += joined;
+                    resultantString += joined;
                 }
             }
             recruitmentAction.setGridPDFDownload(resultantString);
@@ -2618,6 +2647,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         }
         return addResult;
     }
+
     public List getVendorRequirementsDashboard(HttpServletRequest httpServletRequest, RecruitmentAction recruitmentAction) {
         ArrayList<RequirementListVTO> list = new ArrayList<RequirementListVTO>();
         StringBuffer stringBuffer = new StringBuffer();

@@ -129,6 +129,15 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
     private String gridDownload;
     private String requirementName;
     private String pdfHeaderName;
+    private String withdrawComments;
+
+    public String getWithdrawComments() {
+        return withdrawComments;
+    }
+
+    public void setWithdrawComments(String withdrawComments) {
+        this.withdrawComments = withdrawComments;
+    }
 
     public int getSessionOrgId() {
         return sessionOrgId;
@@ -778,6 +787,29 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
             document.close();
             return baos;
         }
+    }
+    
+    public String doWithdrawConsultant() {
+        resultType = LOGIN;
+       // String reponseString = "";
+        try {
+            System.out.println(" Consultant Ajax Handler action -->" + getConsultantId());
+            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+                setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+              int  reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().doWithdrawConsultant(this);
+                //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setContentType("text");
+                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.getWriter().write(reponseString);
+
+                //  resultType = SUCCESS;
+            } else {
+                return resultType;
+            }
+        } catch (Exception e) {
+            resultType = ERROR;
+        }
+        return null;
     }
 
     public void setServletRequest(HttpServletRequest httpServletRequest) {

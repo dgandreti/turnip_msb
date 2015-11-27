@@ -28,7 +28,15 @@ public class RequirementListVTO {
     private String taxTerm; //reqType
     private String requirementMaxRate;
     private int orgId;
+    private String postedDate;
 
+    public String getPostedDate() {
+        return postedDate;
+    }
+
+    public void setPostedDate(String postedDate) {
+        this.postedDate = postedDate;
+    } 
     public int getOrgId() {
         return orgId;
     }

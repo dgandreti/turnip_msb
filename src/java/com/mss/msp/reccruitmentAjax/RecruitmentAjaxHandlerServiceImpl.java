@@ -219,7 +219,6 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
         return resultString;
     }
 
-
 // Add By Aklakh
     public void doAddMailManagerStatusActivation(String email1, String first_name, String last_name, String plainPassword, String subject, int createdBy) throws SQLException, ServiceLocatorException {
         String toAdd = "", bodyContent = "", bcc = "", cc = "", SubjectStatusActivation = "";
@@ -302,8 +301,8 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
         ResultSet resultSet = null;
         String queryString = "";
         String resultString = "";
-         String date = "";
-         String rating;
+        String date = "";
+        String rating;
         try {
             queryString = "SELECT forwarded_to_name1,forwarded_to1,id,review_type,forwarded_to,consultant_id,req_id,scheduled_date,forwarded_to_name,comments,techie_title,STATUS,rating,forwarded_by,forwarded_date   "
                     + "FROM con_techreview "
@@ -330,12 +329,11 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
                 }
                 if (resultSet.getString("rating") != null) {
                     Double value = Double.parseDouble(resultSet.getString("rating"));
-             
-                
-                rating=String.format("%.1f", value);
-                }else
-                {
-                rating=" ";  
+
+
+                    rating = String.format("%.1f", value);
+                } else {
+                    rating = " ";
                 }
                 resultString += resultSet.getString("consultant_id") + "|"
                         + resultSet.getString("req_id") + "|"
@@ -353,7 +351,7 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
                         + resultSet.getString("forwarded_by") + "|"
                         + com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(resultSet.getInt("forwarded_by")) + "|"
                         + DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("forwarded_date")) + "^";
-                
+
             }
             System.out.println("resultString>>>" + resultString);
         } catch (Exception sqe) {
@@ -439,15 +437,15 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
         String queryString = "";
         String resultString = "";
         String date = "";
-        String option1 = null,option2 = null,option3 = null,option4 = null,option5 = null,option6 = null,option7 = null,option8 = null,option9 = null,option10 = null;
-        
+        String option1 = null, option2 = null, option3 = null, option4 = null, option5 = null, option6 = null, option7 = null, option8 = null, option9 = null, option10 = null;
+
         String skill1Name1 = null, skill1Name2 = null, skill1Name3 = null, skill1Name4 = null, skill1Name5 = null, skill1Name6 = null, skill1Name7 = null, skill1Name8 = null, skill1Name9 = null, skill1Name10 = null;
         int noOfQuestion1 = 0, noOfQuestion2 = 0, noOfQuestion3 = 0, noOfQuestion4 = 0, noOfQuestion5 = 0, noOfQuestion6 = 0, noOfQuestion7 = 0, noOfQuestion8 = 0, noOfQuestion9 = 0, noOfQuestion10 = 0;
         int rightAns1 = 0, rightAns2 = 0, rightAns3 = 0, rightAns4 = 0, rightAns5 = 0, rightAns6 = 0, rightAns7 = 0, rightAns8 = 0, rightAns9 = 0, rightAns10 = 0;
 
 
         try {
-            if (!"Online".equals(recruitmentAjaxHandlerAction.getReviewType())&& !"Psychometric".equals(recruitmentAjaxHandlerAction.getReviewType())) {
+            if (!"Online".equals(recruitmentAjaxHandlerAction.getReviewType()) && !"Psychometric".equals(recruitmentAjaxHandlerAction.getReviewType())) {
                 queryString = "SELECT CONCAT(c.first_name,'.',c.last_name) AS NAME,c.email1,c.phone1,cd.job_title,"
                         + "rcr.con_skill,cr.scheduled_date,ar.acc_attachment_id,cr.tech_skills,"
                         + "cr.domain_skills,cr.commmunication_skills,cr.comments,cr.STATUS  "
@@ -468,20 +466,20 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
                         + " LEFT OUTER JOIN users c ON(c.usr_id=so.consultantid)"
                         + " LEFT OUTER JOIN usr_details cd ON(cd.usr_id=so.consultantid)"
                         + " LEFT OUTER JOIN sb_onlineexamsummery se ON(so.eid=se.examid)"
-                        + " WHERE so.techreviewid=" + recruitmentAjaxHandlerAction.getConTechReviewId()+"";
+                        + " WHERE so.techreviewid=" + recruitmentAjaxHandlerAction.getConTechReviewId() + "";
 
             }
             System.out.println("gueryString>>>> " + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
-            statement = connection.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-         
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
 
             resultSet = statement.executeQuery(queryString);
 
             while (resultSet.next()) {
-              
 
-                if (!"Online".equals(recruitmentAjaxHandlerAction.getReviewType())&& !"Psychometric".equals(recruitmentAjaxHandlerAction.getReviewType())) {
+
+                if (!"Online".equals(recruitmentAjaxHandlerAction.getReviewType()) && !"Psychometric".equals(recruitmentAjaxHandlerAction.getReviewType())) {
                     if (resultSet.getDate("scheduled_date") != null) {
                         //System.out.println("Scheduled Date if");
                         date = com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashformat(resultSet.getDate("scheduled_date"));
@@ -491,112 +489,111 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
                     }
                     resultString = resultSet.getString("NAME") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("phone1") + "|" + date + "|" + resultSet.getString("acc_attachment_id") + "|" + resultSet.getString("job_title") + "|" + resultSet.getString("con_skill") + "|" + resultSet.getString("tech_skills") + "|" + resultSet.getString("domain_skills") + "|" + resultSet.getString("commmunication_skills") + "|" + resultSet.getString("comments") + "|" + resultSet.getString("STATUS") + "^";
                 } else {
-                     if( resultSet.last())
-                     {
-                         
-                     
-                    // resultSet.getString("NAME") 
-                    int eid=resultSet.getInt("so.eid");
-                    option1 = resultSet.getString("option1");
-                    System.out.println("option1-->" + option1 + "<---");
-                    if (!"".equals(option1)) {
-                        String[] str1 = option1.split("-");
+                    if (resultSet.last()) {
 
-                        skill1Name1 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str1[0]));
-                        rightAns1  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str1[0]), eid);
-                        noOfQuestion1 = Integer.parseInt(str1[1]);
-                    }
-                    option2 = resultSet.getString("option2");
-                    System.out.println("option2-->" + option2 + "<---");
-                    if (!"".equals(option2)) {
-                        String[] str2 = option2.split("-");
-                        skill1Name2 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str2[0]));
-                        rightAns2  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str2[0]), eid);
-                        noOfQuestion2 = Integer.parseInt(str2[1]);
-                    }
 
-                    option3 = resultSet.getString("option3");
-                    System.out.println("option3-->" + option3 + "<---");
-                    if (!"".equals(option3)) {
-                        String[] str3 = option3.split("-");
-                        skill1Name3 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str3[0]));
-                        rightAns3  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str3[0]), eid);
-                        noOfQuestion3 = Integer.parseInt(str3[1]);
-                    }
-                    option4 = resultSet.getString("option4");
-                    System.out.println("option4-->" + option4 + "<---");
+                        // resultSet.getString("NAME") 
+                        int eid = resultSet.getInt("so.eid");
+                        option1 = resultSet.getString("option1");
+                        System.out.println("option1-->" + option1 + "<---");
+                        if (!"".equals(option1)) {
+                            String[] str1 = option1.split("-");
 
-                    if (!"".equals(option4)) {
-                        String[] str4 = option4.split("-");
-                        skill1Name4 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str4[0]));
-                        rightAns4  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str4[0]), eid);
-                        noOfQuestion4 = Integer.parseInt(str4[1]);
-                    }
-                    option5 = resultSet.getString("option5");
-                    System.out.println("option5-->" + option5 + "<---");
-                    if (!"".equals(option5)) {
-                        String[] str5 = option5.split("-");
-                        skill1Name5 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str5[0]));
-                        rightAns5  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str5[0]), eid);
-                        noOfQuestion5 = Integer.parseInt(str5[1]);
-                    }
+                            skill1Name1 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str1[0]));
+                            rightAns1 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str1[0]), eid);
+                            noOfQuestion1 = Integer.parseInt(str1[1]);
+                        }
+                        option2 = resultSet.getString("option2");
+                        System.out.println("option2-->" + option2 + "<---");
+                        if (!"".equals(option2)) {
+                            String[] str2 = option2.split("-");
+                            skill1Name2 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str2[0]));
+                            rightAns2 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str2[0]), eid);
+                            noOfQuestion2 = Integer.parseInt(str2[1]);
+                        }
 
-                    option6 = resultSet.getString("option6");
-                    System.out.println("option6-->" + option6 + "<---");
-                    if (!"".equals(option6)) {
-                        String[] str6 = option6.split("-");
-                        skill1Name6 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str6[0]));
-                        rightAns6  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str6[0]), eid);
-                        noOfQuestion6 = Integer.parseInt(str6[1]);
-                    }
+                        option3 = resultSet.getString("option3");
+                        System.out.println("option3-->" + option3 + "<---");
+                        if (!"".equals(option3)) {
+                            String[] str3 = option3.split("-");
+                            skill1Name3 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str3[0]));
+                            rightAns3 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str3[0]), eid);
+                            noOfQuestion3 = Integer.parseInt(str3[1]);
+                        }
+                        option4 = resultSet.getString("option4");
+                        System.out.println("option4-->" + option4 + "<---");
 
-                    option7 = resultSet.getString("option7");
-                    System.out.println("option7-->" + option7 + "<---");
-                    if (!"".equals(option7)) {
-                        String[] str7 = option7.split("-");
-                        skill1Name7 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str7[0]));
-                        rightAns7  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str7[0]), eid);
-                        noOfQuestion7 = Integer.parseInt(str7[1]);
-                    }
-                    option8 = resultSet.getString("option8");
-                    System.out.println("option8-->" + option8 + "<---");
-                    if (!"".equals(option8)) {
+                        if (!"".equals(option4)) {
+                            String[] str4 = option4.split("-");
+                            skill1Name4 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str4[0]));
+                            rightAns4 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str4[0]), eid);
+                            noOfQuestion4 = Integer.parseInt(str4[1]);
+                        }
+                        option5 = resultSet.getString("option5");
+                        System.out.println("option5-->" + option5 + "<---");
+                        if (!"".equals(option5)) {
+                            String[] str5 = option5.split("-");
+                            skill1Name5 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str5[0]));
+                            rightAns5 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str5[0]), eid);
+                            noOfQuestion5 = Integer.parseInt(str5[1]);
+                        }
 
-                        String[] str8 = option8.split("-");
-                        skill1Name8 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str8[0]));
-                        rightAns8  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str8[0]), eid);
-                        noOfQuestion8 = Integer.parseInt(str8[1]);
-                    }
-                    option9 = resultSet.getString("option9");
-                    if (!"".equals(option9)) {
-                        System.out.println("option9-->" + option9 + "<---");
-                        String[] str9 = option9.split("-");
-                        skill1Name9 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str9[0]));
-                        rightAns9  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str9[0]), eid);
-                        noOfQuestion9 = Integer.parseInt(str9[1]);
-                    }
-                    option10 = resultSet.getString("option10");
-                    if (!"".equals(option10)) {
+                        option6 = resultSet.getString("option6");
+                        System.out.println("option6-->" + option6 + "<---");
+                        if (!"".equals(option6)) {
+                            String[] str6 = option6.split("-");
+                            skill1Name6 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str6[0]));
+                            rightAns6 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str6[0]), eid);
+                            noOfQuestion6 = Integer.parseInt(str6[1]);
+                        }
 
-                        System.out.println("option10-->" + option10 + "<---");
-                        String[] str10 = option10.split("-");
-                        skill1Name10 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str10[0]));
-                        rightAns10  =com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str10[0]), eid);
-                        noOfQuestion10 = Integer.parseInt(str10[1]);
-                    }
-                     if (resultSet.getString("se.completed_ts") != null) {
-                        //System.out.println("Scheduled Date if");
-                        date = DateUtility.getInstance().convertToviewFormatInDashWithTime(resultSet.getString("se.completed_ts"));
-                    } else {
-                        // System.out.println("Scheduled Date else");
-                        date = "";
-                    }
+                        option7 = resultSet.getString("option7");
+                        System.out.println("option7-->" + option7 + "<---");
+                        if (!"".equals(option7)) {
+                            String[] str7 = option7.split("-");
+                            skill1Name7 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str7[0]));
+                            rightAns7 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str7[0]), eid);
+                            noOfQuestion7 = Integer.parseInt(str7[1]);
+                        }
+                        option8 = resultSet.getString("option8");
+                        System.out.println("option8-->" + option8 + "<---");
+                        if (!"".equals(option8)) {
 
-                    resultString = resultSet.getString("NAME") + "|" + resultSet.getString("job_title") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("phone1") + "|" + DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("so.createddate")) + "|" + resultSet.getString("cr.STATUS")
-                            + "|" + StringUtils.chop(skill1Name1) + "|" + noOfQuestion1 + "|" + StringUtils.chop(skill1Name2) + "|" + noOfQuestion2 + "|" + StringUtils.chop(skill1Name3) + "|" + noOfQuestion3 + "|" + StringUtils.chop(skill1Name4) + "|" + noOfQuestion4 + "|" + StringUtils.chop(skill1Name5) + "|" + noOfQuestion5
-                            + "|" + StringUtils.chop(skill1Name6) + "|" + noOfQuestion6 + "|" + StringUtils.chop(skill1Name7) + "|" + noOfQuestion7 + "|" + StringUtils.chop(skill1Name8) + "|" + noOfQuestion8 + "|" + StringUtils.chop(skill1Name9) + "|" + noOfQuestion9 + "|" + StringUtils.chop(skill1Name10) + "|" + noOfQuestion10 
-                             + "|" + rightAns1 + "|" + rightAns2 + "|" + rightAns3 + "|" + rightAns4 + "|" + rightAns5 + "|" + rightAns6 + "|" + rightAns7 + "|" + rightAns8 + "|" + rightAns9 + "|" + rightAns10 +"|" +resultSet.getString("so.examstatus")+ "|" +date+"^";    
-                }
+                            String[] str8 = option8.split("-");
+                            skill1Name8 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str8[0]));
+                            rightAns8 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str8[0]), eid);
+                            noOfQuestion8 = Integer.parseInt(str8[1]);
+                        }
+                        option9 = resultSet.getString("option9");
+                        if (!"".equals(option9)) {
+                            System.out.println("option9-->" + option9 + "<---");
+                            String[] str9 = option9.split("-");
+                            skill1Name9 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str9[0]));
+                            rightAns9 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str9[0]), eid);
+                            noOfQuestion9 = Integer.parseInt(str9[1]);
+                        }
+                        option10 = resultSet.getString("option10");
+                        if (!"".equals(option10)) {
+
+                            System.out.println("option10-->" + option10 + "<---");
+                            String[] str10 = option10.split("-");
+                            skill1Name10 = com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(str10[0]));
+                            rightAns10 = com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfRightAns(Integer.parseInt(str10[0]), eid);
+                            noOfQuestion10 = Integer.parseInt(str10[1]);
+                        }
+                        if (resultSet.getString("se.completed_ts") != null) {
+                            //System.out.println("Scheduled Date if");
+                            date = DateUtility.getInstance().convertToviewFormatInDashWithTime(resultSet.getString("se.completed_ts"));
+                        } else {
+                            // System.out.println("Scheduled Date else");
+                            date = "";
+                        }
+
+                        resultString = resultSet.getString("NAME") + "|" + resultSet.getString("job_title") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("phone1") + "|" + DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("so.createddate")) + "|" + resultSet.getString("cr.STATUS")
+                                + "|" + StringUtils.chop(skill1Name1) + "|" + noOfQuestion1 + "|" + StringUtils.chop(skill1Name2) + "|" + noOfQuestion2 + "|" + StringUtils.chop(skill1Name3) + "|" + noOfQuestion3 + "|" + StringUtils.chop(skill1Name4) + "|" + noOfQuestion4 + "|" + StringUtils.chop(skill1Name5) + "|" + noOfQuestion5
+                                + "|" + StringUtils.chop(skill1Name6) + "|" + noOfQuestion6 + "|" + StringUtils.chop(skill1Name7) + "|" + noOfQuestion7 + "|" + StringUtils.chop(skill1Name8) + "|" + noOfQuestion8 + "|" + StringUtils.chop(skill1Name9) + "|" + noOfQuestion9 + "|" + StringUtils.chop(skill1Name10) + "|" + noOfQuestion10
+                                + "|" + rightAns1 + "|" + rightAns2 + "|" + rightAns3 + "|" + rightAns4 + "|" + rightAns5 + "|" + rightAns6 + "|" + rightAns7 + "|" + rightAns8 + "|" + rightAns9 + "|" + rightAns10 + "|" + resultSet.getString("so.examstatus") + "|" + date + "^";
+                    }
                 }
             }
             System.out.println("resultString>>>" + resultString);
@@ -615,8 +612,8 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
 
         return resultString;
     }
-    
-    public String questionsCount(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction,int orgId) throws ServiceLocatorException {
+
+    public String questionsCount(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction, int orgId) throws ServiceLocatorException {
         Connection connection = null;
         //CallableStatement callableStatement = null;
         PreparedStatement preparedStatement = null;
@@ -638,7 +635,7 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
                 StringTokenizer stk = new StringTokenizer(skillData, ",");
                 int skillCount = stk.countTokens();
                 System.out.println("skillCount-->" + skillCount);
-                queryString = "SELECT skillid ,COUNT(IF(LEVEL='M',1, NULL)) as medium,COUNT(IF(LEVEL='L',1, NULL) ) as low,COUNT(IF(LEVEL='H',1, NULL) ) as high FROM sb_onlineexamQuestion  WHERE skillid=? AND orgid="+orgId+" AND exam_type='T'";
+                queryString = "SELECT skillid ,COUNT(IF(LEVEL='M',1, NULL)) as medium,COUNT(IF(LEVEL='L',1, NULL) ) as low,COUNT(IF(LEVEL='H',1, NULL) ) as high FROM sb_onlineexamQuestion  WHERE skillid=? AND orgid=" + orgId + " AND exam_type='T'";
                 // queryString="SELECT COUNT(id) AS total FROM sb_onlineexamQuestion WHERE skillid =? AND LEVEL='"+recruitmentAjaxHandlerAction.getTechReviewSeverity()+"' ";
                 //System.out.println(queryString);
                 connection = ConnectionProvider.getInstance().getConnection();
@@ -701,7 +698,7 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
         return resultString;
     }
 
-    public String questionsCountCheck(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction,int orgId) throws ServiceLocatorException {
+    public String questionsCountCheck(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction, int orgId) throws ServiceLocatorException {
         Connection connection = null;
         //CallableStatement callableStatement = null;
         PreparedStatement preparedStatement = null;
@@ -723,29 +720,28 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
                 StringTokenizer stk = new StringTokenizer(skillData, ",");
                 int skillCount = stk.countTokens();
                 System.out.println("skillCount-->" + skillCount);
-               int total= recruitmentAjaxHandlerAction.getTechReviewQuestions()/skillCount;
-               int extraQuestions = recruitmentAjaxHandlerAction.getTechReviewQuestions() - (total * skillCount);
-               
-               // queryString = "SELECT skillid ,COUNT(IF(LEVEL='M',1, NULL)) as medium,COUNT(IF(LEVEL='L',1, NULL) ) as low,COUNT(IF(LEVEL='H',1, NULL) ) as high FROM sb_onlineexamQuestion  WHERE skillid=?";
+                int total = recruitmentAjaxHandlerAction.getTechReviewQuestions() / skillCount;
+                int extraQuestions = recruitmentAjaxHandlerAction.getTechReviewQuestions() - (total * skillCount);
+
+                // queryString = "SELECT skillid ,COUNT(IF(LEVEL='M',1, NULL)) as medium,COUNT(IF(LEVEL='L',1, NULL) ) as low,COUNT(IF(LEVEL='H',1, NULL) ) as high FROM sb_onlineexamQuestion  WHERE skillid=?";
                 // queryString="SELECT COUNT(id) AS total FROM sb_onlineexamQuestion WHERE skillid =? AND LEVEL='"+recruitmentAjaxHandlerAction.getTechReviewSeverity()+"' ";
                 //System.out.println(queryString);
-              //  connection = ConnectionProvider.getInstance().getConnection();
-               // preparedStatement = connection.prepareStatement(queryString);
+                //  connection = ConnectionProvider.getInstance().getConnection();
+                // preparedStatement = connection.prepareStatement(queryString);
                 while (stk.hasMoreTokens()) {
                     int skillId = Integer.parseInt(stk.nextToken());
                     //preparedStatement.setInt(1, skillId);
-                   int skillQues=  com.mss.msp.util.DataSourceDataProvider.getInstance().noOfQuestionsReturns(skillId,recruitmentAjaxHandlerAction.getTechReviewSeverity(),"T",orgId);//---------------->have to change to orgId variable 
-                   if((total+extraQuestions) < skillQues)
-                   {
-                     resultString="allowed" ; 
-                   }else{
-                       resultString="notallowed";
-                       break;
-                   }
-                   
-                   
-                   //System.out.println(queryString);
-                   // resultSet = preparedStatement.executeQuery();
+                    int skillQues = com.mss.msp.util.DataSourceDataProvider.getInstance().noOfQuestionsReturns(skillId, recruitmentAjaxHandlerAction.getTechReviewSeverity(), "T", orgId);//---------------->have to change to orgId variable 
+                    if ((total + extraQuestions) < skillQues) {
+                        resultString = "allowed";
+                    } else {
+                        resultString = "notallowed";
+                        break;
+                    }
+
+
+                    //System.out.println(queryString);
+                    // resultSet = preparedStatement.executeQuery();
                     //System.out.println(queryString);
 //                    while (resultSet.next()) {
 //                        resultString += resultSet.getInt("low") + "|"
@@ -783,11 +779,10 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
 
         return resultString;
     }
-    
-    public String skillsQuestions(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction,int orgId) throws ServiceLocatorException
-    {
-        
-         Connection connection = null;
+
+    public String skillsQuestions(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction, int orgId) throws ServiceLocatorException {
+
+        Connection connection = null;
         //CallableStatement callableStatement = null;
         PreparedStatement preparedStatement = null;
         Statement statement = null;
@@ -804,7 +799,7 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
             System.out.println("skillCategoryValue--->" + recruitmentAjaxHandlerAction.getSkillCategoryArry());
 
             String skillData = recruitmentAjaxHandlerAction.getSkillCategoryArry();
-            int count=0;
+            int count = 0;
             if (!"".equals(skillData)) {
                 StringTokenizer stk = new StringTokenizer(skillData, ",");
                 int skillCount = stk.countTokens();
@@ -812,25 +807,25 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
 //               int total= recruitmentAjaxHandlerAction.getTechReviewQuestions()/skillCount;
 //               int extraQuestions = recruitmentAjaxHandlerAction.getTechReviewQuestions() - (total * skillCount);
 //               
-               // queryString = "SELECT skillid ,COUNT(IF(LEVEL='M',1, NULL)) as medium,COUNT(IF(LEVEL='L',1, NULL) ) as low,COUNT(IF(LEVEL='H',1, NULL) ) as high FROM sb_onlineexamQuestion  WHERE skillid=?";
+                // queryString = "SELECT skillid ,COUNT(IF(LEVEL='M',1, NULL)) as medium,COUNT(IF(LEVEL='L',1, NULL) ) as low,COUNT(IF(LEVEL='H',1, NULL) ) as high FROM sb_onlineexamQuestion  WHERE skillid=?";
                 // queryString="SELECT COUNT(id) AS total FROM sb_onlineexamQuestion WHERE skillid =? AND LEVEL='"+recruitmentAjaxHandlerAction.getTechReviewSeverity()+"' ";
                 //System.out.println(queryString);
-              //  connection = ConnectionProvider.getInstance().getConnection();
-               // preparedStatement = connection.prepareStatement(queryString);
+                //  connection = ConnectionProvider.getInstance().getConnection();
+                // preparedStatement = connection.prepareStatement(queryString);
                 while (stk.hasMoreTokens()) {
                     count++;
                     int skillId = Integer.parseInt(stk.nextToken());
                     //preparedStatement.setInt(1, skillId);
-                   int skillQues=  com.mss.msp.util.DataSourceDataProvider.getInstance().noOfQuestionsReturns(skillId,recruitmentAjaxHandlerAction.getTechReviewSeverity(), recruitmentAjaxHandlerAction.getTechExamType(),orgId);//---------------->have to change to orgId variable 
-             
+                    int skillQues = com.mss.msp.util.DataSourceDataProvider.getInstance().noOfQuestionsReturns(skillId, recruitmentAjaxHandlerAction.getTechReviewSeverity(), recruitmentAjaxHandlerAction.getTechExamType(), orgId);//---------------->have to change to orgId variable 
 
-                    
-                        resultString += skillQues + "|"
-                                + skillId + "|"
-                                + StringUtils.chop(com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(skillId)) + "|" +count+ "^";
-                    }
-               // resultString += 0 + "|" + 0 + "|"+ count + "^";
-                
+
+
+                    resultString += skillQues + "|"
+                            + skillId + "|"
+                            + StringUtils.chop(com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(skillId)) + "|" + count + "^";
+                }
+                // resultString += 0 + "|" + 0 + "|"+ count + "^";
+
             }
         } catch (Exception sqe) {
             sqe.printStackTrace();
@@ -856,19 +851,20 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
                 sqle.printStackTrace();
             }
         }
-        System.out.println("resultString---->"+resultString);
+        System.out.println("resultString---->" + resultString);
 
         return resultString;
     }
+
     public String saveOnlineExamStatus(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction) throws ServiceLocatorException {
 
         Connection connection = null;
         Statement statement = null;
-        
+
         ResultSet resultSet = null;
         String queryString = "";
         String resultString = "";
-        int result=0;
+        int result = 0;
         try {
             //queryString = "UPDATE con_techreview SET STATUS='"+recruitmentAjaxHandlerAction.getExamStatus()+"' WHERE id=" + recruitmentAjaxHandlerAction.getConTechReviewId();
             queryString = "UPDATE con_techreview ct left outer join req_con_rel rc on(rc.consultantId=ct.consultant_id) "
@@ -883,11 +879,10 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
             statement = connection.createStatement();
             result = statement.executeUpdate(queryString);
 
-            if(result>0){
-             resultString = "Updated Successfully";
-            }
-            else{
-             resultString = "Not Updated";   
+            if (result > 0) {
+                resultString = "Updated Successfully";
+            } else {
+                resultString = "Not Updated";
             }
             System.out.println("resultString>>>" + resultString);
         } catch (Exception sqe) {
@@ -904,5 +899,44 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
         }
 
         return resultString;
+    }
+
+    public int doWithdrawConsultant(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction) throws ServiceLocatorException {
+        int updatedRows = 0;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        String queryString = "update req_con_rel set status=?,comments=? WHERE reqId=" + recruitmentAjaxHandlerAction.getRequirementId() + " and consultantId='" + recruitmentAjaxHandlerAction.getConsultantId() + "'"
+                + " and createdbyOrgId=" + recruitmentAjaxHandlerAction.getSessionOrgId() + "";
+
+        System.out.println("doWithdrawConsultant() queryString" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+
+            preparedStatement = connection.prepareStatement(queryString);
+            // preparedStatement.setString(1, requirementAction.getRequirementExp());
+            preparedStatement.setString(1, "Withdraw");
+            preparedStatement.setString(2, recruitmentAjaxHandlerAction.getWithdrawComments());
+
+            updatedRows = preparedStatement.executeUpdate();
+
+            System.out.println("in doWithdrawConsultant() updatedRows ------->" + updatedRows);
+        } catch (SQLException se) {
+            throw new ServiceLocatorException(se);
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException se) {
+                throw new ServiceLocatorException(se);
+            }
+        }
+        return updatedRows;
     }
 }

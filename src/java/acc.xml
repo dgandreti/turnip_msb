@@ -523,6 +523,7 @@
         <action name="questionsCount" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="questionsCount"></action>
         <action name="questionsCountCheck" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="questionsCountCheck"></action>
         <action name="skillsQuestions" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="skillsQuestions"></action>
+        <action name="doWithdrawConsultant" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="doWithdrawConsultant"></action>
     </package>
 
 </struts>

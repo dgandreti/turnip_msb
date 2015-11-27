@@ -510,30 +510,23 @@ public class BudgetServiceImpl implements BudgetService {
      **************************************
      */
     public String getCostCentertDetailsByProjectId(BudgetAction budgetAction) throws ServiceLocatorException {
-        String resultString = "";
+       String resultString = "";
         //String queryString = "";
         String queryString1 = "";
         try {
-            //queryString = "SELECT parent_project_id FROM acc_projects WHERE project_id =" + budgetAction.getProjectId();
-
-            //queryString = "SELECT cccode,ccname,budgetamt,spentamt,balance FROM costcenter cc LEFT OUTER JOIN acc_projects ap ON(cc.cccode=ap.cccode) LEFT OUTER JOIN costcenterbudgets cb ON(cc.cccode=cb.cccode) WHERE project_id =" + projectId;
-            //System.out.println("queryString helloooo -->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
-            //resultSet = statement.executeQuery(queryString);
-            //while (resultSet.next()) {
-                 queryString1 = "SELECT ap.cccode,ccname,budgetamt,spentamt,balance,year,Quarter,status FROM costcenter cc LEFT OUTER JOIN acc_projects ap ON(cc.cccode=ap.cccode) LEFT OUTER JOIN costcenterbudgets cb ON(cc.cccode=cb.cccode) WHERE project_id =" + budgetAction.getProjectId() + " and cb.ccbstatus = 'Active'";
-               // if ((resultSet.getInt("parent_project_id")) > 0) {
-                   // queryString1 = "SELECT ap.cccode,ccname,budgetamt,spentamt,balance,year,Quarter,status FROM costcenter cc LEFT OUTER JOIN acc_projects ap ON(cc.cccode=ap.cccode) LEFT OUTER JOIN costcenterbudgets cb ON(cc.cccode=cb.cccode) WHERE project_id =" + resultSet.getInt("parent_project_id") + " and cb.ccbstatus = 'Active'";
-//                } else {
-//                    queryString1 = "SELECT ap.cccode,ccname,budgetamt,spentamt,balance,year,Quarter,status FROM costcenter cc LEFT OUTER JOIN acc_projects ap ON(cc.cccode=ap.cccode) LEFT OUTER JOIN costcenterbudgets cb ON(cc.cccode=cb.cccode) WHERE project_id =" + budgetAction.getProjectId() + " and cb.ccbstatus = 'Active'";
-//                }
-                //queryString1= queryString1+" AND year="+ budgetAction.getYear()+" AND Quarter='"+ budgetAction.getQuarterId()+"'";
+            queryString1 = "SELECT ap.cccode,ccname,budgetamt,spentamt,balance,year,Quarter,status FROM costcenter cc LEFT OUTER JOIN acc_projects ap ON(cc.cccode=ap.cccode) LEFT OUTER JOIN costcenterbudgets cb ON(cc.cccode=cb.cccode) WHERE project_id =" + budgetAction.getProjectId() + " and cb.ccbstatus = 'Active'";
+            resultSet = statement.executeQuery(queryString1);
+            while (resultSet.next()) {
+                resultString += resultSet.getString("ccname") + "|" + resultSet.getDouble("budgetamt") + "|" + resultSet.getDouble("spentamt") + "|" + resultSet.getDouble("balance") + "|" + resultSet.getString("cccode") + "|" + resultSet.getString("year") + "|" + resultSet.getString("Quarter") + "|" + resultSet.getString("status") + "^";
+            }
+            if ("".equals(resultString)||resultString==null) {
+                queryString1 = "SELECT ccname FROM costcenter cc LEFT OUTER JOIN acc_projects ap ON(cc.cccode=ap.cccode) WHERE project_id =" + budgetAction.getProjectId();
                 resultSet = statement.executeQuery(queryString1);
                 while (resultSet.next()) {
-                    resultString += resultSet.getString("ccname") + "|" + resultSet.getDouble("budgetamt") + "|" + resultSet.getDouble("spentamt") + "|" + resultSet.getDouble("balance") + "|" + resultSet.getString("cccode") + "|" + resultSet.getString("year") + "|" + resultSet.getString("Quarter") +"|" + resultSet.getString("status") + "^";
-              //  }
-                //resultString +=resultSet.getInt()
+                    resultString += resultSet.getString("ccname")+"|"+"CCN";
+                }
             }
             System.out.println("queryString helloooo -->" + queryString1);
 

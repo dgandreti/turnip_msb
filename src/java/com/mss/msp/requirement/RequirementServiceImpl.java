@@ -118,15 +118,15 @@ public class RequirementServiceImpl implements RequirementService {
             callableStatement.setString(22, requirementAction.getRequirementDurationDescriptor());
             callableStatement.setInt(23, requirementAction.getReqCategoryValue());
             callableStatement.setString(24, requirementAction.getRequirementMaxRate());
-            if( requirementAction.getRequirementTaxTerm().equals("CO")){
-            callableStatement.setString(25, requirementAction.getBillingtype());
-            }else{
-            callableStatement.setString(25,"");
-  
+            if (requirementAction.getRequirementTaxTerm().equals("CO")) {
+                callableStatement.setString(25, requirementAction.getBillingtype());
+            } else {
+                callableStatement.setString(25, "");
+
             }
 
             callableStatement.registerOutParameter(26, Types.INTEGER);
-            
+
             // preparedStatement.setString(24, requirementAction.getRequirementPresales2());
             // preparedStatement.setString(25, requirementAction.getRequirementReason());
 //            
@@ -276,7 +276,7 @@ public class RequirementServiceImpl implements RequirementService {
                 requirementVTO.setBillingContact(resultSet.getString("billing_contact"));
                 requirementVTO.setRequirementDurationDescriptor(resultSet.getString("hr_week_month"));
                 requirementVTO.setRequirementMaxRate(resultSet.getString("max_rate"));
-                 requirementVTO.setBillingtype(resultSet.getString("billingtype"));
+                requirementVTO.setBillingtype(resultSet.getString("billingtype"));
 
             }
 
@@ -374,12 +374,12 @@ public class RequirementServiceImpl implements RequirementService {
             preparedStatement.setString(19, requirementAction.getBillingContact());
             preparedStatement.setString(20, requirementAction.getRequirementDurationDescriptor());
             preparedStatement.setString(21, requirementAction.getRequirementMaxRate());
-            if(requirementAction.getRequirementTaxTerm().equals("CO")){
-            preparedStatement.setString(22, requirementAction.getBillingtype());
-              }else{
-           preparedStatement.setString(22, "");
- 
-              }
+            if (requirementAction.getRequirementTaxTerm().equals("CO")) {
+                preparedStatement.setString(22, requirementAction.getBillingtype());
+            } else {
+                preparedStatement.setString(22, "");
+
+            }
             updated = preparedStatement.executeUpdate();
 
             // System.out.println("------------------------record updated----------------------");
@@ -734,18 +734,21 @@ public class RequirementServiceImpl implements RequirementService {
             int sessionusrPrimaryrole = requirementAction.getPrimaryRole();
             if (typeofusr.equalsIgnoreCase("VC")) {
 //              
-                queryString = "SELECT tax_term,jdid,requirement_id,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_created_by,req_status,req_contact1,req_contact2 ,created_by_org_id,target_rate,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel ON requirement_id=req_id WHERE ven_id=" + requirementAction.getSessionOrgId() + " AND  NOW() >= req_access_time AND  STATUS LIKE 'Active' ";
+                queryString = "SELECT created_date,tax_term,jdid,requirement_id,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_created_by,req_status,req_contact1,req_contact2 ,created_by_org_id,target_rate,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel ON requirement_id=req_id WHERE ven_id=" + requirementAction.getSessionOrgId() + " AND  NOW() >= req_access_time AND  STATUS LIKE 'Active' ";
 
             } else {
 
 
                 if (sessionusrPrimaryrole == 3) { // for pr.manager
-                    queryString = "SELECT * FROM acc_requirements WHERE 1=1 AND  acc_id=" + requirementAction.getSessionOrgId() + " AND  req_created_by=" + requirementAction.getUserSessionId();
+                    queryString = "SELECT DISTINCT(requirement_id),req_created_by,created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                            + " WHERE 1=1 AND  acc_id=" + requirementAction.getSessionOrgId() + " AND  req_created_by=" + requirementAction.getUserSessionId();
                 } else if (sessionusrPrimaryrole == 1) {
-                    queryString = "SELECT * FROM acc_requirements  WHERE 1=1 AND  acc_id=" + requirementAction.getAccountSearchID();
+                    queryString = "SELECT DISTINCT(requirement_id),req_created_by,created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                            + " WHERE 1=1 AND  acc_id=" + requirementAction.getAccountSearchID();
                 } else {
                     // queryString = "SELECT * FROM acc_requirements JOIN usr_grouping ON (req_category=cat_type) WHERE usr_id=" + requirementAction.getUserSessionId() + " and acc_id=" + requirementAction.getSessionOrgId() + " ";
-                    queryString = "SELECT * FROM acc_requirements  WHERE 1=1 AND  acc_id=" + requirementAction.getSessionOrgId();
+                    queryString = "SELECT DISTINCT(requirement_id),req_created_by,created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                            + " WHERE 1=1 AND  acc_id=" + requirementAction.getSessionOrgId();
                 }
             }
 
@@ -822,7 +825,7 @@ public class RequirementServiceImpl implements RequirementService {
                 queryString += " and req_created_by = " + requirementAction.getReqCreatedBy() + " ";
             }
 
-            queryString += " order by req_name,FIELD(req_status,'O','R','C','F','I','H','W','S','L'),req_created_date desc LIMIT 100";
+            queryString += " GROUP BY requirement_id  order by req_name,FIELD(req_status,'O','R','C','F','I','H','W','S','L'),req_created_date desc LIMIT 100";
             System.out.println("query....." + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -846,6 +849,13 @@ public class RequirementServiceImpl implements RequirementService {
                     status = "Won";
                 } else if (resultSet.getString("req_status").equalsIgnoreCase("L")) {
                     status = "Lost";
+                }
+                String postedDate = "";
+                Date myDate = resultSet.getDate("created_date");
+                if (myDate != null) {
+                    postedDate = com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(myDate);
+                } else {
+                    postedDate = "---";
                 }
 //                String str = resultSet.getString("req_skills");
 //                StringTokenizer stk = new StringTokenizer(str, ",");
@@ -877,7 +887,8 @@ public class RequirementServiceImpl implements RequirementService {
                         + com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(resultSet.getInt("req_created_by")) + "|"
                         + resultSet.getString("tax_term") + "|"
                         + resultSet.getString("target_rate") + "|"
-                        + resultSet.getString("max_rate") + "^";
+                        + resultSet.getString("max_rate") + "|"
+                        + postedDate + "^";
             }
             // System.out.println("result=========>" + resultString);
         } catch (SQLException ex) {
