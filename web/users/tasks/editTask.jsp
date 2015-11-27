@@ -447,7 +447,7 @@
                                                             </div>
 
                                                                 <label class="page_option"> Display <select id="paginationOption_T" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                                    <option>1</option>
+                                                                    <option>10</option>
                                                                     <option>15</option>
                                                                     <option>25</option>
                                                                     <option>50</option>

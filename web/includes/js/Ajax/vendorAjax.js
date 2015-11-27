@@ -1199,9 +1199,9 @@ function getConsultantListBySearch(){
     var consult_phno=$('#consult_phno').val();
     var accountFlag=$('#accountFlag').val();
     var vendorName=$('#vendorName').val();
-    
+    var consult_lstname=$('#consult_lstname').val();
     var url='Requirements/getConsultantListBySearch?RequirementId='+RequirementId+'&consult_name='+consult_name+
-    '&consult_email='+consult_email+'&consult_skill='+consult_skill+'&consult_phno='+consult_phno+'&vendor='+vendorName;
+    '&consult_email='+consult_email+'&consult_skill='+consult_skill+'&consult_phno='+consult_phno+'&vendor='+vendorName+'&consult_lstname='+consult_lstname;
     var req=initRequest(url);
     req.onreadystatechange = function() {
         document.getElementById('loadingConsultant').style.display = 'block';
@@ -1282,7 +1282,7 @@ function consultantListGridDisplay(response){
         table.deleteRow(i);
     }
     if(vendor!='yes'){
-        var res="Vendor" + "|" + "Candidate Name" + "|" + "Phone Number" + "|" + "Email" + "|" + "Status" + "|" + "Skills" + "|" + "Rate" + "^";
+        var res="Vendor" + "|" + "Candidate Name" + "|" + "Status" + "|" + "Skills" + "|" + "Rate" + "^";
     }
     else
     {
@@ -1298,7 +1298,7 @@ function consultantListGridDisplay(response){
                 var row = $("<tr />")
           
                 if(vendor!='yes'){
-                    res=res+(Values[7] +"|"+ Values[1]+"|"+ Values[4]+"|"+ Values[2]+"|"+ Values[5]+"|"+ Values[3]+"|$"+ Values[8]+"/Hr^");      
+                    res=res+(Values[7] +"|"+ Values[1]+"|"+ Values[5]+"|"+ Values[3]+"|$"+ Values[8]+"/Hr^");      
                 }
                 else
                 {
@@ -1316,15 +1316,28 @@ function consultantListGridDisplay(response){
                     row.append($('<td><a href=../recruitment/consultant/getConsultantDetails.action?vendor='+ vendor +'&consult_id='+Values[0]+'&consultFlag='+consultFlag  +'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&accountFlag='+accountFlag+'&jdId='+jdId+'&customerFlag='+customerFlag+">"+ Values[1] +"</a></td>"));
                 }
                 //row.append($("<td>" + Values[7] + "</td>"));
-                row.append($("<td>" + Values[2] + "</td>"));
+                row.append($("<td>" + Values[11] + "</td>")); // postedDate
+                 if(vendor=='yes'){
+                    row.append($("<td>" + Values[2] + "</td>"));
+                }
                 if(Values[3]=='null'||Values[3]==""){
                     Values[3]="";
                     row.append($('<td><a href="#" class="recSkillOverlay_popup_open" onclick=" showSkillDetailsCustomer(\'' + Values[3] + '\');" >'+Values[3].substr(0,10)+"</td>"));
                 }else{
                     row.append($('<td><a href="#" class="recSkillOverlay_popup_open" onclick=" showSkillDetailsCustomer(\'' + Values[3] + '\');" >'+Values[3].substr(0,10)+"...</td>"));
                 }
-                row.append($("<td>" + Values[4] + "</td>"));
-                row.append($("<td>" + Values[5] + "</td>"));
+                if(vendor=='yes'){
+                    row.append($("<td>" + Values[4] + "</td>"));
+                }
+                if(Values[5]=='Withdraw')
+                {
+                    var okDisable="okDisable";
+                    row.append($('<td><a href="#" class="conWithdraw_popup_open" onclick="consultantWithdrawnPopup(\'' + okDisable + '\',\''+ Values[12] +'\');">'+  Values[5] +'</td>')); //Values[10] withdraw comments.
+                }
+                else 
+                {
+                    row.append($("<td>" + Values[5] + "</td>"));
+                }
                 row.append($("<td>$" + Values[8] + "/Hr.</td>"));
                 row.append($("<td><figcaption><button type='button' value="+ Values[6] +" onclick=doAttachmentDownload("+ Values[6] +")><img src='./../includes/images/download.png' height='20' width='20' ></button></figcaption></td>"));
                 if(vendor!='yes'){
@@ -1341,6 +1354,14 @@ function consultantListGridDisplay(response){
                         row.append($('<td><a href="#" class="SOW_popup_open" onclick=SOWPopup(\'' + Values[0] + '\',\'' + Values[8] + '\');><img src="../includes/images/go.gif" height="20" width="25"></td>'));
                     }else{
                         row.append($('<td><a href="#" ><img style="opacity: 0.4;cursor:default" src="../includes/images/go.gif" height="20" width="25"></td>'));
+                    }
+                }
+                
+                 if(vendor=='yes'){
+                    if(Values[5]=='Withdraw'){
+                        row.append($('<td><a href="#" ><img style="opacity: 0.4;cursor:default" src="../includes/images/removeCons.png" height="20" width="20"></td>'));
+                    }else {
+                        row.append($('<td><a href="#" class="conWithdraw_popup_open" onclick=consultantWithdrawnPopup('+ Values[0] +','+ requirementId +');><img src="../includes/images/removeCons.png" height="20" width="20"></td>'));
                     }
                 }
                 
@@ -1397,6 +1418,109 @@ function consultantListGridDisplay(response){
 
   $('#consultantListTable').tablePaginate({navigateType:'navigator'},recordPage);
     pager.init(); 
+   
+}
+function consultantWithdrawnPopup(consultantID,reqID){
+    //alert(customerId)
+    if(consultantID=="okDisable")
+    {
+        document.getElementById("withdrawComments").value=reqID;  
+        document.getElementById("withdrawButtonDiv").style.display="none";  
+    }
+    else
+    {
+        document.getElementById("withdrawComments").value="";  
+        document.getElementById("withdrawButtonDiv").style.display="block"; 
+    }
+    var specialBox = document.getElementById('conWithdrawBox');
+    if(specialBox.style.display == "block"){       
+        specialBox.style.display = "none";         
+    } else {
+        specialBox.style.display = "block";      
+    }
+    // Initialize the plugin    
+    $('#conWithdraw_popup').popup(      
+        );
+    $("#reqwithdrawId").val(reqID);
+    $("#conWithdrawId").val(consultantID);
+}
+function conWithdrawClose(flag){
+    var specialBox = document.getElementById('conWithdrawBox');
+    if(specialBox.style.display == "block"){       
+        specialBox.style.display = "none";         
+    } else {
+        specialBox.style.display = "block";      
+    }
+    // Initialize the plugin    
+    $('#conWithdraw_popup').popup(      
+        );
+    if(flag=="ok")
+    {
+        consultantWithdrawn();
+    }
+// getConsultantList();
+}
+
+
+function consultantWithdrawn()
+{
+    // alert(consultantID);
+    // alert(reqID);
+    var reqID= $("#reqwithdrawId").val();
+    var consultantID= $("#conWithdrawId").val();
+    var withdrawComments= $("#withdrawComments").val(); 
+    
+    swal({
+    
+        title: "Do you want Withdraw Candidate for this Requirement",
+  
+        //text: "Tranfering csr",
+        textSize:"170px",
+        type: "warning",
+  
+        showCancelButton: true,
+        confirmButtonColor: "#3498db",
+  
+        //cancelButtonColor: "#56a5ec",
+        cancelButtonText: "No",
+        confirmButtonText: "Yes",
+        closeOnConfirm: false,
+        closeOnCancel: false
+ 
+    },
+    function(isConfirm){
+        if (isConfirm) {
+            // alert(groupingId);
+            // alert(id);
+            //  alert(action_id);
+            var url='Requirements/doWithdrawConsultant.action?requirementId='+reqID+'&consultantId='+consultantID+'&withdrawComments='+withdrawComments;
+            var req=initRequest(url);
+            //alert(url);
+            req.onreadystatechange = function() {
+                if (req.readyState == 4) {
+                    if (req.status == 200) {
+                        // document.getElementById("outputMessage").innerHTML=req.responseText;
+                        //  getActionResorucesSearchResults();
+                        getConsultantList();
+                        swal("withdrew!", "Withdrew Successfully....", "success");
+                    //  conWithdrawClose();  
+                    } 
+                    else
+                    {
+                        swal("Sorry Not withdrew", "withdraw not done ", "error");
+                    //  conWithdrawClose();
+                    }
+                }
+            };
+            req.open("GET",url,"true");
+            req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            req.send(null);
+        }
+        else {
+     
+            swal("Cancelled", "withdraw cancelled ", "error");
+        }
+    });
    
 }
 function migration_overlay(cName,consult_id){
@@ -2119,7 +2243,6 @@ function saveVendorTierDetails(){
 }
 function getOrgConsultant(vendorName,ven_id)
 {
-    alert(ven_id);
     var techSearch="search";
     document.getElementById("techSearch").value=techSearch;
     document.getElementById('consultantListLi').className='active active_details  ';
@@ -2127,13 +2250,14 @@ function getOrgConsultant(vendorName,ven_id)
     document.getElementById('consultantList').className='tab-pane fade in active ';
     var RequirementId=$('#RequirementId').val();
     var consult_name=$('#consult_name').val();
+    var consult_lstname=$('#consult_lstname').val();
     var consult_email=$("#consult_email").val();
     var consult_skill=$('#consult_skill').val();
     var consult_phno=$('#consult_phno').val();
     var accountFlag=$('#accountFlag').val();
     
     var url='Requirements/getConsultantListBySearch?RequirementId='+RequirementId+'&consult_name='+consult_name+
-    '&consult_email='+consult_email+'&consult_skill='+consult_skill+'&consult_phno='+consult_phno+'&vendor='+vendorName+'&ven_id='+ven_id;
+    '&consult_email='+consult_email+'&consult_skill='+consult_skill+'&consult_phno='+consult_phno+'&vendor='+vendorName+'&ven_id='+ven_id+'&consult_lstname='+consult_lstname;
     //    var RequirementId=$('#RequirementId').val();
     //    alert(RequirementId);
     //    //var url='Requirements/getConsultantList.action?RequirementId='+RequirementId;

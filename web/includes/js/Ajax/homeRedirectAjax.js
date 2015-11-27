@@ -319,24 +319,29 @@ function setAccNamesAndRoles1(){
     req.send(null);
 }
 function getActionDescription(){
-    document.getElementById('data-tooltip').style.visibility="visible";
     var actionName=$("#actionName").val();
-   // alert(actionName);
-    var url='../general/getActionDescription.action?actionName='+actionName;
-    var req=initRequest(url);
-    req.onreadystatechange = function() {
-        if (req.readyState == 4 && req.status == 200) {
-            //setRolesForHomeRedirect(req.responseText);
-         //   alert(req.responseText);
-            document.getElementById("NameOverlay").innerHTML=req.responseText;
-            
-        } 
-    };
-    req.open("GET",url,"true");
-    req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-    req.send(null);
-    
-}
-function displaynon(){
-    document.getElementById('data-tooltip').style.visibility="hidden";
+    if(actionName==""){
+        $("#action_description").tooltip('hide')
+                .attr('data-original-title',"")
+                .tooltip('fixTitle')
+                .tooltip('show');
+    }
+    else{
+        var url='../general/getActionDescription.action?actionName='+actionName;
+        var req=initRequest(url);
+        req.onreadystatechange = function() {
+            if (req.readyState == 4 && req.status == 200) {
+                //            document.getElementById("action_description").title="";
+                //            document.getElementById("action_description").title=req.responseText;
+                $("#action_description").tooltip('hide')
+                .attr('data-original-title', req.responseText)
+                .tooltip('fixTitle')
+                .tooltip('show');
+            //            tool_tip();
+            } 
+        };
+        req.open("GET",url,"true");
+        req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        req.send(null);
+    }
 }

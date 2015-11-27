@@ -230,7 +230,7 @@
                                                 <br/>
                                                 <s:if test="costCenterSearchList.size > 0">
                                                 <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                        <option>1</option>
+                                                        <option>10</option>
                                                         <option>15</option>
                                                         <option>25</option>
                                                         <option>50</option>
@@ -328,6 +328,7 @@
 
                         <s:form>
                             <span><costCenter></costCenter></span>
+                            <span id="info"></span>
                             <center>
                                 <table>
                                     <s:hidden name="code" id="code" value=""/>
@@ -424,6 +425,7 @@
                                                          type="text" value="" 
                                                          name="budgetAmt"
                                                          placeholder=""
+                                                         onkeypress="return validationCostCenterYear(event,this.id)"
                                                          /></div>
                                     </div>  
                                     <div class="col-lg-6" id="spentAmtId" style="display:none">

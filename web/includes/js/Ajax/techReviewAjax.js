@@ -892,7 +892,7 @@ function interviewDateConfirmation(){
     
         if (isConfirm) {
                var url='.././Requirements/saveTechReviewResults.action?techSkill='+techSkill+'&domainSkill='+domainSkill+'&comSkill='+comSkill+'&rating='+rating+'&consultantComments='+consultantComments+'&finalTechReviewStatus='+finalTechReviewStatus+'&techTitle='+techTitle+'&consultId='+consultId+'&requirementId='+requirementId+'&interviewType='+interviewType+'&contechId='+contechId;
-            alert(url)
+           // alert(url)
             var req=initRequest(url);
             req.onreadystatechange = function() {
                 if (req.readyState == 4 && req.status == 200) {
@@ -1014,6 +1014,9 @@ function searchTechReviews(){
 }
 function populateTechReviewSearchTable(response){
     /// alert(response)
+    $(".page_option").css('display','block');
+     $(".pagination").css('display','block');
+    
     var techReviewList=response.split("^");
     
     var table = document.getElementById("techReviewSearchTable");
@@ -1079,7 +1082,9 @@ function populateTechReviewSearchTable(response){
     else{
         var row = $("<tr />")
         $("#techReviewSearchTable").append(row);
-        row.append($('<td colspan="6"><font style="color: red;font-size: 15px;">No Records to display</font></td>'))
+        row.append($('<td colspan="6"><font style="color: red;font-size: 15px;">No Records to display</font></td>'));
+         $(".page_option").css('display','none');
+          $(".pagination").css('display','none');
     }
     pager.init(); 
     pager.showPageNav('pager', 'pageNavPosition'); 

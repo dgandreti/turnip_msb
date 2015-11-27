@@ -89,7 +89,7 @@ function csrCustReqOverlay(){
     // Initialize the plugin    
 
     $('#csrCustomerReq_popup').popup(      
-);    
+        );    
     return false;
 }
 function csrCustReqDetails(accountId)
@@ -248,12 +248,12 @@ function showChart(cust,open,release,close)
         //        height:300,
         title: 'Customer Requirements Yearly Analysis',
         colors: ['#0000FF', '#00FF00', '#FF0000']
-        // animation: {
-        //duration: 1000,
-        //easing: 'linear'
-        //vAxis: {
-        //viewWindow: {
-        //max: 8
+    // animation: {
+    //duration: 1000,
+    //easing: 'linear'
+    //vAxis: {
+    //viewWindow: {
+    //max: 8
     }
     var chart = new google.visualization.ColumnChart(document.getElementById('reqCustomerYearChart'));
    
@@ -281,16 +281,19 @@ function showCustomerChart(month,open,release,close,others)
     var options = {
         //        width: 370,
         //        height:300,
-       // title: 'Customer Requirements Yearly Analysis',
+        // title: 'Customer Requirements Yearly Analysis',
         colors: ['#0000FF', '#00FF00', '#FF0000','#00BFFF'],
-        legend: { position: 'top', alignment: 'center' }
+        legend: {
+            position: 'top', 
+            alignment: 'center'
+        }
         
-        // animation: {
-        //duration: 1000,
-        //easing: 'linear'
-        //vAxis: {
-        //viewWindow: {
-        //max: 8
+    // animation: {
+    //duration: 1000,
+    //easing: 'linear'
+    //vAxis: {
+    //viewWindow: {
+    //max: 8
     }
     var chart = new google.visualization.ColumnChart(document.getElementById('individualCustomerYearChart'));
     
@@ -405,7 +408,7 @@ function parseAccountName(responseXML,accType) {
             var validationMessageForCustomer=document.getElementById("validationMessageForCustomer");
             validationMessageForCustomer.innerHTML = "<font color=red>  Account doesn't Exists </font>"; 
         }
-        //document.getElementById('validationMessage').innerHTML = "<font color=red> Employee doesn't Exists!</font>";
+    //document.getElementById('validationMessage').innerHTML = "<font color=red> Employee doesn't Exists!</font>";
     }
     if(consultants.childNodes.length<10) {
         // autorow1.style.overflowY = "hidden";
@@ -437,7 +440,7 @@ function appendAccounutName(accName,accId,accType) {
 
 
     linkElement.setAttribute("href",
-    "javascript:setAccountName('"+accName +"','"+ accId +"','"+ accType +"')");
+        "javascript:setAccountName('"+accName +"','"+ accId +"','"+ accType +"')");
     linkElement.appendChild(document.createTextNode(accName));
     linkElement["onclick"] = new Function("hideScrollBar()");
     nameCell.appendChild(linkElement);
@@ -669,9 +672,10 @@ function getCostCenterDashboardList(selectedValue,flag){
     
     if(flag=="quarters")
     {
+        document.getElementById('costCentersProjectsDiv').style.display = 'none';
         document.getElementById("quarters").value=selectedValue;
         quarters=selectedValue; 
-        // alert("quarters value-->"+quarters);
+    // alert("quarters value-->"+quarters);
     }
     
     if(flag=="costcenters")
@@ -679,7 +683,7 @@ function getCostCenterDashboardList(selectedValue,flag){
         //  var costcenternames=document.getElementById("costcenternames").value; 
         quarters=document.getElementById("quarters").value;
         costcenternames=selectedValue;
-        // alert("in if costcenternames-->"+costcenternames);
+    // alert("in if costcenternames-->"+costcenternames);
     }
     
     if(flag=="yearquaters")
@@ -743,7 +747,7 @@ function populateCostCenterDashBoardTable(response,quarters,costcenternames){
         // var v=$('#quarter option:selected').text();
         document.getElementById('costcenterchartTitle').innerHTML = "<font color=red ><b>&nbsp; "+ quarters +" </font><font color=green><b>Cost Center Budget Yearly Analysis</b></font>";
         document.getElementById("costCentersProjectsDiv").style.display = 'none';
-        // document.getElementById("projectsnorecords").style.display = 'none';        
+    // document.getElementById("projectsnorecords").style.display = 'none';        
     }
     else if(response=="noprojects"){
         //  alert("noprojects");
@@ -755,9 +759,9 @@ function populateCostCenterDashBoardTable(response,quarters,costcenternames){
         document.getElementById('projectschartTitle').innerHTML = "<font color=red ><b>&nbsp; "+ costcenternames +" </font><font color=green><b>Cost Center Projects Budget Yearly Analysis</b></font>";
         document.getElementById("projectsBarchart").style.display = 'none';
         
-        // document.getElementById("BarchartForResources").style.display = 'none';
-        //  document.getElementById("resorceschartTitle").style.display = 'none';
-        //document.getElementById("resourcesnorecords").style.display = 'none';     
+    // document.getElementById("BarchartForResources").style.display = 'none';
+    //  document.getElementById("resorceschartTitle").style.display = 'none';
+    //document.getElementById("resourcesnorecords").style.display = 'none';     
     }
     else
     {
@@ -778,16 +782,16 @@ function populateCostCenterDashBoardTable(response,quarters,costcenternames){
                 if(costcenterResponse=="costcenterresponse"){
                     costCenterIdsArray.push(Values[5]);
                 }
-                //                if(costcenterResponse=="costcenterresponse" && i==0){
-                //                    
-                //                    //document.getElementById("costCentersSelectDiv").style.display = 'block';
-                //                    $select.find('option').remove();
-                //                    $('<option>').val(-1).text('All').appendTo($select);
-                //                }
-                //                if(costcenterResponse=="costcenterresponse"){
-                //                    
-                //                    $('<option>').val(Values[5]).text(Values[0]).appendTo($select);  
-                //                }
+            //                if(costcenterResponse=="costcenterresponse" && i==0){
+            //                    
+            //                    //document.getElementById("costCentersSelectDiv").style.display = 'block';
+            //                    $select.find('option').remove();
+            //                    $('<option>').val(-1).text('All').appendTo($select);
+            //                }
+            //                if(costcenterResponse=="costcenterresponse"){
+            //                    
+            //                    $('<option>').val(Values[5]).text(Values[0]).appendTo($select);  
+            //                }
             }
         }
         if(costcenterResponse=="costcenterresponse"){
@@ -796,14 +800,14 @@ function populateCostCenterDashBoardTable(response,quarters,costcenternames){
             document.getElementById("costcentersnorecords").style.display = 'none';
            
             document.getElementById("costcentersBarchart").style.display = 'block'; 
-            // $("#costCentersSelectDiv").css('visibility', 'visible'); 
+        // $("#costCentersSelectDiv").css('visibility', 'visible'); 
         }
         if(costcenterResponse=="costcenterpojectresponse"){
             //  document.getElementById("costCentersSelectDiv").style.display = 'block';
             document.getElementById("costCentersProjectsDiv").style.display = 'block';
             document.getElementById("projectsnorecords").style.display = 'none';
             document.getElementById("projectsBarchart").style.display = 'block'; 
-            // $("#costCentersSelectDiv").css('visibility', 'visible'); 
+        // $("#costCentersSelectDiv").css('visibility', 'visible'); 
         }
         //   alert("cost-->"+month);
         //   alert("budget-->"+open);
@@ -813,13 +817,13 @@ function populateCostCenterDashBoardTable(response,quarters,costcenternames){
         showCostCenterChart(month,open,release,close,costcenterResponse,quarters,costcenternames);
         
     }
-    //    else{
-    //        
-    //        $("#Barchart").css('visibility', 'hidden');
-    //        $("#norecords").css('visibility', 'visible');
-    //        document.getElementById('norecords').innerHTML = "<font color=red> No Records to Display!</font>";
-    //        
-    //    }
+//    else{
+//        
+//        $("#Barchart").css('visibility', 'hidden');
+//        $("#norecords").css('visibility', 'visible');
+//        document.getElementById('norecords').innerHTML = "<font color=red> No Records to Display!</font>";
+//        
+//    }
 }
 
 function showCostCenterChart(month,open,release,close,costcenterResponse,quarters,costcenternames)
@@ -863,12 +867,12 @@ function showCostCenterChart(month,open,release,close,costcenterResponse,quarter
                 title: "Budget Amount",
                 format:'$###,###,###.00',
                 titleColor:"green"
-                //                textStyle: {color: '#24BEFF'}
+            //                textStyle: {color: '#24BEFF'}
             },
             hAxis: {
                 title: "Cost Centers",
                 titleColor:"green"
-                //                textStyle: {color: '#24BEFF'}
+            //                textStyle: {color: '#24BEFF'}
             }
         }
     }
@@ -951,7 +955,7 @@ function showCostCenterChart(month,open,release,close,costcenterResponse,quarter
             if (selectedItem) {
                 var practice = data.getValue(selectedItem.row, 0);
                 //    alert('The user selected--> '+practice);
-                document.getElementById('costCentersProjectsDiv').style.display = 'none';
+                // document.getElementById('costCentersProjectsDiv').style.display = 'none';
                 getCostCenterDashboardList(practice,"quarters");
             }
         }
@@ -976,7 +980,7 @@ function settingValue(){
     if(v=="DF"){
         document.getElementById("costCentersDiv").style.display = 'none';
     }
-    //$("#costCentersSelectDiv").css('visibility', 'hidden');
+//$("#costCentersSelectDiv").css('visibility', 'hidden');
 }
 function removeProjectsDiv(){
     var v=document.getElementById("costCenters").value; 
@@ -987,6 +991,8 @@ function removeProjectsDiv(){
 
 function getMainProjectsChart(){
     var year=document.getElementById("dashBoardYear").value;
+    document.getElementById('subProjectsDiv').style.display = 'none'; 
+    document.getElementById('resouresDiv').style.display = 'none';
     if((year.length)==4){
         // alert(year.length);
         getProjectDashboardList(year,"yearmainprojects");
@@ -1017,12 +1023,12 @@ function getProjectDashboardList(selectedValue,flag){
                 finalId=Values[0]
                 break ;
             }
-            // }
+        // }
         }
-        //  alert("final ID-->"+finalId);
-        // document.getElementById("mainprojects").value=selectedValue;
-        // mainprojects=selectedValue; 
-        // alert("quarters value-->"+quarters);
+    //  alert("final ID-->"+finalId);
+    // document.getElementById("mainprojects").value=selectedValue;
+    // mainprojects=selectedValue; 
+    // alert("quarters value-->"+quarters);
     }
     
     if(flag=="subprojects")
@@ -1039,11 +1045,11 @@ function getProjectDashboardList(selectedValue,flag){
                 break ;
             } 
         }
-        // alert("final sub ID-->"+finalId);
-        //  var costcenternames=document.getElementById("costcenternames").value; 
-        //  mainprojects=document.getElementById("mainprojects").value;
-        //  subprojects=selectedValue;
-        // alert("in if costcenternames-->"+costcenternames);
+    // alert("final sub ID-->"+finalId);
+    //  var costcenternames=document.getElementById("costcenternames").value; 
+    //  mainprojects=document.getElementById("mainprojects").value;
+    //  subprojects=selectedValue;
+    // alert("in if costcenternames-->"+costcenternames);
     }
     
     
@@ -1141,7 +1147,7 @@ function populateProjectsDashBoardTable(response,selectedValue){
             document.getElementById('resourcesnorecords').innerHTML = "<font color=red> No Resources to Display!</font>";
             document.getElementById("BarchartForResources").style.display = 'none';
             document.getElementById("resorceschartTitle").style.display = 'none';
-            //document.getElementById("resourcesnorecords").style.display = 'none';     
+        //document.getElementById("resourcesnorecords").style.display = 'none';     
         }
         else
         {
@@ -1176,12 +1182,12 @@ function populateProjectsDashBoardTable(response,selectedValue){
                     
                     
                     var resourceHours=Values[3];
-                    //  alert("Sub project ids"+Values[3]);
+                //  alert("Sub project ids"+Values[3]);
                 
-                    //                if(costcenterResponse=="costcenterpojectresponse"){
-                    //                //  $('<option>').val(Values[5]).text(Values[6]).appendTo($select);    
-                    //                }
-                    //alert(month);
+                //                if(costcenterResponse=="costcenterpojectresponse"){
+                //                //  $('<option>').val(Values[5]).text(Values[6]).appendTo($select);    
+                //                }
+                //alert(month);
                 }
             }
             //            if(subProjects=="subprojects"){
@@ -1202,15 +1208,15 @@ function populateProjectsDashBoardTable(response,selectedValue){
             showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours,selectedValue);
         
         }
-        //  alert("subprojectsMap-->"+subprojectsMap);
+    //  alert("subprojectsMap-->"+subprojectsMap);
         
         
-        //  $("#Barchart").css('visibility', 'hidden');
-        //  $("#norecords").css('visibility', 'visible');
-        //  document.getElementById('norecords').innerHTML = "<font color=red> No Records to Display!</font>";
-        //  $("#resouresDiv").css('visibility', 'hidden');
-        //  $("#resourcesnorecords").css('visibility', 'visible');
-        //  document.getElementById('resourcesnorecords').innerHTML = "<font color=red> No Records to Display!</font>";
+    //  $("#Barchart").css('visibility', 'hidden');
+    //  $("#norecords").css('visibility', 'visible');
+    //  document.getElementById('norecords').innerHTML = "<font color=red> No Records to Display!</font>";
+    //  $("#resouresDiv").css('visibility', 'hidden');
+    //  $("#resourcesnorecords").css('visibility', 'visible');
+    //  document.getElementById('resourcesnorecords').innerHTML = "<font color=red> No Records to Display!</font>";
         
         
     }
@@ -1270,12 +1276,12 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
             vAxis: {
                 title: "Hours",
                 titleColor:"green"
-                //                textStyle: {color: '#24BEFF'}
+            //                textStyle: {color: '#24BEFF'}
             },
             hAxis: {
                 title: "Main Projects",
                 titleColor:"green"
-                //                textStyle: {color: '#24BEFF'}
+            //                textStyle: {color: '#24BEFF'}
             }
         }
     }
@@ -1318,12 +1324,12 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
             vAxis: {
                 title: "Hours",
                 titleColor:"green"
-                //                textStyle: {color: '#24BEFF'}
+            //                textStyle: {color: '#24BEFF'}
             },
             hAxis: {
                 title: "Sub Projects",
                 titleColor:"green"
-                //                textStyle: {color: '#24BEFF'}
+            //                textStyle: {color: '#24BEFF'}
             }
         }
     }
@@ -1379,7 +1385,7 @@ function settingProjectValue(){
     }
     
     document.getElementById("resouresDiv").style.display = 'none';
-    //$("#costCentersSelectDiv").css('visibility', 'hidden');
+//$("#costCentersSelectDiv").css('visibility', 'hidden');
 }
 function settingProjectResourcesValue(){
     //var v=document.getElementById("costCenters").value;  
@@ -1390,7 +1396,7 @@ function settingProjectResourcesValue(){
         //  alert(v);
         document.getElementById("resouresDiv").style.display = 'none';    
     }
-    //document.getElementById("subProjectsSelectDiv").style.display = 'none';
+//document.getElementById("subProjectsSelectDiv").style.display = 'none';
 }
 function getProjectsForYear()
 {

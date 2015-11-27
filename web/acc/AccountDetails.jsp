@@ -1219,7 +1219,7 @@ Author     : Greg
                                                                                     </tbody>
                                                                                 </table>
                                                                                 <br/>
-                                                                                <label class="page_option"> Display <select id="vpaginationOption" class="disPlayRecordsCss" onchange="pagerOption_vendorPage()" style="width: auto">
+                                                                                <label class="page_option"> Display <select id="vpaginationOption" class="disPlayRecordsCss" onchange="vpagerOption()" style="width: auto">
                                                                                         <option>10</option>
                                                                                         <option>15</option>
                                                                                         <option>25</option>

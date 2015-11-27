@@ -231,11 +231,12 @@ function populateReqTableReq(response){
                 //                }
                 //                // reqRow.append($('<td><a href="#" class="recSkillOverlay_popup_open" onclick="showReqSkillOverlay('+Values[0]+');" >Click'+"</td>"));
                 // reqRow.append($('<td><a href="#" class="preSkillOverlay_popup_open" onclick="showPreReqSkillOverlay('+Values[0]+');" >Click'+"</td>"));
-                if(vendor!='yes'){
+               /* if(vendor!='yes'){
  
                     reqRow.append($('<td><a href="" class="recruiterOverlay_popup_open" onclick="showOverlayRecruiter('+Values[5]+');" >'+Values[7]+"</td>"));
                     reqRow.append($('<td><a href="" class="recruiterOverlay_popup_open" onclick="showOverlayRecruiter('+Values[6]+');" >'+Values[8]+"</td>"));
-                }
+                } */
+                reqRow.append($("<td>" +Values[17] + "</td>")); // job posting date (Created date in req_ven_rel)
                 reqRow.append($("<td>" + Values[4] + "</td>"));
                 if(vendor!='yes'){
                     //                    if(Values[4]=='Closed'){

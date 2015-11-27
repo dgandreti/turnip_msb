@@ -204,9 +204,10 @@
                                                     </table>
                                                     <s:if test="userVTO.size > 0">
                                                     <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                            <option>5</option>
+                                                            
                                                             <option>10</option>
                                                             <option>15</option>
+                                                            <option>25</option>
                                                             <option>50</option>
                                                         </select>
                                                         CSR's per page
@@ -280,6 +281,9 @@
     var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
                     //alert(paginationSize);
+                        {
+                            
+                        }
                 recordPage=paginationSize;
               
                  $('#csrResults').tablePaginate({navigateType:'navigator'},recordPage);

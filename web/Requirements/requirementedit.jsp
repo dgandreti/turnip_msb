@@ -32,6 +32,7 @@ Author     : miracle
 
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
@@ -50,6 +51,7 @@ Author     : miracle
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/requirementAjax.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/vendorAjax.js"/>"></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
         <style>
 
 
@@ -177,7 +179,7 @@ Author     : miracle
                                                     <s:param name="accFlag">accDetails</s:param>
                                                 </s:url>
                                                 <s:a href='%{#myUrl}' style="color: #0000FF;"><s:property value="%{account_name}"/></s:a>
-                                                </div>
+                                            </div>
                                         </s:if> 
                                         <div class="" style="float: left; margin-top:-5px; margin-bottom: -2px">
                                             <s:url var="reqUrl" action="acc/viewAccount.action">
@@ -427,7 +429,7 @@ Author     : miracle
                                                                                 <s:select name="RequirementContact2" id="RequirementContact2" value="%{requirementVTO.RequirementContact2}" list="EmployeeNames" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" disabled="true"/>--%>
                                                                                 <label class="labelStyle" id="labelLevelStatusReq">Start Date</label> <s:textfield cssClass="form-control " name="RequirementFrom" id="RequirementFrom" placeholder="StartDate" value="%{requirementVTO.RequirementFrom}" onkeypress="return editRequirementDateValidation()" cssStyle="z-index: 10000004;" onfocus="removeErrorMessages()" disabled="true"/>
                                                                                 <%--<label class="labelStyle" id="labelLevelStatusReq">Hr/week/month:</label> <s:select  id="requirementDurationDescriptor" value="%{requirementVTO.requirementDurationDescriptor}" list="#@java.util.LinkedHashMap@{'Hours':'Hours','Weeks':'Weeks','Months':'Months'}"   headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" disabled="true" onfocus="removeErrorMessages()"/> --%>
-                                                                                 <div id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq">Billing&nbsp;Type:</label> <s:select  id="billingtype" list="#@java.util.LinkedHashMap@{'After Work':'After Work','On Work':'On Work'}"  value="%{requirementVTO.billingtype}" cssClass="SelectBoxStyles form-control" />      
+                                                                                <div id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq">Billing&nbsp;Type:</label> <s:select  id="billingtype" list="#@java.util.LinkedHashMap@{'After Work':'After Work','On Work':'On Work'}"  value="%{requirementVTO.billingtype}" cssClass="SelectBoxStyles form-control" />      
                                                                                 </div>
                                                                                 <label class="labelStyle" id="labelLevelStatusReq"> Min Rate </label>
                                                                                 <div class="form-group input-group">
@@ -440,7 +442,7 @@ Author     : miracle
                                                                             <s:else> 
                                                                                 <label class="labelStyle" id="labelLevelStatusReq">Start Date</label> <s:textfield cssClass="form-control " name="RequirementFrom" id="RequirementFrom" placeholder="StartDate" value="%{requirementVTO.RequirementFrom}" onkeypress="return editRequirementDateValidation()" cssStyle="z-index: 10000004;" onfocus="removeErrorMessages()" />
                                                                                 <s:if test="requirementVTO.RequirementTaxTerm=='PE'">
-                                                                                     <div id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq">Billing&nbsp;Type:</label> <s:select  id="billingtype" list="#@java.util.LinkedHashMap@{'After Work':'After Work','On Work':'On Work'}"  value="%{requirementVTO.billingtype}" cssClass="SelectBoxStyles form-control" />      
+                                                                                    <div id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq">Billing&nbsp;Type:</label> <s:select  id="billingtype" list="#@java.util.LinkedHashMap@{'After Work':'After Work','On Work':'On Work'}"  value="%{requirementVTO.billingtype}" cssClass="SelectBoxStyles form-control" />      
                                                                                     </div>
                                                                                     <%-- <label class="labelStyle" id="labelLevelStatusReq">Hr/week/month:</label> <s:select  id="requirementDurationDescriptor" value="%{requirementVTO.requirementDurationDescriptor}" list="#@java.util.LinkedHashMap@{'Hours':'Hours','Weeks':'Weeks','Months':'Months'}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" disabled="true " onfocus="removeErrorMessages()"/> --%>
 
@@ -611,7 +613,7 @@ Author     : miracle
                                                             <div class="col-lg-10"></div>
                                                             <div class="col-lg-2">
                                                                 <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="update" onclick="return updaterequirements();" value="" theme="simple"><i class="fa fa-refresh"></i>&nbsp;Update</s:submit>
-                                                                </div>
+                                                            </div>
                                                         </s:if>
                                                     </s:if>
                                                 </div> 
@@ -748,17 +750,17 @@ Author     : miracle
                                                                 <div class="col-lg-10"></div>
                                                                 <div class="col-lg-2">
                                                                     <s:submit cssStyle="margin:5px 0px;" cssClass=" add_searchButton form-control col-sm-offset-10 btn cssbutton" value="" type="button" onclick="return saveVendorAssociation()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
-                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
 
-                                                            <div id="vendorAssoEdit_popup">
+                                                        <div id="vendorAssoEdit_popup">
 
-                                                                <div id="vendorAssocitaionEditOverlay">
-                                                                    <div class="backgroundcolor">
-                                                                        <table>
-                                                                            <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Edit Association&nbsp;&nbsp; </font></h4></td>
-                                                                            <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="vendorAssoEdit_popup_close" onclick="associationEditOverlayclose()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                                            <div id="vendorAssocitaionEditOverlay">
+                                                                <div class="backgroundcolor">
+                                                                    <table>
+                                                                        <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Edit Association&nbsp;&nbsp; </font></h4></td>
+                                                                        <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="vendorAssoEdit_popup_close" onclick="associationEditOverlayclose()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
                                                                     </table>
 
                                                                 </div>
@@ -779,22 +781,22 @@ Author     : miracle
                                                                 <div class="col-lg-10"></div>
                                                                 <div class="col-lg-2">
                                                                     <s:submit  cssStyle="margin:5px 0px;" cssClass=" add_searchButton form-control vendorAssoEdit_popup_close"  value="" type="button" onclick="return updateVendorAssociation()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
-                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
 
 
-                                                        </div> 
-                                                        <div class="col-sm-12">
-                                                            <br/> 
-                                                            <div class="emp_Content" id="emp_div" align="">
-                                                                <table id="vendorAssociationResults" class="responsive CSSTable_task sortable" border="5">
-                                                                    <tbody>
-                                                                        <tr> 
-                                                                            <th>Vendor</th>
-                                                                            <th class="unsortable">Vendor Tier </th>
-                                                                            <th class="unsortable">No.Of.Submissions</th>
-                                                                            <th class="unsortable"> Avg.Rate</th>
+                                                    </div> 
+                                                    <div class="col-sm-12">
+                                                        <br/> 
+                                                        <div class="emp_Content" id="emp_div" align="">
+                                                            <table id="vendorAssociationResults" class="responsive CSSTable_task sortable" border="5">
+                                                                <tbody>
+                                                                    <tr> 
+                                                                        <th>Vendor</th>
+                                                                        <th class="unsortable">Vendor Tier </th>
+                                                                        <th class="unsortable">No.Of.Submissions</th>
+                                                                        <th class="unsortable"> Avg.Rate</th>
                                                                         <%--<th>Created BY </th>--%>
                                                                         <th class="unsortable">Access Time</th>
                                                                         <%--<th>Requirement</th>--%>
@@ -805,7 +807,7 @@ Author     : miracle
                                                             </table>
                                                             <br/>
                                                             <label class="page_option"> Display <select id="vpaginationOption" class="disPlayRecordsCss" onchange="vpagerOption()" style="width: auto">
-                                                                    <option>1</option>
+                                                                    <option>10</option>
                                                                     <option>15</option>
                                                                     <option>25</option>
                                                                     <option>50</option>
@@ -919,35 +921,48 @@ Author     : miracle
                                                             <s:hidden name="accountSearchID" id="accountSearchID" value="%{accountSearchID}"></s:hidden>
                                                             <s:hidden name="gridDownload" id="gridDownload" value=""/>
                                                             <div class="row">
+                                                                <s:if test="vendor!='yes'">
+                                                                    <div class="col-lg-4">
+                                                                        <label style="color:#56a5ec;" class="labelStylereq">Vendor Name:</label>
+                                                                        <s:textfield cssClass="form-control" name="vendorName" id="vendorName" tabindex="1" maxLength="60"/>
+                                                                    </div>
+                                                                </s:if>
+                                                                <s:else><s:hidden name="vendorName" id="vendorName" /></s:else>
                                                                 <div class="col-lg-4">
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">Vendor Name:</label>
-                                                                    <s:textfield cssClass="form-control" name="vendorName" id="vendorName" tabindex="1" maxLength="60"/>
-                                                                </div>
 
-                                                                <div class="col-lg-4">
-
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">Candidate Name:&nbsp;&nbsp;</label>
+                                                                    <label style="color:#56a5ec;" class="labelStylereq">First Name:&nbsp;&nbsp;</label>
                                                                     <s:textfield cssClass="form-control" name="consult_name" id="consult_name" placeholder="" value="%{consult_name}" tabindex="1" maxLength="30"/>
 
                                                                 </div>
-
                                                                 <div class="col-lg-4">
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">E-Mail:</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_email" id="consult_email" placeholder="" value="%{consult_email}" tabindex="1" maxLength="60"/>
+
+                                                                    <label style="color:#56a5ec;" class="labelStylereq">Last Name:&nbsp;&nbsp;</label>
+                                                                    <s:textfield cssClass="form-control" name="consult_lstname" id="consult_lstname" placeholder="" value="%{consult_lstname}" tabindex="1" maxLength="30"/>
 
                                                                 </div>
+                                                                <s:if test="vendor=='yes'">
+                                                                    <div class="col-lg-4">
+                                                                        <label style="color:#56a5ec;" class="labelStylereq">E-Mail:</label>
+                                                                        <s:textfield cssClass="form-control" name="consult_email" id="consult_email" placeholder="" value="%{consult_email}" tabindex="1" maxLength="60"/>
 
+                                                                    </div>
+                                                                </s:if>
+                                                                <s:else><s:hidden name="consult_email" id="consult_email"/></s:else>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-lg-4">
                                                                     <label style="color:#56a5ec;" class="labelStylereq">Skill Set:</label>
                                                                     <s:textfield cssClass="form-control" name="consult_skill" id="consult_skill" placeholder="" value="%{consult_skill}" tabindex="1" maxLength="100"/>
                                                                 </div>
-
-                                                                <div class="col-lg-4">
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">Phone:</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_phno" id="consult_phno" placeholder="" value="%{consult_phno}" tabindex="1" maxLength="15"/>
-                                                                </div>
+                                                                <s:if test="vendor=='yes'">
+                                                                    <div class="col-lg-4">
+                                                                        <label style="color:#56a5ec;" class="labelStylereq">Phone:</label>
+                                                                        <s:textfield cssClass="form-control" name="consult_phno" id="consult_phno" placeholder="" value="%{consult_phno}" tabindex="1" maxLength="15"/>
+                                                                    </div>
+                                                                </s:if>
+                                                                <s:else>
+                                                                    <s:hidden name="consult_phno" id="consult_phno"/>
+                                                                </s:else>
                                                                 <s:hidden name="consultantFlag" id="consultantFlag" value="%{consultantFlag}"/>
 
                                                                 <div class="col-lg-4">
@@ -956,8 +971,8 @@ Author     : miracle
                                                                         <div class="col-lg-6">
                                                                             <label class="labelStylereq" style="color:#56a5ec;"></label>
                                                                             <s:submit type="button" cssClass="add_searchButton form-control" id="searchButton" cssStyle="margin:5px 0px;" value="" onclick="return getConsultantListBySearch();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                                            </div>
-                                                                            <div class="col-lg-6">
+                                                                        </div>
+                                                                        <div class="col-lg-6">
                                                                             <s:if test="consultantFlag == 1">
                                                                                 <label class="labelStylereq" style="color:#56a5ec;"></label>
                                                                                 <a href="/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/addConsultant.action" ><input type="button" class=" cssbutton form-control"" value="Add Consultant"></a> &nbsp;
@@ -995,9 +1010,14 @@ Author     : miracle
                                                                                         <th>Vendor</th>
                                                                                     </s:if>
                                                                                     <th>Candidate Name</th>
-                                                                                    <th>E-Mail</th>
+                                                                                    <th>Submitted Date</th>
+                                                                                    <s:if test="vendor=='yes'">
+                                                                                        <th>E-Mail</th>
+                                                                                    </s:if>
                                                                                     <th>Skill Set</th>
-                                                                                    <th>Phone No</th>
+                                                                                    <s:if test="vendor=='yes'">
+                                                                                        <th>Phone No</th>
+                                                                                    </s:if>
                                                                                     <th>Status</th>
                                                                                     <th>Rate</th>
                                                                                     <th>Resume</th>
@@ -1005,12 +1025,14 @@ Author     : miracle
                                                                                         <th>Reviews</th>
                                                                                     </s:if>
                                                                                     <th>Proceed</th>
+                                                                                    <s:if test="vendor=='yes'">
+                                                                                        <th>Withdrawn</th>
+                                                                                    </s:if>
                                                                                     <%--   <s:if test="accountFlag=='csr'">    
                                                                                            <th>Login</th>  
                                                                                        </s:if> 
                                                                                            <th>Migration</th>--%>
                                                                                 </tr>
-
 
                                                                             </tbody>
                                                                         </table>
@@ -1164,6 +1186,30 @@ Author     : miracle
                     <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                 </div>
             </div>
+
+            <div id="conWithdraw_popup">
+                <div id="conWithdrawBox" class="marginTasks">
+                    <div class="backgroundcolor">
+                        <table>
+                            <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;Withdraw Comments&nbsp; </font></h4></td>        
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="conWithdraw_popup_close" onclick="conWithdrawClose('close')" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                        </table>
+                    </div>
+                    <s:hidden name="reqwithdrawId" id="reqwithdrawId"/>
+                    <s:hidden name="conWithdrawId" id="conWithdrawId"/>
+                    <div class="required">
+                        <label >Comments</label>
+                        <s:textarea name="withdrawComments" id="withdrawComments"  cssClass="form-control textareaSkillOverlay" />
+                    </div>
+
+                    <div class="pull-right" id="withdrawButtonDiv">
+                        <s:submit type="button" cssClass="cssbutton conWithdraw_popup_close" id="contactSend" value="OK" onclick="conWithdrawClose('ok');"/> 
+                    </div>
+                    <font style="color: #ffffff">..................... ..............................  ..........................................</font>
+                </div>
+            </div>
+
+
             <div id="consultantLoginOverlay_popup" >
                 <div id="consultantLoginBox" class="marginTasks">
                     <div class="backgroundcolor">

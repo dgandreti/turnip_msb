@@ -138,11 +138,25 @@ function getCostCenterName(){
     //var year=$('#oyear option:selected').text();
     //var quarterId= document.getElementById("oquarterId").value;
     var url='../budgets/getCostCenterNameByProjectId.action?projectId='+oproject;
-    //alert(url);
     var req=initRequest(url);
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
-            populateCCDetails(req.responseText);
+            alert(req.responseText);
+            var add=req.responseText.split("|");
+            if(add[1]=="CCN")
+            {
+                alert(add[0]);
+                $("e").html("<b><font color='red'>No Budget for cost center <br> so you cann't budget for this project</font> </b>");
+                $("e").show().delay(4000).fadeOut();
+                document.getElementById("costCenterBudgetAmt").value="";
+                document.getElementById("costCenterName").value=add[0];
+                document.getElementById("oestimateBudget").value="";
+                document.getElementById("oremainingAmt").value="";  
+                $("tip").html("");//" <font color='gray'>Estimated amount should not exceed</font> <font color='red'>$0.0.</font>");  ;
+            }
+            else{
+                populateCCDetails(req.responseText);
+            }
         } 
     };
     req.open("GET",url,"true");

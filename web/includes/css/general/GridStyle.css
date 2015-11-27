@@ -565,3 +565,8 @@ div#consultantdivEmail
     font-size:14px;
     font-weight: bold;
 }
+
+
+#projectBudget_popup{
+    width: 75%;
+}

@@ -14,16 +14,16 @@
 <script>
     //           Pagination Script
     var pager;
-//    function teamPagerOption(){
-//
-//        paginationSize = document.getElementById("teamPaginationOption").value;
-//        pager = new Pager('membersSearchResults', parseInt(paginationSize));
-//        pager.init();
-//        pager.showPageNav('pager', 'memberPageNavPosition');
-//        pager.showPage(1);
-//
-//    };
-//    //            End Pagination Script
+    //    function teamPagerOption(){
+    //
+    //        paginationSize = document.getElementById("teamPaginationOption").value;
+    //        pager = new Pager('membersSearchResults', parseInt(paginationSize));
+    //        pager.init();
+    //        pager.showPageNav('pager', 'memberPageNavPosition');
+    //        pager.showPage(1);
+    //
+    //    };
+    //    //            End Pagination Script
 
     function getProjectsReportsToList(){
         console.log("calling");
@@ -106,33 +106,33 @@
                                                 <br>
                                                 <s:hidden name="projectID" value="%{projectID}" id="projectID" />
                                                 <span><emp></emp></span>
-                                               <div class="inner-reqdiv-elements">
-                                                   <div class="row">
-                                                  <div class="col-lg-4">    
-                                                      <label class="labelStylereq">TeamMember Name</label>   
-                                                   <s:textfield cssClass="form-control" id="teamMemberName" type="text"  placeholder="Team Member Name" maxLength="30"/>
-                                                  </div>      
-                                                  <div class="col-lg-4">       
+                                                <div class="inner-reqdiv-elements">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">    
+                                                            <label class="labelStylereq">TeamMember Name</label>   
+                                                            <s:textfield cssClass="form-control" id="teamMemberName" type="text"  placeholder="Team Member Name" maxLength="30"/>
+                                                        </div>      
+                                                        <div class="col-lg-4">       
                                                             <%-- <s:textfield cssClass="textbox" id="teamMemberStatus" type="text" placeholder="Team Member Status"/>--%>
                                                             <label class="labelStylereq">Status:</label>  
                                                             <s:select id="status" name="status"  cssClass="form-control SelectBoxStyles" headerKey="DF" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"/>
-                                                  </div>
-                                               <div class="col-lg-2" style="margin-top: 18px">
-                                                   <a href='acc/setTeamMembersForProject.action?projectID=<%=projectId%>&projectFlag=addMember' class="add_searchButton form-control" style="margin:5px"><i class="fa fa-plus-square"></i>&nbsp;Add</a>  
+                                                        </div>
+                                                        <div class="col-lg-2" style="margin-top: 18px">
+                                                            <a href='acc/setTeamMembersForProject.action?projectID=<%=projectId%>&projectFlag=addMember' class="add_searchButton form-control" style="margin:5px"><i class="fa fa-plus-square"></i>&nbsp;Add</a>  
+                                                        </div>
+                                                        <div class="col-lg-2"style="margin-top: 18px">
+                                                            <button type="button" class="add_searchButton form-control"  value="" onclick="return searchTeamMembers();" style="margin:5px"><i class="fa fa-search">&nbsp;Search</i></button>
+                                                        </div>
+
+
                                                     </div>
-                                                    <div class="col-lg-2"style="margin-top: 18px">
-                                                        <button type="button" class="add_searchButton form-control"  value="" onclick="return searchTeamMembers();" style="margin:5px"><i class="fa fa-search">&nbsp;Search</i></button>
-                                                    </div>
-                                                
-                                               
-                                                </div>
                                                 </div>
                                             </s:form>
-                                                                             </div>
+                                        </div>
                                         <div>
                                             <s:form>
                                                 <div style="width: fit-content">
-                                                            <div class="emp_Content" id="emp_div" align="center" style="width:auto;margin: auto" >
+                                                    <div class="emp_Content" id="emp_div" align="center" style="width:auto;margin: auto" >
                                                         <table id="membersSearchResults" class="responsive CSSTable_task" border="5" style="width: 100%;margin: 13px auto auto;" >
 
                                                             <tr>
@@ -153,35 +153,37 @@
                                                             <s:iterator  value="projectsTeamList">
                                                                 <s:hidden id="status" name="status" value="%{status}"/>
                                                                 <s:url action="acc/setTeamMembersForProject.action" var="getProjectDetails">
-                                                                            <s:param name="projectID"><s:property value="projectID"/></s:param>
-                                                                            <s:param name="userID" ><s:property  value="userID"/></s:param>
-                                                                           
-                                                                           
-                                                                    </s:url>
+                                                                    <s:param name="projectID"><s:property value="projectID"/></s:param>
+                                                                    <s:param name="userID" ><s:property  value="userID"/></s:param>
+
+
+                                                                </s:url>
                                                                 <tr>
-                                                                   
-                                                                     <td><s:a href="%{getProjectDetails}"><s:property value="firstName"/>.<s:property value="lastName"/></s:a></td>
+
+                                                                    <td><s:a href="%{getProjectDetails}"><s:property value="firstName"/>.<s:property value="lastName"/></s:a></td>
                                                                     <td><s:property value="designation"/></td>
                                                                     <td><s:property value="status"/></td>
                                                                     <%--<td><s:property value="skillName"/></td> --%>
                                                                     <td><s:property value="reportsTo1Name"/></td>
-                                                                   <%--<td><s:property value="reportsTo2Name"/></td>--%>
-                                                                   <s:if test="status=='Active'">
-                                                                   <td><a href="#" onclick="EmpReleasefromProject('<s:property value="userID"/>')"><img src="includes/images/release.png" height="25" width="25"></a></td>
-                                                                   </s:if>
-                                                                   <s:else>
-                                                                       <td>Released</td>
-                                                                   </s:else>
+                                                                    <%--<td><s:property value="reportsTo2Name"/></td>--%>
+                                                                    <s:if test="status=='Active'">
+                                                                        <td><a href="#" onclick="EmpReleasefromProject('<s:property value="userID"/>')"><img src="includes/images/release.png" height="25" width="25"></a></td>
+                                                                            </s:if>
+                                                                            <s:else>
+                                                                        <td>Released</td>
+                                                                    </s:else>
                                                                 </tr>
                                                             </s:iterator>
 
                                                         </table>
                                                         <br/>
+
                                                         <label class="page_options"> Display:
-                                                            <select id="paginationOption_mem" class="disPlayRecordsCss" onchange="PagerOption1()" style="width: auto">
-                                                                <option>5</option>
+                                                            <select id="paginationOption_mem" class="disPlayRecordsCss" onchange="PagerOption1()" style="width: auto">                                                                
                                                                 <option>10</option>
                                                                 <option>15</option>
+                                                                <option>25</option>
+                                                                <option>50</option>
                                                             </select>&nbsp;Team-Member per page
                                                         </label>
                                                         <div id="loadingTeamMember" class="loadingImg" style="display: none">
@@ -211,6 +213,26 @@
         </div>
 
     </section>
+            <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+
+<script type="text/javascript">
+    var recordPage=10;
+    function PagerOption1(){
+        //alert("PagerOption_mem");
+        var paginationSize = document.getElementById("paginationOption_mem").value;
+        if(isNaN(paginationSize))
+        {
+                       
+        }
+        //alert(paginationSize)
+        recordPage=paginationSize;
+               
+        $('#membersSearchResults').tablePaginate({navigateType:'navigator'},recordPage);
+
+    };
+    $('#membersSearchResults').tablePaginate({navigateType:'navigator'},recordPage);
+        
+</script>
 </div>
 
 <script>
@@ -218,23 +240,3 @@
     window.setTimeout("teamPagerOption();", 1000);
     setupAddProjectTeamMemberOverlay();
 </script>
-     <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function PagerOption1(){
-//alert("PagerOption_mem")
-               var paginationSize = document.getElementById("paginationOption_mem").value;
-                if(isNaN(paginationSize))
-                   {
-                       
-                   }
-                //alert(paginationSize)
-               recordPage=paginationSize;
-               
-                 $('#membersSearchResults').tablePaginate({navigateType:'navigator'},recordPage);
-
-            };
-        $('#membersSearchResults').tablePaginate({navigateType:'navigator'},recordPage);
-        
-       </script>

@@ -513,7 +513,7 @@
                                                     </tbody>
                                                 </table>
                                                 <br/>
-                                                <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
                                                         <option>10</option>
                                                         <option>15</option>
                                                         <option>25</option>
@@ -521,7 +521,7 @@
                                                     </select>
                                                     Review's per page
                                                 </label>
-                                                <div align="right" id="pageNavPosition" style="margin: -31px -1px 9px 5px;"></div>
+                                                <div align="right" id="pageNavPosition" style="margin: -31px -1px 9px 5px;display: none"></div>
                                             </div>
                                             <script type="text/javascript">
                                                 var pager = new Pager('techReviewSearchTable', 8); 
@@ -548,6 +548,24 @@
             </div>
         </footer><!--/Footer-->
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+        
+    <script type="text/javascript">
+        var recordPage=10;
+          function pagerOption(){
+//alert("recordPage")
+               var paginationSize = document.getElementById("paginationOption").value;
+                if(isNaN(paginationSize))
+                   {
+                       
+                   }
+                recordPage=paginationSize;
+                //alert(recordPage)
+                 $('#techReviewSearchTable').tablePaginate({navigateType:'navigator'},recordPage);
+
+            };
+        $('#techReviewSearchTable').tablePaginate({navigateType:'navigator'},recordPage);
+        </script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

@@ -121,7 +121,7 @@ function headingMessage(message)
         showContacts();
     }
     if(message.id=="vendorFormsHead"){
-        document.getElementById("headingmessage").innerHTML='Vendor Forms <i  class="fa fa-angle-up " id="updownArrow" onclick="toggleContent(\'contactDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
+        document.getElementById("headingmessage").innerHTML='Vendor Forms <i  class="fa fa-angle-up " id="updownArrow" onclick="toggleContent(\'VendorFormstDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
         showAttachments();
     }
     if(message.id=="acitivitieshead"){

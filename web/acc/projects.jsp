@@ -169,7 +169,7 @@
 
     <div>
         <div id="clickHere"></div>
-        <div id="addProject_popup" class="overlay">
+        <div id="addProject_popup" class="overlay" style="width:75%">
             <div id="addProjectOverlay">
 
                 <div style="background-color: #3BB9FF ">
@@ -397,12 +397,14 @@
 
                                                             </table>
                                                             <br/>
+                                                            <s:if test="searchDetails.size() > 0">
                                                             <label> Display:
                                                                 <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption();" style="width: auto">
                                                                     <option>10</option>
                                                                     <option>15</option>
                                                                 </select>&nbsp;Projects per page
                                                             </label>
+                                                          </s:if>
                                                             <div id="loadingSearchProject" class="loadingImg" style="display: none">
                                                                 <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>
                                                             </div>

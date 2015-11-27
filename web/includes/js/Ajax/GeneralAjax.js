@@ -1374,7 +1374,7 @@ function doUserGroupingMethod(){
         '&usrDescription='+usrDescription+
         '&usrCatType='+usrCatType+
         '&primary='+primary;
-        alert(url)
+        //alert(url)
         var req=initRequest(url);
         req.onreadystatechange = function() {
             if (req.readyState == 4) {
@@ -2229,10 +2229,10 @@ function generateInvoice(){
     //    var invoiceEndDateOver=document.getElementById("invoiceEndDateOver").value;
     var cheked;
     cheked=( $('#resourceAll').is(":checked"));
-    alert(cheked)
+   // alert(cheked)
     if(isvalidationInvoice(invoiceMonth,invoiceYear,invoiceResource,cheked)){
         var url=CONTENXT_PATH+'/sag/generateInvoice.action?invoiceMonth='+invoiceMonth+'&invoiceYear='+invoiceYear+'&invoiceResource='+invoiceResource+'&cheked='+cheked;
-        alert(url)
+      //  alert(url)
         var req=initRequest(url);
         req.onreadystatechange = function() {
             if (req.readyState == 4) {
@@ -2297,6 +2297,7 @@ function setupOverlay(overlayBox, popupId){
 }
 
 function isvalidationInvoice(invoiceMonth,invoiceYear,invoiceResource,cheked){
+ $("invoiceGenerarionMessage").css("display","");   
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()//January is 0!
@@ -2312,13 +2313,13 @@ function isvalidationInvoice(invoiceMonth,invoiceYear,invoiceResource,cheked){
            
         }else
         {
-            $("invoiceGenerarionMessage").html(" <b><font color='red'>Month Not Valid</font></b>.");
+            $("invoiceGenerarionMessage").html(" <b><font color='red'>Month Not Valid</font></b>.").show().delay(5000).fadeOut();
             return false; 
         }
     }
     else
     {
-        $("invoiceGenerarionMessage").html(" <b><font color='red'>Year Not Valid</font></b>.");
+        $("invoiceGenerarionMessage").html(" <b><font color='red'>Year Not Valid</font></b>.").show().delay(5000).fadeOut();
         return false;
     }
     if(cheked){
@@ -2330,7 +2331,7 @@ function isvalidationInvoice(invoiceMonth,invoiceYear,invoiceResource,cheked){
         }
         else
         {
-            $("invoiceGenerarionMessage").html(" <b><font color='red'>must be valid email</font></b>.");
+            $("invoiceGenerarionMessage").html(" <b><font color='red'>must be valid email</font></b>.").show().delay(5000).fadeOut();
             return false;
         }
     }

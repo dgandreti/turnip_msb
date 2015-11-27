@@ -15,7 +15,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ServicesBay :: Requirement List For All</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
-          <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/home/home.css"/>">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/home/home.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/main.css"/>">
@@ -42,7 +42,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
 
         <%--script type="text/javascript" src="<s:url value="/includes/js/Ajax/vendorAjax.js"/>"></script--%>
 
-  
+
         <script>
             //            var pager;
             //            // $(document).ready(function(){
@@ -68,7 +68,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
             //            };
        
         </script>
-        		
+
         <script type="text/javascript">
             ;function sortables_init() {
                 // Find all tables with class sortable and make them sortable
@@ -101,7 +101,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
             
         </script>
 
-      
+
 
 
     </head>
@@ -154,7 +154,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                 </div> 
             </div>
         </div>
-       
+
         <%-- model window popup --%>
 
         <%-- model window popup --%>
@@ -162,7 +162,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
             <div  class="container">
                 <div class="row">
                     <!-- content start -->
-                     <s:include value="/includes/menu/LeftMenu.jsp"/>
+                    <s:include value="/includes/menu/LeftMenu.jsp"/>
                     <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-12 ">
@@ -191,9 +191,9 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                             <s:hidden name="accountFlag" id="accountFlag" value="%{accountFlag}" ></s:hidden>
                                             <s:hidden name="customerFlag" id="customerFlag" value="%{customerFlag}" ></s:hidden> 
 
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <label class="labelStylereq " style="color:#56a5ec;">Job Id:</label>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <label class="labelStylereq " style="color:#56a5ec;">Job Id:</label>
                                                     <s:textfield cssClass="form-control" name="jdId" id="jdId" placeholder="Job Id"/>
                                                     <%--<s:select id="jobTitle" name="jobTitle" cssClass="reqSelectStyle" headerKey="-1" headerValue="jobTitle" theme="simple" list="{'Developer','Tester','Manager'}" />--%>
                                                 </div>
@@ -274,10 +274,10 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                             <label class="labelStylereq" style="color:#56a5ec;"></label>
                                                             <s:submit type="button" cssClass="add_searchButton form-control"
                                                                       value="Search" onclick="return getSearchRequirementsList()" cssStyle="margin:5px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
                                         </s:form>
                                         <br>
@@ -310,10 +310,11 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                     </s:else>
                                                                     <th class="unsortable">Skill set</th>
                                                                     <%--<th class="unsortable">Pre Skills</th>--%>
-                                                                    <s:if test="vendor!='yes'">
+                                                                   <%-- <s:if test="vendor!='yes'">
                                                                         <th class="unsortable">Approver</th>
                                                                         <th class="unsortable">Requisitioner</th>
-                                                                    </s:if>
+                                                                    </s:if> --%>
+                                                                    <th class="unsortable">Posted Date</th>
                                                                     <th class="unsortable">Status</th>
                                                                     <s:if test="vendor=='yes'"></s:if>
                                                                     <s:else>
@@ -379,10 +380,11 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                         <s:else>
                                                                             <td><s:a href="#" cssClass="preSkillOverlay_popup_open" onclick="preSkillOverlay('%{preSkillSet}')"><s:property  value="%{preSkillSet}"/></s:a></td>
                                                                         </s:else--%>
-                                                                        <s:if test="vendor!='yes'">
+                                                                       <%-- <s:if test="vendor!='yes'">
                                                                             <td><s:a href="#" cssClass="recruiterOverlay_popup_open" onclick="showOverlayRecruiter(%{req_contact1})"><s:property value="reqContactName1"></s:property></s:a></td>
                                                                             <td><s:a href="#" cssClass="recruiterOverlay_popup_open" onclick="showOverlayRecruiter(%{req_contact2})"><s:property value="reqContactName2"></s:property></s:a></td>
-                                                                        </s:if>
+                                                                        </s:if> --%>
+                                                                        <td><s:property value="postedDate"/></td> 
                                                                         <td><s:property value="status"></s:property></td>
                                                                         <s:if test="vendor=='yes'">
 
@@ -510,7 +512,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
 
                                     <%--close of future_items--%>
                                 </div>
-                               
+
                                 <div id="preSkillOverlay_popup">
                                     <div id="preskillBox" class="marginTasks">
                                         <div class="backgroundcolor">
@@ -532,33 +534,33 @@ Author     : Praveen<pkatru@miraclesoft.com>
                             </div>
                         </div>
                     </div> <s:if test="#session.primaryrole==3">         
-                                    <div class="side_popup">
+                        <div class="side_popup">
 
-                                        <div class="popup_block"> 
+                            <div class="popup_block"> 
 
-                                            <div class="addlink" style="height: 80px;" >
-                                                <s:url id="myUrl" action="/../../../Requirements/addRequirements.action">
-                                                    <s:param name="accountSearchID"><s:property value="orgid"/></s:param>
-                                                    <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
-                                                </s:url>
+                                <div class="addlink" style="height: 80px;" >
+                                    <s:url id="myUrl" action="/../../../Requirements/addRequirements.action">
+                                        <s:param name="accountSearchID"><s:property value="orgid"/></s:param>
+                                        <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
+                                    </s:url>
 
-                                                <div class="alignField"> <s:a href='%{#myUrl}'>    <img src="../../includes/images/requirement.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </s:a></div>
+                                    <div class="alignField"> <s:a href='%{#myUrl}'>    <img src="../../includes/images/requirement.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </s:a></div>
 
-                                                <div class="alignField">
+                                        <div class="alignField">
 
 
 
-                                                    <s:a href='%{#myUrl}'>   Add Requirement  </s:a>
-                                                </div>
-
-                                            </div>
+                                        <s:a href='%{#myUrl}'>   Add Requirement  </s:a>
                                         </div>
 
-                                        <div class="slide_popup"><img src="../../includes/images/next.png"  class="img-swap"></div>
                                     </div>
+                                </div>
+
+                                <div class="slide_popup"><img src="../../includes/images/next.png"  class="img-swap"></div>
+                            </div>
 
 
-                                </s:if>
+                    </s:if>
                 </div>
             </div>        <!-- content end -->
         </section><!--/form-->
@@ -602,7 +604,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
             };
             $('#reqTableInRecruiter').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-       <script>
+        <script>
             $(document).ready(function(){
                 $(".img-swap").click(function(){
                     $(".popup_block").animate({
@@ -611,7 +613,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                 });
             });
             
-               $(function(){
+            $(function(){
                 $(".img-swap").live('click', function() {
                    
                     if ($(this).attr("class") == "img-swap") {

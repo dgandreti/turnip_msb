@@ -55,20 +55,20 @@
         </script>
         -->
         <script>
-            var pager;
-           
-            function pagerOption(){
-               
-                paginationSize = document.getElementById("paginationOption").value;
-                if(isNaN(paginationSize))
-                    alert(paginationSize);
-
-                pager = new Pager('hoursOverlayTable', parseInt(paginationSize));
-                pager.init();
-                pager.showPageNav('pager', 'task_pageNavPosition');
-                pager.showPage(1);
-
-            };
+//            var pager;
+//           
+//            function pagerOption(){
+//               
+//                paginationSize = document.getElementById("paginationOption").value;
+//                if(isNaN(paginationSize))
+//                    alert(paginationSize);
+//
+//                pager = new Pager('hoursOverlayTable', parseInt(paginationSize));
+//                pager.init();
+//                pager.showPageNav('pager', 'task_pageNavPosition');
+//                pager.showPage(1);
+//
+//            };
             
         </script>
         
@@ -85,7 +85,7 @@
 
         </header>
                 
-                <div id="hoursOverlay_popup" class="hoursOverlay">
+                <div id="hoursOverlay_popup" class="hoursOverlay" style="width:35%">
         <div id="hoursInfoBox" >
 
             <div style="background-color: #3BB9FF ">
@@ -105,7 +105,7 @@
                     </tr>
                 </table > 
                  <div>
-                        <div class="col-lg-6">
+                      
                     <label> Display <select id="paginationOption" onchange="pagerOption()" style="width: auto">
                                                             <option>5</option>
                                                             <option>10</option>
@@ -115,10 +115,8 @@
                                                         </select>&nbsp;per&nbsp;page
                       
                     </label>
-                        </div>
-                        <div class="col-lg-6">
-                    <div id="task_pageNavPosition" align="right" style="margin-right:0vw"></div>
-                        </div>
+                       
+                    
                     </div> 
             </div>
         </div>
@@ -335,6 +333,24 @@
                     </div>
                 </footer>
                 <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
+                        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+        
+    <script type="text/javascript">
+        var recordPage=10;
+          function pagerOption(){
+
+               var paginationSize = document.getElementById("paginationOption").value;
+                if(isNaN(paginationSize))
+                   {
+                       
+                   }
+                recordPage=paginationSize;
+               // alert(recordPage)
+                 $('#hoursOverlayTable').tablePaginate({navigateType:'navigator'},recordPage);
+
+            };
+        $('#hoursOverlayTable').tablePaginate({navigateType:'navigator'},recordPage);
+        </script>
                 <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
                     <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
                 </div>

@@ -3847,3 +3847,15 @@ popupClose:hover{
 .labelColor{
     color: white;
 }
+
+div#conWithdrawBox
+{
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}

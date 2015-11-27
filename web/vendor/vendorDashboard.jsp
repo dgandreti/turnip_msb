@@ -113,7 +113,7 @@
                                                             <%--<th>Req.Won</th>
                                                                 <th>Req.Lost</th> --%>
                                                             <th>Month</th>
-                                                            <th>Requirements</th>
+                                                            <th>Total Requirements</th>
                                                             <th>Processing </th>
                                                             <th>Servicing </th>
                                                             <th>Selected</th>

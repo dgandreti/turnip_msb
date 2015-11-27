@@ -47,33 +47,7 @@
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/techReviewAjax.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/homeRedirectAjax.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery-1.2.2.pack.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/general/htmltooltip.js"/>"></script>
-
-        <style type="text/css">
-            div#imageTooltip{
-                display: none;
-            }
-            .bgcolor{
-                background-color:  #6495ED;
-                border-radius:4px 4px 4px 4px;
-            }
-
-            div.htmltooltip{
-                position: absolute; /*leave this and next 3 values alone*/
-                z-index: 1000;
-                left: -1000px;
-                top: -1000px;
-                background: #272727;
-                border: 10px solid #6495ED;
-                color: white;
-                padding: 3px;
-                width: 600px;
-                height: auto;
-                margin: 13px 11px 10px 21px;/*width of tooltip*/
-            }
-
-        </style>
+       
     </head>
     <s:if test="homeRedirectActionId!=0">
         <body onload="doOnLoad();">
@@ -151,7 +125,9 @@
                                         <div class="row">
                                             <div class="col-lg-12 required">
                                                 <label class="labelStylereq" style="color: #56a5ec">Action:</label>
-                                                
+                                                <a href="#" id="action_description" data-placement="right" onmouseover ="getActionDescription();">
+                                                      <img src="<s:url value="/includes/images/icons/isymbol.png" />" height="20" width="20" > 
+                                                </a>
                                                     <!--<a  href="" rel="htmltooltip" onmouseover="getActionDescription()" onmouseout="displaynon()"> <img src="<s:url value="/includes/images/icons/isymbol.png" />" height="20" width="20" style="margin: 0px -49px -1px -2px"> </a>-->
                                                 <s:if test="#session.typeOfUsr=='AC' or #session.typeOfUsr=='VC'">
                                                     <s:select cssClass="SelectBoxStyles form-control" name="actionName" id="actionName" value="%{homeVto.actionName}" list="actionName" />
@@ -233,6 +209,9 @@
                                         <div class="row">
                                             <div class="col-lg-12 required">
                                                 <label class="labelStylereq" style="color: #56a5ec">Action:</label>
+                                                <a href="#" id="action_description" data-placement="right" onmouseover ="getActionDescription();">
+                                                      <img src="<s:url value="/includes/images/icons/isymbol.png" />" height="20" width="20" > 
+                                                </a>
                                                 <s:if test="#session.typeOfUsr=='AC' or #session.typeOfUsr=='VC'">
                                                     <s:select cssClass="SelectBoxStyles form-control" name="actionName" id="actionName" list="actionName" />
                                                 </s:if>
@@ -275,21 +254,6 @@
         <div style="height: 206px"></div>
 
     </section>
-    <div class="htmltooltip">
-        <div id="data-tooltip" >
-            <center>
-                <div class="bgcolor">
-                    <table>
-                        <tr><td><h4 style="font-style: italic;color: black;">&nbsp;Action Description&nbsp;&nbsp;</h4></td></tr>
-                    </table>
-                </div>
-                <div>
-                <!--<table>-->
-                   <%--<s:textarea cssClass="form-control" id="NameOverlay" disabled="true" />--%>
-                <!--</table>-->
-                <span id ="NameOverlay" ></span>
-                </div>
-            </center></div></div>
             <%-- ------------MIDDLE -----------------------------------------%>
     <footer id="footer"><!--Footer-->
         <div class="footer-bottom" id="footer_bottom">
