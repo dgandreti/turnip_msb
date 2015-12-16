@@ -407,6 +407,7 @@
             <!--<interceptor-ref name="crudStack" />-->
             <interceptor-ref name="authorizationcheckStack" />
             <result name="success">requirementedit.jsp</result>
+            <result name="input">v_RequirementDetails.jsp</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>
@@ -524,6 +525,7 @@
         <action name="questionsCountCheck" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="questionsCountCheck"></action>
         <action name="skillsQuestions" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="skillsQuestions"></action>
         <action name="doWithdrawConsultant" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="doWithdrawConsultant"></action>
+        <action name="doDeclineConsultant" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="doDeclineConsultant"></action>
     </package>
 
 </struts>

@@ -129,7 +129,35 @@ public class ConsultantVTO implements Serializable {
     private List skillSetList;
 //Add for Relocation
     private String consult_relocation;
-     private int forwardby;
+    private int forwardby;
+    private String ConsultantVisa;
+    private String consultantIdProof;
+    private String consultantIdProofAttach;
+
+    public String getConsultantIdProof() {
+        return consultantIdProof;
+    }
+
+    public void setConsultantIdProof(String consultantIdProof) {
+        this.consultantIdProof = consultantIdProof;
+    }
+
+    public String getConsultantIdProofAttach() {
+        return consultantIdProofAttach;
+    }
+
+    public void setConsultantIdProofAttach(String consultantIdProofAttach) {
+        this.consultantIdProofAttach = consultantIdProofAttach;
+    }
+    
+
+    public String getConsultantVisa() {
+        return ConsultantVisa;
+    }
+
+    public void setConsultantVisa(String ConsultantVisa) {
+        this.ConsultantVisa = ConsultantVisa;
+    }
 
     public String getConsult_relocation() {
         return consult_relocation;
@@ -138,6 +166,7 @@ public class ConsultantVTO implements Serializable {
     public void setConsult_relocation(String consult_relocation) {
         this.consult_relocation = consult_relocation;
     }
+
     public List getSkillSetList() {
         return skillSetList;
     }
@@ -969,6 +998,4 @@ public class ConsultantVTO implements Serializable {
     public void setForwardby(int forwardby) {
         this.forwardby = forwardby;
     }
-    
-    
 }

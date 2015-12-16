@@ -29,6 +29,7 @@ public class RequirementListVTO {
     private String requirementMaxRate;
     private int orgId;
     private String postedDate;
+    private int noOfSubmissions;
 
     public String getPostedDate() {
         return postedDate;
@@ -179,5 +180,13 @@ public class RequirementListVTO {
 
     public void setRequirementMaxRate(String requirementMaxRate) {
         this.requirementMaxRate = requirementMaxRate;
+    }
+
+    public int getNoOfSubmissions() {
+        return noOfSubmissions;
+    }
+
+    public void setNoOfSubmissions(int noOfSubmissions) {
+        this.noOfSubmissions = noOfSubmissions;
     }
 }

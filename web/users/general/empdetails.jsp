@@ -38,7 +38,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>" > </script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/EmployeeProfile.js"/>"></script>
@@ -725,8 +725,8 @@
             </div>
         </footer><!--/Footer-->
 
-
-
+<script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 
 
 

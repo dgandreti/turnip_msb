@@ -5,6 +5,7 @@
 
 
 function Pager(tableName, itemsPerPage) {
+   
     this.tableName = tableName;
     this.itemsPerPage = itemsPerPage;
     this.currentPage = 1;
@@ -138,14 +139,15 @@ function goToMyPage(element) {
 $(document).ready(function() {
   var switched = false;
   var updateTables = function() {
-    if (($(window).width() < 917) && !switched ){
-      switched = true;
+    if (($(window).width() < 1025) && !switched ){
+    
+     switched = true;
       $("table.responsive").each(function(i, element) {
         splitTable($(element));
       });
       return true;
     }
-    else if (switched && ($(window).width() > 917)) {
+    else if (switched && ($(window).width() > 1025)) {
       switched = false;
       $("table.responsive").each(function(i, element) {
         unsplitTable($(element));

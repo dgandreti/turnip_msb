@@ -24,14 +24,15 @@
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/CountriesAjax.js"/>"></script>
         <%-- <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>--%>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/glinechart.js"/>"></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/dashBoardAjax.js"/>'></script>
@@ -44,12 +45,13 @@
                 </div>
             </div>
         </header>
-        <s:include value="/includes/menu/LeftMenu.jsp"/>
+       
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
+                    <s:include value="/includes/menu/LeftMenu.jsp"/>
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-12 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -72,10 +74,10 @@
                                                 <div class="row">
                                                      <s:hidden id="mainprojects"/>
                                                     <s:hidden id="subprojects"/>
-                                                    <div class="col-lg-2">
+                                                    <div class="col-sm-2">
                                                         <label class="" style="color:#56a5ec;">Year: </label>
                                                         <s:textfield cssClass="form-control" id="dashBoardYear"
-                                                                     name="dashBoardYear" placeholder="Year" onkeyup="getMainProjectsChart();"
+                                                                     name="dashBoardYear" placeholder="Year" onkeyup="getMainProjectsChart();" tabindex="1"
                                                                      />
                                                     </div>
                                                     <s:hidden id="mainprojectsList" value="%{projectsMap}"/>
@@ -253,6 +255,8 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

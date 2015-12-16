@@ -91,7 +91,10 @@ public interface UserAjaxHandlerService {
     public boolean isUserGroupExist(int userId) throws ServiceLocatorException;
 
     public String checkFileName(String xlsfileFileName) throws ServiceLocatorException;
-    
-    public String getQuestion(int questionNo, HttpServletRequest httpServletRequest, int selectedAns, String navigation, int remainingQuestions, int onClickStatus, int subTopicId, int specficQuestionNo,UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
+
+    public String getQuestion(int questionNo, HttpServletRequest httpServletRequest, int selectedAns, String navigation, int remainingQuestions, int onClickStatus, int subTopicId, int specficQuestionNo, UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
+
     public String getEmpRecruitment(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
+
+    public int doUpdateVisaAttachment(int consultantId, String fileName) throws ServiceLocatorException;
 }

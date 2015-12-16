@@ -31,7 +31,7 @@
         <%-- for date picket start--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>
@@ -92,7 +92,7 @@
 
 
 </head>
-<body onload="calculateRemainingHrs();doOnLoad();">
+<body onload="calculateRemainingHrs();doOnLoad();javascript: $.getScript('/includes/js/general/GridNavigation.js' );">
     <header id="header"><!--header-->
         <div class="header_top"><!--header_top-->
             <div class="container">
@@ -108,10 +108,10 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-10 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-12 ">
-                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                            <div class="col-sm-12 ">
+                                <div class="row" id="profileBox" style="float: left; margin-top: 5px">
                                     <br>
                                     <% String accFlag = "accDetails";%> 
                                     <div class=""  style="float: left; margin-top:-12px; margin-bottom: 20px">
@@ -150,7 +150,7 @@
                                                         <s:param name="accountID"><s:property value="accountID"/></s:param>
                                                     </s:url>
                                                 </s:else>
-                                                <span> <s:a href='%{#myUrl}' cssClass="pull-right"><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                <span onclick="javascript: $.getScript('/includes/js/general/GridNavigation.js' );"/> <s:a href='%{#myUrl}' cssClass="pull-right"><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
                                                 </h4>
                                             </div>
 
@@ -176,16 +176,16 @@
                                                 <s:hidden id="textParentProjectID" value="%{projectID}" />
                                                 <s:hidden id="accountID" value="%{project.accountID}"/>
                                                 <s:hidden id="projectType" value="%{project.projectType}"/>                                                    </div>
+                                                <s:hidden id="mainProjectId" value="%{project.parentProjectID}"/> 
 
-
-                                            <div class="inner-addtaskdiv-elements " style="margin-left: -15px">
-                                                <div class="col-lg-4 required">
-                                                    <label > Name: </label><s:textfield  cssClass="form-control" id="editprojectName" name="project.projectName" key="project.projectName" value="%{project.projectName}" maxlength="30" onchange="checkProjectName(this.value);" cssStyle="margin-right:50px; "/>
+                                         
+                                                <div class="col-sm-3 required">
+                                                    <label > Name: </label><s:textfield  cssClass="form-control" id="editprojectName" name="project.projectName" key="project.projectName" value="%{project.projectName}" maxlength="30" onchange="checkProjectName(this.value,'%{project.projectType}');" cssStyle="margin-right:50px; "/>
                                                 </div>    
-                                                <div class="col-lg-4 required">
+                                                <div class="col-sm-3 required">
                                                     <label  >Status: </label><s:select  id="project.project_status"  name="project.project_status" cssClass="form-control SelectBoxStyles "  list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active','Completed':'Completed','Paused':'Paused'}"  headerValue="'%{project.project_status}'" cssStyle="margin-right:50px"/>
                                                 </div>  
-                                                <div class="col-lg-4">    
+                                                <div class="col-sm-4">    
                                                     <s:set scope="request" name="prjFlag" value="%{project.projectType}"/>
                                                     <%
                                                         int noOfResource = 0;
@@ -197,39 +197,40 @@
                                                     %>
                                                     <label >Number of Resources: </label><br> <% out.print(noOfResource + "");%>
                                                 </div> 
-                                            </div>
+                                                <div class="col-sm-12" >
+                                                    <label> Skill Set: </label><s:textfield  cssClass="form-control" id="projectReqSkills" placeholder="Skill Set" name="project.projectReqSkillSet" value="%{project.projectReqSkillSet}" style="" onkeydown="checkCharSkill(this)" onblur="removeMsg()" maxLength="100"/>
+                                                </div>
+                                           
 
-                                            <div class="inner-addtaskdiv-elements " >
-                                                <label class="projectLabelStyle"> Skill Set: </label><s:textfield  cssClass="form-control" id="projectReqSkills" name="project.projectReqSkillSet" value="%{project.projectReqSkillSet}" style="" onkeydown="checkCharSkill(this)" onblur="removeMsg()" maxLength="100"/>
-                                            </div>
+
                                             <div class="charNum" id="Skill"></div>                                                 
                                             <div class="inner-addtaskdiv-elements " style="margin-left: -15px">
-                                                <div class="col-lg-4 required">
+                                                <div class="col-sm-3 required">
                                                     <label >Start Date: </label><s:textfield cssClass="form-control" name="project.projectStartDate" value="%{project.projectStartDate}" id="projectStartDate" placeholder="%{project.projectStartDate}" cssStyle="background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;margin-right:38px" onkeypress=" return projectDateRepository();" onclick="dateValidate();" autocomplete="off"/>
                                                 </div>  
-                                                <div class="col-lg-4 required">
+                                                <div class="col-sm-3 required">
                                                     <label >Target Date: </label><s:textfield cssClass="form-control" name="project.projectTargetDate" value="%{project.projectTargetDate}" id="projectTargetDate" placeholder="%{project.projectTargetDate}" cssStyle="background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;" onkeypress=" return projectDateRepository();" onclick="dateValidate();" autocomplete="off"/>
                                                 </div>
-                                                <div class="col-sm-4  required">
+                                                <div class="col-sm-3  required">
                                                     <label>Target hours</label>
                                                     <div class="form-group input-group">
                                                         <s:textfield cssClass="form-control "  id="editProjectTargetHrs"  value="%{project.projectTargetHrs}" name="project.projectTargetHrs"  onkeypress="return noOfHoursValidate(event, this.id)"  onblur="calculateSubProjectTargetHrs()"/>
                                                         <span class="input-group-addon" style="padding-top: 5px">Hrs</span>
                                                     </div>
-                                                        <s:hidden name ="remainingSubpjctTotalHrs" id="remainingSubpjctTotalHrs" value="%{remainingTargetHrs}"/>
-                                                        <s:hidden name ="targetHours" id="targetHours" value="%{project.projectTargetHrs}"/>
+                                                    <s:hidden name ="remainingSubpjctTotalHrs" id="remainingSubpjctTotalHrs" value="%{remainingTargetHrs}"/>
+                                                    <s:hidden name ="targetHours" id="targetHours" value="%{project.projectTargetHrs}"/>
                                                 </div> 
                                             </div>
                                             <div class="inner-addtaskdiv-elements" style="margin-left: -15px">
 
-                                                <div class="col-sm-4  ">
+                                                <div class="col-sm-3 ">
                                                     <label>Worked hours</label>
                                                     <div class="form-group input-group">
                                                         <s:textfield cssClass="form-control " id="editProjectWorkedHrs"   name="project.projectWorkedHrs" value="%{project.projectWorkedHrs}" placeholder="" readonly="true"  />
                                                         <span class="input-group-addon" style="padding-top: 5px">Hrs</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4  ">
+                                                <div class="col-sm-3">
                                                     <label>Remaining hours</label>
                                                     <div class="form-group input-group">
                                                         <s:textfield cssClass="form-control " id="editProjectRemainingHrs"   name="project.projectRemainingHrs" placeholder="" readonly="true"  />
@@ -238,7 +239,7 @@
                                                 </div>        
 
                                                 <s:if test="project.projectType=='Main Project'">   
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-3">
                                                         <label>Cost Center: </label><s:select  id="costCenterName"  name="project.costCenterName" cssClass="form-control SelectBoxStyles "  list="%{costCenterNames}" value="%{project.costCenterName}" cssStyle="margin-right:50px"/>
                                                     </div>
                                                 </s:if> 
@@ -296,12 +297,13 @@
             </div>
         </div>
     </footer><!--/Footer-->
+    <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
     <s:if test="project.projectType=='Main Project'">
         <script>
             ajaxReplaceDiv('/getSubProjects?parentProjectName=<s:property value="project.projectName" />','#subProjects','parentProjectID=<s:property value="project.projectID" />');
             ajaxReplaceDiv('/getProjectsTeamMembers','#projectTeam','projectID=<s:property value="project.projectID" />');
         </script>
     </s:if>
-
+    <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 </body>
 </html>

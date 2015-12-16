@@ -28,8 +28,8 @@
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -43,6 +43,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.maskedinput.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/requirementAjax.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/vendorAjax.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/techReviewAjax.js"/>"></script>
 
@@ -83,7 +84,7 @@
                                         <s:hidden name="accountSearchID" id="accountSearchID" value="%{accountSearchID}" />
                                         <s:hidden name="vendorId" id="vendorId" />
                                         <label class="labelStylereq" style="color: #56a5ec">Vendor Name:</label>
-                                        <s:textfield cssClass="form-control" id="vendorName"  name="vendorName" onkeyup="return getVendorNames();" autocomplete='off' maxLength="60"/>
+                                        <s:textfield cssClass="form-control" id="vendorName" placeholder="Vendor Name"  name="vendorName" onkeyup="return getVendorNames();" autocomplete='off' maxLength="60"/>
                                     </div>
                                     <div class="col-lg-3">
                                         <label class="labelStylereq" style="color: #56a5ec">URL:</label>
@@ -105,7 +106,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <label class="labelStylereq" style="color: #56a5ec">Comments:</label>
-                                        <s:textarea cssClass="form-control" cssStyle="width=100%" name="vendorComments" id="vendorComments" onkeyup="checkCommentsChars(this)"/>
+                                        <s:textarea cssClass="form-control" cssStyle="width=100%" name="vendorComments" placeholder="Comments" id="vendorComments" onkeyup="checkCommentsChars(this)"/>
                                     </div>
                                 </div>
                                      <div class="charNum pull-left" id="JobcharNum"></div>
@@ -132,6 +133,8 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:186px;left:246px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

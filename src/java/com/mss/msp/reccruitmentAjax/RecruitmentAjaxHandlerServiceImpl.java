@@ -165,7 +165,7 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
         ConsultantVTO consult = new ConsultantVTO();
 
         try {
-            queryString = "SELECT * FROM acc_rec_attachment WHERE object_type='CV' AND object_id=? order by status";
+             queryString = "SELECT * FROM acc_rec_attachment WHERE (object_type='CV' OR object_type = 'CSA') AND object_id=? order by status";
 
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
@@ -461,7 +461,7 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
                         + "AND cr.req_id=" + recruitmentAjaxHandlerAction.getRequirementId() + " "
                         + "AND review_type='" + recruitmentAjaxHandlerAction.getReviewType() + "'";
             } else {
-                queryString = "SELECT CONCAT(c.first_name,'.',c.last_name) AS NAME,so.techreviewid,so.consultantid,cr.id,cr.STATUS,so.option1,so.option2,so.option3,so.option4,so.option5,so.option6,so.option7,so.option8,so.option9,so.option10,c.email1,so.createddate,c.phone1,cd.job_title,so.eid,so.examstatus,se.completed_ts  FROM sb_onlineexam so"
+                queryString = "SELECT CONCAT(c.first_name,'.',c.last_name) AS NAME,so.techreviewid,so.consultantid,cr.id,cr.STATUS,so.option1,so.option2,so.option3,so.option4,so.option5,so.option6,so.option7,so.option8,so.option9,so.option10,c.email1,so.createddate,c.phone1,cd.job_title,so.eid,so.examstatus,se.completed_ts,cr.comments  FROM sb_onlineexam so"
                         + " LEFT OUTER JOIN con_techreview cr ON(so.techreviewid=cr.id)"
                         + " LEFT OUTER JOIN users c ON(c.usr_id=so.consultantid)"
                         + " LEFT OUTER JOIN usr_details cd ON(cd.usr_id=so.consultantid)"
@@ -592,7 +592,7 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
                         resultString = resultSet.getString("NAME") + "|" + resultSet.getString("job_title") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("phone1") + "|" + DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("so.createddate")) + "|" + resultSet.getString("cr.STATUS")
                                 + "|" + StringUtils.chop(skill1Name1) + "|" + noOfQuestion1 + "|" + StringUtils.chop(skill1Name2) + "|" + noOfQuestion2 + "|" + StringUtils.chop(skill1Name3) + "|" + noOfQuestion3 + "|" + StringUtils.chop(skill1Name4) + "|" + noOfQuestion4 + "|" + StringUtils.chop(skill1Name5) + "|" + noOfQuestion5
                                 + "|" + StringUtils.chop(skill1Name6) + "|" + noOfQuestion6 + "|" + StringUtils.chop(skill1Name7) + "|" + noOfQuestion7 + "|" + StringUtils.chop(skill1Name8) + "|" + noOfQuestion8 + "|" + StringUtils.chop(skill1Name9) + "|" + noOfQuestion9 + "|" + StringUtils.chop(skill1Name10) + "|" + noOfQuestion10
-                                + "|" + rightAns1 + "|" + rightAns2 + "|" + rightAns3 + "|" + rightAns4 + "|" + rightAns5 + "|" + rightAns6 + "|" + rightAns7 + "|" + rightAns8 + "|" + rightAns9 + "|" + rightAns10 + "|" + resultSet.getString("so.examstatus") + "|" + date + "^";
+                                + "|" + rightAns1 + "|" + rightAns2 + "|" + rightAns3 + "|" + rightAns4 + "|" + rightAns5 + "|" + rightAns6 + "|" + rightAns7 + "|" + rightAns8 + "|" + rightAns9 + "|" + rightAns10 + "|" + resultSet.getString("so.examstatus") + "|" + date + "|"+ resultSet.getString("cr.comments")+"^";
                     }
                 }
             }
@@ -867,10 +867,14 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
         int result = 0;
         try {
             //queryString = "UPDATE con_techreview SET STATUS='"+recruitmentAjaxHandlerAction.getExamStatus()+"' WHERE id=" + recruitmentAjaxHandlerAction.getConTechReviewId();
-            queryString = "UPDATE con_techreview ct left outer join req_con_rel rc on(rc.consultantId=ct.consultant_id) "
+             queryString = "UPDATE con_techreview ct left outer join req_con_rel rc on(rc.consultantId=ct.consultant_id) "
                     + "SET "
+                    + "ct.comments='" + recruitmentAjaxHandlerAction.getCnslt_comments() + "' ,"  
+                    + "rc.modified_By='" + recruitmentAjaxHandlerAction.getUserSessionId() + "',"
+                    + "rc.modified_date='" + com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDate() + "',"
                     + "ct.STATUS='" + recruitmentAjaxHandlerAction.getExamStatus() + "' ,"
-                    + "rc.STATUS='" + recruitmentAjaxHandlerAction.getExamStatus() + "'"
+                    + "rc.STATUS='" + recruitmentAjaxHandlerAction.getExamStatus() + "' ,"
+                    + "rc.customercomments='" + recruitmentAjaxHandlerAction.getCnslt_comments() + "' " 
                     + " WHERE ct.consultant_id=" + recruitmentAjaxHandlerAction.getConsult_id() + " AND ct.req_id=" + recruitmentAjaxHandlerAction.getRequirementId() + " "
                     + " AND rc.consultantId=" + recruitmentAjaxHandlerAction.getConsult_id() + " AND rc.reqId=" + recruitmentAjaxHandlerAction.getRequirementId() + " "
                     + " AND ct.id=" + recruitmentAjaxHandlerAction.getConTechReviewId();
@@ -917,6 +921,44 @@ public class RecruitmentAjaxHandlerServiceImpl implements RecruitmentAjaxHandler
             // preparedStatement.setString(1, requirementAction.getRequirementExp());
             preparedStatement.setString(1, "Withdraw");
             preparedStatement.setString(2, recruitmentAjaxHandlerAction.getWithdrawComments());
+
+            updatedRows = preparedStatement.executeUpdate();
+
+            System.out.println("in doWithdrawConsultant() updatedRows ------->" + updatedRows);
+        } catch (SQLException se) {
+            throw new ServiceLocatorException(se);
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException se) {
+                throw new ServiceLocatorException(se);
+            }
+        }
+        return updatedRows;
+    }
+    public int doDeclineConsultant(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction) throws ServiceLocatorException {
+        int updatedRows = 0;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        String queryString = "update req_con_rel set status=?,customercomments=? WHERE reqId=" + recruitmentAjaxHandlerAction.getRequirementId() + " and consultantId='" + recruitmentAjaxHandlerAction.getConsultantId() + "'"
+                + " and createdbyOrgId=" + recruitmentAjaxHandlerAction.getCreatedByOrgId() + "";
+
+        System.out.println("doWithdrawConsultant() queryString" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+
+            preparedStatement = connection.prepareStatement(queryString);
+            // preparedStatement.setString(1, requirementAction.getRequirementExp());
+            preparedStatement.setString(1, "Rejected");
+            preparedStatement.setString(2, recruitmentAjaxHandlerAction.getRejectionComments());
 
             updatedRows = preparedStatement.executeUpdate();
 

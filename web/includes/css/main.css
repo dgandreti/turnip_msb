@@ -1,3 +1,5 @@
+
+
 body {
     font-family: 'Roboto', sans-serif;
 
@@ -5,6 +7,9 @@ body {
     font-weight:400px;
 }
 
+.anchorstyle{
+    margin-right: 15%;
+}
 #col-sm{
     background-image: url(bgg.jpg);
     border-radius: 31px; 
@@ -38,13 +43,16 @@ body {
     line-height:0.428571429;
     padding-bottom: 5px;
     height:53px;
-    background: rgba(0, 0, 0, 0) url("../images/home/header.jpg") no-repeat scroll left top / 100% 100%;
+    background: url("../images/home/header.jpg");
+    background-size:contain ;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 #footer_bottom {
     height:100%;
     /*background-color:#989898; /* Old browsers */
-    background:rgba(0, 0, 0, 0) url("../images/home/footer1.jpg") no-repeat scroll 0 0 / 100% 100%;
+    background:url("../images/home/footer1.jpg");
+     background-size:contain ;
 }
 @media (max-width: 600px) {
     #footer_bottom {
@@ -1558,7 +1566,7 @@ h2.title {
 }
 #generalForm {
     display: block;
-    margin-bottom: 25px;
+    margin-bottom: 269px;
     margin-top: 10px;
     overflow: hidden;
 }
@@ -3028,6 +3036,8 @@ select::-ms-expand {
     display: none;
 }
 
+
+
 #headSelectBoxStyle{
     border-radius:3px;
     width:129px;
@@ -3859,3 +3869,46 @@ div#conWithdrawBox
     overflow-x: hidden;
 
 }
+
+
+.contact_search{
+    width:100px;
+}
+
+
+
+.contact_add{
+     width:97px;
+}
+
+div#visaAttachOverlay
+{
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+div#declineBox
+{
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+
+}
+#updownArrowSub
+{
+    float: right;
+    cursor: pointer;
+    font-size: 30px;
+    margin-top: -8px;
+    color: white;
+}
+

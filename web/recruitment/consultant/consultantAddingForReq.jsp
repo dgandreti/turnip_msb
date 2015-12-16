@@ -24,11 +24,11 @@
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/requirementStyle.css"/>'>
-         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/selectivity-full.css"/>">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/selectivity-full.css"/>">
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -39,6 +39,23 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <%--script type="text/javascript" src="<s:url value="/includes/js/Ajax/vendorAjax.js"/>"></script--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
+
+        <style>
+            .selectivity-dropdown{
+                top:60px !important;
+                height: 110px !important;
+            }
+
+            .selectivity-dropdown{
+                width:15em !important;
+
+            }
+
+            .selectivity-results-container{
+                height:110px !important;
+            }
+        </style>
+
     </head>
     <body style="overflow-x: hidden"">
         <header id="header"><!--header-->
@@ -49,12 +66,13 @@
             </div>
         </header>
 
-        <s:include value="/includes/menu/LeftMenu.jsp"/>
+
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <s:include value="/includes/menu/LeftMenu.jsp"/>
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="" id="profileBox" style="float: left; margin-top: 5px">
                                 <div class="backgroundcolor" >
@@ -63,22 +81,22 @@
                                             <font color="#ffffff">Add Consultant For Job </font> 
                                             <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                             <s:url var="myUrl" action="getLoginUserRequirementList.action">
-                                                 <s:param name="accountFlag">MyRequirements</s:param> 
+                                                <s:param name="accountFlag">MyRequirements</s:param> 
                                                 <s:param name="orgid"><s:property value="%{orgid}"/></s:param> 
                                                 <s:param name="vendor">yes</s:param>
                                             </s:url>
                                             <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
 
-                                            </h4>
-
-                                        </div>
+                                        </h4>
 
                                     </div>
 
-                                    <div>
-                                        <div class="pull-left" style="float: left; margin-top:0px;margin-bottom: -7px;">
-                                            <label class=""> Job Title: </label>                                         
-                                            <span style="color:#FF8A14;"><s:property value="%{jobTitle}"/></span>
+                                </div>
+
+                                <div>
+                                    <div class="pull-left" style="float: left; margin-top:0px;margin-bottom: -7px;">
+                                        <label class=""> Job Title: </label>                                         
+                                        <span style="color:#FF8A14;"><s:property value="%{jobTitle}"/></span>
                                     </div>
                                     <div class="pull-right" style="float: left; margin-top:0px;margin-bottom: -7px;">
                                         <label class=""> Job ID: </label>                                         
@@ -98,33 +116,35 @@
                                     <s:form action="storeProofData" theme="simple"  enctype="multipart/form-data" onsubmit="return addconsultantValidation();">
 
                                         <span><e1></e1></span>
-                                        <div class="col-lg-12">
+                                        <div class="col-sm-12">
                                             <s:hidden name="reqId" id="reqId" value="%{requirementId}"/>
 
                                             <s:hidden name="resourceType" id="resourceType"/>
-                                             <s:hidden name="jdId" id="jdId" value="%{jdId}"/>
+                                            <s:hidden name="jdId" id="jdId" value="%{jdId}"/>
                                             <s:hidden name="jobTitle" id="jobTitle" value="%{jobTitle}"/>
                                             <s:hidden name="orgId" id="orgid" value="%{orgid}"/>
                                             <s:hidden name="targetRate" id="targetRate" value="%{targetRate}"/>
                                             <s:hidden name="requirementMaxRate" id="requirementMaxRate" value="%{maxRate}"/>    
 
 
-                                            <div class="col-lg-4">
-                                                <label class="labelStyleAddCon"><font color="red">*</font>Email:</label><s:textfield name="conEmail" id="conEmail" theme="simple" cssClass="form-control" onblur="getEmailExistance();" onclick="clearConultantAddOverlay()"/>
+                                            <div class="col-sm-4">
+                                                <label class="labelStyleAddCon"><font color="red">*</font>Email:</label><s:textfield name="conEmail" id="conEmail" placeholder="Email" theme="simple" cssClass="form-control" onblur="getEmailExistance();" onclick="clearConultantAddOverlay()" tabindex="1" maxlength="60" />
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStyleAddCon"><font color="red">*</font>Rate/Hr:</label>
                                                 <div class="input-group">
-                                                    <s:textfield name="ratePerHour" id="ratePerHour" theme="simple" cssClass="form-control"  onkeyup="return ratePerHourValidation();" onclick="clearConultantAddOverlay()" ><span class="input-group-addon">$</span></s:textfield>
-                                                      <span class="input-group-addon">/Hr</span>
+                                                    <s:textfield name="ratePerHour" id="ratePerHour" placeholder="Rate/Hr" theme="simple" cssClass="form-control"  onkeyup="return ratePerHourValidation();" onclick="clearConultantAddOverlay()" tabindex="2" maxlength="10" ><span class="input-group-addon">$</span></s:textfield>
+                                                    <span class="input-group-addon">/Hr</span>
                                                 </div>
                                             </div>
-
-
+                                            <div class="col-sm-4">
+                                                <label class="labelStyleAddCon">SSN No:</label><s:textfield name="ssnNo" id="ssnNo" placeholder="SSN No" theme="simple" cssClass="form-control" tabindex="3" maxlength="60"/>
                                             </div>
-                                            <div class="col-lg-12">
 
-                                                <div class="col-lg-4">
+                                        </div>
+                                        <div class="col-lg-12">
+
+                                            <div class="col-lg-4">
 
                                                 <s:hidden id="proofType" name="proofType" value="N"/>
                                             </div>
@@ -138,20 +158,25 @@
                                             </div>
                                         </div>
                                         <div id="skillField"  style="position: relative">
-                                            <div class="col-lg-6 required" >
+                                            <div class="col-sm-6 required" >
                                                 <label  class="labelStylereq skilllist" style="margin-left:10px;">Skills:</label>
-                                                <s:select cssClass="commentsStyle" name="skillCategoryValueList"  id="skillListValue" list="skillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()"  /> 
+                                                <s:select cssClass="commentsStyle" name="skillCategoryValueList"  id="skillListValue" list="skillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()" tabindex="3" /> 
                                                 <s:hidden id="propsedSkills" name="propsedSkills" />
                                                 <s:hidden id="tempSkillList"  value="%{skillValuesMap}"/>
                                             </div>  
                                         </div>
-                                        <div class="col-lg-14" id="IsEmployee">
-                                            <label class="labelStylereq" style="margin-left:  25px"><font color="red">*</font>Upload&nbsp;resume:</label><s:file  cssStyle="margin-left:  25px" name="file" id="file" cssClass=""  tabindex="12" onclick="clearConultantAddOverlay()" />
+                                        <div class="col-sm-14"> <!--id="IsEmployee"-->
+                                            <label class="labelStylereq" style="margin-left:  25px"><font color="red">*</font>Upload&nbsp;resume:</label><s:file  cssStyle="margin-left:  25px" name="file" id="file" cssClass=""   onclick="clearConultantAddOverlay()" tabindex="4" />
                                             <span style="color:red;margin-left: 25px">Upload PDF or Doc or Docx file.</span>
                                         </div>
-                                            <div class="col-md-10"></div>
-                                        <div class="col-lg-2">
-                                            <s:submit type="button" cssStyle="margin:5px 0px;" id="addConSubmit" cssClass="add_searchButton form-control" value="" onclick="return storeProofData()" ><i class=" fa fa-check-circle-o"></i>&nbsp;Submit</s:submit>
+                                        <div class="form-group col-sm-12">
+                                            <label class="labelStyle" id="labelLevelStatusReq">Comments </label> <s:textarea name="vendorComments" id="vendorComments" cssClass="titleStyle" value="" placeholder="Enter Comments Here" rows="3" onkeyup=" commentsCheckCharacters(this)"/>
+                                        </div>
+                                        <div id="charNum"></div>
+                                        <div class="col-md-10" style="height:100px"></div>
+
+                                        <div class="col-sm-2">
+                                            <s:submit type="button" cssStyle="margin:5px 0px;" id="addConSubmit" cssClass="add_searchButton form-control" value="" onclick="return storeProofData()" tabindex="5" ><i class=" fa fa-check-circle-o"></i>&nbsp;Submit</s:submit>
                                         </div>
 
 
@@ -165,9 +190,9 @@
             </div>
         </div>        <!-- content end -->
     </section><!--/form-->
-    
+
     <div style="height: 182px"></div>
-    
+
     <footer id="footer"><!--Footer-->
         <div class="footer-bottom" id="footer_bottom">
             <div class="container">
@@ -175,7 +200,7 @@
             </div>
         </div>
     </footer><!--/Footer-->
- <script language="JavaScript" src='<s:url value="/includes/js/general/popupoverlay.js"/>'></script>
+    <script language="JavaScript" src='<s:url value="/includes/js/general/popupoverlay.js"/>'></script>
     <script type="text/JavaScript" src="<s:url value="/includes/js/general/selectivity-full.min.js"/>"></script>
     <script>
         $(document).ready(function() {
@@ -187,5 +212,7 @@
         });
             
     </script>
+    <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+    <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 </body>
 </html>

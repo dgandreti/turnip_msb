@@ -29,7 +29,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -78,7 +78,7 @@
             <div class="container">
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="" id="profileBox" style="float: left; margin-top: 5px">
                                 <div class="backgroundcolor" >
@@ -96,22 +96,22 @@
                                 <s:form action="" theme="simple" id="costCenterInfo">
                                     <div class="inner-reqdiv-elements">
                                         <div class="row">
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-6">
                                                 <s:hidden name="ccCode" id="ccCode" value="%{ccCode}"/>
                                                 <label>Cost Center Code:</label><font style="color: #FF8A14;"><s:property value="ccCode"></s:property></font>
                                             </div>
-                                            <div class ="col-lg-3"></div>
-                                            <div class ="col-lg-3"></div>
-                                            <div class ="col-lg-3">
-                                                <label>Cost Center Name:</label><font style="color: #FF8A14;"><s:property value="ccName"/></font>
+                                            <div class ="col-sm-6">
+                                                <div class="pull-right">
+                                                    <label>Cost Center Name:</label><font style="color: #FF8A14;"><s:property value="ccName"/></font>
+                                                </div>
                                             </div></div>
-                                            <span id="info"></span>
+                                        <span id="info"></span>
                                         <div class="row">
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStylereq" style="color:#56a5ec">Year:</label>
                                                 <s:textfield cssClass="form-control" id="year"  name="year" placeHolder="YYYY" value="2015" onkeypress="return validationCostCenterYear(event,this.id)"/>
                                             </div>
-                                            <div class="col-lg-2 ">
+                                            <div class="col-sm-2 ">
                                                 <label class="labelStylereq" style="color:#56a5ec"></label>
                                                 <s:submit  cssClass="add_searchButton form-control" type="button" value="" onclick="return costCenterInfoSearch()" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                             </div>
@@ -131,12 +131,12 @@
 
                                                         <tr>
                                                             <!--<th>CcId</th>-->
-                                                            <th>Start Date</th>
-                                                            <th>End Date</th>
-                                                            <th>Estimated Amt</th>
-                                                            <th>Consumed Amt</th>
-                                                            <th>Balance Amt</th>
-                                                            <th>Budget Status</th>
+                                                            <th>Start&nbsp;Date</th>
+                                                            <th>End&nbsp;Date</th>
+                                                            <th>Estimated&nbsp;Amt</th>
+                                                            <th>Consumed&nbsp;Amt</th>
+                                                            <th>Balance&nbsp;Amt</th>
+                                                            <th>Budget&nbsp;Status</th>
                                                             <th>Status</th>
                                                         </tr>
                                                         <s:if test="costCenterSearchList.size == 0">
@@ -157,7 +157,7 @@
                                                             <td><s:property value="balanceAmt"></s:property></i></td>
                                                             <td><s:property value="budgetStatus"></s:property></i></td>
                                                             <td><s:property value="status"></s:property></i></td>
-                                                            </tr>
+                                                        </tr>
                                                     </s:iterator>
                                                     </tbody>
                                                 </table>
@@ -198,24 +198,25 @@
             </div>
         </footer><!--/Footer-->
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
-<script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
 
-               var paginationSize = document.getElementById("paginationOption").value;
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+
+                var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
-                   {
+                {
                        
-                   }
+                }
                 recordPage=paginationSize;
-               // alert(recordPage)
-                 $('#costCenterInfoTable').tablePaginate({navigateType:'navigator'},recordPage);
+                // alert(recordPage)
+                $('#costCenterInfoTable').tablePaginate({navigateType:'navigator'},recordPage);
 
             };
-        $('#costCenterInfoTable').tablePaginate({navigateType:'navigator'},recordPage);
+            $('#costCenterInfoTable').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

@@ -23,9 +23,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
-
+   
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
@@ -48,18 +46,7 @@
                 // document.getElementById("paginationOption").value=5;
                 pager.showPage(1);
             };
-//            function pagerOption(){
-//
-//                paginationSize = document.getElementById("paginationOption").value;
-//                if(isNaN(paginationSize))
-//                    alert(paginationSize);
-//
-//                pager = new Pager('empCategorizationResults', parseInt(paginationSize));
-//                pager.init();
-//                pager.showPageNav('pager', 'pageNavPosition');
-//                pager.showPage(1);
-//
-//            };
+           
         </script>
         <script type="text/javascript">
             function sortables_init() {
@@ -93,7 +80,7 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -102,7 +89,6 @@
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
 
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Employee Categorization</font>
                                                 <i id="updownArrow" onclick="toggleContent('empCategorizationForm')" class="fa fa-angle-up"></i> 
                                             </h4>
@@ -112,10 +98,10 @@
                                     <!-- content start -->
                                     <div class="col-sm-12">
                                         <div id="empCategorizationForm">
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <s:hidden name="teamMemberId" id="teamMemberId" value="0"/>
                                                 <label class="labelStylereq" style="color:#56a5ec;">Employee Name: </label>
-                                                <s:textfield id="empName"
+                                                <s:textfield id="empName" tabindex="1"
                                                              cssClass="form-control"
                                                              type="text"
                                                              name="empName"
@@ -123,10 +109,10 @@
                                                 <%--onkeyup="return getTeamMemberNames();" /> --%>
                                                 <span id="validationMessage" />
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Category Group: </label>
                                                 <s:select  id="categoryType"
-                                                           name="categoryType"
+                                                           name="categoryType" tabindex="2"
                                                            cssClass="SelectBoxStyles form-control"
                                                            headerKey="-1" 
                                                            headerValue="Select Category"
@@ -134,39 +120,28 @@
                                                            list="categoryTypes"
                                                            />
                                             </div>
-                                            <%-- <div class="col-lg-4">
-                                                 <s:hidden name="teamMemberId" id="teamMemberId" value="0"/>
-                                                 <label class="labelStylereq" style="color:#56a5ec;">Employee Name: </label>
-                                                 <s:textfield id="teamMemberNamePopup"
-                                                              cssClass="form-control"
-                                                              type="text"
-                                                              name="empName"
-                                                              placeholder="Employee Name"
-                                                              onkeyup="return getTeamMemberNames();" /> 
-                                                 <span id="validationMessage" />
-                                             </div> --%>
-                                            <div class="col-lg-4">
+                                            
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
                                                 <s:select  id="empStatus"
-                                                           name="empStatus"
+                                                           name="empStatus" tabindex="3"
                                                            cssClass="SelectBoxStyles form-control"
                                                            headerKey="-1"  
                                                            theme="simple"
                                                            list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active','All':'All'}"
                                                            />
                                             </div >
-                                            <div class="col-lg-8"></div>
-                                            <div class="col-lg-2">
-                                                <a href='getUserGroping.action?addOrUpdate=add'><button type="button" class="add_searchButton form-control" value="" style="margin: 5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
+                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-2">
+                                                <a href='getUserGroping.action?addOrUpdate=add'><button type="button" tabindex="4" class="add_searchButton form-control" value="" style="margin: 5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-sm-2">
 
                                                 <s:submit type="button" cssStyle="margin:5px 0px;"
-                                                          cssClass="add_searchButton form-control"
+                                                          cssClass="add_searchButton form-control" tabindex="5"
                                                           value=""  onclick="return getEmpCategories();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
 
                                                 </div></div>
-                                            <%--<s:submit cssClass="css_button" value="show"/><br>--%>
                                         <div class="col-sm-12">
 
                                             <s:form>
@@ -273,31 +248,32 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
 
         <!--/Footer-->
-            <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
-               var paginationSize = document.getElementById("paginationOption").value;
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+
+                var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
-                   {
+                {
                        
-                   }
+                }
                 recordPage=paginationSize;
-               // alert(recordPage)
-                 $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
+                // alert(recordPage)
+                $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
 
             };
-        $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
+            $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <script>
             sortables_init();
         </script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>
+
     </body>
 </html>
 

@@ -39,7 +39,7 @@
         <%-- for date picket start--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
 
@@ -64,7 +64,7 @@
                 // alert("hii2");
                 //myCalendar.setDateFormat("%m/%d/%Y %H:%i");
                 myCalendar.setDateFormat("%m-%d-%Y");
-                  myCalendar.hideTime();
+                myCalendar.hideTime();
                 // alert("hii3");
                 //alert("myCalendar")
                 mycalenderweek = new dhtmlXCalendarObject(["weekrange"]);
@@ -80,7 +80,7 @@
                 
                 //alert("hii2");
                 myCalendar1.setDateFormat("%Y/%m/%d");
-                  myCalendar1.hideTime();
+                myCalendar1.hideTime();
                 
                 // default date code start from here
                 
@@ -198,18 +198,18 @@
                 //document.getElementById("paginationOption").value=10;
                 pager.showPage(1);
             });
-//            function pagerOption(){
-//
-//                paginationSize = document.getElementById("paginationOption").value;
-//                if(isNaN(paginationSize))
-//                    alert(paginationSize);
-//
-//                pager = new Pager('timesheet_results', parseInt(paginationSize));
-//                pager.init();
-//                pager.showPageNav('pager', 'timesheetpageNavPosition');
-//                pager.showPage(1);
-//
-//            };
+            //            function pagerOption(){
+            //
+            //                paginationSize = document.getElementById("paginationOption").value;
+            //                if(isNaN(paginationSize))
+            //                    alert(paginationSize);
+            //
+            //                pager = new Pager('timesheet_results', parseInt(paginationSize));
+            //                pager.init();
+            //                pager.showPageNav('pager', 'timesheetpageNavPosition');
+            //                pager.showPage(1);
+            //
+            //            };
         </script>
 
 
@@ -239,7 +239,7 @@
                     <s:include value="/includes/menu/LeftMenu.jsp"/>  
 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -249,45 +249,46 @@
 
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Team Time Sheets Search</font>
-                                                 <i id="updownArrow" onclick="toggleContent('teamTimesheetSearch')" class="fa fa-angle-up"></i>
+                                                <i id="updownArrow" onclick="toggleContent('teamTimesheetSearch')" class="fa fa-angle-up"></i>
 
                                             </h4>
                                         </div>
 
                                     </div>
-                                    
+
                                     <s:url var="myUrl" action="#"></s:url>
-                                    <span id="timesheetValidation"></span>
+                                        <span id="timesheetValidation"></span>
                                         <!-- content start onsubmit="return validateDates()" -->
-                                        <div class="col-sm-13">
+                                        <div class="col-sm-12">
                                         <s:form action="teamTimesheetSearch" onsubmit="return checkTimesheetDateRange();" theme="simple" >
                                             <br>
                                             <ul class="nav nav-pills">
                                                 <s:hidden value="%{reportingPerson}" name="reportingPerson" id="reportingPerson"/>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color:#56a5ec;">From Date:</label> 
                                                     <s:textfield cssClass="form-control dateImage" label="from date" name="startDate" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color:#56a5ec;">To Date:</label>
                                                     <s:textfield cssClass="form-control dateImage" label="To date" name="endDate" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
                                                     <s:select id="tmstatus" name="tmstatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'CA':'Entered','SU':'Submitted','AP':'Approved'}"/>
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color:#56a5ec;">Employee:</label>
                                                     <s:select id="tmstatus" name="tmmember" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Employee" theme="simple" list="teamMembersList"/>
                                                 </div>
+                                                <div class="col-sm-8 pull-right">
+                                                    <div class=" pull-right">
 
-                                                <div class="col-lg-2">
-                                                    
-                                                    <%--a href="#" onclick="addTimeSheetOverlayOpen()"><input type="button" class="cssbutton addTimeSheet_open" value="Add Timesheet"></a--%>&nbsp;&nbsp;&nbsp; 
-                                                    <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="searchButton" value="" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                </div>
-                                            </ul>
-                                            <br>
+                                                        <%--a href="#" onclick="addTimeSheetOverlayOpen()"><input type="button" class="cssbutton addTimeSheet_open" value="Add Timesheet"></a--%>&nbsp;&nbsp;&nbsp; 
+                                                        <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="searchButton" value="" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                                <br>
                                         </s:form>
                                         <%
                                             if (request.getParameter("resultMessage") != null) {
@@ -308,7 +309,7 @@
                                                                     <th>Emp Name</th>
                                                                     <th>Start Date</th>
                                                                     <th>End Date</th>
-                                                                     <th>Billable Hours</th>
+                                                                    <th>Billable Hours</th>
                                                                     <th>Status</th>
                                                                     <%--th>Reports To</th--%>
                                                                     <th>Submitted Date</th>
@@ -339,7 +340,7 @@
                                                                             String reports_to = usa.getReportsto1();
                                                                             String tm_submitted_date = usa.getSubmittedDate();
                                                                             String tm_approved_date = usa.getApprovedDate();
-                                                                            double  billableHr=usa.getTotalBillHrs();
+                                                                            double billableHr = usa.getTotalBillHrs();
                                                                 %>
                                                                 <tr>
                                                                     <td>
@@ -353,7 +354,7 @@
                                                                     <td><%= tm_empname%></td>
                                                                     <td><%= tm_start_date%></td>
                                                                     <td><%= tm_end_date%></td>
-                                                                     <td><%= billableHr%></td>
+                                                                    <td><%= billableHr%></td>
                                                                     <td><%= cur_status%></td>
                                                                     <%--td><%= reports_to%></td--%>
                                                                     <td><%= tm_submitted_date%></td>
@@ -380,12 +381,12 @@
                                                             </tbody>
                                                         </table>
                                                         <br/>
-                                                       <%
-                                                                        
+                                                        <%
 
-                                                                    
-                                                                    if (c > 0) {
-                                                                %>
+
+
+                                                            if (c > 0) {
+                                                        %>
                                                         <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
                                                                 <option>10</option>
                                                                 <option>15</option>
@@ -395,7 +396,7 @@
                                                             Time Sheets per page
                                                         </label>
                                                         <%    }
-                                                                %>
+                                                        %>
 
                                                         <%
                                                             if (c == 1) {
@@ -480,25 +481,26 @@
                 </div>
             </div>
         </footer><!--/Footer-->
- 
-        
-        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-       <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
 
-               var paginationSize = document.getElementById("paginationOption").value;
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+
+                var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
-                   {
+                {
                        
-                   }
+                }
                 recordPage=paginationSize;
-               // alert(recordPage)
-                 $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
+                // alert(recordPage)
+                $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
 
             };
-        $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
+            $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

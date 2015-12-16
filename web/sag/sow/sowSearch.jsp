@@ -30,7 +30,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -105,7 +105,7 @@
             <div class="container">
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="" id="profileBox" style="float: left; margin-top: 5px">
                                 <div class="backgroundcolor" >
@@ -121,41 +121,41 @@
                                 <s:form action="/sag/sow/SOWSearchAction" theme="simple" id="SOWSearchForm">
                                     <div class="inner-reqdiv-elements">
                                         <div class="row">
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStylereq" style="color:#56a5ec">Consultant Name:</label>
-                                                <s:textfield cssClass="form-control" id="consultantName"  name="consultantName" maxLength="60"/>
+                                                <s:textfield cssClass="form-control" id="consultantName" placeholder="Consultant Name" name="consultantName" maxLength="60"/>
                                             </div>
 
                                             <s:if test="#session.typeOfUsr == 'AC'">
-                                                <div class="col-lg-3">
+                                                <div class="col-sm-3">
                                                     <label class="labelStylereq" style="color:#56a5ec">Vendor Name:</label>
-                                                    <s:textfield cssClass="form-control" id="vendorName"  name="vendorName" maxLength="60"/>
+                                                    <s:textfield cssClass="form-control" id="vendorName" placeholder="Vendor Name" name="vendorName" maxLength="60"/>
                                                 </div>
                                             </s:if>
                                             <s:if test="#session.typeOfUsr == 'VC'">
-                                                <div class="col-lg-3">
+                                                <div class="col-sm-3">
                                                     <label class="labelStylereq" style="color:#56a5ec">Customer Name:</label>
-                                                    <s:textfield cssClass="form-control" id="customerName"  name="customerName" maxLength="60"/>
+                                                    <s:textfield cssClass="form-control" id="customerName" placeholder="Customer Name" name="customerName" maxLength="60"/>
                                                 </div>
                                             </s:if>
 
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStylereq" style="color:#56a5ec">Requirement Name:</label>
-                                                <s:textfield cssClass="form-control" id="requirementName"  name="requirementName" maxLength="50"/>
+                                                <s:textfield cssClass="form-control" id="requirementName" placeholder="Requirement Name" name="requirementName" maxLength="50"/>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStylereq" style="color:#56a5ec">Status:</label>
                                                 <%--<s:select id="status" cssClass="SelectBoxStyles form-control" name="status" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Selected':'Selected','Approved':'Approved','Rejected':'Rejected','Generated':'SOW generated','Submitted':'SOW Submitted','Released':'Released'}"/>--%>
                                                 <s:select id="status" cssClass="SelectBoxStyles form-control" name="status" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Created':'Created','Approved':'Approved','Rejected':'Rejected','Submitted':'Submitted','Paid':'Paid','Denied':'Denied'}"/>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStylereq" style="color:#56a5ec">Service&nbsp;Type</label>
 
                                                 <s:select name="SOWSelectValue" id="SOWSelectValue" cssClass="SelectBoxStyles form-control" list="#@java.util.LinkedHashMap@{'-1':'All','S':'SOW Proceed','F':'Finder Fee'}"/>
 
                                             </div>
-                                            <div class="col-lg-7"></div>
-                                            <div class="col-lg-2 ">
+                                            <div class="col-sm-7"></div>
+                                            <div class="col-sm-2 ">
                                                 <label class="labelStylereq" style="color:#56a5ec"></label>
                                                 <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                 </div>
@@ -338,6 +338,7 @@
 
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
     <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+    <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         
     <script type="text/javascript">
         var recordPage=10;
@@ -355,5 +356,6 @@
             };
         $('#sowResults').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

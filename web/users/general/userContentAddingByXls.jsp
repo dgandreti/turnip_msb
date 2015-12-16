@@ -31,7 +31,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/fileUploadScript.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.form.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -54,7 +54,7 @@
             });
         </script>
     </head>
-    <body style="overflow-x: hidden">
+    <body style="overflow-x: hidden" onload="jumper();">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -69,16 +69,16 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-14 ">
+                            <div class="col-sm-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
 
 
                                     <!-- content start -->
                                     <br>
                                     <% String accFlag = "accDetails";%> 
-                                    <div class="col-lg-12"  style=" margin-top:-12px; margin-bottom: 20px">
+                                    <div class="col-sm-12"  style=" margin-top:-12px; margin-bottom: 20px">
                                         <%--   <label >Account Name:   </label>                                       
                                           <s:url var="myUrl" action="viewAccount.action">
                                               <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param>
@@ -119,108 +119,108 @@
                                                     <s:hidden name="filePath" value="%{filePath}"/>
                                                     <s:hidden name="path" value="%{path}"/>
                                                     <div class="inner-reqdiv-elements">
-                                                        <div class="row">
-                                                            <div class="col-lg-4">
+                                                        
+                                                            <div class="col-sm-4">
                                                                 <label class="addAcclabelStyle"><span style="color:red;">*</span>First Name</label>
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="contactFname" list="%{columnsMap}"></s:select>  
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">Middle&nbsp;Name</label>
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="contactMname" list="%{columnsMap}"></s:select>  
                                                                     <span id="mnameError" class=""></span> 
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle"><span style="color:red;">*</span>Last Name</label>
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="contactLname" list="%{columnsMap}"></s:select>  
                                                                 </div>
 
 
-                                                            </div>
+                                                           
                                                         </div>
                                                         <div class="inner-reqdiv-elements">
-                                                            <div class="row">
-                                                                <div class="col-lg-4">
+                                                            
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle"><span style="color:red;">*</span>Email </label>
 
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="email1" list="%{columnsMap}"></s:select>  
                                                                 <%--label class="addAcclabelStyle"><span style="color:red;">*</span>Email</label><s:textfield cssClass="form-control" placeholder="email" name="ContactEmail" id="ContactEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Must be valid email')"   onchange="try{setCustomValidity('')}catch(e){}" required="true"  onkeyup="EmailValidation()" --%>
 
                                                             </div>
-                                                            <div class="col-lg-4">
+                                                            <div class="col-sm-4">
                                                                 <label class="addAcclabelStyle">Alternate Email</label>
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="email2" list="%{columnsMap}"></s:select>  
 
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">Gender</label>
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="contactGender" list="%{columnsMap}"></s:select>  
                                                                 <%-- <label class="addAcclabelStyle"><span style="color:red;">*</span>Designation</label><s:textfield cssClass="form-control" placeholder="Designation"  name="contactDesignation" id="designation"  required="true" onkeyup="contactDesignationValidation()"/>--%>
                                                                 <%--label class="addAcclabelStyle">Designation:</label><s:select cssClass="form-control SelectBoxStyles" placeholder="Designation"  name="contactDesignation" id="designation" headerkey="-1" list="designations" /--%>
                                                             </div>
 
-                                                        </div>
+                                                        
                                                     </div>
 
                                                     <div class="inner-reqdiv-elements">
-                                                        <div class="row">
-                                                            <div class="col-lg-4">
+                                                        
+                                                            <div class="col-sm-4">
                                                                 <label class="addAcclabelStyle"><span style="color:red;">*</span>Office&nbsp;Phone</label>
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="workPhone" list="%{columnsMap}"></s:select>  
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">Mobile Phone</label>
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="phone" list="%{columnsMap}"></s:select>  
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">Home Phone</label>
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="phone1" list="%{columnsMap}"></s:select>  
                                                                 </div>
 
-                                                            </div>
+                                                           
                                                         </div>
                                                         <div class="inner-reqdiv-elements">
-                                                            <div class="row">
-                                                                <div class="col-lg-4">
+                                                            
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle"><span style="color:red;">*</span>Title</label>
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="title" list="%{columnsMap}"></s:select>  
                                                                 </div>
 
-                                                            </div>
+                                                            
                                                         </div>
                                                         <!-- Add By Aklakh, start -->
                                                         <h4><b>Contact Address</b></h4>  
                                                         <div class="inner-reqdiv-elements">
-                                                            <div class="row">
-                                                                <div class="col-lg-4">
+                                                            
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">Address</label> 
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="address" list="%{columnsMap}"></s:select>  
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">Address2</label>     
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="address2" list="%{columnsMap}"></s:select>  
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">City</label>    
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="city" list="%{columnsMap}"></s:select>  
                                                                 </div>
 
-                                                            </div>
+                                                           
                                                         </div>
                                                         <div class="inner-reqdiv-elements">
-                                                            <div class="row">
-                                                                <div class="col-lg-4">
+                                                           
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">Country</label>    
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="country" list="%{columnsMap}"></s:select>  
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">State</label>  
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="state" list="%{columnsMap}"></s:select>  
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <label class="addAcclabelStyle">Zip</label>   
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="zip" list="%{columnsMap}"></s:select>  
                                                                 </div>
-                                                            </div>
+                                                           
                                                         </div>
 
 
@@ -343,12 +343,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-8"></div>
-                                <div class="col-lg-2">
+                                <div class="col-sm-8"></div>
+                                <div class="col-sm-2">
 
                                     <%--<s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-eraser form-control" id="button_manage"  value="Clear"/>&nbsp;--%>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-sm-2">
                                     <s:submit type="button" cssStyle="margin:5px 0px;"  value="Save" cssClass="add_searchButton fa fa-floppy-o form-control" theme="simple"></s:submit>
 
                                     </div>
@@ -396,5 +396,7 @@
         </div>
     </div>
 </footer><!--/Footer-->
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
 </body>
 </html>

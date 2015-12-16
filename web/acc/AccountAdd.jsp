@@ -31,7 +31,7 @@
 
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/account/formVerification.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.maskedinput.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
@@ -40,6 +40,7 @@
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script language="JavaScript" type="text/javascript" src="<s:url value="/includes/js/general/ProfilePage.js"/>" ></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/CountriesAjax.js"/>"></script>
 
 
@@ -47,6 +48,7 @@
     </head>
 
     <body onload="getStockSymbol($(acc_country).val()); getStates($(acc_country).val(),'#acc_state');">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -55,12 +57,12 @@
             </div>
 
         </header>
-
+         <div id="main">        
         <div class="container">
             <div class="row">
                 <!-- Main Content-->
                 <s:include value="/includes/menu/LeftMenu.jsp"/>
-                <div class="col-md-10" style="">
+                <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="">
                     <!-- Add Form Area -->
                     <div class="col-lg-12">
                         <div class="" id="profileBox" style="float: left; margin-top: 15px; margin-bottom: 20px">
@@ -105,44 +107,45 @@
                                     <h4><b>Account Information</b></h4>
                                     <div class="col-sm-12">
                                         <div class="row">
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <span>
                                                     <label class="labelStyle2"><span class="accDetailsError">*</span>Account Name</label>
                                                     <s:textfield cssClass="form-control" id="account_name" type="text" maxLength="60"
                                                                  name="account.name" placeholder="Account Name" value="%{account.name}"
-                                                                 onblur="javascript: nameCheck('#account_name','#accountNameValidation')" />
+                                                                 onblur="javascript: nameCheck('#account_name','#accountNameValidation')" tabindex="1" />
                                                     <span id="accountNameValidation" class="accDetailsError"></span>
                                                 </span>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <span>
                                                     <label class="labelStyle2"><span class="accDetailsError">*</span> Account URL </label>
                                                     <s:textfield cssClass="form-control" id="account_url" type="text" maxLength="60"
                                                                  name="account.url"  placeholder="Account Url" value="%{account.url}"
-                                                                 onblur="javascript: urlCheck('#account_url','#accountURLValidation')"/>
+                                                                 onblur="javascript: urlCheck('#account_url','#accountURLValidation')" tabindex="2" />
                                                     <span id="accountURLValidation" class="accDetailsError"></span>
                                                 </span>
                                                 <br />
                                             </div>
 
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <span>
                                                     <label class="labelStyle2"><span class="accDetailsError">*</span> Account Type </label>
                                                     <s:select  cssClass="SelectBoxStyles form-control" id="account_type"
                                                                name="account.typeId" list="accountTypeList"
                                                                value="%{account.typeId}"
                                                                headerKey="" headerValue="Select Account Type"
-                                                               cssStyle="width:100%;" onchange="validateDropDown('account_type','accountTypeValidation')"/>
+                                                               cssStyle="width:100%;" onchange="validateDropDown('account_type','accountTypeValidation')" tabindex="3" />
                                                     <span id="accountTypeValidation" class="accDetailsError"></span>
                                                 </span>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <span>
                                                     <label class="labelStyle2"><span class="accDetailsError">*</span> Mail Extention </label>
                                                     <s:textfield  cssClass="form-control" id="email_ext" maxLength="60"
                                                                   name="account.email_ext" list="accountTypeList"
+                                                                  placeholder="Mail Extention"
                                                                   value="%{account.email_ext}"
-                                                                  cssStyle="width:100%;" onchange="getValidExtention()"/>
+                                                                  cssStyle="width:100%;" onchange="getValidExtention()" tabindex="4" />
                                                     <span id="accountTypeValidation" class="accDetailsError"></span>
                                                     <span id="orgExtCheckSpan"></span>
                                                 </span>
@@ -170,14 +173,14 @@
                                                     <label class="labelStyle2"> Address 1 </label>
                                                     <s:textfield cssClass="form-control" id="address1" type="text" maxLength="100"
                                                                  name="account.address1" placeholder="Address 1"
-                                                                 value="%{account.address1}"/>
+                                                                 value="%{account.address1}" tabindex="5" />
                                                 </span></div>
                                             <div class="col-sm-3">
                                                 <span>
                                                     <label class="labelStyle2"> Address 2 </label>
                                                     <s:textfield cssClass="form-control" id="address2" type="text" maxLength="100"
                                                                  name="account.address2" placeholder="Address 2"
-                                                                 value="%{account.address2}"/>
+                                                                 value="%{account.address2}" tabindex="6" />
                                                 </span></div>
 
                                             <div class="col-sm-3">
@@ -187,7 +190,7 @@
                                                                  name="account.city" placeholder="City"
                                                                  value="%{account.city}"
                                                                  onkeypress="return cityValidate(event);"
-                                                                onblur="return digitValidate()" />
+                                                                onblur="return digitValidate()" tabindex="7" />
                                                 </span>
                                                 <span id="cityError"></span>  
                                                 <span id="cityCoError"></span> 
@@ -199,7 +202,7 @@
                                                                  name="account.zip" placeholder="Zip"
                                                                  value="%{account.zip}"
                                                                  onkeypress="return zipValidate(event);"
-                                                                 onblur="return zipcharValidate()"/>
+                                                                 onblur="return zipcharValidate()" tabindex="8" />
                                                 </span>
                                                 <span id="zipError"></span>
                                             </div>
@@ -217,7 +220,7 @@
                                                               onchange="javascript:
                                                               getStates($(acc_country).val(),'#acc_state');
                                                               getStockSymbol($(acc_country).val());"
-                                                              cssStyle="width:100%;"  />
+                                                              cssStyle="width:100%;" tabindex="9" />
                                                     <%-- validateDropDown('acc_country','countryValidation')" --%>
                                                     <span id="countryValidation" class="accDetailsError"></span>
                                                 </span>
@@ -231,6 +234,7 @@
                                                               list="stateList" listKey="%{id}" listValue="%{name}"
                                                               cssStyle="width:100%;"
                                                               value="%{account.state.id}"
+                                                              tabindex="10"
                                                               />
                                                     <%-- onchange="validateDropDown('acc_state','stateValidation')" --%>
                                                     <span id="stateValidation" class="accDetailsError"></span>
@@ -242,7 +246,7 @@
                                                     <label  class="labelStyle2"> Phone </label>
                                                     <s:textfield cssClass="form-control" id="phone1" type="text" maxLength="15"
                                                                  name="account.phone" placeholder="Phone"
-                                                                 value="%{account.phone}"/>
+                                                                 value="%{account.phone}" tabindex="11" />
                                                     <span id="phoneValidation" class="accDetailsError"></span>
                                                 </span>
                                             </div>
@@ -251,7 +255,7 @@
                                                     <label  class="labelStyle2">Fax </label>
                                                     <s:textfield cssClass="form-control" id="fax" type="text" maxLength="15"
                                                                  name="account.fax" placeholder="Fax"
-                                                                 value="%{account.fax}"/>
+                                                                 value="%{account.fax}" tabindex="12" />
                                                     <span id="faxValidation" class="accDetailsError"></span>
                                                 </span>
                                             </div>
@@ -270,6 +274,7 @@
                                                               cssStyle="width:100%;"
                                                               headerKey="" headerValue="Select Industry" theme="simple"
                                                               list="industryList"  value="%{account.industryId}"
+                                                              tabindex="13"
                                                               />
                                                     <%--onchange="validateDropDown('acc_industry','industryValidation')" --%>
                                                     <span id="industryValidation" class="accDetailsError"/>
@@ -282,7 +287,8 @@
                                                                  name="account.region"  placeholder="Region"
                                                                  value="%{account.region}"
                                                                  onkeypress="return regionValidate(event);"
-                                                                 onblur="return rdigitValidate()"/>
+                                                                 onblur="return rdigitValidate()"
+                                                                 tabindex="14" />
                                                     <span id="regionValidation" class="accDetailsError"/>
                                                 </span>
                                             </div>
@@ -293,7 +299,8 @@
                                                                  name="account.territory"  placeholder="Territory"
                                                                  value="%{account.territory}"
                                                                  onkeypress="return territoryValidate(event);"
-                                                                 onblur="return tdigitValidate()"/>
+                                                                 onblur="return tdigitValidate()"
+                                                                 tabindex="15" />
                                                 </span>
                                                 <span id="territoryError" class=""></span>
                                             </div>
@@ -302,7 +309,7 @@
                                                     <label class="labelStyle2"> No. of Employees </label>
                                                     <s:textfield cssClass="form-control" id="acc_no_of_employees" type="text" maxLength="50"
                                                                  name="account.noemp" placeholder="No. of Employees"
-                                                                 value="%{account.noemp}"
+                                                                 value="%{account.noemp}" tabindex="16"
                                                                  />
                                             </div>
                                         </div>
@@ -325,7 +332,7 @@
                                                     <label class="labelStyle2">Tax ID </label>
                                                     <s:textfield cssClass="form-control" id="acc_tax_id" type="text" maxLength="20"
                                                                  name="account.tax_id" placeholder="Tax ID"
-                                                                 value="%{account.tax_id}"/>
+                                                                 value="%{account.tax_id}" tabindex="17" />
                                                     <span id="taxValidation" class="accDetailsError"/>
                                                 </span></div>
                                             <!--Linked to State and Country-->
@@ -334,7 +341,7 @@
                                                     <label class="labelStyle2">Stock Symbol </label>
                                                     <s:textfield cssClass="form-control" id="acc_stock_symbol" type="text"
                                                                  name="account.stockSymbol"  placeholder="Stock Symbol" readonly="true"
-                                                                 value="%{account.stockSymbol}"/>
+                                                                 value="%{account.stockSymbol}" tabindex="18" />
                                                 </span></div>
                                             <div class="col-sm-3">
                                                 <span>
@@ -342,7 +349,7 @@
                                                     <s:textfield cssClass="form-control" id="acc_revenue" type="text" maxLength="20"
                                                                  name="account.revenue"  placeholder="Revenue"
                                                                  value="%{account.revenue}"
-                                                                 onkeypress="return revenueValidate(event)"/>
+                                                                 onkeypress="return revenueValidate(event)" tabindex="19" />
                                                     <span id="revenueValidation" class="accDetailsError" ></span>
                                                 </span>
                                             </div>
@@ -353,22 +360,22 @@
                                                     <label  class="labelStyle2">Description </label>
                                                     <s:textarea cssClass="form-control" id="description" type="text"
                                                                 name="account.description"  placeholder="Description"
-                                                                maxlength="200" value="%{account.description}"    />
+                                                                maxlength="200" value="%{account.description}"  tabindex="20"  />
                                                     <span id="ResponsecharNum" class="charNum"></span>
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-6"></div>
-                                            <div class="col-sm-2">
+                                        <div class="col-sm-12 ">
+                                            <!--<div class="col-lg-6"></div>-->
+                                            <div class="col-sm-2 pull-right">
                                                 <%--s:reset type="button" cssClass="cssbutton_emps field-margin" key="reset" value="Clear"/--%>
-                                                <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" onclick="clearform();"/>
+                                                <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" onclick="clearform();" tabindex="21" />
                                             </div>
-                                            <div class="col-sm-2">
-                                                <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel"/>
+                                            <div class="col-sm-2 pull-right">
+                                                <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel" tabindex="22" />
                                             </div>
-                                            <div class="col-sm-2">
-                                                <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value=""><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                            <div class="col-sm-2 pull-right">
+                                                <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" tabindex="23" ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -383,7 +390,7 @@
                 </div>
             </div>
         </div>
-
+       </div>                          
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">
@@ -392,6 +399,7 @@
             </div>
         </footer>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
-
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
+</div>
     </body>
 </html>

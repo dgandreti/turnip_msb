@@ -1025,7 +1025,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             resultSet = statement.executeQuery(queryString);
 
             while (resultSet.next()) {
-                resultString += resultSet.getString("csr_id") + "|" + resultSet.getString("NAME") + "|" + resultSet.getString("STATUS") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("phone1") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("created_by")) + "|" + resultSet.getString("created_date") + "^";
+                resultString += resultSet.getString("csr_id") + "|" + resultSet.getString("NAME") + "|" + resultSet.getString("STATUS") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("phone1") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("created_by")) + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("created_date")) + "^";
             }
 
         } catch (Exception e) {

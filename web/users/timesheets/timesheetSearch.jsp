@@ -24,7 +24,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ServicesBay :: Time sheets Search</title>
-
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/main.css"/>">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/home/home.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
@@ -45,7 +46,7 @@
         <%-- for date picket start--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
 
@@ -225,307 +226,294 @@
 
 
     <body style="overflow-x: hidden" onload="doOnLoad();checkWeekStatus();loadPopup();">
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
-                    <s:include value="/includes/template/header.jsp"/> 
+        <div id="wrap">
+
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
+                        <s:include value="/includes/template/header.jsp"/> 
+                    </div>
                 </div>
-            </div>
 
-        </header>
+            </header>
+            <div id="main">
+                <section id="generalForm"><!--form-->
 
-        <section id="generalForm"><!--form-->
 
+                    <div class="container">
+                        <div class="row">
+                            <s:include value="/includes/menu/LeftMenu.jsp"/>  
+                            <!-- Model popup -->
 
-            <div class="container">
-                <div class="row">
-                    <s:include value="/includes/menu/LeftMenu.jsp"/>  
-                    <!-- Model popup -->
+                            <!-- Model popup, end -->
 
-                    <!-- Model popup, end -->
+                            <!-- content start -->
+                            <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
+                                <div class="features_items">
+                                    <div class="col-lg-14 ">
+                                        <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                                            <div class="backgroundcolor" >
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
 
-                    <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
-                        <div class="features_items">
-                            <div class="col-lg-14 ">
-                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
-                                    <div class="backgroundcolor" >
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
+                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                        <font color="#ffffff">Time Sheets Search</font>
+                                                        <i id="updownArrow" onclick="toggleContent('myTimesheetSearch')" class="fa fa-angle-up"></i>
 
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                <font color="#ffffff">Time Sheets Search</font>
-                                                <i id="updownArrow" onclick="toggleContent('myTimesheetSearch')" class="fa fa-angle-up"></i>
-
-                                            </h4>
-                                        </div>
-
-                                    </div>
-                                    <span id="timesheetValidation"></span>
-                                    <s:url var="myUrl" action="#"></s:url>
-                                    <!-- content start onsubmit="return validateDates()" -->
-                                    <div class="col-sm-13">
-                                        <s:form action="myTimesheetSearch" onsubmit="return checkTimesheetDateRange();" theme="simple" >
-                                            <br>
-                                            <ul class="nav nav-pills">
-                                                <s:hidden value="%{reportingPerson}" name="reportingPerson" id="reportingPerson"/>
-                                                <div class="col-lg-4">
-                                                    <label class="labelStylereq" style="color:#56a5ec;">From Date:</label>  
-                                                    <s:textfield cssClass="form-control dateImage" label="from date" name="startDate" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
+                                                    </h4>
                                                 </div>
-                                                <div class="col-lg-4">
-                                                    <label class="labelStylereq" style="color:#56a5ec;">To Date:</label>
-                                                    <s:textfield cssClass="form-control dateImage" label="To date" name="endDate" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
-                                                    <s:select id="tmstatus" name="tmstatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'CA':'Entered','SU':'Submitted','AP':'Approved'}"/>
-                                                </div>
-                                                <div class="col-lg-8"></div>
-                                                <div class="col-lg-2">
+
+                                            </div>
+                                            <span id="timesheetValidation"></span>
+                                            <s:url var="myUrl" action="#"></s:url>
+                                                <!-- content start onsubmit="return validateDates()" -->
+                                                <div class="col-sm-13">
+                                                <s:form action="myTimesheetSearch" onsubmit="return checkTimesheetDateRange();" theme="simple" >
+                                                    <br>
+                                                    <ul class="nav nav-pills">
+                                                        <s:hidden value="%{reportingPerson}" name="reportingPerson" id="reportingPerson"/>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">From Date:</label>  
+                                                            <s:textfield cssClass="form-control dateImage" label="from date" name="startDate" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">To Date:</label>
+                                                            <s:textfield cssClass="form-control dateImage" label="To date" name="endDate" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
+                                                            <s:select id="tmstatus" name="tmstatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'CA':'Entered','SU':'Submitted','AP':'Approved'}"/>
+                                                        </div>
+                                                        <div class="btn_align">
+                                                            <div class="col-sm-2 pull-right">
 
 
-                                                    <a href="#" onclick="addTimeSheetOverlayOpen();return clearPreviousDate();"><button class="add_searchButton addTimeSheet_open form-control" style="margin:5px 0px -17px;" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>&nbsp;&nbsp;&nbsp; 
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <s:submit type="button"  cssStyle="margin:5px 0px;"  cssClass="add_searchButton form-control" id="searchButton" value="" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                </div>
-                                                <%
-                                                    if (request.getAttribute(ApplicationConstants.RESULT_MSG) != null) {
-                                                        out.println(request.getAttribute(ApplicationConstants.RESULT_MSG));
-                                                    }
-                                                %>  
-                                            </ul>
-                                            <br>
-                                            <%
-                                                if (request.getParameter("resultMessage") != null) {
-                                                    out.println(request.getParameter("resultMessage"));
-                                                }
-                                            %>  
-                                        </s:form>
-                                        <div class="col-sm-13">
-                                            <s:form>
-                                                <div class="task_content" id="task_div" align="center" style="display: none" >
-                                                    <div>
-                                                        <div>
-                                                            <span><addTimesheerResult></addTimesheerResult></span>    
-                                                            <table id="timesheet_results" class="responsive CSSTable_task" border="5" cell-spacing="2">
+                                                                <a href="#" onclick="addTimeSheetOverlayOpen();return clearPreviousDate();"><button class="add_searchButton addTimeSheet_open form-control" style="margin:5px 0px -17px;" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>&nbsp;&nbsp;&nbsp;
+                                                            </div>
+                                                            <div class="col-sm-2  pull-right">
+                                                                <s:submit type="button"  cssStyle="margin:5px 0px;"  cssClass="add_searchButton form-control" id="searchButton" value="" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                </div>
+                                                            </div>
+                                                        <%
+                                                            if (request.getAttribute(ApplicationConstants.RESULT_MSG) != null) {
+                                                                out.println(request.getAttribute(ApplicationConstants.RESULT_MSG));
+                                                            }
+                                                        %>  
+                                                    </ul>
+                                                    <br>
+                                                    <%
+                                                        if (request.getParameter("resultMessage") != null) {
+                                                            out.println(request.getParameter("resultMessage"));
+                                                        }
+                                                    %>  
+                                                </s:form>
+                                                <div class="col-sm-12">
+                                                    <s:form>
+                                                        <div class="task_content" id="task_div" align="center" style="display: none" >
+                                                            <div>
+                                                                <div>
+                                                                    <span><addTimesheerResult></addTimesheerResult></span>    
+                                                                    <table id="timesheet_results" class="responsive CSSTable_task" border="5" cell-spacing="2">
 
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th>Edit</th>
-                                                                        <th>Start Date</th>
-                                                                        <th>End Date</th>
-                                                                        <th>Status</th>
-                                                                        <th>Submitted Date</th>
-                                                                        <th>Billable Hours</th>
-                                                                        <th>Approved/Rejected by</th>
-                                                                        <th>Approved/Rejected Date</th>
-                                                                        <th>Delete</th>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th>Edit</th>
+                                                                                <th>Start Date</th>
+                                                                                <th>End Date</th>
+                                                                                <th>Status</th>
+                                                                                <th>Submitted Date</th>
+                                                                                <th>Billable Hours</th>
+                                                                                <th>Approved/Rejected by</th>
+                                                                                <th>Approved/Rejected Date</th>
+                                                                                <th>Delete</th>
 
-                                                                    </tr>
-                                                                    <%
+                                                                            </tr>
+                                                                            <%
 
-                                                                        int c = 0;
-                                                                        //if(session.getAttribute("TMResultmessage") != null){
-                                                                        // out.println(session.getAttribute("TMResultmessage"));
-                                                                        //  }
-                                                                        //out.println("request for time sheets---> "+session.getAttribute("timesheetsData"));
-                                                                        if ((List) session.getAttribute("timesheetsData") != null) {
+                                                                                int c = 0;
+                                                                                //if(session.getAttribute("TMResultmessage") != null){
+                                                                                // out.println(session.getAttribute("TMResultmessage"));
+                                                                                //  }
+                                                                                //out.println("request for time sheets---> "+session.getAttribute("timesheetsData"));
+                                                                                if ((List) session.getAttribute("timesheetsData") != null) {
 
-                                                                            List l = (List) session.getAttribute("timesheetsData");
-                                                                            //out.println("timesheet list"+l);
-                                                                            Iterator it = l.iterator();
-                                                                            while (it.hasNext()) {
-                                                                                if (c == 0) {
-                                                                                    c = 1;
-                                                                                }
-                                                                                TimesheetVTO usa = (TimesheetVTO) it.next();
-                                                                                int tms_id = usa.getTimesheetid();
-                                                                                int usr_id = usa.getUsr_id();
-                                                                                String tm_start_date = usa.getDateStart();
-                                                                                String tm_end_date = usa.getDateEnd();
-                                                                                String cur_status = usa.getReportsto1status();
-                                                                                String reports_to = usa.getReportsto1();
-                                                                                String tm_submitted_date = usa.getSubmittedDate();
-                                                                                String tm_approved_date = usa.getApprovedDate();
-                                                                                double tm_billableHr = usa.getTotalBillHrs();
-                                                                    %>
-                                                                    <tr>
-                                                                        <td>
+                                                                                    List l = (List) session.getAttribute("timesheetsData");
+                                                                                    //out.println("timesheet list"+l);
+                                                                                    Iterator it = l.iterator();
+                                                                                    while (it.hasNext()) {
+                                                                                        if (c == 0) {
+                                                                                            c = 1;
+                                                                                        }
+                                                                                        TimesheetVTO usa = (TimesheetVTO) it.next();
+                                                                                        int tms_id = usa.getTimesheetid();
+                                                                                        int usr_id = usa.getUsr_id();
+                                                                                        String tm_start_date = usa.getDateStart();
+                                                                                        String tm_end_date = usa.getDateEnd();
+                                                                                        String cur_status = usa.getReportsto1status();
+                                                                                        String reports_to = usa.getReportsto1();
+                                                                                        String tm_submitted_date = usa.getSubmittedDate();
+                                                                                        String tm_approved_date = usa.getApprovedDate();
+                                                                                        double tm_billableHr = usa.getTotalBillHrs();
+                                                                            %>
+                                                                            <tr>
+                                                                                <td>
 
-                                                                            <%--s:a href='%{#myUrl}'></s:a--%>
-                                                                            <s:url var="myUrl" action="../timesheets/getTimeSheets.action?timesheetFlag=My">
-                                                                                <s:param name="timesheetid"><%=tms_id%></s:param>
-                                                                                <s:param name="usr_id"><%=usr_id%></s:param>
-                                                                            </s:url>
+                                                                                    <%--s:a href='%{#myUrl}'></s:a--%>
+                                                                                    <s:url var="myUrl" action="../timesheets/getTimeSheets.action?timesheetFlag=My">
+                                                                                        <s:param name="timesheetid"><%=tms_id%></s:param>
+                                                                                        <s:param name="usr_id"><%=usr_id%></s:param>
+                                                                                    </s:url>
 
-                                                                            <s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/edit_Msb.png"/>" height="20" width="20"></s:a></td>
-                                                                        <td><%= tm_start_date%></td>
-                                                                        <td><%= tm_end_date%></td>
-                                                                        <td><%= cur_status%></td>
-                                                                        <td><%= tm_submitted_date%></td>
-                                                                        <td><%= tm_billableHr%></td>
-                                                                        <td><%= reports_to%></td>
-                                                                        <td><%= tm_approved_date%></td>
-                                                                        <td>
-                                                                            <a href="#" onclick="deleteTimeSheet('<%=tms_id%>');" id="deleteTimesheet" ><img src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="20"></a>  
-                                                                        </td>
-                                                                    </tr> 
-                                                                    <%-- <s:url var="deleteUrl" action="deleteTimesheet">
-                                                                           <s:param name="timesheetid"><%=tms_id%></s:param>
+                                                                                    <s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/edit_Msb.png"/>" height="20" width="20"></s:a></td>
+                                                                                <td><%= tm_start_date%></td>
+                                                                                <td><%= tm_end_date%></td>
+                                                                                <td><%= cur_status%></td>
+                                                                                <td><%= tm_submitted_date%></td>
+                                                                                <td><%= tm_billableHr%></td>
+                                                                                <td><%= reports_to%></td>
+                                                                                <td><%= tm_approved_date%></td>
+                                                                                <td>
+                                                                                    <a href="#" onclick="deleteTimeSheet('<%=tms_id%>');" id="deleteTimesheet" ><img src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="20"></a>  
+                                                                                </td>
+                                                                            </tr> 
+                                                                            <%-- <s:url var="deleteUrl" action="deleteTimesheet">
+                                                                                   <s:param name="timesheetid"><%=tms_id%></s:param>
 
                                                                         </s:url>
 <s:a onclick="return confirm('Are you sure you want to delete this record')" id="deleteTimesheet" href='%{#deleteUrl}'><img src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="25"></s:a></td>--%>
 
 
+                                                                            <%
+                                                                                    }
+
+                                                                                }
+                                                                                if (c == 0) {
+                                                                            %>
+                                                                            <tr>
+                                                                                <td colspan="9"><font style="color: red;font-size: 15px;">No Records to display</font></td>
+                                                                            </tr> 
+                                                                            <%    }
+                                                                            %>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <br/>
                                                                     <%
-                                                                            }
+                                                                        if (c == 1) {
+                                                                    %>
 
+                                                                    <%                                                            }
+
+                                                                        if (session.getAttribute("TMResultmessage") != null) {
+                                                                            session.removeAttribute("TMResultmessage");
                                                                         }
-                                                                        if (c == 0) {
+
                                                                     %>
-                                                                    <tr>
-                                                                        <td colspan="9"><font style="color: red;font-size: 15px;">No Records to display</font></td>
-                                                                    </tr> 
-                                                                    <%    }
+                                                                    <% if (c > 0) {
+
                                                                     %>
+                                                                    <label> Display <select id="tpaginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                                            <option>10</option>
+                                                                            <option>15</option>
+                                                                            <option>25</option>
+                                                                            <option>50</option>
+                                                                        </select>
+                                                                        Time Sheets per page
+                                                                    </label>
+                                                                    <% }%>
+                                                                    <div align="right" id="timesheetpageNavPosition" style="margin-right: 0vw;display: none"></div>
+                                                                    <script type="text/javascript">
+                                                                        var pager = new Pager('timesheet_results', 10); 
+                                                                        pager.init(); 
+                                                                        pager.showPageNav('pager', 'timesheetpageNavPosition'); 
+                                                                        pager.showPage(1);
+                                                                    </script>
 
-                                                                </tbody>
-                                                            </table>
-                                                            <br/>
-                                                            <%
-                                                                if (c == 1) {
-                                                            %>
-
-                                                            <%                                                            }
-
-                                                                if (session.getAttribute("TMResultmessage") != null) {
-                                                                    session.removeAttribute("TMResultmessage");
-                                                                }
-
-                                                            %>
-                                                            <% if (c > 0) {
-
-                                                            %>
-                                                            <label> Display <select id="tpaginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                                    <option>10</option>
-                                                                    <option>15</option>
-                                                                    <option>25</option>
-                                                                    <option>50</option>
-                                                                </select>
-                                                                Time Sheets per page
-                                                            </label>
-                                                            <% }%>
-                                                            <div align="right" id="timesheetpageNavPosition" style="margin-right: 0vw;display: none"></div>
-                                                            <script type="text/javascript">
-                                                                var pager = new Pager('timesheet_results', 10); 
-                                                                pager.init(); 
-                                                                pager.showPageNav('pager', 'timesheetpageNavPosition'); 
-                                                                pager.showPage(1);
-                                                            </script>
-
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </s:form>
                                                 </div>
-                                            </s:form>
+                                            </div>
                                         </div>
                                     </div>
+                                    <%--close of future_items--%>
                                 </div>
                             </div>
-                            <%--close of future_items--%>
-                        </div>
-                    </div>
-                <div class="side_popup">
+                            <div class="side_popup">
 
-                <div class="popup_block"> 
+                                <div class="popup_block"> 
 
-                    <div class="addlink" >
+                                    <div class="addlink" >
 
-                        <div class="alignField"> <a href="#" onclick="addTimeSheetOverlayOpen();return clearPreviousDate();" class="addTimeSheet_open">  <img src="../../includes/images/timesheet.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </a></div>
+                                        <div class="alignField"> <a href="#" onclick="addTimeSheetOverlayOpen();return clearPreviousDate();" class="addTimeSheet_open">  <img src="../../includes/images/timesheet.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </a></div>
 
-                        <div class="alignField">
+                                        <div class="alignField">
 
 
 
-                            <a href="#" onclick="addTimeSheetOverlayOpen();return clearPreviousDate();" class="addTimeSheet_open">  Add Timesheet</a> </div>
-                    </div>
+                                            <a href="#" onclick="addTimeSheetOverlayOpen();return clearPreviousDate();" class="addTimeSheet_open">  Add Timesheet</a> </div>
+                                    </div>
 
-                </div>
-
-
-                <div class="slide_popup"><img src="../../includes/images/next.png"  class="img-swap"></div>
-            </div>
-
-                </div>
-           
-            </div>
-            <!-- content end -->
-           
-        </section><!--/form-->
-
-        <div id="addTimeSheet">
-            <div id="addTimeSheetOverlay" >
-                <div style="background-color: #3bb9ff ; padding: 0px">
-                    <table>
-                        <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Add&nbsp;Time&nbsp;Sheet&nbsp;&nbsp; </font></h4></td>
-                        </tr>
-                        <span class=" pull-right"><h5><a href="" class="addTimeSheet_close" onclick="addTimeSheetOverlayClose()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
-                    </table>
-                </div>
-                <div>
-                    <form action="#" theme="simple" >
-                        <div>
-                            <div class="inner-addSkillDiv-elements textfieldLabel">
+                                </div>
 
 
-                                <s:radio id="radiobutton" name="myRadioButton" 
-                                         list="#@java.util.LinkedHashMap@{'1' : 'submit timesheet for this week'}" onclick="return checkWeekStatus()" value="1"/>
-                                <br> <s:radio id="radiobutton" name="myRadioButton" 
-                                         list="#@java.util.LinkedHashMap@{'2':'previous week starting on'}" onclick="return checkWeekStatus()" value="2"/>
-                                <br>
-                                <s:textfield cssClass=" form-control dateImage" name="weekrange" id="weekrange" onkeypress="return enterTimesheetDateRepository(this)"/>
-
-                                <br> 
-                                <span><addTimesheerResult></addTimesheerResult></span>
-                                <%--s:select id="projectType" name="projectType" label="Project Type" cssClass="form-control"
-                                          list="#@java.util.LinkedHashMap@{'1':'Internal','2':'External'}" onclick="return checkWeekStatus()"/--%>
-                                <%--s:submit cssClass="col-sm-offset-4 btn cssbutton" value="Go"  onclick="false" ../timesheets/addTimeSheet.action  ></s:submit--%>
-                                <a href="#" ><button style="margin: 5px 0px;" type="button" class="add_searchButton form-control " value="" onclick="return checkPreviousDate()">&nbsp;Go&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button></a></a>&nbsp; 
+                                <div class="slide_popup timesheet_sidepopup"><img src="../../includes/images/next.png"  class="img-swap"></div>
                             </div>
-                        </div>
-                    </form>
-                </div> 
-            </div>
-        </div>
 
-        <footer id="footer"><!--Footer-->
-            <div class="footer-bottom" id="footer_bottom">
-                <div class="container">
-                    <s:include value="/includes/template/footer.jsp"/>
+                        </div>
+
+                    </div>
+                    <!-- content end -->
+
+                </section><!--/form-->
+
+                <div id="addTimeSheet">
+                    <div id="addTimeSheetOverlay" >
+                        <div style="background-color: #3bb9ff ; padding: 0px">
+                            <table>
+                                <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Add&nbsp;Time&nbsp;Sheet&nbsp;&nbsp; </font></h4></td>
+                                </tr>
+                                <span class=" pull-right"><h5><a href="" class="addTimeSheet_close" onclick="addTimeSheetOverlayClose()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                            </table>
+                        </div>
+                        <div>
+                            <form action="#" theme="simple" >
+                                <div>
+                                    <div class="inner-addSkillDiv-elements textfieldLabel">
+
+
+                                        <s:radio id="radiobutton" name="myRadioButton" 
+                                                 list="#@java.util.LinkedHashMap@{'1' : 'submit timesheet for this week'}" onclick="return checkWeekStatus()" value="1"/>
+                                        <br> <s:radio id="radiobutton" name="myRadioButton" 
+                                                 list="#@java.util.LinkedHashMap@{'2':'previous week starting on'}" onclick="return checkWeekStatus()" value="2"/>
+                                        <br>
+                                        <s:textfield cssClass=" form-control dateImage" name="weekrange" id="weekrange" onkeypress="return enterTimesheetDateRepository(this)"/>
+
+                                        <br> 
+                                        <span><addTimesheerResult></addTimesheerResult></span>
+                                        <%--s:select id="projectType" name="projectType" label="Project Type" cssClass="form-control"
+                                                  list="#@java.util.LinkedHashMap@{'1':'Internal','2':'External'}" onclick="return checkWeekStatus()"/--%>
+                                        <%--s:submit cssClass="col-sm-offset-4 btn cssbutton" value="Go"  onclick="false" ../timesheets/addTimeSheet.action  ></s:submit--%>
+                                        <a href="#" ><button style="margin: 5px 0px;" type="button" class="add_searchButton form-control " value="" onclick="return checkPreviousDate()">&nbsp;Go&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button></a></a>&nbsp; 
+                                    </div>
+                                </div>
+                            </form>
+                        </div> 
+                    </div>
                 </div>
             </div>
-        </footer><!--/Footer-->
-
+            <footer id="footer"><!--Footer-->
+                <div class="footer-bottom" id="footer_bottom">
+                    <div class="container">
+                        <s:include value="/includes/template/footer.jsp"/>
+                    </div>
+                </div>
+            </footer><!--/Footer-->
+        </div>
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-
-        <script type="text/javascript">
-            var recordPage=10;
-            function pagerOption(){
-
-                var paginationSize = document.getElementById("tpaginationOption").value;
-                if(isNaN(paginationSize))
-                {
-                       
-                }
-                recordPage=paginationSize;
-                //alert(recordPage)
-                $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
-
-            };
-            $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
-        </script>
-        <script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+ <script>
             $(document).ready(function(){
                 $(".img-swap").click(function(){
                     $(".popup_block").animate({
@@ -546,7 +534,41 @@
                     $(this).toggleClass("on");
                 });
             });
+            
+            
+            if ( $(window).width() > 1400) {      
+                //Add your javascript for large screens here 
+  
+                $(document).ready(function(){
+                    $(".slide_popup").click(function(){
+                        $(".popup_block").animate({
+                            width: 'toggle'
+                        });
+                    });
+                });
+            
+              
+            }
         </script>
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+
+                var paginationSize = document.getElementById("tpaginationOption").value;
+                if(isNaN(paginationSize))
+                {
+                       
+                }
+                recordPage=paginationSize;
+                //alert(recordPage)
+                $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
+
+            };
+            $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
+        </script>
+      
+ 
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

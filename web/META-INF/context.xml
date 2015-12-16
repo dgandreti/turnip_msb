@@ -10,7 +10,7 @@
     password="lokam001" 
     type="com.mchange.v2.c3p0.ComboPooledDataSource" 
     user="miracledb"/>  -->
-   <Resource 
+   <!--<Resource 
         auth="Container" 
         description="c3pO DataSource" 
         driverClass="com.mysql.jdbc.Driver" 
@@ -19,7 +19,7 @@
         name="jndi/msb" 
         password="lokam001"
         type="com.mchange.v2.c3p0.ComboPooledDataSource" 
-        user="miracledb"/>
+        user="miracledb"/>-->
     <!--  <Resource 
     auth="Container" 
     description="c3pO DataSource" 
@@ -30,7 +30,7 @@
     password="" 
     type="com.mchange.v2.c3p0.ComboPooledDataSource" 
     user="root"/>-->
-<!--<Resource 
+<Resource 
     auth="Container" 
     description="c3pO DataSource" 
     driverClass="com.mysql.jdbc.Driver" 
@@ -39,6 +39,6 @@
     name="jndi/msb" 
     password="lokam001" 
     type="com.mchange.v2.c3p0.ComboPooledDataSource" 
-    user="miracledb"/>-->
+    user="miracledb"/>
     <!--<Resource auth="Container" description="c3pO DataSource" driverClass="com.mysql.jdbc.Driver" factory="org.apache.naming.factory.BeanFactory" jdbcUrl="jdbc:mysql://localhost:3306/servicebay?autoReconnect=true" name="jndi/msb" password="lokam001" type="com.mchange.v2.c3p0.ComboPooledDataSource" user="miracledb"/> -->
 </Context>

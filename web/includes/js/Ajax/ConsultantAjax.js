@@ -311,18 +311,18 @@ function addConsultantValidate(){
     var todayDate= new Date();
     var dobYeardiff= (todayDate-consultDOBDate)/ (86400000 * 360);
     var userCatArry = []; 
-     var skillCategoryArry = [];    
+    var skillCategoryArry = [];    
     $("#skillCategoryValue :selected").each(function(){
         skillCategoryArry.push($(this).val()); 
     });
-   // alert("skillCategoryArry"+skillCategoryArry);
+    // alert("skillCategoryArry"+skillCategoryArry);
     if(skillCategoryArry==""){
        
         $("addCnsltError").html(" <b><font color='red'>Skill field is required</font></b>");
         $("#skillCategoryValue").css("border", "1px solid red");
         return false;
     } else
-    {
+{
         $("addCnsltError").html("");
         $("#skillCategoryValue").css("border", "1px solid green");
     }
@@ -640,11 +640,11 @@ function submmition(){
     $("#skillCategoryValue :selected").each(function(){
         skillCategoryArry.push($(this).val()); 
     });
-   // alert(skillCategoryArry);
+    // alert(skillCategoryArry);
     document.getElementById("skillValues").value=skillCategoryArry;
     var v=document.getElementById("skillValues").value;
     
-  //  alert(v);
+//  alert(v);
 //  alert(skillCategoryArry);
 //  document.getElementById("consultantForm").submit(); 
 }
@@ -1051,13 +1051,13 @@ function ConsultDetails_valid(){
     var fstname=document.getElementById("consult_fstname").value;
     
     var userCatArry = [];  
-     if(skillCategoryArry=="" )
+    if(skillCategoryArry=="" )
     {
         $("consult_error").html(" <b><font color='red'>skill  is Required</font></b>");
         $("#skillCategoryValue").css("border", "1px solid red");
         return false;
     } else
-    {
+{
         $("consult_error").html(" ");
         $("#skillCategoryValue").css("border", "1px solid green");
     }
@@ -2159,7 +2159,9 @@ function populateAttachmentTable(response){
         }
     }
 
-    $('#consult-attach_pagenav').tablePaginate({navigateType:'navigator'},recordPage);
+    $('#consult-attach_pagenav').tablePaginate({
+        navigateType:'navigator'
+    },recordPage);
     cpager.init();     
     
 }
@@ -2172,14 +2174,14 @@ function doConsultAttachmentDownload(acc_attachment_id)
     var consultFlag=$("#consultFlag").val();
     var consultantFlag=$("#consultantFlag").val();
     //alert(consultFlag);
-   if(consultFlag=='customer'){
+    if(consultFlag=='customer'){
         
-     window.location = '../consultant/downloadConsultantAttachedDocument.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&consultantFlag='+consultantFlag;
+        window.location = '../consultant/downloadConsultantAttachedDocument.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&consultantFlag='+consultantFlag;
        
     }else{
-    window.location = '../consultant/downloadConsultantAttachment.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&consultantFlag='+consultantFlag;
+        window.location = '../consultant/downloadConsultantAttachment.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&consultantFlag='+consultantFlag;
     }
-   // window.location = '../consultant/downloadConsultantAttachment.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag;
+// window.location = '../consultant/downloadConsultantAttachment.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag;
 }
 function consultAttachmentDownload()
 {
@@ -2191,14 +2193,14 @@ function consultAttachmentDownload()
     var requirementId=$("#requirementId").val();
     var jdId=$("#jdId").val();
     var accountSearchID=$("#accountSearchID").val();
-   // alert("requirementId-->"+requirementId+"jdId-->"+jdId+"accountSearchID-->"+accountSearchID);
-   // alert(acc_attachment_id);
+    // alert("requirementId-->"+requirementId+"jdId-->"+jdId+"accountSearchID-->"+accountSearchID);
+    // alert(acc_attachment_id);
     if(consultFlag=='customer'){
-       // alert(consultFlag);
-     window.location = '../consultant/downloadConsultantAttachedDocument.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&jdId='+jdId;
+        // alert(consultFlag);
+        window.location = '../consultant/downloadConsultantAttachedDocument.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&jdId='+jdId;
        
     }else{
-    window.location = '../consultant/downloadConsultantAttachment.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag;
+        window.location = '../consultant/downloadConsultantAttachment.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag;
     }
 }
 $(document).ready(function(){
@@ -2218,7 +2220,7 @@ function saveConsultantLoginDetails(id){
             } 
             else
             {
-               // alert("Error occured");
+            // alert("Error occured");
             }
         }
     };
@@ -2673,10 +2675,10 @@ function parseEmpForRecruitment(responseXML) {
         document.getElementById("menu-popup").style.display = "block";
     } 
     if(chk.childNodes[0].nodeValue =="false") {
-       // var validationMessage=document.getElementById("validationMessage");
-       // validationMessage.innerHTML = "<font color=red>  Employee doesn't Exists </font>";
-       $('#validationMessage').html(" <font color='red'>Employee doesn't Exists</font>");
-         $('#validationMessage').show().delay(2000).fadeOut();
+        // var validationMessage=document.getElementById("validationMessage");
+        // validationMessage.innerHTML = "<font color=red>  Employee doesn't Exists </font>";
+        $('#validationMessage').html(" <font color='red'>Employee doesn't Exists</font>");
+        $('#validationMessage').show().delay(2000).fadeOut();
         document.getElementById("enameForRecruitment").value="";
     //document.getElementById('validationMessage').innerHTML = "<font color=red> Employee doesn't Exists!</font>";
     }
@@ -2722,7 +2724,7 @@ function setEmpRecruitment(empName,loginId){
     // alert("in set_cust");
     document.getElementById("enameForRecruitment").value =empName;
     document.getElementById("enameIdForRecruitment").value =loginId;
-   //alert(document.getElementById("enameIdForRecruitment").value)
+//alert(document.getElementById("enameIdForRecruitment").value)
 }
 
 function clearTable() {
@@ -2736,5 +2738,354 @@ function clearTable() {
         for (loop = completeTable.childNodes.length -1; loop >= 0 ; loop--) {
             completeTable.removeChild(completeTable.childNodes[loop]);
         }
+    }
+}
+
+
+function jumper() {
+           
+    $.scrollUp({
+        scrollName: 'scrollUp', // Element ID
+        scrollDistance: 300, // Distance from top/bottom before showing element (px)
+        scrollFrom: 'top', // 'top' or 'bottom'
+        scrollSpeed: 300, // Speed back to top (ms)
+        easingType: 'linear', // Scroll to top easing (see http://easings.net/)
+        animation: 'fade', // Fade, slide, none
+        animationSpeed: 200, // Animation in speed (ms)
+        scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
+        //scrollTarget: false, // Set a custom target element for scrolling to the top
+        scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
+        scrollTitle: false, // Set a custom <a> title if required.
+        scrollImg: false, // Set true to use image
+        activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+        zIndex: 2147483647 // Z-Index for the overlay
+    });
+};
+        
+        
+function conDetailsCustomer()
+{
+     
+     
+              
+    //alert("hello")
+    var e = document.getElementById("consultantAvailable");
+    var strUser = e.options[e.selectedIndex].text;
+    //alert(strUser) 
+          
+    document.getElementById("consultantAvailableCustomer").innerHTML=strUser;
+    if(document.getElementById("addressFlag").value!="emp")
+    {
+        var e1 = document.getElementById("consultantCountry");
+        var strUser1 = e1.options[e1.selectedIndex].text;
+        //alert(strUser) 
+           
+        document.getElementById("consultantLivingCountry").innerHTML=strUser1;    
+    }
+     
+    var e2 = document.getElementById("consultantCountry");
+    var strUser2 = e2.options[e2.selectedIndex].text;
+    //alert(strUser) 
+    document.getElementById("cosultantCountryCustomer").innerHTML=strUser2;    
+    var e3 = document.getElementById("consultantState");
+    var strUser3 = e3.options[e3.selectedIndex].text;
+    //alert(strUser) 
+    document.getElementById("cosultantCountryState").innerHTML=strUser3;
+    var e4 = document.getElementById("cosultantCCountry");
+    var strUser4 = e4.options[e4.selectedIndex].text;
+    //alert(strUser) 
+    document.getElementById("cosultantCCountryCustomer").innerHTML=strUser4;
+    var e5 = document.getElementById("cosultantCState");
+    var strUser5 = e5.options[e5.selectedIndex].text;
+    //alert(strUser) 
+    document.getElementById("cosultantCStateCustomer").innerHTML=strUser5;
+        
+}
+
+function consultantVisaValidation(){
+    var FileUploadPath = document.getElementById('visaAttachment').value;
+
+    //To check if user upload any file
+    if (FileUploadPath == '') {
+       
+        $("addCnsltError").html(" <b><font color='red'>Please upload a file</font></b>");
+        return false;
+    } else {
+        var Extension = FileUploadPath.substring(
+            FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
+
+        if (Extension == "pdf" || Extension == "doc" || Extension == "docx" ) {
+            $("addCnsltError").html(" ");
+            return true;
+        } 
+        else {
+            $("addCnsltError").html(" <b><font color='red'> Allows only doc,docx type or pdf.</font></b>");
+            return false;
+        }
+    }
+}
+function openDialogforVisaAttachment(){
+   // alert("hello")
+    var specialBox = document.getElementById('visaAttachOverlay');
+    if(specialBox.style.display == "block"){       
+        specialBox.style.display = "none";         
+    } else {
+        specialBox.style.display = "block";      
+    }
+    // Initialize the plugin    
+    $('#consultVisaAttachment_popup').popup(      
+        );
+
+}
+
+function visaAttachOverlayClose(){
+    var specialBox = document.getElementById('visaAttachOverlay');
+    if(specialBox.style.display == "block"){       
+        specialBox.style.display = "none";         
+    } else {
+        specialBox.style.display = "block";      
+    }
+    // Initialize the plugin    
+    $('#consultVisaAttachment_popup').popup(      
+        );
+// getConsultantList();
+}
+function teAttachemntUpload(){
+    
+    var consultantId = $('#consultantId').val();
+    
+   // alert(consultantId);
+    //    var imagePath =document.getElementById('consultVisaAttachment').value;
+      
+    //    if(imagePath == null || (imagePath =="")){
+    //        document.getElementById('message').innerHTML = "<font color=red>please upload file</font>"
+    //        return false;
+    //    }
+   
+    
+    // document.getElementById("load").style.display = 'block';
+    $.ajaxFileUpload({
+        url:'visaAttachemntUpload.action?consultantId='+consultantId,//
+        secureuri:false,//false
+        fileElementId:'file',//id  <input type="file" id="file" name="file" />
+        dataType: 'json',// json
+        success: function(data,status){
+            
+            var displaymessage = "<font color=red>Please try again later</font>";
+          
+            if(data.indexOf("uploaded")>0){
+               
+                displaymessage = "<font color=green>Attachment uploaded Successfully.</font>";
+                document.getElementById('proofdownloadDiv').style.display = "block";
+                document.getElementById('proofuploadDiv').style.display = "none";
+            }
+            if(data.indexOf("Notvalid")>0){
+                
+                displaymessage = "<font color=red>Not a valid file!,Please check the file and try again.</font>";
+            }
+            if(data.indexOf("Error")>0){
+               
+                displaymessage = "<font color=red>Internal Error!, Please try again later.</font>"
+            }
+           
+            //   document.getElementById("load").style.display = 'none';
+            document.getElementById('message').innerHTML = displaymessage;//"<font color=green>File uploaded successfully</font>";
+        
+        },
+        error: function(e){
+            
+            // document.getElementById("load").style.display = 'none';
+            document.getElementById('message').innerHTML = "<font color=red>Please try again later</font>";
+       
+        }
+    });
+    
+   
+    //}	
+    return false;
+}
+
+function onloadIdProofDetails(){
+   
+    var consultantIdProof = document.getElementById('consultantIdProof').value;
+   
+    if(consultantIdProof=="VS"){
+        document.getElementById('visaSelectDiv').style.display = "block";
+    }
+    else{
+        document.getElementById('visaSelectDiv').style.display = "none"; 
+    }
+    var consultantIdProofAttach = document.getElementById('consultantIdProofAttach').value;
+    //alert(consultantIdProofAttach);
+    if(consultantIdProofAttach!=null && consultantIdProofAttach!=""){
+        document.getElementById('proofdownloadDiv').style.display = "block";  
+    }
+    else{
+        if(consultantIdProof=="0"){
+            document.getElementById('proofuploadDiv').style.display = "none";     
+            document.getElementById('proofdownloadDiv').style.display = "none"; 
+        }
+       
+    }
+    
+}
+
+function getVisaDetails(){
+    var consultantId=document.getElementById('consultantId').value;
+   // alert(consultantId+"-->consultantId")
+    
+    var consultantIdProof = document.getElementById('consultantIdProof').value;
+   
+    
+    
+    if(consultantIdProof=="VS"){
+        document.getElementById('visaSelectDiv').style.display = "block";
+    }
+    else{
+        document.getElementById('visaSelectDiv').style.display = "none"; 
+    }
+    var consultantIdProofAttach = document.getElementById('consultantIdProofAttach').value;
+  //  alert(consultantIdProofAttach);
+    if(consultantIdProofAttach==null || consultantIdProofAttach==""){
+        document.getElementById('proofuploadDiv').style.display = "block";  
+    }
+   
+    if(consultantIdProof=="0"){
+        document.getElementById('proofuploadDiv').style.display = "none";     
+        document.getElementById('proofdownloadDiv').style.display = "none"; 
+    }
+   
+    var consultantIdProofhidden=document.getElementById('consultantIdProofhidden').value;
+   // alert(consultantIdProofhidden);
+    if(consultantIdProofAttach!=null && consultantIdProofAttach!=""){
+        swal({
+    
+            title: "You will lose Current ID Proof. Do you want to continue..",
+  
+            //text: "Tranfering csr",
+            textSize:"170px",
+            type: "warning",
+  
+            showCancelButton: true,
+            confirmButtonColor: "#3498db",
+  
+            //cancelButtonColor: "#56a5ec",
+            cancelButtonText: "No",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false,
+            closeOnCancel: false
+ 
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                var url='removeConsultantAttachement.action?consultantId='+consultantId;
+                var req=initRequest(url);
+                //alert(url);
+                req.onreadystatechange = function() {
+                    if (req.readyState == 4) {
+                        if (req.status == 200) {
+                            alert(req.responseText);
+                            if(req.responseText=="1"){
+                                document.getElementById('proofuploadDiv').style.display = "none"; 
+                                document.getElementById('proofdownloadDiv').style.display = "none";
+                                document.getElementById('consultantIdProofhidden').value="0";
+                                document.getElementById('consultantIdProof').value="0";
+                                document.getElementById('visaSelectDiv').style.display = "none"; 
+                                document.getElementById('consultantIdProofAttach').value="";
+                            }
+                            // document.getElementById("outputMessage").innerHTML=req.responseText;
+                            swal("Deleted!", "Deleted Successfully....", "success");
+                        } 
+                        else
+                        {
+                            swal("Sorry Not Deleted", "Deletion not done ", "error");
+                        }
+                    }
+                };
+                req.open("GET",url,"true");
+                req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                req.send(null);
+        
+            }
+            else {
+     
+                swal("Cancelled", "Deleted cancelled ", "error");
+                document.getElementById('consultantIdProof').value=consultantIdProofhidden;
+                if(consultantIdProofhidden=="VS"){
+                    document.getElementById('visaSelectDiv').style.display = "block";
+                }
+                else{
+                    document.getElementById('visaSelectDiv').style.display = "none"; 
+                }
+            }
+        });
+    }
+    
+}
+    
+    
+
+
+function removeConsultantAttachement(){
+    var consultantId=document.getElementById('consultantId').value;
+   // alert(consultantId);
+    swal({
+    
+        title: "You will lose Current ID Proof. Do you want to continue..",
+  
+        //text: "Tranfering csr",
+        textSize:"170px",
+        type: "warning",
+  
+        showCancelButton: true,
+        confirmButtonColor: "#3498db",
+  
+        //cancelButtonColor: "#56a5ec",
+        cancelButtonText: "No",
+        confirmButtonText: "Yes",
+        closeOnConfirm: false,
+        closeOnCancel: false
+ 
+    },
+    function(isConfirm){
+        if (isConfirm) {
+            var url='removeConsultantAttachement.action?consultantId='+consultantId;
+            var req=initRequest(url);
+            //alert(url);
+            req.onreadystatechange = function() {
+                if (req.readyState == 4) {
+                    if (req.status == 200) {
+                       // alert(req.responseText);
+                        if(req.responseText=="1"){
+                            document.getElementById('proofuploadDiv').style.display = "none"; 
+                            document.getElementById('proofdownloadDiv').style.display = "none";
+                            document.getElementById('consultantIdProofhidden').value="0";
+                            document.getElementById('consultantIdProof').value="0";
+                            document.getElementById('visaSelectDiv').style.display = "none"; 
+                            document.getElementById('consultantIdProofAttach').value="";
+                        }
+                        // document.getElementById("outputMessage").innerHTML=req.responseText;
+                        swal("Deleted!", "Deleted Successfully....", "success");
+                    } 
+                    else
+                    {
+                        swal("Sorry Not Deleted", "Deletion not done ", "error");
+                    }
+                }
+            };
+            req.open("GET",url,"true");
+            req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            req.send(null);
+        }
+        
+    }); 
+}
+function displayHide_downloadButtons(){
+var val = document.getElementById("rec_exits").value;
+    if (val=="no"){
+        $("#downloading_grid").css('display', 'none');
+    }
+    else{
+        $("#downloading_grid").css('display', '');
     }
 }

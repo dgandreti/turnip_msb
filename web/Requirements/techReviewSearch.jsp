@@ -29,7 +29,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -88,7 +88,7 @@
             <div class="container">
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
 
                             <div class="" style="float: left; margin-top:2px; margin-bottom: -2px">
@@ -226,10 +226,10 @@
                                             </table>
                                         </div>
                                         <%--form start from here --%>
-                                       
+
                                         <span><e></e></span><br>
                                         <s:hidden name="consultId" id="consultId"/>
-                                       
+
                                         <label class="headingLabel">Consultant Details:</label>
                                         <div id="reviewalignBox">
                                             <div class="inner-techReviewdiv-elements">
@@ -272,17 +272,17 @@
                                                              />
                                                 <label class="">Status:</label>
                                                 <span id="onlineExam">
-                                                <s:select cssClass="techReviewSelectStyle" 
-                                                          name="finalTechReviewStatus" 
-                                                          id="finalTechReviewStatus" 
-                                                          list="#@java.util.LinkedHashMap@{'Processing':'Processing','Rejected':'Rejected','ShortListed':'ShortListed','Selected':'Selected'}" 
-                                                          disabled="true"
-                                                          />
+                                                    <s:select cssClass="techReviewSelectStyle" 
+                                                              name="finalTechReviewStatus" 
+                                                              id="finalTechReviewStatus" 
+                                                              list="#@java.util.LinkedHashMap@{'Processing':'Processing','Rejected':'Rejected','ShortListed':'ShortListed','Selected':'Selected'}" 
+                                                              disabled="true"
+                                                              />
                                                 </span>
                                                 <span id="examStatus"> </span>
-                                                   
-                                               
-                                                
+
+
+
                                             </div>
 
                                         </div>
@@ -335,21 +335,7 @@
                                                 </div>
                                             </div>
 
-                                            <label class="headingLabel">Comments:</label>
 
-                                            <div id="reviewalignBox">
-
-                                                <div class="inner-techReviewdiv-elements">
-                                                    <s:textarea id="consultantComments"
-                                                                name="consultantComments"
-                                                                cssClass="reviewareacss"
-                                                                type="text"
-                                                                placeholder="Any comments"
-                                                                value=""
-                                                                disabled="true"
-                                                                />
-                                                </div>
-                                            </div>
 
                                             <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                                         </span>
@@ -357,33 +343,46 @@
                                             <s:hidden id="contechId" name="contechId"/>
                                             <s:hidden id="consultantId" name="consultantId" value="%{consult_id}"/>
                                             <s:hidden id="requirementId" name="consultantId" value="%{requirementId}"/>
-                                             <label class="headingLabel">Online Exam Details:</label>
-                                             
-                                            <div class="skillQuestionBox">
-                                             <label class="headingLabel " style="color: #56a5ec">Exam Performed On:<span id="examsubmittedDate" /></label>   
-                                            <div class="row">
+                                            <label class="headingLabel">Online Exam Details:</label>
 
-                                                <div class="col-sm-3" id="skillDivQuestion1">  <label class="skillQuestionsLabel"> <span id="skillQuestion1" ></span></label> </div>
-                                                <div class="col-sm-3" id="skillDivQuestion2"> <label class="skillQuestionsLabel"> <span id="skillQuestion2"></span></label></div> 
-                                                <div class="col-sm-3" id="skillDivQuestion3"> <label class="skillQuestionsLabel"> <span id="skillQuestion3"></span></label></div>
-                                                <div class="col-sm-3" id="skillDivQuestion4"> <label class="skillQuestionsLabel"> <span id="skillQuestion4"></span></label></div> 
-                                                <div class="col-sm-3" id="skillDivQuestion5"> <label class="skillQuestionsLabel"> <span id="skillQuestion5"></span></label></div> 
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-sm-3" id="skillDivQuestion6"> <label class="skillQuestionsLabel"> <span id="skillQuestion6"></span></label></div> 
-                                                <div class="col-sm-3" id="skillDivQuestion7"> <label class="skillQuestionsLabel"> <span id="skillQuestion7"></span></label></div> 
-                                                <div class="col-sm-3" id="skillDivQuestion8"> <label class="skillQuestionsLabel"> <span id="skillQuestion8"></span></label></div> 
-                                                <div class="col-sm-3" id="skillDivQuestion9"><label class="skillQuestionsLabel"> <span id="skillQuestion9"></span></label></div> 
-                                                <div class="col-sm-3" id="skillDivQuestion10"><label class="skillQuestionsLabel"> <span id="skillQuestion10"></span></label></div> 
-                                            </div>
+                                            <div class="skillQuestionBox">
+                                                <label class="headingLabel " style="color: #56a5ec">Exam Performed On:<span id="examsubmittedDate" /></label>   
+                                                <div class="row">
+
+                                                    <div class="col-sm-3" id="skillDivQuestion1">  <label class="skillQuestionsLabel"> <span id="skillQuestion1" ></span></label> </div>
+                                                    <div class="col-sm-3" id="skillDivQuestion2"> <label class="skillQuestionsLabel"> <span id="skillQuestion2"></span></label></div> 
+                                                    <div class="col-sm-3" id="skillDivQuestion3"> <label class="skillQuestionsLabel"> <span id="skillQuestion3"></span></label></div>
+                                                    <div class="col-sm-3" id="skillDivQuestion4"> <label class="skillQuestionsLabel"> <span id="skillQuestion4"></span></label></div> 
+                                                    <div class="col-sm-3" id="skillDivQuestion5"> <label class="skillQuestionsLabel"> <span id="skillQuestion5"></span></label></div> 
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="col-sm-3" id="skillDivQuestion6"> <label class="skillQuestionsLabel"> <span id="skillQuestion6"></span></label></div> 
+                                                    <div class="col-sm-3" id="skillDivQuestion7"> <label class="skillQuestionsLabel"> <span id="skillQuestion7"></span></label></div> 
+                                                    <div class="col-sm-3" id="skillDivQuestion8"> <label class="skillQuestionsLabel"> <span id="skillQuestion8"></span></label></div> 
+                                                    <div class="col-sm-3" id="skillDivQuestion9"><label class="skillQuestionsLabel"> <span id="skillQuestion9"></span></label></div> 
+                                                    <div class="col-sm-3" id="skillDivQuestion10"><label class="skillQuestionsLabel"> <span id="skillQuestion10"></span></label></div> 
+                                                </div>
                                             </div>
                                         </span>
-                                       <span id="examButton"> 
-                                       <div class="pull-left "><s:submit cssClass="cssbutton"  value="Rejected" onclick="saveExamResult(this.value);" style="margin-left: -27px;"></s:submit></div>
-                                       <div class="pull-right "><s:submit cssClass="cssbutton"  value="ShortListed" onclick="saveExamResult(this.value);"></s:submit></div>
-                                        </span>         
-                                    </div>
+                                        <div id="reviewalignBox"  name="reviewComments">
+                                            <label class="headingLabel">Comments:</label>
+                                            <div class="inner-techReviewdiv-elements">
+                                                <s:textarea id="consultantComments"
+                                                            name="consultantComments"
+                                                            cssClass="reviewareacss"
+                                                            type="text"
+                                                            placeholder="Any comments"
+                                                            value=""
+                                                            disabled="true"
+                                                            />
+                                            </div>
+                                        </div>           
+                                        <span id="examButton"> 
+                                            <div class="pull-left "><s:submit cssClass="cssbutton"  value="Rejected" onclick="saveExamResult(this.value,'reviewSearch');" style="margin-left: -27px;"></s:submit></div>
+                                            <div class="pull-right "><s:submit cssClass="cssbutton"  value="ShortListed" onclick="saveExamResult(this.value,'reviewSearch');"></s:submit></div>
+                                            </span>         
+                                        </div>
                                     <%--close of future_items--%>
                                 </div>
 
@@ -410,19 +409,19 @@
 
                                     <div class="inner-reqdiv-elements" id="techReviewForm">
                                         <div class="row">
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec">Interview Date:</label>
-                                            <s:textfield cssClass="techReviewInputStyle dateImage" id="searchInterviewDate"  name="searchInterviewDate"  onkeypress="return enterTechDateRepository(this);" />
+                                            <s:textfield cssClass="techReviewInputStyle dateImage" tabindex="1" id="searchInterviewDate" placeholder="Interview Date"  name="searchInterviewDate"  onkeypress="return enterTechDateRepository(this);" />
                                         </div>
                                         <s:hidden name="empIdTechReview" id="empIdTechReview" />
 
-                                        <div class="col-lg-4">
-                                            <label class="labelStylereq" style="color:#56a5ec">Employee Name:</label>
-                                            <s:textfield cssClass="form-control" id="eNameTechReview"  name="eNameTechReview" onkeyup="return getEmpForTechReview();" autocomplete='off' maxLength="30"/>
+                                        <div class="col-sm-4">
+                                            <label class="labelStylereq" style="color:#56a5ec">Reviewer :</label>
+                                            <s:textfield cssClass="form-control" id="eNameTechReview" tabindex="2"  name="eNameTechReview" onkeyup="return getEmpForTechReview();" autocomplete='off' maxLength="30" placeholder="Reviewer"/>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-sm-2 pull-right">
                                             <label class="labelStylereq" style="color:#56a5ec"></label>
-                                            <s:submit id="" cssClass="add_searchButton form-control" type="button" onclick="searchTechReviews();" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                            <s:submit id="" cssClass="add_searchButton form-control" tabindex="4" type="button" onclick="searchTechReviews();" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                             </div>
                                         <s:form action="../Requirements/forwardTechReview.action" id="#" theme="simple" enctype="multipart/form-data" >
                                             <s:hidden name="requirementId" id="requirementId" value="%{requirementId}" />
@@ -440,10 +439,10 @@
 
                                             </s:url>
 
-                                            <div class="col-lg-2">
+                                            <div class="col-sm-2 pull-right">
                                                 <label class="labelStylereq" style="color:#56a5ec"></label>
                                                 <%--  <s:submit cssClass="cssbutton form-control" value="Add Review" cssStyle="margin:5px 0px 0px" />--%>
-                                                <s:a href='%{#reviewUrl}' cssClass="add_searchButton form-control"  cssStyle="margin:5px 0px 0px"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
+                                                <s:a href='%{#reviewUrl}' cssClass="add_searchButton form-control" tabindex="3" cssStyle="margin:5px 0px 0px"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
                                                 </div>
 
                                             <%--<a href="../Requirements/forwardTechReview.action"><input type="button" class="cssbutton " value="Forward Review" /></a> --%>
@@ -487,23 +486,17 @@
                                                                 <s:elseif test="reviewType=='Psychometric'"><td><s:property value="forwardedDate"></s:property></td></s:elseif>
                                                                 <s:else><td><s:property value="dateOfReview"></s:property></td></s:else>
                                                                 <%--<td><s:property value="forwardedToName"></s:property></td>--%>
-                                                                <s:if test="reviewType=='Online' " >
-                                                                    <td><s:a href="#" onclick="getMailPhoneOfReviewedBy(%{forwardby});techReviewEmailPhoneOverlay();" cssClass="emailPhoneShow_popup_open"><s:property value="forwardedBy"></s:property></s:a></td>   
-                                                                </s:if>
-                                                                     <s:elseif test="reviewType=='Psychometric'">
-                                                                    <td><s:a href="#" onclick="getMailPhoneOfReviewedBy(%{forwardby});techReviewEmailPhoneOverlay();" cssClass="emailPhoneShow_popup_open"><s:property value="forwardedBy"></s:property></s:a></td>   
-                                                                </s:elseif>   
-                                                                <s:else>
+                                                               
                                                                     <td><s:a href="#" onclick="getMailPhoneOfReviewedBy(%{forwardedToId});techReviewEmailPhoneOverlay();" cssClass="emailPhoneShow_popup_open"><s:property value="forwardedToName"></s:property></s:a></td>     
-                                                                </s:else>
+                                                                
                                                                 <td><s:property value="avgRating"></s:property></td>
                                                                 <%-- <td><s:a href="#" onclick="getMailPhoneOfReviewedBy(%{forwardedToId1});techReviewEmailPhoneOverlay();" cssClass="emailPhoneShow_popup_open"><s:property value="forwardedToName1"></s:property></s:a></td>--%>
                                                                 <%--<td><s:property value="techieTitle"></s:property></td>--%>
-                                                                 <s:if test="comments.length()>20">  
-                                                                <td><s:a href="#" onclick="techReviewCommentsOverlayJs(\'%{comments}\');" cssClass="techReviewCommentsOverlay_popup_open" ><s:property value="%{comments.substring(0,20)}"></s:property>..</s:a></td>
+                                                                <s:if test="comments.length()>20">  
+                                                                    <td><s:a href="#" onclick="techReviewCommentsOverlayJs(\'%{comments}\');" cssClass="techReviewCommentsOverlay_popup_open" ><s:property value="%{comments.substring(0,20)}"></s:property>..</s:a></td>
                                                                 </s:if>
                                                                 <s:else>
-                                                                <td><s:a href="#" onclick="techReviewCommentsOverlayJs(\'%{comments}\');" cssClass="techReviewCommentsOverlay_popup_open" ><s:property value="%{comments}"></s:property></s:a></td>    
+                                                                    <td><s:a href="#" onclick="techReviewCommentsOverlayJs(\'%{comments}\');" cssClass="techReviewCommentsOverlay_popup_open" ><s:property value="%{comments}"></s:property></s:a></td>    
                                                                 </s:else>
                                                                 <%--<td><s:property value="comments"></s:property></td>--%>
                                                                 <td><s:property value="status"></s:property></td>
@@ -548,24 +541,26 @@
             </div>
         </footer><!--/Footer-->
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
-//alert("recordPage")
-               var paginationSize = document.getElementById("paginationOption").value;
+
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+                //alert("recordPage")
+                var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
-                   {
+                {
                        
-                   }
+                }
                 recordPage=paginationSize;
                 //alert(recordPage)
-                 $('#techReviewSearchTable').tablePaginate({navigateType:'navigator'},recordPage);
+                $('#techReviewSearchTable').tablePaginate({navigateType:'navigator'},recordPage);
 
             };
-        $('#techReviewSearchTable').tablePaginate({navigateType:'navigator'},recordPage);
+            $('#techReviewSearchTable').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

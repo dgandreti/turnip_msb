@@ -178,11 +178,11 @@ function populateReqTableReq(response){
     }
     if(vendor=='yes')
     {
-        var res = "Job Id" + "|" + "Jog Title" + "|" + "Customer" + "|" + "Skills Set" + "|" + "Status" + "^"; // for grid download
+        var res = "Job Id" + "|" + "Jog Title" + "|" + "Customer" + "|" + "Skills Set" + "|" + "Posted Date" +"|" + "Status" + "^"; // for grid download
     }
     else
     {
-        var res = "Job Id" + "|" + "Jog Title" + "|" + "Positions" + "|" + "Skills Set" + "|" + "Approver" + "|" + "Requisitioner" + "|" + "Status" + "^"; // for grid download
+       var res = "Job Id" + "|" + "Jog Title" + "|" + "Positions" + "|" + "Skills Set" + "|" + "Posted Date" + "|" + "Status" + "|" + "No of Submissions" + "^"; // for grid download
     }
     if(response.length>0){
         for(var i=0;i<reqList.length-1;i++){     
@@ -194,11 +194,11 @@ function populateReqTableReq(response){
                 $("#reqTableInRecruiter").append(reqRow); //this will append tr element to table... keep its reference for a while since we will add cels into it
                 if(vendor=='yes')
                 {
-                    res=res+(Values[12] +"|"+ Values[1]+"|"+ Values[9]+"|"+ Values[10]+"|"+ Values[4]+"^");      
+                    res=res+(Values[12] +"|"+ Values[1]+"|"+ Values[9]+"|"+ Values[10]+"|"+Values[18]+"|"+ Values[4]+"^");      
                 }
                 else
                 {
-                    res=res+(Values[12]+"|"+ Values[1]+"|"+ Values[2]+"|"+ Values[10]+"|"+ Values[7]+"|"+ Values[8]+ "|"+ Values[4]+"^");      
+                    res=res+(Values[12]+"|"+ Values[1]+"|"+ Values[2]+"|"+ Values[10]+"|"+Values[18]+ "|"+ Values[4]+"|"+Values[17]+"^");      
                 }
                 if(vendor=='yes'){
                     reqRow.append($('<td><a href="../../Requirements/requirementedit.action?jdId='+ Values[12] +'&accountSearchID='+orgid+'&requirementId='+Values[0]+'&accountFlag='+accountFlag+'&vendor=yes" > ' + Values[12] + "</td>"));
@@ -236,9 +236,10 @@ function populateReqTableReq(response){
                     reqRow.append($('<td><a href="" class="recruiterOverlay_popup_open" onclick="showOverlayRecruiter('+Values[5]+');" >'+Values[7]+"</td>"));
                     reqRow.append($('<td><a href="" class="recruiterOverlay_popup_open" onclick="showOverlayRecruiter('+Values[6]+');" >'+Values[8]+"</td>"));
                 } */
-                reqRow.append($("<td>" +Values[17] + "</td>")); // job posting date (Created date in req_ven_rel)
+                reqRow.append($("<td>" +Values[18] + "</td>")); // job posting date (Created date in req_ven_rel)
                 reqRow.append($("<td>" + Values[4] + "</td>"));
                 if(vendor!='yes'){
+                    reqRow.append($("<td>" +Values[17] + "</td>"));
                     //                    if(Values[4]=='Closed'){
                     //                        reqRow.append($('<td><center><a href="#" >'+"<img src='../../includes/images/release.png' height='20' width='20' style='opacity:0.3' ></center></td>"));
                     //                    }
@@ -273,11 +274,13 @@ function populateReqTableReq(response){
             }
         }
         document.getElementById("gridDownload").value=res;
+        document.getElementById("downloading_grid").style.display="";
     }
     else{
         var row = $("<tr />")
         $("#reqTableInRecruiter").append(row);
         row.append($('<td colspan="11"><font style="color: red;font-size: 15px;">No Records to display</font></td>'));
+        document.getElementById("downloading_grid").style.display="none";
         $(".page_option").css('display', 'none');
     }
 
@@ -729,14 +732,14 @@ function goToMyPage(element) {
 $(document).ready(function() {
     var switched = false;
     var updateTables = function() {
-        if (($(window).width() < 917) && !switched ){
+        if (($(window).width() < 1025) && !switched ){
             switched = true;
             $("table.responsive").each(function(i, element) {
                 splitTable($(element));
             });
             return true;
         }
-        else if (switched && ($(window).width() > 917)) {
+        else if (switched && ($(window).width() > 1025)) {
             switched = false;
             $("table.responsive").each(function(i, element) {
                 unsplitTable($(element));
@@ -1336,13 +1339,21 @@ function getEmailExistance(){
                 var resultMsg=req.responseText;
                 if(resultMsg!=""){
                     var Values=resultMsg.split("#");
+                    if(Values[2]!=""){
+                        document.getElementById("ssnNo").value=Values[2];
+                        document.getElementById("ssnNo").disabled = true; 
+                    }
+                    else{
+                        document.getElementById("ssnNo").disabled = false;
+                        document.getElementById("ssnNo").value ="";
+                    }
                     // alert(Values[0])
                     //alert(Values[1])
                     if(Values[0]==3){
                         $("e1").html("");
                         $("e1").html(" <b><font color='red'>Already consultant exists.</font></b>");
                         document.getElementById("conEmail").value="";
-                        $("#IsEmployee").css('visibility', 'hidden');
+//                        $("#IsEmployee").css('visibility', 'hidden');
                         $("#skillField").css('visibility', 'hidden');
                     }
                     if(Values[0]==2){
@@ -1356,11 +1367,11 @@ function getEmailExistance(){
                         $("e1").html(" <b><font color='red'>sorry email doesnt exist.</font></b>");
                         document.getElementById("conEmail").value="";
                         $("#skillField").css('visibility', 'hidden');
-                        $("#IsEmployee").css('visibility', 'hidden');
+//                        $("#IsEmployee").css('visibility', 'hidden');
                     }
                     document.getElementById("resourceType").value=Values[1];
-                    var val=  Values[2].replace(/[\[\]']+/g,'');
-                    resourceVendorType();
+                    var val=  Values[3].replace(/[\[\]']+/g,'');
+//                    resourceVendorType();
                     setSkillForVendorEmployee(val,id);
                 } else{
                     $("e1").html("");
@@ -1368,8 +1379,8 @@ function getEmailExistance(){
                     document.getElementById("conEmail").value="";
                     document.getElementById("resourceType").value="Val";
                     $("#skillField").css('visibility', 'hidden');
-                    $("#IsEmployee").css('visibility', 'hidden');
-                    resourceVendorType();
+//                    $("#IsEmployee").css('visibility', 'hidden');
+//                    resourceVendorType();
                 }
             }
         };
@@ -1380,7 +1391,7 @@ function getEmailExistance(){
         $("e1").html("");
         $("e1").html(" <b><font color='red'>sorry email not valid.</font></b>");
         $("#skillField").css('visibility', 'hidden');
-        $("#IsEmployee").css('visibility', 'hidden');
+//        $("#IsEmployee").css('visibility', 'hidden');
     }
     return false;
 }
@@ -1887,4 +1898,31 @@ function setSkillForVendorEmployee(skillId,topicId){
     $("#IsEmployee").show();
     
     
+}
+function commentsCheckCharacters(id){
+    $(id).keyup(function(){
+        el = $(this);
+        e2 = $(this);
+        var count = el.val().length + ((el.val().split('\n').length)*5);
+        if(count >= 1000){
+            e2.val( e2.val().substr(0, 1000-((el.val().split('\n').length)*5)) );
+        } else {
+            $("#charNum").text(1000-count+' Characters remaining . ');
+        }
+        if(count==1000)
+        {
+            $("#charNum").text(' Cannot enter  more than 1000 Characters .');    
+        }
+        
+    })
+    return false;
+};
+function display_downloadButtons(){
+var val = document.getElementById("rec_exits").value;
+    if (val=="no"){
+        $("#downloading_grid").css('display', 'none');
+    }
+    else{
+        $("#downloading_grid").css('display', '');
+    }
 }

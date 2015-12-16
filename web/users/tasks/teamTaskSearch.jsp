@@ -33,6 +33,7 @@
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/profilediv.css"/>">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/media_queries.css"/>">
 
         <%-- aklakh js single file start --%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
@@ -44,7 +45,7 @@
         <%-- for date picket start--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>
@@ -120,7 +121,7 @@
                 // alert("hii2");
                 //myCalendar.setDateFormat("%m/%d/%Y %H:%i");
                 myCalendar.setDateFormat("%m-%d-%Y");
-                  myCalendar.hideTime();
+                myCalendar.hideTime();
                 // alert("hii3");
                 //alert("myCalendar")
                 
@@ -129,7 +130,7 @@
                 myCalendar1.setSkin('omega');
                 // alert("hii2");
                 myCalendar1.setDateFormat("%Y/%m/%d");
-                  myCalendar1.hideTime();
+                myCalendar1.hideTime();
                 
                 // default date code start from here
               
@@ -161,10 +162,10 @@
                 var odd=today.getDate()+1;
                 var overlayDate=yyyy+'-'+mm+'-'+odd;
                 //alert(from+" and "+to)
-              //  document.getElementById("docdatepickerfrom").value=from;
-               // document.getElementById("docdatepicker").value=to;
-               // document.getElementById("startDate").value=overlayDate;
-               // document.getElementById("endDate").value=overlayDate;
+                //  document.getElementById("docdatepickerfrom").value=from;
+                // document.getElementById("docdatepicker").value=to;
+                // document.getElementById("startDate").value=overlayDate;
+                // document.getElementById("endDate").value=overlayDate;
             }
             
             
@@ -179,41 +180,41 @@
                 return false;
             }
             
-//            function checkRange() {
-//                var fromValue=$('#docdatepickerfrom').val();
-//                var toValue=$('#docdatepicker').val();
-//                //alert(fromValue+" and "+toValue)
-//                if(fromValue==""){
-//                    alert("from date is madatory")
-//                    return false;
-//                }
-//                if(toValue==""){
-//                    alert("to date is madatory")
-//                    return false;
-//                }
-//                
-//                /*  var res = fromValue.split(" ");
-//                fromValue=res[0];
-//                var res1 = toValue.split(" ");
-//                toValue=res1[0];
-//                //alert(fromValue+" and "+toValue)
-//                if (Date.parse(fromValue) > Date.parse(toValue)) {
-//                    alert("Invalid Date Range!\nFrrom Date cannot be after To Date!")
-//                    return false;
-//                }*/
-//                var addStartDate = Date.parse(fromValue);
-//                var addEndDate = Date.parse(toValue);
-//
-//                var difference = (addEndDate - addStartDate) / (86400000 * 7);
-//                if (difference < 0) {
-//                    alert("The start date must come before the end date.");
-//                    $("errorEduAdd").html(" <b><font color='red'>start date must be less than end date</font></b>.");
-//                    $("#fromValue").css("border", "1px solid red");
-//      
-//                    $("#toValue").css("border","1px solid red");
-//                    return false;
-//                }
-//            }; 
+            //            function checkRange() {
+            //                var fromValue=$('#docdatepickerfrom').val();
+            //                var toValue=$('#docdatepicker').val();
+            //                //alert(fromValue+" and "+toValue)
+            //                if(fromValue==""){
+            //                    alert("from date is madatory")
+            //                    return false;
+            //                }
+            //                if(toValue==""){
+            //                    alert("to date is madatory")
+            //                    return false;
+            //                }
+            //                
+            //                /*  var res = fromValue.split(" ");
+            //                fromValue=res[0];
+            //                var res1 = toValue.split(" ");
+            //                toValue=res1[0];
+            //                //alert(fromValue+" and "+toValue)
+            //                if (Date.parse(fromValue) > Date.parse(toValue)) {
+            //                    alert("Invalid Date Range!\nFrrom Date cannot be after To Date!")
+            //                    return false;
+            //                }*/
+            //                var addStartDate = Date.parse(fromValue);
+            //                var addEndDate = Date.parse(toValue);
+            //
+            //                var difference = (addEndDate - addStartDate) / (86400000 * 7);
+            //                if (difference < 0) {
+            //                    alert("The start date must come before the end date.");
+            //                    $("errorEduAdd").html(" <b><font color='red'>start date must be less than end date</font></b>.");
+            //                    $("#fromValue").css("border", "1px solid red");
+            //      
+            //                    $("#toValue").css("border","1px solid red");
+            //                    return false;
+            //                }
+            //            }; 
 		
             
             $(document).ready(function(){
@@ -240,7 +241,7 @@
 
 
 
-    <body style="overflow-x: hidden" onload="doOnLoad();onLoad(); init(); getTaskType();">
+    <body style="overflow-x: hidden" onload="jumper();doOnLoad();onLoad(); init(); getTaskType();">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -266,7 +267,7 @@
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -276,7 +277,7 @@
 
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Tasks Search</font>
-                                                   <i id="updownArrow" onclick="toggleContent('showTeamTaskSearchDetails')" class="fa fa-angle-up"></i>
+                                                <i id="updownArrow" onclick="toggleContent('showTeamTaskSearchDetails')" class="fa fa-angle-up"></i>
 
                                             </h4>
                                         </div>
@@ -284,7 +285,6 @@
                                     </div>
                                     <!-- content start -->
                                     <span id="taskSearchValidation"></span>
-                                    <div class="col-sm-12">
                                         <s:form action="showTeamTaskSearchDetails" onsubmit="return checkDateRange()" theme="simple">
                                             <%--<br>
                                             <ul class="nav nav-pills">
@@ -304,54 +304,47 @@
 
 
                                             <div class="inner-reqdiv-elements">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Task Name: </label>
-                                                        <s:textfield cssClass="form-control"  name="task_name" placeholder="Task_Name" maxLength="60"/>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <label class="labelStylereq" style="color: #56a5ec;">Task Id: </label>
-                                                        <s:textfield cssClass="form-control" id="task_id" name="task_id"  placeholder="Task_Id" />
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <label class="labelStylereq" style="color: #56a5ec;">Status: </label>
-                                                        <s:select  id="status"  name="task_status" label="Status"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="tasksStatusList" />
-                                                    </div>
+                                                <div class="col-sm-4">
+                                                    <label class="labelStylereq" style="color:#56a5ec;">Task Name: </label>
+                                                    <s:textfield cssClass="form-control"  name="task_name" placeholder="Task_Name" maxLength="60"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label class="labelStylereq" style="color: #56a5ec;">Task Id: </label>
+                                                    <s:textfield cssClass="form-control" id="task_id" name="task_id"  placeholder="Task_Id" />
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label class="labelStylereq" style="color: #56a5ec;">Status: </label>
+                                                    <s:select  id="status"  name="task_status" label="Status"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="tasksStatusList" />
                                                 </div>
                                             </div>
                                             <div class="inner-reqdiv-elements">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label class="labelStylereq" style="color: #56a5ec;">Start Date: </label>
-                                                        <s:textfield cssClass=" form-control dateImage" name="docdatepickerfrom" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <label class="labelStylereq" style="color: #56a5ec;">End Date: </label>
-                                                        <s:textfield cssClass=" form-control dateImage" name="docdatepicker" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <label class="labelStylereq" style="color: #56a5ec;">Team Member: </label>
-                                                        <s:select  id="teamMember"  name="teamMember" label="teamMember"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="teamMemberNames" />
-                                                    </div>
-
-                                                    <div class="col-lg-4 pull-right">
-                                                        <div class="row">
-                                                         
-                                                        <%--    <div class="col-lg-6">
-                                                                <label class="labelStylereq" style=""></label>
-                                                                <a href="../tasks/addTask.action" class="add_searchButton form-control " style="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a> 
-                                                            </div> --%>
-                                                               <div class="col-lg-6">
-                                                                <label class="labelStylereq" style=""></label>
-                                                                <s:submit type="button" cssClass="add_searchButton form-control " id="searchButton" value=""  cssStyle="margin:5px" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>&nbsp;
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
+                                                <div class="col-sm-4">
+                                                    <label class="labelStylereq" style="color: #56a5ec;">Start Date: </label>
+                                                    <s:textfield cssClass=" form-control dateImage" name="docdatepickerfrom" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
                                                 </div>
-                                            </div>
+                                                <div class="col-sm-4">
+                                                    <label class="labelStylereq" style="color: #56a5ec;">End Date: </label>
+                                                    <s:textfield cssClass=" form-control dateImage" name="docdatepicker" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label class="labelStylereq" style="color: #56a5ec;">Team Member: </label>
+                                                    <s:select  id="teamMember"  name="teamMember" label="teamMember"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="teamMemberNames" />
+                                                </div>
+
+                                                <div class="col-sm-2 pull-right">
+
+
+                                                    <%--    <div class="col-lg-6">
+                                                            <label class="labelStylereq" style=""></label>
+                                                            <a href="../tasks/addTask.action" class="add_searchButton form-control " style="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a> 
+                                                        </div> --%>
+                                                    <label class="labelStylereq" style=""></label>
+                                                    <s:submit type="button" cssClass="add_searchButton form-control " id="searchButton" value=""  cssStyle="margin:5px" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>&nbsp;
+
+                                                    </div>
+                                                </div>
                                         </s:form>
-                                        <div class="col-sm-13">
+                                        <div class="row"></div>
 
                                             <s:form>
                                                 <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
@@ -390,9 +383,9 @@
                                                                     <td><s:property value="createdDate"></s:property></td>
                                                                     <s:if test="task_comments.length()>9">    
                                                                         <!--<td><s:a href="#" onclick="taskCommentsDetailsToViewOnOverlay('%{task_id}');taskCommentsPopup();" cssClass="taskComments_popup_open"><s:property value="%{task_comments.substring(0,10)}"></s:property>..</s:a></td>-->
-                                                                         <td><s:a href="#" onclick="taskCommentsPopup('%{task_comments}');" cssClass="taskComments_popup_open"><s:property value="%{task_comments.substring(0,10)}"></s:property>..</s:a>
-                                                                    </s:if>
-                                                                    <s:else>
+                                                                        <td><s:a href="#" onclick="taskCommentsPopup('%{task_comments}');" cssClass="taskComments_popup_open"><s:property value="%{task_comments.substring(0,10)}"></s:property>..</s:a>
+                                                                        </s:if>
+                                                                        <s:else>
                                                                         <td><s:property value="task_comments"></s:property></td>
                                                                     </s:else>
                                                                     <td><s:property value="relatedProject"></s:property></td>
@@ -408,20 +401,18 @@
                                                     </table>
                                                     <br/>
                                                     <s:if test="teamtaskDetails.size > 0">
-                                                    <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                            <option>10</option>
-                                                            <option>15</option>
-                                                            <option>25</option>
-                                                            <option>50</option>
-                                                        </select>
-                                                        Tasks per page
-                                                    </label>
+                                                        <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                                <option>10</option>
+                                                                <option>15</option>
+                                                                <option>25</option>
+                                                                <option>50</option>
+                                                            </select>
+                                                            Tasks per page
+                                                        </label>
                                                     </s:if>
                                                     <div align="right" class="pull-right" id="pageNavPosition" style="margin-right: 0vw;display: none"></div>
                                                 </div>
                                             </s:form>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <%--close of future_items--%>
@@ -458,26 +449,27 @@
                 </div>
             </div>
         </footer><!--/Footer-->
-<script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
-               var paginationSize = document.getElementById("paginationOption").value;
-               // alert(paginationSize)
-               if(isNaN(paginationSize))
-                   {
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+
+                var paginationSize = document.getElementById("paginationOption").value;
+                // alert(paginationSize)
+                if(isNaN(paginationSize))
+                {
                        
-                   }
+                }
                 recordPage=paginationSize;
                 //alert(recordPage)
-                 $('#teamTaskTable').tablePaginate({navigateType:'navigator'},recordPage);
+                $('#teamTaskTable').tablePaginate({navigateType:'navigator'},recordPage);
 
             };
-        $('#teamTaskTable').tablePaginate({navigateType:'navigator'},recordPage);
+            $('#teamTaskTable').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

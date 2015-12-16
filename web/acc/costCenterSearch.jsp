@@ -30,7 +30,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -62,18 +62,18 @@
                 //document.getElementById("paginationOption").value=10;
                 pager.showPage(1);
             };
-//            function pagerOption(){
-//                        
-//                paginationSize = document.getElementById("paginationOption").value;
-//                if(isNaN(paginationSize))
-//                    alert(paginationSize);
-//                        
-//                pager = new Pager('costCenterResults', parseInt(paginationSize));
-//                pager.init();
-//                pager.showPageNav('pager', 'pageNavPosition');
-//                pager.showPage(1);
-//                        
-//            };
+            //            function pagerOption(){
+            //                        
+            //                paginationSize = document.getElementById("paginationOption").value;
+            //                if(isNaN(paginationSize))
+            //                    alert(paginationSize);
+            //                        
+            //                pager = new Pager('costCenterResults', parseInt(paginationSize));
+            //                pager.init();
+            //                pager.showPageNav('pager', 'pageNavPosition');
+            //                pager.showPage(1);
+            //                        
+            //            };
         </script>
 
     </head>
@@ -91,7 +91,7 @@
             <div class="container">
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="" id="profileBox" style="float: left; margin-top: 5px">
                                 <div class="backgroundcolor" >
@@ -107,37 +107,30 @@
                                 <s:form action="/costCenter/costCenterSearch" theme="simple" id="costCenterSearch">
                                     <div class="inner-reqdiv-elements">
                                         <div class="row">
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec">Cost Center Name:</label>
-                                                <s:textfield cssClass="form-control" id="ccName"  name="ccName" maxLength="30"/>
+                                                <s:textfield cssClass="form-control" id="ccName" placeholder="Cost Center Name"  name="ccName" maxLength="30"/>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec">Cost Center Code:</label>
-                                                <s:textfield cssClass="form-control" id="ccCode"  name="ccCode" maxLength="30"/>
+                                                <s:textfield cssClass="form-control" id="ccCode" placeholder="Cost Center Code" name="ccCode" maxLength="30"/>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec">Status:</label>
                                                 <s:select id="status" cssClass="SelectBoxStyles form-control" name="status" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"/>
                                             </div>
-                                            <div class="col-lg-3">
-                                                <div class="col-lg-6">
+
+                                        </div>
+                                        <div class="row">  
+                                            <div class="col-sm-4 pull-right">
+                                                <div class="col-sm-6 ">
                                                     <label class="labelStylereq" style="color:#56a5ec"></label>
                                                     <s:a href='#' onclick="costCenterAdd_overlay()" cssClass="costCenter_popup_open add_searchButton form-control"  cssStyle="margin:5px 0px 0px"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>  
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-sm-6 ">
                                                     <label class="labelStylereq" style="color:#56a5ec"></label>
                                                     <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit> 
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">  
-                                            <div class="col-lg-4"></div>
-                                            <div class="col-lg-4"></div>
-                                            <div class="col-lg-2 ">
-
-                                            </div>
-                                            <div class="col-lg-2 ">
-
                                             </div>
                                         </div>
                                     </div>
@@ -229,14 +222,14 @@
                                                 </table>
                                                 <br/>
                                                 <s:if test="costCenterSearchList.size > 0">
-                                                <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                        <option>10</option>
-                                                        <option>15</option>
-                                                        <option>25</option>
-                                                        <option>50</option>
-                                                    </select>
-                                                    cost center per page
-                                                </label>
+                                                    <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                            <option>10</option>
+                                                            <option>15</option>
+                                                            <option>25</option>
+                                                            <option>50</option>
+                                                        </select>
+                                                        cost center per page
+                                                    </label>
                                                 </s:if>
                                                 <div align="right" id="pageNavPosition" style="margin: -31px -1px 9px 5px;display: none"></div>
                                             </div>
@@ -278,7 +271,7 @@
                                                      id="name" 
                                                      type="text" value="" 
                                                      name="name"
-                                                     placeholder="" label="Cost Center Name"
+                                                     placeholder="Cost Center Name" label="Cost Center Name"
                                                      maxLength="30"/>
 
                                     </div>
@@ -381,7 +374,7 @@
                                                          id="startDate" 
                                                          type="text" value="" 
                                                          name="startDate"
-                                                         placeholder="" label="Start Date" 
+                                                         placeholder="Start Date" label="Start Date" 
                                                          onkeypress="return enterDateRepository(); 
                                                          "/>
                                         </s:if>
@@ -390,7 +383,7 @@
                                                          id="startDate" 
                                                          type="text" value="" 
                                                          name="startDate"
-                                                         placeholder="" label="Start Date"
+                                                         placeholder="Start Date" label="Start Date"
                                                          onkeypress="return enterDateRepository();" readonly="true"/>
                                         </s:else>
 
@@ -401,7 +394,7 @@
                                                          id="endDate" 
                                                          type="text" value="" 
                                                          name="endDate"
-                                                         placeholder="" label="End Date"
+                                                         placeholder="End Date" label="End Date"
                                                          onkeypress="return enterDateRepository();"/>
                                         </s:if>
                                         <s:else>
@@ -409,7 +402,7 @@
                                                          id="endDate" 
                                                          type="text" value="" 
                                                          name="endDate"
-                                                         placeholder="" label="End Date"
+                                                         placeholder="End Date" label="End Date"
                                                          onkeypress="return enterDateRepository();" readonly="true"/>
                                         </s:else>
 
@@ -424,7 +417,7 @@
                                                          id="budgetAmt" 
                                                          type="text" value="" 
                                                          name="budgetAmt"
-                                                         placeholder=""
+                                                         placeholder="Budget Amount"
                                                          onkeypress="return validationCostCenterYear(event,this.id)"
                                                          /></div>
                                     </div>  
@@ -596,26 +589,28 @@
                 </div>
             </div>
         </footer><!--/Footer-->
-      
+
 
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
-          <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
 
-               var paginationSize = document.getElementById("paginationOption").value;
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+
+                var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
-                   {
+                {
                        
-                   }
+                }
                 recordPage=paginationSize;
-               // alert(recordPage)
-                 $('#costCenterResults').tablePaginate({navigateType:'navigator'},recordPage);
+                // alert(recordPage)
+                $('#costCenterResults').tablePaginate({navigateType:'navigator'},recordPage);
 
             };
-        $('#costCenterResults').tablePaginate({navigateType:'navigator'},recordPage);
+            $('#costCenterResults').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

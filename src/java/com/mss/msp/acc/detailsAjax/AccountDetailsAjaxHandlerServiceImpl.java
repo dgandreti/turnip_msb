@@ -102,8 +102,8 @@ public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxH
             callableStatement.setString(23, account.getBankAddress());
             callableStatement.setString(24, account.getBankCity());
             callableStatement.setString(25, account.getBankZip());
-            callableStatement.setString(26, account.getBankRoutingNumber());
-            callableStatement.setString(27, account.getBankAccountNumber());
+            callableStatement.setString(26, com.mss.msp.util.DataUtility.encrypted(account.getBankRoutingNumber()));
+            callableStatement.setString(27, com.mss.msp.util.DataUtility.encrypted(account.getBankAccountNumber()));
             callableStatement.setString(28, account.getBeneficiaryName());
 //            String str = account.getSkillValues();
 //            StringTokenizer stk = new StringTokenizer(str, ",");

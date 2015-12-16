@@ -3018,4 +3018,47 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
         //System.out.println("csr name--->" + sb.toString());
         return sb.toString();
     }
+    public int doUpdateVisaAttachment(int consultantId,String fileName) throws ServiceLocatorException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        
+        int result = 0;
+        
+        //StringBuffer sb = new StringBuffer();
+
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            String queryString = " update usr_details SET idproofattachment=? WHERE usr_id="+consultantId;
+
+            //System.out.println("get edit skill details update query" + queryStringupdate);
+            preparedStatement = connection.prepareStatement(queryString);
+            preparedStatement.setString(1, fileName);
+            result = preparedStatement.executeUpdate();
+            
+            //System.out.println("String-->" + sb);
+        } catch (SQLException sqle) {
+            throw new ServiceLocatorException(sqle);
+        } finally {
+            try {
+                if (resultSet != null) {
+
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
+                }
+
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sql) {
+                //System.err.print("Error :"+sql);
+            }
+
+        }
+        return result;
+    }
 }

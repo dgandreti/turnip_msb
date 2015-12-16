@@ -61,7 +61,8 @@ public class RequirementVTO {
     private List skillSetList;
     private List preSkillSetList;
     private int othersCount;
-     private String billingtype;
+    private String billingtype;
+    private String requirementQualification;
 
     public int getOthersCount() {
         return othersCount;
@@ -70,8 +71,6 @@ public class RequirementVTO {
     public void setOthersCount(int othersCount) {
         this.othersCount = othersCount;
     }
-    
-    
 
     public String getSkillCategoryValue() {
         return skillCategoryValue;
@@ -97,7 +96,6 @@ public class RequirementVTO {
         this.preSkillSetList = preSkillSetList;
     }
 
-    
     public String getRequirementExp() {
         return RequirementExp;
     }
@@ -463,5 +461,12 @@ public class RequirementVTO {
     public void setBillingtype(String billingtype) {
         this.billingtype = billingtype;
     }
-    
+
+    public String getRequirementQualification() {
+        return requirementQualification;
+    }
+
+    public void setRequirementQualification(String requirementQualification) {
+        this.requirementQualification = requirementQualification;
+    }
 }

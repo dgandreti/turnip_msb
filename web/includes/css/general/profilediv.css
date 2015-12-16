@@ -744,10 +744,10 @@ div#emailPhoneShowBoxOverlay {
     color: #3A3A3A;
 }
 div#vendorAssocitaionOverlay{
-
+margin-left: 10%;
     display: none;
     z-index: 3;
-
+height: 220px;
     background: #f9f9f9;
     color: #3711F5;
     border-radius: 3px; 

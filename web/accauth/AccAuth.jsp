@@ -13,7 +13,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Action Authorization Page</title>
+        <title>ServicesBay :: Action Authorization Search Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -34,31 +34,7 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/GeneralAjax.js"/>'></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
-        <script>
-//            var pager;
-//            function onLoad(){
-//                //alert("onload")
-//                var paginationSize = 10; // parseInt(document.getElementById("paginationOption").value);
-//                // alert(paginationSize);
-//                pager = new Pager('empCategorizationResults', paginationSize);
-//                pager.init();
-//                pager.showPageNav('pager', 'pageNavPosition');
-//              //  document.getElementById("paginationOption").value=10;
-//                pager.showPage(1);
-//            };
-//            function pagerOption(){
-//
-//                paginationSize = document.getElementById("paginationOption").value;
-//                if(isNaN(paginationSize))
-//                    alert(paginationSize);
-//
-//                pager = new Pager('empCategorizationResults', parseInt(paginationSize));
-//                pager.init();
-//                pager.showPageNav('pager', 'pageNavPosition');
-//                pager.showPage(1);
-//
-//            };
-        </script>
+        
         <script type="text/javascript">
             function sortables_init() {
                 // Find all tables with class sortable and make them sortable
@@ -92,7 +68,7 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-16 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -118,7 +94,8 @@
                                      </div>   
                                     <div class="col-sm-16">
                                         <s:form action="searchAccAuthorization" theme="simple">
-                                            <div class="col-lg-4">
+                                             <div class="row">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Action Name: </label>
                                                 <s:textfield id="actionName"
                                                              cssClass="form-control"
@@ -127,7 +104,7 @@
                                                              placeholder="Action Name" maxLength="60"
                                                              /> 
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
                                                 <s:select  id="status"
                                                            name="status"
@@ -138,17 +115,17 @@
                                                            />
                                             </div >
                                             <br>
-                                            <div class="col-lg-2">
+                                            <div class="col-sm-2 pull-right">
 
                                                 <button type="button" style="margin: 5px 0px;" class="add_searchButton form-control addAuthAccOverlay_popup_open cssbutton" onclick="addAuthAccOverlayFun();addOrUpdateChecking('a');clearActionValues();"  style=""><i class="fa fa-plus-square"></i>&nbsp;Add</button>
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-sm-2 pull-right">
 
                                                 <s:submit type="button" cssStyle="margin:5px 0px;"
                                                           cssClass="add_searchButton form-control"
                                                           value=""><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                             </div>
-
+                                             </div>
                                         </s:form>
 
                                         <%--<s:submit cssClass="css_button" value="show"/><br>--%>
@@ -235,16 +212,10 @@
                             <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="authAccOverlay_popup_close" onclick="authAccOverlayFun()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
                         </table>
                     </div>
-                        
                     <div>
                         <div class="inner-reqdiv-elements">
-
                            <s:textarea id="outputMessageOfauthAcc" disabled="true" cssClass="form-control textareaActionDescOverlay"></s:textarea>
-
                         </div>
-
-
-
                     </div>
                     <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                 </div>   
@@ -266,9 +237,6 @@
                         <s:hidden id="overlayActionName" value="overlayActionName"/>
                         <s:hidden id="overlayActionStatus" value="overlayActionStatus"/>
                         <s:hidden id="overlayActionDesc" value="overlayActionDesc"/>
-                        <%-- <div class="inner-addAcc-elements ">
-                             <label class="addAcclabelStyle">Email:</label><s:textfield cssClass="addAccInputStyle" placeholder="Email" name="contactEmail" id="ContactEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Must be valid email')"   onchange="try{setCustomValidity('')}catch(e){}"  onkeyup="EmailValidation()" />
-                             </div>--%>
                         <br>
                         <div class="inner-addAcc-elements" id="accNameDiv">
                             <label class="addAcclabelStyle" style="color:#56a5ec;"><span class="accAuthError">*</span>Action Name: </label>
@@ -294,24 +262,17 @@
                         </div>
                         <div class="inner-addAcc-elements" id="descDiv">
                             <label class="addAcclabelStyle" style="color:#56a5ec;"><span class="accAuthError">*</span>Description: </label>
-                            <s:textarea id="addingAccAuthDesc" cssClass="authareacss" name="addingAccAuthDesc" onkeydown="actionAuthDescription(this)"  onfocus="return removeErrorMsg();"/>
+                            <s:textarea id="addingAccAuthDesc" cssClass="authareacss" name="addingAccAuthDesc" placeholder="Description" onkeydown="actionAuthDescription(this)"  onfocus="return removeErrorMsg();"/>
 
                         </div>
                         <span class="charNum" id="addingAccAuthValid"></span> 
-                        <div class="col-lg-6"></div>
-                        <div class="col-lg-4" id="addDiv">
-
-
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-4 pull-right" id="addDiv">
                             <button type="button" style="margin: 5px 0px;" class="add_searchButton  form-control" onclick="insertOrUpdateAccAuth('0');" value=""><i class="fa fa-plus-square"></i>&nbsp;Add</button>
-
-
                         </div>
-                        <div class="col-lg-4" id="updateDiv">
-
+                        <div class="col-sm-4 pull-right" id="updateDiv">
                             <button type="button" style="margin: 5px 0px;" class="add_searchButton  form-control" onclick="insertOrUpdateAccAuth('1');" value=""><i class="fa fa-refresh"></i>&nbsp;update</button>
-
                         </div>
-
                         <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                     </div>   
                 </div> 
@@ -321,14 +282,15 @@
 
             <!-- content end -->
         </section><!--/form-->
+        
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">
                     <s:include value="/includes/template/footer.jsp"/>
                 </div>
             </div>
-
         </footer>
+                
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
 
@@ -346,22 +308,21 @@
     <script type="text/javascript">
         var recordPage=10;
           function pagerOption(){
-
                var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
                    {
-                       
                    }
                 recordPage=paginationSize;
                // alert(recordPage)
                  $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
-
             };
         $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
        </script>
+       <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>
+       
     </body>
 </html>
 

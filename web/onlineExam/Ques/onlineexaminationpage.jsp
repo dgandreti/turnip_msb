@@ -569,6 +569,8 @@ System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 
         </table>
         <!-- Wrapper -->
+
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 
 </html>

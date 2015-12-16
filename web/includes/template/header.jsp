@@ -14,6 +14,7 @@
 <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
 <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/general.css"/>">
 <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/main.css"/>">
+<link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive_queries.css"/>">
 <!DOCTYPE html>
 
 <%-- <div class="row headerAlingment"></div>--%>
@@ -143,6 +144,7 @@
                     </li>
                 </ul>
             </div>
+                            
         </div>
     </s:else>
 </div>

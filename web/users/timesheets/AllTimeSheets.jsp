@@ -39,7 +39,7 @@
         <%-- for date picket start--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
 
@@ -170,7 +170,7 @@
                     <s:include value="/includes/menu/LeftMenu.jsp"/>  
 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -189,48 +189,48 @@
                                     <span id="timesheetValidation"></span>
                                     <s:url var="myUrl" action="#"></s:url>
                                         <!-- content start onsubmit="return validateDates()" -->
-                                        <div class="col-sm-13">
+                                        <div class="col-sm-12">
                                         <s:form action="getAllTimeSheetsSearch" onsubmit="return checkTimesheetDateRange();" theme="simple" >
                                             <br>
                                             <ul class="nav nav-pills">
                                                 <s:hidden value="%{reportingPerson}" name="reportingPerson" id="reportingPerson"/>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color:#56a5ec;">From Date:</label> 
                                                     <s:textfield cssClass="form-control dateImage" name="startDate" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color:#56a5ec;">To Date:</label>
                                                     <s:textfield cssClass="form-control dateImage" name="endDate" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color:#56a5ec;">Timesheet Status:</label>
-                                                    <s:select id="tmstatus" name="tmstatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'CA':'Entered','SU':'Submitted','AP':'Approved','DA':'Disapproved'}"/>
+                                                    <s:select id="tmstatus" name="tmstatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'CA':'Entered','SU':'Submitted','AP':'Approved','DA':'Disapproved'}" tabindex="3" />
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color:#56a5ec;">Employee:</label>
-                                                    <s:textfield id="tmmember" name="tmmember" cssClass="form-control" placeholder="Name" maxLength="60"/>
+                                                    <s:textfield id="tmmember" name="tmmember" cssClass="form-control" placeholder="Name" maxLength="60" tabindex="4" />
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
-                                                    <s:select id="status" name="status" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"/>
+                                                    <s:select id="status" name="status" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" tabindex="5" />
                                                 </div>
                                                 <s:if test="#session.primaryrole==7">
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">Account Name:</label>
-                                                        <s:textfield id="vendorName" name="vendorName" cssClass="form-control" placeholder="Name" maxLength="60"/>
+                                                        <s:textfield id="vendorName" name="vendorName" cssClass="form-control" placeholder="Name" maxLength="60" tabindex="6"/>
                                                     </div>
                                                 </s:if>
                                                 <s:else>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">Customer Name:</label>
-                                                        <s:textfield id="customerName" name="customerName" cssClass="form-control" placeholder="Name" maxLength="60"/>
+                                                        <s:textfield id="customerName" name="customerName" cssClass="form-control" placeholder="Name" maxLength="60" tabindex="7"/>
                                                     </div> 
                                                 </s:else>    
-                                                <div class="col-lg-10"></div>
-                                                <div class="col-lg-2">
+                                                <div class="col-sm-10"></div>
+                                                <div class="col-sm-2">
                                                     
                                                     <%--a href="#" onclick="addTimeSheetOverlayOpen()"><input type="button" class="cssbutton addTimeSheet_open" value="Add Timesheet"></a--%>&nbsp;&nbsp;&nbsp; 
-                                                    <s:submit type="button"  cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="searchButton" value="" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                    <s:submit type="button"  cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="searchButton" value="" tabindex="8" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                 </div>
                                             </ul>
                                             <br>
@@ -400,6 +400,7 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
  
        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
         
@@ -419,7 +420,7 @@
             };
         $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />

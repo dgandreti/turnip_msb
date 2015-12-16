@@ -34,6 +34,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/register/modernizr.custom.04022.js"/>"></script>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/account/formVerification.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
 
         <!--[if lt IE 8]>
                 <style>
@@ -52,12 +53,12 @@
 
         </header><!--/header-->
 
-        <div class="container">
+        <div class="container register_form">
             <section class="af-wrapper">
                 <h2 style="text-align: center;font-weight: bold;">Vendor Registration</h2>
 
                 <input id="af-showreq" class="af-show-input" type="checkbox" name="showreq"/>
-                <label for="af-showreq" class="af-show">Show only required fields</label>
+                <div> <label for="af-showreq" class="af-show">Show only required fields</label></div>
                 <s:form action="userRegistration.action" cssClass="af-form" id="af-form"  method="post" name="userLoginForm"   validate="" theme="simple"> 
                     <div class="row">
                         <s:if test="%{resultMessage=='NULL'}">
@@ -303,7 +304,12 @@
                 <s:include value="/includes/template/footer.jsp"/>
 
             </div>
-
+            <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        <script>
+            $("#org_fax").mask("99/99/9999");
+            $("#zip").mask("99/99/9999");
+        </script>
     </body>
 </html>

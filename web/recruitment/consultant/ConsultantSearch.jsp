@@ -41,7 +41,7 @@
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>
@@ -100,7 +100,7 @@
 
 
 
-    <body style="overflow-x: hidden" onload="consultantPage();StateChange();">
+    <body style="overflow-x: hidden" onload="consultantPage();StateChange();jumper();">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -125,9 +125,9 @@
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
 
 
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-14 ">
+                            <div class="col-sm-14 ">
                                 <div class="" id="selectivityProfileBox" style="float: left; margin-top: 5px">
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
@@ -142,9 +142,10 @@
                                     </div>
 
                                     <div class="col-sm-12">
-                                        <s:form action="getConsultant" theme="simple">
-                                            <span id="validationMessage"></span>
-                                            <%--div class="row">
+                                        <div class="row">
+                                            <s:form action="getConsultant" theme="simple">
+                                                <span id="validationMessage"></span>
+                                                <%--div class="row">
 
                                                 <div class="col-lg-4">
 
@@ -164,70 +165,70 @@
                                                 </div>
 
                                             </div--%>
-                                            <s:hidden name="gridDownload" id="gridDownload" value="%{gridPDFDownload}"/>
-                                            <div class="inner-reqdiv-elements">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
+                                                <s:hidden name="gridDownload" id="gridDownload" value="%{gridPDFDownload}"/>
+                                                <div class="inner-reqdiv-elements">
+
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec">Name:</label>
                                                         <s:textfield cssClass="form-control" name="consult_name" id="consult_name" placeholder="Name" value="%{consult_name}" tabindex="1" maxLength="60"/>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec">Email Id:</label>
                                                         <s:textfield cssClass="form-control" name="consult_email" id="consult_email" placeholder="Email" value="%{consult_email}" tabindex="1" maxLength="60"/>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec">Status:</label>
                                                         <s:select cssClass="SelectBoxStyles form-control" name="consult_status" id="consult_status" headerKey="-1" headerValue="-- Select status--"  list="{'Active','In-Active'}" tabindex="1"/>
                                                     </div>
-                                                </div>
 
-                                                <%--div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label style="color:#56a5ec;" class="task-label">Phone:</label>
-                                                        <s:textfield cssClass="textbox" name="consult_phno" id="consult_phno" placeholder="" value="%{consult_phno}" tabindex="1"/>
-                                                    </div>
-                                                    <s:if test="consultantFlag == 'Team'">
-                                                        <div class="col-lg-4" >
-                                                            <label style="color:#56a5ec;margin-right: 10px;" class="accountLabel">Members:</label>
-                                                            <s:select id="teamMembers" value="" style="margin-top: 5px;width:160px;" name="teamMembers" cssClass="selectBoxStyle" headerKey="-1" headerValue="--Please Select--" theme="simple" list="teamMembersList"/>
+
+                                                    <%--div class="row">
+                                                        <div class="col-lg-4">
+                                                            <label style="color:#56a5ec;" class="task-label">Phone:</label>
+                                                            <s:textfield cssClass="textbox" name="consult_phno" id="consult_phno" placeholder="" value="%{consult_phno}" tabindex="1"/>
                                                         </div>
-                                                    </s:if>
-                                                    <s:hidden name="consultantFlag" id="consultantFlag" value="%{consultantFlag}"/>
+                                                        <s:if test="consultantFlag == 'Team'">
+                                                            <div class="col-lg-4" >
+                                                                <label style="color:#56a5ec;margin-right: 10px;" class="accountLabel">Members:</label>
+                                                                <s:select id="teamMembers" value="" style="margin-top: 5px;width:160px;" name="teamMembers" cssClass="selectBoxStyle" headerKey="-1" headerValue="--Please Select--" theme="simple" list="teamMembersList"/>
+                                                            </div>
+                                                        </s:if>
+                                                        <s:hidden name="consultantFlag" id="consultantFlag" value="%{consultantFlag}"/>
+                                                        <div class="col-lg-4">
+                                                            <s:submit cssClass="cssbutton" id="searchButton" value="search" />
+                                                    <%--   <s:if test="consultantFlag == 'My'">
+                                                        <a href="/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/addConsultant.action" ><input type="button" class=" cssbutton " value="Add Consultant"></a> &nbsp;
+                                                        </s:if>--%>
+                                                    <%--/div>
                                                     <div class="col-lg-4">
-                                                        <s:submit cssClass="cssbutton" id="searchButton" value="search" />
-                                                <%--   <s:if test="consultantFlag == 'My'">
-                                                    <a href="/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/addConsultant.action" ><input type="button" class=" cssbutton " value="Add Consultant"></a> &nbsp;
-                                                    </s:if>--%>
-                                                <%--/div>
-                                                <div class="col-lg-4">
 
                                                 </div>
 
                                             </div--%>
 
-                                                <div class="row">
+
                                                     <s:hidden name="consultState" id="consultState" value="%{consult_State}"/>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec">Country:</label>
                                                         <s:select cssClass="form-control SelectBoxStyles" name="consult_Country" id="consult_Country" headerKey="-1" headerValue="All" list="consult_WCountry" onchange="StateChange()" tabindex="5" />
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec">State:</label>
                                                         <s:select cssClass="form-control SelectBoxStyles" name="consult_State" id="consult_State"  headerKey="-1" headerValue="Select state" list="{}"  tabindex="5" value="%{consult_State}"/> 
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec">City:</label>
                                                         <s:textfield cssClass="form-control" name="consult_City" id="consult_City" placeholder="Enter City"  tabindex="1" />
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
+
+
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec">Phone:</label>
                                                         <s:textfield cssClass="form-control" name="consult_phno" id="consult_phno" placeholder="Phone" value="%{consult_phno}" tabindex="1" maxLength="15"/>
                                                     </div>
 
-                                                   <s:if test="consultantFlag == 'Team' || consultantFlag == 'All'">
-                                                        <div class="col-lg-4" >
+                                                    <s:if test="consultantFlag == 'Team' || consultantFlag == 'All'">
+                                                        <div class="col-sm-4" >
                                                             <label class="labelStylereq" style="color:#56a5ec;margin-right: 10px;" >Members:</label>
                                                             <%--<s:select id="teamMembers" value=""  name="teamMembers" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="--Please Select--" theme="simple" list="teamMembersList"/>--%>
                                                             <s:textfield cssClass="form-control" id="enameForRecruitment"  name="enameForRecruitment" onkeyup="return getEmpRecruitment();" autocomplete='off' maxLength="30" placeholder="Name" onfocus="return removeErrorMsgForTechie();"/>
@@ -235,22 +236,23 @@
                                                         </div>
                                                     </s:if>
                                                     <s:hidden name="consultantFlag" id="consultantFlag" value="%{consultantFlag}"/>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStyle" id="labelLevelStatusReq">Specialization </label> <s:select cssClass="" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true"/> 
                                                         <s:hidden id="skillValues" name="skillValues" />
                                                     </div>
-                                                    <div class="col-lg-4"></div>
-                                                    <div class="col-lg-4"></div>
-                                                    <div class="col-lg-2 pull-right">
+                                                    <div class="col-sm-4"></div>
+                                                    <div class="col-sm-4"></div>
+                                                    <div class="col-sm-2 pull-right">
                                                         <label class="labelStylereq" style=""></label>
                                                         <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="searchButton" value="" onclick="submmition();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                        </div>
                                                     </div>
+
                                                 </div>
 
 
                                                 <br>
-                                        </s:form>
+                                            </s:form>
+                                        </div>
                                     </div>
                                     <div id="responseMessage" style="color: green;margin-left: 2%"></div>
                                     <div class="col-sm-12">
@@ -324,11 +326,13 @@
                                                                 <%                                                               }
                                                                 %> --%>
                                                                 <s:if test="ConsultantListDetails.size == 0">
+                                                                    <s:hidden id="rec_exits" value="no"/>
                                                                     <tr>
                                                                         <td colspan="10"><font style="color: red;font-size: 15px;">No Records to display</font></td>
                                                                     </tr>
                                                                 </s:if>
                                                                 <s:iterator  value="ConsultantListDetails">
+                                                                    <s:hidden id="rec_exits" value="yes"/>
                                                                     <%
                                                                         String strFlag = request.getParameter("consultantFlag");
                                                                     %>
@@ -349,7 +353,7 @@
                                                                         <%--<td><s:property value="consult_salary"></s:property></td>--%>
                                                                         <td><s:property value="consult_phno"></s:property></td>
                                                                         <td><s:property value="consult_status"></s:property></td>
-                                                                        </tr>
+                                                                    </tr>
                                                                 </s:iterator>
                                                             </tbody> 
                                                         </table>
@@ -375,8 +379,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 pull-right">
-                                                <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadResults.action?pdfHeaderName=Consultant List&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class=" cssbutton form-control" value="Download"></a>
+                                            <div id="downloading_grid">
+                                                <div class="col-lg-2 pull-right">
+                                                    <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadResults.action?pdfHeaderName=Consultant List&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class=" cssbutton form-control" value="Download"></a>
+                                                </div>
                                             </div>
                                         </s:form>
 
@@ -421,6 +427,7 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/selectivity-full.min.js"/>"></script> 
         <script>
             
@@ -453,7 +460,11 @@
             };
             $('#task_results').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-<div style="display: none; position: absolute; top:270px;left:700px;overflow:auto; z-index: 1900000" id="menu-popup">
+        <script type="text/JavaScript">
+            displayHide_downloadButtons();
+        </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
+        <div style="display: none; position: absolute; top:270px;left:700px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>
 

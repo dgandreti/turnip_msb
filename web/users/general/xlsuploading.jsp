@@ -33,7 +33,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -59,7 +59,7 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -79,35 +79,40 @@
                                     </div>
                                     <!-- content start -->
                                     <div class="col-sm-12">
-                                        <div class="col-lg-2"></div>
-                                        <div class="col-lg-7">
+                                        <div class="row"></div>
+                                        <div class="row">
                                             <s:form action="xlsFileUpload" id="myForm" theme="simple" method="POST" enctype="multipart/form-data" >
                                                 <s:hidden name="fileExist" value="%{fileExist}"/>
                                                 <span><fileuplaoderror></fileuplaoderror></span>
-                                                <div class="col-lg-12">
+                                                <div class="col-sm-12">
                                                     <s:if test="fileExist!=''&&fileExist!=null">
                                                         <span id="resume"><font style='color:red;font-size:15px;'>File Name Already Exists!!</font></span>
                                                         </s:if> 
                                                 </div>
                                                 <!--<div class="col-lg-12">-->
-                                                 <div class="col-lg-4"><br>
+                                               <div class="row"><br></div>
+                                                <div class="col-sm-6">
                                                     <s:select name="accountType" id="accountType" value="" list="#@java.util.LinkedHashMap@{'Customer':'Customer','Vendor':'Vendor'}" cssClass="SelectBoxStyles form-control"/>
                                                 </div>
-                                                <div class="col-lg-5"><br>
+                                             
+                                                <div class="col-sm-6">
                                                     <s:file name="xlsfile" cssClass="" label="Xls File" id="file"></s:file>
                                                     <span style="color:#4E4E4E;font-size: 10px">Upload XLS file.</span>
-                                                </div><div class="col-lg-3">
+                                                </div>
+                                                    <div class="col-sm-4 pull-right">
                                                     <%--<s:hidden name="accountType" id="accountType" value="%{accountType}"/>--%>
                                                     
-                                                    <sx:submit value="Upload" cssClass="cssbutton_emps" name="submit" onclick="return checkExtention()" />
+                                                    <sx:submit value="Upload" cssClass="cssbutton_emps pull-right" name="submit" onclick="return checkExtention()" />
                                                 </div>
                                                 <!--</div>-->
                                             </s:form>       
                                         </div>
-                                        <br>
+                                       
                                         <%--<s:submit cssClass="css_button" value="show"/><br>--%>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <br>
+                                    <div class="col-sm-12">
+                                        <div class="row">
                                         <ol>
                                             <b><font color="">File Attributes :</font></b>
                                             <li>File Name should be Less Than 30 Characters.</li>
@@ -124,6 +129,7 @@
                                         </ol> 
                                         To Download Sample File Format 
                                         <s:a href="downloadSample.action">Click Here</s:a> 
+                                    </div>
                                     </div>
 
                                 </div>
@@ -149,7 +155,8 @@
 
     </footer>
     <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
-
+    <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     <!--/Footer-->
 
 </body>

@@ -56,7 +56,7 @@ function ts_makeSortable(t) {
         var cell = firstRow.cells[i];
         var txt = ts_getInnerText(cell);
         if (cell.className != "unsortable" && cell.className.indexOf("unsortable") == -1) {
-            cell.innerHTML = '<a href="#" style="color:white" onmouseover="colorChange(this)" onmouseout="normalColor(this)" class="sortheader" onclick="pageTable(sortableTableName, sortableTableRows.length);ts_resortTable(this, '+i+');pagerOption();return false;">'+txt+'<span class="sortarrow">&nbsp;&nbsp;&#128316;</span></a>';
+            cell.innerHTML = '<a href="#" style="color:white" onmouseover="colorChange(this)" onmouseout="normalColor(this)" class="sortheader" onclick="pageTable(sortableTableName, sortableTableRows.length);ts_resortTable(this, '+i+');pagerOption();return false;">'+txt+'<span class="sortarrow">&nbsp;&nbsp;&#9650;</span></a>';
         }
     }
     if (alternate_row_colors) {
@@ -145,11 +145,11 @@ function ts_resortTable(lnk, clid) {
     }
     newRows.sort(sortfn);
     if (span.getAttribute("sortdir") == 'down') {
-        ARROW = '&nbsp;&nbsp;&#128316;';
+        ARROW = '&nbsp;&nbsp;&#9650;';
         
         span.setAttribute('sortdir','up');
     } else {
-        ARROW = '&nbsp;&nbsp;&#128317;';
+        ARROW = '&nbsp;&nbsp;&#9660;';
         newRows.reverse();
         span.setAttribute('sortdir','down');
     } 

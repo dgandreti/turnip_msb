@@ -391,7 +391,7 @@ public class AccountServiceImpl implements AccountService {
              callableStatement.setString(22, accountAction.getContactTitle());
              callableStatement.setInt(23, accountAction.getContactExperience());
              callableStatement.setInt(24,accountAction.getContactIndustry());
-             callableStatement.setString(25, accountAction.getContactSsnNo());
+             callableStatement.setString(25, com.mss.msp.util.DataUtility.encrypted(accountAction.getContactSsnNo()));
              callableStatement.setString(26, accountAction.getContactEducation());
              callableStatement.setString(27,accountAction.getContactSkillValues());
              callableStatement.setString(28,File.separator);

@@ -36,7 +36,7 @@
         <%-- for date picket start--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>
@@ -65,10 +65,10 @@
                     <div class="row">
                         <s:include value="/includes/menu/LeftMenu.jsp"/>
                         <!-- content start -->
-                        <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                        <div class="col-sm-12 col-md-9 col-lg-10 right_content" style="background-color:#fff">
                             <div class="features_items">
                                 <div class="col-lg-12 ">
-                                    <div class="" id="" style="float: left; margin-top: 5px">
+                                    <div class="" id="" style=" margin-top: 5px">
 
 
                                         <div id="projectsPage">
@@ -94,6 +94,7 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
          <script>
             ;
             
@@ -232,5 +233,6 @@
                 document.getElementById("projectNameError").style.display = "none";
             };
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

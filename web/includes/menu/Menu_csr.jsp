@@ -11,7 +11,7 @@
 <%@ page import="com.mss.msp.util.ApplicationConstants"%>
 <!DOCTYPE html>
 
-<div class="col-sm-2" style="margin-left: 0%">
+<div class="col-sm-12 col-md-3 col-lg-2 side_menu">
     <div class="left-sidebar">
 
         <div class="panel-group category-products" id="accordian">

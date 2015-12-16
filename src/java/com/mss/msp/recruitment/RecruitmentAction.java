@@ -140,6 +140,13 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     private String AccountSearchOrgId;
     private int viewAccountID;
     private String editValidity;
+    private String contechNote;
+    private String consultantVisa;
+    private File visaAttachment;
+    private String visaAttachmentContentType;
+    private String visaAttachmentFileName;
+    private String visaAttachmentPath;
+    private String consultantIdProof;
     
     /* Consultant Activity End*/
 
@@ -299,10 +306,13 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     private String skill8Questions;
     private String skill9Questions;
     private String skill10Questions;
-     private Map psychoSkillValuesMap;
-     private String gridPDFDownload;
-     private int enameIdForRecruitment;
-     private String enameForRecruitment;
+    private Map psychoSkillValuesMap;
+    private String gridPDFDownload;
+    private int enameIdForRecruitment;
+    private String enameForRecruitment;
+    private String reviewType;
+    private String venEmail;
+    private String venName;
     public String getGridPDFDownload() {
         return gridPDFDownload;
     }
@@ -310,8 +320,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     public void setGridPDFDownload(String gridPDFDownload) {
         this.gridPDFDownload = gridPDFDownload;
     }
-     
-     
+
     public String getPrefstateValues() {
         return PrefstateValues;
     }
@@ -1167,6 +1176,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 //(dataSourceDataProvider.getInstance().getAccountNameById(getSessionOrgId()));
+                setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getSessionOrgId()));
                 String accToken = com.mss.msp.util.DataUtility.getRandomHexadecimal(64);
                 String validKey = com.mss.msp.util.DataUtility.getRandomHexadecimal(6);
                 //System.out.println("accToken----->"+accToken);
@@ -1174,18 +1184,17 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
 
                 if (result > 0) {
                     dataSourceDataProvider.getInstance().getMailIdsOfConAndEmp(this);
+                    dataSourceDataProvider.getInstance().getVendorEmpEmail(this);
                     System.out.println("MAIL IDS IN ACTION AFTER DSDP::>>>>" + getConEmail() + "  " + getEmpEmail());
-                    if ("Online".equals(getInterviewType())|| "Psychometric".equals(getInterviewType())) {
+                    if ("Online".equals(getInterviewType()) || "Psychometric".equals(getInterviewType())) {
                         setReqName(DataSourceDataProvider.getInstance().getReqNameById(getRequirementId()));
                         mailResult = mailManager.doAddTechReviewEmailLogger(this, validKey, getConEmail(), accToken, getReqName());
-                    } else {
                         mailResult = mailManager.techReviewTechieEmailGenerator(this, getEmpEmail());
-//                    if (!"".equalsIgnoreCase(getEmpEmail2()) || !"null".equalsIgnoreCase(getEmpEmail2())) {
-//                        System.out.println("@@@@@@@@@@@@@@@@@@@@@@ @ @@@@@@@@@@@@@@@@@@@@@ " + getEmpEmail2());
-//                        mailResult = mailManager.techReviewTechieEmailGenerator(this, getEmpEmail2());
-//                    } else {
-//                        System.out.println("NO SECOND TECHIEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-//                    }
+                        mailResult = mailManager.techReviewMailToVendor(this, getVenEmail());
+                    } else {
+                        mailManager.sendInvitationToConsultant(this, getEmpEmail());
+                        mailResult = mailManager.techReviewTechieEmailGenerator(this, getEmpEmail());
+                        mailResult = mailManager.techReviewMailToVendor(this, getVenEmail());
                         conMailResult = mailManager.techReviewConsultantEmailGenerator(this);
                     }
                     if (mailResult > 0 && conMailResult > 0) {
@@ -1730,7 +1739,8 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
 
         return SUCCESS;
     }
-     public String getVendorRequirementsDashboard() {
+
+    public String getVendorRequirementsDashboard() {
         resultMessage = LOGIN;
         try {
             System.out.println("getVendorRequirementsDashboard");
@@ -3635,6 +3645,85 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     public void setEnameForRecruitment(String enameForRecruitment) {
         this.enameForRecruitment = enameForRecruitment;
     }
-    
+
+    public String getContechNote() {
+        return contechNote;
+    }
+
+    public void setContechNote(String contechNote) {
+        this.contechNote = contechNote;
+    }
+
+    public String getReviewType() {
+        return reviewType;
+    }
+
+    public void setReviewType(String reviewType) {
+        this.reviewType = reviewType;
+    }
+
+    public String getConsultantVisa() {
+        return consultantVisa;
+    }
+
+    public void setConsultantVisa(String consultantVisa) {
+        this.consultantVisa = consultantVisa;
+    }
+
+    public File getVisaAttachment() {
+        return visaAttachment;
+    }
+
+    public void setVisaAttachment(File visaAttachment) {
+        this.visaAttachment = visaAttachment;
+    }
+
+    public String getVisaAttachmentContentType() {
+        return visaAttachmentContentType;
+    }
+
+    public void setVisaAttachmentContentType(String visaAttachmentContentType) {
+        this.visaAttachmentContentType = visaAttachmentContentType;
+    }
+
+    public String getVisaAttachmentFileName() {
+        return visaAttachmentFileName;
+    }
+
+    public void setVisaAttachmentFileName(String visaAttachmentFileName) {
+        this.visaAttachmentFileName = visaAttachmentFileName;
+    }
+
+    public String getVisaAttachmentPath() {
+        return visaAttachmentPath;
+    }
+
+    public void setVisaAttachmentPath(String visaAttachmentPath) {
+        this.visaAttachmentPath = visaAttachmentPath;
+    }
+
+    public String getVenEmail() {
+        return venEmail;
+    }
+
+    public void setVenEmail(String venEmail) {
+        this.venEmail = venEmail;
+    }
+
+    public String getVenName() {
+        return venName;
+    }
+
+    public void setVenName(String venName) {
+        this.venName = venName;
+    }
+
+    public String getConsultantIdProof() {
+        return consultantIdProof;
+    }
+
+    public void setConsultantIdProof(String consultantIdProof) {
+        this.consultantIdProof = consultantIdProof;
+    }
     
 }

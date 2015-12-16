@@ -24,6 +24,8 @@
         
         <action name="getAccountNamesForHomeRedirection" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getAccountNames"/>
         <action name="getQuestion" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getQuestion"/>
+        <action name="visaAttachemntUpload" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="visaAttachemntUpload"/>
+        <action name="removeConsultantAttachement" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="removeConsultantAttachement"/>
     </package>
  
     <package name="struts2" extends="json-default">  

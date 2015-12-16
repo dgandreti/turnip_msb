@@ -29,7 +29,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <%--script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -45,29 +45,14 @@
 
 
 
-        <script>
-            //            var pager;
-            //            $(document).ready(function(){
-            //
-            //                var paginationSize = 10;
-            //                pager = new Pager('projectBudgetTable', paginationSize);
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //               // document.getElementById("paginationOption").value=10;
-            //                pager.showPage(1);
-            //            });
-            //            function pagerOption(){
-            //
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('projectBudgetTable', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
+         <script>
+            $(document).ready(function(){
+                $(".img-swap").click(function(){
+                    $(".popup_block").animate({
+                        width: 'toggle'
+                    });
+                });
+            });
             
             $(function(){
                 $(".img-swap").live('click', function() {
@@ -81,6 +66,21 @@
                     $(this).toggleClass("on");
                 });
             });
+            
+            
+            if ( $(window).width() > 1400) {      
+                //Add your javascript for large screens here 
+  
+                $(document).ready(function(){
+                    $(".slide_popup").click(function(){
+                        $(".popup_block").animate({
+                            width: 'toggle'
+                        });
+                    });
+                });
+            
+              
+            }
         </script>
         <script>
             $(document).ready(function(){
@@ -124,7 +124,7 @@
                 <div class="row">
                     <!-- content start -->
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-12 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -146,33 +146,33 @@
                                             <s:hidden name="roleValue" id="roleValue" value="%{roleValue}"/>
                                             <div class="inner-reqdiv-elements">
                                                 <div class="row">
-                                                    <div class="col-lg-3">
+                                                    <div class="col-sm-3">
                                                         <label class="" style="color:#56a5ec;">Year: </label>
                                                         <s:textfield cssClass="form-control" id="budgetYear"
                                                                      name="year" value="%{year}" onkeypress="return validationYear(event)"
                                                                      />
                                                     </div>
-                                                    <div class="col-lg-3">
+                                                    <div class="col-sm-3">
                                                         <label class="" style="color:#56a5ec;">Projects: </label>
                                                         <s:select cssClass="SelectBoxStyles form-control" name="project" id="project" headerKey="-1" headerValue="All" list="projectsMap" />
                                                     </div>
-                                                    <div class="col-lg-3">
+                                                    <div class="col-sm-3">
                                                         <label class="" style="color:#56a5ec;">Quarter: </label>
                                                         <s:select cssClass="SelectBoxStyles form-control" name="quarterId" id="quarterId" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Q1':'Q1','Q2':'Q2','Q3':'Q3','Q4':'Q4'}" />
                                                     </div>
-                                                    <div class="col-lg-3">
+                                                    <div class="col-sm-3">
                                                         <label class="" style="color:#56a5ec;">Status: </label>
                                                         <s:select cssClass="SelectBoxStyles form-control" name="status" id="status" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Entered':'Entered','Submitted':'Submitted','Approved':'Approved','Rejected':'Rejected'}" />
                                                     </div>
 
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-lg-2 pull-right">
-                                                        <s:a href="#" ><input type="button" class="cssbutton_search form-control" value="Search" style="margin:5px" onclick="getProjectBudgetSearch();"></s:a>
+                                                    <div class="col-sm-3 pull-right budget_search">
+                                                        <s:a href="#" ><input type="button" class="cssbutton_search form-control" value="Search" style="margin:5px;padding:0" onclick="getProjectBudgetSearch();"></s:a>
                                                     </div>
                                                     <s:if test="roleValue!='Director'">
-                                                        <div class="col-lg-2 pull-right">
-                                                            <s:a href="#" cssClass="projectBudget_popup_open" onclick="projectBudgetOverlay('Add');"><button class="cssbutton_emps form-control" style="margin:5px" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
+                                                        <div class="col-sm-3 pull-right contact_search">
+                                                            <s:a href="#" cssClass="projectBudget_popup_open" onclick="projectBudgetOverlay('Add');"><button class="cssbutton_emps form-control" style="margin:5px;padding:0" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
                                                         </div>
                                                     </s:if>
 
@@ -315,7 +315,7 @@
                                     </div>
                                 </div>
 
-                                <div class="slide_popup"><img src="../includes/images/next.png"  class="img-swap" onclick="sidepopup()"></div>
+                                <div class="slide_popup budget"><img src="../includes/images/next.png"  class="img-swap" onclick="sidepopup()"></div>
                             </div>
                     </s:if>
                 </div>
@@ -415,6 +415,7 @@
                                              name="oestimateBudget"
                                              cssClass="form-control"
                                              id="oestimateBudget"
+                                             placeholder="Estimated Amount"
                                              onkeypress="return estimateBudgetValidation(event)"
                                              maxLength="10"
                                              onfocus="return removeBudgetErrorMsg();"
@@ -525,6 +526,7 @@
         </script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/popupoverlay.js"/>'></script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
 
         <script type="text/javascript">
             var recordPage=10;
@@ -543,5 +545,6 @@
             $('#projectBudgetTable').tablePaginate({navigateType:'navigator'},recordPage);
         
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

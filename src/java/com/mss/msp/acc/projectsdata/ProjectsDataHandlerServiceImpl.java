@@ -166,7 +166,7 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
 
     }
 
-    public String checkProjectName(String projectName) throws ServiceLocatorException {
+    public String checkProjectName(String projectName,String projectFlag,int projectId,int accountID) throws ServiceLocatorException {
         System.out.println(":::::::::::::: ProjectsDataHandlerServiceImpl ==> checkProjectName ::::::::::::::::::");
 
         String nameFound = "false";
@@ -176,6 +176,7 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
 
         Criteria query = session.createCriteria(com.mss.msp.acc.projectsdata.ProjectsVTO.class);
 
+        query.add(Restrictions.like("accountID", accountID));  
         query.add(Restrictions.like("projectName", projectName));
 
         query.setProjection(Projections.property("projectName"));

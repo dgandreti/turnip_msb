@@ -88,12 +88,13 @@
                 </div>
             </div>
         </header>
-        <s:include value="/includes/menu/LeftMenu.jsp"/>
+        
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
+                    <s:include value="/includes/menu/LeftMenu.jsp"/>
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-12 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -110,26 +111,26 @@
                                     <!-- content start -->
                                     <br>
                                     <div class="col-sm-12" id="venReqDashboardForm">
-                                        <div class="col-lg-4">
+                                        <div class="col-sm-4">
                                             <label class="labelStylereq " tabindex="1" style="color:#56a5ec;">Job Title:</label>
-                                            <s:textfield cssClass="form-control" name="jobTitle" id="jobTitle" placeholder="Job Title"/>
+                                            <s:textfield cssClass="form-control" name="jobTitle" id="jobTitle" placeholder="Job Title" tabindex="1" />
                                             <%--<s:select id="jobTitle" name="jobTitle" cssClass="reqSelectStyle" headerKey="-1" headerValue="jobTitle" theme="simple" list="{'Developer','Tester','Manager'}" />--%>
                                         </div>  
 
-                                        <div class="col-lg-4">
+                                        <div class="col-sm-4">
 
                                             <label style="color:#56a5ec;" class="labelStylereq">Candidate Name:&nbsp;&nbsp;</label>
                                             <s:textfield cssClass="form-control" name="candidateName" id="candidateName" placeholder="Candidate Name" tabindex="2" maxLength="30"/>
 
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-sm-2">
                                             <label class="" style="color:#56a5ec;"></label> 
                                             <%--<s:submit type="submit" cssClass="cssbutton_emps form-control"
                                                     value="Search" onclick="getVendorDashboardList();"/> --%>
-                                            <a href="#" ><input type="button" class="cssbutton_action_search form-control" value="Search" style="margin:5px" onclick="return getVendorReqDashBoardGrid();"></a>
+                                            <a href="#" ><input type="button" class="cssbutton_action_search form-control" value="Search" style="margin:5px" onclick="return getVendorReqDashBoardGrid();" tabindex="3"></a>
                                         </div>
                                     </div>
-
+                                            <div class="row"></div>        
                                     <s:form>
                                         <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
                                         <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
@@ -251,5 +252,6 @@
          <script>
             sortables_init();
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

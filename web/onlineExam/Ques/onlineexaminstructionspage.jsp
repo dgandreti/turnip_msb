@@ -105,7 +105,7 @@ and open the template in the editor.
                 </td>
             </tr>
         </table>
-
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <!-- Wrapper -->
     </body>
 

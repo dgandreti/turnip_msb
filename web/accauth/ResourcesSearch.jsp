@@ -50,18 +50,7 @@
                 // document.getElementById("paginationOption").value=10;
                 pager.showPage(1);
             });
-//            function pagerOption(){
-//
-//                paginationSize = document.getElementById("paginationOption").value;
-//                if(isNaN(paginationSize))
-//                    alert(paginationSize);
-//
-//                pager = new Pager('empCategorizationResults', parseInt(paginationSize));
-//                pager.init();
-//                pager.showPageNav('pager', 'pageNavPosition');
-//                pager.showPage(1);
-//
-//            };
+           
         </script>
         <script type="text/javascript">
             function sortables_init() {
@@ -96,7 +85,7 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-13 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -120,8 +109,9 @@
                                     <s:hidden id="authId" name="authId" value="authrization"/>
                                     <div class="col-sm-13">
                                         <div id="outputMessage" style="color: red"></div>
+                                        <div class="row">
                                         <s:form action="searchAccAuthorization" theme="simple">
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Account Type: </label>
                                                 <s:select  id="accType"
                                                            name="accType"
@@ -132,7 +122,7 @@
                                                            list="#@java.util.LinkedHashMap@{'C':'Customer','V':'Vendor','M':'Main'}"
                                                            />
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
                                                 <s:select  id="status"
                                                            name="status"
@@ -142,7 +132,7 @@
                                                            list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'Inactive','All':'All'}"
                                                            />
                                             </div >
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Roles: </label>
                                                 <s:select  id="roles"
                                                            name="roles"
@@ -153,7 +143,7 @@
                                                            list="#@java.util.LinkedHashMap@{}"
                                                            />
                                             </div >
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <s:hidden name="orgId" id="orgId"/>
                                                 <label class="labelStylereq" style="color:#56a5ec;">Account Name: </label>
                                                 <s:textfield id="accountNamePopup"
@@ -164,17 +154,18 @@
                                                              onkeyup="return getAccountNames();"  maxLength="60"/> 
                                                 <span id="validationMessage" />
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-sm-2 pull-right">
                                                 <label class="labelStylereq" style="color:#56a5ec;"> </label>
                                                 <a href='actionResourcesForAddOrUpdate.action?action_id=<s:property value="%{action_id}"/>&AMP;action_name=<s:property value="%{action_name}"/>&AMP;accType=C' style="margin: 5px 0px;" class="add_searchButton form-control"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
 
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-sm-2 pull-right">
                                                 <label class="labelStylereq" style="color:#56a5ec;"> </label>
                                                 <button type="button" style="margin: 5px 0px;"
                                                         class="add_searchButton  form-control"
                                                         value="" onclick="return getActionResorucesSearchResults();"><i class="fa fa-search"></i>&nbsp;Search</button>
                                             </div>
+                                                </div>
                                             <br>
                                         </s:form>
 
@@ -228,7 +219,7 @@
                                                         </tbody>
                                                     </table>
                                                     <br/>
-                                                    
+
                                                     <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
                                                             <option>10</option>
                                                             <option>15</option>
@@ -237,7 +228,7 @@
                                                         </select>
                                                         Action's per page
                                                     </label>
-                                                     
+
                                                     <div align="right" id="pageNavPosition" style="margin-right: 0vw;display: none"></div>
                                                 </div>
                                             </s:form>
@@ -264,102 +255,7 @@
                 </div>
 
             </div>
-            <%-- Start overlay for Display Description --%>
-            <%--<div id="authAccOverlay_popup" >
-                <div id="authAccBox">
-                    <div class="backgroundcolor">
-                        <table>
-                            <tr><td><h4 style="font-family:cursive"><font class="titleColor" >&nbsp;&nbsp;Description &nbsp;&nbsp; </font></h4></td>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="authAccOverlay_popup_close" onclick="authAccOverlayFun()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
-                        </table>
-                    </div>
-                    <div>
-                        <div class="inner-reqdiv-elements">
-
-                            <div id="outputMessageOfauthAcc"></div>
-
-                        </div>
-
-
-
-                    </div>
-                    <font style="color: #ffffff">..................... ..............................  ..........................................</font>
-                </div>   
-            </div> --%>
-
-            <%-- end overlay for Display Description --%>
-            <%-- Start overlay for for Add Acc Authorization  --%>
-            <%--<div id="addAuthAccOverlay_popup" >
-                <div id="addAuthAccBox">
-                    <div class="backgroundcolor">
-                        <table>
-                            <tr><td><h4 id="" style="font-family:cursive"><font id="heading" class="titleColor" >&nbsp;&nbsp;Add Account Authorization &nbsp;&nbsp; </font></h4></td>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="addAuthAccOverlay_popup_close" onclick="addAuthAccOverlayFun()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
-                        </table>
-                    </div>
-                    <div>
-                        <s:hidden id="overlayActionId" value="overlayActionId"/>
-                        <s:hidden id="overlayActionName" value="overlayActionName"/>
-                        <s:hidden id="overlayActionStatus" value="overlayActionStatus"/>
-                        <s:hidden id="overlayActionDesc" value="overlayActionDesc"/>
-                        <div class="inner-reqdiv-elements" id="accNameDiv">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <label class="labelStylereq" style="color:#56a5ec;">Action Name: </label>
-                                    <s:textfield id="action_name" 
-                                                 cssClass="form-control"
-                                                 type="text"
-                                                 name="action_name"
-                                                 placeholder="Action Name"
-                                                 /> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inner-reqdiv-elements" id="statusDiv">
-            <%--  <s:hidden id="overLayAction_id" name="overLayAction_id" value="action_id"/>--%>
-            <%--<div class="row">
-                <div class="col-lg-6">
-                    <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
-                    <s:select  id="accauthStatus"
-                               name="accauthStatus"
-                               cssClass="SelectBoxStyles form-control"
-                               headerKey="-1"  
-                               theme="simple" 
-                               list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'Inactive','All':'All'}"
-                               />
-                </div >
-            </div>
-        </div>
-        <div class="inner-reqdiv-elements" id="descDiv">
-            <div class="row">
-                <div class="col-lg-10">
-                    <label class="labelStylereq" style="color:#56a5ec;">Description: </label>
-                    <s:textarea id="addingAccAuthDesc" cssClass="form-control" name="addingAccAuthDesc"/>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inner-reqdiv-elements" id="addDiv">
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <input type="button" class="cssbutton" onclick="insertOrUpdateAccAuth('0');" value="Add"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inner-reqdiv-elements" id="updateDiv">
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <input type="button" class="cssbutton" onclick="insertOrUpdateAccAuth('1');" value="update"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <font style="color: #ffffff">..................... ..............................  ..........................................</font>
-                    </div>   
-                </div> 
-            </div> --%>
-
-            <%-- end overlay for Add Acc Authorization  --%>
+           
 
             <!-- content end -->
         </section><!--/form-->
@@ -378,25 +274,25 @@
         <script>
             sortables_init();
         </script>
-            <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
-               var paginationSize = document.getElementById("paginationOption").value;
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+
+                var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
-                   {
+                {
                        
-                   }
+                }
                 recordPage=paginationSize;
-               // alert(recordPage)
-                 $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
+                // alert(recordPage)
+                $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
 
             };
-        $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
+            $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

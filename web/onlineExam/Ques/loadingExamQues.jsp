@@ -16,7 +16,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Miracle Service Bay :: Employee Search Page</title>
+        <title>Miracle Service Bay :: Logger for Questions</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -34,7 +34,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -75,9 +75,9 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-14 ">
+                            <div class="col-sm-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
 
                                     <div class="backgroundcolor" >
@@ -96,7 +96,7 @@
 
                                     </div>
                                     <!-- content start -->
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12" id="searchLogger">
                                         <s:form action="searchLoggerForQues" theme="simple" method="POST" enctype="multipart/form-data">
                                             <s:hidden name="sp_res" id="sp_res" value="%{sp_res}"/>
                                             <s:hidden name="sp_exists" id="sp_exists" value="%{sp_exists}"/>
@@ -126,17 +126,17 @@
                                                 <s:else>
 
                                             </s:else> 
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStyle" id="labelLevelStatusReq">Created Date: </label>
-                                                <s:textfield cssClass="form-control dateImage" name="createdDate" id="created_Date" value="" onkeypress="return enterDateRepository();"></s:textfield>
+                                                <s:textfield tabindex="1" cssClass="form-control dateImage" name="createdDate" id="created_Date" value="" onkeypress="return enterDateRepository();"></s:textfield>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStyle" id="labelLevelStatusReq">Status: </label>
-                                                <s:select cssClass="form-control SelectBoxStyles " name="status" list="#@java.util.LinkedHashMap@{'DF':'---Select---','Success':'Success','Un-Success':'Un-Success'}"></s:select>
+                                                <s:select tabindex="2" cssClass="form-control SelectBoxStyles " name="status" list="#@java.util.LinkedHashMap@{'DF':'---Select---','Success':'Success','Un-Success':'Un-Success'}"></s:select>
                                             </div>  
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStyle" id="labelLevelStatusReq"></label>
-                                                <s:submit type="button" value="" cssStyle="margin:5px" cssClass="add_searchButton form-control"> <i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                <s:submit type="button" value="" cssStyle="margin:5px" tabindex="3" cssClass="add_searchButton form-control"> <i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                             </div>  
                                         </s:form>
 
@@ -216,6 +216,7 @@
         </div>
 
     </footer>
+            <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
     <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
     <script>
         setTimeout(function(){              
@@ -226,7 +227,7 @@
         },3000);
     </script>
     <!--/Footer-->
-
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 </body>
 </html>
 

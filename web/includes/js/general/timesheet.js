@@ -2594,8 +2594,9 @@ function totalProjectDays1()
             allTotal();
             totalBillableHrs();
         }
+        return result;
     }
-    return true;
+    
 };
 function totalProjectDays2()
 {
@@ -2629,8 +2630,9 @@ function totalProjectDays2()
             allTotal();
             totalBillableHrs();
         }
+        return result;
     }
-    return true;
+    
 };
 function totalProjectDays3()
 {
@@ -2664,8 +2666,9 @@ function totalProjectDays3()
             allTotal();
             totalBillableHrs();
         }
+        return result;
     }
-    return true;
+    
 };
 function totalProjectDays4()
 {
@@ -2699,8 +2702,9 @@ function totalProjectDays4()
             allTotal();
             totalBillableHrs();
         }
+        return result;
     }
-    return true;
+    
 };
 function totalProjectDays5()
 {
@@ -2734,8 +2738,9 @@ function totalProjectDays5()
             allTotal();
             totalBillableHrs();
         }
+        return result;
     }
-    return true;
+   
 };
 
 function totalinternalDays()
@@ -2769,8 +2774,9 @@ function totalinternalDays()
             allTotal();
             totalBillableHrs();
         }
+        return result;
     }
-    return true;
+   
 };
 function totalvacationDays()
 {
@@ -2803,8 +2809,9 @@ function totalvacationDays()
             document.getElementById('totalVacationHrs').value=result.toFixed(1);
             allTotal();
         }
+        return result;
     }
-    return true;
+    
 };
 function totalholidayDays()
 {
@@ -2837,8 +2844,9 @@ function totalholidayDays()
             document.getElementById('totalHolidayHrs').value = result.toFixed(1);
             allTotal();
         }
+        return result;
     }
-    return true;
+   
 };
 function totalSunday()
 {
@@ -2889,8 +2897,9 @@ function totalSunday()
             document.getElementById('totalSun').value = result.toFixed(1);
            
         }
+        return result;
     }
-    return true;
+    
 };
 function totalMonday()
 {
@@ -2939,8 +2948,9 @@ function totalMonday()
             document.getElementById('totalMon').value = result.toFixed(1);
         // allTotal();
         }
+        return result;
     }
-    return true;
+    
 };
 function totalTuesday()
 {
@@ -2988,8 +2998,9 @@ function totalTuesday()
             document.getElementById('totalTue').value = result.toFixed(1);
         // allTotal();
         }
+        return result;
     }
-    return true;
+    
 };
 function totalWednesday()
 {
@@ -3037,8 +3048,9 @@ function totalWednesday()
             document.getElementById('totalWed').value = result.toFixed(1);
         //allTotal();
         }
+        return result;
     }
-    return true;
+   
 };
 function totalThursday()
 {
@@ -3088,8 +3100,9 @@ function totalThursday()
             document.getElementById('totalThu').value = result.toFixed(1);
         //allTotal();
         }
+        return result;
     }
-    return true;
+    
 };
 function totalFriday()
 {
@@ -3137,8 +3150,9 @@ function totalFriday()
             document.getElementById('totalFri').value = result.toFixed(1);
         //allTotal();
         }
+        return result;
     }
-    return true;
+    
 };
 function totalSaturday()
 {
@@ -3187,8 +3201,9 @@ function totalSaturday()
             document.getElementById('totalSat').value = result.toFixed(1);
         //allTotal();
         }
+        return result;
     }
-    return true;
+   
 };
 function totalBillableHrs(){
     var projectNameAll1=$("#projectNameAll1").val();

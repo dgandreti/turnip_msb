@@ -11,7 +11,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Dashboard Page</title>
+        <title>ServicesBay :: Requirements Dashboard Page</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
@@ -24,19 +24,20 @@
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <%--        <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>--%>
-       
-         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
+
+        <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
-       
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/CountriesAjax.js"/>"></script>
         <%-- <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>--%>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/dashBoardAjax.js"/>'></script>
 
         <script type="text/javascript" src="<s:url value="/includes/js/general/glinechart.js"/>"></script>
-         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
+
         <script>
             var pager;
             //$(document).ready(function(){
@@ -75,14 +76,15 @@
                 </div>
             </div>
         </header>
-        <s:include value="/includes/menu/LeftMenu.jsp"/>
+
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
+                    <s:include value="/includes/menu/LeftMenu.jsp"/>
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-12 ">
+                            <div class="col-sm-12 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
@@ -101,25 +103,26 @@
 
                                             <div class="inner-reqdiv-elements">
                                                 <div class="row">
-                                                    <div class="col-lg-2">
+                                                    <div class="col-sm-2">
                                                         <label class="" style="color:#56a5ec;">Year: </label>
                                                         <s:textfield cssClass="form-control" id="year"
                                                                      name="year" placeholder="Year" 
                                                                      onkeypress="return validationDashboardYear(event)"
+                                                                     tabindex="1"
                                                                      />
                                                     </div>
-                                                    <div class="col-lg-2">
+                                                    <div class="col-sm-2">
                                                         <label class="" style="color:#56a5ec;">Month: </label>
-                                                        <s:select id="month" cssClass="form-control SelectBoxStyles" name="month" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December'}"/>
+                                                        <s:select id="month" cssClass="form-control SelectBoxStyles" name="month" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December'}" tabindex="2" />
                                                     </div>
 
-                                                    <div class="col-lg-2">
+                                                    <div class="col-sm-2">
                                                         <div class="row">
-                                                            <div class="col-lg-11">
+                                                            <div class="col-sm-11">
                                                                 <label class="" style="color:#56a5ec;"></label> 
                                                                 <%--<s:submit type="submit" cssClass="cssbutton_emps form-control"
                                                                         value="Search" onclick="getVendorDashboardList();"/> --%>
-                                                                <a href="#" ><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" onclick="getCustomerDashboardList();"><i class="fa fa-search"></i>&nbsp;Search</button></a>
+                                                                <a href="#" ><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" onclick="getCustomerDashboardList();" tabindex="3" ><i class="fa fa-search"></i>&nbsp;Search</button></a>
                                                             </div>
                                                         </div>
                                                     </div>   
@@ -150,6 +153,7 @@
                                                             <th>Month</th>
                                                             <th>Opened </th>
                                                             <th>Released</th>
+                                                            <th>Open&nbsp;For&nbsp;Resume</th>
                                                             <th>Closed</th>
                                                             <th>Others</th>
                                                             <th>Total</th>
@@ -167,11 +171,12 @@
                                                                 <td><s:property value="month"></s:property></td>
                                                                 <td><s:property value="open"></s:property></td>
                                                                 <td><s:property value="released"></s:property></td>
+                                                                <td><s:property value="openForResume"></s:property></td>
                                                                 <td><s:property value="closed"></s:property></td>
                                                                 <td><s:property value="othersCount"></s:property></td>
                                                                 <td><s:property value="total"></s:property></td>
 
-                                                            </tr>
+                                                                </tr>
                                                         </s:iterator>
 
                                                     </tbody>
@@ -203,7 +208,7 @@
 
 
 
-                           
+
                             <div class="col-sm-12" >
                                 <div class="col-lg-12 panel panel-default panel-heading">
                                     <i class="fa fa-bar-chart-o fa-fw"></i>Bar Chart<div align="center"><span id="chartTitle"></span></div>
@@ -226,7 +231,7 @@
             </div>
         </footer><!--/Footer-->
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/javascript">
             var recordPage=5;
             function pagerOption(){
@@ -243,7 +248,7 @@
             };
             $('#customerDashboardResults').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 
     </body>
 </html>

@@ -45,7 +45,7 @@
         <%-- for date picket start--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
        
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>
@@ -238,7 +238,7 @@
 
             };
         </script>
-       <script>
+    <script>
             $(document).ready(function(){
                 $(".img-swap").click(function(){
                     $(".popup_block").animate({
@@ -247,9 +247,9 @@
                 });
             });
             
-               $(function(){
-                $(".img-swap").click(function() {
-//                   alert('hi');
+            $(function(){
+                $(".img-swap").live('click', function() {
+                   
                     if ($(this).attr("class") == "img-swap") {
                        
                         this.src = this.src.replace("next","prev");
@@ -259,6 +259,21 @@
                     $(this).toggleClass("on");
                 });
             });
+            
+            
+            if ( $(window).width() > 1400) {      
+                //Add your javascript for large screens here 
+  
+                $(document).ready(function(){
+                    $(".slide_popup").click(function(){
+                        $(".popup_block").animate({
+                            width: 'toggle'
+                        });
+                    });
+                });
+            
+              
+            }
         </script>
 
     </head>
@@ -298,7 +313,7 @@
                         <!-- Model popup, end -->
 
                         <!-- content start -->
-                        <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                        <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                             <div class="features_items">
                                 <div class="col-lg-14 ">
                                     <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -334,39 +349,39 @@
                                             </ul>
                                             <br--%>
                                                 <div class="inner-reqdiv-elements">
-                                                    <div class="row">
-                                                        <div class="col-lg-4">
+                                                    <div class="">
+                                                        <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color:#56a5ec;">Task Name: </label>
                                                             <s:textfield cssClass="form-control"  name="task_name" placeholder="Task_Name" maxLength="60"/>
                                                         </div>
-                                                        <div class="col-lg-4">
+                                                        <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color: #56a5ec;">Task Id: </label>
                                                             <s:textfield cssClass="form-control" id="task_id" name="task_id"  placeholder="Task_Id" maxLength="11"/>
                                                         </div>
-                                                        <div class="col-lg-4">
+                                                        <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color: #56a5ec;">Status: </label>
                                                             <s:select  id="status"  name="task_status" label="Status"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="tasksStatusList" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="inner-reqdiv-elements">
-                                                    <div class="row">
-                                                        <div class="col-lg-4">
+                                                    <div class="">
+                                                        <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color: #56a5ec;">Start Date: </label>
                                                             <s:textfield cssClass=" form-control dateImage" name="docdatepickerfrom" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
                                                         </div>
-                                                        <div class="col-lg-4">
+                                                        <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color: #56a5ec;">End Date: </label>
                                                             <s:textfield cssClass=" form-control dateImage" name="docdatepicker" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
                                                         </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class=" ">
 
-                                                                <div class="col-lg-6">
+                                                                <div class="col-sm-6 pull-right">
                                                                     <label class="labelStylereq" style=""></label>
                                                                     <a href="../tasks/addTask.action" class="add_searchButton form-control " style="margin:5px 0px;" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a> 
                                                                 </div>
-                                                                <div class="col-lg-6">
+                                                                <div class="col-sm-6 pull-right">
                                                                     <label class="labelStylereq" style=""></label>
                                                                     <s:submit type="button"  cssClass="add_searchButton form-control " id="searchButton" value="search"  cssStyle="margin:5px 0px;" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>&nbsp;
                                                                     </div>
@@ -374,6 +389,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                                    <div class="row"></div>
                                             </s:form>
                                             <s:form>
                                                 <div class="emp_Content" id="emp_div" align="center" style="display: none">
@@ -457,7 +473,7 @@
                         </div>
                     </div>
 
-                   <div class="slide_popup"><img src="../../includes/images/next.png"  class="img-swap"></div>
+                   <div class="slide_popup task_sidePopup"><img src="../../includes/images/next.png"  class="img-swap"></div>
                 </div>   
                 </div>
                     </div>
@@ -492,6 +508,8 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
         <script type="text/javascript">
@@ -527,7 +545,7 @@
             };
             $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-    
+    <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

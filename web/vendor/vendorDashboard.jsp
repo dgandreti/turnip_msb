@@ -25,7 +25,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -43,12 +43,13 @@
                 </div>
             </div>
         </header>
-        <s:include value="/includes/menu/LeftMenu.jsp"/>
+        
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
+                    <s:include value="/includes/menu/LeftMenu.jsp"/>
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-12 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -67,24 +68,24 @@
 
                                             <div class="inner-reqdiv-elements">
                                                 <div class="row">
-                                                    <div class="col-lg-2">
+                                                    <div class="col-sm-2">
                                                         <label class="" style="color:#56a5ec;">Year: </label>
                                                         <s:textfield cssClass="form-control" id="year"
-                                                                     name="year" placeholder="Year" 
+                                                                     name="year" placeholder="Year"  tabindex="1"
                                                                      />
                                                     </div>
-                                                    <div class="col-lg-2">
+                                                    <div class="col-sm-2">
                                                         <label class="" style="color:#56a5ec;">Month: </label>
-                                                        <s:select id="month" cssClass="form-control SelectBoxStyles" name="month" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'1':'January','2':'February','3':'March','4':'April','5':'May','6':'June','7':'July','8':'August','9':'September','10':'October','11':'November','12':'December'}"/>
+                                                        <s:select id="month" cssClass="form-control SelectBoxStyles" name="month" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'1':'January','2':'February','3':'March','4':'April','5':'May','6':'June','7':'July','8':'August','9':'September','10':'October','11':'November','12':'December'}" tabindex="2" />
                                                     </div>
 
-                                                    <div class="col-lg-2">
+                                                    <div class="col-sm-2">
                                                         <div class="row">
-                                                            <div class="col-lg-11">
+                                                            <div class="col-sm-11">
                                                                 <label class="" style="color:#56a5ec;"></label> 
                                                                 <%--<s:submit type="submit" cssClass="cssbutton_emps form-control"
                                                                         value="Search" onclick="getVendorDashboardList();"/> --%>
-                                                                <a href="#" ><input type="button" class="cssbutton_action_search form-control" value="Search" style="margin:5px" onclick="getVendorDashboardList();"></a>
+                                                                <a href="#" ><input type="button" class="cssbutton_action_search form-control" value="Search" style="margin:5px" onclick="getVendorDashboardList();" tabindex="3" ></a>
                                                             </div>
                                                         </div>
                                                     </div>   
@@ -270,6 +271,7 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
         <script type="text/javascript">
@@ -288,5 +290,6 @@
             };
             $('#dashboardResults').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

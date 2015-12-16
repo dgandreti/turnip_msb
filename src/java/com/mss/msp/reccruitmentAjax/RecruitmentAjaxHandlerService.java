@@ -37,4 +37,6 @@ public interface RecruitmentAjaxHandlerService {
     public String saveOnlineExamStatus(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction) throws ServiceLocatorException;
     
     public int doWithdrawConsultant(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction) throws ServiceLocatorException;
+    
+    public int doDeclineConsultant(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction) throws ServiceLocatorException;
 }

@@ -20,7 +20,7 @@ public interface ProjectsDataHandlerService {
 
     public void addProject(ProjectsVTO projects) throws ServiceLocatorException;
 
-    public String checkProjectName(String projectName) throws ServiceLocatorException;
+    public String checkProjectName(String projectName,String projectFlag,int projectId,int accountID) throws ServiceLocatorException;
 
     public ProjectsVTO getProjectsByProjectID(ProjectsDataHandlerAction projectsDataHandlerAction) throws ServiceLocatorException;
 

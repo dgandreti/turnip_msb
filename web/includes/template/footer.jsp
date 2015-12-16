@@ -6,16 +6,14 @@
 
 <%--<div id="footer_seperator"></div>--%>
 <div class="row">
-					<div class="col-sm-6 pull-left">Copyright &copy; 2015 ServicesBay. All rights reserved.</div>
-                                         <div class="col-sm-6">
-                <ul class="pull-right socialHover">
-                    <a class="btn btn-social btn-facebook " href="https://www.facebook.com/miracle45625" itemprop="sameAs"><i class="fa fa-facebook" style=""></i></a>
-                    <a class="btn btn-social btn-google-plus" href="https://plus.google.com/+Team_MSS/" itemprop="sameAs"><i class="fa fa-google-plus"></i></a>
-                    <a class="btn btn-social btn-twitter" href="https://twitter.com/Team_MSS" itemprop="sameAs"><i class="fa fa-twitter"></i></a>
-                    <a class="btn btn-social btn-linkedin" href="https://www.linkedin.com/company/miracle-software-systems-inc" itemprop="sameAs">
-                        <i class="fa fa-linkedin"></i></a>
-                        
-                </ul>
-            </div>
-					
+    <div class="col-sm-6 pull-left">Copyright &copy; 2015 ServicesBay. All rights reserved.</div>
+    <div class="col-sm-6">
+        <ul class="pull-right socialHover">
+            <a class="btn btn-social btn-facebook " href="https://www.facebook.com/miracle45625" target="_blank" itemprop="sameAs"><i class="fa fa-facebook" style=""></i></a>
+            <a class="btn btn-social btn-google-plus" href="https://plus.google.com/+Team_MSS/" target="_blank" itemprop="sameAs"><i class="fa fa-google-plus"></i></a>
+            <a class="btn btn-social btn-twitter" href="https://twitter.com/Team_MSS" target="_blank" itemprop="sameAs"><i class="fa fa-twitter"></i></a>
+            <a class="btn btn-social btn-linkedin" href="https://www.linkedin.com/company/miracle-software-systems-inc" target="_blank" itemprop="sameAs"><i class="fa fa-linkedin"></i></a>
+        </ul>
+    </div>
 </div>
+

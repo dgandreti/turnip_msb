@@ -25,12 +25,13 @@
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <%--script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script--%>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/account/accountDetailsAJAX.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
         
     
@@ -43,14 +44,15 @@
                 </div>
             </div>
         </header>
-        <s:include value="/includes/menu/LeftMenu.jsp"/>
+      
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
+                      <s:include value="/includes/menu/LeftMenu.jsp"/>
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-12 ">
+<!--                            <div class="col-sm-12 ">-->
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
@@ -66,29 +68,30 @@
                                          <s:hidden id="toCSRID" name="toCSRID"/>
                                          <s:hidden id="fromCSRID" name="fromCSRID"/>
 
-                                    <div class="inner-reqdiv-elements"> 
+<!--                                    <div class="inner-reqdiv-elements"> -->
                                         <span id="validationMessage"></span>
                                      <div class="row">    
-                                      <div class="col-lg-4">
+                                      <div class="col-sm-4">
                                        <label class="labelStylereq" style="color:#56a5ec;">Accounts:</label>
-                                       <s:select id="typeTransfer" name="typeTransfer" value="" cssClass="SelectBoxStyles form-control" theme="simple" list="#@java.util.LinkedHashMap@{'TA':'Transfer Accounts','CA':'Copy Accounts'}" onchange="setTransferCopy();" />
+                                       <s:select id="typeTransfer" name="typeTransfer" value="" cssClass="SelectBoxStyles form-control" theme="simple" list="#@java.util.LinkedHashMap@{'TA':'Transfer Accounts','CA':'Copy Accounts'}" onchange="setTransferCopy();" tabindex="1" />
                                       </div>
-                                      <div class="col-lg-4">
+                                      <div class="col-sm-4">
                                           <label class="labelStylereq" style="color:#56a5ec;">From CSR:</label>
-                                          <s:textfield cssClass=" form-control" name="fromCSR" placeholder=""  id="fromCSR" tabindex="2"  onkeyup="return getCSR();" onfocus="return removeErrorMsg();" maxLength="60"/>
+                                          <s:textfield cssClass=" form-control" name="fromCSR" placeholder="From CSR"  id="fromCSR" tabindex="2"  onkeyup="return getCSR();" onfocus="return removeErrorMsg();" maxLength="60" />
                                       </div>
-                                      <div class="col-lg-4">
+                                      <div class="col-sm-4">
                                           <label class="labelStylereq" style="color:#56a5ec;">To CSR:</label>
-                                         <s:textfield cssClass=" form-control" name="toCSR" placeholder=""  id="toCSR" tabindex="2"  onkeyup="return getToCSR();" onfocus="return removeErrorMsg();" maxLength="60"/>
+                                         <s:textfield cssClass=" form-control" name="toCSR" placeholder="To CSR"  id="toCSR" tabindex="3"  onkeyup="return getToCSR();" onfocus="return removeErrorMsg();" maxLength="60" />
                                       </div>
                                      </div>
-                                    </div>  
+<!--                                    </div>  -->
+                                       </div>  
                                     <div class="inner-reqdiv-elements">  
                                       <div class="row">
-                                          <div class="col-lg-2 pull-right">
+                                          <div class="col-sm-2 pull-right">
                                              
                                                   <s:submit type="button" cssClass="add_searchButton form-control"
-                                                                     id="transfer" value="Next" cssStyle="margin:5px 0px;" onclick="return transferAccounts();">&nbsp Next &nbsp;<i class="fa fa-arrow-right"></i></s:submit>
+                                                                     id="transfer" value="Next" cssStyle="margin:5px 0px;" onclick="return transferAccounts();" tabindex="4" >&nbsp Next &nbsp;<i class="fa fa-arrow-right"></i></s:submit>
                                           </div>
                                         <%--  <div class="col-lg-2">  
                                                  <s:submit type="button" cssClass="cssbutton_emps form-control"
@@ -98,10 +101,10 @@
                                       </div>  
                                      
                                       </form>
-                                    </div>  
+                                   
                                 </div>
-                            </div>
-                        </div>
+                            
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -114,6 +117,8 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

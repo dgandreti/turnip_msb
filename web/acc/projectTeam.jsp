@@ -71,16 +71,15 @@
         </div>
     </div>
     <section id="generalForm" style="margin-bottom: 1px"><!--form-->
-        <div class=" ">
-            <div class=" ">
+        
 
                 <!-- content start -->
                 <% int projectId = Integer.parseInt(request.getParameter("projectID").toString());
 
                 %>
-                <div class="col-md-13 col-md-offset-0" style="background-color:#fff">
+                <div class="col-md-12 col-md-offset-0" style="background-color:#fff">
                     <div class="features_items" >
-                        <div class="col-lg-11 " >
+                        <div class="col-sm-12" >
                             <div class="" id="profileBox" style="margin-top: 5px; width: 100%">
 
                                 <div class="backgroundcolor" >
@@ -108,19 +107,19 @@
                                                 <span><emp></emp></span>
                                                 <div class="inner-reqdiv-elements">
                                                     <div class="row">
-                                                        <div class="col-lg-4">    
+                                                        <div class="col-sm-4">    
                                                             <label class="labelStylereq">TeamMember Name</label>   
                                                             <s:textfield cssClass="form-control" id="teamMemberName" type="text"  placeholder="Team Member Name" maxLength="30"/>
                                                         </div>      
-                                                        <div class="col-lg-4">       
+                                                        <div class="col-sm-4">       
                                                             <%-- <s:textfield cssClass="textbox" id="teamMemberStatus" type="text" placeholder="Team Member Status"/>--%>
                                                             <label class="labelStylereq">Status:</label>  
                                                             <s:select id="status" name="status"  cssClass="form-control SelectBoxStyles" headerKey="DF" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"/>
                                                         </div>
-                                                        <div class="col-lg-2" style="margin-top: 18px">
+                                                        <div class="col-sm-2 pull-right" style="margin-top: 18px">
                                                             <a href='acc/setTeamMembersForProject.action?projectID=<%=projectId%>&projectFlag=addMember' class="add_searchButton form-control" style="margin:5px"><i class="fa fa-plus-square"></i>&nbsp;Add</a>  
                                                         </div>
-                                                        <div class="col-lg-2"style="margin-top: 18px">
+                                                        <div class="col-sm-2 pull-right"style="margin-top: 18px">
                                                             <button type="button" class="add_searchButton form-control"  value="" onclick="return searchTeamMembers();" style="margin:5px"><i class="fa fa-search">&nbsp;Search</i></button>
                                                         </div>
 
@@ -209,8 +208,7 @@
                 </div>
 
                 <%--close of future_items--%>
-            </div>
-        </div>
+      
 
     </section>
             <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
@@ -233,6 +231,7 @@
     $('#membersSearchResults').tablePaginate({navigateType:'navigator'},recordPage);
         
 </script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 </div>
 
 <script>
@@ -240,3 +239,4 @@
     window.setTimeout("teamPagerOption();", 1000);
     setupAddProjectTeamMemberOverlay();
 </script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>

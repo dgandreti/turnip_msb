@@ -134,8 +134,11 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
     private List skillSetList;
     private Map preSkillValuesMap;
     private String reqSkillSet;
-     private String skillList;
-      private String billingtype;
+    private String skillList;
+    private String billingtype;
+    private String vendorComments;
+    private String ssnNo;
+    private String requirementQualification;
 
     public RequirementAction() {
     }
@@ -214,7 +217,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(), skillsmap);
                 //  setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 //  setPreSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-                requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(),skillsmap);
+                requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(), skillsmap);
                 resultMessage = SUCCESS;
             }
         } catch (Exception ex) {
@@ -285,8 +288,13 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getAccountSearchID()));
                 typesTiers = com.mss.msp.util.DataSourceDataProvider.getInstance().getVendorTierTypes();
 
-                requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(),skillsmap);
-                resultMessage = SUCCESS;
+                requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(), skillsmap);
+                if (typeOfUser.equals("VC")) {
+                    System.out.println("vendor Requirement");
+                    resultMessage = INPUT;
+                } else {
+                    resultMessage = SUCCESS;
+                }
             } catch (Exception ex) {
 
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
@@ -587,10 +595,10 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
+                SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
                 System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
-                String list = ServiceLocator.getRequirementService().getSearchRequirementsList(httpServletRequest, this,skillsmap);
+                String list = ServiceLocator.getRequirementService().getSearchRequirementsList(httpServletRequest, this, skillsmap);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(list);
@@ -1737,5 +1745,28 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
     public void setBillingtype(String billingtype) {
         this.billingtype = billingtype;
     }
-    
+
+    public String getVendorComments() {
+        return vendorComments;
+    }
+
+    public void setVendorComments(String vendorComments) {
+        this.vendorComments = vendorComments;
+    }
+
+    public String getSsnNo() {
+        return ssnNo;
+    }
+
+    public void setSsnNo(String ssnNo) {
+        this.ssnNo = ssnNo;
+    }
+
+    public String getRequirementQualification() {
+        return requirementQualification;
+    }
+
+    public void setRequirementQualification(String requirementQualification) {
+        this.requirementQualification = requirementQualification;
+    }
 }

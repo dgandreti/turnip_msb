@@ -46,7 +46,13 @@ public class AccountDetailsHandlerServiceImpl implements AccountDetailsHandlerSe
         if (temp.size() > 0) {
             details = (AccountDetails) temp.get(0);
         }
-
+         if(details.getBankAccountNumber()!=null)
+        {
+       details.setBankAccountNumber(com.mss.msp.util.DataUtility.decrypted(details.getBankAccountNumber()));
+        }
+        if(details.getBankAccountNumber()!=null){
+       details.setBankRoutingNumber(com.mss.msp.util.DataUtility.decrypted(details.getBankRoutingNumber()));
+    }
 
 
         //get look up names fomr lk tables =>CHANGE LATER<=
@@ -298,12 +304,24 @@ public class AccountDetailsHandlerServiceImpl implements AccountDetailsHandlerSe
                 if (resultSet.getString("u.image_path") != null) {
                     File imageFile = new File(resultSet.getString("u.image_path"));
                     if (imageFile.exists() == false) {
+                        if("F".equalsIgnoreCase(resultSet.getString("u.gender"))){
+                            accountContactVTO.setProfileImage(Properties.getProperty("Profile.FEMALEIMAGE"));
+                        }
+                        else
+                        {
                         accountContactVTO.setProfileImage(Properties.getProperty("Profile.GENERALIMAGE"));
+                        }
                     } else {
                         accountContactVTO.setProfileImage(resultSet.getString("u.image_path"));
                     }
                 } else {
+                    if("F".equalsIgnoreCase(resultSet.getString("u.gender"))){
+                        accountContactVTO.setProfileImage(Properties.getProperty("Profile.FEMALEIMAGE"));
+                    }
+                    else
+                    {
                     accountContactVTO.setProfileImage(Properties.getProperty("Profile.GENERALIMAGE"));
+                    }
                 }
                 accountContactVTO.setOrgId(resultSet.getInt("u.org_id"));
                 accountContactVTO.setGender(resultSet.getString("u.gender"));
@@ -320,7 +338,10 @@ public class AccountDetailsHandlerServiceImpl implements AccountDetailsHandlerSe
                 accountContactVTO.setContactTitle(resultSet.getString("job_title"));
                 accountContactVTO.setContactExperience(resultSet.getInt("experience"));
                 accountContactVTO.setContactIndustry(resultSet.getInt("usr_industry"));
-                accountContactVTO.setContactSsnNo(resultSet.getString("ssn_number"));
+                if(resultSet.getString("ssn_number")!=null)
+                {
+                accountContactVTO.setContactSsnNo(com.mss.msp.util.DataUtility.decrypted(resultSet.getString("ssn_number")));
+                }
                 accountContactVTO.setContactEducation(resultSet.getString("education"));
                 accountContactVTO.setContactSkillValues(resultSet.getString("consultant_skills"));
                
@@ -471,7 +492,7 @@ public class AccountDetailsHandlerServiceImpl implements AccountDetailsHandlerSe
             callableStatement.setString(23, accountDetailsAction.getContactTitle());
             callableStatement.setInt(24, accountDetailsAction.getContactExperience());
             callableStatement.setInt(25, accountDetailsAction.getContactIndustry());
-            callableStatement.setString(26, accountDetailsAction.getContactSsnNo());
+            callableStatement.setString(26, com.mss.msp.util.DataUtility.encrypted(accountDetailsAction.getContactSsnNo()));
             callableStatement.setString(27, accountDetailsAction.getContactEducation());
             callableStatement.setString(28, accountDetailsAction.getContactSkillValues());
             callableStatement.registerOutParameter(29, Types.INTEGER);

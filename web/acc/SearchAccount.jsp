@@ -23,6 +23,7 @@
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive_queries.css"/>">
 <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <%--script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script--%>
@@ -34,8 +35,17 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
-        <script>
-                 $(function(){
+         <script>
+            $(document).ready(function(){
+//                alert("acc")
+                $(".img-swap").click(function(){
+                    $(".popup_block").animate({
+                        width: 'toggle'
+                    });
+                });
+            });
+            
+            $(function(){
                 $(".img-swap").live('click', function() {
                    
                     if ($(this).attr("class") == "img-swap") {
@@ -48,31 +58,20 @@
                 });
             });
             
-            var pager;
-            $(document).ready(function(){
-
-                //                var paginationSize = 10; //parseInt(document.getElementById("paginationOption").value);
-                //                pager = new Pager('accountSearchResults', paginationSize);
-                //                pager.init();
-                //pager.showPageNav('pager', 'pageNavPosition');
-                // document.getElementById("paginationOption").value=10;
-                //pager.showPage(1);
-            });
-            //            function pagerOption(){
-            //
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('accountSearchResults', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
             
+            if ( $(window).width() > 1400) {      
+                //Add your javascript for large screens here 
+//  alert("large screens")
+                $(document).ready(function(){
+                    $(".slide_popup").click(function(){
+                        $(".popup_block").animate({
+                            width: 'toggle'
+                        });
+                    });
+                });
             
-       
+              
+            }
         </script>
 
 
@@ -119,7 +118,7 @@
                 </div>
             </div>
         </header>
-        <s:include value="/includes/menu/LeftMenu.jsp"/>
+        
         <!-- Model popup -->
         
 
@@ -128,9 +127,10 @@
             <div  class="container">
                 <div class="row">
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <s:include value="/includes/menu/LeftMenu.jsp"/>
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-12 ">
+                            <div class="col-sm-12 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
@@ -167,27 +167,27 @@
                                                 </div>
                                             </div--%>
                                             <div class="inner-reqdiv-elements">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
+                                               
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">Name: </label>
                                                         <s:textfield  cssClass="form-control" label="accountName" id="accountName"
                                                                       type="text" name="account.name" placeholder="Account Name"
                                                                       value="%{account.name}" maxLength="60"
                                                                       />
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">URL:</label>
                                                         <s:textfield cssClass="form-control" id="accountUrl" type="text"
                                                                      name="account.url" placeholder="Account Url"
                                                                      value="%{account.url}" maxLength="60"/>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">Zip:</label>
                                                         <s:textfield cssClass="form-control" id="accountZip" type="dropdown"
                                                                      name="account.zip" placeholder="Zip"
                                                                      value="%{account.zip}" maxLength="10"/>
                                                     </div>
-                                                </div>
+                                               
                                             </div>
 
 
@@ -221,8 +221,8 @@
                                                 </div>
                                             </div--%>
                                             <div class="inner-reqdiv-elements">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
+                                                
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">Date: </label>
                                                         <s:textfield cssClass="form-control dateImage" id="accountLastAccessDate"
                                                                      type="dropdown" name="account.lastAccessDate"
@@ -230,7 +230,7 @@
                                                                      onkeypress="return enterDateRepositoryAccount(this)"
                                                                      />
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">Country:</label>
                                                         <s:select  id="Countries" type="dropdown"
                                                                    listKey="%{id}" listValue="%{name}"
@@ -240,7 +240,7 @@
                                                                    headerValue="Select Country"
                                                                    cssClass="SelectBoxStyles form-control" onchange="javascript: getStates($(Countries).val(),'#accountState')"/>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">State:</label>
                                                         <s:select  id="accountState" type="dropdown"
                                                                    name="account.state.id" placeholder="State"
@@ -250,7 +250,7 @@
                                                                    headerValue="Select State"
                                                                    cssClass="SelectBoxStyles form-control"/>
                                                     </div>
-                                                </div>
+                                                
                                             </div>
 
 
@@ -284,8 +284,8 @@
                                                 </div>
                                             </div--%>
                                             <div class="inner-reqdiv-elements">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
+                                                
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">Type: </label>
                                                         <s:select  id="accountType" type="dropdown"
                                                                    name="account.typeId" placeholder="Type"
@@ -294,7 +294,7 @@
                                                                    headerValue="Select Account Type"
                                                                    cssClass="SelectBoxStyles form-control"/>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">Industry:</label>
                                                         <s:select  id="accountIndustry" type="dropdown"
                                                                    name="account.industryId" placeholder="Industry"
@@ -303,7 +303,7 @@
                                                                    headerValue="Select Industry"
                                                                    cssClass="SelectBoxStyles form-control"/>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
                                                         <s:select  id="accountStatus" type="dropdown"
                                                                    name="account.status" placeholder="Status"
@@ -312,13 +312,13 @@
                                                                    headerValue="Select Status"
                                                                    cssClass="SelectBoxStyles form-control"/>
                                                     </div>
-                                                    <div class="col-lg-10"></div>
-                                                    <div class="col-lg-2">
+                                                   
+                                                    <div class="col-sm-2 pull-right">
 
                                                         <s:submit type="button" cssClass="add_searchButton  form-control"
                                                                   value="" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                         </div>
-                                                    </div>
+                                                    
                                                 </div>
 
                                             <%--div class="row">
@@ -329,8 +329,9 @@
 
                                         </s:form>
                                         <br>
+                                        <div class="row"></div>
                                         <%--<s:submit cssClass="css_button" value="show"/><br>--%>
-                                        <div class="col-sm-13">
+                                        <div class="col-sm-12">
                                             <s:form>
                                                 <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
                                                     <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
@@ -425,7 +426,7 @@
                         </div>
                
 
-                    <div class="slide_popup"><img src="../includes/images/next.png"  class="img-swap" onclick="sidepopup()"></div>
+                    <div class="slide_popup account"><img src="../includes/images/next.png"  class="img-swap"></div>
                 </div>
 				
 
@@ -487,5 +488,6 @@
         <script>
             sortables_init();
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

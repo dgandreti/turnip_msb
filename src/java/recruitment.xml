@@ -154,6 +154,7 @@
                
             </result>
         </action>
+        
          <!-- Add By Aklakh -->
         <action name="downloadConsultantAttachedDocument" class="com.mss.msp.reccruitmentAjax.ConsultantDownloadAction" method="downloadResume"> 
             <result type="redirectAction" name="input">
@@ -237,6 +238,8 @@
             <!--<interceptor-ref name="authorizationcheckStack" />-->
             <result name="input" >/error.jsp</result>
             <result name="error">/error.jsp</result>
+        </action>
+        <action name="downloadXlsResults" class="com.mss.msp.reccruitmentAjax.RecruitmentAjaxHandlerAction" method="doDownloadXlsResults">
         </action>
         
     </package>

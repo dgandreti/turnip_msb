@@ -24,16 +24,16 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/profilediv.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value='/includes/css/accountDetails/details.css'/>">
-
+         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/account/formVerification.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.maskedinput.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
-
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/AppConstants.js"/>"></script>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
@@ -42,6 +42,7 @@
         <script language="JavaScript" src="<s:url value="/includes/js/account/accountDetailsAJAX.js"/>" type="text/javascript"></script>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
 
         <script>
             var pager;
@@ -82,9 +83,9 @@
             <div class="row">
                 <!-- Main Content-->
                 <s:include value="/includes/menu/LeftMenu.jsp"/>
-                <div class="col-md-10" style="">
+                <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="">
                     <!-- Add Form Area -->
-                    <div class="col-lg-12">
+                    <div class="col-sm-12">
                         <div class="" id="profileBox" style="float: left; margin-top: 15px; margin-bottom: 20px">
                             <!-- Add Form Header-->
                             <div class="backgroundcolor" >
@@ -101,27 +102,27 @@
                             </div> 
                              <span id="invoiceValidation"></span>             
                             <s:form action="doSearchInvoice" theme="simple">
-                                <div class="col-lg-12">
-                                    <div class="col-lg-4">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-4">
                                         <label class="labelStylereq" style="color:#56a5ec">Month</label>
                                         <s:select id="" name="invoiceMonth" cssClass="SelectBoxStyles form-control " theme="simple" list="#@java.util.LinkedHashMap@{'0':'All','1':'January','2':'February','3':'March','4':'April','5':'May','6':'June','7':'July','8':'August','9':'September','10':'October','11':'November','12':'December'}"  onfocus="clearErrosMsgForGrouping()" />
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-sm-4">
                                         <label class="labelStylereq" style="color:#56a5ec">Year</label>
                                         <s:textfield id="invoiceYear" name="invoiceYear" cssClass=" form-control " onkeypress="return invoceYear(event)" />
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-sm-4">
                                         <label class="labelStylereq" style="color:#56a5ec">Resource&nbsp;Name</label>
-                                        <s:textfield id="invoiceResource" name="invoiceResource" cssClass=" form-control " maxLength="60" />
+                                        <s:textfield id="invoiceResource" name="invoiceResource" placeholder="Resource Name" cssClass=" form-control " maxLength="60" />
                                        
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="col-lg-4">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-4">
                                         <label class="labelStylereq" style="color:#56a5ec">Vendor Name</label>
-                                        <s:textfield id="invVendor" name="invVendor" cssClass="form-control " maxLength="60"/>
+                                        <s:textfield id="invVendor" name="invVendor" placeholder="Vendor Name" cssClass="form-control " maxLength="60"/>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-sm-4">
                                         <label class="labelStylereq" style="color:#56a5ec">Status</label>
                                         <s:if test="#session.typeOfUsr=='VC'">
                                             <s:select id="invoiceStatus" name="invoiceStatus" cssClass="SelectBoxStyles form-control "  list="#@java.util.LinkedHashMap@{'All':'All','created':'Created','submitted':'Submitted','approved':'Approved','rejected':'Rejected','paid':'Paid'}" />
@@ -132,11 +133,11 @@
                                     </div>
                                 
 
-                                <div class="col-lg-2">
+                                <div class="col-sm-2">
                                     <label class="labelStylereq" style="color:#56a5ec"></label><br>
                                     <s:submit type="button" value="Search" cssClass="add_searchButton form-control" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit> 
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-sm-2">
                                     <label class="labelStylereq" style="color:#56a5ec"></label><br>
                                     <s:if test="#session.typeOfUsr=='VC'">
                                         <s:submit value="Generate" cssClass="add_searchButton form-control InvoiceGenerationOverlay_popup_open" cssStyle="margin:5px 0px;" onclick="return generateInvoiceOverlay()"/>
@@ -145,6 +146,7 @@
                                 </div>
                                 </div>
                             </s:form>
+                             <div class="row"></div>
                             <div class="col-lg-12">
                                 <table id="InvoiceTable" class="responsive CSSTable_task" border="5"cell-spacing="2">
 
@@ -185,7 +187,8 @@
                                                             <s:param name="invoiceId"><s:property value="invoiceId"></s:property></s:param>
                                                              
                                                         </s:url>
-                                                        <s:a href="%{#myUrl}"><img src="<s:url value="/includes/images/delete.png"/>" height="25" width="25"></s:a>
+                                                        <%--<s:a href="%{#myUrl}"><img src="<s:url value="/includes/images/delete.png"/>" height="25" width="25"></s:a>--%>
+                                                        <a href="#" onclick="deleteInvoice('<s:property value="invoiceId"/>');" id="deleteInvoice" ><img src="<s:url value="/includes/images/delete.png"/>" height="25" width="25"></a>
                                                     </s:if>
                                                     <s:else>
                                                         <img src="<s:url value="/includes/images/delete.png"/>" height="25" width="25" style="opacity: 0.5">
@@ -228,7 +231,7 @@
                 <div class="backgroundcolor">
                     <table>
                         <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Generate&nbsp;Invoice&nbsp; </font></h4></td>
-                        <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="InvoiceGenerationOverlay_popup_close" onclick="generateInvoiceOverlay()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                        <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="InvoiceGenerationOverlay_popup_close" onclick="closeInvoiceOverlay()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
                     </table>
                 </div><div>
                     <span><invoiceGenerarionMessage></invoiceGenerarionMessage></span></div>
@@ -250,7 +253,7 @@
                     </div>
                     <div class="col-lg-6" id="OverResourceName">
                         <label class="labelStylereq" style="color:#56a5ec">Resource&nbsp;Email</label>
-                        <s:textfield id="resourceNameOver" name="resourceNameOver"  cssClass="form-control" maxLength="60"/>
+                        <s:textfield id="resourceNameOver" name="resourceNameOver" placeholder="Resource Email" cssClass="form-control" maxLength="60"/>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -272,6 +275,7 @@
         </footer>
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
             <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+            <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         
     <script type="text/javascript">
         var recordPage=10;
@@ -289,7 +293,7 @@
             };
         $('#InvoiceTable').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
-
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

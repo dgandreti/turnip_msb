@@ -79,6 +79,7 @@
         </script>
     </head>
     <body style="overflow-x: hidden" onload="onLoad();">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -87,15 +88,15 @@
             </div>
 
         </header>
-
+          <div id="main">        
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-14 ">
+                            <div class="col-sm-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
 
                                     <div class="backgroundcolor" >
@@ -113,7 +114,7 @@
                                     <!-- content start -->
                                     <div class="col-sm-12">
                                         <s:form action="csrList" theme="simple" >
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <s:hidden name="accFlag" id="accFlag" value="%{accFlag}"/>
                                                 <label class="labelStylereq" style="color:#56a5ec;">Name: </label>
                                                 <s:textfield id="name"
@@ -121,18 +122,20 @@
                                                              type="text"
                                                              name="empName"
                                                              placeholder="First Name"
-                                                             maxLength="30"/> 
+                                                             maxLength="30"
+                                                             tabindex="1" /> 
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Email Id: </label>
                                                 <s:textfield id="email"
                                                              name="email1"
                                                              cssClass="form-control"
                                                              theme="simple"
                                                              type="text"
-                                                             placeholder="Email" maxLength="60"/>
+                                                             placeholder="Email" maxLength="60"
+                                                             tabindex="2" />
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
                                                 <s:select  id="status"
                                                            name="status"
@@ -140,23 +143,25 @@
                                                            headerKey="-1"  
                                                            theme="simple"
                                                            list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active','All':'All'}"
-                                                           />
+                                                           tabindex="3" />
                                             </div>
-                                            <div class="col-lg-8"></div>
-
-                                            <div class="col-lg-4">
-                                                <div class="row">
-                                                    <div class="col-lg-6"></div>
-                                                    <div class="col-lg-6 ">
+                                            <!--<div class="col-sm-8"></div>-->
+                                             </div>
+                                            <div class="row">
+                                            <div class="col-sm-2 pull-right">
+                                               
+                                                   
+                                                   
                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
                                                         <span class=""><s:submit type="button"
                                                                   cssClass="add_searchButton form-control"
-                                                                  value="" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit></span>
-                                                    </div>
+                                                                  value="" cssStyle="margin:5px 0px;"
+                                                                  tabindex="4" ><i class="fa fa-search"></i>&nbsp;Search</s:submit></span>
+                                                   
 
-                                                </div>
+                                                
                                             </div>
-
+                                                </div>
 
 
                                         </s:form>       
@@ -217,7 +222,7 @@
                                                 </s:form>
                                             </div>
                                         </div>
-                                    </div>
+                                   
                                 </div>
                                 <%--close of future_items--%>
                             </div>
@@ -263,6 +268,8 @@
 
             <!-- content end -->
         </section><!--/form-->
+        </div>
+        </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">
@@ -291,10 +298,12 @@
             };
         $('#csrResults').tablePaginate({navigateType:'navigator'},recordPage);
        </script>
+       <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <!--/Footer-->
         <script>
             sortables_init();
         </script>
+        
     </body>
 </html>
 

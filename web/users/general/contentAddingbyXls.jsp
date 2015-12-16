@@ -29,7 +29,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -55,9 +55,9 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-14 ">
+                            <div class="col-sm-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
 
                                     <div class="backgroundcolor" >
@@ -76,23 +76,23 @@
                                     <div class="col-sm-12">
                                         <s:form action="getCellContentValues" theme="simple" method="POST" enctype="multipart/form-data">
                                             <s:hidden name="filePath" value="%{filePath}"/>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStyle" id="labelLevelStatusReq">Account&nbsp;Name: </label>
                                                 <s:select cssClass="form-control SelectBoxStyles" name="columnValue" list="%{columnsMap}"></s:select>
                                                 <s:hidden name="path" value="%{path}"/>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStyle" id="labelLevelStatusReq">Account&nbsp;Url: </label>
                                                 <s:select cssClass="form-control SelectBoxStyles" name="accUrl" list="%{columnsMap}"></s:select>
 
                                             </div>
 
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStyle" id="labelLevelStatusReq">Account&nbsp;Type: </label>
                                                 <s:textfield cssClass="form-control" name="accType" value="%{accountType}" readonly="true"></s:textfield>
                                             </div>
 
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStyle" id="labelLevelStatusReq">Mail&nbsp;Extention: </label>
                                                 <s:select cssClass="form-control SelectBoxStyles" name="mailExt" list="%{columnsMap}"></s:select>
                                             </div>
@@ -242,7 +242,8 @@
 
                     </footer>
                     <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
-
+                    <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
                     <!--/Footer-->
 
                     </body>

@@ -29,8 +29,8 @@
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -44,6 +44,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.maskedinput.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/requirementAjax.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/vendorAjax.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/techReviewAjax.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/homeRedirectAjax.js"/>"></script>
@@ -68,7 +69,7 @@
             <div class="container">
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <s:if test="homeRedirectActionId!=0">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -88,33 +89,25 @@
                                         <span><e id="errorSpan"></e></span><br>
                                         <div class="row">
                                             <div class="inner-techReviewdiv-elements"><span id="validationMessage" /></div> 
-                                            <div class="col-lg-3 required">
+                                            <div class="col-sm-3 required">
                                                 <label class="labelStylereq" style="color: #56a5ec">Account Type:</label>
-                                                <%--  <s:if test="#session.typeOfUsr=='AC'">
-                                                      <s:select cssClass="SelectBoxStyles form-control" name="accountType" id="accountType" list="#@java.util.LinkedHashMap@{'M':'Main','AC':'Customer','VC':'Vendor'}" headerKey="M" onchange="setAccNamesAndRoles();" value="%{homeVto.accountType}" disabled="true"/>
-                                                  </s:if>
-                                                  <s:elseif test="#session.typeOfUsr=='VC'">
-                                                      <s:select cssClass="SelectBoxStyles form-control" name="accountType" id="accountType" list="#@java.util.LinkedHashMap@{'M':'Main','AC':'Customer','VC':'Vendor'}" headerKey="M" onchange="setAccNamesAndRoles();" value="%{homeVto.accountType}" disabled="true"/>
-                                                  </s:elseif>
-                                                  <s:else>
-                                                      <s:select cssClass="SelectBoxStyles form-control" name="accountType" id="accountType" list="#@java.util.LinkedHashMap@{'M':'Main','AC':'Customer','VC':'Vendor'}" headerKey="M" onchange="setAccNamesAndRoles();" value="%{homeVto.accountType}" disabled="true"/>
-                                                  </s:else>--%>
+                                             
                                                 <s:select cssClass="SelectBoxStyles form-control" name="accountType" id="accountType" list="#@java.util.LinkedHashMap@{'M':'Main','AC':'Customer','VC':'Vendor'}" headerKey="M" onchange="setAccNamesAndRoles();" value="%{homeVto.accountType}" disabled="true"/>
 
                                             </div>
                                             <s:hidden name="accountId" id="accountId" value="%{homeVto.accountId}" />
 
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStylereq" style="color: #56a5ec">Account Name:</label>
                                                 <s:textfield cssClass="form-control" id="accountName"  name="accountName" onkeyup="return getAccountNamesForHomeRedirection();" autocomplete='off' value="%{homeVto.accountName}" maxLength="60" disabled="true"/>
 
                                             </div>
-                                            <div class="col-lg-3 required">
+                                            <div class="col-sm-3 required">
                                                 <label class="labelStylereq" style="color: #56a5ec">Role:</label>
                                                 <s:select cssClass="SelectBoxStyles form-control" name="roleName" id="roleName" list="rolesMap"  value="homeVto.roleName" disabled="true"/>
 
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-sm-3">
                                                 <label class="labelStylereq" style="color: #56a5ec">Status</label>
                                                 <s:select cssClass="SelectBoxStyles form-control" name="status" id="status" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" value="%{homeVto.status}"/>
                                             </div>
@@ -123,12 +116,12 @@
                                     </div>
                                     <div class="inner-reqdiv-elements">
                                         <div class="row">
-                                            <div class="col-lg-12 required">
+                                            <div class="col-sm-12 required">
                                                 <label class="labelStylereq" style="color: #56a5ec">Action:</label>
                                                 <a href="#" id="action_description" data-placement="right" onmouseover ="getActionDescription();">
                                                       <img src="<s:url value="/includes/images/icons/isymbol.png" />" height="20" width="20" > 
                                                 </a>
-                                                    <!--<a  href="" rel="htmltooltip" onmouseover="getActionDescription()" onmouseout="displaynon()"> <img src="<s:url value="/includes/images/icons/isymbol.png" />" height="20" width="20" style="margin: 0px -49px -1px -2px"> </a>-->
+                                                
                                                 <s:if test="#session.typeOfUsr=='AC' or #session.typeOfUsr=='VC'">
                                                     <s:select cssClass="SelectBoxStyles form-control" name="actionName" id="actionName" value="%{homeVto.actionName}" list="actionName" />
                                                 </s:if>
@@ -146,7 +139,7 @@
                                     </div>
                                     <div class="inner-reqdiv-elements">
                                         <div class="row">
-                                            <div class="col-lg-12">
+                                            <div class="col-sm-12">
                                                 <label class="labelStylereq" style="color: #56a5ec">Description:</label>
                                                 <s:textarea cssClass="form-control" id="description"  name="description" value="%{homeVto.description}" onkeydown=" ResponseCheckCharacters(this);" />
                                                 <div class="charNum" id="ResponsecharNum"></div>
@@ -157,8 +150,8 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-10"></div>
-                                <div class="col-lg-2">
+                                <div class="col-sm-10"></div>
+                                <div class="col-sm-2 pull-right">
                                     <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-floppy-o form-control" value="Save" onclick="storeAddOrEditHomeRedirectDetails();" theme="simple"  />
                                 </div>
                             </s:if>
@@ -178,16 +171,16 @@
                                         <span><e id="errorSpan"></e></span><br>
                                         <div class="row">
                                             <div class="inner-techReviewdiv-elements"><span id="validationMessage" /></div>  
-                                            <div class="col-lg-4 required">
+                                            <div class="col-sm-4 required">
                                                 <label class="labelStylereq" style="color: #56a5ec">Account Type:</label>
                                                 <s:select cssClass="SelectBoxStyles form-control" name="accountType" id="accountType" list="#@java.util.LinkedHashMap@{'M':'Main','AC':'Customer','VC':'Vendor'}" headerKey="M" onchange="setAccNamesAndRoles();"/>
                                             </div>
                                             <s:hidden name="accountId" id="accountId" value="%{accountSearchOrgId}"/>
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color: #56a5ec">Account Name:</label>
-                                                <s:textfield cssClass="form-control" id="accountName" value="%{accountName}" name="accountName"  onkeyup="return getAccountNamesForHomeRedirection();" autocomplete='off' maxLength="60"/>
+                                                <s:textfield cssClass="form-control" id="accountName" placeholder="Account Name" value="%{accountName}" name="accountName"  onkeyup="return getAccountNamesForHomeRedirection();" autocomplete='off' maxLength="60"/>
                                             </div>
-                                            <div class="col-lg-4 required">
+                                            <div class="col-sm-4 required">
                                                 <label class="labelStylereq" style="color: #56a5ec">Role:</label>
                                                 <%--<s:if test="#session.typeOfUsr=='AC' or #session.typeOfUsr=='VC'">--%>
                                                 <%--<s:select cssClass="SelectBoxStyles form-control" name="roleName" id="roleName" list="{}" onchange="getActionNames();"/>--%>
@@ -197,7 +190,7 @@
                                                 <%--</s:else>--%>
                                             </div>
                                             <s:if test="homeRedirectActionId!=0">
-                                                <div class="col-lg-3">
+                                                <div class="col-sm-3">
                                                     <label class="labelStylereq" style="color: #56a5ec">Status</label>
                                                     <s:select cssClass="SelectBoxStyles form-control" name="accountType" id="accountType" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" value="%{homeVto.status}"/>
                                                 </div>
@@ -207,16 +200,16 @@
                                     </div>
                                     <div class="inner-reqdiv-elements">
                                         <div class="row">
-                                            <div class="col-lg-12 required">
+                                            <div class="col-sm-12 required">
                                                 <label class="labelStylereq" style="color: #56a5ec">Action:</label>
                                                 <a href="#" id="action_description" data-placement="right" onmouseover ="getActionDescription();">
                                                       <img src="<s:url value="/includes/images/icons/isymbol.png" />" height="20" width="20" > 
                                                 </a>
                                                 <s:if test="#session.typeOfUsr=='AC' or #session.typeOfUsr=='VC'">
-                                                    <s:select cssClass="SelectBoxStyles form-control" name="actionName" id="actionName" list="actionName" />
+                                                    <s:select cssClass="SelectBoxStyles form-control" name="actionName" placeholder="Action" id="actionName" list="actionName" />
                                                 </s:if>
                                                 <s:else>
-                                                    <s:textfield cssClass="form-control" id="actionName"  name="actionName" onblur="validateAction();" maxLength="100"/>
+                                                    <s:textfield cssClass="form-control" id="actionName"  name="actionName" placeholder="Action" onblur="validateAction();" maxLength="100"/>
                                                 </s:else>
                                             </div>
                                             <%--<div class="col-lg-4 required">
@@ -227,9 +220,9 @@
                                     </div>
                                     <div class="inner-reqdiv-elements">
                                         <div class="row">
-                                            <div class="col-lg-12">
+                                            <div class="col-sm-12">
                                                 <label class="labelStylereq" style="color: #56a5ec">Description:</label>
-                                                <s:textarea cssClass="form-control" id="description"  name="description" onkeydown=" ResponseCheckCharacters(this);" />
+                                                <s:textarea cssClass="form-control" id="description"  name="description" placeholder="Description" onkeydown=" ResponseCheckCharacters(this);" />
                                                 <div class="charNum" id="ResponsecharNum"></div>
                                             </div>
 
@@ -238,8 +231,8 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-10"></div>
-                                <div class="col-lg-2">
+                         
+                                <div class="col-sm-2 pull-right">
                                     <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-plus-square form-control" value="Add" onclick="storeAddOrEditHomeRedirectDetails();" theme="simple"  />
                                 </div>
                             </s:if>
@@ -262,7 +255,8 @@
             </div>
         </div>
     </footer><!--/Footer-->
-    
+    <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+    <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     <div style="display: none; position: absolute; top:170px;left:540px;overflow:auto; z-index: 1900000" id="menu-popup">
         <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
     </div>

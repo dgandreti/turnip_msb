@@ -74,9 +74,13 @@ Author     : Greg
             //                pager.showPage(1);
             //            };
 
+
+
+
             var myCalendar;
             //,"docdatepickerfrom1","docdatepicker1"
             function doOnLoadRequirement() {
+              
                 myCalendar = new dhtmlXCalendarObject(["reqStart","reqEnd"]);
                 myCalendar.setSkin('omega');
                 //myCalendar.setDateFormat("%m/%d/%Y %H:%i");
@@ -158,103 +162,7 @@ Author     : Greg
             }
         </script>
         <script>
-            //            var pager;   //this pagination for Contact, Vendor , CSR and Account Requirements
-            //            var vpager;
-            //            var csrpager;
-            //            var accpager;
-            //            $(document).ready(function(){
-            //
-            //                //var paginationSize = parseInt(document.getElementById("paginationOption").value);
-            //                var paginationSize=10;
-            //                var vpaginationSize=10;
-            //                var csrpaginationSize=10;
-            //                var accpaginationSize=10;
-            //                pager = new Pager('contactPageNav', paginationSize);
-            //                vpager = new Pager('vendorTierTable', vpaginationSize);
-            //                csrpager = new Pager('csrDetailsTable', csrpaginationSize);
-            //                accpager = new Pager('reqTableInAccount', accpaginationSize);
-            //                
-            //               
-            //                vpager.init();
-            //                csrpager.init();
-            //                accpager.init();
-            //                
-            //              
-            //                vpager.showPageNav('vpager', 'vendorTierTablepageNavPosition');
-            //                csrpager.showPageNav('csrpager', 'csrDetailsTablepageNavi');
-            //                accpager.showPageNav('accpager', 'reqPageNavPosition');
-            //                
-            //                //                document.getElementById("paginationOption").value=10;
-            //                //                document.getElementById("vpaginationOption").value=10;
-            //                //                document.getElementById("csrpaginationOption").value=10;
-            //                //                document.getElementById("accpaginationOption").value=10;
-            //                
-            //                pager.showPage(1);
-            //                vpager.showPage(1);
-            //                csrpager.showPage(1);
-            //                accpager.showPage(1);
-            //               
-            //            });
-            //            function pagerOption(){
-            //
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('contactPageNav', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'contactPageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
-            //            function LocationpagerOption(){
-            //
-            //                paginationSize = document.getElementById("locationpaginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('LocationPageNav', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'LocationPageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
-            //            function vpagerOption(){
-            //
-            //                vpaginationSize = document.getElementById("vpaginationOption").value;
-            //                if(isNaN(vpaginationSize))
-            //                    alert(vpaginationSize);
-            //
-            //                pager = new Pager('vendorTierTable', parseInt(vpaginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'vendorTierTablepageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
-            //            function csrpagerOption(){
-            //
-            //                csrpaginationSize = document.getElementById("csrpaginationOption").value;
-            //                if(isNaN(csrpaginationSize))
-            //                    alert(csrpaginationSize);
-            //
-            //                pager = new Pager('csrDetailsTable', parseInt(csrpaginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'csrDetailsTablepageNavi');
-            //                pager.showPage(1);
-            //
-            //            };
-            //            function accpagerOption(){
-            //
-            //                accpaginationSize = document.getElementById("accpaginationOption").value;
-            //                if(isNaN(accpaginationSize))
-            //                    alert(accpaginationSize);
-            //
-            //                pager = new Pager('reqTableInAccount', parseInt(accpaginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'reqPageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
+         
             function attachmentsValidFromTo(){
                 myCalendar = new dhtmlXCalendarObject(["validFrom","validTo"]);
                 myCalendar.setSkin('omega');
@@ -285,10 +193,15 @@ Author     : Greg
                 var to = mm+'/'+dd+'/'+yyyy;
             }
         </script>
+        <style>
+            section{
+                margin-bottom: 200px;
+            }
+        </style>
 
 
     </head>
-    <body onload="doOnLoadRequirement(),AccountTypeDropDown();attachmentsValidFromTo();attachmentsValidFromToOverlay();editAttachmentvalidity(); getStates($('#locationCountry').val(),'#locationState')">
+    <body onload="doOnLoadRequirement(),AccountTypeDropDown();attachmentsValidFromTo();attachmentsValidFromToOverlay();editAttachmentvalidity(); getStates($('#locationCountry').val(),'#locationState');jumper();frameportion()">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -302,7 +215,7 @@ Author     : Greg
             <div class="container">
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class=" ">
                                 <div class="" id="selectivityProfileBox" style="float: left; margin-top: 5px">
@@ -312,7 +225,7 @@ Author     : Greg
                                             <div class="">
                                                 <div class="panel " style="margin-bottom:-8px ">
                                                     <div class="panel-body" id="panel-task-body" >
-                                                        <div class=""  style="float: unset; margin-top:-12px; margin-bottom: 5px">
+                                                        <div class="col-sm-12"  style="float: unset; margin-top:-12px; margin-bottom: 5px">
                                                             <s:if test="%{userType!='vendor'}">
                                                                 <s:hidden name="nameFlag" id="nameFlag" value="Customer"/>
                                                                 <label>Account Name:</label>
@@ -330,7 +243,7 @@ Author     : Greg
                                                                 typeOfUser = session.getAttribute("typeOfUsr").toString();
 
                                                                 //   if ("SA".equalsIgnoreCase(typeOfUser)) {
-                                                            %>
+%>
                                                             <s:if test="#session.primaryrole == 0 || #session.primaryrole == 1" >
                                                                 <span style="float: right;"><a href="searchAccountsBy.action" ><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></a></span>
                                                                     </s:if>       <%--        //                                                                }
@@ -340,7 +253,7 @@ Author     : Greg
                                                         <!-- Nav tabs -->
                                                         <ul class="active_details" >
                                                             <li class="dropdown"  >
-                                                                <a class=" active_details " onclick="lockScreen();" data-toggle="dropdown"  href="#" title="Click Me For Menu"   style="background-color: #fff; width:40px;"><img src="<s:url value="/includes/images/toggleMenu.png"/>" height="40" width="38"></a>
+                                                                <a class=" active_details " onclick="lockScreen();frameportion()" data-toggle="dropdown"  href="#" title="Click Me For Menu"   style="background-color: #fff; width:40px;"><img src="<s:url value="/includes/images/toggleMenu.png"/>" height="40" width="38"></a>
                                                             <headingmess id="headingmessage"  class="accDetails" >Account Details</headingmess>
                                                             <ul class="active_details dropdown-menu  " style="position:absolute; z-index:10000;">
                                                                 <s:if test="%{userType!='vendor'}">
@@ -348,20 +261,20 @@ Author     : Greg
                                                                     </li>
                                                                 </s:if>
                                                                 <s:else>
-                                                                    <li class="  "><a aria-expanded="false" href="#details" data-toggle="tab" id="accountdetailshead" onclick="headingMessage(this); unlockScreen();" style="background-color: #fff; width:40px;" ><img  src="<s:url value="/includes/images/icons/accountEdit.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Vendor Details</font></a>
+                                                                    <li class="  "><a aria-expanded="false" href="#details" data-toggle="tab" id="accountdetailshead" onclick="headingMessage(this); unlockScreen();frameportion()" style="background-color: #fff; width:40px;" ><img  src="<s:url value="/includes/images/icons/accountEdit.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Vendor Details</font></a>
                                                                     </li>
                                                                 </s:else>
 
                                                                 <s:if test="#session.primaryrole != 0 && #session.primaryrole != 2" >
                                                                     <s:if test="%{userType!='vendor'}">
-                                                                        <li class=""><a aria-expanded="false" href="#requirements" data-toggle="tab" id="requirementshead" onclick="getSearchRequirementsList(); headingMessage(this); unlockScreen();" style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/requirement.png"/>" height="15" width="15"><font style="color: blue">Requirements</font></a>
+                                                                        <li class=""><a aria-expanded="false" href="#requirements" data-toggle="tab" id="requirementshead" onclick="getSearchRequirementsList(); headingMessage(this); unlockScreen();frameportion()" style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/requirement.png"/>" height="15" width="15"><font style="color: blue">Requirements</font></a>
 
                                                                         </li>
                                                                     </s:if>
                                                                 </s:if>
-                                                                <li class=""><a aria-expanded="false" href="#contacts" data-toggle="tab" id="contactshead" onclick="headingMessage(this); unlockScreen();"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/contacts.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Contacts</font></a>
+                                                                <li class=""><a aria-expanded="false" href="#contacts" data-toggle="tab" id="contactshead" onclick="headingMessage(this); unlockScreen();frameportion()"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/contacts.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Contacts</font></a>
                                                                 </li>
-                                                                <li class=""><a aria-expanded="false" href="#VendorForms" data-toggle="tab" id="vendorFormsHead" onclick="headingMessage(this); unlockScreen();"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/attachment.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Attachments</font></a>
+                                                                <li class=""><a aria-expanded="false" href="#VendorForms" data-toggle="tab" id="vendorFormsHead" onclick="headingMessage(this); unlockScreen();frameportion()"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/attachment.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Attachments</font></a>
                                                                 </li>
                                                                 <s:if test="%{userType!='vendor'}">
                                                                     <s:if test="#session.primaryrole == 0" >
@@ -398,11 +311,11 @@ Author     : Greg
                                                                 <div id="editMessage" style="display: none" ><font style="color:green ;font: bold; font-size: large">Account  updated successfully!</font></div>
                                                                     <s:form action="ajaxAccountUpdate" id="accountDetailsForm" theme="simple" >
                                                                         <s:hidden name="viewAccountID" id="viewAccountID" value="%{accountSearchID}"></s:hidden>
-                                                                        <div class="panel-body" id="task-panel" >
-                                                                            <div class="row">
-                                                                                <span><editAccountError></editAccountError></span>
-                                                                                <div class="col-lg-12">
-                                                                                    <div class="col-lg-3">
+                                                                    <div class="panel-body" id="task-panel" >
+                                                                        <div class="row">
+                                                                            <span><editAccountError></editAccountError></span>
+                                                                            <div class="col-sm-12">
+                                                                                <div class="col-sm-4">
                                                                                     <s:if test="%{userType!='vendor'}">
                                                                                         <label style="color:#56a5ec;" class="labelStyle2">Account Name  </label>
                                                                                     </s:if>
@@ -417,7 +330,7 @@ Author     : Greg
                                                                                                  readonly="true"/>
                                                                                     <span id="nameError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <s:if test="%{userType!='vendor'}">
                                                                                         <label style="color:#56a5ec;" class="labelStyle2">Account URL  </label>
                                                                                     </s:if>
@@ -432,7 +345,7 @@ Author     : Greg
                                                                                                  readonly="true"/>
                                                                                     <span id="urlError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <s:hidden id="account_type" name="accountDetails.accountType" value="%{accountDetails.accountType}" />
                                                                                     <s:if test="%{userType!='vendor'}">
                                                                                         <label style="color:#56a5ec;" class="labelStyle2">Account Type </label>
@@ -454,7 +367,7 @@ Author     : Greg
                                                                                     <span id="typeError" class="accDetailsError"></span>
                                                                                 </div>
 
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2"><span style="color:red;">*</span>Status  </label>
                                                                                     <br>
                                                                                     <s:if test="#session.primaryrole == 0 || #session.primaryrole == 1">
@@ -483,7 +396,7 @@ Author     : Greg
                                                                                     <span id="statusError" class="accDetailsError"></span>
                                                                                     <%-- IF ACCOUNT TYPE --%>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <span>
                                                                                         <label class="labelStyle2">Mail Extention </label>
 
@@ -512,8 +425,8 @@ Author     : Greg
                                                                             <s:else>
                                                                                 <h5><b>Vendor Address</b></h5>
                                                                             </s:else>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="col-lg-3">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Address 1  </label>
                                                                                     <s:textfield type="text" maxLength="100"
                                                                                                  name="accountDetails.address1"
@@ -522,7 +435,7 @@ Author     : Greg
                                                                                                  value="%{accountDetails.address1}"/>
                                                                                     <span id="address1Error" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Address 2  </label>
                                                                                     <s:textfield type="text" maxLength="100"
                                                                                                  name="accountDetails.address2"
@@ -530,7 +443,7 @@ Author     : Greg
                                                                                                  id="account_address2" placeholder="Address 2"
                                                                                                  value="%{accountDetails.address2}"/>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>City  </label>
                                                                                     <s:textfield id="account_city" maxLength="20"
                                                                                                  name="accountDetails.city"
@@ -544,7 +457,7 @@ Author     : Greg
 
                                                                                     <span id="cityError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Zip  </label>
                                                                                     <s:textfield id="account_zip" maxLength="11"
                                                                                                  name="accountDetails.zip"
@@ -556,12 +469,11 @@ Author     : Greg
 
                                                                                     <span id="zipError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-lg-12">
+
+
+
                                                                                 <s:if test="accountDetails.country==NULL">
-                                                                                    <div class="col-lg-3">
+                                                                                    <div class="col-sm-4">
                                                                                         <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>Country  </label>
                                                                                         <br><s:select   id="account_country"
                                                                                                     value="3"
@@ -576,7 +488,7 @@ Author     : Greg
                                                                                     </div>
                                                                                 </s:if>
                                                                                 <s:else>
-                                                                                    <div class="col-lg-3">
+                                                                                    <div class="col-sm-4">
                                                                                         <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>Country  </label>
                                                                                         <br><s:select   id="account_country"
                                                                                                     value="accountDetails.country"
@@ -590,7 +502,7 @@ Author     : Greg
                                                                                         <span id="countryError" class="countryError"></span>
                                                                                     </div>
                                                                                 </s:else>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>State  </label>
                                                                                     <br><s:select   id="account_state"
                                                                                                 value="%{accountDetails.state}"
@@ -603,7 +515,7 @@ Author     : Greg
                                                                                                 onchange="accStateValidate();"/>
                                                                                     <span id="stateError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>Phone  </label>
                                                                                     <s:textfield  id="phone1" 
                                                                                                   cssClass="form-control"
@@ -613,7 +525,7 @@ Author     : Greg
                                                                                                   onkeyup="accPhoneValidate();"/>
                                                                                     <span id="phoneError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Fax  </label>
                                                                                     <s:textfield  id="fax" maxLength="15"
                                                                                                   cssClass="form-control"
@@ -625,12 +537,13 @@ Author     : Greg
 
                                                                                     <span id="faxError" class="accDetailsError"></span>
                                                                                 </div>
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
                                                                             <h5><b>Basic Information</b></h5>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="col-lg-3">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>Industry </label>
                                                                                     <br><s:select   id="account_industry"
                                                                                                 name="accountDetails.industry"
@@ -643,7 +556,7 @@ Author     : Greg
                                                                                                 onchange="accIndustryValidate()"/>
                                                                                     <span id="industryError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Region  </label>
                                                                                     <s:textfield id="account_region" maxLength="20"
                                                                                                  name="accountDetails.region"
@@ -655,7 +568,7 @@ Author     : Greg
                                                                                                  />
                                                                                     <span id="regionError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Territory  </label>
                                                                                     <s:textfield id="account_territory" maxLength="20"
                                                                                                  name="accountDetails.territory"
@@ -667,7 +580,7 @@ Author     : Greg
                                                                                                  />
                                                                                     <span id="territoryError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">No. of Employees  </label>
                                                                                     <s:textfield id="account_noemp" maxLength="50"
                                                                                                  name="accountDetails.noemp"
@@ -676,10 +589,8 @@ Author     : Greg
                                                                                                  value="%{accountDetails.noemp}"
                                                                                                  />
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-lg-12">
+
+
                                                                                 <%-- <div class="col-lg-3">
                                                                                      <label style="color:#56a5ec;" class="labelStyle2">Budget  </label>
                                                                                      <s:textfield id="account_budget"
@@ -689,7 +600,7 @@ Author     : Greg
                                                                                                   value="%{accountDetails.budget}"/>
                                                                                      <span id="budgetError" class="accDetailsError"></span>
                                                                                  </div> --%>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Tax ID  </label>
                                                                                     <s:textfield id="account_taxid" maxLength="20"
                                                                                                  name="accountDetails.taxId"
@@ -699,7 +610,7 @@ Author     : Greg
                                                                                                  onkeypress="return taxValidate(event)"/>
                                                                                     <span id="taxError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Stock Symbol  </label>
                                                                                     <%--------------------CURRENCY TYPE--------------------%>
                                                                                     <s:textfield id="stock_symbol"
@@ -710,7 +621,7 @@ Author     : Greg
                                                                                                  readonly="true"/>
                                                                                     <span id="stockError" class="accDetailsError"></span>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Revenue  </label>
                                                                                     <s:textfield id="account_revenue" maxLength="11"
                                                                                                  cssClass="form-control"
@@ -724,16 +635,16 @@ Author     : Greg
                                                                         </div>
 
                                                                         <div class="row">
-                                                                            <div class="col-lg-12">
-                                                                                <div class="col-lg-12">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="col-sm-12">
                                                                                     <label class="labelStyle" id="labelLevelStatusReq">Specialized In </label> <s:select cssClass="" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true"  value="%{accountDetails.skillValueList}"/> 
                                                                                     <s:hidden id="skillValues" name="accountDetails.skillValues" />
 
                                                                                 </div></div></div>
 
                                                                         <div class="row">
-                                                                            <div class="col-lg-12">
-                                                                                <div class="col-lg-12">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="col-sm-12">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Description  </label>
                                                                                     <s:textarea id="account_description"
                                                                                                 name="accountDetails.description"
@@ -749,8 +660,8 @@ Author     : Greg
                                                                         </div>
                                                                         <div class="row">
                                                                             <h5><b><label>Bank Details</label></b></h5>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="col-lg-3">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Beneficiary Name</label>
                                                                                     <br><s:textfield id="beneficiaryName" maxLength="80"
                                                                                                  name="accountDetails.beneficiaryName"
@@ -759,7 +670,7 @@ Author     : Greg
                                                                                                  value="%{accountDetails.beneficiaryName}" placeholder="Beneficiary Name"
                                                                                                  />
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Bank Name </label>
                                                                                     <br><s:textfield id="bankName" maxLength="80"
                                                                                                  name="accountDetails.bankName"
@@ -768,7 +679,7 @@ Author     : Greg
                                                                                                  value="%{accountDetails.bankName}" placeholder="Bank Name"
                                                                                                  />
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Account No.</label>
                                                                                     <s:textfield id="Bank Account No." maxLength="15"
                                                                                                  name="accountDetails.bankAccountNumber"
@@ -777,7 +688,7 @@ Author     : Greg
                                                                                                  value="%{accountDetails.bankAccountNumber}"
                                                                                                  />
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Routing No.</label>
                                                                                     <s:textfield id="bankRoutingNumber" maxLength="10"
                                                                                                  name="accountDetails.bankRoutingNumber"
@@ -786,7 +697,7 @@ Author     : Greg
                                                                                                  value="%{accountDetails.bankRoutingNumber}" placeholder="Bank Routing Number"
                                                                                                  />
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Address</label>
                                                                                     <s:textfield id="bankAddress" maxLength="100"
                                                                                                  name="accountDetails.bankAddress"
@@ -795,7 +706,7 @@ Author     : Greg
                                                                                                  value="%{accountDetails.bankAddress}" placeholder="Bank Address"
                                                                                                  />
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">City</label>
                                                                                     <s:textfield id="bankCity" maxLength="50"
                                                                                                  name="accountDetails.bankCity"
@@ -804,7 +715,7 @@ Author     : Greg
                                                                                                  value="%{accountDetails.bankCity}" placeholder="Bank City"
                                                                                                  />
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-sm-4">
                                                                                     <label style="color:#56a5ec;" class="labelStyle2">Zip</label>
                                                                                     <s:textfield id="bankZip" maxLength="11"
                                                                                                  name="accountDetails.bankZip"
@@ -825,12 +736,13 @@ Author     : Greg
 
                                                                         <div class="row">
 
-                                                                            <div class="col-lg-10"></div>
-                                                                            <div class="col-lg-2" >
-                                                                                <s:if test="#session.primaryrole == 0 ||#session.primaryrole == 1 ||#session.primaryrole == 2 ||#session.primaryrole == 8 " >
-                                                                                    <a id="detailsFormSubmit"   href="#save"><button type="button" style="margin: 5px 0px;" class="add_searchButton form-control"><i class="fa fa-floppy-o"></i>&nbsp;save</button></a>
-                                                                                </s:if>
 
+                                                                            <div class="col-sm-12">
+                                                                                <div class="col-sm-2 pull-right">
+                                                                                    <s:if test="#session.primaryrole == 0 ||#session.primaryrole == 1 ||#session.primaryrole == 2 ||#session.primaryrole == 8 " >
+                                                                                        <a id="detailsFormSubmit"   href="#save"><button type="button" style="margin: 5px 0px;" class="add_searchButton form-control"><i class="fa fa-floppy-o"></i>&nbsp;save</button></a>
+                                                                                    </s:if>
+                                                                                </div>
                                                                                 <%--    <a id="detailsFormSubmit" href="#save" class="active_details cssbutton_emps pull-right"><div class="details_button" >SAVE</div></a> --%>
                                                                             </div>
                                                                             <script>
@@ -874,7 +786,7 @@ Author     : Greg
                                                             <div class="tab-pane fade in " id="softwares">
                                                                 <div class="panel-body"  >
                                                                     <div class="row">
-                                                                        <div class="col-lg-12">
+                                                                        <div class="col-sm-12">
                                                                             <div class="row">
                                                                                 <div id="softwareDiv"  >
 
@@ -900,7 +812,7 @@ Author     : Greg
                                                             <div class="tab-pane fade in " id="team">
                                                                 <div class="panel-body" id="task-panel" >
                                                                     <div class="row">
-                                                                        <div class="col-lg-12">
+                                                                        <div class="col-sm-12">
                                                                             <s:form action="updateAccTeam" theme="simple">
                                                                                 <label for="leftTitle"  id="primaryAssign1">Primary Assign</label><label  id="primaryAssign2"> : </label>
                                                                                 <s:select   id="accountindustry"
@@ -966,7 +878,7 @@ Author     : Greg
 
                                                                         <div class="inner-reqdiv-elements">
                                                                             <div class="row">
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <s:hidden name="accFlag" id="accFlag" value="%{accFlag}"/>
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">First Name: </label>
                                                                                     <s:textfield id="firstNameContacts"
@@ -976,7 +888,7 @@ Author     : Greg
                                                                                                  placeholder="First Name"
                                                                                                  maxLength="30"/> 
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Last Name: </label>
                                                                                     <s:textfield id="lastNameContacts"
                                                                                                  name="lastName"
@@ -985,7 +897,7 @@ Author     : Greg
                                                                                                  type="text"
                                                                                                  placeholder="Last Name" maxLength="30"/>
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Email Id: </label>
                                                                                     <s:textfield id="emailContacts"
                                                                                                  name="email"
@@ -994,12 +906,10 @@ Author     : Greg
                                                                                                  type="text"
                                                                                                  placeholder="Email" maxLength="60"/>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
 
-                                                                        <div class="inner-reqdiv-elements">
-                                                                            <div class="row">
-                                                                                <div class="col-lg-4">
+
+
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Phone: </label> 
                                                                                     <s:textfield id="phoneContacts"
                                                                                                  cssClass="form-control"
@@ -1008,7 +918,7 @@ Author     : Greg
                                                                                                  placeholder="Phone #" 
                                                                                                  maxLength="15"/>
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
                                                                                     <s:select id="statusContacts"
                                                                                               cssClass="SelectBoxStyles form-control"
@@ -1018,28 +928,28 @@ Author     : Greg
 
                                                                                               placeholder="Status" />
                                                                                 </div>
-                                                                                <div class="col-lg-4">
-                                                                                    <div class="row">
+                                                                                <div class="col-sm-4">
 
-                                                                                        <div class="col-lg-6">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec;"></label> 
-                                                                                            <%--<s:submit id="" cssClass="Contact_popup_open cssbutton_emps form-control"  onclick="removeDataAfterContactOverlay()"  onfocus="clearContactOverlay()" value="Add Contact" style="margin:5px"/>--%>
-                                                                                            <a href='setContacts.action?accountType=<s:property value="%{accountDetails.accountType}"/>&accountSearchID=<s:property value="%{accountSearchID}"/>'><button class="add_searchButton form-control" style="margin: 5px 0px;"><i class="fa fa-user"></i>&nbsp;Add</button></a>
-                                                                                        </div>
-                                                                                        <div class="col-lg-6">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                            <s:submit type="button" id=""
-                                                                                                      cssClass="add_searchButton  form-control"
-                                                                                                      value="" onclick="getContactSearchResults()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                                                            </div>
-                                                                                        </div>
+
+                                                                                    <div class="col-md-6 col-lg-6 pull-right contact_add">
+                                                                                        <label class="labelStylereq" style="color:#56a5ec;"></label> 
+                                                                                        <%--<s:submit id="" cssClass="Contact_popup_open cssbutton_emps form-control"  onclick="removeDataAfterContactOverlay()"  onfocus="clearContactOverlay()" value="Add Contact" style="margin:5px"/>--%>
+                                                                                        <a href='setContacts.action?accountType=<s:property value="%{accountDetails.accountType}"/>&accountSearchID=<s:property value="%{accountSearchID}"/>'><button class="add_searchButton form-control" style="margin: 5px 0px;"><i class="fa fa-user"></i>&nbsp;Add</button></a>
                                                                                     </div>
+                                                                                    <div class="col-md-6 col-lg-6 pull-right contact_search" style="width:100px">
+                                                                                        <label class="labelStylereq" style="color:#56a5ec;"></label>
+                                                                                        <s:submit type="button" id=""
+                                                                                                  cssClass="add_searchButton  form-control"
+                                                                                                  value="" onclick="getContactSearchResults()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                                    </div>
+
                                                                                 </div>
                                                                             </div>
-
-                                                                            <span id="validationMessage" />
-
                                                                         </div>
+
+                                                                        <span id="validationMessage" />
+
+                                                                    </div>
                                                                     <%-- </s:form>--%>
                                                                     <!-- for grid-->
                                                                     <%-- <div class="col-sm-4"><div id="outputMessage"></div></div>--%>
@@ -1101,8 +1011,8 @@ Author     : Greg
                                                                                 acPager.init();
                                                                                 acPager.showPageNav('acPager', 'contactPageNavPosition');
                                                                                 acPager.showPage(1);
-
-
+                                                                               
+                                                        
                                                                             </script>
                                                                         </div>
                                                                     </div>
@@ -1114,7 +1024,7 @@ Author     : Greg
                                                                         <span id="formValidationMsg"></span>
                                                                         <div class="inner-reqdiv-elements">
                                                                             <div class="row">
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Title</label>
                                                                                     <s:textfield cssClass="form-control " id="attachmentTitle"
                                                                                                  type="dropdown" name="attachmentTitle"
@@ -1122,7 +1032,7 @@ Author     : Greg
                                                                                                  value=""
                                                                                                  />
                                                                                 </div>  
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Valid&nbsp;From: </label>
                                                                                     <s:textfield cssClass="form-control dateImage" id="validFrom"
                                                                                                  type="dropdown" name="validFrom"
@@ -1130,7 +1040,7 @@ Author     : Greg
                                                                                                  onkeypress="return enterDateRepositoryAttachment();" autocomplete="off" onfocus="return removeFormErrorMsg();"
                                                                                                  />
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Valid&nbsp;To: </label>
                                                                                     <s:textfield cssClass="form-control dateImage" id="validTo"
                                                                                                  type="dropdown" name="validTo"
@@ -1138,9 +1048,9 @@ Author     : Greg
                                                                                                  onkeypress="return enterDateRepositoryAttachment();" autocomplete="off" onfocus="return removeFormErrorMsg();"
                                                                                                  />
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-lg-4">
+
+
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Document&nbsp;Type: </label>
                                                                                     <s:select id="vendorDocs"
                                                                                               cssClass="SelectBoxStyles form-control"
@@ -1149,6 +1059,7 @@ Author     : Greg
                                                                                               headerKey="DF"
                                                                                               placeholder="Status" />
                                                                                 </div>
+
                                                                                 <s:hidden name="viewAccountID" id="viewAccountID" value="%{accountSearchID}"></s:hidden>
                                                                                 <s:hidden name="acc_attachment_id" id="acc_attachment_id" value="%{acc_attachment_id}"/>
                                                                                 <s:hidden name="attachment_id" id="attachment_id" value="%{attachment_id}"/>
@@ -1277,15 +1188,15 @@ Author     : Greg
                                                                     </div--%>
                                                                         <div class="inner-reqdiv-elements">
                                                                             <div class="row">
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec">Job Title:</label>
                                                                                     <s:textfield cssClass="form-control " name="jobTitle" id="jobTitle" placeholder="Job Title"/>
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec">Skills:</label>
                                                                                     <s:textfield cssClass="form-control  " name="requirementSkill" id="requirementSkill" placeholder="Skill"/>
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <s:if test="vendor=='yes'">
                                                                                         <label class="labelStylereq" style="color:#56a5ec">Status:</label>
                                                                                         <s:select id="requirementStatus" name="requirementStatus" cssClass="SelectBoxStyles form-control " headerKey="-1" headerValue="requirementStatus" theme="simple" list="#@java.util.LinkedHashMap@{'R':'Released','C':'Closed'}" />
@@ -1295,11 +1206,10 @@ Author     : Greg
                                                                                         <s:select id="requirementStatus" name="requirementStatus" cssClass="SelectBoxStyles form-control " headerKey="-1" headerValue="requirementStatus" theme="simple" list="#@java.util.LinkedHashMap@{'O':'Opened','R':'Released','C':'Closed'}" />
                                                                                     </s:else>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
 
-                                                                        <%--div class="row"> 
-                                                                            <div class="col-sm-4">
+
+                                                                                <%--div class="row"> 
+                                                                                    <div class="col-sm-4">
 
                                                                                 <label class="labelStylereq field-margincontact" style="color:#56a5ec;">StartDate:</label>  
                                                                                 <s:textfield cssClass="  calendarImage " name="reqStart" id="reqStart" placeholder="FromDate"  tabindex="1"  onkeypress="return enterDateRepositoryReq();" />
@@ -1313,25 +1223,26 @@ Author     : Greg
                                                                             </div>
                                                                         </div--%>
 
-                                                                        <div class="inner-reqdiv-elements">
-                                                                            <div class="row">
-                                                                                <div class="col-lg-4">
+
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">StartDate:</label>
                                                                                     <s:textfield cssClass="form-control dateImage" name="reqStart" id="reqStart" placeholder="FromDate"  tabindex="1"  onkeypress="return enterDateRepositoryReq();" />
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">EndDate:</label>
                                                                                     <s:textfield cssClass="form-control dateImage" name="reqEnd" placeholder="ToDate"  id="reqEnd" tabindex="2"  onkeypress="return enterDateRepositoryReq();"/>
                                                                                 </div>
-                                                                                <div class="col-lg-2">
-                                                                                    <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                    <s:submit type="button" cssClass="add_searchButton  form-control" value="" onclick="return getSearchRequirementsList()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                                <div class="col-sm-4">
+                                                                                    <div class="contact_add pull-right">
+                                                                                        <label class="labelStylereq" style="color:#56a5ec;"></label>
+                                                                                        <s:submit type="button" cssClass="add_searchButton  form-control" value="" onclick="return getSearchRequirementsList()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-12" style="align:center">
-                                                                            <span><releaseMessage></releaseMessage></span>
+                                                                    </div>
+                                                                    <div class="col-sm-12" style="align:center">
+                                                                        <span><releaseMessage></releaseMessage></span>
                                                                         <s:form>
 
 
@@ -1383,45 +1294,45 @@ Author     : Greg
                                                                     <div class="col-sm-12" id="csrAssignDiv">
                                                                         <s:hidden name="viewAccountID" id="viewAccountID" value="%{accountSearchID}"></s:hidden>
                                                                         <s:hidden name="accountFlag" id="accountFlag" value="%{accountFlag}" ></s:hidden>
-                                                                            <div class="inner-reqdiv-elements">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-4">
-                                                                                        <label class="labelStylereq" style="color:#56a5ec">CSR:</label>
-                                                                                    <s:textfield cssClass="form-control " name="Name" id="csrName" maxLength="30"/>
+                                                                        <div class="inner-reqdiv-elements">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-4">
+                                                                                    <label class="labelStylereq" style="color:#56a5ec">CSR:</label>
+                                                                                    <s:textfield cssClass="form-control " name="Name" id="csrName" placeholder="CSR" maxLength="30"/>
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec">Email:</label>
-                                                                                    <s:textfield cssClass="form-control  " name="Email" id="csrEmail" maxLength="60"/>
+                                                                                    <s:textfield cssClass="form-control  " name="Email" id="csrEmail" placeholder="Email" maxLength="60"/>
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
 
                                                                                     <label class="labelStylereq" style="color:#56a5ec">Phone:</label>
-                                                                                    <s:textfield cssClass="form-control  " name="csrPhone" id="csrPhone" maxLength="15"/>
+                                                                                    <s:textfield cssClass="form-control  " name="csrPhone" id="csrPhone" placeholder="Phone" maxLength="15"/>
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
 
                                                                                     <label class="labelStylereq" style="color:#56a5ec">Status:</label>
                                                                                     <s:select id="csrStatus" name="csrStatus" cssClass="SelectBoxStyles form-control " value="Active"  theme="simple" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" />
                                                                                 </div>
-                                                                                <div class="col-lg-4"></div>
-                                                                                <div class="col-lg-2">
+
+                                                                                <div class="col-sm-2 pull-right">
                                                                                     <label class="labelStylereq" style="color:#56a5ec"></label>
                                                                                     <s:url var="csrUrl" action="../acc/goAddintAccToCsr.action">
                                                                                         <s:param name="orgUserId"><s:property value="accountSearchID"/></s:param>
                                                                                     </s:url>
                                                                                     <s:a href='%{#csrUrl}' style="color: #0000FF;"><s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control"><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit></s:a>
-                                                                                        </div>
-                                                                                        <div class="col-lg-2" >
-                                                                                            <label class="labelStylereq" style="color:#56a5ec"></label>
+                                                                                </div>
+                                                                                <div class="col-sm-2 pull-right" >
+                                                                                    <label class="labelStylereq" style="color:#56a5ec"></label>
                                                                                     <s:submit type="button" value="" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" onclick="getCsrDetailsTable()"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <br>
                                                                         </div>
-                                                                        <div class="inner-reqdiv-elements">
-                                                                            <div class="col-sm-12" style="align:center">
-                                                                                <span><releaseMessage></releaseMessage></span>
+                                                                        <br>
+                                                                    </div>
+                                                                    <div class="inner-reqdiv-elements">
+                                                                        <div class="col-sm-12" style="align:center">
+                                                                            <span><releaseMessage></releaseMessage></span>
 
                                                                             <s:form>
                                                                                 <table id="csrDetailsTable" class="responsive CSSTable_task" border="5"cell-spacing="2">
@@ -1469,7 +1380,7 @@ Author     : Greg
 
                                                                     <div class="col-sm-12" id="locationsDiv">
                                                                         <!--overlay Starts-->
-                                                                        <div id="addLocation_popup">
+                                                                        <div id="addLocation_popup" style="width:70%">
                                                                             <div id="AddLocationOverlay">
                                                                                 <div style="background-color: #3bb9ff ; padding: 0px">
                                                                                     <table>
@@ -1484,47 +1395,45 @@ Author     : Greg
                                                                                     <div class="row">
                                                                                         <s:hidden id="accountAddress" value=""></s:hidden>
 
-                                                                                            <div class="col-lg-4 required">
-                                                                                                <label class="labelStyleAddCon">Name</label>
-                                                                                            <s:textfield id="locationName" cssClass="form-control" name="locationName" value=""  maxLength="80"/>
+                                                                                        <div class="col-sm-4 required">
+                                                                                            <label class="labelStyleAddCon">Name</label>
+                                                                                            <s:textfield id="locationName" cssClass="form-control" name="locationName" placeholder="Name" value=""  maxLength="80"/>
                                                                                         </div>
-                                                                                        <div class="col-lg-4">
+                                                                                        <div class="col-sm-4">
                                                                                             <label class="labelStyleAddCon">Address1</label>
-                                                                                            <s:textfield id="locationAddress1" cssClass="form-control" name="locationAddress1" value=""  maxLength="100"/>
+                                                                                            <s:textfield id="locationAddress1" cssClass="form-control" name="locationAddress1" placeholder="Address1" value=""  maxLength="100"/>
                                                                                         </div>
-                                                                                        <div class="col-lg-4">
+                                                                                        <div class="col-sm-4">
                                                                                             <label class="labelStyleAddCon">Address2</label>
-                                                                                            <s:textfield id="locationAddress2" cssClass="form-control" name="locationAddress2" value="" maxLength="100" />
+                                                                                            <s:textfield id="locationAddress2" cssClass="form-control" name="locationAddress2" placeholder="Address2" value="" maxLength="100" />
                                                                                         </div>
 
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-4 required">
+
+                                                                                        <div class="col-sm-4 required">
                                                                                             <label class="labelStyleAddCon">Country</label>
                                                                                             <s:select id="locationCountry"  headerKey=""  cssClass="SelectBoxStyles form-control" name="locationCountry" list="countries" value="3"  onchange="getStates($('#locationCountry').val(),'#locationState')"/>
                                                                                         </div>
-                                                                                        <div class="col-lg-4 required">
+                                                                                        <div class="col-sm-4 required">
                                                                                             <label class="labelStyleAddCon">State</label>
                                                                                             <s:select id="locationState"  headerKey="" headerValue="Select State" cssClass="SelectBoxStyles form-control" name="locationState" list="{}"/>
                                                                                         </div>
-                                                                                        <div class="col-lg-4 required">
+                                                                                        <div class="col-sm-4 required">
                                                                                             <label class="labelStyleAddCon">City</label>
-                                                                                            <s:textfield id="locationCity" cssClass="form-control" name="locationCity" value=" "  maxLength="20"/>
+                                                                                            <s:textfield id="locationCity" cssClass="form-control" name="locationCity" placeholder="City" value=" "  maxLength="20"/>
                                                                                         </div>
 
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-4">
+
+                                                                                        <div class="col-sm-4">
                                                                                             <label class="labelStyleAddCon">Phone</label>
-                                                                                            <s:textfield id="locationPhone" cssClass="form-control" name="locationPhone" value=""  maxLength="15"/>
+                                                                                            <s:textfield id="locationPhone" cssClass="form-control" name="locationPhone" placeholder="Phone" value=""  maxLength="15"/>
                                                                                         </div>
-                                                                                        <div class="col-lg-4">
+                                                                                        <div class="col-sm-4">
                                                                                             <label class="labelStyleAddCon">Zip</label>
-                                                                                            <s:textfield id="locationZip" cssClass="form-control" name="locationZip" value=""   maxLength="10"/>
+                                                                                            <s:textfield id="locationZip" cssClass="form-control" name="locationZip" placeholder="Zip" value=""   maxLength="10"/>
                                                                                         </div>
-                                                                                        <div class="col-lg-4">
+                                                                                        <div class="col-sm-4">
                                                                                             <label class="labelStyleAddCon">Fax</label>
-                                                                                            <s:textfield id="locationFax" cssClass="form-control" name="locationFax" value=""  maxLength="15"/>
+                                                                                            <s:textfield id="locationFax" cssClass="form-control" name="locationFax" placeholder="Fax" value=""  maxLength="15"/>
                                                                                         </div>
                                                                                         <!--                                                                                        <div class="col-lg-4" id="statusLoc">
                                                                                                                                                                                     <label class="labelStyleAddCon">Status</label>
@@ -1532,7 +1441,7 @@ Author     : Greg
                                                                                     </div> -->
                                                                                     </div> 
                                                                                     <div class="row">
-                                                                                        <div class="col-lg-4" id="statusLoc">
+                                                                                        <div class="col-sm-4" id="statusLoc">
                                                                                             <label class="labelStyleAddCon">Status</label>
                                                                                             <s:select id="locationStatus" cssClass="SelectBoxStyles form-control" name="locationStatus" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"  />
                                                                                         </div>  </div>
@@ -1560,8 +1469,8 @@ Author     : Greg
                                                                         <div id="locationSearchDiv">
                                                                             <div class="inner-reqdiv-elements">
                                                                                 <div class="row">
-                                                                                    <span id="validationLocationSearch" />
-                                                                                    <div class="col-lg-4">
+                                                                                    <span id="validationLocationSearch"></span>
+                                                                                    <div class="col-sm-4">
                                                                                         <label class="labelStylereq" style="color:#56a5ec;">Name: </label> 
                                                                                         <s:textfield id="locationSearchName"
                                                                                                      cssClass="form-control"
@@ -1570,7 +1479,7 @@ Author     : Greg
                                                                                                      placeholder="Location Name " 
                                                                                                      maxLength="80"/>
                                                                                     </div>
-                                                                                    <div class="col-lg-4">
+                                                                                    <div class="col-sm-4">
 
                                                                                         <s:hidden name="accFlag" id="accFlag" value="%{accFlag}"/>
 
@@ -1583,7 +1492,7 @@ Author     : Greg
                                                                                                      maxLength="20"
                                                                                                      value=""/> 
                                                                                     </div>
-                                                                                    <div class="col-lg-4">
+                                                                                    <div class="col-sm-4">
                                                                                         <label class="labelStylereq" style="color:#56a5ec;">Phone: </label> 
                                                                                         <s:textfield id="locationSearchPhone"
                                                                                                      cssClass="form-control"
@@ -1595,12 +1504,7 @@ Author     : Greg
 
 
 
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="inner-reqdiv-elements">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-4">
+                                                                                    <div class="col-sm-4">
                                                                                         <label class="labelStylereq" style="color:#56a5ec;">Country: </label>
                                                                                         <s:select id="locationSearchCountry"
 
@@ -1612,7 +1516,7 @@ Author     : Greg
                                                                                                   onchange="getStates($('#locationSearchCountry').val(),'#locationSearchState')"
                                                                                                   placeholder="Status" />
                                                                                     </div>
-                                                                                    <div class="col-lg-4">
+                                                                                    <div class="col-sm-4">
                                                                                         <label class="labelStylereq" style="color:#56a5ec;">State: </label>
                                                                                         <s:select id="locationSearchState"
                                                                                                   cssClass="SelectBoxStyles form-control"
@@ -1622,25 +1526,25 @@ Author     : Greg
                                                                                                   headerValue="Select State"
                                                                                                   placeholder="Status" />
                                                                                     </div>
-                                                                                    <div class="col-lg-4">
+                                                                                    <div class="col-sm-4">
 
                                                                                         <label class="labelStylereq" style="color:#56a5ec">Status:</label>
                                                                                         <s:select id="locationSearchStatus" name="locationSearchStatus" cssClass="SelectBoxStyles form-control "  theme="simple" list="#@java.util.LinkedHashMap@{'All':'All','Active':'Active','In-Active':'In-Active'}" />
                                                                                     </div>
-                                                                                    <div class="col-lg-4">
-                                                                                        <div class="row">
+                                                                                    <div class="col-sm-8 pull-right">
 
-                                                                                            <div class="col-lg-6">
-                                                                                                <label class="labelStylereq" style="color:#56a5ec;"></label> 
-                                                                                                <s:submit id="" cssClass="addLocation_popup_open add_searchButton  form-control"  onclick="addLocationOverlay();addorEditLocationOverlay('Add');clearLocationFields()"  value="Add New Location" style="margin:5px"/>
 
-                                                                                            </div>
-                                                                                            <div class="col-lg-6">
-                                                                                                <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                                <s:submit type="button" id=""
-                                                                                                          cssClass="add_searchButton fa fa-search form-control"
-                                                                                                          value="Search" onclick="showLocations()" cssStyle="margin:5px 0px;"/>
-                                                                                            </div>
+                                                                                        <div class="col-sm-6 col-md-5 pull-right">
+                                                                                            <label class="labelStylereq" style="color:#56a5ec;"></label> 
+                                                                                            <s:submit id="" cssClass="addLocation_popup_open add_searchButton  form-control"  onclick="addLocationOverlay();addorEditLocationOverlay('Add');clearLocationFields()"  value="Add New Location" style="margin:5px"/>
+
+                                                                                        </div>
+                                                                                        <div class="col-sm-4  col-md-3 pull-right">
+                                                                                            <label class="labelStylereq" style="color:#56a5ec;"></label>
+                                                                                            <s:submit type="button" id=""
+                                                                                                      cssClass="add_searchButton fa fa-search form-control"
+                                                                                                      value="Search" onclick="showLocations()" cssStyle="margin:5px 0px;"/>
+
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1737,17 +1641,17 @@ Author     : Greg
                                                                                         </div>
                                                                                         <div class="">
                                                                                             <s:submit id="addVendorTier" cssClass="cssbutton" onclick="addVendorTierType();"><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit>
-                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div id="editVendorTier_popup">
-                                                                                    <div id="EditVendorTierOverlay" >
-                                                                                        <div style="background-color: #3bb9ff ; padding: 0px">
-                                                                                            <table>
-                                                                                                <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Edit Vendor Tier Details&nbsp;&nbsp; </font></h4></td>
-                                                                                                </tr>
-                                                                                                <span class=" pull-right"><h5><a href="" class="editVendorTier_popup_close" onclick="editVendorTierOverlayClose();" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                                                                            </div>
+                                                                            <div id="editVendorTier_popup">
+                                                                                <div id="EditVendorTierOverlay" >
+                                                                                    <div style="background-color: #3bb9ff ; padding: 0px">
+                                                                                        <table>
+                                                                                            <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Edit Vendor Tier Details&nbsp;&nbsp; </font></h4></td>
+                                                                                            </tr>
+                                                                                            <span class=" pull-right"><h5><a href="" class="editVendorTier_popup_close" onclick="editVendorTierOverlayClose();" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
                                                                                         </table>
                                                                                     </div>
                                                                                     <div id="VendorTierDiv">
@@ -1765,10 +1669,10 @@ Author     : Greg
                                                                                         </div>
                                                                                         <div class="">
                                                                                             <s:submit type="button" cssStyle="margin:5px 0px;"  id="editVendorTierStatus"  cssClass="add_searchButton form-control" value="" onclick="editVendorTierDetails();" ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
-                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
                                                                             <%--div class="inner-reqdiv-elements">
                                                                                 <label class="vendorTierlabelStyle" style="color:#56a5ec;">Type Of Tier:</label>
                                                                                 <s:select id="vendorTierType" name="vendorTierType" cssClass="reqSelectStyle" headerKey="-1" headerValue="All" theme="simple" list="vendorTierMap" />
@@ -1779,32 +1683,30 @@ Author     : Greg
                                                                             </div--%>
 
                                                                             <div class="row" id="vendorDiv">
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStyle" style="color:#56a5ec">Type of Tier:</label>
                                                                                     <s:select id="vendorTierType" name="vendorTierType" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="vendorTierMap" />
                                                                                 </div>
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-sm-4">
                                                                                     <label class="labelStylereq" style="color:#56a5ec">Status:</label>
                                                                                     <s:select id="TierStatus" name="TierStatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All"  theme="simple" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" />
                                                                                 </div>
-                                                                                <div class="col-lg-4">
-                                                                                    <div class="row">
-
-                                                                                        <div class="col-lg-6">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                                                            <s:form action="addVendorForCustomer" theme="simple">
-                                                                                                <s:hidden name="accountSearchID" id="accountSearchID"/>
-                                                                                                <s:submit type="button" cssClass="add_searchButton form-control" cssStyle="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit>
-                                                                                            </s:form>
-                                                                                        </div>
-                                                                                        <div class="col-lg-6">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                                                            <s:submit type="button"  value="" cssClass="add_searchButton form-control" onclick="searchVendorTier()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                <div class="col-sm-4 pull-right">
+                                                                                    <div class="col-sm-4 col-md-5 pull-right contact_search">
+                                                                                        <label class="labelStylereq" style="color:#56a5ec"></label>
+                                                                                        <s:form action="addVendorForCustomer" theme="simple">
+                                                                                            <s:hidden name="accountSearchID" id="accountSearchID"/>
+                                                                                            <s:submit type="button" cssClass="add_searchButton form-control" cssStyle="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit>
+                                                                                        </s:form>
                                                                                     </div>
+                                                                                    <div class="col-sm-4 col-md-5 pull-right contact_search">
+                                                                                        <label class="labelStylereq" style="color:#56a5ec"></label>
+                                                                                        <s:submit type="button"  value="" cssClass="add_searchButton form-control" onclick="searchVendorTier()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                                    </div>
+
                                                                                 </div>
-                                                                                <br>
+                                                                            </div>
+                                                                            <br>
 
                                                                             <s:form>
                                                                                 <div class="task_content" id="task_div" align="center" style="display: none" >
@@ -1824,7 +1726,7 @@ Author     : Greg
                                                                                             </table>
                                                                                             <br/>
                                                                                             <label class="page_option"> Display <select id="vendor_paginationOption" class="disPlayRecordsCss" onchange="vendor_pagerOption()" style="width: auto">
-                                                                                                    <option>1</option>
+                                                                                                    <option>10</option>
                                                                                                     <option>15</option>
                                                                                                     <option>25</option>
                                                                                                     <option>50</option>
@@ -2053,7 +1955,7 @@ Author     : Greg
 
                                                             <%--close of future_items--%>
                                                         </div>
-                                                        <div id="addAttachment_popup">
+                                                        <div id="addAttachment_popup" style="width:50%">
                                                             <div id="attachmentBox" class="marginTasks">
                                                                 <div class="backgroundcolor">
                                                                     <table>
@@ -2071,7 +1973,7 @@ Author     : Greg
                                                                         <s:hidden name="userSessionId" id="userSessionId" value="%{userSessionId}"/>
                                                                         <div class="inner-reqdiv-elements">
                                                                             <div class="row">
-                                                                                <div class="col-lg-6 required">
+                                                                                <div class="col-sm-6 required">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Title: </label>
                                                                                     <s:textfield cssClass="form-control " id="attachmentTitle"
                                                                                                  name="attachmentTitle"
@@ -2079,7 +1981,7 @@ Author     : Greg
                                                                                                  value=""
                                                                                                  />
                                                                                 </div>     
-                                                                                <div class="col-lg-6">
+                                                                                <div class="col-sm-6">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Document&nbsp;Type: </label>
                                                                                     <s:select id="vendorDocs"
                                                                                               cssClass="SelectBoxStyles form-control"
@@ -2089,14 +1991,13 @@ Author     : Greg
 
                                                                                               placeholder="Status" />
                                                                                 </div>
-                                                                            </div>  
-                                                                            <div class="row">
-                                                                                <div class="col-lg-6 required">
+
+                                                                                <div class="col-sm-6 required">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Upload&nbsp;Form: </label>
                                                                                     <s:file cssClass="form-control" name="file" id="file" onchange="return attachmentFileFormatValidation();" onfocus="return removeFormErrorMsg();"/>
                                                                                     <font style="color: blue"> Upload doc or pdf or docx </font>
                                                                                 </div>
-                                                                                <div class="col-lg-6 required">
+                                                                                <div class="col-sm-6 required">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Validity: </label>
                                                                                     <s:textfield cssClass="form-control dateImage" id="validity"
                                                                                                  type="dropdown" name="validity"
@@ -2106,9 +2007,8 @@ Author     : Greg
                                                                                 </div>
 
 
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-lg-12 ">
+
+                                                                                <div class="col-sm-12">
                                                                                     <label class="labelStylereq" style="color:#56a5ec;">Comments: </label>
                                                                                     <s:textarea cssClass="form-control " id="attachmentComments"
                                                                                                 name="attachmentComments"
@@ -2122,8 +2022,8 @@ Author     : Greg
                                                                         <div class="inner-reqdiv-elements">
                                                                             <div class="row">
 
-                                                                                <div class="col-lg-10"></div>
-                                                                                <div class="col-lg-2"><s:submit cssStyle="margin:5px 0px;" cssClass=" add_searchButton form-control col-sm-offset-10 btn cssbutton" value="" type="button" onclick="return addVendorFormDetails()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit></div>
+
+                                                                                <div class="col-sm-3 pull-right"><s:submit cssStyle="margin:5px 0px;" cssClass=" add_searchButton form-control col-sm-offset-10 btn cssbutton" value="" type="button" onclick="return addVendorFormDetails()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit></div>
                                                                             </div></div></div></s:form>
 
                                                                     <font style="color: #ffffff">..................... ..............................  ..........................................</font>
@@ -2293,248 +2193,255 @@ Author     : Greg
                             </div>
                         </div>
                     </div>
-                    </section>
-                    <script type="text/javascript">
-                        $("#phone1").mask("(999)-999-9999");
-                        $("#fax").mask("(999)-999-9999");
-                        $("#locationPhone").mask("(999)-999-9999");
-                        $("#locationFax").mask("(999)-999-9999");
-                    </script>
-                    <%--------------MIDDLE -----------------------------------------%>
-                    <footer id="footer"><!--Footer-->
-                        <div class="footer-bottom" id="footer_bottom">
-                            <div class="container">
-                                <s:include value="/includes/template/footer.jsp"/>
-                            </div>
-                        </div>
-                    </footer><!--/Footer-->
-                    <s:hidden id="testRealValue"/>
-                    <%--ACCOUNT DETAILS SPECIFIC--%>
-                    <script language="JavaScript" src="<s:url value="/includes/js/account/accountDetailsAJAX.js"/>" type="text/javascript"></script>
-                    <script language="JavaScript" src="<s:url value="/includes/js/account/formVerification.js"/>" type="text/javascript"></script>
-                    <script language="JavaScript" src="<s:url value="/includes/js/account/accountValidation.js"/>" type="text/javascript"></script>
-                    <%----%>
-                    <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
 
-                    <script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>
-                    <script type="text/JavaScript" src="<s:url value="/includes/js/general/selectivity-full.min.js"/>"></script> 
-                    <script>
+
+                </div>
+            </div>
+        </section>
+        <script type="text/javascript">
+            $("#phone1").mask("(999)-999-9999");
+            $("#fax").mask("(999)-999-9999");
+            $("#locationPhone").mask("(999)-999-9999");
+            $("#locationFax").mask("(999)-999-9999");
+        </script>
+        <%--------------MIDDLE -----------------------------------------%>
+        <footer id="footer"><!--Footer-->
+            <div class="footer-bottom" id="footer_bottom">
+                <div class="container">
+                    <s:include value="/includes/template/footer.jsp"/>
+                </div>
+            </div>
+        </footer><!--/Footer-->
+        <s:hidden id="testRealValue"/>
+        <%--ACCOUNT DETAILS SPECIFIC--%>
+        <script language="JavaScript" src="<s:url value="/includes/js/account/accountDetailsAJAX.js"/>" type="text/javascript"></script>
+        <script language="JavaScript" src="<s:url value="/includes/js/account/formVerification.js"/>" type="text/javascript"></script>
+        <script language="JavaScript" src="<s:url value="/includes/js/account/accountValidation.js"/>" type="text/javascript"></script>
+        <%----%>
+        <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
+
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/selectivity-full.min.js"/>"></script> 
+        <script>
             
-                        $('#skillCategoryValue').selectivity({
+            $('#skillCategoryValue').selectivity({
                     
-                            multiple: true,
-                            placeholder: 'Type to search skills'
-                        });
+                multiple: true,
+                placeholder: 'Type to search skills'
+            });
             
             
-                    </script>
+        </script>
 
-                    <script type="text/javascript">
-                        //alert("before flag");
-                        // alert(document.getElementById("conFlag").value);
-                        var flag=document.getElementById("accFlag").value;
+        <script type="text/javascript">
+            //alert("before flag");
+            // alert(document.getElementById("conFlag").value);
+            var flag=document.getElementById("accFlag").value;
 
-                        //alert(flag);
-                        if(flag=="CsrSearch")
-                        {
-                            //alert("in if");
-                            // document.getElementById('details').className="";
-                            document.getElementById("headingmessage").innerHTML='Csr Accounts<i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'csrAssignDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
-                            document.getElementById('csrAccountsRef').className='tab-pane fade in active';
-                            // var obj=document.getElementById('contacts');
-                            //alert(obj);
-                            //alert("before show contacts function");
-                            getCsrDetailsTable();
-                            // alert("after show contacts function");
-
-
-                        }
-                        if(flag=="conSearch")
-                        {
-                            //alert("in if");
-                            // document.getElementById('details').className="";
-                            document.getElementById("headingmessage").innerHTML='Contacts<i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'contactDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                            document.getElementById('contacts').className='tab-pane fade in active';
-                            // var obj=document.getElementById('contacts');
-                            //alert(obj);
-                            //alert("before show contacts function");
-                            showContacts();
-                            // alert("after show contacts function");
+            //alert(flag);
+            if(flag=="CsrSearch")
+            {
+                //alert("in if");
+                // document.getElementById('details').className="";
+                document.getElementById("headingmessage").innerHTML='Csr Accounts<i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'csrAssignDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
+                document.getElementById('csrAccountsRef').className='tab-pane fade in active';
+                // var obj=document.getElementById('contacts');
+                //alert(obj);
+                //alert("before show contacts function");
+                getCsrDetailsTable();
+                // alert("after show contacts function");
 
 
-                        }
-                        if(flag=="accDetails")
-                        {
+            }
+            if(flag=="conSearch")
+            {
+                //alert("in if");
+                // document.getElementById('details').className="";
+                document.getElementById("headingmessage").innerHTML='Contacts<i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'contactDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('contacts').className='tab-pane fade in active';
+                // var obj=document.getElementById('contacts');
+                //alert(obj);
+                //alert("before show contacts function");
+                showContacts();
+                // alert("after show contacts function");
+
+
+            }
+            if(flag=="accDetails")
+            {
                             
-                            var nameFlag=document.getElementById("nameFlag").value;
-                            //alert("in accDetails if");
-                            // document.getElementById('details').className="";
-                            if(nameFlag=='Vendor'){
-                                document.getElementById("headingmessage").innerHTML="Vendor Details";
-                            }else{
-                                document.getElementById("headingmessage").innerHTML="Account Details";
-                            }
-                            //document.getElementById("headingmessage").innerHTML="Account Details";
-                            document.getElementById('details').className='tab-pane fade in active';
-                        }
-                        if(flag=="proSearch")
-                        {
-                            //alert("in accDetails if");
-                            // document.getElementById('details').className="";
-                            document.getElementById("headingmessage").innerHTML="Projects";
-                            document.getElementById('projects').className='tab-pane fade in active';
-                            var orgId=document.getElementById("accountSearchID").value;
-                            javascript: ajaxReplaceDiv('/getAccountProjects','#projects','accountID='+orgId);
-                        }
-                        if(flag=="reqSearch")
-                        {
-                            //alert("in accDetails if");
-                            // document.getElementById('details').className="";
-                            document.getElementById("headingmessage").innerHTML='Account Requirements<i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'requirementDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                            document.getElementById('requirements').className='tab-pane fade in active';
-                            //var orgId=document.getElementById("accountSearchID").value;
-                            getSearchRequirementsList();
-                        }
-                        if(flag=="assignTeamUpdate")
-                        {
+                var nameFlag=document.getElementById("nameFlag").value;
+                //alert("in accDetails if");
+                // document.getElementById('details').className="";
+                if(nameFlag=='Vendor'){
+                    document.getElementById("headingmessage").innerHTML="Vendor Details";
+                }else{
+                    document.getElementById("headingmessage").innerHTML="Account Details";
+                }
+                //document.getElementById("headingmessage").innerHTML="Account Details";
+                document.getElementById('details').className='tab-pane fade in active';
+            }
+            if(flag=="proSearch")
+            {
+                //alert("in accDetails if");
+                // document.getElementById('details').className="";
+                document.getElementById("headingmessage").innerHTML="Projects";
+                document.getElementById('projects').className='tab-pane fade in active';
+                var orgId=document.getElementById("accountSearchID").value;
+                javascript: ajaxReplaceDiv('/getAccountProjects','#projects','accountID='+orgId);
+            }
+            if(flag=="reqSearch")
+            {
+                //alert("in accDetails if");
+                // document.getElementById('details').className="";
+                document.getElementById("headingmessage").innerHTML='Account Requirements<i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'requirementDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('requirements').className='tab-pane fade in active';
+                //var orgId=document.getElementById("accountSearchID").value;
+                getSearchRequirementsList();
+            }
+            if(flag=="assignTeamUpdate")
+            {
 
-                            document.getElementById("headingmessage").innerHTML="Assign Team";
-                            document.getElementById('team').className='tab-pane fade in active';
-                            //var orgId=document.getElementById("accountSearchID").value;
-                            //getRequirementDetails();
-                        }
-                        if(flag=="requirements")
-                        {
-                            //alert("requirements");
-                            document.getElementById("headingmessage").innerHTML='Account Requirements<i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'requirementDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                            document.getElementById('requirements').className='tab-pane fade in active';
-                            //var orgId=document.getElementById("accountSearchID").value;
-                            //getRequirementDetails();
-                        }
-                        if(flag=="venSearch")
-                        {
-                            //alert("venSearch");
-                            document.getElementById("headingmessage").innerHTML="Vendor Tier's";document.getElementById("headingmessage").innerHTML='Vendor Tier'+"'"+'s <i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'vendorDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                            document.getElementById('subvendors').className='tab-pane fade in active';
-                            //var orgId=document.getElementById("accountSearchID").value;
+                document.getElementById("headingmessage").innerHTML="Assign Team";
+                document.getElementById('team').className='tab-pane fade in active';
+                //var orgId=document.getElementById("accountSearchID").value;
+                //getRequirementDetails();
+            }
+            if(flag=="requirements")
+            {
+                //alert("requirements");
+                document.getElementById("headingmessage").innerHTML='Account Requirements<i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'requirementDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('requirements').className='tab-pane fade in active';
+                //var orgId=document.getElementById("accountSearchID").value;
+                //getRequirementDetails();
+            }
+            if(flag=="venSearch")
+            {
+                //alert("venSearch");
+                document.getElementById("headingmessage").innerHTML="Vendor Tier's";document.getElementById("headingmessage").innerHTML='Vendor Tier'+"'"+'s <i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'vendorDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('subvendors').className='tab-pane fade in active';
+                //var orgId=document.getElementById("accountSearchID").value;
                            
-                            getVendors();
-                        }
-                        if(flag=="attachDetails")
-                        {
-                            //alert("venSearch");
-                            document.getElementById("headingmessage").innerHTML="Vendor Forms";document.getElementById("headingmessage").innerHTML='Vendor Forms <i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'vendorDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                            document.getElementById('VendorForms').className='tab-pane fade in active';
-                            //var orgId=document.getElementById("accountSearchID").value;
+                getVendors();
+            }
+            if(flag=="attachDetails")
+            {
+                //alert("venSearch");
+                document.getElementById("headingmessage").innerHTML="Vendor Forms";document.getElementById("headingmessage").innerHTML='Vendor Forms <i  class="fa fa-angle-up" id="updownArrow" onclick="toggleContent(\'vendorDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('VendorForms').className='tab-pane fade in active';
+                //var orgId=document.getElementById("accountSearchID").value;
                            
-                            showAttachments();
-                        }
-                    </script>
-                    <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
-                    <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+                showAttachments();
+            }
+        </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
-                    <script type="text/javascript">
-                        var recordPage=10;
-                        function pagerOption(){
-                            initSessionTimer();
-                            var paginationSize = document.getElementById("paginationOption_cnt").value;
-                            if(isNaN(paginationSize))
-                            // alert(paginationSize);
-                            {
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+                initSessionTimer();
+                var paginationSize = document.getElementById("paginationOption_cnt").value;
+                if(isNaN(paginationSize))
+                // alert(paginationSize);
+                {
                            
-                            }
-                            recordPage=paginationSize;
-                            // alert(recordPage)
-                            $('#contactPageNav').tablePaginate({navigateType:'navigator'},recordPage);
+                }
+                recordPage=paginationSize;
+                // alert(recordPage)
+                $('#contactPageNav').tablePaginate({navigateType:'navigator'},recordPage);
 
-                        };
-                        $('#contactPageNav').tablePaginate({navigateType:'navigator'},recordPage);
-                    </script>
+            };
+            $('#contactPageNav').tablePaginate({navigateType:'navigator'},recordPage);
+        </script>
 
-                    <script type="text/javascript">
-                        var recordPage=10;
-                        function vpagerOption(){
-                            var paginationSize = document.getElementById("vpaginationOption").value;
-                            if(isNaN(paginationSize))
-                            //   alert(paginationSize);
-                            {
+        <script type="text/javascript">
+            var recordPage=10;
+            function vpagerOption(){
+                var paginationSize = document.getElementById("vpaginationOption").value;
+                if(isNaN(paginationSize))
+                //   alert(paginationSize);
+                {
                          
-                            }
-                            recordPage=paginationSize;
+                }
+                recordPage=paginationSize;
                
-                            $('#vendorFormPageNav').tablePaginate({navigateType:'navigator'},recordPage);
+                $('#vendorFormPageNav').tablePaginate({navigateType:'navigator'},recordPage);
 
-                        };
-                    </script>
+            };
+        </script>
 
-                    <script type="text/javascript">
-                        var recordPage=10;
-                        function Loc_pagerOption(){
+        <script type="text/javascript">
+            var recordPage=10;
+            function Loc_pagerOption(){
 
-                            var paginationSize = document.getElementById("loc_paginationOption").value;
-                            if(isNaN(paginationSize))
-                            // alert(paginationSize);
-                                recordPage=paginationSize;
-                            alert(recordPage)
-                            $('#LocationPageNav').tablePaginate({navigateType:'navigator'},recordPage);
+                var paginationSize = document.getElementById("loc_paginationOption").value;
+                if(isNaN(paginationSize))
+                // alert(paginationSize);
+                    recordPage=paginationSize;
+                alert(recordPage)
+                $('#LocationPageNav').tablePaginate({navigateType:'navigator'},recordPage);
 
-                        };
+            };
       
-                    </script>
+        </script>
 
 
-                    <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
-                    <script type="text/javascript">
-                        var recordPage=10;
-                        function accpagerOption(){
+        <script type="text/javascript">
+            var recordPage=10;
+            function accpagerOption(){
 
-                            var paginationSize = document.getElementById("accpaginationOption").value;
-                            if(isNaN(paginationSize))
-                            {
+                var paginationSize = document.getElementById("accpaginationOption").value;
+                if(isNaN(paginationSize))
+                {
                        
-                            }
-                            recordPage=paginationSize;
-                            // alert(recordPage)
-                            $('#reqTableInAccount').tablePaginate({navigateType:'navigator'},recordPage);
+                }
+                recordPage=paginationSize;
+                // alert(recordPage)
+                $('#reqTableInAccount').tablePaginate({navigateType:'navigator'},recordPage);
 
-                        };
-                        $('#reqTableInAccount').tablePaginate({navigateType:'navigator'},recordPage);
-                    </script>
+            };
+            $('#reqTableInAccount').tablePaginate({navigateType:'navigator'},recordPage);
+        </script>
 
-                    <script type="text/javascript">
-                        var recordPage=10;
-                        function vendor_pagerOption(){
-                            var paginationSize = document.getElementById("vendor_paginationOption").value;
-                            if(isNaN(paginationSize))
-                            //   alert(paginationSize);
-                            {
+        <script type="text/javascript">
+            var recordPage=10;
+            function vendor_pagerOption(){
+                var paginationSize = document.getElementById("vendor_paginationOption").value;
+                if(isNaN(paginationSize))
+                //   alert(paginationSize);
+                {
                          
-                            }
-                            recordPage=paginationSize;
+                }
+                recordPage=paginationSize;
                
-                            $('#vendorTierTable').tablePaginate({navigateType:'navigator'},recordPage);
+                $('#vendorTierTable').tablePaginate({navigateType:'navigator'},recordPage);
 
-                        };
-                    </script>
-                    <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+            };
+        </script>
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
-                    <script type="text/javascript">
-                        var recordPage=10;
-                        function csrpagerOption(){
+        <script type="text/javascript">
+            var recordPage=10;
+            function csrpagerOption(){
 
-                            var paginationSize = document.getElementById("csrpaginationOption").value;
-                            if(isNaN(paginationSize))
-                            {
+                var paginationSize = document.getElementById("csrpaginationOption").value;
+                if(isNaN(paginationSize))
+                {
                        
-                            }
-                            recordPage=paginationSize;
-                            // alert(recordPage)
-                            $('#csrDetailsTable').tablePaginate({navigateType:'navigator'},recordPage);
+                }
+                recordPage=paginationSize;
+                // alert(recordPage)
+                $('#csrDetailsTable').tablePaginate({navigateType:'navigator'},recordPage);
 
-                        };
-                        $('#csrDetailsTable').tablePaginate({navigateType:'navigator'},recordPage);
+            };
+            $('#csrDetailsTable').tablePaginate({navigateType:'navigator'},recordPage);
         
-                    </script>
-                    </body>
-                    </html>
+        
+          
+        </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
+    </body>
+</html>

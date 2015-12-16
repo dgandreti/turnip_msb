@@ -34,7 +34,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -44,18 +44,18 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>
 
         <script>
-//            ;function pagerOption(){
-//
-//                paginationSize = document.getElementById("paginationOption").value;
-//                if(isNaN(paginationSize))
-//                    alert(paginationSize);
-//
-//                pager = new Pager('Utility_logger', parseInt(paginationSize));
-//                pager.init();
-//                pager.showPageNav('pager', 'pageNavPosition');
-//                pager.showPage(1);
-//
-//            };
+            //            ;function pagerOption(){
+            //
+            //                paginationSize = document.getElementById("paginationOption").value;
+            //                if(isNaN(paginationSize))
+            //                    alert(paginationSize);
+            //
+            //                pager = new Pager('Utility_logger', parseInt(paginationSize));
+            //                pager.init();
+            //                pager.showPageNav('pager', 'pageNavPosition');
+            //                pager.showPage(1);
+            //
+            //            };
         </script>
 
 
@@ -75,9 +75,9 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-14 ">
+                            <div class="col-sm-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
 
                                     <div class="backgroundcolor" >
@@ -92,7 +92,7 @@
 
                                     </div>
                                     <!-- content start -->
-                                    <div class="col-sm-12">
+                                    <div class ="col-sm-12">
                                         <s:form action="searchLogger" theme="simple" method="POST" enctype="multipart/form-data">
                                             <s:hidden name="sp_res" id="sp_res" value="%{sp_res}"/>
                                             <s:hidden name="sp_exists" id="sp_exists" value="%{sp_exists}"/>
@@ -122,20 +122,23 @@
                                                 <s:else>
 
                                             </s:else> 
-                                            <div class="col-lg-3">
-                                                <label class="labelStyle" id="labelLevelStatusReq">Created Date: </label>
-                                                <s:textfield cssClass="form-control dateImage" name="createdDate" id="created_Date" value="" onkeypress="return enterDateRepository();"></s:textfield>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label class="labelStyle" id="labelLevelStatusReq">Created Date: </label>
+                                                    <s:textfield cssClass="form-control dateImage" name="createdDate" id="created_Date" value="" onkeypress="return enterDateRepository();"></s:textfield>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label class="labelStyle" id="labelLevelStatusReq">Status: </label>
+                                                    <s:select cssClass="form-control SelectBoxStyles " name="status" list="#@java.util.LinkedHashMap@{'DF':'---Select---','Success':'Success','Un-Success':'Un-Success'}"></s:select>
+                                                </div>  
+                                                <div class="col-sm-3 pull-right">
+                                                    <label class="labelStyle" id="labelLevelStatusReq"></label>
+                                                    <s:submit type="button" value="" cssStyle="margin:5px" cssClass="add_searchButton form-control"> <i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                </div> 
                                             </div>
-                                            <div class="col-lg-3">
-                                                <label class="labelStyle" id="labelLevelStatusReq">Status: </label>
-                                                <s:select cssClass="form-control SelectBoxStyles " name="status" list="#@java.util.LinkedHashMap@{'DF':'---Select---','Success':'Success','Un-Success':'Un-Success'}"></s:select>
-                                            </div>  
-                                            <div class="col-lg-3">
-                                                <label class="labelStyle" id="labelLevelStatusReq"></label>
-                                                <s:submit type="button" value="" cssStyle="margin:5px" cssClass="add_searchButton form-control"> <i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                            </div>  
                                         </s:form>
-
+                                    </div>
+                                    <div class="col-sm-12">
                                         <s:form>
                                             <div class="col-sm-13 emp_Content" id="emp_div" align="center" style="display: none" >
                                                 <br>
@@ -143,9 +146,9 @@
                                                     <tbody>
                                                         <tr>
                                                             <th>Logger</th>
-                                                            <th>UploadedFile</th>
-                                                            <th>ResultantFile</th>
-                                                            <th>Created Date</th>
+                                                            <th>Uploaded&nbsp;File</th>
+                                                            <th>Resultant&nbsp;File</th>
+                                                            <th>Created&nbsp;Date</th>
                                                             <th>Status</th>
                                                         </tr>
                                                         <s:if test="utility_logger.size <= 0">
@@ -171,76 +174,78 @@
                                                                 </s:else>
                                                                 <td><s:property value="loggerCreatedDate"></s:property></td>
                                                                 <td><s:property value="utility_status"></s:property></td>
-                                                            </tr>
+                                                                </tr>
                                                         </s:iterator>
                                                     </tbody>
                                                 </table>
                                                 <br/>
                                                 <s:if test="utility_logger.size > 0">
-                                                <label> Display <select id="paginationOption" onchange="pagerOption()" style="width: auto" class="disPlayRecordsCss">
-                                                        <option>10</option>
-                                                        <option>15</option>
-                                                        <option>25</option>
-                                                        <option>50</option>
-                                                    </select>
-                                                      Log's per page
-                                                </label>
+                                                    <label> Display <select id="paginationOption" onchange="pagerOption()" style="width: auto" class="disPlayRecordsCss">
+                                                            <option>10</option>
+                                                            <option>15</option>
+                                                            <option>25</option>
+                                                            <option>50</option>
+                                                        </select>
+                                                        Log's per page
+                                                    </label>
                                                 </s:if>
                                                 <div align="right" class="pull-right" id="pageNavPosition" style="margin-right: 0vw;display: none"></div>
                                             </div>
                                         </s:form>
                                         <%--<s:submit cssClass="css_button" value="show"/><br>--%>
 
+
                                     </div>
                                 </div>
+                                <%--close of future_items--%>
                             </div>
-                            <%--close of future_items--%>
                         </div>
                     </div>
+
                 </div>
 
             </div>
 
-        </div>
 
-
-        <!-- content end -->
-    </section><!--/form-->
-    <footer id="footer"><!--Footer-->
-        <div class="footer-bottom" id="footer_bottom">
-            <div class="container">
-                <s:include value="/includes/template/footer.jsp"/>
+            <!-- content end -->
+        </section><!--/form-->
+        <footer id="footer"><!--Footer-->
+            <div class="footer-bottom" id="footer_bottom">
+                <div class="container">
+                    <s:include value="/includes/template/footer.jsp"/>
+                </div>
             </div>
-        </div>
 
-    </footer>
-    <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
-    <script>
-        setTimeout(function(){              
-            $('#resume').remove();
-        },3000);
-        setTimeout(function(){              
-            $('#resultMessage').remove();
-        },3000);
-    </script>
-    <!--/Footer-->
-  <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
+        </footer>
+        <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
+        <script>
+            setTimeout(function(){              
+                $('#resume').remove();
+            },3000);
+            setTimeout(function(){              
+                $('#resultMessage').remove();
+            },3000);
+        </script>
+        <!--/Footer-->
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
-               var paginationSize = document.getElementById("paginationOption").value;
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+
+                var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
-                   // alert(paginationSize);
-                recordPage=paginationSize;
-              //alert(recordPage)
-                 $('#Utility_logger').tablePaginate({navigateType:'navigator'},recordPage);
+                // alert(paginationSize);
+                    recordPage=paginationSize;
+                //alert(recordPage)
+                $('#Utility_logger').tablePaginate({navigateType:'navigator'},recordPage);
 
             };
-        $('#Utility_logger').tablePaginate({navigateType:'navigator'},recordPage);
-       </script>
-</body>
+            $('#Utility_logger').tablePaginate({navigateType:'navigator'},recordPage);
+        </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
+    </body>
 </html>
 
 

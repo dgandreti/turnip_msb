@@ -11,7 +11,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Dashboard Page</title>
+        <title>ServicesBay :: Questions Search Page</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
@@ -25,7 +25,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <%--        <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -61,7 +61,7 @@
 
 
     </head>
-    <body onload="skillValues(examType.value);">
+    <body >
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -80,7 +80,7 @@
                 </div>
 
                 <div>
-                    <center>    <div id="qname" style="display:none;margin-top: 1vw;">
+                    <center>    <div class="col-sm-12" id="qname" style="display:none;margin-top: 1vw;">
 
                         </div></center>
 
@@ -96,12 +96,13 @@
 
         </div>
 
-        <s:include value="/includes/menu/LeftMenu.jsp"/>
+
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
+                    <s:include value="/includes/menu/LeftMenu.jsp"/>
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-12 ">
                                 <div class="" id="profileBox" style="float: left;">
@@ -110,91 +111,91 @@
                                             <h4 class="panel-title">
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Questions Search</font>
-                                                <i id="updownArrow" onclick="toggleContent('customerDashboardForm')" class="fa fa-angle-up"></i> 
+                                                <i id="updownArrow" onclick="toggleContent('questionssearch')" class="fa fa-angle-up"></i> 
                                             </h4>
                                         </div>
                                     </div>
                                     <span> <br/></span>
                                     <!-- content start -->
                                     <span id="customerDashValidation"> <br/></span>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12" id="questionssearch">
                                         <s:form action="getQuestionsSearchList" method="post" theme="simple">
                                             <s:hidden id="userSessionId" name="userSessionId" value="%{userSessionId}"/>
                                             <s:hidden id="userOrgSessionId" name="userOrgSessionId" value="%{userOrgSessionId}"/>
                                             <s:hidden id="search"  value="search"/>
                                             <div class="inner-reqdiv-elements">
                                                 <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="col-lg-3">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-3">
                                                             <label class="" style="color:#56a5ec;">Question: </label>
                                                             <s:textfield cssClass="form-control" id="question"
                                                                          name="question" placeholder="Enter Question" 
-
+                                                                         tabindex="1"
                                                                          />
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-sm-3">
                                                             <label class="" style="color:#56a5ec;">ExamType: </label>
 
-                                                            <s:select id="examType" cssClass="form-control SelectBoxStyles" name="examType"  list="#@java.util.LinkedHashMap@{'T':'Technical','S':'Psychometric'}" value="%{editQues.examType}" onchange="return skillValues(this.value);"/>
+                                                            <s:select id="examType" cssClass="form-control SelectBoxStyles" name="examType"  list="#@java.util.LinkedHashMap@{'T':'Technical','S':'Psychometric'}" value="%{editQues.examType}" onchange="return skillValues(this.value);" tabindex="2" />
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-sm-3">
                                                             <label class="" style="color:#56a5ec;">Skill: </label>
 
-                                                            <s:select id="skillCategoryValue" cssClass="form-control SelectBoxStyles" name="skillCategoryValue" headerKey="-1" headerValue="All" list="skillValuesMap"/>
+                                                            <s:select id="skillCategoryValue" cssClass="form-control SelectBoxStyles" name="skillCategoryValue" headerKey="-1" headerValue="All" list="skillValuesMap" tabindex="3" />
                                                         </div>
 
-                                                        <div class="col-lg-3">
+                                                        <div class="col-sm-3">
                                                             <label class="" style="color:#56a5ec;">Status: </label>
 
-                                                            <s:select id="status" cssClass="form-control SelectBoxStyles" name="status" headerKey="DF" headerValue="All" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"/>
+                                                            <s:select id="status" cssClass="form-control SelectBoxStyles" name="status" headerKey="DF" headerValue="All" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" tabindex="4" />
                                                         </div>
 
 
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="col-lg-3">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-3">
                                                             <label class="" style="color:#56a5ec;">Level: </label>
 
-                                                            <s:select id="level" cssClass="form-control SelectBoxStyles" name="level" headerKey="DF" headerValue="All" list="#@java.util.LinkedHashMap@{'L':'Low','M':'Medium','H':'High'}"
+                                                            <s:select id="level" cssClass="form-control SelectBoxStyles" name="level" headerKey="DF" headerValue="All" list="#@java.util.LinkedHashMap@{'L':'Low','M':'Medium','H':'High'}" tabindex="5"
                                                                       />
                                                         </div>
 
-                                                        <div class="col-lg-3">
+                                                        <div class="col-sm-3">
                                                             <label class="" style="color:#56a5ec;">Answer&nbsp;Type </label>
 
-                                                            <s:select id="answerType" cssClass="form-control SelectBoxStyles" name="answerType" headerKey="DF" headerValue="All"  list="#@java.util.LinkedHashMap@{'S':'Single','M':'Multiple'}"/>
+                                                            <s:select id="answerType" cssClass="form-control SelectBoxStyles" name="answerType" headerKey="DF" headerValue="All"  list="#@java.util.LinkedHashMap@{'S':'Single','M':'Multiple'}" tabindex="6" />
                                                         </div>
 
 
 
-                                                        <div class="col-lg-2">
+                                                        <div class="col-sm-2">
                                                             <div class="row">
                                                                 <div class="col-lg-11">
                                                                     <label class="" style="color:#56a5ec;"></label> 
 
-                                                                    <s:submit type="button" cssClass="add_searchButton form-control" value="Search" style="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                    <s:submit type="button" cssClass="add_searchButton form-control" value="Search" style="margin:5px 0px;" tabindex="7" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+
+                                                            <div class="col-sm-2">
+                                                                <div class="row">
+                                                                    <div class="col-lg-11">
+                                                                        <label class="" style="color:#56a5ec;"></label> 
+
+                                                                    <s:a href='doAddOrEditExamQues.action'><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" tabindex="8" ><i class="fa fa-search"></i>&nbsp;Add</button></s:a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div> 
+                                                            <div class="col-sm-2">
+                                                                <div class="row">
+                                                                    <div class="col-lg-11">
+                                                                        <label class="" style="color:#56a5ec;"></label> 
 
-                                                        <div class="col-lg-2">
-                                                            <div class="row">
-                                                                <div class="col-lg-11">
-                                                                    <label class="" style="color:#56a5ec;"></label> 
-
-                                                                    <s:a href='doAddOrEditExamQues.action'><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Add</button></s:a>
+                                                                    <s:a href='getSkillDetails.action?uploadFlag=uploadFlag'><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" tabindex="9" >Upload Questions</button></s:a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-2">
-                                                            <div class="row">
-                                                                <div class="col-lg-11">
-                                                                    <label class="" style="color:#56a5ec;"></label> 
-
-                                                                    <s:a href='getSkillDetails.action?uploadFlag=uploadFlag'><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;">Upload Questions</button></s:a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
 
                                                         <%-- <div class="col-lg-2">
                                                             <a href="getSkillDetails.action"  class="cssbutton req_margin"  />UploadQuestions</a>  
@@ -207,12 +208,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
 
 
 
-                                    </s:form>
+
+                                        </s:form>
+                                    </div>
 
                                     <%-- <div class="col-lg-12">
                                         <div class="col-sm-4 "> </div>
@@ -229,23 +231,23 @@
 
                                     <span> <br/></span>
                                         <%--<s:submit cssClass="css_button" value="show"/><br>--%>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12" >
 
                                         <s:form>
                                             <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
-                                            <div class="emp_Content" id="emp_div" align="center" style="display: none">
-                                                <table id="QuestionsList" class="responsive CSSTable_task sortable" border="5">
-                                                    <tbody>
-                                                        <tr>
+                                                <div class="emp_Content" id="emp_div" align="center" style="display: none">
+                                                    <table id="QuestionsList" class="responsive CSSTable_task sortable" border="5">
+                                                        <tbody>
+                                                            <tr>
 
-                                                            <th class="unsortable"><center> Edit </center> </th> 
-                                                    <th class="unsortable"><center> Question</center> </th>
-                                                    <th class="unsortable"><center> Skill</center> </th>
-                                                    <th class="unsortable"><center> Status</center> </th>
-                                                    <th><center>Level</center> </th>
-                                                    <th><center>Answer&nbsp;Type</center> </th>
+                                                                <th class="unsortable"><center> Edit </center> </th> 
+                                                        <th class="unsortable"><center> Question</center> </th>
+                                                        <th class="unsortable"><center> Skill</center> </th>
+                                                        <th class="unsortable"><center> Status</center> </th>
+                                                        <th><center>Level</center> </th>
+                                                        <th><center>Answer&nbsp;Type</center> </th>
 
-                                                    </tr>
+                                                        </tr>
                                                     <s:if test="skills.size == 0">
                                                         <tr>
                                                             <td colspan="6"><font style="color: red;font-size: 15px;text-align: center">No Records to display</font></td>
@@ -277,7 +279,7 @@
                                                             <td><s:property value="status"></s:property></td>
                                                             <td><s:property value="level"></s:property></td>
                                                             <td><s:property value="answerType"></s:property></td>
-                                                        </tr>
+                                                            </tr>
                                                     </s:iterator>
 
                                                     </tbody>
@@ -336,6 +338,7 @@
             </div>
         </footer><!--/Footer-->
 
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
 
@@ -358,6 +361,6 @@
         <script>
             sortables_init();
         </script>
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

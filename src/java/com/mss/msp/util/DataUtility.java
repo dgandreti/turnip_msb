@@ -28,6 +28,7 @@ import static java.lang.Math.pow;
 import static java.lang.Math.abs;
 import static java.lang.Math.min;
 import static org.apache.commons.lang.StringUtils.leftPad;
+import org.apache.commons.net.util.Base64;
 
 public class DataUtility {
 
@@ -208,4 +209,39 @@ public class DataUtility {
     }
     return sb.toString();
   }
+     /**
+     * *************************************
+     *
+     * @encrypted()
+     *
+     * @Author:Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * @Created Date:11/18/2015
+     *
+     * For USe:To encrypt the string entered by user 
+     * 
+     * *************************************
+     */
+    public static String encrypted(String texto) {
+        
+
+        return new String(Base64.encodeBase64(texto.getBytes()));
+    }
+    /**
+     * *************************************
+     *
+     * @decrypted()
+     *
+     * @Author:Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * @Created Date:11/18/2015
+     *
+     * For USe:To Decrypt the string that is encrypted already  
+     * 
+     * *************************************
+     */
+    public static String decrypted(String texto) {
+        //System.out.println("encrypted String is"+texto);
+        return new String(Base64.decodeBase64(texto.getBytes()));
+    }
 }

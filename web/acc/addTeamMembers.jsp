@@ -30,11 +30,12 @@
 <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css"> --%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <%--<script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script> --%>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/fileUploadScript.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.form.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
@@ -64,9 +65,9 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-14 ">
+                            <div class="col-sm-14 ">
                                 <s:if test="%{projectFlag!='addMember'}">
                                     <ul class="nav nav-tabs active_details">
                                         <%--s:if test="project.projectType=='Main Project'"--%>
@@ -119,7 +120,7 @@
 
                                             <div class="" id="profileBox" style="float: left; margin-top: 5px">
 
-                                                <div style="width:fit-content">
+                                                <div >
 
                                                     <form action="addTeamMemberToProject" theme="simple" id="overlayForm" >
 
@@ -136,7 +137,7 @@
 
                                                             </div>
                                                             <div class="inner-addtaskdiv-elements">
-                                                                <div class="col-lg-4 ">
+                                                                <div class="col-sm-4 ">
                                                                     <label  for="projectName">Project&nbsp;&nbsp;Name&nbsp;:&nbsp;</label><label style="color:#FF8A14;"><s:property value="account.projectName"/></label><%--s:textfield  cssClass="form-control" id="projectName"  name="projectName" value="%{account.projectName}" /--%>
                                                                 </div> 
                                                             </div>
@@ -147,38 +148,38 @@
 
                                                                 <%--/s:if--%>
                                                                 <s:if test="%{projectFlag!='addMember'}">
-                                                                    <div class="col-lg-4">
+                                                                    <div class="col-sm-4">
                                                                         <s:hidden value="%{account.resourceType}" />
                                                                         <label  for="teamMemberNamePopup">Resource</label>
-                                                                        <s:select  id="resourceType"  name="resourceType" cssClass="form-control SelectBoxStyles "  theme="simple" list="#@java.util.LinkedHashMap@{'E':'Employee','C':'Consultant'}" disabled="true" value="%{account.resourceType}"/>
+                                                                        <s:select  id="resourceType"  name="resourceType" cssClass="form-control SelectBoxStyles "  theme="simple" list="#@java.util.LinkedHashMap@{'E':'Employee','C':'Consultant'}" disabled="true" value="%{account.resourceType}" tabindex="1"/>
                                                                     </div>  
                                                                 </s:if>
                                                                 <s:else>
-                                                                    <div class="col-lg-4">
+                                                                    <div class="col-sm-4">
                                                                         <label  for="teamMemberNamePopup">Resource</label>
 
-                                                                        <s:select  id="resourceType"  name="resourceType" cssClass="form-control SelectBoxStyles "  theme="simple" list="#@java.util.LinkedHashMap@{'E':'Employee','C':'Consultant'}"/>
+                                                                        <s:select  id="resourceType"  name="resourceType" cssClass="form-control SelectBoxStyles "  theme="simple" list="#@java.util.LinkedHashMap@{'E':'Employee','C':'Consultant'}" tabindex="1" />
                                                                     </div>
                                                                 </s:else>
                                                                 <s:if test="%{projectFlag!='addMember'}">
 
-                                                                    <div class="col-lg-4 ">
+                                                                    <div class="col-sm-4 ">
                                                                         <s:hidden value="%{account.teamMemberIdname}" />
-                                                                        <label  for="teamMemberNamePopup">Name</label><s:textfield  cssClass="form-control" id="teamMemberNamePopup"  name="teamMemberIdname" value="%{account.teamMemberIdname}" readonly="true" maxLength="30"/>
+                                                                        <label  for="teamMemberNamePopup">Name</label><s:textfield  cssClass="form-control" id="teamMemberNamePopup"  name="teamMemberIdname" value="%{account.teamMemberIdname}" readonly="true" maxLength="30" tabindex="2" />
 
                                                                     </div>
                                                                 </s:if>
                                                                 <s:else>
 
-                                                                    <div class="col-lg-4 required">
+                                                                    <div class="col-sm-4 required">
 
-                                                                        <label  for="teamMemberNamePopup">Name</label><s:textfield  cssClass="form-control" id="teamMemberNamePopup"  name="teamMemberIdname" placeholder="Member Name" onkeyup="return getTeamMemberNames();" autocomplete='off' maxLength="30"/>
+                                                                        <label  for="teamMemberNamePopup">Name</label><s:textfield  cssClass="form-control" id="teamMemberNamePopup"  name="teamMemberIdname" placeholder="Member Name" onkeyup="return getTeamMemberNames();" autocomplete='off' maxLength="30" tabindex="2" />
 
                                                                     </div>
                                                                 </s:else>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <s:hidden value="%{account.teamMemberStatus}" />
-                                                                    <label>Status</label><s:select  id="teamMemberStatusPopup"  name="teamMemberStatus" cssClass="form-control SelectBoxStyles "  headerValue="Select status" theme="simple" list="{'Active','In-Active'}" value="%{account.teamMemberStatus}"/>
+                                                                    <label>Status</label><s:select  id="teamMemberStatusPopup"  name="teamMemberStatus" cssClass="form-control SelectBoxStyles "  headerValue="Select status" theme="simple" list="{'Active','In-Active'}" value="%{account.teamMemberStatus}" tabindex="3" />
                                                                 </div>
 
 
@@ -186,9 +187,9 @@
 
                                                             <div class="inner-addtaskdiv-elements">
 
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-4">
                                                                     <s:hidden value="%{account.reportsto1}" />
-                                                                    <label  for="primaryReportingPopup" >Reports To</label><s:select  cssClass="SelectBoxStyles form-control" id="memberPrimaryReporting" name="reportsto1"  headerKey="-1" headerValue="Select Contact"  list="reportsTOMap" value="%{account.reportsto1}"/>
+                                                                    <label  for="primaryReportingPopup" >Reports To</label><s:select  cssClass="SelectBoxStyles form-control" id="memberPrimaryReporting" name="reportsto1"  headerKey="-1" headerValue="Select Contact"  list="reportsTOMap" value="%{account.reportsto1}" tabindex="4" />
                                                                 </div>
 
 
@@ -197,14 +198,14 @@
 
                                                                 <div class="inner-addtaskdiv-elements">
 
-                                                                    <div class="col-lg-4  ">
+                                                                    <div class="col-sm-4  ">
                                                                         <s:hidden value="%{account.consSkills}" />
-                                                                        <label  for="consultantSkills">Con. Skills</label><s:textfield  cssClass="form-control" id="consSkills"  name="consSkills" placeholder="Consultant Skills" onkeyup="" readonly="true"/>
+                                                                        <label  for="consultantSkills">Con. Skills</label><s:textfield  cssClass="form-control" id="consSkills"  name="consSkills" placeholder="Consultant Skills" onkeyup="" readonly="true" tabindex="5" />
 
                                                                     </div>
-                                                                    <div class="col-lg-4  ">
+                                                                    <div class="col-sm-4  ">
                                                                         <s:hidden value="%{account.rateSalary}" />
-                                                                        <label  for="ratePerHr">Rate Salary</label><s:textfield  cssClass="form-control" id="rateSalary"  name="rateSalary" placeholder="Rate Per Hr" onkeyup="" readonly="true"/>
+                                                                        <label  for="ratePerHr">Rate Salary</label><s:textfield  cssClass="form-control" id="rateSalary"  name="rateSalary" placeholder="Rate Per Hr" onkeyup="" readonly="true" tabindex="6" />
 
                                                                     </div>
                                                                 </div>
@@ -212,16 +213,16 @@
                                                             </s:if>    
                                                             <div class="inner-addtaskdiv-elements">
                                                                 <s:if test="%{projectFlag!='addMember'}">
-                                                                    <div  class="col-lg-4 pull-right">
+                                                                    <div  class="col-sm-4 pull-right">
                                                                         <br>  
-                                                                        <s:submit cssClass="cssbutton pull-right" value="Update" theme="simple" onclick="return projectTeamMemberValidation();"/>
+                                                                        <s:submit cssClass="cssbutton pull-right" value="Update" theme="simple" onclick="return projectTeamMemberValidation();" tabindex="7"/>
                                                                     </div>
                                                                 </s:if>
                                                                 <s:else>
-                                                                    <div  class="col-lg-4">
+                                                                    <div  class="col-sm-4">
                                                                         <br>
-                                                                        <s:reset cssClass="cssbutton " value="Clear" theme="simple" onclick="resetOverlayForm();"/>
-                                                                        <s:submit cssClass="cssbutton" value="Save" theme="simple" onclick="return projectTeamMemberValidation();"/>
+                                                                        <s:reset cssClass="cssbutton " value="Clear" theme="simple" onclick="resetOverlayForm();" tabindex="8" />
+                                                                        <s:submit cssClass="cssbutton" value="Save" theme="simple" onclick="return projectTeamMemberValidation();" tabindex="9" />
                                                                     </div>
                                                                 </s:else>
                                                             </div>
@@ -255,15 +256,15 @@
                                                     <s:hidden id="userID" name="userID" value="%{userID}" />
                                                     <s:hidden id="teamMemberFlag" name="teamMemberFlag" value="%{teamMemberFlag}" />
 
-                                                    <div class="col-lg-4 ">
+                                                    <div class="col-sm-4 ">
                                                         <label  for="projectName">Project&nbsp;&nbsp;Name&nbsp;:&nbsp;</label><label style="color:#FF8A14;"><s:property value="account.projectName"/></label><%--s:textfield  cssClass="form-control" id="projectName"  name="projectName" value="%{account.projectName}" /--%>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label  for="projectEmpName">Employee&nbsp;&nbsp;Name&nbsp;:&nbsp;</label><label style="color:#FF8A14;"><s:property value="account.teamMemberIdname"/></label><%--s:textfield  cssClass="form-control" id="projectEmpName"  name="projectEmpName" value="%{account.projectEmpName}" /--%>
                                                     </div>
 
                                                     <br/>
-                                                    <div class="col-lg-8">
+                                                    <div class="col-sm-8">
                                                         <%
                                                             if (request.getAttribute("validateMessage") != null) {
                                                                 if (request.getAttribute("validateMessage").equals("Projects has been successfully updated!")) {
@@ -277,7 +278,7 @@
                                                     </div>
 
                                                     <div class=" ">
-                                                        <div class="col-lg-6 " style="margin-left: 5px ;width: auto " >
+                                                        <div class="col-sm-6 " style="margin-left: 5px ;width: auto " >
                                                             <div style="margin-left: 0px ;overflow-x: auto">
                                                                 <s:optiontransferselect
                                                                     name="subProjectOption"
@@ -342,6 +343,8 @@
         </div>
     </div>
 </footer><!--/Footer-->
+<script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
     <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
 </div>

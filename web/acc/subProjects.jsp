@@ -105,9 +105,9 @@
    
 
     function checkSubProjectName(projName){
-
+    var mainProjectId= $("#parentProjectId").val();
         $.ajax({
-            url:"<%=request.getContextPath()%>/checkProjectNames.action?projectName="+ projName,
+            url:"<%=request.getContextPath()%>/checkProjectNames.action?projectName="+ projName+"&mainProjectId="+mainProjectId+"&projectFlag=subprojects",
             success: function(data){
 
                 if(data == "true"){
@@ -135,7 +135,8 @@
 <script language="JavaScript" src='<s:url value="/includes/js/account/projectOverlays.js"/>'></script>
 <script type="text/JavaScript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
 
-<div>
+
+
     <div id="resourceOverlay_popup" class="overlay">
         <div id="resourceOverlay" >
 
@@ -177,6 +178,7 @@
                 <form action="addSubProject" theme="simple" id="overlayForm" >
                     <s:hidden  id="project_statusPopup"  name="project_status" value="Active" />
                     <s:hidden id="projType" value="SP"/>
+                    <s:hidden id="parentProjectId" value="%{projectID}"/>
                     <span id="addProjectValidation"></span>
                     <!--<div><label>Project Name:</label> 
 
@@ -206,7 +208,7 @@
                             <div class="col-sm-4  required">
                                 <label>Target hours</label>
                                 <div class="form-group input-group">
-                                    <s:textfield cssClass="form-control "  id="projectTargetHrs" value="" name="projectTargetHrs"  onkeypress="return noOfHoursValidate(event, this.id)" onblur="calculateTargetHrs()" />
+                                    <s:textfield cssClass="form-control "  id="projectTargetHrs" placeholder="Target hours" value="" name="projectTargetHrs"  onkeypress="return noOfHoursValidate(event, this.id)" onblur="calculateTargetHrs()" />
                                     <span class="input-group-addon" style="padding-top: 5px">Hrs</span>
                                 </div>
                             </div>
@@ -224,7 +226,7 @@
                             </div>
                         </div>
                         <div class="inner-addtaskdiv-elements">
-                            <div class="col-lg-10">
+                            <div class="col-sm-12">
                                 <label class="labelStyle">Skill Set</label>
                             </div>
                             <div class="inner-addtaskdiv-elements">
@@ -285,14 +287,14 @@
 
     </div>                    
     <section id="generalForm" style="margin-bottom: 1px"><!--form-->
-        <div class=" ">
-            <div class=" ">
+       
+          
 
                 <!-- content start -->
 
-                <div class="col-md-13 col-md-offset-0" style="background-color:#fff">
-                    <div class="features_items" >
-                        <div class="col-lg-11 " >
+               
+                <div class="features_items col-sm-12" style="background-color:#fff">
+                        
                             <div class="" id="" style="margin-top: 5px; width: 100%">
                                 <%-- <div class=""  style="float: left; margin-top:-12px; margin-bottom: 20px">  Account&nbsp;Name:                                          
                                      <s:url var="myUrl" action="/acc/viewAccount.action">
@@ -317,11 +319,11 @@
 
                                 <label class="labelStyle" style="color: green; width: auto;margin-left: 20px" id="projectAddResult"><s:property value="projectsActionResponse"/></label>
 
-                                <div class="col-sm-13" id="profileBox" style="margin-top: -20px">
+                                <div class="col-sm-12" id="profileBox" style="margin-top: -20px">
                                     <span><searchSubProject></searchSubProject></span>
-                                    <div >
+                                    <div class="row">
                                         <div id="subProjectsForm">
-                                            <div class="inner-addtaskdiv-elements">
+                                            
                                                 <div class="col-sm-3">
                                                     <label >Skill Set: </label>
                                                     <s:textfield cssClass="form-control" id="projectReqSkillSet" type="text"  placeholder="Skill Set" maxLength="100"/>
@@ -340,17 +342,19 @@
                                                     <s:textfield cssClass="form-control" id="projectTargetDateSearch" type="text" placeholder="Project Target Date" cssStyle="height: 25px;background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;" onkeypress=" return subProjectDaterepository();" autocomplete="off"/>
                                                 </div>
 
-                                            </div>
-                                            <br>
-                                            <div class="col-sm-12 col-md-offset-8" style="margin-bottom: 5px">
-                                                <div class="col-lg-2 ">
+                                        
+                                           
+                                            <div class="col-sm-12" style="margin-bottom: 5px">
+                                                <div class="col-sm-2 pull-right contact_search">
                                                     <s:submit type="button" cssClass="add_searchButton form-control" value="" onclick="searchSubProjects()" align="right" cssStyle="margin:5px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                     </div>
-                                                    <div class="col-lg-2 ">
+                                                    <div class="col-sm-2 pull-right contact_search">
                                                         <a href="" class="addSubProject_popup_open" ><button class="add_searchButton form-control" style="margin:5px" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
                                                     </div>
-                                                </div> </div>
-                                            <div>
+                                                </div> 
+                                        </div>
+                                                        </div>
+                                                    <div class="row">
                                             <s:form>
                                                 <div style="width: fit-content">
                                                     <s:hidden name="remainingTargetHrs" id="remainingTargetHrs" value=""/>
@@ -450,20 +454,20 @@
                                             </s:form>
 
                                         </div>
-                                    </div>
+                                
                                 </div>
 
                             </div>
-                        </div>
+                        
                     </div>
-                </div>
+                
 
                 <%--close of future_items--%>
-            </div>
-        </div>
+        
+       
 
     </section>
-</div>
+
 
 <script>
     window.setTimeout("pagerOption();", 1000);
@@ -490,3 +494,5 @@
     $('#projectResults').tablePaginate({navigateType:'navigator'},recordPage);
         
 </script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>

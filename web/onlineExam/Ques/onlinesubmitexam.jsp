@@ -173,7 +173,7 @@ window.onhashchange=function(){window.location.hash="no-back-button";}
             <s:else> <br><b style="color: #56a5ec;margin-right: 10px">Total</b>:<b style="color: green;margin-right: 10px"><s:property value="%{totalResult}"/></b></s:else>--%>
 
         </div>                   
-                                  
+              <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>                    
                          
         <!-- Wrapper -->
     </body>

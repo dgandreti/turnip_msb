@@ -92,9 +92,7 @@
                                
                         </div><!--/login form-->
                     </div>
-                    <div class="col-sm-1">
-                      
-                    </div>
+                  
                     </div>
                 </div>
                     </div>
@@ -115,5 +113,6 @@
             </div>
 
         </footer><!--/Footer-->
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
    </body>
 </html>

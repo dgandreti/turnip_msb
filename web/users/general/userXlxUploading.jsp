@@ -17,7 +17,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Miracle Service Bay :: Employee Search Page</title>
+        <title>Miracle Service Bay :: User Uploading Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -33,7 +33,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -59,55 +59,48 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-14 ">
+                            <div class="col-sm-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
 
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
 
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Users Loading</font>
-                                                <%--      <span class="pull-right"><s:a href="javascript:history.back()"><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
-
-                                              <s:url var="myUrl" action="../../acc/accountadd.action">
-                                                </s:url>
-                                                <span> <s:a href='%{#myUrl}' cssClass="pull-right"><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
-                                            --%>
+                                              
                                             </h4>
                                         </div>
                                     </div>
                                     <!-- content start -->
                                     <div class="col-sm-12">
-                                        <div class="col-lg-3"></div>
-                                        <div class="col-lg-6">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-sm-6">
                                             <s:form action="userXlsFileUpload" id="myForm" theme="simple" method="POST" enctype="multipart/form-data" >
                                                 <s:hidden name="fileExist" value="%{fileExist}"/>
                                                 <s:hidden name="contactAccountType" value="%{contactAccountType}"/>
                                                 <s:hidden name="accountSearchOrgId" value="%{accountSearchOrgId}"/>
                                                 <span><fileuplaoderror></fileuplaoderror></span>
-                                                <div class="col-lg-12">
+                                                <div class="col-sm-12">
                                                     <s:if test="fileExist!=''&&fileExist!=null">
                                                         <span id="resume"><font style='color:red;font-size:15px;'>File Name Already Exists!!</font></span>
                                                         </s:if> 
                                                 </div>
 
-                                                <div class="col-lg-6"><br>
-                                                    <s:file name="xlsfile" cssClass="" label="Xls File" id="file"></s:file>
+                                                <div class="col-sm-6"><br>
+                                                    <s:file name="xlsfile" cssClass="" label="Xls File" id="file" tabindex="1"></s:file>
                                                     <span style="color:#4E4E4E;font-size: 10px">Upload XLS file.</span>
-                                                </div><div class="col-lg-3">
+                                                </div><div class="col-sm-3">
                                                     <s:hidden name="accountType" id="accountType" value="%{accountType}"/>
-                                                      <sx:submit value="Upload" cssClass="cssbutton_emps" name="submit" onclick="return checkExtention()" />
+                                                    <sx:submit value="Upload" cssClass="cssbutton_emps" name="submit" onclick="return checkExtention()" tabindex="2"/>
                                                 </div>
 
                                             </s:form>       
                                         </div>
                                         <br>
-                                        <%--<s:submit cssClass="css_button" value="show"/><br>--%>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-sm-12">
                                         <ol>
                                             <b><font color="">File Attributes :</font></b>
                                             <li>File Name should be Less Than 30 Characters.</li>
@@ -150,7 +143,8 @@
 
     </footer>
     <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
-
+    <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+    <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     <!--/Footer-->
 
 </body>

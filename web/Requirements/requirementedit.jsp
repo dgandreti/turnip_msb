@@ -19,7 +19,7 @@ Author     : miracle
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Requirements Edit Page</title>
+        <title>ServicesBay :: Requirements Details Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -36,7 +36,7 @@ Author     : miracle
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -58,6 +58,7 @@ Author     : miracle
             .numeric_field{
                 width: 30%!important ;
                 padding: 0 5px !important;
+                float: left;
             }
 
             .select_duration{
@@ -65,7 +66,7 @@ Author     : miracle
             }
         </style>
         <script type="text/javascript">
-            ; function sortables_init() {
+            function sortables_init() {
                 // Find all tables with class sortable and make them sortable
                 ; if (!document.getElementsByTagName) return;
                 tbls = document.getElementById("vendorAssociationResults");
@@ -78,75 +79,32 @@ Author     : miracle
                     }
                 }
             };
-            
-            
             function showHideDuration(){
-                // alert("hii");
+                //alert("hii");
                 var RequirementTaxTerm=document.getElementById('RequirementTaxTerm').value;
-               
-                if(RequirementTaxTerm=='CO'){
+                //alert(RequirementTaxTerm)
+                if(RequirementTaxTerm=='CO')
+                {
                 
-                    document.getElementById('duration').style.display = "block";
-                    
+                    document.getElementById("duration").style.display = "block";
+                    //alert("hii");
                     // document.getElementById('durationdesr').style.display = "block";
-                    document.getElementById('billingtype1').style.display = "block";
-                }else{
+                    document.getElementById("billingtype1").style.display = "block";
+                    document.getElementById("reqCustCategoryV").style.display = "none";
+                    document.getElementById("reqCustCategory").style.display = "block";
+                }
+                else{
                     document.getElementById('duration').style.display = "none";
-                    //document.getElementById('durationdesr').style.display = "none";
+                    // document.getElementById('durationdesr').style.display = "none";
                     document.getElementById('billingtype1').style.display = "none";
-
+                    document.getElementById('reqCustCategory').style.display = "none";
+                    document.getElementById('reqCustCategoryV').style.display = "block";
                     
                 }
             }
-            
         </script>
-
-        <script>
-            //            var pager;   //this pagination for Vendor Search and Consultant Search
-            //            var vpager;
-            //            //$(document).ready(function(){
-            //            function paginationVC(){
-            //                var paginationSize = 10; //parseInt(document.getElementById("cpaginationOption").value);
-            //                pager = new Pager('consultantListTable', paginationSize);
-            //                vpager = new Pager('vendorAssociationResults', paginationSize);
-            //                pager.init();
-            //                vpager.init();
-            //                pager.showPageNav('pager', 'taskpageNavPosition');
-            //                vpager.showPageNav('pager', 'pageNavPosition');
-            //                //document.getElementById("cpaginationOption").value=10;
-            //                // document.getElementById("vpaginationOption").value=10;
-            //                pager.showPage(1);
-            //                vpager.showPage(1);
-            //            };
-            //            function cpagerOption(){
-            //
-            //                paginationSize = document.getElementById("cpaginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('consultantListTable', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'taskpageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
-            //            function vpagerOption(){
-            //
-            //                paginationSize = document.getElementById("vpaginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                vpager = new Pager('vendorAssociationResults', parseInt(paginationSize));
-            //                vpager.init();
-            //                vpager.showPageNav('vpager', 'pageNavPosition');
-            //                vpager.showPage(1);
-            //
-            //            };
-        </script>
-
     </head>
-
-    <body style="overflow-x: hidden" onload="showHideDuration();doOnloadEditRequirement(); paginationVC();">
+    <body style="overflow-x: hidden" onload="doOnloadEditRequirement();showHideDuration();">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -163,7 +121,7 @@ Author     : miracle
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-14 ">
 
@@ -235,7 +193,7 @@ Author     : miracle
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs">
                                             <s:if test="vendor!='yes'">
-                                                <li class=" active_details" id="detailsLi" ><a aria-expanded="false" href="#details" data-toggle="tab">Requirement Edit</a>
+                                                <li class=" active_details" id="detailsLi" ><a aria-expanded="false" href="#details" data-toggle="tab">Requirement Details</a>
                                                 </li>
                                             </s:if>
                                             <s:if test="vendor=='yes'">
@@ -247,115 +205,75 @@ Author     : miracle
                                                 </li>
                                             </s:if>
                                             <li class="active_details"  id="consultantListLi"><a aria-expanded="false" href="#consultantList" data-toggle="tab" onclick="return getConsultantList()"   >Submitted List</a></li>
-                                            <%--
-                                                                                        <s:if test="accountFlag=='Account'">
-                                                                                            <li class="active_details"><a aria-expanded="false" href="#vendorAssociation" data-toggle="tab" onclick="return getVendorAssociationDetails()"   >Vendor Association</a>
-                                                                                            </li>
-                                                                                            <li class="active_details"><a aria-expanded="false" href="#consultantList" data-toggle="tab" onclick="return getConsultantList()"   >Consultant List</a>
-                                                                                            </li>
-                                                                                        </s:if>
-                                                                                        <s:elseif test="accountFlag=='MyRequirements'">
 
-                                                <li class="active_details"><a aria-expanded="false" href="#consultantList" data-toggle="tab" onclick="return getConsultantList()"   >Consultant List</a>
-                                                </li>
-                                            </s:elseif>
-                                            <s:elseif test="accountFlag=='OnlyMyRequirements'">
-                                                <li class="active_details"><a aria-expanded="false" href="#consultantList" data-toggle="tab" onclick="return getConsultantList()"   >Consultant List</a>
-                                                </li>
-                                            </s:elseif>
-                                            <s:elseif test="accountFlag=='VendorReq'">
-                                                <li class="active_details"><a aria-expanded="false" href="#consultantList" data-toggle="tab" onclick="return getConsultantList()"   >Consultant List</a>
-                                                </li>
-                                            </s:elseif>
-                                            <s:else>
-                                                <li class="active_details"><a aria-expanded="false" href="#consultantList" data-toggle="tab" onclick="return getConsultantList()"   >Consultant List</a>
-                                                </li>
-                                            </s:else>
+                                            <s:if test="accountFlag=='Account'">
+                                                <s:url var="myUrl" action="acc/viewAccount.action">
+                                                    <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
+                                                    <s:param name="accFlag"><%=flag%></s:param>
+                                                </s:url>
+                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span>
+                                                </s:if>
+                                                <s:elseif test="accountFlag=='MyRequirements' && customerFlag=='customer'">
 
-                                            --%>
+                                                <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
+                                                    <s:param name="accountFlag">MyRequirements</s:param>
+                                                    <s:param name="orgid"><%=orgId%></s:param>
+                                                    <s:param name="customerFlag">customer</s:param>
+                                                </s:url>
+                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span> 
+                                                </s:elseif>
+                                                <s:elseif test="accountFlag=='MyRequirements'">
+
+                                                <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
+                                                    <s:param name="accountFlag">MyRequirements</s:param>
+                                                    <s:param name="vendor">yes</s:param>
+                                                    <s:param name="orgid"><%=orgId%></s:param>
+                                                </s:url>
+                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span> 
+                                                </s:elseif>
+                                                <s:elseif test="accountFlag=='OnlyMyRequirements'">
+
+                                                <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
+                                                    <s:param name="accountFlag">OnlyMyRequirements</s:param>
+                                                    <s:param name="vendor">yes</s:param>
+                                                    <s:param name="orgid"><%=orgId%></s:param>
+
+                                                </s:url>
+                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span> 
+                                                </s:elseif>
+                                                <s:elseif test="accountFlag=='csr'">
+
+                                                <s:url var="myUrl" action="acc/viewAccount.action">                                                        
+                                                    <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param>
+                                                    <s:param name="accFlag"><%=flag%></s:param>
+
+                                                </s:url>
+                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span> 
+                                                </s:elseif>
+                                                <s:elseif test="#session.primaryrole == 13">
+                                                    <s:url var="myUrl" action="recruitment/consultant/getAllRequirementList.action">
+                                                        <s:param name="orgid"><%=orgId%></s:param>    
+                                                    </s:url>
+                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span> 
+                                                </s:elseif>
+                                                <s:else>
+                                                    <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
+                                                        <s:param name="accountFlag">MyRequirements</s:param>
+                                                    <s:param name="orgid"><%=orgId%></s:param>
+                                                    <s:param name="customerFlag">customer</s:param>
+                                                </s:url>
+                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span> 
+                                                </s:else>
 
                                         </ul>
+
                                         <div class="tab-content">
                                             <div class="tab-pane fade in active" id="details">
-                                                <div class="" id="selectivityProfileBox" style="float: left; margin-top: 5px">
+                                                <div class="" id="selectivityProfileBox" style="float: left; margin-top: 5px;background-color: white">
 
-                                                    <div class="backgroundcolor" >
-                                                        <div class="panel-heading">
-                                                            <h4 class="panel-title">
-                                                                <s:if test="vendor!='yes'">
-                                                                    <font color="#ffffff"> Edit Requirement </font>
-                                                                </s:if>
-                                                                <s:if test="vendor=='yes'">
-                                                                    <font color="#ffffff">Requirement Details</font>
-                                                                </s:if>
 
-                                                                <s:if test="accountFlag=='Account'">
-                                                                    <s:url var="myUrl" action="acc/viewAccount.action">
-                                                                        <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
-                                                                        <s:param name="accFlag"><%=flag%></s:param>
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
-                                                                    </s:if>
-                                                                    <s:elseif test="accountFlag=='MyRequirements' && customerFlag=='customer'">
-                                                                        <%--  <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                                                        --%>
-                                                                        <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                            <s:param name="accountFlag">MyRequirements</s:param>
-                                                                        <s:param name="orgid"><%=orgId%></s:param>
-                                                                        <s:param name="customerFlag">customer</s:param>
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-                                                                    <s:elseif test="accountFlag=='MyRequirements'">
-                                                                        <%--  <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                                                        --%>
-                                                                        <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                            <s:param name="accountFlag">MyRequirements</s:param>
-                                                                        <s:param name="vendor">yes</s:param>
-                                                                        <s:param name="orgid"><%=orgId%></s:param>
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-                                                                    <s:elseif test="accountFlag=='OnlyMyRequirements'">
-                                                                        <%--  <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                                                        --%>
-                                                                        <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                            <s:param name="accountFlag">OnlyMyRequirements</s:param>
-                                                                        <s:param name="vendor">yes</s:param>
-                                                                        <s:param name="orgid"><%=orgId%></s:param>
-
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-                                                                    <s:elseif test="accountFlag=='csr'">
-
-                                                                    <s:url var="myUrl" action="acc/viewAccount.action">                                                        
-                                                                        <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param>
-                                                                        <s:param name="accFlag"><%=flag%></s:param>
-
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-                                                                    <s:elseif test="#session.primaryrole == 13">
-                                                                        <s:url var="myUrl" action="recruitment/consultant/getAllRequirementList.action">
-                                                                            <s:param name="orgid"><%=orgId%></s:param>    
-                                                                        </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-                                                                    <s:else>
-                                                                        <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                            <s:param name="accountFlag">MyRequirements</s:param>
-                                                                        <s:param name="orgid"><%=orgId%></s:param>
-                                                                        <s:param name="customerFlag">customer</s:param>
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:else>
-                                                            </h4>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-lg-14">
-                                                        <div class="panel-body">
+                                                    <div class="col-sm-12">
+                                                     
                                                             <s:form action="#" method="post" theme="simple" >
                                                                 <s:hidden name="RequirementId" id="RequirementId" value="%{requirementVTO.RequirementId}"/>
                                                                 <div class="col-md-12"> 
@@ -364,367 +282,194 @@ Author     : miracle
 
                                                                 <span cellspacing="30">
 
-                                                                    <div class="col-lg-3 required">
-
-                                                                        <table class="CSSTable_task">
-                                                                            <s:if test="#session.typeOfUsr=='VC'">
-                                                                                <%--<label class="labelStyle" id="labelLevelStatusReq"> Approver :</label>
-                                                                                <s:select name="RequirementContact1" id="RequirementContact1" value="%{requirementVTO.RequirementContact1}" list="EmployeeNames" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" disabled="true"/>--%>
-                                                                                <label class="labelStyle" id="labelLevelStatusReq"> Title </label> <s:textfield cssClass="form-control " id="RequirementName" type="text" value="%{requirementVTO.RequirementName}" name="RequirementName" placeholder="" onfocus="removeErrorMessages()" readonly="true"/>
-
-                                                                                <s:if test="requirementVTO.RequirementTaxTerm=='PE'">
-                                                                                    <div id="duration" style="display: none;">
-                                                                                        <label class="labelStylereq" style="color:#56a5ec;"> Duration :</label>
-
-                                                                                        <div class="form-group input-group">
-                                                                                            <s:textfield cssClass="form-control textMessageBox numeric_field" id="RequirementDuration" type="text" value="%{requirementVTO.RequirementDuration}"  placeholder="" onfocus="removeErrorMessages()" readonly="true"/>
-                                                                                            <s:select  id="requirementDurationDescriptor" value="%{requirementVTO.requirementDurationDescriptor}" list="#@java.util.LinkedHashMap@{'Hours':'Hours','Weeks':'Weeks','Months':'Months'}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control select_duration " disabled="true " onfocus="removeErrorMessages()" style=""/> 
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <%-- <label class="labelStyle" id="labelLevelStatusReq">  Duration  </label> <s:textfield cssClass="form-control" id="RequirementDuration" type="text" value="%{requirementVTO.RequirementDuration}" name="RequirementDuration" placeholder="" onfocus="removeErrorMessages()" readonly="true"/>--%>
-                                                                                </s:if>
-                                                                                <s:else>
-                                                                                    <div id="duration" style="display: none;">
-                                                                                        <label class="labelStylereq" style="color:#56a5ec;"> Duration :</label>
-
-                                                                                        <div class="form-group input-group">
-                                                                                            <s:textfield cssClass="form-control textMessageBox numeric_field" id="RequirementDuration" type="text" value="%{requirementVTO.RequirementDuration}"  placeholder="" onfocus="removeErrorMessages()" maxLength="10" onkeypress="return durationValidation(event)" readonly="true"/>
-                                                                                            <s:select  id="requirementDurationDescriptor" value="%{requirementVTO.requirementDurationDescriptor}" list="#@java.util.LinkedHashMap@{'Hours':'Hours','Weeks':'Weeks','Months':'Months'}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control select_duration " disabled="true " onfocus="removeErrorMessages()" style=""/> 
-                                                                                        </div> 
-                                                                                    </div>
-                                                                                    <%--  <label class="labelStyle" id="labelLevelStatusReq">  Duration  </label> <s:textfield cssClass="form-control" id="RequirementDuration" type="text" value="%{requirementVTO.RequirementDuration}" name="RequirementDuration" placeholder="" onfocus="removeErrorMessages()" onkeypress="return durationValidation(event)" readonly="true"/>--%>
-                                                                                </s:else>    
-
-                                                                                <label class="labelStyle" id="labelLevelStatusReq">Billing Contact </label> <s:select  id="billingContact" name="buildingContact" value="%{requirementVTO.billingContact}" list="EmployeeNames" headerKey="DF" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" disabled="true"/></td>
-                                                                            </s:if> 
-                                                                            <s:else> 
-                                                                                <label class="labelStyle" id="labelLevelStatusReq"> Title </label> <s:textfield cssClass="form-control " id="RequirementName" type="text" value="%{requirementVTO.RequirementName}" name="RequirementName" placeholder="" onfocus="removeErrorMessages()" readonly="true" maxLength="50"/>
-                                                                                <div id="duration" style="display: none;">
-                                                                                    <label class="labelStylereq" style="color:#56a5ec;"> Duration :</label>
-
-                                                                                    <div class="form-group input-group">
-                                                                                        <s:textfield cssClass="form-control textMessageBox numeric_field" id="RequirementDuration" type="text" value="%{requirementVTO.RequirementDuration}"  placeholder="" onfocus="removeErrorMessages()" maxLength="10" onkeypress="return durationValidation(event)"/>
-                                                                                        <s:select  id="requirementDurationDescriptor" value="%{requirementVTO.requirementDurationDescriptor}" list="#@java.util.LinkedHashMap@{'Hours':'Hours','Weeks':'Weeks','Months':'Months'}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control select_duration "  onfocus="removeErrorMessages()" style=""/> 
-                                                                                    </div>
-                                                                                </div>
-                                                                                <%--<label class="labelStyle" id="labelLevelStatusReq">  Duration  </label> <s:textfield cssClass="form-control" id="RequirementDuration" type="text" value="%{requirementVTO.RequirementDuration}" name="RequirementDuration" placeholder="" onfocus="removeErrorMessages()" maxLength="10" onkeypress="return durationValidation(event)"/>--%>
-                                                                                <label class="labelStyle" id="labelLevelStatusReq"> Approver </label> 
-                                                                                <s:select name="RequirementContact1" id="RequirementContact1" value="%{requirementVTO.RequirementContact1}" list="EmployeeNames" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/>
-                                                                                <label class="labelStyle" id="labelLevelStatusReq"> Min Rate </label>
-                                                                                <div class="form-group input-group">
-                                                                                    <span class="input-group-addon "style="padding-top: 5px" >$</span>
-
-                                                                                    <s:textfield cssClass="form-control " id="RequirementTargetRate" type="text" value="%{requirementVTO.RequirementTargetRate}" name="RequirementTargetRate" placeholder="" onfocus="removeErrorMessages()" onkeypress="return RequirementMinRate(event)" maxLength="10"/>
-                                                                                    <span class="input-group-addon" style="padding-top: 5px">/Hr</span>
-                                                                                </div>
-
-                                                                            </s:else>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="col-lg-3 required" >
-                                                                        <s:hidden id="userType" value="%{#session.typeOfUsr}" />
-                                                                        <table class="CSSTable_task">
-                                                                            <s:if test="#session.typeOfUsr=='VC'">
-                                                                                <%--<label class="labelStyle" id="labelLevelStatusReq"> Requisitioner :</label>
-                                                                                <s:select name="RequirementContact2" id="RequirementContact2" value="%{requirementVTO.RequirementContact2}" list="EmployeeNames" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" disabled="true"/>--%>
-                                                                                <label class="labelStyle" id="labelLevelStatusReq">Start Date</label> <s:textfield cssClass="form-control " name="RequirementFrom" id="RequirementFrom" placeholder="StartDate" value="%{requirementVTO.RequirementFrom}" onkeypress="return editRequirementDateValidation()" cssStyle="z-index: 10000004;" onfocus="removeErrorMessages()" disabled="true"/>
-                                                                                <%--<label class="labelStyle" id="labelLevelStatusReq">Hr/week/month:</label> <s:select  id="requirementDurationDescriptor" value="%{requirementVTO.requirementDurationDescriptor}" list="#@java.util.LinkedHashMap@{'Hours':'Hours','Weeks':'Weeks','Months':'Months'}"   headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" disabled="true" onfocus="removeErrorMessages()"/> --%>
-                                                                                <div id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq">Billing&nbsp;Type:</label> <s:select  id="billingtype" list="#@java.util.LinkedHashMap@{'After Work':'After Work','On Work':'On Work'}"  value="%{requirementVTO.billingtype}" cssClass="SelectBoxStyles form-control" />      
-                                                                                </div>
-                                                                                <label class="labelStyle" id="labelLevelStatusReq"> Min Rate </label>
-                                                                                <div class="form-group input-group">
-                                                                                    <span class="input-group-addon "style="padding-top: 5px" >$</span>
-
-                                                                                    <s:textfield cssClass="form-control " id="RequirementTargetRate" type="text" value="%{requirementVTO.RequirementTargetRate}" name="RequirementTargetRate" placeholder="" onfocus="removeErrorMessages()" onkeypress="return RequirementMinRate(event)" disabled="true"/>
-                                                                                    <span class="input-group-addon" style="padding-top: 5px">/Hr</span>
-                                                                                </div>
-                                                                            </s:if> 
-                                                                            <s:else> 
-                                                                                <label class="labelStyle" id="labelLevelStatusReq">Start Date</label> <s:textfield cssClass="form-control " name="RequirementFrom" id="RequirementFrom" placeholder="StartDate" value="%{requirementVTO.RequirementFrom}" onkeypress="return editRequirementDateValidation()" cssStyle="z-index: 10000004;" onfocus="removeErrorMessages()" />
-                                                                                <s:if test="requirementVTO.RequirementTaxTerm=='PE'">
-                                                                                    <div id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq">Billing&nbsp;Type:</label> <s:select  id="billingtype" list="#@java.util.LinkedHashMap@{'After Work':'After Work','On Work':'On Work'}"  value="%{requirementVTO.billingtype}" cssClass="SelectBoxStyles form-control" />      
-                                                                                    </div>
-                                                                                    <%-- <label class="labelStyle" id="labelLevelStatusReq">Hr/week/month:</label> <s:select  id="requirementDurationDescriptor" value="%{requirementVTO.requirementDurationDescriptor}" list="#@java.util.LinkedHashMap@{'Hours':'Hours','Weeks':'Weeks','Months':'Months'}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" disabled="true " onfocus="removeErrorMessages()"/> --%>
-
-                                                                                </s:if>
+                                                                    <div class="col-sm-12 required">
 
 
-                                                                                <s:else>
-                                                                                    <div id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq">Billing&nbsp;Type:</label> <s:select  id="billingtype" list="#@java.util.LinkedHashMap@{'After Work':'After Work','On Work':'On Work'}"  value="%{requirementVTO.billingtype}" cssClass="SelectBoxStyles form-control" />      
-                                                                                    </div>
-                                                                                    <%-- <label class="labelStyle" id="labelLevelStatusReq">Hr/week/month:</label> <s:select  id="requirementDurationDescriptor" value="%{requirementVTO.requirementDurationDescriptor}" list="#@java.util.LinkedHashMap@{'Hours':'Hours','Weeks':'Weeks','Months':'Months'}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control"  onfocus="removeErrorMessages()"/> --%>     
+                                                                        <div class="col-sm-3">  <label class="labelStyle" id="labelLevelStatusReq"> Title </label> <s:textfield cssClass="form-control "  id="RequirementName" type="text" value="%{requirementVTO.RequirementName}" name="RequirementName" placeholder="" onfocus="removeErrorMessages()" readonly="true" maxLength="50"/></div>
+                                                                        <%--<s:if test="requirementVTO.RequirementTaxTerm=='PE'">--%>
+                                                                        <div class="col-sm-3">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq">Start Date</label> <s:textfield cssClass="form-control " name="RequirementFrom" id="RequirementFrom" placeholder="StartDate" value="%{requirementVTO.RequirementFrom}" onkeypress="return editRequirementDateValidation()" cssStyle="z-index: 10000004;" onfocus="removeErrorMessages()" />
 
-                                                                                </s:else>
+                                                                        </div>
+                                                                        <div class="col-sm-3">    
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Type </label> <s:select name="RequirementTaxTerm" id="RequirementTaxTerm" value="%{requirementVTO.RequirementTaxTerm}" list="#@java.util.LinkedHashMap@{'CO':'Contract','PE':'Permanent'}" headerKey="DF"  cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" onchange="showHideDuration();disableFields()"/>
+                                                                        </div>
+                                                                        <div class="col-sm-3">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Positions </label> <s:textfield cssClass="form-control" id="RequirementNoofResources" type="text" value="%{requirementVTO.RequirementNoofResources}" name="RequirementNoofResources" placeholder="" onfocus="removeErrorMessages()" maxLength="11"/> 
+                                                                        </div>
+                                                                        <div id="duration" class="col-sm-3" style="display: none;">
+                                                                            <label class="labelStylereq" style="color:#56a5ec;"> Duration :</label>
 
-
-                                                                                <label class="labelStyle" id="labelLevelStatusReq"> Requisitioner </label> 
-                                                                                <s:select name="RequirementContact2" id="RequirementContact2" value="%{requirementVTO.RequirementContact2}" list="EmployeeNames" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" />
-                                                                                <label class="labelStyle" id="labelLevelStatusReq"> Max Rate </label>    
-                                                                                <div class="form-group input-group">
-                                                                                    <span class="input-group-addon "style="padding-top: 5px" >$</span>
-
-                                                                                    <s:textfield cssClass="form-control " id="requirementMaxRate" type="text" value="%{requirementVTO.requirementMaxRate}" name="RequirementTargetRate" placeholder="" onfocus="removeErrorMessages()" onkeypress="return RequirementMaxRate(event)" maxLength="5"/>
-                                                                                    <span class="input-group-addon" style="padding-top: 5px">/Hr</span>
-                                                                                </div>
-
-
-                                                                            </s:else>
-
-                                                                        </table>
-                                                                    </div>
-
-                                                                    <div class="col-lg-3 required">     
-
-                                                                        <s:hidden name="typeOfUser" id="typeOfUser" value="%{#session.typeOfUsr}"/>
-                                                                        <s:if test="#session.typeOfUsr=='VC'">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Type </label> <s:select name="RequirementTaxTerm" id="RequirementTaxTerm" value="%{requirementVTO.RequirementTaxTerm}" list="#@java.util.LinkedHashMap@{'CO':'Contract','PE':'Permanent'}" headerKey="DF" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages() " disabled="true" onchange="showHideDuration();"/>
-                                                                            <%--<s:if test="#session.typeOfUsr!='VC'">
-                                                                                <label class="labelStyle" id="labelLevelStatusReq"> Presales 1 :</label> <s:select name="RequirementPresales1" id="RequirementPresales1" value="%{requirementVTO.RequirementPresales1}" list="Contacts" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onfocus="removeErrorMessages()"/>
-                                                                            </s:if>--%>
+                                                                            <div class="form-group input-group" style="margin: 0">
+                                                                                <s:textfield cssClass="form-control textMessageBox numeric_field" id="RequirementDuration" type="text" value="%{requirementVTO.RequirementDuration}"  placeholder="" onfocus="removeErrorMessages()" maxLength="10" onkeypress="return durationValidation(event)"/>
+                                                                                <s:select  id="requirementDurationDescriptor" value="%{requirementVTO.requirementDurationDescriptor}" list="#@java.util.LinkedHashMap@{'Hours':'Hours','Weeks':'Weeks','Months':'Months'}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control select_duration "  onfocus="removeErrorMessages()" style=""/> 
+                                                                            </div>
+                                                                        </div>
 
 
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Req.Exp. </label><s:select  id="RequirementYears" list="experienceMap"  value="%{requirementVTO.RequirementExp}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" disabled="true"/>
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Max Rate </label>    
+                                                                        <div class="col-sm-3" id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq">Billing&nbsp;Type:</label> <s:select  id="billingtype" list="#@java.util.LinkedHashMap@{'After Work':'After Work','On Work':'On Work'}"  value="%{requirementVTO.billingtype}" cssClass="SelectBoxStyles form-control" />      
+                                                                        </div>
+
+
+
+
+
+
+
+                                                                        <div class="col-sm-3">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Req.Exp. </label><s:select  id="RequirementYears" list="experienceMap"  value="%{requirementVTO.RequirementExp}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/>
+
+                                                                        </div>
+
+                                                                        <div class="col-sm-3">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Location </label> <s:select name="RequirementLocation" id="RequirementLocation" value="%{requirementVTO.RequirementLocation}" list="#@java.util.LinkedHashMap@{'ON':'Onsite','OF':'Offsite','OS':'Offshore'}" headerKey="DF" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/>
+                                                                        </div>
+                                                                        <div class="col-sm-3">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Approver </label> 
+                                                                            <s:select name="RequirementContact1" id="RequirementContact1" value="%{requirementVTO.RequirementContact1}" list="EmployeeNames" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/>
+                                                                        </div>
+
+                                                                        <div class="col-sm-3">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Requisitioner </label> 
+                                                                            <s:select name="RequirementContact2" id="RequirementContact2" value="%{requirementVTO.RequirementContact2}" list="EmployeeNames" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" />
+                                                                        </div>
+                                                                        <div class="col-sm-3">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Status </label><s:select name="RequirementStatus" id="RequirementStatus" value="%{requirementVTO.RequirementStatus}" list="#@java.util.LinkedHashMap@{'O':'Opened','R':'Released','OR':'Open for Resume','C':'Closed','F':'Forecast','I':'Inprogess','H':'Hold','W':'Withdrawn','S':'Won','L':'Lost'}" headerKey="DF"  cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/>
+                                                                        </div>
+                                                                        <div class="col-sm-3">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq">Billing Contact </label> <s:select  id="billingContact" name="buildingContact" value="%{requirementVTO.billingContact}" list="EmployeeNames" headerKey="DF" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/>
+                                                                        </div>
+                                                                        <div class="col-sm-3">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Min Rate </label>
                                                                             <div class="form-group input-group">
                                                                                 <span class="input-group-addon "style="padding-top: 5px" >$</span>
 
-                                                                                <s:textfield cssClass="form-control " id="requirementMaxRate" type="text" value="%{requirementVTO.requirementMaxRate}" name="RequirementTargetRate" placeholder="" onfocus="removeErrorMessages()" onkeypress="return RequirementMaxRate(event)" disabled="true"/>
+                                                                                <s:textfield cssClass="form-control " id="RequirementTargetRate" type="text" value="%{requirementVTO.RequirementTargetRate}" name="RequirementTargetRate" placeholder="" onfocus="removeErrorMessages()" onkeypress="return RequirementMinRate(event)" maxLength="10"/>
                                                                                 <span class="input-group-addon" style="padding-top: 5px">/Hr</span>
-                                                                            </div>                                                                               
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-3">    <label class="labelStyle" id="labelLevelStatusReq"> Max Rate </label> 
+                                                                            <div class="form-group input-group">
+                                                                                <span class="input-group-addon "style="padding-top: 5px" >$</span>
 
-                                                                        </s:if>
-                                                                        <s:else>
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Type </label> <s:select name="RequirementTaxTerm" id="RequirementTaxTerm" value="%{requirementVTO.RequirementTaxTerm}" list="#@java.util.LinkedHashMap@{'CO':'Contract','PE':'Permanent'}" headerKey="DF" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" onchange="showHideDuration();disableFields()"/>
-                                                                            <%--<s:if test="#session.typeOfUsr!='VC'">
-                                                                                <label class="labelStyle" id="labelLevelStatusReq"> Presales 1 :</label> <s:select name="RequirementPresales1" id="RequirementPresales1" value="%{requirementVTO.RequirementPresales1}" list="Contacts" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onfocus="removeErrorMessages()"/>
-                                                                            </s:if>--%>
+                                                                                <s:textfield cssClass="form-control " id="requirementMaxRate" type="text" value="%{requirementVTO.requirementMaxRate}" name="RequirementTargetRate" placeholder="" onfocus="removeErrorMessages()" onkeypress="return RequirementMaxRate(event)" maxLength="5"/>
+                                                                                <span class="input-group-addon" style="padding-top: 5px">/Hr</span>
+                                                                            </div>
+
+                                                                        </div>
 
 
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Req.Exp. </label><s:select  id="RequirementYears" list="experienceMap"  value="%{requirementVTO.RequirementExp}" headerKey="-1" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/>
+                                                                        <div id="reqCustCategory" class="col-sm-3">
 
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Status </label><s:select name="RequirementStatus" id="RequirementStatus" value="%{requirementVTO.RequirementStatus}" list="#@java.util.LinkedHashMap@{'O':'Opened','R':'Released','C':'Closed','F':'Forecast','I':'Inprogess','H':'Hold','W':'Withdrawn','S':'Won','L':'Lost'}" headerKey="DF"  cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/>
                                                                             <label class="labelStylereq " style="color:#56a5ec;">Req.Category</label>
                                                                             <s:select id="reqCategoryValue" name="reqCategoryValue" cssClass="SelectBoxStyles form-control"  theme="simple" list="%{reqCategory}" value="%{requirementVTO.reqCatgory}" disabled="true"/>
+                                                                        </div>
 
-                                                                        </s:else>
 
+
+
+
+
+
+
+
+
+                                                                        <s:hidden id="userType" value="%{#session.typeOfUsr}" />
+
+                                                                        <s:hidden name="typeOfUser" id="typeOfUser" value="%{#session.typeOfUsr}"/>
                                                                     </div>
-                                                                    <div class="col-lg-3 required" >     
 
-                                                                        <s:if test="#session.typeOfUsr=='VC'">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Positions </label> <s:textfield cssClass="form-control" id="RequirementNoofResources" type="text" value="%{requirementVTO.RequirementNoofResources}" name="RequirementNoofResources" placeholder="" onfocus="removeErrorMessages()" disabled="true"/>
-
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Location </label> <s:select name="RequirementLocation" id="RequirementLocation" value="%{requirementVTO.RequirementLocation}" list="#@java.util.LinkedHashMap@{'ON':'Onsite','OF':'Offsite','OS':'Offshore'}" headerKey="DF" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()" disabled="true"/>
-                                                                            <label class="labelStylereq " style="color:#56a5ec;">Req.Category</label>
-                                                                            <s:select id="reqCategoryValue" name="reqCategoryValue" cssClass="SelectBoxStyles form-control"  theme="simple" list="%{reqCategory}" value="%{requirementVTO.reqCatgory}" disabled="true" />
-
-                                                                        </s:if>
-                                                                        <s:else>
-
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Positions </label> <s:textfield cssClass="form-control" id="RequirementNoofResources" type="text" value="%{requirementVTO.RequirementNoofResources}" name="RequirementNoofResources" placeholder="" onfocus="removeErrorMessages()" maxLength="11"/> 
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Location </label> <s:select name="RequirementLocation" id="RequirementLocation" value="%{requirementVTO.RequirementLocation}" list="#@java.util.LinkedHashMap@{'ON':'Onsite','OF':'Offsite','OS':'Offshore'}" headerKey="DF" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/>
-                                                                            <label class="labelStyle" id="labelLevelStatusReq">Billing Contact </label> <s:select  id="billingContact" name="buildingContact" value="%{requirementVTO.billingContact}" list="EmployeeNames" headerKey="DF" headerValue="--select--" cssClass="SelectBoxStyles form-control" onfocus="removeErrorMessages()"/></td>
-
-                                                                        </s:else>       
-                                                                    </div>
+                                                        
+                                                            <div class="form-group req-textarea col-sm-12 required">
+                                                                <label class="labelStyle" id="labelLevelStatusReq">Qualification </label> <s:textarea name="requirementQualification" id="requirementQualification" cssClass="titleStyle" value="%{requirementVTO.RequirementQualification}" placeholder="Enter Qualification Here" cols="127" rows="3" onkeyup=" QualificationCheckCharacters(this)"  onfocus="removeErrorMessages()"/>
 
                                                             </div>
-                                                            <s:if test="#session.typeOfUsr=='VC'">
-                                                                <div class="col-lg-7 "></div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="col-lg-6 ">
-                                                                        <span class="required">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq">Skill Set </label> <s:select cssClass="commentsStyle" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true" onfocus="removeErrorMessages()" value="%{requirementVTO.skillSetList}" disabled="true"/> 
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="col-lg-6 ">
-                                                                        <label class="labelStyle" id="labelLevelStatusReq">Preferred Skill Set </label>  <s:select cssClass="commentsStyle" name="preSkillCategoryValue"  id="preSkillCategoryValue" list="preSkillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()" value="%{requirementVTO.preSkillSetList}" disabled="true"/> 
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group req-textarea required">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Responsibilities </label> <s:textarea name="RequirementResponse" id="RequirementResponse" cssClass="titleStyle" value="%{requirementVTO.RequirementResponse}" placeholder="Enter Responsibilities Here" rows="3" onkeyup=" ResponseCheckCharacters(this)" onfocus="removeErrorMessages()"  disabled="true"  />
-                                                                </div>
-                                                                <div class="charNum" id="ResponsecharNum"></div>
-                                                                <div class="form-group req-textarea required">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Description </label> <s:textarea name="RequirementJobdesc" id="RequirementJobdesc" cssClass="titleStyle" value="%{requirementVTO.RequirementJobdesc}" placeholder="Enter Job Description Here" rows="3" onkeyup=" JobCheckCharacters(this)" onfocus="removeErrorMessages()"   disabled="true"  />
-                                                                </div>
-                                                                <div class="charNum" id="JobcharNum"></div>
+                                                            <div class="charNum" id="req_Qualification"></div>
+                                                            <div class="form-group req-textarea required col-sm-12">
+                                                                <label class="labelStyle" id="labelLevelStatusReq">Description </label> <s:textarea name="RequirementJobdesc" id="RequirementJobdesc" cssClass="titleStyle" value="%{requirementVTO.RequirementJobdesc}" placeholder="Enter Job Description Here" rows="3" onkeyup=" JobCheckCharacters(this)" onfocus="removeErrorMessages()" />
+                                                            </div>
+                                                            <div class="charNum" id="JobcharNum"></div>       
+                                                            <div class="form-group req-textarea required col-sm-12">
+                                                                <label class="labelStyle" id="labelLevelStatusReq">Responsibilities </label> <s:textarea name="RequirementResponse" id="RequirementResponse" cssClass="titleStyle" value="%{requirementVTO.RequirementResponse}" placeholder="Enter Responsibilities Here" rows="3" onkeyup=" ResponseCheckCharacters(this)" onfocus="removeErrorMessages()" />
+                                                            </div>
+                                                            <div class="charNum" id="ResponsecharNum"></div>
 
-                                                                <div class="col-lg-12 ">  
-                                                                    <div class="col-lg-6">
-                                                                        <div class="charNum" id="SkillcharNum"></div></div>
-                                                                    <div class="col-lg-6">
-                                                                        <div class="charNum" id="PreferredSkillcharNum"></div>
-                                                                    </div></div>
+                                                            <div class="col-sm-12">
+                                                                <div class="col-sm-6 ">
+                                                                    <span class="required">
+                                                                        <label class="labelStyle" id="labelLevelStatusReq">Skill Set </label> <s:select cssClass="commentsStyle" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()" value="%{requirementVTO.skillSetList}"/> 
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-sm-6 ">
+                                                                    <label class="labelStyle" id="labelLevelStatusReq">Preferred Skill Set </label>  <s:select cssClass="commentsStyle" name="preSkillCategoryValue"  id="preSkillCategoryValue" list="preSkillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()" value="%{requirementVTO.preSkillSetList}"/> 
+                                                                </div>
+                                                            </div>
 
-                                                                <div id="charNum"></div>
-                                                                <div class="form-group req-textarea">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Comments </label> <s:textarea name="RequirementComments" id="RequirementComments" cssClass="titleStyle" value="%{requirementVTO.RequirementComments}" placeholder="Enter Comments Here" rows="3" onkeyup=" CommentsCheckCharacters(this)" onfocus="removeErrorMessages()" disabled="true" />
-                                                                </div>
-                                                                <div class="charNum" id="CommcharNum"></div>
-                                                            </s:if>
-                                                            <s:else>
-                                                                <div class="col-lg-7 "></div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="col-lg-6 ">
-                                                                        <span class="required">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq">Skill Set </label> <s:select cssClass="commentsStyle" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()" value="%{requirementVTO.skillSetList}"/> 
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="col-lg-6 ">
-                                                                        <label class="labelStyle" id="labelLevelStatusReq">Preferred Skill Set </label>  <s:select cssClass="commentsStyle" name="preSkillCategoryValue"  id="preSkillCategoryValue" list="preSkillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()" value="%{requirementVTO.preSkillSetList}"/> 
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group req-textarea required">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Responsibilities </label> <s:textarea name="RequirementResponse" id="RequirementResponse" cssClass="titleStyle" value="%{requirementVTO.RequirementResponse}" placeholder="Enter Responsibilities Here" rows="3" onkeyup=" ResponseCheckCharacters(this)" onfocus="removeErrorMessages()" />
-                                                                </div>
-                                                                <div class="charNum" id="ResponsecharNum"></div>
-                                                                <div class="form-group req-textarea required">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Description </label> <s:textarea name="RequirementJobdesc" id="RequirementJobdesc" cssClass="titleStyle" value="%{requirementVTO.RequirementJobdesc}" placeholder="Enter Job Description Here" rows="3" onkeyup=" JobCheckCharacters(this)" onfocus="removeErrorMessages()" />
-                                                                </div>
-                                                                <div class="charNum" id="JobcharNum"></div>
-
-                                                                <%--  <div class="form-group req-textarea1 ">
-                                                                      <div class="col-lg-6 required">
-                                                                          <label class="labelStyle" id="labelLevelStatusReq">Required Skill Set </label> <s:textarea name="RequirementSkills" id="RequirementSkills" cssClass="titleStyle" value="%{requirementVTO.RequirementSkills}" placeholder="Enter Skills Here" rows="3" onkeyup=" SkillCheckCharacters(this)" onfocus="removeErrorMessages()" />
-                                                                      </div>
-                                                                      <div class="col-lg-6">
-                                                                          <label class="labelStyle" id="labelLevelStatusReq">Preferred Skill Set </label> <s:textarea name="RequirementPreferredSkills" id="RequirementPreferredSkills" cssClass="titleStyle" value="%{requirementVTO.RequirementPreferredSkills}" placeholder="Enter Preferred Skills Here" rows="3" onkeyup=" PreferredSkillCheckCharacters(this)" onfocus="removeErrorMessages()" />
-
-                                                                    </div>
-                                                                </div>--%>
-                                                                <div class="col-lg-12 ">  
-                                                                    <div class="col-lg-6">
-                                                                        <div class="charNum" id="SkillcharNum"></div></div>
-                                                                    <div class="col-lg-6">
-                                                                        <div class="charNum" id="PreferredSkillcharNum"></div>
-                                                                    </div></div>
-                                                                <div id="charNum"></div>
-                                                                <div class="form-group req-textarea">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Comments </label> <s:textarea name="RequirementComments" id="RequirementComments" cssClass="titleStyle" value="%{requirementVTO.RequirementComments}" placeholder="Enter Comments Here" rows="3" onkeyup=" CommentsCheckCharacters(this)" onfocus="removeErrorMessages()"/>
-                                                                </div>
-                                                                <div class="charNum" id="CommcharNum"></div>
-                                                            </s:else>
+                                                            <div class="col-sm-12 ">  
+                                                                <div class="col-sm-6">
+                                                                    <div class="charNum" id="SkillcharNum"></div></div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="charNum" id="PreferredSkillcharNum"></div>
+                                                                </div></div>
+                                                            <div id="charNum"></div>
+                                                            <div class="form-group req-textarea col-sm-12">
+                                                                <label class="labelStyle" id="labelLevelStatusReq">Comments </label> <s:textarea name="RequirementComments" id="RequirementComments" cssClass="titleStyle" value="%{requirementVTO.RequirementComments}" placeholder="Enter Comments Here" rows="3" onkeyup=" CommentsCheckCharacters(this)" onfocus="removeErrorMessages()"/>
+                                                            </div>
+                                                            <div class="charNum" id="CommcharNum"></div>
+                                                            <%--</s:else>--%>
                                                         </s:form>       
                                                     </div>     
 
                                                     <s:if test="accountFlag !='csr'">  
                                                         <s:if test="vendor!='yes'">
-                                                            <div class="col-lg-10"></div>
-                                                            <div class="col-lg-2">
-                                                                <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="update" onclick="return updaterequirements();" value="" theme="simple"><i class="fa fa-refresh"></i>&nbsp;Update</s:submit>
+
+                                                            <div class="col-sm-12">
+                                                                <div class="col-sm-2 pull-right">    <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="update" onclick="return updaterequirements();" value="" theme="simple"><i class="fa fa-refresh"></i>&nbsp;Update</s:submit></div>
                                                             </div>
                                                         </s:if>
                                                     </s:if>
                                                 </div> 
-
                                             </div>
                                             <div class="tab-pane fade in " id="vendorAssociation">
 
-                                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
-                                                    <div>
-                                                        <div class="backgroundcolor" >
-                                                            <div class="panel-heading">
+                                                <div class="" id="profileBox" style="float: left; margin-top: 5px; background-color: white">
+                                                    <div class="row">
+                                                        <div class="backgroundcolor" style="background-color: white">
+                                                            <div class="panel-heading" >
                                                                 <h4 class="panel-title">
-
-                                                                    <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                                    <font color="#ffffff">Vendor Search</font>
-                                                                    <i id="updownArrow" onclick="toggleContent('vendorSearchForm')" class="fa fa-angle-up"></i>
-                                                                    <s:if test="accountFlag=='Account'">
-                                                                        <s:url var="myUrl" action="acc/viewAccount.action">
-                                                                            <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
-                                                                            <s:param name="accFlag"><%=flag%></s:param>
-                                                                        </s:url>
-                                                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
-                                                                        </s:if>
-                                                                        <s:elseif test="accountFlag=='MyRequirements' && customerFlag=='customer'">
-                                                                            <%--  <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                                                            --%>
-                                                                            <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                                <s:param name="accountFlag">MyRequirements</s:param>
-                                                                            <s:param name="orgid"><%=orgId%></s:param>
-                                                                            <s:param name="customerFlag">customer</s:param>
-                                                                        </s:url>
-                                                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                        </s:elseif>
-                                                                        <s:elseif test="accountFlag=='MyRequirements'">
-                                                                            <%--  <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                                                            --%>
-                                                                            <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                                <s:param name="accountFlag">MyRequirements</s:param>
-                                                                            <s:param name="vendor">yes</s:param>
-                                                                            <s:param name="orgid"><%=orgId%></s:param>
-                                                                        </s:url>
-                                                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                        </s:elseif>
-                                                                        <s:elseif test="accountFlag=='OnlyMyRequirements'">
-                                                                            <%--  <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                                                            --%>
-                                                                            <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                                <s:param name="accountFlag">OnlyMyRequirements</s:param>
-                                                                            <s:param name="vendor">yes</s:param>
-                                                                            <s:param name="orgid"><%=orgId%></s:param>
-                                                                        </s:url>
-                                                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                        </s:elseif>
-
-                                                                    <s:elseif test="accountFlag=='csr'">
-
-                                                                        <s:url var="myUrl" action="acc/viewAccount.action">                                                        
-                                                                            <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param>
-                                                                            <s:param name="accFlag"><%=flag%></s:param>
-
-                                                                        </s:url>
-                                                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                        </s:elseif>
-                                                                        <s:elseif test="#session.primaryrole == 13">
-                                                                            <s:url var="myUrl" action="recruitment/consultant/getAllRequirementList.action">
-                                                                                <s:param name="orgid"><%=orgId%></s:param>    
-                                                                            </s:url>
-                                                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                        </s:elseif>
-                                                                        <s:else>
-                                                                            <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                                <s:param name="accountFlag">MyRequirements</s:param>
-                                                                            <s:param name="orgid"><%=orgId%></s:param>
-                                                                            <s:param name="customerFlag">customer</s:param>
-                                                                        </s:url>
-                                                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                        </s:else>                                                                  
-
+                                                                    <i id="updownArrow" style="color:#56a5ec" onclick="toggleContentRequirement('vendorSearchForm')" class="fa fa-sort-asc"></i>
                                                                 </h4>
                                                             </div>
                                                         </div>
                                                         <s:hidden id="req_id" value="%{RequirementId}"/>
-
                                                         <div class="pull-right" style="float: left; margin-top:0px;margin-bottom: -7px;">
                                                             <label class=""> Job Title: </label>                                         
                                                             <span style="color: #FF8A14;"><s:property value="%{requirementVTO.RequirementName}"/></span>
                                                         </div>
                                                         <div class="col-sm-12" id="vendorSearchForm">
-                                                            <div class="col-lg-4">   
+                                                            <div class="col-sm-3">   
                                                                 <label class="labelStylereq" style="color:#56a5ec;"> Type Of Tier :</label><s:select name="tireType" id="tireTypeSearch" value="" list="%{typesTiers}" headerKey="-1" headerValue="All" cssClass="SelectBoxStyles form-control" onchange="return getVendorsNames()"/>
                                                             </div>
-                                                            <div class="col-lg-4">
+                                                            <div class="col-sm-3">
                                                                 <label class="labelStylereq" style="color:#56a5ec;"> Status :</label><s:select name="status" id="status" value="" list="#@java.util.LinkedHashMap@{'DF':'All','Active':'Active','In-Active':'In-Active'}" cssClass="SelectBoxStyles form-control"/>
                                                             </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="row">
+                                                            <div class="col-sm-6 pull-right">
 
-                                                                    <div class="col-lg-6"> 
+                                                                <div class="row">
+                                                                    <div class=" pull-right contact_search"> 
                                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
                                                                         <button class="cssbutton form-control vendorAsso_popup_open"  onclick="return associationOverlay()"/><i class="fa fa-plus-square"></i>&nbsp;Add</button>
                                                                     </div> 
-                                                                    <div class="col-lg-6">
+                                                                    <div class="pull-right">
                                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
                                                                         <input type="button" class="cssbutton_action_search form-control" value="Search" onclick="return searchVendorAssociationDetails()"/>
                                                                     </div>  
-                                                                </div>   
+                                                                </div>
                                                             </div>                                                       
                                                         </div>
                                                         <div id="vendorAsso_popup">
 
-                                                            <div id="vendorAssocitaionOverlay">
+                                                            <div id="vendorAssocitaionOverlay" style="width:60%">
                                                                 <div class="backgroundcolor">
                                                                     <table>
                                                                         <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Add Association&nbsp;&nbsp; </font></h4></td>
@@ -732,23 +477,24 @@ Author     : miracle
                                                                     </table>
                                                                 </div><div>
                                                                     <span><saveVendorAssociation></saveVendorAssociation></span></div>
-                                                                <div class="updateCss ReqinputStyle ">   
-                                                                    <table>
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span>  Type Of Tier :</label><s:select name="tireType" id="tireType" value="" list="%{typesTiers}" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onchange="return getVendorsNames()" onfocus="return removeVendorErrorMsg();"/>
-                                                                    </table>
+                                                                <div class="updateCss ReqinputStyle col-sm-6">   
+
+                                                                    <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span>  Type Of Tier :</label><s:select name="tireType" id="tireType" value="" list="%{typesTiers}" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onchange="return getVendorsNames()" onfocus="return removeVendorErrorMsg();"/>
+
                                                                 </div> 
-                                                                <div class="updateCss ReqinputStyle ">     
-                                                                    <table>
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span>  Access Time :</label><s:textfield name="accessTime" id="accessTime" value=""  cssClass="form-control dateImage" onkeypress="return enterDateRepository(this)" onfocus="return removeVendorErrorMsg();"/>
-                                                                    </table>
+                                                                <div class="updateCss ReqinputStyle col-sm-6">     
+
+                                                                    <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span>  Access Time :</label><s:textfield name="accessTime" id="accessTime" value=""  cssClass="form-control dateImage" onkeypress="return enterDateRepository(this)" onfocus="return removeVendorErrorMsg();"/>
+
                                                                 </div> 
-                                                                <div class="updateCss ReqinputStyle ">     
-                                                                    <table> <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span> Vendor Names :</label>
-                                                                        <s:select cssClass="selectBoxStyle form-control"  list="{}" name="vendorNames" id="vendorNames" value="%{vendorNames}"  multiple="true" size="4" onfocus="return removeVendorErrorMsg();"/>   
-                                                                    </table>
+                                                                <div class="updateCss ReqinputStyle col-sm-8">     
+
+                                                                    <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span> Vendor Names :</label>
+                                                                    <s:select cssClass="selectBoxStyle form-control"  list="{}" name="vendorNames" id="vendorNames" value="%{vendorNames}"  multiple="true" size="4" onfocus="return removeVendorErrorMsg();"/>   
+
                                                                 </div> 
-                                                                <div class="col-lg-10"></div>
-                                                                <div class="col-lg-2">
+
+                                                                <div class="col-sm-3 pull-right companyinfo">
                                                                     <s:submit cssStyle="margin:5px 0px;" cssClass=" add_searchButton form-control col-sm-offset-10 btn cssbutton" value="" type="button" onclick="return saveVendorAssociation()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                                                 </div>
                                                             </div>
@@ -767,19 +513,19 @@ Author     : miracle
                                                                 <span class="" style="margin-left: 15px; color:#FC9A11;">Name:&nbsp;<vendorNameDisplay></vendorNameDisplay></span><br>
                                                                 <s:hidden id="vendorId" value=""/>
 
-                                                                <div class="updateCss ReqinputStyle " style="margin-left: 10px">   
-                                                                    <table>
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Type Of Tier :</label><s:select name="tireTypeEdit" id="tireTypeEdit" value="" list="%{typesTiers}" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onchange="return getVendorsNames()" disabled="true"/>
-                                                                    </table>
+                                                                <div class="updateCss ReqinputStyle col-sm-6">   
+
+                                                                    <label class="labelStyle" id="labelLevelStatusReq"> Type Of Tier :</label><s:select name="tireTypeEdit" id="tireTypeEdit" value="" list="%{typesTiers}" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onchange="return getVendorsNames()" disabled="true"/>
+
                                                                 </div> 
 
-                                                                <div class="updateCss ReqinputStyle " style="margin-left: 10px">     
-                                                                    <table>
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Status :</label><s:select name="statusEdit" id="statusEdit" value="" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" cssClass="selectBoxStyle form-control"/>
-                                                                    </table>
+                                                                <div class="updateCss ReqinputStyle col-sm-6">     
+
+                                                                    <label class="labelStyle" id="labelLevelStatusReq"> Status :</label><s:select name="statusEdit" id="statusEdit" value="" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" cssClass="selectBoxStyle form-control"/>
+
                                                                 </div> 
-                                                                <div class="col-lg-10"></div>
-                                                                <div class="col-lg-2">
+
+                                                                <div class="col-sm-6 pull-right">
                                                                     <s:submit  cssStyle="margin:5px 0px;" cssClass=" add_searchButton form-control vendorAssoEdit_popup_close"  value="" type="button" onclick="return updateVendorAssociation()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                                                 </div>
                                                             </div>
@@ -831,76 +577,13 @@ Author     : miracle
 
 
                                             <div class="tab-pane fade in " id="consultantList">
-                                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
-                                                    <div class="backgroundcolor" >
+                                                <div class="" id="profileBox" style="float: left; margin-top: 5px;background-color: white">
+                                                    <div class="backgroundcolor" style="background-color: white">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
 
-                                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                                <font color="#ffffff">Consultant Search</font>
-                                                                <i id="updownArrow" onclick="toggleContent('consultantSearchForm')" class="fa fa-angle-up"></i>
-                                                                <s:if test="accountFlag=='Account'">
-                                                                    <s:url var="myUrl" action="acc/viewAccount.action">
-                                                                        <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
-                                                                        <s:param name="accFlag"><%=flag%></s:param>
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
-                                                                    </s:if>
-                                                                    <s:elseif test="accountFlag=='MyRequirements' && customerFlag=='customer'">
-                                                                        <%--  <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                                                        --%>
-                                                                        <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                            <s:param name="accountFlag">MyRequirements</s:param>
-                                                                        <s:param name="orgid"><%=orgId%></s:param>
-                                                                        <s:param name="customerFlag">customer</s:param>
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-                                                                    <s:elseif test="accountFlag=='MyRequirements'">
-                                                                        <%--  <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                                                        --%>
-                                                                        <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                            <s:param name="accountFlag">MyRequirements</s:param>
-                                                                        <s:param name="vendor">yes</s:param>
-                                                                        <s:param name="orgid"><%=orgId%></s:param>
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-                                                                    <s:elseif test="accountFlag=='OnlyMyRequirements'">
-                                                                        <%--  <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                                                        --%>
-                                                                        <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                            <s:param name="accountFlag">OnlyMyRequirements</s:param>
-                                                                        <s:param name="vendor">yes</s:param>
-                                                                        <s:param name="orgid"><%=orgId%></s:param>
+                                                                <i id="updownArrowSub" style="color:#56a5ec" onclick="toggleContentRequirementSubmittedList('consultantSearchForm')" class="fa fa-sort-asc"></i>
 
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-                                                                    <s:elseif test="accountFlag=='csr'">
-
-                                                                    <s:url var="myUrl" action="acc/viewAccount.action">                                                        
-                                                                        <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param>
-                                                                        <s:param name="accFlag"><%=flag%></s:param>
-
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-
-                                                                <s:elseif test="#session.primaryrole == 13">
-                                                                    <s:url var="myUrl" action="recruitment/consultant/getAllRequirementList.action">
-                                                                        <s:param name="orgid"><%=orgId%></s:param>    
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:elseif>
-                                                                    <s:else>
-                                                                        <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
-                                                                            <s:param name="accountFlag">MyRequirements</s:param>
-                                                                        <s:param name="orgid"><%=orgId%></s:param>
-                                                                        <s:param name="customerFlag">customer</s:param>
-                                                                    </s:url>
-                                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
-                                                                    </s:else>
                                                             </h4>
                                                         </div>
                                                     </div>
@@ -909,82 +592,84 @@ Author     : miracle
                                                         <span style="color: #FF8A14;"><s:property value="%{requirementVTO.RequirementName}"/></span>
                                                     </div>
 
-                                                    <div class="col-sm-12">
-                                                        <s:form action="" theme="simple" id="consultantSearchForm">
-                                                            <s:hidden name="vendor" id="vendor" value="%{vendor}"/>
-                                                            <s:hidden name="RequirementId" id="RequirementId" value="%{requirementVTO.RequirementId}"/>
-                                                            <s:hidden name="jdId" id="jdId" value="%{jdId}"/>
+                                                    <div class="col-sm-12" id="consultantSearchForm">
+                                                        <div class="row">
+                                                            <s:form action="" theme="simple" >
+                                                                <s:hidden name="vendor" id="vendor" value="%{vendor}"/>
+                                                                <s:hidden name="RequirementId" id="RequirementId" value="%{requirementVTO.RequirementId}"/>
+                                                                <s:hidden name="jdId" id="jdId" value="%{jdId}"/>
 
-                                                            <s:hidden name="downloadFlag" id="downloadFlag" value="%{downloadFlag}"/>
-                                                            <s:hidden name="customerFlag" id="customerFlag" value="%{customerFlag}"/>
-                                                            <s:hidden name="accountFlag" id="accountFlag" value="%{accountFlag}" ></s:hidden>
-                                                            <s:hidden name="accountSearchID" id="accountSearchID" value="%{accountSearchID}"></s:hidden>
-                                                            <s:hidden name="gridDownload" id="gridDownload" value=""/>
-                                                            <div class="row">
+                                                                <s:hidden name="downloadFlag" id="downloadFlag" value="%{downloadFlag}"/>
+                                                                <s:hidden name="customerFlag" id="customerFlag" value="%{customerFlag}"/>
+                                                                <s:hidden name="accountFlag" id="accountFlag" value="%{accountFlag}" ></s:hidden>
+                                                                <s:hidden name="accountSearchID" id="accountSearchID" value="%{accountSearchID}"></s:hidden>
+                                                                <s:hidden name="gridDownload" id="gridDownload" value=""/>
+
                                                                 <s:if test="vendor!='yes'">
-                                                                    <div class="col-lg-4">
+                                                                    <div class="col-sm-3">
                                                                         <label style="color:#56a5ec;" class="labelStylereq">Vendor Name:</label>
-                                                                        <s:textfield cssClass="form-control" name="vendorName" id="vendorName" tabindex="1" maxLength="60"/>
+                                                                        <s:textfield cssClass="form-control" name="vendorName" id="vendorName" tabindex="1" maxLength="60" placeholder="Vendor Name"/>
                                                                     </div>
                                                                 </s:if>
                                                                 <s:else><s:hidden name="vendorName" id="vendorName" /></s:else>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-3">
 
                                                                     <label style="color:#56a5ec;" class="labelStylereq">First Name:&nbsp;&nbsp;</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_name" id="consult_name" placeholder="" value="%{consult_name}" tabindex="1" maxLength="30"/>
+                                                                    <s:textfield cssClass="form-control" name="consult_name" id="consult_name"  value="%{consult_name}" tabindex="1" maxLength="30" placeholder="First Name"/>
 
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-sm-3">
 
                                                                     <label style="color:#56a5ec;" class="labelStylereq">Last Name:&nbsp;&nbsp;</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_lstname" id="consult_lstname" placeholder="" value="%{consult_lstname}" tabindex="1" maxLength="30"/>
+                                                                    <s:textfield cssClass="form-control" name="consult_lstname" id="consult_lstname"  value="%{consult_lstname}" tabindex="1" maxLength="30" placeholder="Last Name"/>
+
+                                                                </div>
+                                                                <div class="col-sm-3">
+
+                                                                    <label style="color:#56a5ec;" class="labelStylereq">SSN Number:&nbsp;&nbsp;</label>
+                                                                    <s:textfield cssClass="form-control" name="consult_ssnNo" id="consult_ssnNo"  value="%{consult_ssnNo}" placeholder="SSN Number"/>
 
                                                                 </div>
                                                                 <s:if test="vendor=='yes'">
-                                                                    <div class="col-lg-4">
+                                                                    <div class="col-sm-3">
                                                                         <label style="color:#56a5ec;" class="labelStylereq">E-Mail:</label>
-                                                                        <s:textfield cssClass="form-control" name="consult_email" id="consult_email" placeholder="" value="%{consult_email}" tabindex="1" maxLength="60"/>
+                                                                        <s:textfield cssClass="form-control" name="consult_email" id="consult_email" value="%{consult_email}" tabindex="1" maxLength="60" placeholder="E-Mail"/>
 
                                                                     </div>
                                                                 </s:if>
                                                                 <s:else><s:hidden name="consult_email" id="consult_email"/></s:else>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-lg-4">
+
+
+                                                                <div class="col-sm-3">
                                                                     <label style="color:#56a5ec;" class="labelStylereq">Skill Set:</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_skill" id="consult_skill" placeholder="" value="%{consult_skill}" tabindex="1" maxLength="100"/>
+                                                                    <s:textfield cssClass="form-control" name="consult_skill" id="consult_skill" value="%{consult_skill}" tabindex="1" maxLength="100" placeholder="Skill Set"/>
                                                                 </div>
-                                                                <s:if test="vendor=='yes'">
-                                                                    <div class="col-lg-4">
-                                                                        <label style="color:#56a5ec;" class="labelStylereq">Phone:</label>
-                                                                        <s:textfield cssClass="form-control" name="consult_phno" id="consult_phno" placeholder="" value="%{consult_phno}" tabindex="1" maxLength="15"/>
-                                                                    </div>
-                                                                </s:if>
-                                                                <s:else>
-                                                                    <s:hidden name="consult_phno" id="consult_phno"/>
-                                                                </s:else>
+
+                                                                <s:hidden name="consult_phno" id="consult_phno"/>
+
                                                                 <s:hidden name="consultantFlag" id="consultantFlag" value="%{consultantFlag}"/>
 
-                                                                <div class="col-lg-4">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-6"></div>
-                                                                        <div class="col-lg-6">
-                                                                            <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                            <s:submit type="button" cssClass="add_searchButton form-control" id="searchButton" cssStyle="margin:5px 0px;" value="" onclick="return getConsultantListBySearch();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                                        </div>
-                                                                        <div class="col-lg-6">
-                                                                            <s:if test="consultantFlag == 1">
-                                                                                <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                <a href="/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/addConsultant.action" ><input type="button" class=" cssbutton form-control"" value="Add Consultant"></a> &nbsp;
-                                                                                </s:if>
-                                                                        </div>
+                                                                <div class="col-sm-3 pull-right">
+
+
+                                                                    <div class="pull-right contact_search">
+                                                                        <label class="labelStylereq" style="color:#56a5ec;"></label>
+                                                                        <s:submit type="button" cssClass="add_searchButton form-control" id="searchButton" cssStyle="margin:5px 0px;" value="" onclick="return getConsultantListBySearch();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                                     </div>
+                                                                    <div class="pull-right">
+                                                                        <s:if test="consultantFlag == 1">
+                                                                            <label class="labelStylereq" style="color:#56a5ec;"></label>
+                                                                            <a href="/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/addConsultant.action" ><input type="button" class=" cssbutton form-control" value="Add Consultant"></a> &nbsp;
+                                                                            </s:if>
+                                                                    </div>
+
                                                                     <s:hidden name="techSearch" id="techSearch" value="%{techSearch}"/>
                                                                     <s:hidden name="reqFlag" id="reqFlag" value="%{reqFlag}"/>
                                                                 </div>
-                                                            </div>
 
-                                                        </s:form>
+
+                                                            </s:form>
+                                                        </div>
                                                     </div>
 
                                                     <div class="col-sm-12">
@@ -1011,6 +696,7 @@ Author     : miracle
                                                                                     </s:if>
                                                                                     <th>Candidate Name</th>
                                                                                     <th>Submitted Date</th>
+                                                                                    <th>SSN No.</th>
                                                                                     <s:if test="vendor=='yes'">
                                                                                         <th>E-Mail</th>
                                                                                     </s:if>
@@ -1028,10 +714,6 @@ Author     : miracle
                                                                                     <s:if test="vendor=='yes'">
                                                                                         <th>Withdrawn</th>
                                                                                     </s:if>
-                                                                                    <%--   <s:if test="accountFlag=='csr'">    
-                                                                                           <th>Login</th>  
-                                                                                       </s:if> 
-                                                                                           <th>Migration</th>--%>
                                                                                 </tr>
 
                                                                             </tbody>
@@ -1056,8 +738,13 @@ Author     : miracle
                                                                             pager.showPage(1);
                                                                         </script>
                                                                     </div>
-                                                                    <div class="col-lg-2 pull-right">
-                                                                        <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadResults.action?pdfHeaderName=Consultant Submitted List&requirementName='+ document.getElementById('RequirementName').value +'&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class=" cssbutton form-control" value="Download"></a>
+                                                                        <div id="downloading_grid" class="col-sm-6 pull-right">
+                                                                        <div class="col-sm-3 col-md-6 pull-right">
+                                                                            <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadResults.action?pdfHeaderName=Consultant Submitted List&requirementName='+ document.getElementById('RequirementName').value +'&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class=" cssbutton form-control" value="Download PDF"></a>
+                                                                        </div>
+                                                                        <div class="col-sm-3 col-md-6 pull-right">
+                                                                            <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadXlsResults.action?pdfHeaderName=Consultant Submitted List&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class=" cssbutton form-control" value="Download XLS"></a>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1191,7 +878,7 @@ Author     : miracle
                 <div id="conWithdrawBox" class="marginTasks">
                     <div class="backgroundcolor">
                         <table>
-                            <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;Withdraw Comments&nbsp; </font></h4></td>        
+                            <tr><td><h4 style="font-family:cursive"><font class="titleColor" id="commentsLabel">&nbsp;Comments</font></h4></td>        
                             <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="conWithdraw_popup_close" onclick="conWithdrawClose('close')" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
                         </table>
                     </div>
@@ -1208,7 +895,29 @@ Author     : miracle
                     <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                 </div>
             </div>
+            <div id="decline_popup" style="display:none">
+                <div id="declineBox" class="marginTasks">
+                    <div class="backgroundcolor">
+                        <table>
+                            <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;Rejection&nbsp; </font></h4></td>        
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="decline_popup_close" onclick="declineClose()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                        </table>
+                    </div>
+                    <s:hidden name="reqRejectId" id="reqRejectId"/>
+                    <s:hidden name="conRejectId" id="conRejectId"/> 
+                    <s:hidden name="createdByOrgId" id="createdByOrgId"/> 
+                    <span id="rejectionMessage"></span>
+                    <div class="required">
+                        <label >Comments</label>
+                        <s:textarea name="rejectionComments" id="rejectionComments"  cssClass="form-control textareaSkillOverlay" />
+                    </div>
 
+                    <div class="pull-right" id="declineButtonDiv" style="display: none">
+                        <s:submit type="button" cssClass="cssbutton decline_popup_close" id="" value="OK" onclick="doDeclineConsultant();"/> 
+                    </div>
+                    <font style="color: #ffffff">..................... ..............................  ..........................................</font>
+                </div>
+            </div>
 
             <div id="consultantLoginOverlay_popup" >
                 <div id="consultantLoginBox" class="marginTasks">
@@ -1252,6 +961,7 @@ Author     : miracle
         </footer> 
 
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/javascript">
             var techSearch=document.getElementById("techSearch").value;
             var flag=document.getElementById("downloadFlag").value;

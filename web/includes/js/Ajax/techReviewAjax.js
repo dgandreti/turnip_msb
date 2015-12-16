@@ -311,6 +311,7 @@ function responseForTechReview(interviewType,flag){
                 var interviewType=$('#interviewType').val();
                 var empIdTechReview=$('#empIdTechReview').val();
                 var empIdTechReview2=$('#empIdTechReview2').val();
+                  var contechNote =$('#interviewNotes').val();
                 //alert(empIdTechReview)
                 //alert(empIdTechReview2)
                 var interviewDate=$('#interviewDate').val();
@@ -496,7 +497,7 @@ function responseForTechReview(interviewType,flag){
                 var url='.././Requirements/techReviewForward.action?requirementId='+requirementId+'&consult_id='+consult_id+'&interview='+interview+'&interviewType='+interviewType+'&empIdTechReview='+empIdTechReview+'&interviewDate='+interviewDate+'&reviewAlertDate='+reviewAlertDate+'&alertMessageTechReview='+alertMessageTechReview+'&timeZone='+timeZone+'&empIdTechReview2='+empIdTechReview2+'&interviewLocation='+interviewLocation+
                     '&techReviewQuestions='+techReviewQuestions+'&techReviewComments='+techReviewComments+'&techReviewSeverity='+techReviewSeverity+'&techReviewTime='+techReviewTime+'&skillCategoryArry='+skillCategoryArry+
                     '&skill1Questions='+skill1Questions+'&skill2Questions='+skill2Questions+'&skill3Questions='+skill3Questions+'&skill4Questions='+skill4Questions+'&skill5Questions='+skill5Questions+
-                    '&skill6Questions='+skill6Questions+'&skill7Questions='+skill7Questions+'&skill8Questions='+skill8Questions+'&skill9Questions='+skill9Questions+'&skill10Questions='+skill10Questions;
+                    '&skill6Questions='+skill6Questions+'&skill7Questions='+skill7Questions+'&skill8Questions='+skill8Questions+'&skill9Questions='+skill9Questions+'&skill10Questions='+skill10Questions+'&contechNote='+contechNote;
         
                 //alert(url)
                 var req=initRequest(url);
@@ -640,7 +641,13 @@ function populateTechReviewTable(response){
                 row.append($("<td>" + Values[2] + "</td>"));
                 row.append($("<td>" + Values[3] + "</td>"));
                 row.append($("<td>" + Values[10]+ "</td>"));
-                row.append($("<td>" + Values[12] + "&nbsp;&nbsp;"+ Values[13] + "&nbsp;&nbsp;"+ Values[14] +"</td>"));
+                if(Values[10]=='Online' || Values[10]=='Psychometric')
+                    {
+                     row.append($("<td>" + Values[5]+ "</td>"));       
+                    }else
+                        {
+                     row.append($("<td>" + Values[12] + "&nbsp;&nbsp;"+ Values[13] + "&nbsp;&nbsp;"+ Values[14] +"</td>"));       
+                        }
                 row.append($('<td><a href="#" class="Forwarded_popup_open" onclick="showOverlayForwardedBy('+Values[7]+');">'+ Values[4] +"</td>"));
                 //row.append($("<td>" + Values[4] + "</td>"));
                 //row.append($("<td>" + Values[5] + "</td>"));
@@ -651,7 +658,7 @@ function populateTechReviewTable(response){
                 
                 }else{
                     row.append($("<td><figcaption><button type='button' value="+ Values[6] +" onclick=doTechReviewAttachmentDownload("+ Values[6] +")><img src='./../../includes/images/download.png' height='20' width='20' ></button></figcaption></td>"));
-                    row.append($('<td><a href="#" class="techReview_popup_open" onclick="techReviewOverlay('+Values[9]+',\'' + Values[8] + '\');techReviewDetailsOnOverlay('+Values[0]+','+Values[11]+');"> Click'+"</td>"));
+                   row.append($('<td><a href="#" class="techReview_popup_open" onclick="techReviewOverlay('+Values[9]+',\'' + Values[8] + '\');techReviewDetailsOnOverlay('+Values[0]+','+Values[11]+',\''+ Values[10]+'\');"> Click'+"</td>"));
                 }
             }
         }
@@ -716,11 +723,49 @@ function techReviewOverlay(reqId,status){
         );    
     return false;
 }
-function techReviewDetailsOnOverlay(consultId,conTechId){
-    //alert("hi "+consultId)
+function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
+    //alert("hi "+conTechId)
+    $('#consult_id').val();
+    $('#contechId').val(conTechId);
+    $('#consultantId').val(consultId);
+   // alert(reviewType)
+    if(reviewType=="Online" || reviewType=="Psychometric")
+    {
+        $("#notOnline").hide();  
+        $("#online").hide();
+        $("#skillQuestion1").html("");
+        $("#skillQuestion2").html("");
+        $("#skillQuestion3").html("");
+        $("#skillQuestion4").html("");
+        $("#skillQuestion5").html("");
+        $("#skillQuestion6").html("");
+        $("#skillQuestion7").html("");
+        $("#skillQuestion8").html("");
+        $("#skillQuestion9").html("");
+        $("#skillQuestion10").html("");
+         $("#examButton").hide();
+          $("#saveButtonReview").hide();
+          
+    }
+    else{
+        $("#notOnline").show(); 
+        $("#online").hide();
+        $("#skillQuestion1").html("");
+        $("#skillQuestion2").html("");
+        $("#skillQuestion3").html("");
+        $("#skillQuestion4").html("");
+        $("#skillQuestion5").html("");
+        $("#skillQuestion6").html("");
+        $("#skillQuestion7").html("");
+        $("#skillQuestion8").html("");
+        $("#skillQuestion9").html("");
+        $("#skillQuestion10").html("");
+        $("#examButton").hide();
+        $("#saveButtonReview").show(); 
+    }
     var req_Id=$("#requirementId").val()
     var contechId=conTechId;
-    var url='.././Requirements/getConsultDetailsOnOverlay.action?consultantId='+consultId+'&contechId='+contechId+'&req_Id='+req_Id;
+    var url='.././Requirements/getConsultDetailsOnOverlay.action?consultantId='+consultId+'&contechId='+contechId+'&req_Id='+req_Id+'&reviewType='+reviewType;
     ;
     var req=initRequest(url);
     req.onreadystatechange = function() {
@@ -730,6 +775,7 @@ function techReviewDetailsOnOverlay(consultId,conTechId){
             for(var i=0;i<techReviewList.length-1;i++){   
                 var Values=techReviewList[i].split("|");
                 {  
+                     if(reviewType!="Online" && reviewType!="Psychometric"){
                     $("#contechId").val(contechId);
                     $("#consultId").val(consultId);
                     $("#consultantName").val(Values[0]);
@@ -737,7 +783,12 @@ function techReviewDetailsOnOverlay(consultId,conTechId){
                     $("#consultantMobile").val(Values[2]);
                     $("#interviewDate").val(Values[3]);
                     //$("#techTitle").val(Values[5]);
+                     $("#onlineExam").show();
+                     $("#onlineExamStatus").show();
+
+                        $("#examStatus").hide(); 
                     $("#ResumeId").val(Values[4]);
+                    
                     if(Values[5]=='null' || Values[5]=="")
                     {
                         Values[5]=" "; 
@@ -781,6 +832,192 @@ function techReviewDetailsOnOverlay(consultId,conTechId){
                     }else{
                         $("#consultantComments").val(Values[11]);
                         document.getElementById("consultantComments").readOnly = true;
+                    }
+                    //alert(Values[12])
+                    if(Values[12]=='null' ){
+                        $("#consultantNotes").val(Values[12]);
+                    }else
+                        {
+                        $("#consultantNotes").val("");    
+                        }
+                      
+                      
+                }
+                    else
+                    {
+                        $("#consultantName").val(Values[0]);
+                        if(Values[1]=='null' || Values[1]==""){
+                            Values[1]="";
+                        }
+                        $("#consultantEmail").val(Values[1]);
+                        $("#consultantEmail").val(Values[2]);
+                        $("#consultantMobile").val(Values[3]);
+                        $("#interviewDate").val(Values[4]);
+                        $("#consultantNotes").val(Values[38]);
+                        $("#consultantComments").val(Values[39]);  
+                        $("#examStatus").html(" <b><font color='green'>"+Values[5]+"</font></b>");
+                        $("#onlineExam").hide(); 
+                        $("#onlineExamStatus").hide();
+                        $("#examStatus").show(); 
+                          $("#online").show();
+                        $("#skillDivQuestion1").hide(); 
+                        $("#skillDivQuestion2").hide(); 
+                        $("#skillDivQuestion3").hide();
+                        $("#skillDivQuestion4").hide();
+                        $("#skillDivQuestion5").hide();
+                        $("#skillDivQuestion6").hide(); 
+                        $("#skillDivQuestion7").hide(); 
+                        $("#skillDivQuestion8").hide(); 
+                        $("#skillDivQuestion9").hide(); 
+                        $("#skillDivQuestion10").hide(); 
+                        if(Values[5]=="Rejected" || Values[5]=="ShortListed" || Values[5]=="Processing")
+                          {
+                              
+                            $("#examButton").hide();   
+                          }
+                          else
+                           {
+                             $("#examButton").show();    
+                           }
+                        
+                        if(Values[36]=='Submitted')
+                        {
+                            $("#examsubmittedDate").html("<b><font color='green'>"+Values[37]+"</font></b>");
+                            if(Values[6]!='null' && Values[7]!=0)
+                            {
+                                 $("#skillDivQuestion1").show();  
+                                var percentage1=findPercentage(Values[26],Values[7]);
+                                if(percentage1 < 50)
+                                {
+                                    $("#skillQuestion1").html(" <b><font color='#56a5ec'>"+Values[6]+":</font><font color='red'> "+percentage1+"%</font></b>");    
+                                } 
+                                else{
+                                    $("#skillQuestion1").html(" <b><font color='#56a5ec'>"+Values[6]+":</font><font color='green'> "+percentage1+"%</font></b>");   
+                                }
+                            }
+                            if(Values[8]!='null' && Values[9]!=0)
+                            {
+                                $("#skillDivQuestion2").show();  
+                                var percentage2=findPercentage(Values[27],Values[9])
+                                if( percentage2 < 50)
+                                {    
+                            
+                                    $("#skillQuestion2").html(" <b><font color='#56a5ec'>"+Values[8]+":</font><font color='red'> "+percentage2+"%</font></b>");      
+                                }
+                                else
+                                {
+                                    $("#skillQuestion2").html(" <b><font color='#56a5ec'>"+Values[8]+":</font><font color='green'> "+percentage2+"%</font></b>");             
+                                }
+                            }
+                            if(Values[10]!='null' && Values[11]!=0)
+                                {
+                                   $("#skillDivQuestion3").show(); 
+                                  var percentage3=findPercentage(Values[27],Values[9])  
+                                 if(percentage3 < 50)
+                                {    
+                                 $("#skillQuestion3").html(" <b><font color='#56a5ec'>"+Values[10]+":</font><font color='red'>"+percentage3+"%</font></b>");   
+                                }
+                                else
+                                    {
+                                 $("#skillQuestion3").html(" <b><font color='#56a5ec'>"+Values[10]+":</font><font color='green'>"+percentage3+"%</font></b>");           
+                                    }
+                                }
+                               
+                            if(Values[12]!='null' && Values[13]!=0)
+                                {
+                                    $("#skillDivQuestion4").show();  
+                                    var percentage4=findPercentage(Values[29],Values[13])
+                                   if(percentage4 < 50)
+                                {  
+                                  $("#skillQuestion4").html(" <b><font color='#56a5ec'>"+Values[12]+":</font><font color='red'>"+percentage4+"%</font></b>");   
+                                }else
+                                    {
+                                    $("#skillQuestion4").html(" <b><font color='#56a5ec'>"+Values[12]+":</font><font color='green'>"+percentage4+"%</font></b>");       
+                                    }
+                                }
+                               
+                            if(Values[14]!='null' && Values[15]!=0)
+                                {
+                                    $("#skillDivQuestion5").show(); 
+                                    var percentage5=findPercentage(Values[30],Values[15])
+                                    if(percentage5 < 50)
+                                {  
+                                   $("#skillQuestion5").html(" <b><font color='#56a5ec'>"+Values[14]+":</font><font color='red'>"+percentage5+"%</font></b>"); 
+                                }
+                                else
+                                    {
+                                   $("#skillQuestion5").html(" <b><font color='#56a5ec'>"+Values[14]+":</font><font color='green'>"+percentage5+"%</font></b>");      
+                                    }
+                                }
+                            if(Values[16]!='null' && Values[17]!=0)
+                                {
+                                     $("#skillDivQuestion6").show();
+                                    var percentage6=findPercentage(Values[31],Values[17])
+                                     if(percentage6 < 50)
+                                { 
+                                 $("#skillQuestion6").html(" <b><font color='#56a5ec'>"+Values[16]+":</font><font color='red'>"+percentage6+"%</font></b>");   
+                                }
+                                else
+                                    {
+                                  $("#skillQuestion6").html(" <b><font color='#56a5ec'>"+Values[16]+":</font><font color='green'>"+percentage6+"%</font></b>");      
+                                    }
+                                }
+                            if(Values[18]!='null' && Values[19]!=0)
+                                {
+                                    $("#skillDivQuestion7").show();  
+                                    var percentage7=findPercentage(Values[32],Values[19])
+                                    if(percentage7 < 50)
+                                {  
+                                 $("#skillQuestion7").html(" <b><font color='#56a5ec'>"+Values[18]+":</font><font color='red'>"+percentage7+"%</font></b>");   
+                                }
+                                else
+                                    {
+                                   $("#skillQuestion7").html(" <b><font color='#56a5ec'>"+Values[18]+":</font><font color='green'>"+Values[32]+"/"+Values[19]+"</font></b>");         
+                                    }
+                                }
+                            if(Values[20]!='null' && Values[21]!=0)
+                                {
+                                    $("#skillDivQuestion8").show();  
+                                    var percentage8=findPercentage(Values[33],Values[21])
+                                     if(percentage8 < 50)
+                                { 
+                                   $("#skillQuestion8").html(" <b><font color='#56a5ec'>"+Values[20]+":</font><font color='red'>"+percentage8+"%</font></b>");  
+                                }else
+                                    {
+                                    $("#skillQuestion8").html(" <b><font color='#56a5ec'>"+Values[20]+":</font><font color='green'>"+percentage8+"%</font></b>");      
+                                    }
+                                }
+                            if(Values[22]!='null' && Values[23]!=0)
+                                {
+                                    $("#skillDivQuestion9").show();  
+                                    var percentage9=findPercentage(Values[34],Values[23])
+                                    if(percentage9 < 50)
+                                { 
+                                   $("#skillQuestion9").html(" <b><font color='#56a5ec'>"+Values[22]+":</font><font color='red'>"+percentage9+"%</font></b>");  
+                                }else
+                                    {
+                                    $("#skillQuestion9").html(" <b><font color='#56a5ec'>"+Values[22]+":</font><font color='green'>"+percentage9+"%</font></b>");       
+                                    }
+                                }
+                            if(Values[24]!='null' && Values[25]!=0)
+                                {
+                                    $("#skillDivQuestion10").show();  
+                                    var percentage10=findPercentage(Values[35],Values[25])
+                                  if(percentage10 < 50)
+                                {   
+                                 $("#skillQuestion10").html(" <b><font color='#56a5ec'>"+Values[24]+":</font><font color='red'>"+percentage10+"%</font></b>");   
+                                }
+                                else
+                                    {
+                                 $("#skillQuestion10").html(" <b><font color='#56a5ec'>"+Values[24]+":</font><font color='green'>"+percentage10+"%</font></b>");         
+                                    }
+                                }
+                                
+                        }else
+                            {
+                                $("#online").hide(); 
+                            }
+                        
                     }
                 }
             }
@@ -1050,7 +1287,15 @@ function populateTechReviewSearchTable(response){
                     row.append($('<td><a href="#" class="emailPhoneShow_popup_open" onclick="getMailPhoneOfReviewedBy('+Values[7]+');techReviewEmailPhoneOverlay();" >'+Values[3]+"</td>"));
                 }else{
                    if(Values[9]=='Online'|| Values[9]=='Psychometric'){
-                        row.append($('<td><a href="#" class="emailPhoneShow_popup_open" onclick="getMailPhoneOfReviewedBy('+Values[13]+');techReviewEmailPhoneOverlay();" >'+Values[14]+"</td>"));           
+                       if(Values[3]=='null')
+                           {
+                         row.append($('<td><a href="#" class="emailPhoneShow_popup_open" onclick="getMailPhoneOfReviewedBy('+Values[13]+');techReviewEmailPhoneOverlay();" >'+""+"</td>"));                 
+                           }
+                           else
+                           {
+                          row.append($('<td><a href="#" class="emailPhoneShow_popup_open" onclick="getMailPhoneOfReviewedBy('+Values[13]+');techReviewEmailPhoneOverlay();" >'+Values[3]+"</td>"));                       
+                           }
+                        
                     }else{
                         Values[3]="";
                         row.append($("<td>" + Values[3] + "</td>"));
@@ -1175,6 +1420,7 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
     {
         $("#notOnline").hide();  
         $("#online").show();
+         document.getElementById("consultantComments").disabled = false;
         $("#skillQuestion1").html("");
         $("#skillQuestion2").html("");
         $("#skillQuestion3").html("");
@@ -1192,6 +1438,7 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
     else{
         $("#notOnline").show(); 
         $("#online").hide();
+        document.getElementById("consultantComments").disabled = true;
         $("#skillQuestion1").html("");
         $("#skillQuestion2").html("");
         $("#skillQuestion3").html("");
@@ -1274,6 +1521,9 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                         $("#consultantEmail").val(Values[2]);
                         $("#consultantMobile").val(Values[3]);
                         $("#interviewDate").val(Values[4]);
+                        if(Values[38]!=''){
+                         $("#consultantComments").val(Values[38]);   
+                        }
                         $("#examStatus").html(" <b><font color='green'>"+Values[5]+"</font></b>");
                         $("#onlineExam").hide();  
                         $("#examStatus").show(); 
@@ -1289,12 +1539,29 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                         $("#skillDivQuestion10").hide(); 
                         if(Values[5]=="Rejected" || Values[5]=="ShortListed" || Values[5]=="Processing")
                           {
+                            // alert(Values[5])
                             $("#examButton").hide();   
                           }
                           else
                            {
                              $("#examButton").show();    
                            }
+                        if(Values[5]=="Processing" )
+                            {
+                            $("#reviewComments").hide();      
+                            }
+                         if(Values[5]=="Rejected" || Values[5]=="ShortListed" || Values[5]=="Exam Completed")
+                            {
+                            $("#reviewComments").show();         
+                            }   
+                          if(Values[5]=="Rejected" || Values[5]=="ShortListed" ){
+                             // alert("disabled")
+                            document.getElementById("consultantComments").disabled = true;  
+                          }   
+                          else{
+                             document.getElementById("consultantComments").disabled = false;  
+                             
+                          }
                         
                         if(Values[36]=='Submitted')
                         {
@@ -1470,6 +1737,7 @@ function setLocationForFaceToFace(){
         $("#reviewComments").hide();
         $("#reviewQuestions").hide();
         $("#reviewTech").show();
+         $("#notesData").hide();
         $("#revewInterview").show();
         $("#reviewZone").show();
         $("#reviewSeverity").hide();
@@ -1493,11 +1761,12 @@ function setLocationForFaceToFace(){
         //    $select.remove();  
          
         $("#techReviewSeverity").val('M');
-        $("#reviewTech").hide();
+        $("#reviewTech").show();
         $("#revewInterview").hide();
         $("#reviewZone").hide();
         $("#locationData").hide();
         $("#reviewComments").show();
+         $("#notesData").hide();
         $("#reviewQuestions").show();
         $("#reviewSeverity").show();
         $("#techDuration").show();
@@ -1509,10 +1778,11 @@ function setLocationForFaceToFace(){
         skillsQuestions();
     }else if(interviewType=='Psychometric'){
         $("#techReviewSeverity").val('M');
-        $("#reviewTech").hide();
+        $("#reviewTech").show();
         $("#revewInterview").hide();
         $("#reviewZone").hide();
         $("#locationData").hide();
+         $("#notesData").hide();
         $("#reviewComments").show();
         $("#reviewQuestions").show();
         $("#reviewSeverity").show();
@@ -1528,6 +1798,7 @@ function setLocationForFaceToFace(){
         $("#reviewQuestions").hide();
         $("#reviewTech").show();
         $("#revewInterview").show();
+         $("#notesData").show();
         $("#reviewZone").show();
         $("#locationData").hide();
         $("#reviewSeverity").hide();
@@ -2198,12 +2469,21 @@ function isNumberKey(evt)
     //alert(percentage)
     return Math.round(percentage);
 }
-function saveExamResult(val)
+function saveExamResult(val,flag)
 {
+   //alert(flag)
    var contechId=  $('#contechId').val();
    var consultantId=  $('#consultantId').val();
    var requirementId=  $('#requirementId').val();
-    var url='.././Requirements/onlineExamStatusSave.action?conTechReviewId='+contechId+"&examStatus="+val+"&consult_id="+consultantId+"&requirementId="+requirementId;
+   var comments= $('#consultantComments').val();
+   //alert(comments)
+   if(comments=="")
+       {
+    $("e").html("<b><font color='red'>Please Give Comments</font></b>"); 
+    $("e").show().delay(4000).fadeOut();
+    return false;
+       }
+    var url='.././Requirements/onlineExamStatusSave.action?conTechReviewId='+contechId+"&examStatus="+val+"&consult_id="+consultantId+"&requirementId="+requirementId+"&cnslt_comments="+comments;
     //alert(url)
     var req=initRequest(url);
     req.onreadystatechange = function() {
@@ -2213,12 +2493,37 @@ function saveExamResult(val)
                  $("e").html("<b><font color='green'>"+req.responseText+"</font></b>");
                  $("e").show().delay(4000).fadeOut();
                  $("#examStatus").html("<b><font color='green'>"+val+"</font></b>");
-                 searchTechReviews();
-            } 
+                 if(flag=="reviewSearch")
+                     {
+                     searchTechReviews();    
+                     }
+                     else
+                     {
+                      getSearchTechReviewList();        
+                     }
+          } 
         }
     };
     req.open("GET",url,"true");
     req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     req.send(null);
    
+}
+
+function checkCharactersNotes(id){
+    
+    $(id).keyup(function(){
+        el = $(this);
+        if(el.val().length >= 200){
+            el.val( el.val().substr(0, 200) );
+        } else {
+            $("#notes_feedback").text(200-el.val().length+' Characters remaining . ');
+        }
+        if(el.val().length==200)
+        {
+            $("#notes_feedback").text(' Cannot enter  more than 200 Characters .');    
+        }
+        
+    })
+    return false;
 }

@@ -196,12 +196,22 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
                                 if (dbProfilImagePath != null) {
                                     File imageFile = new File(dbProfilImagePath);
                                     if (imageFile.exists() == false) {
-                                        session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.GENERALIMAGE"));
-                                    } else {
+                                        if("M".equals(dbgender)){
+                                            session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.GENERALIMAGE"));
+                                        }
+                                        else{
+                                        session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.FEMALEIMAGE"));
+                                        }
+                                        } else {
                                         session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, dbProfilImagePath);
                                     }
                                 } else {
-                                    session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.GENERALIMAGE"));
+                                    if("M".equals(dbgender)){
+                                            session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.GENERALIMAGE"));
+                                        }
+                                        else{
+                                        session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.FEMALEIMAGE"));
+                                        }
                                 }
                                 session.setAttribute(ApplicationConstants.MSTATUS, dbmstatus);
                                 session.setAttribute(ApplicationConstants.AliasName, dbalias);

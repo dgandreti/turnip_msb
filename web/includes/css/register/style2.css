@@ -23,7 +23,7 @@ background: -moz-linear-gradient(bottom, #CCCCCC, #EEEEEE 175px);
 	padding: 10px;
 }
 .af-show {
-	position: absolute;
+/*	position: absolute;*/
 	/*top: 30px;*/
 	right: 155px;
 	cursor: pointer;

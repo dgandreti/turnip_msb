@@ -95,7 +95,7 @@
             
       function checkAddProjectName(projName){
                
-          $.ajax({url:"<%=request.getContextPath()%>/checkProjectNames.action?projectName="+ projName,
+          $.ajax({url:"<%=request.getContextPath()%>/checkProjectNames.action?projectName="+ projName+"&projectFlag=main",
               success: function(data){
                    
                   if(data == "true"){
@@ -205,7 +205,7 @@
                                 <div class="col-sm-4 required">
                                     <label>Target hours</label>
                                     <div class="form-group input-group">
-                                        <s:textfield cssClass="form-control "  id="projectTargetHrs"  value="" name="projectTargetHrs"  onkeypress="return noOfHoursValidate(event, this.id)"/>
+                                        <s:textfield cssClass="form-control "  id="projectTargetHrs" placeholder="Target hours" value="" name="projectTargetHrs"  onkeypress="return noOfHoursValidate(event, this.id)"/>
                                         <span class="input-group-addon" style="padding-top: 5px">Hrs</span>
                                     </div>
                                 </div>
@@ -278,14 +278,13 @@
         </div>
 
         <section id=""><!--form-->
-            <div class="container" style="overflow: auto;">
+            <div class="" style="">
                 <div class="row">
 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
-                        <div class=" " >
-                            <div class=" " >
-                                <div class="" id="profileBox" style="margin-top: 5px; width: 90%">
+                    <div class="" style="background-color:#fff">
+                         
+                                <div class="" id="profileBox" style="margin-top: 5px; width: 100%">
 
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
@@ -303,122 +302,127 @@
                                     <label class="labelStyle" style="color: green; width: auto;margin-left: 20px" id="projectAddResult"><s:property value="projectsActionResponse"/></label>
 
                                     <div class="col-sm-12" id="profileBox" style="margin-top: -20px">
-                                        <div >
-                                            <div id="projectSearchForm">
-                                                <div class="col-sm-12">
-                                                    <s:form action="" theme="simple" method="GET" target="%{projects}">
-                                                        <br>
-                                                        <span><searchProject></searchProject></span>
-                                                        <div class="inner-addtaskdiv-elements" style="margin-left: -30px">
-                                                            <div class="col-sm-3">
-                                                                <label >Skill Set: </label>
-                                                                <s:textfield cssClass="form-control " label="projectReqSkillSet" id="projectReqSkillSet" type="text" name="projectReqSkillSet"  placeholder="Skill Set" maxLength="100"/>
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <label >Project Name: </label>
-                                                                <s:textfield  cssClass="form-control " label="projectName" id="projectName" type="text" name="projectName" placeholder="Project Name" maxLength="30"/>
-                                                            </div>
 
-                                                            <div class="col-sm-3">
-                                                                <label >Start Date: </label>
-                                                                <s:textfield cssClass="form-control " id="projectStartDate" type="text" name="projectStartDate" placeholder="Project Start Date"  cssStyle="height: 25px;background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;" onkeypress=" return projectDateRepository();" autocomplete="off"/>
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <label >Target Date: </label>
-                                                                <s:textfield cssClass="form-control " id="projectTargetDate" type="text" name="projectTargetDate" placeholder="Project Target Date"  cssStyle="height: 25px;background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;" onkeypress=" return projectDateRepository();" autocomplete="off"/>
-                                                            </div>
+                                        <div id="projectSearchForm">
+                                            <div class="col-sm-12">
+                                                <s:form action="" theme="simple" method="GET" target="%{projects}">
+                                                    <br>
+                                                    <span><searchProject></searchProject></span>
+                                                    <div class="">
+                                                        <div class="col-sm-3">
+                                                            <label >Skill Set: </label>
+                                                            <s:textfield cssClass="form-control " label="projectReqSkillSet" id="projectReqSkillSet" type="text" name="projectReqSkillSet"  placeholder="Skill Set" maxLength="100"/>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label >Project Name: </label>
+                                                            <s:textfield  cssClass="form-control " label="projectName" id="projectName" type="text" name="projectName" placeholder="Project Name" maxLength="30"/>
+                                                        </div>
 
-
-                                                            
-                                                            </div>
+                                                        <div class="col-sm-3">
+                                                            <label >Start Date: </label>
+                                                            <s:textfield cssClass="form-control " id="projectStartDate" type="text" name="projectStartDate" placeholder="Project Start Date"  cssStyle="height: 25px;background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;" onkeypress=" return projectDateRepository();" autocomplete="off"/>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label >Target Date: </label>
+                                                            <s:textfield cssClass="form-control " id="projectTargetDate" type="text" name="projectTargetDate" placeholder="Project Target Date"  cssStyle="height: 25px;background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;" onkeypress=" return projectDateRepository();" autocomplete="off"/>
                                                         </div>
 
 
-                                                </s:form>
 
 
+
+
+
+                                                    </s:form>
+
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-sx-12">      
+                                                        <div class="col-sm-2 pull-right contact_search">   
+                                                            <s:submit type="button" cssStyle="margin:5px 0px" cssClass="add_searchButton form-control "  onclick="searchProjects();" ><i class="fa fa-search" ></i>&nbsp;Search</s:submit>
+                                                        </div>
+                                                        <div class="col-sm-2 pull-right contact_search">
+                                                            <a href="" class="addProject_popup_open" ><button style="margin:5px 0px" class="add_searchButton form-control" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <br>
-<div class="col-lg-8"></div>
-                                                            <div class="col-lg-2 ">   
-                                                                <s:submit type="button" cssStyle="margin:5px 0px" cssClass="add_searchButton form-control "  onclick="searchProjects();" ><i class="fa fa-search" ></i>&nbsp;Search</s:submit>
-                                                                </div>
-                                                                <div class="col-lg-2">
-                                                                    <a href="" class="addProject_popup_open" ><button style="margin:5px 0px" class="add_searchButton form-control" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
-                                                                </div>
-                                            <div class="col-sm-12">
-                                                <s:form id="projectResultsForm">
-                                                    <div style="width: fit-content">
-                                                        <div class="emp_Content" id="emp_div" align="center" style="width:auto;margin: auto" >
-                                                            <table id="projectResults" class="responsive CSSTable_task" border="5" style="width: 100%;margin: auto" >
-                                                                <br>
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <s:form id="projectResultsForm">
+                                                <div style="width: fit-content">
+                                                    <div class="emp_Content" id="emp_div" align="center" style="width:auto;margin: auto" >
+                                                        <table id="projectResults" class="responsive CSSTable_task" border="5" style="width: 100%;margin: auto" >
+                                                            <br>
+                                                            <tr>
+                                                                <th>Project Name</th>
+
+                                                                <th>Required Skill-Set</th>
+                                                                <th>Description</th>
+                                                                <th>Start Date</th>
+                                                                <th>Target Date</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                            <s:if test="searchDetails ==null || searchDetails.size() ==0">
                                                                 <tr>
-                                                                    <th>Project Name</th>
-
-                                                                    <th>Required Skill-Set</th>
-                                                                    <th>Description</th>
-                                                                    <th>Start Date</th>
-                                                                    <th>Target Date</th>
-                                                                    <th>Status</th>
+                                                                    <td colspan="9"><font style="color: red;font-size: 15px;">No Records to display</font></td>
                                                                 </tr>
-                                                                <s:if test="searchDetails ==null || searchDetails.size() ==0">
-                                                                    <tr>
-                                                                        <td colspan="9"><font style="color: red;font-size: 15px;">No Records to display</font></td>
-                                                                    </tr>
-                                                                </s:if>
-                                                                <s:iterator  value="searchDetails">
-                                                                    <tr>
+                                                            </s:if>
+                                                            <s:iterator  value="searchDetails">
+                                                                <tr>
 
-                                                                        <s:url action="projectDetails.action" var="getDetails">
-                                                                            <s:param name="projectID"><s:property value="projectID"/></s:param>
-                                                                            <s:param name="accountID"><s:property value="accountID"/></s:param>
-                                                                        </s:url>
-                                                                        <td><s:a href="%{getDetails}"><s:property value="projectName"/></s:a></td>
-                                                                        <s:if test="%{projectReqSkillSet.length()>10}">
-                                                                            <%-- <td><s:property value="projectReqSkillSet"/></td>--%>
-                                                                            <td><s:a href="#" cssClass="projectSkillOverlay_popup_open" onclick="reqSkillSetOverlay('%{projectReqSkillSet}')"><s:property value="projectReqSkillSet.substring(0,10)"/></s:a></td>
-                                                                        </s:if>
-                                                                        <s:else>
-                                                                            <td> <s:a href="#" cssClass="projectSkillOverlay_popup_open" onclick="reqSkillSetOverlay('%{projectReqSkillSet}')"><s:property value="projectReqSkillSet"/></s:a></td>
-                                                                        </s:else>
-                                                                        <%-- <td><s:property value="project_description"/></td>--%>
-                                                                        <s:if test="%{project_description.length()>10}">
-                                                                            <td><s:a href="#" cssClass="projectsDescOverlay_popup_open" onclick="projectDescriptinOverlay('%{project_description}')"><s:property value="project_description.substring(0,10)"/></s:a></td>
-                                                                        </s:if>
-                                                                        <s:else>
-                                                                            <td><s:a href="#" cssClass="projectsDescOverlay_popup_open" onclick="projectDescriptinOverlay('%{project_description}')"><s:property value="project_description"/></s:a></td>    
-                                                                        </s:else>
-                                                                        <td><s:property value="projectStartDate"/></td>
-                                                                        <td><s:property value="projectTargetDate"/></td>
-                                                                        <td><s:property value="project_status"/></td>
-                                                                    </tr>
+                                                                    <s:url action="projectDetails.action" var="getDetails">
+                                                                        <s:param name="projectID"><s:property value="projectID"/></s:param>
+                                                                        <s:param name="accountID"><s:property value="accountID"/></s:param>
+                                                                    </s:url>
+                                                                    <td><s:a href="%{getDetails}"><s:property value="projectName"/></s:a></td>
+                                                                    <s:if test="%{projectReqSkillSet.length()>10}">
+                                                                        <%-- <td><s:property value="projectReqSkillSet"/></td>--%>
+                                                                        <td><s:a href="#" cssClass="projectSkillOverlay_popup_open" onclick="reqSkillSetOverlay('%{projectReqSkillSet}')"><s:property value="projectReqSkillSet.substring(0,10)"/></s:a></td>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                        <td> <s:a href="#" cssClass="projectSkillOverlay_popup_open" onclick="reqSkillSetOverlay('%{projectReqSkillSet}')"><s:property value="projectReqSkillSet"/></s:a></td>
+                                                                    </s:else>
+                                                                    <%-- <td><s:property value="project_description"/></td>--%>
+                                                                    <s:if test="%{project_description.length()>10}">
+                                                                        <td><s:a href="#" cssClass="projectsDescOverlay_popup_open" onclick="projectDescriptinOverlay('%{project_description}')"><s:property value="project_description.substring(0,10)"/></s:a></td>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                        <td><s:a href="#" cssClass="projectsDescOverlay_popup_open" onclick="projectDescriptinOverlay('%{project_description}')"><s:property value="project_description"/></s:a></td>    
+                                                                    </s:else>
+                                                                    <td><s:property value="projectStartDate"/></td>
+                                                                    <td><s:property value="projectTargetDate"/></td>
+                                                                    <td><s:property value="project_status"/></td>
+                                                                </tr>
 
-                                                                </s:iterator>
+                                                            </s:iterator>
 
-                                                            </table>
-                                                            <br/>
-                                                            <s:if test="searchDetails.size() > 0">
+                                                        </table>
+                                                        <br/>
+                                                        <s:if test="searchDetails.size() > 0">
                                                             <label> Display:
                                                                 <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption();" style="width: auto">
                                                                     <option>10</option>
                                                                     <option>15</option>
                                                                 </select>&nbsp;Projects per page
                                                             </label>
-                                                          </s:if>
-                                                            <div id="loadingSearchProject" class="loadingImg" style="display: none">
-                                                                <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>
-                                                            </div>
-                                                            <div align="right" id="pageNavPosition" style="margin-right: 0vw;display: none"></div>
+                                                        </s:if>
+                                                        <div id="loadingSearchProject" class="loadingImg" style="display: none">
+                                                            <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>
                                                         </div>
+                                                        <div align="right" id="pageNavPosition" style="margin-right: 0vw;display: none"></div>
                                                     </div>
-                                                </s:form>
+                                                </div>
+                                            </s:form>
 
-                                            </div>
                                         </div>
+
                                     </div>
 
-                                </div>
-                            </div>
+                             
                         </div>
                     </div>
 
@@ -432,26 +436,27 @@
     <%--close of future_items--%>
 </div>
 <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
 
-               var paginationSize = document.getElementById("paginationOption").value;
-                if(isNaN(paginationSize))
-                   {
+<script type="text/javascript">
+    var recordPage=10;
+    function pagerOption(){
+
+        var paginationSize = document.getElementById("paginationOption").value;
+        if(isNaN(paginationSize))
+        {
                        
-                   }
-                recordPage=paginationSize;
-               // alert(recordPage)
-                 $('#projectResults').tablePaginate({navigateType:'navigator'},recordPage);
-
-            };
+        }
+        recordPage=paginationSize;
+        // alert(recordPage)
         $('#projectResults').tablePaginate({navigateType:'navigator'},recordPage);
-       </script>
+
+    };
+    $('#projectResults').tablePaginate({navigateType:'navigator'},recordPage);
+</script>
 <script type="text/javascript">
     window.setTimeout("pagerOption();", 1000);
     window.setTimeout("doOnLoad();", 1000);
     setupAddProjectOverlay();
-	// new code.
+    // new code.
 </script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>

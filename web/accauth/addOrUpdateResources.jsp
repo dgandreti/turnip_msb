@@ -22,8 +22,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
+        
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
@@ -31,10 +30,8 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
-
-        <%--<script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>--%>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/GeneralAjax.js"/>'></script>
-        <%--<script type="text/JavaScript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>--%>
+       
 
     </head>
     <body style="overflow-x: hidden" onload="getAccountNames(); getUserGroups();">
@@ -53,7 +50,7 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-16 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -87,7 +84,7 @@
                                     <div class="col-sm-16">
                                         <div id="outputMessage" style="color: green"></div>
                                         <%-- <s:form action="searchAccAuthorization" theme="simple"> --%>
-                                        <div class="col-lg-4">
+                                        <div class="col-sm-4">
                                             <label class="labelStylereq" style="color:#56a5ec;">Account Type: </label>
                                             <s:select  id="accType"
                                                        name="accType"
@@ -99,7 +96,7 @@
                                         </div>
                                         <s:if test="flag=='update'">
 
-                                            <div class="col-lg-4">
+                                            <div class="col-sm-4">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
                                                 <s:select  id="status"
                                                            name="status"
@@ -112,7 +109,7 @@
                                             </div >
                                         </s:if>
 
-                                        <div class="col-lg-4">
+                                        <div class="col-sm-4">
                                             <label class="labelStylereq" style="color:#56a5ec;">Roles: </label>
                                             <s:select  id="roles"
                                                        name="roles"
@@ -124,7 +121,7 @@
                                                        onchange="getUserGroups();"
                                                        />
                                         </div >
-                                        <div class="col-lg-4" id="usergroupDiv" style="display: none">
+                                        <div class="col-sm-4" id="usergroupDiv" style="display: none">
                                             <label class="labelStylereq" style="color:#56a5ec;">Group: </label>
                                             <s:select  id="userGroups"
                                                        name="userGroupId"
@@ -136,12 +133,9 @@
                                                        list="userGroupIdList"
                                                        />
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-sm-4">
                                             <s:hidden name="orgId" id="orgId"/>
-                                            <%--<s:textfield value="%{accountName}"/>
-                                            <s:textfield value="%{status}"/>
-                                            <s:textfield value="%{description}"/>--%>
-                                            <%--<s:textfield value="%{rollName}"/> --%>
+                                           
 
                                             <label class="labelStylereq" style="color:#56a5ec;">Account Name: </label>
                                             <s:if test="accountName == 'All'">   
@@ -166,23 +160,23 @@
                                             </s:else>
                                             <span id="validationMessage" />
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-sm-4">
                                             <label class="labelStylereq" style="color:#56a5ec;">Description: </label>
-                                            <s:textarea id="addingAccAuthDesc" cssClass="form-control" name="addingAccAuthDesc" value="%{description}" onkeydown="actionAuthDescription(this)"/>
+                                            <s:textarea id="addingAccAuthDesc" cssClass="form-control" name="addingAccAuthDesc" placeholder="Description" value="%{description}" onkeydown="actionAuthDescription(this)"/>
                                             <span class="charNum" id="addingAccAuthValid"></span> 
                                         </div>
 
-                                        <div class="col-lg-4">
-                                            <label for="block_flag" class="checkbox">
+                                        <div class="col-sm-4">
+                                            <label for="block_flag" class="checkbox" style="margin: 25px 0px">
                                                 <s:checkbox name="blockFlag" id="blockFlag" value="%{blockFlag}"/>Block Action
                                             </label>
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        <div class="col-sm-4 pull-right">
                                             <s:if test="flag=='update'">
 
                                                 <div class="col-lg-6"></div>
-                                                <div class="col-lg-6">
+                                                <div class="col-sm-6">
                                                     <label class="labelStylereq" style="color:#56a5ec;"></label>
 
                                                     <button type="button"
@@ -191,7 +185,7 @@
                                                 </s:if>
                                                 <s:else>
                                                     <div class="col-lg-6"></div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-sm-6">
                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
 
                                                         <button type="button" style="margin: 5px 0px;"
@@ -201,125 +195,17 @@
                                                 </s:else>
                                             </div>
 
-                                            <%--  </s:form> --%>
 
 
                                         </div>
-                                        <%--</s:form>--%>
                                     </div>
-
                                     <%--close of future_items--%>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-                <%-- Start overlay for Display Description --%>
-                <%--<div id="authAccOverlay_popup" >
-                    <div id="authAccBox">
-                        <div class="backgroundcolor">
-                            <table>
-                                <tr><td><h4 style="font-family:cursive"><font class="titleColor" >&nbsp;&nbsp;Description &nbsp;&nbsp; </font></h4></td>
-                                <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="authAccOverlay_popup_close" onclick="authAccOverlayFun()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
-                            </table>
-                        </div>
-                        <div>
-                            <div class="inner-reqdiv-elements">
-
-                            <div id="outputMessageOfauthAcc"></div>
-
-                        </div>
-
-
-
-                    </div>
-                    <font style="color: #ffffff">..................... ..............................  ..........................................</font>
-                </div>   
-            </div> --%>
-
-                <%-- end overlay for Display Description --%>
-                <%-- Start overlay for for Add Acc Authorization  --%>
-                <%--<div id="addAuthAccOverlay_popup" >
-                    <div id="addAuthAccBox">
-                        <div class="backgroundcolor">
-                            <table>
-                                <tr><td><h4 id="" style="font-family:cursive"><font id="heading" class="titleColor" >&nbsp;&nbsp;Add Account Authorization &nbsp;&nbsp; </font></h4></td>
-                                <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="addAuthAccOverlay_popup_close" onclick="addAuthAccOverlayFun()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
-                            </table>
-                        </div>
-                        <div>
-                            <s:hidden id="overlayActionId" value="overlayActionId"/>
-                            <s:hidden id="overlayActionName" value="overlayActionName"/>
-                            <s:hidden id="overlayActionStatus" value="overlayActionStatus"/>
-                            <s:hidden id="overlayActionDesc" value="overlayActionDesc"/>
-                            <div class="inner-reqdiv-elements" id="accNameDiv">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <label class="labelStylereq" style="color:#56a5ec;">Action Name: </label>
-                                        <s:textfield id="action_name" 
-                                                     cssClass="form-control"
-                                                     type="text"
-                                                     name="action_name"
-                                                     placeholder="Action Name"
-                                                     /> 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="inner-reqdiv-elements" id="statusDiv">
-                <%--  <s:hidden id="overLayAction_id" name="overLayAction_id" value="action_id"/>--%>
-                <%--<div class="row">
-                    <div class="col-lg-6">
-                        <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
-                        <s:select  id="accauthStatus"
-                                   name="accauthStatus"
-                                   cssClass="SelectBoxStyles form-control"
-                                   headerKey="-1"  
-                                   theme="simple" 
-                                   list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'Inactive','All':'All'}"
-                                   />
-                    </div >
-                </div>
-            </div>
-            <div class="inner-reqdiv-elements" id="descDiv">
-                <div class="row">
-                    <div class="col-lg-10">
-                        <label class="labelStylereq" style="color:#56a5ec;">Description: </label>
-                        <s:textarea id="addingAccAuthDesc" cssClass="form-control" name="addingAccAuthDesc"/>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inner-reqdiv-elements" id="addDiv">
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <input type="button" class="cssbutton" onclick="insertOrUpdateAccAuth('0');" value="Add"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inner-reqdiv-elements" id="updateDiv">
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <input type="button" class="cssbutton" onclick="insertOrUpdateAccAuth('1');" value="update"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <font style="color: #ffffff">..................... ..............................  ..........................................</font>
-                    </div>   
-                </div> 
-            </div> --%>
-
-                <%-- end overlay for Add Acc Authorization  --%>
-
-                <!-- content end -->
         </section><!--/form-->
-
-        <div style="height: 306px"></div>
 
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
@@ -331,7 +217,7 @@
         </footer>
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <!--/Footer-->
         <script>
             sortables_init();

@@ -71,10 +71,18 @@ function ajaxReplaceDiv(actionUrl,divId,data)
 
 var projName;
 
-function checkProjectName(projName){
-
+function checkProjectName(projName,type){
+var mainProjectId=$("#mainProjectId").val();
+    var projectType;
+    if(type=='Main Project')
+        {
+        projectType="main"; 
+        }
+        else{
+        projectType="subprojects"; 
+        }
     $.ajax({
-        url:"./checkProjectNames.action?projectName="+ projName,
+        url:"./checkProjectNames.action?projectName="+ projName+"&projectFlag="+projectType+"&mainProjectId="+mainProjectId,
         success: function(data){
 
             if(data == "true"){

@@ -19,7 +19,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ServicesBay :: Home Page</title>
-
+        <!--[if IE]>
+                <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/ie_support.css"/>">
+               <![endif]-->
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/main.css"/>">
@@ -69,7 +71,7 @@
 
         </header><!--/header-->
 
-        <section id="form"><!--form-->
+        <section id="generalForm"><!--form-->
             <div id="login_home" >
                 <div class="container">
                     <div class="row">
@@ -148,7 +150,7 @@
                                             <div class="col-md-6" id="multiple_devices">
                                                 <ul id="desktop_slider">
                                                     <li>
-                                                        <img id="desktop_home" width="375px" height="297px"  src="<s:url value="/includes/images/home/home.png"/>"/>
+                                                        <img id="desktop_home" width="375px" height="297px"  src="<s:url value="/includes/images/home/SB_Home_Page.png"/>"/>
                                                     </li>
                                                     <li>
                                                         <img id="desktop_home1" width="375px" height="297px"  src="<s:url value="/includes/images/home/ServicesBay_Account_Search_Page.jpg"/>"/>
@@ -159,7 +161,7 @@
                                                 </ul>
                                                 <ul id="tab_slider">
                                                     <li>
-                                                        <img name="imageslider" width="167px" height="246px"  src="<s:url value="/includes/images/home/home_tab.jpg"/>"/>
+                                                        <img name="imageslider" width="167px" height="246px"  src="<s:url value="/includes/images/home/SB_Tab_Home.png"/>"/>
                                                     </li>
                                                     <li>
                                                         <img name="imageslider" width="167px" height="246px"  src="<s:url value="/includes/images/home/account_search_tab.jpg"/>" />
@@ -206,7 +208,7 @@
                                     <center>
                                         <s:form id="forgotPassword" name="forgotPassword" >
 
-                                            <input type="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Valid Email Address" id="forgotEmailId" name="forgotEnailId" required= "required"/>
+                                            <input type="email"  class="frgt_pwd" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Valid Email Address" id="forgotEmailId" name="forgotEnailId" required= "required"/>
                                             &nbsp;<input style="margin:4px" type="button" class="passwordButton" value="Send E-mail" name="FPass" id="FPass" onclick="return forgotPassword();"/>
 
 
@@ -261,13 +263,13 @@
                                         <% out.println(request.getAttribute("errorMessage"));
                                         %>
                                         <%
-                                                    }%>
+                                            }%>
                                         <s:form action="/general/loginCheck.action" method="post" name="userLoginForm" id="userLoginForm" > 
-                                            <input type="email" placeholder="Email" name="emailId" id="emailId" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required data-error-message="LoginId is required!" tabindex="1"/>
+                                            <input type="email" placeholder="Email" class="frgt_pwd" name="emailId" id="emailId" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required data-error-message="LoginId is required!" tabindex="1"/>
 
-                                            <input type="password" placeholder="Password"  name='password' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" id="password" title="Must be at least 6 characters long, and contain at least one number, one uppercase and one lowercase letter" required data-type="Password" tabindex="2" />
+                                            <input type="password" placeholder="Password" class="frgt_pwd"  name='password' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" id="password" title="Must be at least 6 characters long, and contain at least one number, one uppercase and one lowercase letter" required data-type="Password" tabindex="2" />
 
-                                            <p id="wrapper"><a  class="slide_open" href="" id="closeLogin" data-dismiss="modal" data-toggle="modal" data-target="#forgotPwd"><font class ="fgtPwd">Forgot Password</font></a></p>
+                                            <p id="wrapper" class="frgt_pwd"><a  class="slide_open" href="" id="closeLogin" data-dismiss="modal" data-toggle="modal" data-target="#forgotPwd"><font class ="fgtPwd">Forgot Password</font></a></p>
                                             <div class="LoginButton">
                                                 <button type="submit" >LogIn</button>
                                             </div>
@@ -426,7 +428,7 @@
                             <div class="modal-header">
                                 <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
                                 <h4 id="myModalLabel" class="modal-title">Multi device operability</h4>
-                                <img src="<s:url value="/includes/images/home/responsive_galleryIcon-.png"/>" height="100px" width="190px">
+                                <img src="<s:url value="/includes/images/home/responsive_galleryIconnew-.png"/>" height="100px" width="190px">
                             </div>
                             <div class="modal-body">
                                 <p><b>Multi device operability</b>
@@ -565,7 +567,7 @@
              });*/
         </script>
 
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/home/jquery.flexslider.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/home/custom.js"/>"></script>
 

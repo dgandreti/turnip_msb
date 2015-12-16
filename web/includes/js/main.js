@@ -9,36 +9,36 @@
 /*scroll to top*/
 
 $(document).ready(function(){
-	$(function () {
-		$.scrollUp({
-	        scrollName: 'scrollUp', // Element ID
-	        scrollDistance: 300, // Distance from top/bottom before showing element (px)
-	        scrollFrom: 'top', // 'top' or 'bottom'
-	        scrollSpeed: 300, // Speed back to top (ms)
-	        easingType: 'linear', // Scroll to top easing (see http://easings.net/)
-	        animation: 'fade', // Fade, slide, none
-	        animationSpeed: 200, // Animation in speed (ms)
-	        scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
-					//scrollTarget: false, // Set a custom target element for scrolling to the top
-	        scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
-	        scrollTitle: false, // Set a custom <a> title if required.
-	        scrollImg: false, // Set true to use image
-	        activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
-	        zIndex: 2147483647 // Z-Index for the overlay
-		});
-	});
+    $(function () {
+        $.scrollUp({
+            scrollName: 'scrollUp', // Element ID
+            scrollDistance: 300, // Distance from top/bottom before showing element (px)
+            scrollFrom: 'top', // 'top' or 'bottom'
+            scrollSpeed: 300, // Speed back to top (ms)
+            easingType: 'linear', // Scroll to top easing (see http://easings.net/)
+            animation: 'fade', // Fade, slide, none
+            animationSpeed: 200, // Animation in speed (ms)
+            scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
+            //scrollTarget: false, // Set a custom target element for scrolling to the top
+            scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
+            scrollTitle: false, // Set a custom <a> title if required.
+            scrollImg: false, // Set true to use image
+            activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+            zIndex: 2147483647 // Z-Index for the overlay
+        });
+    });
 });
 jQuery.validator.setDefaults({
-debug: true,
-success: "valid"
+    debug: true,
+    success: "valid"
 });
 $( "#loginForm" ).validate({
-rules: {
-logiId: {
-required: true,
-email: true
-}
-}
+    rules: {
+        logiId: {
+            required: true,
+            email: true
+        }
+    }
 });
 
 
@@ -47,14 +47,14 @@ function checkEmailIdExistance(){
     $("resultMessage").html(" ");
     $("resetMessage").html(" ");
     var emailId=document.getElementById("email").value;
-  //  alert(document.getElementById('email').value);
+    //  alert(document.getElementById('email').value);
     var url=CONTENXT_PATH+'/general/resetEmailVerify.action?emailId='+emailId;
     // alert(url);
     var req=initRequest(url);
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
             if (req.status == 200) {
-                      //          alert(req.responseText);
+                //          alert(req.responseText);
                 //  alert("2");
                 emailResponse(req.responseText);
                
@@ -93,65 +93,65 @@ function closePopup(){
 }
 
 function toggleContent(id) {
-  // Get the DOM reference
+    // Get the DOM reference
 
-  var contentId = document.getElementById(id);
-  // Toggle
+    var contentId = document.getElementById(id);
+    // Toggle
 
-  if(contentId.style.display == "none")
-  {
-      contentId.style.display = "";
-      document.getElementById("updownArrow").className="fa fa-angle-up";
-  }
- else
-      {
-          contentId.style.display = "none";
+    if(contentId.style.display == "none")
+    {
+        contentId.style.display = "";
+        document.getElementById("updownArrow").className="fa fa-angle-up";
+    }
+    else
+    {
+        contentId.style.display = "none";
        
-          document.getElementById("updownArrow").className="fa fa-angle-down";
+        document.getElementById("updownArrow").className="fa fa-angle-down";
          
-      }
+    }
 
 } 
 
 
 function toggleContent1(id) {
-  // Get the DOM reference
+    // Get the DOM reference
 
-  var contentId = document.getElementById(id);
-  // Toggle
+    var contentId = document.getElementById(id);
+    // Toggle
 
-  if(contentId.style.display == "none")
-  {
-      contentId.style.display = "";
-      document.getElementById("updownArrow1").className="fa fa-angle-up";
-  }
- else
-      {
-          contentId.style.display = "none";
+    if(contentId.style.display == "none")
+    {
+        contentId.style.display = "";
+        document.getElementById("updownArrow1").className="fa fa-angle-up";
+    }
+    else
+    {
+        contentId.style.display = "none";
          
-          document.getElementById("updownArrow1").className="fa fa-angle-down";
+        document.getElementById("updownArrow1").className="fa fa-angle-down";
          
-      }
+    }
 
 }
 function toggleContentLeft(id) {
-  // Get the DOM reference
+    // Get the DOM reference
 
-  var contentId = document.getElementById(id);
-  // Toggle
+    var contentId = document.getElementById(id);
+    // Toggle
 
-  if(contentId.style.display == "none")
-  {
-      contentId.style.display = "";
-      document.getElementById("updownArrowLeft").className="fa fa-angle-up";
-  }
- else
-      {
-          contentId.style.display = "none";
+    if(contentId.style.display == "none")
+    {
+        contentId.style.display = "";
+        document.getElementById("updownArrowLeft").className="fa fa-angle-up";
+    }
+    else
+    {
+        contentId.style.display = "none";
          
-          document.getElementById("updownArrowLeft").className="fa fa-angle-down";
+        document.getElementById("updownArrowLeft").className="fa fa-angle-down";
          
-      }
+    }
 
 }
 function checkPasswordMatch() {
@@ -174,7 +174,7 @@ function checkPasswordMatch() {
 }
 function matchCurrentPassword(){
                 
- // alert("in Ajax call ");
+    // alert("in Ajax call ");
     var currentPwd=document.getElementById("curPwd").value;
     var url=CONTENXT_PATH+'/general/verfiyCurrentPassword.action?currentPwd='+currentPwd;
     // alert(url);
@@ -182,7 +182,7 @@ function matchCurrentPassword(){
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
             if (req.status == 200) {
-                            //   alert(req.responseText);
+                //   alert(req.responseText);
                 //  alert("2");
                 verifyPasswordResponce(req.responseText);
                
@@ -205,9 +205,9 @@ function verifyPasswordResponce(response){
         return true;
     }
     else{
-         $("resetMessage").html("<font  color='red'> Sorry, Current password is wrong, try again.</font>");
-       // curPwd.value='';
-       document.getElementById("curPwd").value='';
+        $("resetMessage").html("<font  color='red'> Sorry, Current password is wrong, try again.</font>");
+        // curPwd.value='';
+        document.getElementById("curPwd").value='';
         return false;
     }
 }
@@ -241,13 +241,45 @@ function initSessionTimer() {
 
 
 
+       
+       
 
  
             
             
-            function sidepopup(){
-                    $(".popup_block").animate({
-                        width: 'toggle'
-                    });
-            }
+//function sidepopup(){
+//    $(".popup_block").animate({
+//        width: 'toggle'
+//    });
+//}
             
+function toggleContentRequirement(id)
+{
+    var contentId = document.getElementById(id);
+    if(contentId.style.display == "none")
+    {
+        contentId.style.display = "";
+        document.getElementById("updownArrow").className="fa fa-sort-asc";
+    }
+    else
+    {
+        contentId.style.display = "none";
+        document.getElementById("updownArrow").className="fa fa-sort-desc";
+    }
+
+}
+ function toggleContentRequirementSubmittedList(id)
+{
+    var contentId = document.getElementById(id);
+    if(contentId.style.display == "none")
+    {
+        contentId.style.display = "";
+        document.getElementById("updownArrowSub").className="fa fa-sort-asc";
+    }
+    else
+    {
+        contentId.style.display = "none";
+        document.getElementById("updownArrowSub").className="fa fa-sort-desc";
+    }
+
+}             

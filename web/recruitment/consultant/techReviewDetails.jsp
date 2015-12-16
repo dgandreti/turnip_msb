@@ -25,14 +25,15 @@
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/requirementStyle.css"/>'>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/vendorDetailsStyles.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/taskiframe.css"/>">
-          <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive_queries.css"/>">
 
 
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -43,31 +44,18 @@
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/ConsultantAjax.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/techReviewAjax.js"/>'></script>
-         <script language="JavaScript" src='<s:url value="/includes/js/general/sweetalert.min.js"/>'></script>
+        <script language="JavaScript" src='<s:url value="/includes/js/general/sweetalert.min.js"/>'></script>
 
         <script>
             var pager;
-            // $(document).ready(function(){
             function techReview(){
                 var paginationSize = 10;
                 pager = new EmpPager('techReviewTable', paginationSize);
                 pager.init();
                 pager.showPageNav('pager', 'pageNavPosition');
-                // document.getElementById("paginationOption").value=10;
                 pager.showPage(1);
             };
-//            function pagerOption(){
-//
-//                paginationSize = document.getElementById("paginationOption").value;
-//                if(isNaN(paginationSize))
-//                    alert(paginationSize);
-//
-//                pager = new EmpPager('techReviewTable', parseInt(paginationSize));
-//                pager.init();
-//                pager.showPageNav('pager', 'pageNavPosition');
-//                pager.showPage(1);
-//
-//            };
+           
         </script>
     </head>
     <body style="overflow-x: hidden" onload="doOnLoad(); techReview();">
@@ -78,15 +66,15 @@
                 </div>
             </div>
         </header>
-
-        <s:include value="/includes/menu/LeftMenu.jsp"/>
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
+                    <s:include value="/includes/menu/LeftMenu.jsp"/>
+
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
-                            <div class="col-lg-12 ">
+                            <div class="col-sm-12 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
@@ -102,33 +90,24 @@
                                     <div class="col-sm-12">
                                         <s:form  theme="simple" id="techReviewDetailsForm">
                                             <br>
-                                            <%-- <s:hidden name="requirementId" id="requirementId" value="%{requirementId}" />
-                                            < div class="inner-reqdiv-elements">
-                                                 <label class="" style="color:#56a5ec;">From:</label>  
-                                                 <s:textfield cssClass=" reqInputStyle dateImage" name="reviewStartDate" id="reviewStartDate" placeholder="From Date"  tabindex="1"  onkeypress="return enterDateRepository();"/>
-                                                 <label class="" style="color:#56a5ec;">To:</label>  
-                                                 <s:textfield cssClass=" reqInputStyle dateImage" name="reviewEndDate" id="reviewEndDate" placeholder="To Date"  tabindex="1"  onkeypress="return enterDateRepository();"/>
-                                                 <label class="">Status:&nbsp;</label><s:select cssClass="techReviewSelectStyle" name="techReviewStatus" id="techReviewStatus" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Processing':'Processing','ShortListed':'ShortListed','Rejected':'Rejected'}" />
-                                                 <s:submit type="button" cssClass="cssbutton_emps "
-                                                           value="Search" onclick="return getSearchTechReviewList()" cssStyle="margin:5px"/>
-                                             </div--%> 
+                                          
                                             <div class="inner-reqdiv-elements">
                                                 <div class="row">
-                                                    <div class="col-lg-3">
+                                                    <div class="col-sm-3">
                                                         <label class="labelStylereq" style="color:#56a5ec;">From: </label>
                                                         <s:textfield cssClass="form-control dateImage" name="reviewStartDate" id="reviewStartDate" placeholder="From Date"  tabindex="1"  onkeypress="return enterTechDateRepository(this);" autocomplete="off" onfocus="return removeErrorMsgForTechieConsultant();"/>
                                                     </div>
-                                                    <div class="col-lg-3">
+                                                    <div class="col-sm-3">
                                                         <label class="labelStylereq" style="color: #56a5ec;">To: </label>
-                                                        <s:textfield cssClass="form-control dateImage" name="reviewEndDate" id="reviewEndDate" placeholder="To Date"  tabindex="1"  onkeypress="return enterTechDateRepository(this);" autocomplete="off" onfocus="return removeErrorMsgForTechieConsultant();"/>
+                                                        <s:textfield cssClass="form-control dateImage" name="reviewEndDate" id="reviewEndDate" placeholder="To Date"  tabindex="2"  onkeypress="return enterTechDateRepository(this);" autocomplete="off" onfocus="return removeErrorMsgForTechieConsultant();"/>
                                                     </div>
-                                                    <div class="col-lg-3">
+                                                    <div class="col-sm-3">
                                                         <label class="labelStylereq" style="color: #56a5ec;">Status: </label>
-                                                        <s:select cssClass="SelectBoxStyles form-control" name="techReviewStatus" id="techReviewStatus" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Processing':'Processing','ShortListed':'ShortListed','Rejected':'Rejected','Selected':'Selected'}" />
+                                                        <s:select cssClass="SelectBoxStyles form-control" name="techReviewStatus" id="techReviewStatus" tabindex="3" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Processing':'Processing','ShortListed':'ShortListed','Rejected':'Rejected','Selected':'Selected'}" />
                                                     </div>
-                                                    <div class="col-lg-2">
+                                                    <div class="col-sm-2">
                                                         <label class="labelStylereq" style="color: #56a5ec;"></label>
-                                                        <s:submit type="button" cssClass="add_searchButton form-control "
+                                                        <s:submit type="button" cssClass="add_searchButton form-control " tabindex="4"
                                                                   value="" onclick="return getSearchTechReviewList()" cssStyle="margin:5px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                         <s:hidden name="techSearch" id="techSearch" value="%{techSearch}"/>
                                                         <s:hidden name="downloadFlag" id="downloadFlag" value="%{downloadFlag}"/>
@@ -138,6 +117,7 @@
 
                                         </s:form>
                                     </div>
+                                    <div class="row"></div>
                                     <br>
                                     <s:form>
                                         <s:if test='downloadFlag=="noAttachment"'>
@@ -150,6 +130,7 @@
 
                                             <div>
                                                 <div>
+
                                                     <table id="techReviewTable" class="responsive CSSTable_task" border="5"cell-spacing="2">
                                                         <tbody>
                                                             <tr>
@@ -180,8 +161,13 @@
                                                                     <td><s:property value="consult_email"></s:property></td>
                                                                     <td><s:property value="consult_Phone"></s:property></td>
                                                                     <td><s:property value="reviewType"></s:property></td>
-                                                                    <td><s:property value="scheduledDate"></s:property>&nbsp;&nbsp;<s:property value="scheduledTime"></s:property>&nbsp;&nbsp;<s:property value="zone"></s:property></td>
-                                                                    
+                                                                    <s:if test="reviewType=='Online' || reviewType=='Psychometric'" >
+                                                                        <td><s:property value="forwardedDate"></s:property></td>   
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                        <td><s:property value="scheduledDate"></s:property>&nbsp;&nbsp;<s:property value="scheduledTime"></s:property>&nbsp;&nbsp;<s:property value="zone"></s:property></td>    
+                                                                    </s:else>
+
                                                                     <td><s:a href="#" cssClass="Forwarded_popup_open" onclick="showOverlayForwardedBy(%{forwardedById})"><s:property value="forwardedBy"></s:property></s:a></td>
                                                                     <%--<td><s:property value="forwardedBy"></s:property></td>--%>
                                                                     <%--<td><s:property value="forwardedDate"></s:property></td>--%>
@@ -193,7 +179,7 @@
                                                             </s:if>
                                                             <s:else>
                                                                 <td><figcaption><button type=button value="<s:property value="resumeId"></s:property>" onclick=doTechReviewAttachmentDownload(<s:property value="resumeId"></s:property>)><img src='../../includes/images/download.png' height='20' width='20' ></button></figcaption></td>
-                                                                <td><s:a href="#" cssClass="techReview_popup_open" onclick="techReviewOverlay(%{requirementId},\'%{status}\');techReviewDetailsOnOverlay(%{consult_id},%{conTechReviewId});">Click</s:a></td>
+                                                                <td><s:a href="#" cssClass="techReview_popup_open" onclick="techReviewOverlay(%{requirementId},\'%{status}\');techReviewDetailsOnOverlay(%{consult_id},%{conTechReviewId},\'%{reviewType}\');">Click</s:a></td>
                                                             </s:else>
                                                             </tr>
                                                         </s:iterator>
@@ -209,7 +195,7 @@
                                                         </select>
                                                         Reviews per page
                                                     </label>
-                                                 
+
                                                 </div>
                                                 <script type="text/javascript">
                                                     var pager = new EmpPager('techReviewTable', 8); 
@@ -234,7 +220,7 @@
                                             <table >
                                                 <s:textfield label="Name" cssClass="form-control " id="recruiterNameOverlay" />
                                                 <s:textfield label="Email Id" cssClass="form-control margin" id="recruiterEmailIdOverlay" />
-                                                <s:textfield label="Phone" cssClass="form-control margin" id="recruiterPhoneOverlay" />
+                                                <s:textfield label="Phone" placeholder="Phone" cssClass="form-control margin" id="recruiterPhoneOverlay" />
                                             </table>
                                         </center>
                                     </div>
@@ -250,7 +236,7 @@
                                         </table>
                                     </div>
                                     <%--form start from here --%>
-                                    <div class="pull-right "><s:submit id="saveTechReview" cssClass="cssbutton" onclick="saveTechReviewResults();" value="Save"></s:submit></div>
+                                    <div class="pull-right " id="saveButtonReview"><s:submit id="saveTechReview" cssClass="cssbutton" onclick="saveTechReviewResults();" value="Save"></s:submit></div>
                                         <span><e></e></span><br>
                                     <s:hidden name="consultId" id="consultId"/>
                                     <s:hidden name="requirementId" id="requirementId"  />
@@ -300,77 +286,103 @@
                                             <label class="">Status:</label>
 
                                             <s:if test="#session.primaryrole == 6">
-                                                <s:select cssClass="techReviewSelectStyle" 
-                                                          name="finalTechReviewStatus" 
-                                                          id="finalTechReviewStatus" 
-                                                          list="#@java.util.LinkedHashMap@{'Rejected':'Rejected','ShortListed':'ShortListed','Processing':'Processing'}" 
-                                                          />
+                                                <span id="onlineExam">
+                                                    <s:select cssClass="techReviewSelectStyle" 
+                                                              name="finalTechReviewStatus" 
+                                                              id="finalTechReviewStatus" 
+                                                              list="#@java.util.LinkedHashMap@{'Rejected':'Rejected','ShortListed':'ShortListed','Processing':'Processing'}" 
+                                                              />
+                                                </span>
                                             </s:if>
                                             <s:else>
-                                                <s:select cssClass="techReviewSelectStyle" 
-                                                          name="finalTechReviewStatus" 
-                                                          id="finalTechReviewStatus" 
-                                                          list="#@java.util.LinkedHashMap@{'Rejected':'Rejected','ShortListed':'ShortListed','Selected':'Selected','Processing':'Processing'}" 
-                                                          />
-
+                                                <span id="onlineExamStatus">
+                                                    <s:select cssClass="techReviewSelectStyle" 
+                                                              name="finalTechReviewStatus" 
+                                                              id="finalTechReviewStatus" 
+                                                              list="#@java.util.LinkedHashMap@{'Rejected':'Rejected','ShortListed':'ShortListed','Selected':'Selected','Processing':'Processing'}" 
+                                                              />
+                                                </span>
                                             </s:else>
 
+                                            <span id="examStatus"> </span>
                                         </div>
 
                                     </div>
-                                    <label class="headingLabel">Skill Details:</label>
+                                    <span id="notOnline">           
+                                        <label class="headingLabel">Skill Details:</label>
 
-                                    <div id="reviewalignBox">
-                                        <div class="inner-techReviewdiv-elements">
+                                        <div id="reviewalignBox">
+                                            <div class="inner-techReviewdiv-elements">
 
-                                            <s:textarea type="text"
-                                                        name="consultantSkill"
-                                                        cssClass="reviewareacss"
-                                                        id="consultantSkill"
-                                                        disabled="true"
-                                                        />
+                                                <s:textarea type="text"
+                                                            name="consultantSkill"
+                                                            cssClass="reviewareacss"
+                                                            id="consultantSkill"
+                                                            disabled="true"
+                                                            />
+                                            </div>
+
                                         </div>
+                                        <label class="headingLabel">Rating Details:(**Rating between 1(min) to 10(max))</label>
+                                        <span id="skillValid"></span>
+                                        <div id="reviewalignBox">
 
-                                    </div>
-                                    <label class="headingLabel">Rating Details:(**Rating between 1(min) to 10(max))</label>
-                                    <span id="skillValid"></span>
-                                    <div id="reviewalignBox">
+                                            <div class="inner-techReviewdiv-elements required" id="skillRate">
+                                                <label class="">Technical Skills: </label>
+                                                <s:textfield type="text"
+                                                             name="techSkill"
+                                                             cssClass="ratingInputStyle"
+                                                             id="techSkill"
+                                                             value=""
+                                                             onkeyup="skillRateValidation()"
+                                                             onkeypress="return acceptNumbers(event);"
+                                                             maxLength="11"
+                                                             />
 
-                                        <div class="inner-techReviewdiv-elements required" id="skillRate">
-                                            <label class="">Technical Skills: </label>
-                                            <s:textfield type="text"
-                                                         name="techSkill"
-                                                         cssClass="ratingInputStyle"
-                                                         id="techSkill"
-                                                         value=""
-                                                         onkeyup="skillRateValidation()"
-                                                         onkeypress="return acceptNumbers(event);"
-                                                         maxLength="11"
-                                                         />
-
-                                            <label class="">Domain Skills: </label>
-                                            <s:textfield type="text"
-                                                         name="domainSkill"
-                                                         cssClass="ratingInputStyle"
-                                                         id="domainSkill"
-                                                         value=""
-                                                         onkeyup="skillRateValidation()"
-                                                         onkeypress="return acceptNumbers(event);"
-                                                         maxLength="11"
-                                                         />  
-                                            <label class="">Communication Skills:</label>
-                                            <s:textfield type="text"
-                                                         name="comSkill"
-                                                         cssClass="ratingInputStyle"
-                                                         id="comSkill"
-                                                         placeholder=""
-                                                         value=""
-                                                         onkeyup="skillRateValidation()"
-                                                         onkeypress="return acceptNumbers(event);"
-                                                         maxLength="11"
-                                                         /> 
+                                                <label class="">Domain Skills: </label>
+                                                <s:textfield type="text"
+                                                             name="domainSkill"
+                                                             cssClass="ratingInputStyle"
+                                                             id="domainSkill"
+                                                             value=""
+                                                             onkeyup="skillRateValidation()"
+                                                             onkeypress="return acceptNumbers(event);"
+                                                             maxLength="11"
+                                                             />  
+                                                <label class="">Communication Skills:</label>
+                                                <s:textfield type="text"
+                                                             name="comSkill"
+                                                             cssClass="ratingInputStyle"
+                                                             id="comSkill"
+                                                             placeholder=""
+                                                             value=""
+                                                             onkeyup="skillRateValidation()"
+                                                             onkeypress="return acceptNumbers(event);"
+                                                             maxLength="11"
+                                                             /> 
+                                            </div>
                                         </div>
-                                    </div>
+                                    </span> 
+                                    <div class="required" id="notesDiv">
+                                        <label class="headingLabel">Notes:</label>
+
+                                        <div id="reviewalignBox">
+
+                                            <div class="inner-techReviewdiv-elements">
+
+                                                <s:textarea id="consultantNotes"
+                                                            name="consultantNotes"
+                                                            cssClass="reviewareacss"
+                                                            type="text"
+                                                            placeholder="Enter Comments Here"
+                                                            onkeydown="techReviewsComments(this)" 
+                                                            onblur="removeCommentsRemainMessage()"
+                                                            value=""
+                                                            disabled="true"/>
+                                                <div class="charNum" id="remainingCharsDiv"></div>
+                                            </div>
+                                        </div>
+                                    </div>    
                                     <div class="required" id="CommentsDiv">
                                         <label class="headingLabel">Comments:</label>
 
@@ -391,8 +403,41 @@
                                         </div>
                                     </div>
 
-                                    <font style="color: #ffffff">..................... ..............................  ..........................................</font>
-                                </div>
+
+
+                                    <span id="online" >
+                                        <s:hidden id="contechId" name="contechId"/>
+
+                                        <s:hidden id="consultantId" name="consultantId" value="%{consult_id}"/>
+                                        <s:hidden id="requirementId" name="consultantId" value="%{requirementId}"/>
+                                        <label class="headingLabel">Online Exam Details:</label>
+
+                                        <div class="skillQuestionBox">
+                                            <label class="headingLabel " style="color: #56a5ec">Exam Performed On:<span id="examsubmittedDate" /></label>   
+                                            <div class="row">
+
+                                                <div class="col-sm-3" id="skillDivQuestion1">  <label class="skillQuestionsLabel"> <span id="skillQuestion1" ></span></label> </div>
+                                                <div class="col-sm-3" id="skillDivQuestion2"> <label class="skillQuestionsLabel"> <span id="skillQuestion2"></span></label></div> 
+                                                <div class="col-sm-3" id="skillDivQuestion3"> <label class="skillQuestionsLabel"> <span id="skillQuestion3"></span></label></div>
+                                                <div class="col-sm-3" id="skillDivQuestion4"> <label class="skillQuestionsLabel"> <span id="skillQuestion4"></span></label></div> 
+                                                <div class="col-sm-3" id="skillDivQuestion5"> <label class="skillQuestionsLabel"> <span id="skillQuestion5"></span></label></div> 
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-sm-3" id="skillDivQuestion6"> <label class="skillQuestionsLabel"> <span id="skillQuestion6"></span></label></div> 
+                                                <div class="col-sm-3" id="skillDivQuestion7"> <label class="skillQuestionsLabel"> <span id="skillQuestion7"></span></label></div> 
+                                                <div class="col-sm-3" id="skillDivQuestion8"> <label class="skillQuestionsLabel"> <span id="skillQuestion8"></span></label></div> 
+                                                <div class="col-sm-3" id="skillDivQuestion9"><label class="skillQuestionsLabel"> <span id="skillQuestion9"></span></label></div> 
+                                                <div class="col-sm-3" id="skillDivQuestion10"><label class="skillQuestionsLabel"> <span id="skillQuestion10"></span></label></div> 
+                                            </div>
+                                        </div>
+
+                                    </span>  
+                                    <span id="examButton"> 
+                                        <div class="pull-left "><s:submit cssClass="cssbutton"  value="Rejected" onclick="saveExamResult(this.value,'reviewDetails');" style="margin-left: -27px;"></s:submit></div>
+                                        <div class="pull-right "><s:submit cssClass="cssbutton"  value="ShortListed" onclick="saveExamResult(this.value,'reviewDetails');"></s:submit></div>
+                                        </span>          
+                                    </div>
                                 <%--close of future_items--%>
                             </div>
                         </div>
@@ -408,7 +453,7 @@
                 </div>
             </div>
         </footer><!--/Footer-->
-           
+
 
         <script type="text/javascript">
             var flag=document.getElementById("techSearch").value;
@@ -424,25 +469,27 @@
                 $('#resume').remove();
             },3000);
         </script>
-      
+
         <script language="JavaScript" src='<s:url value="/includes/js/general/popupoverlay.js"/>'></script>
-   <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
-        
-    <script type="text/javascript">
-        var recordPage=10;
-          function pagerOption(){
-//alert("recordPage")
-               var paginationSize = document.getElementById("paginationOption").value;
+        <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+
+        <script type="text/javascript">
+            var recordPage=10;
+            function pagerOption(){
+                //alert("recordPage")
+                var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
-                   {
+                {
                        
-                   }
+                }
                 recordPage=paginationSize;
                 //alert(recordPage)
-                 $('#techReviewTable').tablePaginate({navigateType:'navigator'},recordPage);
+                $('#techReviewTable').tablePaginate({navigateType:'navigator'},recordPage);
 
             };
-        $('#techReviewTable').tablePaginate({navigateType:'navigator'},recordPage);
+            $('#techReviewTable').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -190,10 +191,8 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
     private String categoryNames;
     private String categoryNamesList;
     private int projectID;
-
-    
-     private int questionNo;
-    private int selectedAns;  
+    private int questionNo;
+    private int selectedAns;
     private String navigation;
     private int onClickStatus;
     private int remainingQuestions;
@@ -202,10 +201,16 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
     private int answer1;
     private int answer2;
     private int answer3;
-    private int answer4; 
+    private int answer4;
     private int answer5;
     private int answer6;
-     private int examId;
+    private int examId;
+    private File file;
+    private String fileFileName;
+    private String fileFileContentType;
+    private String filesPath;
+    private int consultantId;
+
     public UserAjaxHandlerAction() {
     }
 
@@ -1417,6 +1422,130 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         }
         return null;
     }
+
+    public String visaAttachemntUpload() {
+
+        try {
+
+            System.out.println("visaAttachemntUpload-->" + getFileFileName());
+            File destFile = null;
+            if (getFileFileName() == null) {
+                System.out.println("file is null so it adds only data in task_list table");
+            } else {
+                // String visaAttachPath = dataSourceDataProvider.getInstance().getConsultVisaAttachment(getConsultantId());
+
+                // System.out.println("visaAttachPath from db-->" + visaAttachPath);
+
+
+                String filePath = "";
+                filesPath = Properties.getProperty("Visa.Attachment");
+                File createPath = new File(filesPath);
+                Date dt = new Date();
+                String month = "";
+                short week = 0;
+
+
+
+                if (dt.getMonth() == 0) {
+                    month = "Jan";
+                } else if (dt.getMonth() == 1) {
+                    month = "Feb";
+                } else if (dt.getMonth() == 2) {
+                    month = "Mar";
+                } else if (dt.getMonth() == 3) {
+                    month = "Apr";
+                } else if (dt.getMonth() == 4) {
+                    month = "May";
+                } else if (dt.getMonth() == 5) {
+                    month = "Jun";
+                } else if (dt.getMonth() == 6) {
+                    month = "Jul";
+                } else if (dt.getMonth() == 7) {
+                    month = "Aug";
+                } else if (dt.getMonth() == 8) {
+                    month = "Sep";
+                } else if (dt.getMonth() == 9) {
+                    month = "Oct";
+                } else if (dt.getMonth() == 10) {
+                    month = "Nov";
+                } else if (dt.getMonth() == 11) {
+                    month = "Dec";
+                }
+                week = (short) (Math.round(dt.getDate() / 7));
+
+                /*getrequestType is used to create a directory of the object type specified in the jsp page*/
+                createPath = new File(createPath.getAbsolutePath() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
+                /*This creates a directory forcefully if the directory does not exsist*/
+
+                //System.out.println("path::"+createPath);
+                createPath.mkdir();
+                /*here it takes the absolute path and the name of the file that is to be uploaded*/
+                File theFile = new File(createPath.getAbsolutePath());
+
+                setFilesPath(theFile.toString());
+                /*copies the file to the destination*/
+                destFile = new File(theFile + File.separator + fileFileName);
+                FileUtils.copyFile(getFile(), destFile);
+
+            }
+
+
+            System.out.println("this is printing file path-->" + this.getFilesPath() + "...." + fileFileName);
+            // setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+
+
+
+
+
+
+            if (destFile == null) {
+                responseString = "Error";
+            }
+            if (ServiceLocator.getUserAjaxHandlerService().doUpdateVisaAttachment(getConsultantId(), destFile.toString()) > 0) {
+                responseString = "uploaded";
+            } else {
+                responseString = "Error";
+            }
+            httpServletResponse.setContentType("text");
+            httpServletResponse.getWriter().write(responseString);
+        } catch (ServiceLocatorException ex) {
+            System.err.println(ex);
+        } catch (IOException ioe) {
+            System.err.println(ioe);
+        }
+        return null;
+    }
+    public String removeConsultantAttachement() {
+        /*
+         *This if loop is to check whether there is Session or not
+         **/
+        File destFile1 = null;
+        String updateFile="";
+        try {
+            String visaAttachPath = dataSourceDataProvider.getInstance().getConsultVisaAttachment(getConsultantId());
+
+            if (visaAttachPath != null) {
+
+                destFile1 = new File(visaAttachPath);
+                System.out.println("destFile1--->" + destFile1);
+                destFile1.delete();
+                updateFile="";
+            }
+            System.out.println("destFile1--->" + destFile1);
+
+            int updatedRows = ServiceLocator.getUserAjaxHandlerService().doUpdateVisaAttachment(getConsultantId(), updateFile);
+
+            responseString = String.valueOf(updatedRows);
+//responseString =String.valueOf(lastId);
+            System.out.println("responseString-->" + responseString);
+            httpServletResponse.setContentType("text");
+            httpServletResponse.getWriter().write(responseString);
+        } catch (Exception ex) {
+        }
+
+        //Close Session Checking
+        return null;
+    }
     //praveen
 
     public String getUserCatArry() {
@@ -1665,7 +1794,7 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         }
         return null;
     }
-    
+
     public String getQuestion() {
         try {
             /*
@@ -1674,19 +1803,20 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ONLINE_EXAM_CONSULTANTID) != null) {
                 //System.out.println(getAnswer1()+""+getAnswer2()+""+getAnswer3()+""+getAnswer4()+""+getAnswer5()+""+getAnswer6());
                 // responseString = ServiceLocator.getAjaxHandlerService().getQuestion(getQuestionNo(),httpServletRequest,getSelectedAns(),getNavigation(),getRemainingQuestions(),getOnClickStatus(),getSubTopicId());
-                
-                responseString = ServiceLocator.getUserAjaxHandlerService().getQuestion(getQuestionNo(), httpServletRequest, getSelectedAns(), getNavigation(), getRemainingQuestions(), getOnClickStatus(), getSubTopicId(), getSpecficQuestionNo(),this);
+
+                responseString = ServiceLocator.getUserAjaxHandlerService().getQuestion(getQuestionNo(), httpServletRequest, getSelectedAns(), getNavigation(), getRemainingQuestions(), getOnClickStatus(), getSubTopicId(), getSpecficQuestionNo(), this);
                 httpServletResponse.setContentType("text/xml");
-                System.out.println("responseString-->"+responseString);
+                System.out.println("responseString-->" + responseString);
                 httpServletResponse.getWriter().write(responseString);
             }//Close Session Checking
-        }  catch (ServiceLocatorException ex) {
+        } catch (ServiceLocatorException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return null;
     }
+
     public String getEmpRecruitment() throws IOException, ServiceLocatorException {
         try {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -1699,10 +1829,11 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         }
         return null;
     }
+
     public String getActionNames() {
         resultMessage = LOGIN;
         List<String> ActionNames = new ArrayList<String>();
-        String result="";
+        String result = "";
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -1711,8 +1842,8 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 ActionNames = com.mss.msp.util.DataSourceDataProvider.getInstance().getActionNamesList(getSessionOrgId(), roleId, accType);
                 System.out.println("----------------------------list--------------------" + ActionNames);
                 for (int i = 0; i < ActionNames.size(); i++) {
-                    result+=ActionNames.get(i)+"|";
-                  }
+                    result += ActionNames.get(i) + "|";
+                }
                 //result+="^";
                 System.out.println("in getHomeRedirectSearchDetails action" + result);
                 httpServletResponse.setContentType("text");
@@ -1725,8 +1856,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         }
         return null;
     }
-    public String getActionDescription(){
-    if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+
+    public String getActionDescription() {
+        if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getActionDescription(getActionName());
@@ -1740,7 +1872,8 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             }
         }
         return null;
-}
+    }
+
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
@@ -2955,7 +3088,45 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
     public void setExamId(int examId) {
         this.examId = examId;
     }
-    
-    
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public String getFileFileName() {
+        return fileFileName;
+    }
+
+    public void setFileFileName(String fileFileName) {
+        this.fileFileName = fileFileName;
+    }
+
+    public String getFileFileContentType() {
+        return fileFileContentType;
+    }
+
+    public void setFileFileContentType(String fileFileContentType) {
+        this.fileFileContentType = fileFileContentType;
+    }
+
+    public String getFilesPath() {
+        return filesPath;
+    }
+
+    public void setFilesPath(String filesPath) {
+        this.filesPath = filesPath;
+    }
+
+    public int getConsultantId() {
+        return consultantId;
+    }
+
+    public void setConsultantId(int consultantId) {
+        this.consultantId = consultantId;
+    }
     
 }

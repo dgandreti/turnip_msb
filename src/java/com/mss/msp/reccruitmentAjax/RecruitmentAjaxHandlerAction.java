@@ -37,6 +37,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import jxl.Workbook;
+import jxl.format.Colour;
+import jxl.read.biff.BiffException;
+import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -130,6 +139,33 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
     private String requirementName;
     private String pdfHeaderName;
     private String withdrawComments;
+    private String contactType;
+    private String rejectionComments;
+    private int createdByOrgId;
+
+    public String getContactType() {
+        return contactType;
+    }
+
+    public void setContactType(String contactType) {
+        this.contactType = contactType;
+    }
+
+    public String getRejectionComments() {
+        return rejectionComments;
+    }
+
+    public void setRejectionComments(String rejectionComments) {
+        this.rejectionComments = rejectionComments;
+    }
+
+    public int getCreatedByOrgId() {
+        return createdByOrgId;
+    }
+
+    public void setCreatedByOrgId(int createdByOrgId) {
+        this.createdByOrgId = createdByOrgId;
+    }
 
     public String getWithdrawComments() {
         return withdrawComments;
@@ -185,15 +221,14 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
 
                 if (result != null) {
                     String id[] = result.split("#");
-                    resultNumber = 1 + "#" + id[1] + "#" + id[2];
+                    resultNumber = 1 + "#" + id[1] + "#" + id[2] + "#" + id[3];
                     checkResult = com.mss.msp.util.DataSourceDataProvider.getInstance().getIsExistConsultantByReqId(this.getReqId(), id[0]);
                     int i = Integer.parseInt(checkResult);
                     if (i == 0) {
-                        resultNumber = 2 + "#" + id[1] + "#" + id[2];//file 
+                        resultNumber = 2 + "#" + id[1] + "#" + id[2] + "#" + id[3];//file 
                     } else {
-                        resultNumber = 3 + "#" + id[1] + "#" + id[2];//already exist
+                        resultNumber = 3 + "#" + id[1] + "#" + id[2] + "#" + id[3];//already exist
                     }
-
                 }
 
                 //not valid email id
@@ -788,15 +823,15 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
             return baos;
         }
     }
-    
+
     public String doWithdrawConsultant() {
         resultType = LOGIN;
-       // String reponseString = "";
+        // String reponseString = "";
         try {
             System.out.println(" Consultant Ajax Handler action -->" + getConsultantId());
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-              int  reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().doWithdrawConsultant(this);
+                int reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().doWithdrawConsultant(this);
                 //System.out.println("===============>in titles" + repoString);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
@@ -808,6 +843,77 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
             }
         } catch (Exception e) {
             resultType = ERROR;
+        }
+        return null;
+    }
+
+    public String doDeclineConsultant() {
+        resultType = LOGIN;
+        String reponseString = "";
+        try {
+            System.out.println(" Consultant Ajax Handler action -->" + getConsultantId());
+            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+                setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+                int reponse = ServiceLocator.getRecruitmentAjaxHandlerService().doDeclineConsultant(this);
+                if (reponse > 1) {
+                    reponseString = "Rejected Successfully";
+                }
+                //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setContentType("text");
+                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.getWriter().write(reponseString);
+
+                //  resultType = SUCCESS;
+            } else {
+                return resultType;
+            }
+        } catch (Exception e) {
+            resultType = ERROR;
+        }
+        return null;
+    }
+
+    public String doDownloadXlsResults() throws IOException, WriteException, BiffException {
+        String filename = getPdfHeaderName();
+        filename = filename.concat(".xls");
+        OutputStream out = null;
+        httpServletResponse.setContentType("application/vnd.ms-excel");
+        httpServletResponse.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+        int count;
+        WritableWorkbook wworkbook;
+        wworkbook = Workbook.createWorkbook(httpServletResponse.getOutputStream());
+        WritableSheet wsheet = wworkbook.createSheet("First Sheet", 0);
+        Label label;
+        if (!"".equals(getGridDownload())) {
+            WritableFont cellFont = new WritableFont(WritableFont.TIMES, 12);
+            cellFont.setColour(Colour.PINK);
+
+            WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
+            cellFormat.setBackground(Colour.BLUE);
+            // int Count = stk.countTokens();
+            //  System.out.println("Total Count-->" + Count);
+            String[] s = getGridDownload().split("\\^");
+            for (int i = 0; i < s.length; i++) {
+                System.out.println("stk.split;-->" + s[i]);
+                String ss = s[i];
+                String[] inner = ss.split("\\|");
+                //  System.out.println("inner--->"+inner);
+                for (int j = 0; j < inner.length; j++) {
+                    System.out.println("inner.split;-->" + inner[j]);
+                    if (i == 0) {
+                        label = new Label(j, i, inner[j], cellFormat);
+                        wsheet.addCell(label);
+                    } else {
+                        label = new Label(j, i, inner[j]);
+                        wsheet.addCell(label);
+                    }
+                }
+            }
+        }
+        wworkbook.write();
+        wworkbook.close();
+        if (out != null) {
+            out.close();
         }
         return null;
     }
@@ -1340,5 +1446,4 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
     public void setPdfHeaderName(String pdfHeaderName) {
         this.pdfHeaderName = pdfHeaderName;
     }
-    
 }

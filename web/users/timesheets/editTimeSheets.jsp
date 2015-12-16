@@ -22,7 +22,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ServicesBay :: Timesheets Edit Page</title>
-
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
@@ -32,9 +32,8 @@
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -64,7 +63,7 @@
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div id="projects_popup">
                                 <div id="projectsOverlay">
@@ -145,9 +144,9 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-sm-12">
                                         <s:form name="timeSheetsForm" action="editTimeSheets" method="post" theme="simple" >
-                                            <div class="col-md-14"> 
+                                            <div class="col-sm-12"> 
                                                 <span><edittimesheetserror></edittimesheetserror></span>
                                             </div>
 
@@ -168,7 +167,7 @@
                                                     <!--s:if test="timeSheetVTO.timeSheetStatus=='Entered'||timeSheetVTO.timeSheetStatus=='Disapproved'"-->
 
                                                     <s:if test="timeSheetVTO.timeSheetStatus=='Entered'||timeSheetVTO.timeSheetStatus=='Disapproved'">
-                                                        <div class="inner-addtaskdiv-elements1">
+                                                        <div class="inner-addtaskdiv-elements1" style="padding:0">
                                                             <span style="display: none" id="projectButton" > <a href="#" ><input type="button" class="timesheetbutton projects_popup_open pull-left " style="margin-left:-2px;margin-right: 3px;" value="Projects" onclick="ProjectsOverlayOpen1()"></a></span>
                                                             <a href="#" ><input type="button" class="timesheetbutton timesheetMisc_popup_open pull-left" value="Miscellaneous" onclick="MiscellaneousOverlayOpen()"></a>
                                                         </div>
@@ -179,21 +178,21 @@
                                                 <!--/s:if-->
 
 
-                                                <div class="inner-addtaskdiv-elements1">
-                                                    <label class="labelStyle" id="labelLevelStatusReq">Week Start Date:</label> <s:textfield cssClass="timesheetdatebox" name="timeSheetStartDate" id="timeSheetStartDate" placeholder="StartDate" value="%{timeSheetVTO.timeSheetStartDate}" onchange="return betweenDate();" readonly="true" cssStyle="z-index: 10000004;" tabindex="1" />
-                                                    <label class="labelStyle" id="labelLevelStatusReq">Week End Date:</label>&nbsp;<s:textfield cssClass="timesheetdatebox" name="timeSheetEndDate" value="%{timeSheetVTO.timeSheetEndDate}" id="timeSheetEndDate" placeholder="EndDate" onchange="return betweenDate();" readonly="true" tabindex="1"/>
+                                                <div class="inner-addtaskdiv-elements1" style="padding:0">
+                                                    <div class="col-sm-4 col-sx-4">  <label class="labelStyle" id="labelLevelStatusReq">Week Start Date:</label> <s:textfield cssClass="timesheetdatebox" name="timeSheetStartDate" id="timeSheetStartDate" placeholder="StartDate" value="%{timeSheetVTO.timeSheetStartDate}" onchange="return betweenDate();" readonly="true" cssStyle="z-index: 10000004;" tabindex="1" /></div>
+                                                    <div class="col-sm-4 col-sx-4"> <label class="labelStyle" id="labelLevelStatusReq">Week End Date:</label>&nbsp;<s:textfield cssClass="timesheetdatebox" name="timeSheetEndDate" value="%{timeSheetVTO.timeSheetEndDate}" id="timeSheetEndDate" placeholder="EndDate" onchange="return betweenDate();" readonly="true" tabindex="1"/></div>
                                                     <s:if test="timeSheetVTO.timeSheetStatus!='Approved'">
-                                                        <label class="labelStyle" id="labelLevelStatusReq"> Date Submitted:</label><s:textfield cssClass="timesheetdatebox" name="timeSheetSubmittedDate" value="%{timeSheetVTO.timeSheetSubmittedDate}" id="timeSheetSubmittedDate" placeholder="EndDate" readonly="true" tabindex="1"/>
+                                                     <div class="col-sm-4 col-sx-4">    <label class="labelStyle" id="labelLevelStatusReq"> Date Submitted:</label><s:textfield cssClass="timesheetdatebox" name="timeSheetSubmittedDate" value="%{timeSheetVTO.timeSheetSubmittedDate}" id="timeSheetSubmittedDate" placeholder="EndDate" readonly="true" tabindex="1"/></div>
                                                     </s:if>    
                                                 </div>
                                                 <s:if test="timeSheetVTO.timeSheetStatus=='Approved'">
-                                                    <div class="inner-addtaskdiv-elements1">
-                                                        <label class="labelStyle" id="labelLevelStatusReq"> Date Submitted:</label>&nbsp;<s:textfield cssClass="timesheetdatebox" name="timeSheetSubmittedDate" value="%{timeSheetVTO.timeSheetSubmittedDate}" id="timeSheetSubmittedDate" placeholder="EndDate" readonly="true" tabindex="1"/>
-                                                        <label class="labelStyle" id="labelLevelStatusReq"> Date Approved:</label> <s:textfield cssClass="timesheetdatebox" name="timeSheetApprovedDate" id="timeSheetApprovedDate" placeholder="StartDate" value="%{timeSheetVTO.timeSheetApprovedDate}" readonly="true" cssStyle="z-index: 10000004;" tabindex="1"/>
+                                                    <div class="inner-addtaskdiv-elements1" style="padding:0">
+                                                       <div class="col-sm-4">  <label class="labelStyle" id="labelLevelStatusReq"> Date Submitted:</label>&nbsp;<s:textfield cssClass="timesheetdatebox" name="timeSheetSubmittedDate" value="%{timeSheetVTO.timeSheetSubmittedDate}" id="timeSheetSubmittedDate" placeholder="EndDate" readonly="true" tabindex="1"/></div>
+                                                     <div class="col-sm-4">    <label class="labelStyle" id="labelLevelStatusReq"> Date Approved:</label> <s:textfield cssClass="timesheetdatebox" name="timeSheetApprovedDate" id="timeSheetApprovedDate" placeholder="StartDate" value="%{timeSheetVTO.timeSheetApprovedDate}" readonly="true" cssStyle="z-index: 10000004;" tabindex="1"/></div>
                                                     </div>
                                                 </s:if> 
                                                 <s:hidden name="timeSheetApprovedDate" id="timeSheetApprovedDate" value="%{timeSheetVTO.timeSheetApprovedDate}"/>
-                                                <div>  
+                                                <div class="col-sm-12">  
 
                                                     <div class="inner-addtaskdiv-elements">
                                                         <table id="timesheetTable" class="responsive">
@@ -375,6 +374,7 @@
                                                     </div>  
                                                     <div class="col-md-12" style="margin-left: -14px;" >
                                                         <div class="inner-addtaskdiv-elements" style="margin-left: -4px;">    
+                                                            <div class="col-sm-6 col-sx-6 col-lg-4">
                                                             <div class="updateCss ReqinputStyleTime" > 
 
                                                                 <label class="labelStyle-i add-to" id="labelLevelStatusReq">Total Billable Hrs</label>
@@ -388,13 +388,15 @@
                                                                 <s:textfield name="totalVacationHrs" value="0.0" id="totalVacationHrs" cssClass="form-control SmallTextBox_Time" readonly="true" tabindex="-1"/>
                                                                 <%-- <s:textfield name="totalComptimeHrs" value="0.0" id="totalComptimeHrs" cssClass="form-control SmallTextBox_Time" readonly="true"/>--%>
                                                             </div>
-                                                            <div class="col-sm-8">
+                                                            
+                                                        </div>
+                                                            <div class="col-sm-6 col-sx-6 col-lg-7">
                                                                 <div class=" form-group">
                                                                     <label class="labelStyle" id="labelLevelStatusReq">Notes:</label> <s:textarea name="timeSheetNotes" id="timeSheetNotes" cssClass="titleStyle" value="%{timeSheetVTO.timeSheetNotes}" placeholder="Enter Here" rows="3" onkeydown=" timeSheetsNotes(this)" onblur="removeErrorMessages()" tabindex="1"/>
                                                                 </div>
                                                                 <div class="charNum" id="notes"></div>
                                                             </div>
-                                                            <div class="col-sm-8 col-md-offset-3">
+                                                            <div class="col-sm-12">
                                                                 <div class="form-group  " >
                                                                     <s:if test="timesheetFlag=='Team'"> 
                                                                         <label class="labelStyle" id="labelLevelStatusReq">Comments:</label> <s:textarea name="comments" id="comments" cssClass="titleStyle" value="%{timeSheetVTO.comments}" placeholder="Enter Here" rows="3" onkeyup=" timeSheetsComments(this)" onblur="removeErrorMessages()" tabindex="1"/>
@@ -405,7 +407,7 @@
                                                                     <div class="charNum" id="comments"></div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 col-sm-6">
                                                                 <s:hidden name="timeSheetStatus" id="timeSheetStatus" value="%{timeSheetVTO.timeSheetStatus}" cssClass="noBorder" readonly="true"/>
                                                             </div>
                                                         </div>
@@ -417,11 +419,11 @@
                                                                 <s:if test="timeSheetVTO.timeSheetStatus=='Entered'||timeSheetVTO.timeSheetStatus=='Disapproved'">
                                                                     <s:label><font color="red">*NOTE: After submitting this timesheet you can't edit.</font></s:label>
                                                                     <div class="col-lg-8"></div>
-                                                                    <div class="col-lg-2">
+                                                                    <div class="col-sm-2 pull-right">
                                                                         <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-floppy-o form-control " id="enter" value="Save" theme="simple" onclick="setTemVar1()"/>
 
                                                                     </div>
-                                                                    <div class="col-lg-2">
+                                                                    <div class="col-sm-2 pull-right">
                                                                         <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-check-circle-o form-control " id="update" value="Submit" theme="simple" onclick="setTemVar2()" />
                                                                         <s:hidden name="tempVar" id="tempVar" value=""/>
                                                                     </div>
@@ -432,10 +434,10 @@
                                                             <s:if test="timesheetFlag=='Team'">
                                                                 <s:if test="timeSheetVTO.timeSheetStatus=='Submitted'">
                                                                     <div class="col-lg-8"></div>
-                                                                    <div class="col-lg-2">
+                                                                    <div class="col-sm-2 pull-right">
                                                                         <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-check-circle-o" style="margin-left:3px;" id="approve" value="Approve" theme="simple" onclick='document.timeSheetsForm.action="newapprove.action?tempVar=1"' />
                                                                     </div>
-                                                                    <div class="col-lg-2">
+                                                                    <div class="col-sm-2 pull-right">
                                                                         <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" id="reject" value="Reject" theme="simple" onclick='document.timeSheetsForm.action="newapprove.action?tempVar=2"'/>
                                                                     </div>
                                                                 </s:if>
@@ -472,6 +474,9 @@
                 </div>
             </div>
         </footer> 
+                        <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
 
+                <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

@@ -43,8 +43,8 @@
         <%-- aklakh css single file end --%>
         <%-- for date picket start--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+        
+        
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <%--<script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>--%>
@@ -53,6 +53,7 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>
         <%-- for date picket end--%>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/TaskAjax.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
 
         <sx:head />
@@ -208,7 +209,7 @@
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
 
                     <!-- content start -->
-                    <div class="col-md-10 col-md-offset-0" style="background-color:#fff">
+                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                         <div class="features_items">
                             <div class="col-lg-14 ">
                                 <div class="" id="profileBox" style="float: left; margin-top: 5px">
@@ -228,16 +229,16 @@
                                     <s:form action="addNewTask"  theme="simple" onsubmit="return addTaskValidation()"  enctype="multipart/form-data" >
                                         <span id="editTaskValidation"><editTask></editTask></span>
                                         <div class="inner-reqdiv-elements">
-                                            <div class="row">
-                                                <div class="col-lg-4 required">
+                                            <div class=" ">
+                                                <div class="col-sm-4 required">
                                                     <label class="labelStylereq" style="color: #56a5ec;">StartDate: </label>
                                                     <s:textfield cssClass="form-control dateImage" name="startDate" id="startDate" placeholder="StartDate" value="%{startDate}" cssStyle="z-index: 10000004;" onkeypress="return enterTaskDateRepository(this)"/>
                                                 </div>
-                                                <div class="col-lg-4 required">
+                                                <div class="col-sm-4 required">
                                                     <label class="labelStylereq" style="color: #56a5ec;">EndDate: </label>
                                                     <s:textfield cssClass="form-control dateImage"  name="endDate" value="%{endDate}" id="endDate" placeholder="EndDate"  onkeypress="return enterTaskDateRepository(this)"/>
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color: #56a5ec;">Status: </label>
                                                     <s:select  id="task_status" value="1"  name="taskStatus" cssClass="SelectBoxStyles form-control" headerKey="1" theme="simple" list="tasksStatusList" />
                                                 </div>
@@ -245,17 +246,17 @@
                                         </div>
 
                                         <div class="inner-reqdiv-elements">
-                                            <div class="row">
-                                                <div class="col-lg-4">
+                                            <div class=" ">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color: #56a5ec;">Priority: </label>
                                                     <s:select  id="task_priority"  name="taskPriority" cssClass="SelectBoxStyles form-control" headerKey="M" headerValue="Medium" theme="simple"  list="#@java.util.LinkedHashMap@{'L':'Low','H':'High'}" value="{'M':'Medium'}" />
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-sm-4">
                                                     <label class="labelStylereq" style="color: #56a5ec;">Related To: </label>
                                                     <s:select  id="taskRelatedTo" value="2" name="taskRelatedTo" cssClass="SelectBoxStyles form-control"  theme="simple" list="tasksRelatedToList" onchange="getTaskType();" />
                                                 </div>
-                                                <div class="col-lg-4" id="csrDiv">
+                                                <div class="col-sm-4" id="csrDiv">
                                                     <label class="labelStylereq" style="color: #56a5ec;">Projects: </label>
                                                     <s:select  id="taskType" name="taskType" cssClass="SelectBoxStyles form-control"  theme="simple" list="{}" onchange="getRelatedNames();" />
                                                 </div>
@@ -263,6 +264,7 @@
                                             </div>
                                         </div>
                                         <div>
+                                            
                                             <%--div class="inner-addtaskdiv-elements">
                                                 <label class="labelStyle">RelatedTo</label>:<s:select  id="taskRelatedTo" value="2"   name="taskRelatedTo" cssClass="selectstyle" headerKey="" headerValue="Related To" theme="simple" list="tasksRelatedToList" onchange="getTaskType();" />
                                                 <label class="labelStyle">Type</label>:<s:select  id="taskType"   name="taskType" cssClass="selectstyle" headerKey="-1" headerValue="Select Type" theme="simple" list="{'Bug','Issue','Enhancement','Defect'}" />
@@ -282,20 +284,24 @@
 
                                             </div--%>
                                             <div class="inner-reqdiv-elements-elements required">
+                                                <div class="col-sm-12">
                                                 <label class="labelStylereq">Title</label>:<s:textfield name="taskName" id="task_name" placeholder="Enter Title Here" cssClass="titleStyle"  maxLength="60"/>
-                                            </div>
+                                                </div>
+                                                </div>
                                             <div class="inner-reqdiv-elements">
+                                                <div class="col-sm-12">
                                                 <label class="labelStylereq">Description</label>:<s:textarea name="task_comments" id="task_comments" placeholder="Enter Task Description Here" cssClass="areacss" onkeyup="checkTaskDescription(this)"/>
-                                            </div>
+                                                </div>
+                                                </div>
                                             <div class="charNum" id="description_feedback"></div>
                                             <div class="inner-reqdiv-elements">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
+                                                <div class="col-sm-13">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color: #56a5ec;">Primary Assign: </label>
                                                         <s:select  id="primary_assign"  name="primaryAssign" cssClass="SelectBoxStyles form-control" headerKey="-1" theme="simple" list="{}" />
                                                         <s:hidden name="secondaryId" id="secondaryId"/>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-sm-4">
                                                         <label class="labelStylereq" style="color: #56a5ec;">Secondary Assign:</label>
                                                         <s:textfield  id="secondaryReport"  name="secondaryAssign" placeholder="SecondaryAssignTo" cssClass="form-control"  theme="simple" onkeyup="getSecondaryAssignedNames();" autocomplete='off' maxLength="30"/>
                                                     </div>
@@ -308,9 +314,11 @@
                                             </div--%>
                                             <div class="inner-addtaskdiv-elements"><span id="validationMessage" /></div>
                                             <div class="inner-reqdiv-elements">
+                                                <div class="col-sm-12">
                                                 <label class="labelStyle">Attachments</label>:<s:file  name="taskAttachment" id="taskAttachment" cssClass=""  />
-                                            </div>
-                                            <div class="inner-reqdiv-elements">
+                                                </div>
+                                                </div>
+                                            <div class="col-sm-12">
                                                 <s:checkbox name="alert_check" id="alertCheck"  />&nbsp;&nbsp;<s:label>Do you need alert?</s:label>
                                                 </div>
                                             <%--div id="alertContent" class="inner-addtaskdiv-elements">
@@ -319,27 +327,30 @@
                                         </div--%>
                                             <div class="inner-reqdiv-elements">
                                                 <div id="alertContent">
-                                                    <div class="row">
-                                                        <div class="col-lg-4">
+                                                    <div class="col-sm-13">
+                                                        <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color: #56a5ec;">Alert By: </label>
                                                             <s:select  id="alertTime"  name="alertTime" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Alert By" theme="simple" list="{'EveryMonth','Before One Week','Before One Day'}" /><br>
                                                         </div>
-                                                    </div>
-                                                    <div  class="inner-reqdiv-elements required">
+                                                   
+                                                    <div  class="col-sm-8 required">
                                                         <label class="labelStylereq">Alert Message</label>:<s:textarea name="alertMessage" placeholder="Enter Alert Message Here"  cssClass="areacss"  />
                                                     </div>
+                                                     </div>
                                                 </div>
                                             </div>
+                                                    <div class="row"></div>
                                            <div class="row">
                                                 <div class="col-lg-8"></div>
-                                                <div class="col-md-2">
+                                               <div class="col-sm-2 pull-right">
+                                                        <s:submit type="button"  cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" theme="simple" ><i class="fa fa-plus-square"></i>&nbsp;AddTask</s:submit>
+                                                        </div>
+                                                <div class="col-sm-2 pull-right">
                                                    
                                                         <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser " value="Clear" theme="simple" />
                                                         <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
                                                     </div>
-                                                    <div class="col-md-2">
-                                                        <s:submit type="button"  cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" theme="simple" ><i class="fa fa-plus-square"></i>&nbsp;AddTask</s:submit>
-                                                        </div>
+                                                    
                                                    
 
                                                 </div>
@@ -365,7 +376,8 @@
                 </div>
             </div>
         </footer><!--/Footer-->
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
+<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">
             <table id="completeTable" border="1" bordercolor="#e5e4f2" style="border: 1px dashed gray;" cellpadding="0" class="cellBorder" cellspacing="0" />
         </div>

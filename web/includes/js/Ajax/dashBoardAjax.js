@@ -181,6 +181,7 @@ function populateCustomerDashBoardTable(response){
     var month = new Array();
     var open=new Array();
     var release =new Array();
+    var openForResume =new Array();
     var close=new Array();
     var others=new Array();
     for(var i = table.rows.length - 1; i > 0; i--)
@@ -200,6 +201,7 @@ function populateCustomerDashBoardTable(response){
                 row.append($("<td>" + Values[0] + "</td>"));
                 row.append($("<td>" + Values[1] + "</td>"));
                 row.append($("<td>" + Values[2] + "</td>"));
+                row.append($("<td>" + Values[6] + "</td>"));
                 row.append($("<td>" + Values[3] + "</td>"));
                 
                 row.append($("<td>" + Values[5] + "</td>"));
@@ -209,11 +211,12 @@ function populateCustomerDashBoardTable(response){
                 month.push(Values[0]);
                 open.push(parseInt(Values[1]));
                 release.push(parseInt(Values[2]));
+                openForResume.push(parseInt(Values[6]));
                 close.push(parseInt(Values[3]));
                 others.push(parseInt(Values[5]))
             }
         }
-        showCustomerChart(month,open,release,close,others);
+        showCustomerChart(month,open,release,openForResume,close,others);
         
     }
     else{
@@ -266,14 +269,14 @@ function showChart(cust,open,release,close)
 }
 
 
-function showCustomerChart(month,open,release,close,others)
+function showCustomerChart(month,open,release,openForResume,close,others)
 {
     //alert(month.length);
      
     var Combined = new Array();
-    Combined[0] = ['Month', 'open', 'release','close','others'];
+    Combined[0] = ['Month', 'open', 'release','open for resume','close','others'];
     for (var i = 0; i < month.length; i++){
-        Combined[i + 1] = [ month[i], open[i], release[i],close[i],others[i] ];
+        Combined[i + 1] = [ month[i], open[i], release[i],openForResume[i],close[i],others[i] ];
     }
     //second parameter is false because first row is headers, not data.
     var data = google.visualization.arrayToDataTable(Combined, false);

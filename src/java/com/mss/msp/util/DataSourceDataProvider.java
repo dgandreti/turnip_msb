@@ -4136,8 +4136,11 @@ public class DataSourceDataProvider {
         int resultString = 0;
         connection = ConnectionProvider.getInstance().getConnection();
         try {
-            queryString = "SELECT COUNT(createdbyOrgId) as count FROM req_con_rel  WHERE  status not like '%SOW%' and reqId=" + req_id + " AND createdbyOrgId=" + orgId;
-            //  System.out.println("getNoOfSubmisions query ->"+queryString);
+           queryString = "SELECT COUNT(createdbyOrgId) as count FROM req_con_rel  WHERE  status not like '%SOW%' and reqId=" + req_id;
+            if (orgId != 0) {
+                queryString = queryString + " AND createdbyOrgId=" + orgId;
+            }
+              System.out.println("getNoOfSubmisions query ===================================================================================================================->"+queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -5120,32 +5123,41 @@ public class DataSourceDataProvider {
         String queryString = "";
 
        // queryString = "SELECT usr_id,org_id,type_of_user FROM users WHERE cur_status='Active' AND  email1  ='" + conEmail + "'";
-queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills FROM usr_details ud LEFT OUTER JOIN users u ON(ud.usr_id=u.usr_id)  WHERE cur_status='Active' AND  email1  ='" + conEmail + "'";
+queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud.ssn_number FROM usr_details ud LEFT OUTER JOIN users u ON(ud.usr_id=u.usr_id)  WHERE cur_status='Active' AND  email1  ='" + conEmail + "'";
         System.out.println(">>>>>>  getEmiltExistOrNot -->" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
+                String ssn="";
+                if(resultSet.getString("ssn_number")!=null&&!"".equals(resultSet.getString("ssn_number"))){
+                    ssn=com.mss.msp.util.DataUtility.decrypted(resultSet.getString("ssn_number")); 
+                }
                 if ("IC".equalsIgnoreCase(resultSet.getString("type_of_user"))) {
-                    result = resultSet.getString("usr_id") + "#IC";
+                    result = resultSet.getString("usr_id") + "#IC#" +ssn;
                 } else {
                     if (sessionOrgId == resultSet.getInt("org_id")) {
-                        result = resultSet.getString("usr_id") + "#VC";
+                        result = resultSet.getString("usr_id") + "#VC#"+ssn;
                     } else {
                         result = null;
                     }
                 }
 
                 String str1 = resultSet.getString("consultant_skills");
-                StringTokenizer stk1 = new StringTokenizer(str1, ",");
-                String skillsResultString="";
-                while (stk1.hasMoreTokens()) {
-                    String s=stk1.nextToken();
-                     skillsResultString += com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillId(s)+","+s+"^";
-                  //  skillsResultString +=  s+"^";
-                    System.out.println("skillsResultString--->"+skillsResultString);
+                if (str1 != null&&!"".equals(str1)) {
+                    StringTokenizer stk1 = new StringTokenizer(str1, ",");
+                    String skillsResultString = "";
+                    while (stk1.hasMoreTokens()) {
+                        String s = stk1.nextToken();
+                        skillsResultString += com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillId(s) + "," + s + "^";
+                        //  skillsResultString +=  s+"^";
+                        System.out.println("skillsResultString--->" + skillsResultString);
+                    }
+
+                    result += "#" + skillsResultString;
+                } else {
+                    result += "#" + "null";
                 }
-                result+= "#"+skillsResultString;
                 System.out.println("Reesult in dsdp---->"+result);
             }
             return result;
@@ -6878,5 +6890,109 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills FR
         System.out.println(actionNames);
         return actionNames;
     }
+  /**
+     * *****************************************************************************
+     * Date : December 15, 2015, 3:00 PM IST
+     * Author:jagan<jchukkala@miraclesoft.com>
+     *
+     * ForUse : getting the vendor employee email 
+     * *****************************************************************************
+     */
+  
+  
+public void getVendorEmpEmail(RecruitmentAction recruitmentAction) throws ServiceLocatorException {
 
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String vendorEmp = "";
+        connection = ConnectionProvider.getInstance().getConnection();
+        String queryString = "SELECT CONCAT(c.first_name,'.',c.last_name)AS NAME ,c.email1 AS venEmail FROM users c " +
+                             " LEFT OUTER JOIN req_con_rel rcr ON(rcr.created_By=c.usr_id) "+
+                             " WHERE rcr.reqId="+recruitmentAction.getRequirementId()+" AND rcr.consultantId="+recruitmentAction.getConsult_id()+" ";
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                recruitmentAction.setVenEmail(resultSet.getString("venEmail"));
+                recruitmentAction.setVenName(resultSet.getString("NAME"));
+            }
+            System.out.println("queryString==>In getExamStatus" + queryString);
+        } catch (SQLException ex) {
+            //System.out.println("isAttempted method-->" + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        
+
+    }
+public String getConsultVisaAttachment(int consultantId) {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "", attachmentLocation = "";
+        int i = 0;
+        //System.err.println(days+"Diff in Dyas...");
+        try {
+            System.out.println("in DownloadAction");
+         //   if(consult_acc_attachment_id==0)
+            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
+            queryString = "SELECT idproofattachment FROM usr_details WHERE usr_id=" + consultantId + "";
+
+            System.out.println("queryString-->" + queryString);
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+
+                attachmentLocation += resultSet.getString("idproofattachment");
+
+            }
+
+            System.out.println("attachmentLocation-->" + attachmentLocation);
+
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        }
+        return attachmentLocation;
+
+    }
 }

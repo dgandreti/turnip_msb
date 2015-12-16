@@ -59,6 +59,8 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
     private int dashBoardYear;
     private Map projectsMap;
     private String remainingTargetHrs;
+     private String projectFlag;
+    private int mainProjectId;
     /**
      * The project object is used for storing ProjectsVTO object for the
      * ProjectDetails.jsp for displaying project details and updating the
@@ -141,9 +143,13 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
 
     public String checkProjectNames() throws ServiceLocatorException, UnsupportedEncodingException {
         System.out.println(":::::::::::::: ProjectsDataHandlerAction ==> checkProjectNames ::::::::::::::::::");
-
+         accountID=(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+        if("main".equals(getProjectFlag()))
+        {
+        setMainProjectId(0);   
+        }
         String projName = httpServletRequest.getAttribute("projectName").toString();
-        inputStream = new ByteArrayInputStream(ServiceLocator.getProjectDataHandlerService().checkProjectName(projName).toString().getBytes("ISO-8859-1"));
+        inputStream = new ByteArrayInputStream(ServiceLocator.getProjectDataHandlerService().checkProjectName(projName,getProjectFlag(),getMainProjectId(),accountID).toString().getBytes("ISO-8859-1"));
         System.out.println(inputStream.toString().toUpperCase());
         return SUCCESS;
     }
@@ -781,6 +787,22 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
 
     public void setRemainingTargetHrs(String remainingTargetHrs) {
         this.remainingTargetHrs = remainingTargetHrs;
+    }
+
+    public String getProjectFlag() {
+        return projectFlag;
+    }
+
+    public void setProjectFlag(String projectFlag) {
+        this.projectFlag = projectFlag;
+    }
+
+    public int getMainProjectId() {
+        return mainProjectId;
+    }
+
+    public void setMainProjectId(int mainProjectId) {
+        this.mainProjectId = mainProjectId;
     }
     
 }
