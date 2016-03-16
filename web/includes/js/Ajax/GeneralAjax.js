@@ -985,7 +985,7 @@ function getTeamMemberNames() {
         clearTable();
     } else {
         
-        //alert("Empname->"+v_empName+"--len-->"+v_empName.length);
+        // alert("Empname->"+v_empName+"--len-->"+v_empName.length);
     
         if(v_empName.length>=2){
             var url=CONTENXT_PATH+"/getExternalEmployeeDetails.action?empName="+v_empName+'&resourceType='+resourceType+'&projectID='+projectID;
@@ -1097,7 +1097,42 @@ function setTeamMemberNames(empName,loginId){
     // alert("in set_cust");
     document.getElementById("teamMemberNamePopup").value =empName;
     document.getElementById("teamMemberId").value =loginId;
+    getTeamMemberReportingPersons(loginId);
+}
+function getTeamMemberReportingPersons(loginId)
+{
+    
+    var projectID= document.getElementById("projectID").value;
+    // alert("getTeamMemberReportingPersons()-->"+loginId);
+    var url='getTeamMemberReportingPersons.action?userId='+loginId+'&projectID='+projectID;
    
+    var req=initRequest(url);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            //  alert(req.responseText);
+           
+            populateReportsTo(req.responseText);
+        } 
+    };
+    req.open("GET",url,"true");
+    req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    req.send(null);
+}
+function populateReportsTo(data){
+    //alert(data);
+    // var topicId = document.getElementById("conState");
+    var flag=data.split("FLAG");
+    var addList=flag[0].split("^");
+    var $select = $('#memberPrimaryReporting');
+    $select.find('option').remove();
+    $('<option>').val(-1).text('Select Contact').appendTo($select);
+    for(var i=0;i<addList.length-1;i++){        
+        var Values=addList[i].split("|");
+        {  
+            
+            $('<option>').val(Values[0]).text(Values[1]).appendTo($select); 
+        }
+    }
 }
 ////////////////////////////////////////////for csr auto populate/////////////////////////////////////////////
 function getCSRNames(){
@@ -1224,6 +1259,7 @@ function setEmpForCsrName(empName,loginId){
 function getUserNameForCategory(){
     // alert("csr");
     var fromCSR=$("#userName").val();
+    var rno=Math.random();
     //var toCSR=$("#toCSR").val();
     if(fromCSR =="")
     {
@@ -1232,7 +1268,7 @@ function getUserNameForCategory(){
     else if(fromCSR!=""){
         if(fromCSR.length>=3)
         {
-            url=CONTENXT_PATH+"/getExternalEmployeeDetails.action?empName="+fromCSR;
+            url=CONTENXT_PATH+"/getExternalEmployeeDetails.action?empName="+fromCSR+"&rno="+rno;
             //       alert(url)
             //            }
             //alert("url-->"+url);
@@ -1382,13 +1418,15 @@ function doUserGroupingMethod(){
                 {
                     // alert("success"+req.responseText)
                     if(req.responseText=="Something were Wrong!"){
-                        $("userGrouping").html(" <b><font color='red'>"+req.responseText+"</font></b>.").fadeOut(5000);
+                        $("userGrouping").html(" <b><font color='red'>"+req.responseText+"</font></b>.");
                        
                     }else{
-                        $("userGrouping").html(" <b><font color='green'>"+req.responseText+"</font></b>").fadeOut(5000);
+                        $("userGrouping").html(" <b><font color='green'>"+req.responseText+"</font></b>");
                         
                         if(req.responseText=="grouping updated successfully."){}else{
-                            clearGroupingData();
+                            if(document.getElementById("addOrUpdate").value=="add"){
+                                clearGroupingData();
+                            }
                         }
                     }
                 } 
@@ -1420,6 +1458,7 @@ function CalculateLeangth(){
     
 }
 function checkIsExitOrNot(){
+    var rno=Math.random();
     var userId=document.getElementById("userId").value;
     var usrName=document.getElementById("userName").value;
     if(usrName.length<3){
@@ -1428,7 +1467,7 @@ function checkIsExitOrNot(){
     }
     if(userId>0)
     {
-        var url='../general/checkIsExitOrNotForGrouping.action?userId='+userId;
+        var url='../general/checkIsExitOrNotForGrouping.action?userId='+userId+'&rno='+rno;
         // alert(url)
         var req=initRequest(url);
         req.onreadystatechange = function() {
@@ -1483,15 +1522,17 @@ function clearGroupingData(){
     //var userId=document.getElementById("userId").value="";
     document.getElementById("userName").value="";
     userId=document.getElementById("userId").value=0;
-    //document.getElementById("usrCatType").value="-1";
+    document.getElementById("usrCatType").value="-1";
+    
     //   var userCatArry = [];    
     //    $("#usrCategoryValue :selected").each(function(){
     //        userCatArry.push($(this).val())=""; 
     //    });
-   
+    $("#usrCategoryValue").selectivity('clear');
     document.getElementById("usrStatus").value="-1"; 
     document.getElementById("usrDescription").value="";
     document.getElementById("groupingId").value="0";
+    document.getElementById("usrPrimary").checked=false;
 // getCategoryList()
 }
 function getCategoryList()
@@ -1806,7 +1847,7 @@ function addOrUpdateChecking(flag){
         var add = document.getElementById("addDiv");
         add.style.display=""; 
         
-        document.getElementById("heading").innerHTML="Add Action Authorization"
+        document.getElementById("heading").innerHTML="&nbsp;&nbsp;Add Action Authorization"
     }
     if(flag=='u'){
         //  alert("Updatew");
@@ -1820,7 +1861,7 @@ function addOrUpdateChecking(flag){
         accName.style.display=""; 
         var desc=document.getElementById("descDiv");
         desc.style.display="";
-        document.getElementById("heading").innerHTML="Update Action Authorization"
+        document.getElementById("heading").innerHTML="&nbsp;&nbsp;Update Action Authorization"
        
     }
 }
@@ -2045,7 +2086,7 @@ function populategetActionResorucesSearchTable(response){
                 row.append($("<td>" + Values[2] + "</td>"));
                 row.append($("<td>" + Values[3] + "</td>"));
                 row.append($("<td>" + Values[4] + "</td>"));
-                row.append($("<td><a href='#' onclick=actionResourceTermination(" + Values[0] + ","+ Values[5] +")><img src='../includes/images/delete.png' height=20 width=20 ></td>"));
+                row.append($("<td><a href='#' onclick=actionResourceTermination(" + Values[0] + ","+ Values[5] +")><i class='fa fa-trash-o fa-size'></i></td>"));
 
             }
         }
@@ -2196,19 +2237,62 @@ function getPresentTimeYear() {
     //   
     //
       
+    //    var today = new Date();
+    //    var dd = today.getDate();
+    //    var mm = today.getMonth()//January is 0!
+    //    var yyyy = today.getFullYear();
+    //    if(mm==0){
+    //        mm=12;
+    //    }
+    //    if(mm==12){
+    //        yyyy=yyyy-1;
+    //    }
+    //    // document.getElementById("invoiceMonth").value=mm;
+    //    document.getElementById("invoiceYear").value=yyyy;
+    //    document.getElementById("invoiceMonthOver").value=mm;
+    //    document.getElementById("invoiceYearOver").value=yyyy;
+    //    $('#resourceAll').change(function(){
+    //        var cheked=($(this).is(":checked"));
+    //        
+    //        if(!cheked){
+    //            $('#OverResourceName').show();
+    //        }
+    //        else
+    //            $('#OverResourceName').hide();
+    //
+    //    });
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()//January is 0!
     var yyyy = today.getFullYear();
-    if(mm==0){
-        mm=12;
-    }
+    //    if(mm==0){
+    //        mm=12;
+    //    }
+    //    if(mm==12){
+    //        yyyy=yyyy-1;
+    //    }
+    //    // document.getElementById("invoiceMonth").value=mm;
+    //    document.getElementById("invoiceYear").value=yyyy;
+    //    document.getElementById("invoiceMonthOver").value=mm;
+    //    document.getElementById("invoiceYearOver").value=yyyy;
+    //    $('#resourceAll').change(function(){
+    //        var cheked=($(this).is(":checked"));
+    //        
+    //        if(!cheked){
+    //            $('#OverResourceName').show();
+    //        }
+    //        else
+    //            $('#OverResourceName').hide();
+    //
+    //    });
+    //    
+    document.getElementById("loadingInvoiceSearch").style.display="none";
     if(mm==12){
         yyyy=yyyy-1;
     }
     // document.getElementById("invoiceMonth").value=mm;
-    document.getElementById("invoiceYear").value=yyyy;
-    document.getElementById("invoiceMonthOver").value=mm;
+    //    document.getElementById("invoiceYear").value=yyyy;
+    //    document.getElementById("invoiceMonthOver").value=mm;
     document.getElementById("invoiceYearOver").value=yyyy;
     $('#resourceAll').change(function(){
         var cheked=($(this).is(":checked"));
@@ -2229,10 +2313,10 @@ function generateInvoice(){
     //    var invoiceEndDateOver=document.getElementById("invoiceEndDateOver").value;
     var cheked;
     cheked=( $('#resourceAll').is(":checked"));
-   // alert(cheked)
+    // alert(cheked)
     if(isvalidationInvoice(invoiceMonth,invoiceYear,invoiceResource,cheked)){
         var url=CONTENXT_PATH+'/sag/generateInvoice.action?invoiceMonth='+invoiceMonth+'&invoiceYear='+invoiceYear+'&invoiceResource='+invoiceResource+'&cheked='+cheked;
-      //  alert(url)
+        //  alert(url)
         var req=initRequest(url);
         req.onreadystatechange = function() {
             if (req.readyState == 4) {
@@ -2285,8 +2369,8 @@ function generateInvoiceOverlay(){
     return false;
 }
 function closeInvoiceOverlay(){
-   setupOverlay('InvoiceGenerationOverlay','#InvoiceGenerationOverlay_popup');
-   window.location='getInvoice.action';  
+    setupOverlay('InvoiceGenerationOverlay','#InvoiceGenerationOverlay_popup');
+    window.location='getInvoice.action';  
     return false;
 }
 function setupOverlay(overlayBox, popupId){
@@ -2302,11 +2386,21 @@ function setupOverlay(overlayBox, popupId){
 }
 
 function isvalidationInvoice(invoiceMonth,invoiceYear,invoiceResource,cheked){
- $("invoiceGenerarionMessage").css("display","");   
+    $("invoiceGenerarionMessage").css("display","");   
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()//January is 0!
     var yyyy = today.getFullYear();
+    if(invoiceYear==""){
+        $("#invoiceYearOver").css("border","1px solid red");
+        $("invoiceGenerarionMessage").html(" <b><font color='red'>Please enter the Year</font></b>.").show().delay(5000).fadeOut();
+        return false;
+    }
+    else{
+        alert("inn else ")
+        $("#invoiceYearOver").css("border","1px solid #CCCCCC"); 
+        $("invoiceGenerarionMessage").html(" ");
+    }
     if(mm==0){
         mm=12;
     }
@@ -2504,7 +2598,7 @@ function orgNameCheck(textBoxId,errorTextId){
     // alert($(textBoxId).val())
     //alert(errorTextId)
     if($(textBoxId).val() == ''){
-        $(errorTextId).html('<span><b><font color=red>Please enter Vendor name</font></b></span>');
+        $(errorTextId).html('<span><font color=red>Please enter Vendor name</font></span>');
         $(textBoxId).css('border', '1px solid red');
         setTimeout(function(){
             $(textBoxId).css('border', '');
@@ -2525,9 +2619,9 @@ function orgNameCheck(textBoxId,errorTextId){
                 $(errorTextId).children().remove();
                 if($(textBoxId).val() != ''){
                     //alert('hi')
-                    $(errorTextId).html('<span><b><font color=red>This name already exists</font></b></span>');
+                    $(errorTextId).html('<span><font color=red>This name already exists</font></span>');
                 } else {
-                    $(errorTextId).html('<span><b><font color=red>Please enter Vendor name</font></b></span>');
+                    $(errorTextId).html('<span><font color=red>Please enter Vendor name</font></span>');
                 }
                 $(textBoxId).css('border', '1px solid red');
                 $(textBoxId).val('');
@@ -2552,7 +2646,7 @@ function orgWebAddressCheck(textBoxId,errorTextId){
     //alert(errorTextId)
     $(textBoxId).css('border', '');
     if($(textBoxId).val() == ''){
-        $(errorTextId).html('<span><b><font color=red>Please enter URL</font></b></span>');
+        $(errorTextId).html('<span><font color=red>Please enter URL</font></span>');
         $(textBoxId).css('border', '1px solid red');
         setTimeout(function(){
             $(textBoxId).css('border', '');
@@ -2574,9 +2668,9 @@ function orgWebAddressCheck(textBoxId,errorTextId){
                 $(errorTextId).children().remove();
                 if($(textBoxId).val() != ''){
                     //alert("hi")
-                    $(errorTextId).html('<span><b><font color=red>This Url already exists</font></b></span>');
+                    $(errorTextId).html('<span><font color=red>This Url already exists</font></span>');
                 } else {
-                    $(errorTextId).html('<span><b><font color=red>Please enter URL</font></b></span>');
+                    $(errorTextId).html('<span><font color=red>Please enter URL</font></span>');
                 }
 
                 $(textBoxId).css('border', '1px solid red');
@@ -2602,7 +2696,7 @@ function regEmailValidation(){
     if(!re.test(email))
     {
         //$("#addContactError").html("");
-        $("#email").html(" <b><font color='red'>Must be valid email</font></b>.");
+        $("#email").html(" <font color='red'>Must be valid email</font>.");
         $("#emailId").css("border", "1px solid red");
         
     }
@@ -2626,7 +2720,7 @@ function regOfficeEmailValidation(){
     if(!re.test(email))
     {
         //$("#addContactError").html("");
-        $("#officeemail").html(" <b><font color='red'>Must be valid corp email</font></b>.");
+        $("#officeemail").html(" <font color='red'>Must be valid corp email</font>.");
         $("#office_emailId").css("border", "1px solid red");
         setTimeout(function(){
             $("#office_emailId").css('border', '');
@@ -2638,7 +2732,7 @@ function regOfficeEmailValidation(){
     {
         var ext=document.getElementById("email_ext").value;
         if(ext ==''){
-            $("#officeemail").html(" <b><font color='red'>Please Enter Mail Extension first!!!</font></b>.");
+            $("#officeemail").html(" <font color='red'>Please Enter Mail Extension first!!!</font>.");
             document.getElementById("office_emailId").value="";
             setTimeout(function(){
                 $("#officeemail").children().remove();
@@ -2647,7 +2741,7 @@ function regOfficeEmailValidation(){
         }
         var office_email_ext = email.substring(email.lastIndexOf('@')+1);
         if(ext != office_email_ext){
-            $("#officeemail").html(" <b><font color='red'>Email extension must be same as specified above</font></b>.");
+            $("#officeemail").html(" <font color='red'>Email extension must be same as specified above</font>.");
             $("#office_emailId").css("border", "1px solid red"); 
             document.getElementById("office_emailId").value="";
             setTimeout(function(){
@@ -2667,7 +2761,7 @@ function regOfficeEmailValidation(){
                 if (req.status == 200) {
                     // alert(req.responseText)
                     if(req.responseText=="success"){
-                        $("#officeemail").html("  <b><font color='green'>E-mail is Available</font></b>");
+                        $("#officeemail").html("  <font color='green'>E-mail is Available</font>");
                         $("#office_emailId").css("border", "1px solid green");
                         setTimeout(function(){
                             $("#office_emailId").css('border', '');
@@ -2677,7 +2771,7 @@ function regOfficeEmailValidation(){
                     }
                     else{
                         document.getElementById("office_emailId").value="";
-                        $("#officeemail").html(" <b><font color=#B20000>E-mail  Already Exists !</font></b>");
+                        $("#officeemail").html("<font color=#B20000>E-mail  Already Exists !</font>");
                         $("#office_emailId").css("border", "1px solid red");
                         setTimeout(function(){
                             $("#office_emailId").css('border', '');
@@ -2803,39 +2897,39 @@ function setTotalHours(response){
     
 }
 function userRegFillAddress() {
-    if(checkAddress.checked == true) {
-        address1.value= org_address1.value;
+    if(document.getElementById("checkAddress").checked == true) {
+        document.getElementById("address1").value= document.getElementById("org_address1").value;
         document.getElementById("address1").disabled = true;
-        address2.value= org_address2.value;
+        document.getElementById("address2").value= document.getElementById("org_address2").value;
         document.getElementById("address2").disabled = true;
-        city.value=org_city.value;
+        document.getElementById("city").value=document.getElementById("org_city").value;
         document.getElementById("city").disabled = true;
-        country.value=org_country.value;        
+        document.getElementById("country").value=document.getElementById("org_country").value;        
         document.getElementById("country").disabled = true;     
         var $options = $("#state1 > option").clone();
         $('#state1').append($options);
-        state1.value=org_state.value; 
+        document.getElementById("state1").value=document.getElementById("org_state").value; 
         document.getElementById("state1").disabled = true;
-        zip.value=org_zip.value;
+        document.getElementById("zip").value=document.getElementById("org_zip").value;
         document.getElementById("zip").disabled = true;
-        fax.value=org_fax.value;
+        document.getElementById("fax").value=document.getElementById("org_fax").value;
         document.getElementById("fax").disabled = true;
     }
-    if(checkAddress.checked == false) {
+    if(document.getElementById("checkAddress").checked == false) {
         document.getElementById("address1").disabled = false;
-        address1.value='';
+        document.getElementById("address1").value='';
         document.getElementById("address2").disabled = false;
-        address2.value='';
+        document.getElementById("address2").value='';
         document.getElementById("city").disabled = false;
-        city.value='';
+        document.getElementById("city").value='';
         document.getElementById("country").disabled = false;
-        country.value='';
+        document.getElementById("country").value='';
         document.getElementById("state1").disabled = false;
-        state1.value='';
+        document.getElementById("state1").value='';
         document.getElementById("zip").disabled = false;
-        zip.value='';
+        document.getElementById("zip").value='';
         document.getElementById("fax").disabled = false;
-        fax.value='';
+        document.getElementById("fax").value='';
 
     }
 }
@@ -2859,7 +2953,7 @@ function getValidMailExtention(){
                 if (req.status == 200) {
                     //  alert(req.responseText);
                     if(req.responseText=="Not Exist"){
-                        $("#orgExtCheckSpan").html("  <b><font color='green'><br>Mail Extension is Available</font></b>");
+                        $("#orgExtCheckSpan").html("  <font color='green'><br>Mail Extension is Available</font>");
                         $("#email_ext").css("border", "1px solid green");
                         setTimeout(function(){
                             $("#email_ext").css('border', '');
@@ -2868,7 +2962,7 @@ function getValidMailExtention(){
                     }
                     else{
                         document.getElementById("email_ext").value="";
-                        $("#orgExtCheckSpan").html(" <b><font color=red><br>Mail Extension Already Exists !</font></b>");
+                        $("#orgExtCheckSpan").html(" <font color=red><br>Mail Extension Already Exists !</font>");
                         $("#email_ext").css("border", "1px solid red");
                         setTimeout(function(){
                             $("#email_ext").css('border', '');
@@ -2885,7 +2979,8 @@ function getValidMailExtention(){
         req.send(null);
     }
     else{
-        $("#orgExtCheckSpan").html("  <b><font color='red'><br>Please enter valid email extension!</font></b>");
+        $("#orgExtCheckSpan").html("  <font color='red'><br>Please enter valid email extension!</font>");
+        $("#orgExtCheckSpan").show().delay(3000).fadeOut();
         mailExtention.focus();
         return false;
     }
@@ -2926,7 +3021,7 @@ function deleteInvoice(id){
     function(isConfirm){
         if (isConfirm) {
             window.location='deleteInvoice.action?invoiceId='+id;
-             swal("Deleted!", "Invoice Deleted Successfully....", "success");
+            swal("Deleted!", "Invoice Deleted Successfully....", "success");
     
         } else {
      
@@ -2938,21 +3033,53 @@ function deleteInvoice(id){
 }
 
 function jumper() {
-           // alert("main with other.js")
-		$.scrollUp({
-	        scrollName: 'scrollUp', // Element ID
-	        scrollDistance: 300, // Distance from top/bottom before showing element (px)
-	        scrollFrom: 'top', // 'top' or 'bottom'
-	        scrollSpeed: 300, // Speed back to top (ms)
-	        easingType: 'linear', // Scroll to top easing (see http://easings.net/)
-	        animation: 'fade', // Fade, slide, none
-	        animationSpeed: 200, // Animation in speed (ms)
-	        scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
-					//scrollTarget: false, // Set a custom target element for scrolling to the top
-	        scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
-	        scrollTitle: false, // Set a custom <a> title if required.
-	        scrollImg: false, // Set true to use image
-	        activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
-	        zIndex: 2147483647 // Z-Index for the overlay
-		});
-	};
+    // alert("main with other.js")
+    $.scrollUp({
+        scrollName: 'scrollUp', // Element ID
+        scrollDistance: 300, // Distance from top/bottom before showing element (px)
+        scrollFrom: 'top', // 'top' or 'bottom'
+        scrollSpeed: 300, // Speed back to top (ms)
+        easingType: 'linear', // Scroll to top easing (see http://easings.net/)
+        animation: 'fade', // Fade, slide, none
+        animationSpeed: 200, // Animation in speed (ms)
+        scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
+        //scrollTarget: false, // Set a custom target element for scrolling to the top
+        scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
+        scrollTitle: false, // Set a custom <a> title if required.
+        scrollImg: false, // Set true to use image
+        activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+        zIndex: 2147483647 // Z-Index for the overlay
+    });
+};
+        
+        
+function doLogoutOrNot(){
+    var confirmation; 
+    confirmation = confirm("Your Session will be colsed");
+    if (confirmation==true) {
+        //alert("In if cond-->-->"+confirmation+"-->contextPath"+CONTENXT_PATH);
+        window.location=CONTENXT_PATH+"/general/logout.action";
+        // window.location="+contextPath+"+"/general/logout.action";
+        return true;
+    } else {
+        // alert("In else cond-->"+confirmation);
+        return false;
+    }
+}
+function clearRegistraionForm(){
+    document.getElementById("address1").disabled = false;
+    document.getElementById("address1").value='';
+    document.getElementById("address2").disabled = false;
+    document.getElementById("address2").value='';
+    document.getElementById("city").disabled = false;
+    document.getElementById("city").value='';
+    document.getElementById("country").disabled = false;
+    document.getElementById("country").value='';
+    document.getElementById("state1").disabled = false;
+    document.getElementById("state1").value='';
+    document.getElementById("zip").disabled = false;
+    document.getElementById("zip").value='';
+    document.getElementById("fax").disabled = false;
+    document.getElementById("fax").value='';
+    document.getElementById( "org_state").value='';
+}

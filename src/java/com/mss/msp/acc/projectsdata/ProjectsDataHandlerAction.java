@@ -61,6 +61,8 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
     private String remainingTargetHrs;
      private String projectFlag;
     private int mainProjectId;
+     private String mainProjectStartDate;
+    private String mainProjectTargetDate;
     /**
      * The project object is used for storing ProjectsVTO object for the
      * ProjectDetails.jsp for displaying project details and updating the
@@ -803,6 +805,22 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
 
     public void setMainProjectId(int mainProjectId) {
         this.mainProjectId = mainProjectId;
+    }
+
+    public String getMainProjectStartDate() {
+        return mainProjectStartDate;
+    }
+
+    public void setMainProjectStartDate(String mainProjectStartDate) {
+        this.mainProjectStartDate = mainProjectStartDate;
+    }
+
+    public String getMainProjectTargetDate() {
+        return mainProjectTargetDate;
+    }
+
+    public void setMainProjectTargetDate(String mainProjectTargetDate) {
+        this.mainProjectTargetDate = mainProjectTargetDate;
     }
     
 }

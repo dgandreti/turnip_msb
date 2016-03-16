@@ -1147,6 +1147,7 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+         String exist="";
         StringBuffer sb = new StringBuffer();
         if ("E".equalsIgnoreCase(userAjaxHandlerAction.getResourceType())) {
             queryString = "SELECT concat(trim(first_name),'.',trim(last_name)) AS FullName,usr_id FROM users WHERE (last_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%' OR first_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%') and cur_status='Active' AND org_id=" + userAjaxHandlerAction.getSessionOrgId() + " ORDER BY FullName LIMIT 30";
@@ -1172,6 +1173,14 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
             sb.append("<EMPLOYEES>");
             List projectTeamList = DataSourceDataProvider.getInstance().getProjectTeamMembersList(userAjaxHandlerAction.getProjectID());
             while (resultSet.next()) {
+                if ("E".equalsIgnoreCase(userAjaxHandlerAction.getResourceType()) || "C".equalsIgnoreCase(userAjaxHandlerAction.getResourceType())){
+                    //System.out.println("Conusltant");
+                exist=DataSourceDataProvider.getInstance().checkUserExistOrNotForProjectRespectedOrg(resultSet.getInt(2),userAjaxHandlerAction.getSessionOrgId());
+                }
+                else {
+                exist="notExisted";
+                }
+                if("notExisted".equals(exist)) {
                 if (!projectTeamList.contains(resultSet.getInt(2))) {
                     sb.append("<EMPLOYEE><VALID>true</VALID>");
                     if (resultSet.getString(1) == null || resultSet.getString(1).equals("")) {
@@ -1188,6 +1197,7 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
                     sb.append("</EMPLOYEE>");
                     isGetting = true;
                     count++;
+                }
                 }
             }
 
@@ -3059,6 +3069,233 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
             }
 
         }
+        return result;
+    }
+    
+    public int doUpdateLogo(String accountId,String fileName) throws ServiceLocatorException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        
+        int result = 0;
+        
+        //StringBuffer sb = new StringBuffer();
+        System.out.println("file name---->"+fileName);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            String queryString = "update accounts SET acc_logo=? WHERE account_id="+accountId;
+
+            //System.out.println("get edit skill details update query" + queryStringupdate);
+            preparedStatement = connection.prepareStatement(queryString);
+            preparedStatement.setString(1, fileName);
+            result = preparedStatement.executeUpdate();
+            
+            //System.out.println("String-->" + sb);
+        } catch (SQLException sqle) {
+            throw new ServiceLocatorException(sqle);
+        } finally {
+            try {
+                if (resultSet != null) {
+
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
+                }
+
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sql) {
+                //System.err.print("Error :"+sql);
+            }
+
+        }
+        return result;
+    }
+    
+    /**
+     * *************************************
+     *
+     * @insertPoAttachment() to insert PO attachment of user
+     *
+     * @Author:jagan chukkala<jchukkala@miraclesoft.com>
+     *
+     * @Created Date:08/Jan/2016
+     *
+     *
+     **************************************
+     *
+     */
+    public String insertPoAttachment(UserAjaxHandlerAction userAjaxHandlerAction,String filePath,String files,String fileName) throws ServiceLocatorException {
+        String result = "NotExist";
+        Statement statement = null;
+        String queryString = "";
+         int results = 0;
+        int userId=0;
+             String userName="";
+             String acclogo="";
+             String poStartDate="",poEndDate="",accountName="";
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            System.out.println("userAjaxHandlerAction.insertPoAttachment()--->");
+            queryString = "INSERT INTO acc_rec_attachment(object_id,req_id,object_type,attachment_path,attachment_name,STATUS,opp_created_by) VALUES(?,?,?,?,?,?,?)";
+            preparedStatement = connection.prepareStatement(queryString);
+            preparedStatement.setInt(1, userAjaxHandlerAction.getUserId());
+            preparedStatement.setString(2, userAjaxHandlerAction.getRequirementId());
+            preparedStatement.setString(3, "PO");
+            preparedStatement.setString(4, files);
+            preparedStatement.setString(5, fileName);
+            preparedStatement.setString(6, "Active");
+            preparedStatement.setInt(7, userAjaxHandlerAction.getUserSessionId());
+            results = preparedStatement.executeUpdate();
+            System.out.println("the insertPoAttachment query is-->" + queryString);
+            
+            
+           
+            
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+
+        }
+        System.out.println("--------------" + result);
+        return result;
+    }
+    
+    
+     /**
+     * *************************************
+     *
+     * @poRelease() getting PO details of user
+     *
+     * @Author:jagan chukkala<jchukkala@miraclesoft.com>
+     *
+     * @Created Date:08/Jan/2016
+     *
+     *
+     **************************************
+     *
+     */
+   
+    public String poRelease(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException {
+        String result = "NotExist";
+        Statement statement = null;
+        String queryString = "";
+        int userId=0;
+             String userName="";
+             String acclogo="";
+             String poStartDate="",poEndDate="",accountName="";
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            System.out.println("userAjaxHandlerAction.checkFileName()--->");
+            queryString = "SELECT sa.usr_id,sa.req_id,sa.vendor_id,acc_logo,acc.account_name,sa.po_start_date,sa.po_end_date,sa.target_rate,sa.target_rate_type,sa.over_time_rate,sa.over_time_limit,rcr.created_By,ur.email1" 
+                          + " FROM serviceagreements sa" 
+                          + " LEFT OUTER JOIN accounts acc ON (acc.account_id = sa.customer_id)" 
+                          + " LEFT OUTER JOIN req_con_rel rcr ON (rcr.consultantId = sa.usr_id)" 
+                          + " LEFT OUTER JOIN users ur ON (rcr.created_By = ur.usr_id)" 
+                          + " WHERE sa.serviceid="+userAjaxHandlerAction.getSowId()+" AND rcr.reqId ="+ userAjaxHandlerAction.getRequirementId() +"";
+
+            System.out.println("the getEmpCategoryNames query is-->" + queryString);
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                result = "Exist";
+              userAjaxHandlerAction.setUserId(resultSet.getInt("sa.usr_id")) ;
+              userAjaxHandlerAction.setUserName(DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(resultSet.getInt("sa.usr_id"))) ;
+              userAjaxHandlerAction.setAcclogo(resultSet.getString("acc_logo"));
+              userAjaxHandlerAction.setRequirementId(resultSet.getString("req_id"));
+              if(resultSet.getString("sa.po_start_date")!=null)
+              {
+               userAjaxHandlerAction.setPoStartDate(DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("sa.po_start_date"))) ;   
+              }
+              else
+              {
+               userAjaxHandlerAction.setPoStartDate("--");    
+              }
+              if(resultSet.getString("sa.po_end_date")!=null)
+              {
+              userAjaxHandlerAction.setPoEndDate(DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("sa.po_end_date")));
+              }
+              else
+              {
+              userAjaxHandlerAction.setPoEndDate("--");    
+              }
+              userAjaxHandlerAction.setAccountName(DataSourceDataProvider.getInstance().getAccountNameById(resultSet.getInt("sa.vendor_id")));
+              userAjaxHandlerAction.setEmailId(resultSet.getString("email1"));
+                            
+              userAjaxHandlerAction.setBaseRate(resultSet.getString("sa.target_rate")+" USD per "+resultSet.getString("sa.target_rate_type"));
+              if(resultSet.getString("over_time_rate")==null)
+              {
+              userAjaxHandlerAction.setOverTimeRate("--");    
+              }
+              else
+              {
+               userAjaxHandlerAction.setOverTimeRate(resultSet.getString("over_time_rate")+" USD per "+resultSet.getString("sa.target_rate_type"));   
+              }
+              if(resultSet.getString("over_time_limit")==null)
+              {
+               userAjaxHandlerAction.setOverTimeLimit("--");   
+              }
+              else
+              {
+                  userAjaxHandlerAction.setOverTimeLimit(resultSet.getString("over_time_limit")+" USD per "+resultSet.getString("sa.target_rate_type"));
+              }
+                //System.out.println("accLogo--->"+resultSet.getString("acc_logo"));
+              if(resultSet.getString("acc_logo")==null)
+            {
+                //System.out.println("in if condition");
+             userAjaxHandlerAction.setAcclogo(Properties.getProperty("DEFAULTLOGO"));  
+            }
+              else
+              {
+                  //System.out.println("in else condition");
+             userAjaxHandlerAction.setAcclogo(resultSet.getString("acc_logo"));       
+              }
+            }
+            
+            
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+
+        }
+        System.out.println("--------------" + result);
         return result;
     }
 }

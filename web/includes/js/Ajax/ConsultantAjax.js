@@ -316,16 +316,7 @@ function addConsultantValidate(){
         skillCategoryArry.push($(this).val()); 
     });
     // alert("skillCategoryArry"+skillCategoryArry);
-    if(skillCategoryArry==""){
-       
-        $("addCnsltError").html(" <b><font color='red'>Skill field is required</font></b>");
-        $("#skillCategoryValue").css("border", "1px solid red");
-        return false;
-    } else
-{
-        $("addCnsltError").html("");
-        $("#skillCategoryValue").css("border", "1px solid green");
-    }
+   
     if($("#consult_preferredState :selected").length>5)
     {
             
@@ -347,30 +338,35 @@ function addConsultantValidate(){
     pat =/[^\s]+[a-zA-Z ]*[^\s]+/;    
     if(val_consult_email=="" || val_consult_email==null){
         $("addCnsltError").html(" <b><font color= #FF4D4D>Email field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_email").css("border", "1px solid red");
         $("#consult_email").css("border","1px solid red");
         return false;
     }
     if(val_consult_fstname==""||val_consult_fstname==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>First name field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_fstname").css("border", "1px solid red");
         $("#consult_fstname").css("border","1px solid red");
         return false;
     }
     if(!pat.test(val_consult_fstname)){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Must be valid Name</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_fstname").css("border", "1px solid red");
         $("#consult_fstname").css("border","1px solid red");
         return false;
     }    
     if(val_consult_lstname=="" || val_consult_lstname==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Last name field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_lstname").css("border", "1px solid red");
         $("#consult_lstname").css("border","1px solid red");
         return false;
     }
     if(!pat.test(val_consult_lstname)){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Must be valid last name</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_lstname").css("border", "1px solid red");
         $("#consult_lstname").css("border","1px solid red");
         return false;
@@ -378,12 +374,14 @@ function addConsultantValidate(){
 
     if(val_consult_dob=="" || val_consult_dob==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>DOB field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_dob").css("border", "1px solid red");
         $("#consult_dob").css("border","1px solid red");
         return false;
     }
     if(dobYeardiff < 20){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Consultant must be atleast 20 years old.</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_dob").css("border", "1px solid red");
         $("#consult_dob").css("border","1px solid red");
         return false;
@@ -395,6 +393,7 @@ function addConsultantValidate(){
     //    }
     if(val_consult_mobileNo=="" || val_consult_mobileNo==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Mobile number field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_mobileNo").css("border", "1px solid red");
         $("#consult_mobileNo").css("border","1px solid red");
         return false;
@@ -431,24 +430,28 @@ function addConsultantValidate(){
     //    }
     if(val_consult_City=="" || val_consult_City==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Permanent address city field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_City").css("border", "1px solid red");
         $("#consult_City").css("border","1px solid red");
         return false;
     }
     if(!pat.test(val_consult_City)){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Must be valid city name in permanent address</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_City").css("border", "1px solid red");
         $("#consult_City").css("border","1px solid red");
         return false;
     }
     if(val_consult_Country==-1 ){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Permanent address country field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_Country").css("border", "1px solid red");
         $("#consult_Country").css("border","1px solid red");
         return false;
     }
     if(val_consult_State==-1){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Permanent address state field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_State").css("border", "1px solid red");
         $("#consult_State").css("border","1px solid red");
         return false;
@@ -479,27 +482,42 @@ function addConsultantValidate(){
     //    }
     if(val_consult_CCity=="" || val_consult_CCity==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Current city field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_CCity").css("border", "1px solid red");
         $("#consult_CCity").css("border","1px solid red");
         return false;
     }
     if(!pat.test(val_consult_CCity)){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Must be valid city name in current address</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_CCity").css("border", "1px solid red");
         $("#consult_CCity").css("border","1px solid red");
         return false;
     }
     if(val_consult_CCountry==-1){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Current address country field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_CCountry").css("border", "1px solid red");
         $("#consult_CCountry").css("border","1px solid red");
         return false;
     }
     if(val_consult_CState==-1){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Current address state field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_CState").css("border", "1px solid red");
         $("#consult_CState").css("border","1px solid red");
         return false;
+    }
+     if(skillCategoryArry==""){
+       
+        $("addCnsltError").html(" <b><font color='red'>Skill field is required</font></b>");
+        $('html,body').scrollTop(0);
+        $("#skillCategoryValue").css("border", "1px solid red");
+        return false;
+    } else
+{
+        $("addCnsltError").html("");
+        $("#skillCategoryValue").css("border", "1px solid #ccc");
     }
     //    if(val_consult_CZip=="" || val_consult_CZip==null){
     //        $("addCnsltError").html(" <b><font color=#FF4D4D>Current address zip field is Required</font></b>.");
@@ -522,12 +540,14 @@ function addConsultantValidate(){
     //    }
     if(val_consult_jobTitle=="" || val_consult_jobTitle==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Job title field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_jobTitle").css("border", "1px solid red");
         $("#consult_jobTitle").css("border","1px solid red");
         return false;
     }
     if(val_consult_experience=="" || val_consult_experience==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Experience field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_experience").css("border", "1px solid red");
         $("#consult_experience").css("border","1px solid red");
         return false;
@@ -535,12 +555,14 @@ function addConsultantValidate(){
     
     if(val_consult_wcountry=="" || val_consult_wcountry==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Working country field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_wcountry").css("border", "1px solid red");
         $("#consult_wcountry").css("border","1px solid red");
         return false;
     }
     if(val_consult_industry=="" || val_consult_industry==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Industry field is Required</font></b>.");
+        $('html,body').scrollTop(0);
         $("#val_consult_industry").css("border", "1px solid red");
         $("#consult_industry").css("border","1px solid red");
         return false;
@@ -548,6 +570,7 @@ function addConsultantValidate(){
     if (FileUploadPath == '') {
        
         $("addCnsltError").html(" <b><font color='red'>Please upload a file</font></b>");
+        $('html,body').scrollTop(0);
         return false;
     }
     else {
@@ -561,6 +584,7 @@ function addConsultantValidate(){
         } 
         else {
             $("addCnsltError").html(" <b><font color='red'> Allows only doc, docx or pdf type.</font></b>");
+            $('html,body').scrollTop(0);
             $("#fileSpanId").css("color", "red");
             return false;
         }
@@ -600,13 +624,13 @@ function addConsultantValidate(){
     //   }
    
     $("addCnsltError").html("");
-    $("#consult_email").css("border", "1px solid #3BB9FF");
+    $("#consult_email").css("border", "1px solid #ccc");
     $("#val_consult_email").css("border", "1px solid #3BB9FF");
     //$("#consult_add_date").css("border", "1px solid #3BB9FF");
     $("#consult_available").css("border", "1px solid #3BB9FF");
     $("#consult_fstname").css("border", "1px solid #3BB9FF");
     $("#consult_lstname").css("border", "1px solid #3BB9FF");
-    $("#consult_dob").css("border", "1px solid #3BB9FF");
+    $("#consult_dob").css("border", "1px solid #ccc");
     $("#consult_mobileNo").css("border", "1px solid #3BB9FF");
     $("#consult_lcountry").css("border", "1px solid #3BB9FF");
     $("#consult_Address").css("border", "1px solid #3BB9FF");
@@ -651,39 +675,41 @@ function submmition(){
 
 // function to copy the permanent address into  current address add by Aklakh 
 function FillAddress() {
-    if(addconsult_checkAddress.checked == true) {
-        consult_CAddress.value= consult_Address.value;
+    if(document.getElementById("addconsult_checkAddress").checked == true) {
+        document.getElementById("consult_CAddress").value= document.getElementById("consult_Address").value;
         document.getElementById("consult_CAddress").disabled = true;
-        consult_CAddress2.value= consult_Address2.value;
+        document.getElementById("consult_CAddress2").value= document.getElementById("consult_Address2").value;
         document.getElementById("consult_CAddress2").disabled = true;
-        consult_CCity.value=consult_City.value;
+        document.getElementById("consult_CCity").value=document.getElementById("consult_City").value;
+        $("#consult_CCity").css("border", "1px solid #CCCCCC");
         document.getElementById("consult_CCity").disabled = true;
-        consult_CCountry.value=consult_Country.value;        
+        document.getElementById("consult_CCountry").value=document.getElementById("consult_Country").value;        
         document.getElementById("consult_CCountry").disabled = true;     
         var $options = $("#consult_State > option").clone();
         $('#consult_CState').append($options);
-        consult_CState.value=consult_State.value; 
+        document.getElementById("consult_CState").value=document.getElementById("consult_State").value; 
+        $("#consult_CState").css("border", "1px solid #CCCCCC");
         document.getElementById("consult_CState").disabled = true;
-        consult_CZip.value=consult_Zip.value;
+        document.getElementById("consult_CZip").value=document.getElementById("consult_Zip").value;
         document.getElementById("consult_CZip").disabled = true;
-        consult_CPhone.value=consult_Phone.value;
+        document.getElementById("consult_CPhone").value=document.getElementById("consult_Phone").value;
         document.getElementById("consult_CPhone").disabled = true;
     }
-    if(addconsult_checkAddress.checked == false) {
+    if(document.getElementById("addconsult_checkAddress").checked == false) {
         document.getElementById("consult_CAddress").disabled = false;
-        consult_CAddress.value='';
+        document.getElementById("consult_CAddress").value='';
         document.getElementById("consult_CAddress2").disabled = false;
-        consult_CAddress2.value='';
+        document.getElementById("consult_CAddress2").value='';
         document.getElementById("consult_CCity").disabled = false;
-        consult_CCity.value='';
+        document.getElementById("consult_CCity").value='';
         document.getElementById("consult_CCountry").disabled = false;
-        consult_CCountry.value='';
+        document.getElementById("consult_CCountry").value='3';
         document.getElementById("consult_CState").disabled = false;
-        consult_CState.value='';
+        document.getElementById("consult_CState").value='-1';
         document.getElementById("consult_CZip").disabled = false;
-        consult_CZip.value='';
+        document.getElementById("consult_CZip").value='';
         document.getElementById("consult_CPhone").disabled = false;
-        consult_CPhone.value='';
+        document.getElementById("consult_CPhone").value='';
 
     }
 }
@@ -925,8 +951,8 @@ function consultvalid_industry(){
 function consultvalid_avail(){
     var consult_available=$('#consult_available').val();
     if(consult_available==-1){
-        $("consult_error").html(" <b><font color='red'>Available field is required</font></b>");
-        $("#consult_available").css("border", "1px solid red");
+        //$("consult_error").html(" <b><font color='red'>Available field is required</font></b>");
+       // $("#consult_available").css("border", "1px solid red");
     }
     else{
         $("consult_error").html(" ");
@@ -1608,28 +1634,28 @@ function preferredState(data){
 
 function sameAsAddress() {
     // alert(consult_checkAddress.checked);
-    if(consult_checkAddress.checked == true) {
-        consult_CAddress.value= consult_Address.value;
+    if(document.getElementById("consult_checkAddress").checked == true) {
+        document.getElementById("consult_CAddress").value= document.getElementById("consult_Address").value;
         document.getElementById("consult_CAddress").disabled = true;
-        consult_CAddress2.value= consult_Address2.value;
+        document.getElementById("consult_CAddress2").value= document.getElementById("consult_Address2").value;
         document.getElementById("consult_CAddress2").disabled = true;
-        consult_CCity.value=consult_City.value;
+        document.getElementById("consult_CCity").value=document.getElementById("consult_City").value;
         document.getElementById("consult_CCity").disabled = true;
-        consult_CCountry.value=consult_Country.value;
+        document.getElementById("consult_CCountry").value=document.getElementById("consult_Country").value;
         document.getElementById("consult_CCountry").disabled = true;
       
         var $options = $("#consult_State > option").clone();
         $('#consult_CState').append($options);
-        consult_CState.value=consult_State.value; 
+        document.getElementById("consult_CState").value=document.getElementById("consult_State").value; 
         document.getElementById("consult_CState").disabled = true;
-        consult_CZip.value=consult_Zip.value;
+        document.getElementById("consult_CZip").value=document.getElementById("consult_Zip").value;
         document.getElementById("consult_CZip").disabled = true;
-        consult_CPhone.value=consult_Phone.value;
+        document.getElementById("consult_CPhone").value=document.getElementById("consult_Phone").value;
         document.getElementById("consult_CPhone").disabled = true;
 
     }
     
-    if(consult_checkAddress.checked == false) {
+    if(document.getElementById("consult_checkAddress").checked == false) {
         document.getElementById("consult_CAddress").disabled = false;
         
         document.getElementById("consult_CAddress2").disabled = false;
@@ -1650,7 +1676,7 @@ function sameAsAddress() {
 function defaultClick(){
     //document.getElementById("consult_State").disabled = true;
     //  document.getElementById("consult_preferredState").disabled = true;
-    if(consult_checkAddress.checked == true) {
+    if(document.getElementById("consult_checkAddress").checked == true) {
         document.getElementById("consult_CAddress").disabled = true;
         document.getElementById("consult_CAddress2").disabled = true;
         document.getElementById("consult_CCity").disabled = true;
@@ -1789,7 +1815,7 @@ function pZipValidation(){
     var zip=document.getElementById("consult_Zip").value;
     if(zip==""||status==zip){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Zip field is Required</font></b>.");
-        $("#consult_Zip").css("border", "1px solid red");
+       // $("#consult_Zip").css("border", "1px solid red");
         return false;
     }
     else
@@ -1920,7 +1946,7 @@ function pCAddressValidation(){
     var caddress=document.getElementById("consult_CAddress").value;
     if(caddress==""||caddress==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Address field is Required</font></b>.");
-        $("#consult_CAddress").css("border", "1px solid red");
+      //  $("#consult_CAddress").css("border", "1px solid red");
         return false;
     }
     else
@@ -1952,7 +1978,7 @@ function pCZipValidation(){
     var czip=document.getElementById("consult_CZip").value;
     if(czip==""||status==czip){
         $("addCnsltError").html(" <b><font color=#FF4D4D>Zip field is Required</font></b>.");
-        $("#consult_CZip").css("border", "1px solid red");
+       // $("#consult_CZip").css("border", "1px solid red");
         return false;
     }
     else
@@ -2105,7 +2131,9 @@ function dobValidate(){
 
 
 function showAttachmentDetails(consult_id){
+   
     // alert("in Ajax call ");
+ 
     var url='../consultant/getConsultantAttachments.action?consult_id='+consult_id;
     var req=initRequest(url);
     
@@ -2154,7 +2182,7 @@ function populateAttachmentTable(response){
             attach_row.append($('<td>' + Values[0] + "</td>"));
             attach_row.append($("<td>" + Values[2] + "</td>"));
             attach_row.append($("<td>" + Values[3] + "</td>"));
-            attach_row.append($("<td><figcaption><button type='button' id='id' value="+ Values[4] +" onclick=doConsultAttachmentDownload("+ Values[4] +")><img src='../../includes/images/download.png' height=20 width=20 ></button></figcaption></td>"));
+            attach_row.append($("<td><figcaption><button type='button' id='id' value="+ Values[4] +" onclick=doConsultAttachmentDownload("+ Values[4] +")><i class='fa fa-download' ></i></button></figcaption></td>"));
             attach_row.append($("<td>" + Values[5] + "</td>"));    
         }
     }
@@ -2193,14 +2221,21 @@ function consultAttachmentDownload()
     var requirementId=$("#requirementId").val();
     var jdId=$("#jdId").val();
     var accountSearchID=$("#accountSearchID").val();
+    var techReviewFlag=$("#techReviewFlag").val();
+    var customerFlag=$("#customerFlag").val();
+    var vendor=$("#vendor").val();
+    var consult_salary=$("#consultantExpected").val();
+    var vendorcomments=$("#vendorcomments").val();
     // alert("requirementId-->"+requirementId+"jdId-->"+jdId+"accountSearchID-->"+accountSearchID);
-    // alert(acc_attachment_id);
+    //alert(consult_salary);
     if(consultFlag=='customer'){
-        // alert(consultFlag);
-        window.location = '../consultant/downloadConsultantAttachedDocument.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&jdId='+jdId;
-       
+        if(customerFlag=='customer'){
+            window.location = '../consultant/downloadConsultantAttachedDocument.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&jdId='+jdId+'&techReviewFlag='+techReviewFlag+'&consult_salary='+consult_salary+'&vendorcomments='+vendorcomments;
+        }else{
+            window.location = '../consultant/downloadConsultantAttachedDocument.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&jdId='+jdId+'&techReviewFlag='+techReviewFlag+'&vendor='+vendor+'&consult_salary='+consult_salary+'&vendorcomments='+vendorcomments;
+        }
     }else{
-        window.location = '../consultant/downloadConsultantAttachment.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag;
+        window.location = '../consultant/downloadConsultantAttachment.action?acc_attachment_id='+acc_attachment_id+'&consult_id='+consult_id+'&consultFlag='+consultFlag+'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&jdId='+jdId+'&techReviewFlag='+techReviewFlag+'&consult_salary='+consult_salary+'&vendorcomments='+vendorcomments;
     }
 }
 $(document).ready(function(){
@@ -2263,7 +2298,7 @@ function cheadingMessage(message)
 
 function removedCheckedAddress(){
 
-    if(consult_checkAddress.checked == true) {
+    if(document.getElementById("consult_checkAddress").checked == true) {
         document.getElementById("consult_checkAddress").checked = false;        
         document.getElementById("consult_CAddress").disabled = false;        
         document.getElementById("consult_CAddress2").disabled = false;        
@@ -2275,7 +2310,7 @@ function removedCheckedAddress(){
     }
 }
 function disableCurrentAddress(){
-    if(addconsult_checkAddress.checked==true ) {
+    if(document.getElementById("addconsult_checkAddress").checked==true ) {
         document.getElementById("addconsult_checkAddress").checked = false;      
         document.getElementById("consult_CAddress").disabled = false;        
         document.getElementById("consult_CAddress2").disabled = false;        
@@ -2284,12 +2319,12 @@ function disableCurrentAddress(){
         document.getElementById("consult_CState").disabled = false;        
         document.getElementById("consult_CZip").disabled = false;        
         document.getElementById("consult_CPhone").disabled = false;
-        consult_CAddress.value='';
-        consult_CAddress2.value='';
-        consult_CCity.value='';
-        consult_CCountry.value='';
-        consult_CState.value='';
-        consult_CZip.value='';
+        document.getElementById("consult_CAddress").value='';
+        document.getElementById("consult_CAddress2").value='';
+        document.getElementById("consult_CCity").value='';
+        document.getElementById("consult_CCountry").value='';
+        document.getElementById("consult_CState").value='';
+        document.getElementById("consult_CZip").value='';
         
     }
 }
@@ -2372,6 +2407,8 @@ function resumeValidation(){
 function editResumeValidation(){
     var FileUploadPath = document.getElementById('consultAttachment').value;
 
+               
+      
     //To check if user upload any file
     if (FileUploadPath == '') {
        
@@ -2825,7 +2862,9 @@ function consultantVisaValidation(){
     }
 }
 function openDialogforVisaAttachment(){
-   // alert("hello")
+    
+    document.getElementById('file').value="";
+      $("#message").html("");
     var specialBox = document.getElementById('visaAttachOverlay');
     if(specialBox.style.display == "block"){       
         specialBox.style.display = "none";         
@@ -2839,6 +2878,8 @@ function openDialogforVisaAttachment(){
 }
 
 function visaAttachOverlayClose(){
+   
+    //alert(document.getElementById('file').value)
     var specialBox = document.getElementById('visaAttachOverlay');
     if(specialBox.style.display == "block"){       
         specialBox.style.display = "none";         
@@ -2851,11 +2892,11 @@ function visaAttachOverlayClose(){
 // getConsultantList();
 }
 function teAttachemntUpload(){
-    
+   
     var consultantId = $('#consultantId').val();
     
-   // alert(consultantId);
-    //    var imagePath =document.getElementById('consultVisaAttachment').value;
+    // alert(consultantId);
+    var filePath =document.getElementById('file').value;
       
     //    if(imagePath == null || (imagePath =="")){
     //        document.getElementById('message').innerHTML = "<font color=red>please upload file</font>"
@@ -2864,42 +2905,47 @@ function teAttachemntUpload(){
    
     
     // document.getElementById("load").style.display = 'block';
-    $.ajaxFileUpload({
-        url:'visaAttachemntUpload.action?consultantId='+consultantId,//
-        secureuri:false,//false
-        fileElementId:'file',//id  <input type="file" id="file" name="file" />
-        dataType: 'json',// json
-        success: function(data,status){
+    if(filePath!=""){ 
+        $.ajaxFileUpload({
+            url:'visaAttachemntUpload.action?consultantId='+consultantId,//
+            secureuri:false,//false
+            fileElementId:'file',//id  <input type="file" id="file" name="file" />
+            dataType: 'json',// json
+            success: function(data,status){
             
-            var displaymessage = "<font color=red>Please try again later</font>";
+                var displaymessage = "<font color=red>Please try again later</font>";
           
-            if(data.indexOf("uploaded")>0){
-               
-                displaymessage = "<font color=green>Attachment uploaded Successfully.</font>";
-                document.getElementById('proofdownloadDiv').style.display = "block";
-                document.getElementById('proofuploadDiv').style.display = "none";
-            }
-            if(data.indexOf("Notvalid")>0){
+                if(data.indexOf("uploaded")>0){
+                    displaymessage = "<font color=green>Attachment uploaded Successfully.</font>";
+                    document.getElementById('proofdownloadDiv').style.display = "block";
+                    document.getElementById('proofuploadDiv').style.display = "none";
+                    document.getElementById('consultantIdProofAttach').value = "consultantIdProofAttach";
+                }
+                if(data.indexOf("Notvalid")>0){
                 
-                displaymessage = "<font color=red>Not a valid file!,Please check the file and try again.</font>";
-            }
-            if(data.indexOf("Error")>0){
+                    displaymessage = "<font color=red>Not a valid file!,Please check the file and try again.</font>";
+                }
+                if(data.indexOf("Error")>0){
                
-                displaymessage = "<font color=red>Internal Error!, Please try again later.</font>"
-            }
+                    displaymessage = "<font color=red>Internal Error!, Please try again later.</font>"
+                }
            
-            //   document.getElementById("load").style.display = 'none';
-            document.getElementById('message').innerHTML = displaymessage;//"<font color=green>File uploaded successfully</font>";
+                //   document.getElementById("load").style.display = 'none';
+                document.getElementById('message').innerHTML = displaymessage;//"<font color=green>File uploaded successfully</font>";
         
-        },
-        error: function(e){
+            },
+            error: function(e){
             
-            // document.getElementById("load").style.display = 'none';
-            document.getElementById('message').innerHTML = "<font color=red>Please try again later</font>";
+                // document.getElementById("load").style.display = 'none';
+                document.getElementById('message').innerHTML = "<font color=red>Please try again later</font>";
        
-        }
-    });
-    
+            }
+        });
+    }
+    else
+    {
+        document.getElementById('message').innerHTML = "<font color=red>Please Browse file</font>";   
+    }    
    
     //}	
     return false;
@@ -2932,7 +2978,7 @@ function onloadIdProofDetails(){
 
 function getVisaDetails(){
     var consultantId=document.getElementById('consultantId').value;
-   // alert(consultantId+"-->consultantId")
+    // alert(consultantId+"-->consultantId")
     
     var consultantIdProof = document.getElementById('consultantIdProof').value;
    
@@ -2945,7 +2991,7 @@ function getVisaDetails(){
         document.getElementById('visaSelectDiv').style.display = "none"; 
     }
     var consultantIdProofAttach = document.getElementById('consultantIdProofAttach').value;
-  //  alert(consultantIdProofAttach);
+    //  alert(consultantIdProofAttach);
     if(consultantIdProofAttach==null || consultantIdProofAttach==""){
         document.getElementById('proofuploadDiv').style.display = "block";  
     }
@@ -2956,7 +3002,7 @@ function getVisaDetails(){
     }
    
     var consultantIdProofhidden=document.getElementById('consultantIdProofhidden').value;
-   // alert(consultantIdProofhidden);
+    // alert(consultantIdProofhidden);
     if(consultantIdProofAttach!=null && consultantIdProofAttach!=""){
         swal({
     
@@ -2984,11 +3030,11 @@ function getVisaDetails(){
                 req.onreadystatechange = function() {
                     if (req.readyState == 4) {
                         if (req.status == 200) {
-                            alert(req.responseText);
+                          //  alert(req.responseText);
                             if(req.responseText=="1"){
                                 document.getElementById('proofuploadDiv').style.display = "none"; 
                                 document.getElementById('proofdownloadDiv').style.display = "none";
-                                document.getElementById('consultantIdProofhidden').value="0";
+                                // document.getElementById('consultantIdProofhidden').value="0";
                                 document.getElementById('consultantIdProof').value="0";
                                 document.getElementById('visaSelectDiv').style.display = "none"; 
                                 document.getElementById('consultantIdProofAttach').value="";
@@ -3011,6 +3057,7 @@ function getVisaDetails(){
      
                 swal("Cancelled", "Deleted cancelled ", "error");
                 document.getElementById('consultantIdProof').value=consultantIdProofhidden;
+                document.getElementById('proofdownloadDiv').style.display = "block"; 
                 if(consultantIdProofhidden=="VS"){
                     document.getElementById('visaSelectDiv').style.display = "block";
                 }
@@ -3028,7 +3075,7 @@ function getVisaDetails(){
 
 function removeConsultantAttachement(){
     var consultantId=document.getElementById('consultantId').value;
-   // alert(consultantId);
+    // alert(consultantId);
     swal({
     
         title: "You will lose Current ID Proof. Do you want to continue..",
@@ -3055,7 +3102,7 @@ function removeConsultantAttachement(){
             req.onreadystatechange = function() {
                 if (req.readyState == 4) {
                     if (req.status == 200) {
-                       // alert(req.responseText);
+                        // alert(req.responseText);
                         if(req.responseText=="1"){
                             document.getElementById('proofuploadDiv').style.display = "none"; 
                             document.getElementById('proofdownloadDiv').style.display = "none";
@@ -3077,11 +3124,14 @@ function removeConsultantAttachement(){
             req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
             req.send(null);
         }
+        else {
+            swal("Cancelled", "Deleted cancelled ", "error");
+        }
         
     }); 
 }
 function displayHide_downloadButtons(){
-var val = document.getElementById("rec_exits").value;
+    var val = document.getElementById("rec_exits").value;
     if (val=="no"){
         $("#downloading_grid").css('display', 'none');
     }
@@ -3089,3 +3139,70 @@ var val = document.getElementById("rec_exits").value;
         $("#downloading_grid").css('display', '');
     }
 }
+
+function idProofFileValidation()
+{
+    document.getElementById('message').innerHTML = '';
+    var fullPath = document.getElementById('file').value;
+        
+    // alert(fullPath);
+            
+    var size = document.getElementById('file').files[0].size;
+    var extension = fullPath.substring(fullPath.lastIndexOf('.')+1);
+
+    if(extension=="pdf"||extension=="doc"|| extension=="docx"||extension=="gif" || extension=="jpeg" || extension=="jpg" || extension=="png"){
+        var size = document.getElementById('file').files[0].size;
+                  
+        if(fullPath.length>50){
+            document.getElementById('file').value = '';
+            document.getElementById('message').innerHTML = "<font color=red>File name length must be less than 50 characters!</font>"
+            // showAlertModal("File size must be less than 2 MB");
+            return (false);
+        }
+        else 
+        {
+            if(parseInt(size)<2097152) {
+                
+                  
+            }else {
+                document.getElementById('file').value = '';
+                document.getElementById('message').innerHTML = "<font color=red>File size must be less than 2 MB.</font>"
+                // showAlertModal("File size must be less than 2 MB");
+                return (false);
+            }
+        }
+    }
+    else 
+    {
+    
+        document.getElementById('file').value = "";
+        document.getElementById('message').innerHTML = "<font color=red>Invalid file extension!Please select pdf or doc or docx or gif or jpg or png or jpeg file.</font>"
+        return false;
+    }
+}
+function downloadPDFConsultantList(){
+    var gridDownload=document.getElementById('gridDownload').value;
+    var url= "../../recruitment/consultant/downloadResults.action?pdfHeaderName=Consultant List&gridDownload="
+        +gridDownload+"&gridDownloadFlag=Con";
+//   alert(url);
+   window.location=url;
+}
+
+ConsultantAjax.jsp 
+function CommentsCheckCharacters(id){
+       
+     $(id).keyup(function(){
+        el = $(this);
+        if(el.val().length >= 500){
+            el.val( el.val().substr(0, 500) );
+        } else {
+            $("#commentscharNum").text(500-el.val().length+' Characters remaining . ');
+        }
+        if(el.val().length==500)
+        {
+            $("#commentscharNum").text(' Cannot enter  more than 500 Characters .');
+        }
+
+    })
+    return false;
+};

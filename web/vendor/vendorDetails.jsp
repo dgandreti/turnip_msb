@@ -56,6 +56,7 @@
 
     </head>
     <body >
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -65,6 +66,7 @@
 
         </header>
         <%-- ------------MIDDLE -----------------------------------------%>
+       <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
@@ -107,12 +109,12 @@
                                                                         <div class="row">
                                                                             <span><UpdateVendorInfo></UpdateVendorInfo></span>
                                                                             <div>
-                                                                                <label style="color:#FF8000;" class="">BASIC DETAILS: </label>
+                                                                                <label style="color:#FF8000;" class="">BASIC DETAILS </label>
                                                                                 <div id="vendorBox">
 
                                                                                     <div class="inner-vendordiv-elements">
                                                                                         <s:hidden name="venFlag" id="venFlag" value="%{venFlag}"/>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Vendor Name : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Vendor Name  </label>
                                                                                         <s:textfield type="text"
                                                                                                      name="vendorName"
                                                                                                      cssClass="vendorInputStyle"
@@ -121,7 +123,7 @@
                                                                                                      value="%{vendorListVTO.vendorName}"
                                                                                                      disabled="true"/>
                                                                                         <s:hidden name="vendorId" value="10004" id="vendorId"/>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Vendor URL : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Vendor URL  </label>
                                                                                         <s:textfield type="text"
                                                                                                      name="vendorURL"
                                                                                                      cssClass="vendorInputStyle"
@@ -132,7 +134,7 @@
                                                                                         <script>
 
                                                                                         </script>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Status : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Status  </label>
                                                                                         <s:select  id="vendorStatus"
                                                                                                    name="vendorStatus"
                                                                                                    cssClass="vendorSelectStyle" 
@@ -146,11 +148,11 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div>
-                                                                                <label style="color:#FF8000;" class="">ADDRESS DETAILS : </label>
+                                                                                <label style="color:#FF8000;" class="">ADDRESS DETAILS  </label>
                                                                                 <div id="vendorBox">
 
                                                                                     <div class="inner-vendordiv-elements">
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Address 1 : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Address 1  </label>
                                                                                         <s:textarea type="text"
                                                                                                     name="vendorAddress1"
                                                                                                     cssClass="vendorInputStyle"
@@ -158,14 +160,14 @@
                                                                                                     placeholder="vendorAddress1"
                                                                                                     value="%{vendorListVTO.vendorAddress1}"/>
 
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Address 2 : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Address 2  </label>
                                                                                         <s:textarea type="text"
                                                                                                     name="vendorAddress2"
                                                                                                     cssClass="vendorInputStyle"
                                                                                                     id="vendorAddress2"
                                                                                                     placeholder="vendorAddress2"
                                                                                                     value="%{vendorListVTO.vendorAddress2}"/>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Country : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Country  </label>
                                                                                         <s:select   id="vendorCountry"
                                                                                                     name="vendorCountry"
                                                                                                     cssClass="vendorSelectStyle"
@@ -178,14 +180,14 @@
 
                                                                                     </div>
                                                                                     <div class="inner-vendordiv-elements">
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">City : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">City  </label>
                                                                                         <s:textfield  id="vendorCity"
                                                                                                       cssClass="vendorInputStyle"
                                                                                                       name="vendorCity"
                                                                                                       type="text"
                                                                                                       placeholder="vendorCity"
                                                                                                       value="%{vendorListVTO.vendorCity}"/>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Phone : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Phone  </label>
                                                                                         <s:textfield  id="vendorPhone"
                                                                                                       cssClass="vendorInputStyle"
                                                                                                       name="vendorPhone"
@@ -198,7 +200,7 @@
 
 
 
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">State : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">State  </label>
                                                                                         <s:select   id="vendorState"
                                                                                                     name="vendorState"
                                                                                                     cssClass="vendorSelectStyle"
@@ -209,7 +211,7 @@
                                                                                                     value="%{vendorListVTO.vendorState}"/>
                                                                                     </div>
                                                                                     <div class="inner-vendordiv-elements">
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Fax : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Fax  </label>
                                                                                         <s:textfield  id="vendorFax"
                                                                                                       cssClass="vendorInputStyle"
                                                                                                       name="vendorFax"
@@ -217,14 +219,14 @@
                                                                                                       pattern="{14}"
                                                                                                       placeholder="vendorFax"
                                                                                                       value="%{vendorListVTO.vendorFax}"/>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Zip : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Zip  </label>
                                                                                         <s:textfield id="vendorZip"
                                                                                                      name="vendorZip"
                                                                                                      type="text"
                                                                                                      cssClass="vendorInputStyle" 
                                                                                                      placeholder="vendorZip"
                                                                                                      value="%{vendorListVTO.vendorZip}"/>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Region : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Region  </label>
                                                                                         <s:textfield id="vendorRegion"
                                                                                                      name="vendorRegion"
                                                                                                      type="text"
@@ -233,7 +235,7 @@
                                                                                                      value="%{vendorListVTO.vendorRegion}"/>
                                                                                     </div>
                                                                                     <div class="inner-vendordiv-elements">
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Territory : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Territory  </label>
                                                                                         <s:textfield id="vendorTerritory"
                                                                                                      name="vendorTerritory"
                                                                                                      type="text"
@@ -244,11 +246,11 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div>
-                                                                                <label style="color:#FF8000;" class="">OTHER DETAILS: </label>
+                                                                                <label style="color:#FF8000;" class="">OTHER DETAILS </label>
                                                                                 <div id="vendorBox">
 
                                                                                     <div class="inner-vendordiv-elements">
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Description : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Description  </label>
                                                                                         <s:textarea id="vendorDescription"
                                                                                                     name="vendorDescription"
                                                                                                     cssClass="vendorAreaStyle"
@@ -257,7 +259,7 @@
                                                                                                     value="%{vendorListVTO.vendorDescription}"/>
 
 
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">VendorType : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">VendorType  </label>
                                                                                         <s:select  id="vendorType"
 
                                                                                                    name="vendorType"
@@ -270,21 +272,21 @@
                                                                                     </div>
                                                                                     <div class="inner-vendordiv-elements">
 
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Budget : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Budget  </label>
                                                                                         <s:textfield id="vendorBudget"
                                                                                                      name="vendorBudget"
                                                                                                      cssClass="vendorInputStyle"
                                                                                                      type="text"
                                                                                                      placeholder="vendorBudget"
                                                                                                      value="%{vendorListVTO.vendorBudget}"/>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Tax ID : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Tax ID  </label>
                                                                                         <s:textfield id="vendorTaxid"
                                                                                                      name="vendorTaxid"
                                                                                                      cssClass="vendorInputStyle"
                                                                                                      type="text"
                                                                                                      placeholder="vendorTaxid" 
                                                                                                      value="%{vendorListVTO.vendorTaxid}"/>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Industry : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Industry  </label>
                                                                                         <s:select   id="vendorIndustry"
                                                                                                     name="vendorIndustry"
                                                                                                     cssClass="vendorSelectStyle"
@@ -294,7 +296,7 @@
                                                                                                     value="%{vendorListVTO.vendorIndustry}"/>
                                                                                     </div>
                                                                                     <div class="inner-vendordiv-elements">
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Stock Symbol : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Stock Symbol  </label>
                                                                                         <s:textfield id="stockSymbol"
                                                                                                      name="stockSymbol"
                                                                                                      cssClass="vendorInputStyle"
@@ -302,14 +304,14 @@
                                                                                                      placeholder="stockSymbol"
                                                                                                      value="%{vendorListVTO.stockSymbol}"/>
 
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Revenue : </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">Revenue  </label>
                                                                                         <s:textfield id="vendorRvenue"
                                                                                                      cssClass="vendorInputStyle"
                                                                                                      name="vendorRvenue"
                                                                                                      type="text"
                                                                                                      placeholder="vendorRvenue"
                                                                                                      value="%{vendorListVTO.vendorRvenue}"/>
-                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">No.of Employees: </label>
+                                                                                        <label style="color:#56a5ec;" class="labelStyleVendor">No.of Employees </label>
                                                                                         <s:textfield id="empCount"
                                                                                                      name="empCount"
                                                                                                      cssClass="vendorInputStyle"
@@ -382,7 +384,7 @@
                                                                                             list="allVendorTeam"/>
                                                                                 <div class="form-controls">
                                                                                     <label for="leftTitle" style="margin-left: 5px">
-                                                                                        Assign team&nbsp;:
+                                                                                        Assign team&nbsp;
                                                                                     </label>
                                                                                 </div>
                                                                                 <div class="row " style="margin-left: 5px ;width: auto " >
@@ -429,7 +431,7 @@
 
                                                                             <s:hidden name="vendorSearchId" id="vendorSearchId" value="%{vendorId}"/>
                                                                             <div class="col-lg-4">
-                                                                                <label class="" style="">First Name:&nbsp;</label>
+                                                                                <label class="" style="">First Name&nbsp;</label>
                                                                                 <s:textfield id="firstNameContacts"
                                                                                              cssClass="textbox"  
                                                                                              type="text"
@@ -437,7 +439,7 @@
                                                                                              placeholder="First Name"/>
                                                                             </div>
                                                                             <div class="col-lg-4">
-                                                                                <label class="" style="">Last Name:&nbsp;</label>
+                                                                                <label class="" style="">Last Name&nbsp;</label>
                                                                                 <s:textfield id="lastNameContacts"
                                                                                              name="lastName"
                                                                                              cssClass="textbox" 
@@ -446,7 +448,7 @@
                                                                                              placeholder="Last Name" />
                                                                             </div>
                                                                             <div class="col-lg-4">
-                                                                                <label class="" style="">Email Id:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                                                <label class="" style="">Email Id&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                                                 <s:textfield id="emailContacts"
                                                                                              name="email"
                                                                                              cssClass="textbox" 
@@ -459,7 +461,7 @@
                                                                         <div class="row">
 
                                                                             <div class="col-lg-4">  
-                                                                                <label class="" style="">Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                                                <label class="" style="">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                                                 <s:textfield id="phoneContacts"
                                                                                              cssClass="textbox" 
                                                                                              name="phone" 
@@ -467,7 +469,7 @@
                                                                                              placeholder="Phone #" /> 
                                                                             </div>
                                                                             <div class="col-lg-4">
-                                                                                <label class="" style="">Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                                                <label class="" style="">Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                                                 <s:select id="statusContacts"
                                                                                           cssClass="selectBoxStyle"  
                                                                                           name="status"
@@ -540,6 +542,8 @@
                 </div>
             </div>
         </section>
+                                                 </div>
+            </div>
         <%-- ------------MIDDLE -----------------------------------------%>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">

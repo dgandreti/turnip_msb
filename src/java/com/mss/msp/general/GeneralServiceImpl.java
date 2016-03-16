@@ -463,6 +463,7 @@ public class GeneralServiceImpl implements GeneralService {
                         + "LEFT OUTER JOIN accounts a ON(a.account_id=acc_id) "
                         + "LEFT OUTER JOIN csrorgrel csr ON(a.account_id=csr.org_id)"
                         + "WHERE DATE_FORMAT(req_st_date,'%Y')=" + year + " "
+                        + "AND csr.STATUS = 'active'"
                         + "AND csr.csr_id=" + generalAction.getUserSessionId() + " "
                         + "GROUP BY a.account_id";
             }

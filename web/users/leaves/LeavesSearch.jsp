@@ -68,7 +68,7 @@
                                         <table>
                                             <div class="" id="addtsprofileBox">
                                                 <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Add Leave&nbsp;&nbsp; </font></h4></td>
-                                                <span class=" pull-right"><h5><a href="" class="leave_popup_close"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a>&nbsp;</h5></span>
+                                                <span class=" pull-right"><h5><a href="" class="leave_popup_close"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
                                         </table>
                                     </div>
                                     <div>

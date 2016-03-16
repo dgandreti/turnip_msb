@@ -20,6 +20,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.ParameterAware;
 
@@ -200,7 +202,7 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
     private String validateMessage;
     private Map workLocations;
     private int workingLocation;
-
+    private int reportPerson;
     /**
      * Method : Account add action
      *
@@ -377,7 +379,43 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 setContactPersons(com.mss.msp.util.DataSourceDataProvider.getInstance().getContactPersonsByProjectIdHeigerDesignationId(getProjectID(), getDesignation(), getUserID()));
-                setReportsTOMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getReporingByProjectId(getProjectID()));
+                //setReportsTOMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getReporingByProjectId(this));
+                if (getProjectFlag() == null || "".equals(getProjectFlag().trim())) {
+//                    System.out.println("edit team member");
+                    String allRoles = "";
+                    int userRole = dataSourceDataProvider.getInstance().getUsrRoleById(getUserID());
+                    String usrRole = String.valueOf(userRole);
+                    //,7,11,14
+//                    if ("7".equals(usrRole) || "11".equals(usrRole) || "14".equals(usrRole)) {
+//                        allRoles = Properties.getProperty("REPORTSTOROLESFOREMP"); //"2,13,4,5,3,6";
+//                    } else {
+                        allRoles = Properties.getProperty("REPORTSTOROLES");
+//                    }
+                    System.out.println("allRoles-->" + allRoles);
+
+                    String finalReportsList = "";
+                    String allRoleArray[] = allRoles.split(",");
+
+                    for (int i = 0; i < allRoleArray.length; i++) {
+                        if (allRoleArray[i].equals(usrRole)) {
+                            break;
+                        } else {
+                            finalReportsList += allRoleArray[i] + ",";
+                        }
+
+                    }
+                    if ("".equals(finalReportsList)) {
+                        finalReportsList = null;
+                    }
+                    System.out.println("finalReportsList" + finalReportsList);
+                    finalReportsList = StringUtils.chop(finalReportsList);
+                    System.out.println("finalReportsList" + finalReportsList);
+                    setReportsTOMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getReporingByProjectId(this, finalReportsList));
+                } else {
+//                    System.out.println("add team member");
+                    Map reportsMap = new HashMap();
+                    setReportsTOMap(reportsMap);
+                }
                 // setAccount(ServiceLocator.getAccountService().getSubProjectDetails(httpServletRequest, this));
                 setSubProject(com.mss.msp.util.DataSourceDataProvider.getInstance().getSubProject(getProjectID(), getUserID()));
                 setAssignedSubProject(com.mss.msp.util.DataSourceDataProvider.getInstance().getAssignedSubProject(getProjectID(), getUserID()));
@@ -396,22 +434,53 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
 
     public String addTeamMemberToProject() throws ServiceLocatorException {
         String resulttype = LOGIN;
+        String result = "";
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
 //            setTeamMemberId(123);
             //  System.out.println("Teamemberid in action claas---->" + getTeamMemberId());
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setAccountID(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-            String result = ServiceLocator.getAccountService().addTeamMemberToProject(this, httpServletRequest);
-            // setDesignationMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getDesignation());
-
-            if (result.equalsIgnoreCase("Insert")) {
+            if ("addMember".equals(getProjectFlag())) {
+                result = ServiceLocator.getAccountService().addTeamMemberToProject(this, httpServletRequest);
                 setProjectFlag("addMember");
                 setResultMessage("Team Member Added Succesfully..");
+                // setDesignationMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getDesignation());
             } else {
-                setUserID(getTeamMemberId());
-                setResultMessage("Team Member Updated Succesfully..");
+                System.out.println("teammember Id" + getTeamMemberId());
+                System.out.println("user Id" + getUserID());
+                if ("Active".equals(getTeamMemberStatus())) {
+                    if (getReportPerson() == getReportsto1()) {
+
+                        String userExist = DataSourceDataProvider.getInstance().checkUserExistOrNotForProjectRespectedOrg(getTeamMemberId(), getAccountID());
+                        if ("notExisted".equals(userExist)) {
+                            result = ServiceLocator.getAccountService().addTeamMemberToProject(this, httpServletRequest);
+                            setUserID(getUserID());
+
+                            setResultMessage("Team Member Updated Succesfully..");
+
+                        } else {
+                            setUserID(getUserID());
+
+                            setResultMessage("Team Member Already Existed..");
+                        }
+                    } else {
+                        result = ServiceLocator.getAccountService().addTeamMemberToProject(this, httpServletRequest);
+                        setUserID(getUserID());
+
+                        setResultMessage("Team Member Updated Succesfully..");
+                    }
+                } else {
+                    result = ServiceLocator.getAccountService().addTeamMemberToProject(this, httpServletRequest);
+                    setUserID(getUserID());
+
+                    setResultMessage("Team Member Updated Succesfully..");
+                }
 
             }
+
+
+
+
             resulttype = SUCCESS;
         }
         return resulttype;
@@ -1876,6 +1945,14 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
 
     public void setExperience(Map experience) {
         this.experience = experience;
+    }
+
+    public int getReportPerson() {
+        return reportPerson;
+    }
+
+    public void setReportPerson(int reportPerson) {
+        this.reportPerson = reportPerson;
     }
     
     

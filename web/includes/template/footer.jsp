@@ -3,10 +3,13 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page import="java.util.List" isErrorPage="true"%>
 <%@ page import="com.mss.msp.util.ApplicationConstants"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.GregorianCalendar"%>
 
 <%--<div id="footer_seperator"></div>--%>
 <div class="row">
-    <div class="col-sm-6 pull-left">Copyright &copy; 2015 ServicesBay. All rights reserved.</div>
+    
+    <div class="col-sm-6 pull-left">Copyright <i class="fa fa-copyright"></i> <%GregorianCalendar cal = new GregorianCalendar();out.print(cal.get(Calendar.YEAR));%> ServicesBay. All rights reserved.</div>
     <div class="col-sm-6">
         <ul class="pull-right socialHover">
             <a class="btn btn-social btn-facebook " href="https://www.facebook.com/miracle45625" target="_blank" itemprop="sameAs"><i class="fa fa-facebook" style=""></i></a>

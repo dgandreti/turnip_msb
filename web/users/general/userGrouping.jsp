@@ -57,6 +57,7 @@
     </head>
 
     <body>
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -65,7 +66,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <div class="container">
             <div class="row">
                 <!-- Main Content-->
@@ -82,18 +83,19 @@
                                         <font color="#ffffff">User Grouping</font>
                                         <s:url var="myUrl" action="getEmployeeCategorization.action">
                                         </s:url>
-                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                        <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                         </h4>
                                     </div>
                                 </div> 
                                 <div class="col-sm-12">
                                     <span><userGrouping></userGrouping></span>
+                                    <s:hidden id="addOrUpdate" value="%{addOrUpdate}" />
                                     <div class="inner-reqdiv-elements">
                                         <div class="row">
 
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-3 required">
                                             <s:hidden id="groupingId" name="groupingId" value="%{groupingId}"/>
-                                            <label class="labelStylereq" style="color:#56a5ec"><span class="accDetailsError">*</span>User Name:</label>
+                                            <label class="labelStylereq" style="color:#56a5ec">User Name</label>
                                             <s:if test="groupingId!=0">
                                                 <s:textfield name="userName" cssClass="form-control" id="userName" placeholder="User Name" value="%{userName}" onkeyup="return getUserNameForCategory()" onfocus="clearErrosMsgForGrouping()" disabled="true" maxLength="60"/>
                                             </s:if>
@@ -103,12 +105,12 @@
                                             <s:hidden name="userId" id="userId" value="%{userId}"/>
                                             <span id="validationMessage" />
                                         </div>
-                                        <div class="col-sm-3">
-                                            <label class="labelStylereq" style="color:#56a5ec"><span class="accDetailsError">*</span>Category Type</label>
+                                        <div class="col-sm-3 required">
+                                            <label class="labelStylereq" style="color:#56a5ec">Category Type</label>
                                             <s:select id="usrCatType" name="usrCatType" cssClass="SelectBoxStyles form-control " headerKey="-1" headerValue="--select--"  value="%{usrCatType}"  theme="simple" list="%{usrCategory}" onchange="getCategoryList()" onfocus="clearErrosMsgForGrouping()"/>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <label class="labelStylereq" style="color:#56a5ec"><span class="accDetailsError">*</span>Status</label>
+                                        <div class="col-sm-3 required">
+                                            <label class="labelStylereq" style="color:#56a5ec">Status</label>
                                             <s:select id="usrStatus" name="usrStatus" cssClass="SelectBoxStyles form-control " headerKey="-1" headerValue="--select--"  value="%{usrStatus}"  theme="simple" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"  onfocus="clearErrosMsgForGrouping()" />
                                         </div>
                                         <div class="col-sm-3">
@@ -122,8 +124,8 @@
                                 </div> <br>
                             </div>
 
-                            <div class="col-sm-3">
-                                <label class="labelStylereq categoryReq" style="color:#56a5ec"><span class="accDetailsError">*</span>Categories :</label>
+                            <div class="col-sm-3 required">
+                                <label class="labelStylereq categoryReq" style="color:#56a5ec">Categories </label>
                                 <s:if test="groupingId!=0">
                                     <s:select cssClass="" name="usrCategoryValue"  id="usrCategoryValue" 
                                               list      = "catValuesMap" 
@@ -138,7 +140,7 @@
                                 </s:else>
                             </div>
                             <div class="col-sm-9">
-                                <label class="labelStylereq" style="color:#56a5ec">Description:</label>
+                                <label class="labelStylereq" style="color:#56a5ec">Description</label>
                                 <s:textarea id="usrDescription" name="usrDescription" placeholder="Description" cssClass="form-control "  value="%{usrDescription}" onfocus="clearErrosMsgForGrouping()" onkeyup="CalculateLeangth()"  />
                                 <span><deascOpt></deascOpt></span>
                             </div>
@@ -155,8 +157,8 @@
                     </div><!-- Add Form-->
                 </div>
             </div>
-            
-
+        </div> 
+        </div>
             <footer id="footer"><!--Footer-->
                 <div class="footer-bottom" id="footer_bottom">
                     <div class="container">

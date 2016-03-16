@@ -115,6 +115,7 @@
                 // document.getElementById("docdatepicker").value=to;
                 //document.getElementById("startDate").value=overlayDate;
                 //document.getElementById("endDate").value=overlayDate;
+                document.getElementById("loadingTeamTimesheetSearch").style.display="none";
             }
             
             
@@ -220,229 +221,234 @@
 
 
     <body style="overflow-x: hidden" onload="doOnLoad();checkWeekStatus()">
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
+        <div id="wrap">
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
 
-                    <s:include value="/includes/template/header.jsp"/> 
+                        <s:include value="/includes/template/header.jsp"/> 
 
+                    </div>
                 </div>
-            </div>
 
-        </header>
+            </header>
+            <div id="main">
+                <section id="generalForm"><!--form-->
 
-        <section id="generalForm"><!--form-->
 
+                    <div class="container">
+                        <div class="row">
+                            <s:include value="/includes/menu/LeftMenu.jsp"/>  
 
-            <div class="container">
-                <div class="row">
-                    <s:include value="/includes/menu/LeftMenu.jsp"/>  
+                            <!-- content start -->
+                            <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
+                                <div class="features_items">
+                                    <div class="col-lg-14 ">
+                                        <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                                            <div class="backgroundcolor" >
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
 
-                    <!-- content start -->
-                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
-                        <div class="features_items">
-                            <div class="col-lg-14 ">
-                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
-                                    <div class="backgroundcolor" >
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
+                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                        <font color="#ffffff">Team Time Sheets Search</font>
+                                                        <i id="updownArrow" onclick="toggleContent('teamTimesheetSearch')" class="fa fa-minus"></i>
 
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                <font color="#ffffff">Team Time Sheets Search</font>
-                                                <i id="updownArrow" onclick="toggleContent('teamTimesheetSearch')" class="fa fa-angle-up"></i>
-
-                                            </h4>
-                                        </div>
-
-                                    </div>
-
-                                    <s:url var="myUrl" action="#"></s:url>
-                                        <span id="timesheetValidation"></span>
-                                        <!-- content start onsubmit="return validateDates()" -->
-                                        <div class="col-sm-12">
-                                        <s:form action="teamTimesheetSearch" onsubmit="return checkTimesheetDateRange();" theme="simple" >
-                                            <br>
-                                            <ul class="nav nav-pills">
-                                                <s:hidden value="%{reportingPerson}" name="reportingPerson" id="reportingPerson"/>
-                                                <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color:#56a5ec;">From Date:</label> 
-                                                    <s:textfield cssClass="form-control dateImage" label="from date" name="startDate" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
+                                                    </h4>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color:#56a5ec;">To Date:</label>
-                                                    <s:textfield cssClass="form-control dateImage" label="To date" name="endDate" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
-                                                    <s:select id="tmstatus" name="tmstatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'CA':'Entered','SU':'Submitted','AP':'Approved'}"/>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color:#56a5ec;">Employee:</label>
-                                                    <s:select id="tmstatus" name="tmmember" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Employee" theme="simple" list="teamMembersList"/>
-                                                </div>
-                                                <div class="col-sm-8 pull-right">
-                                                    <div class=" pull-right">
 
-                                                        <%--a href="#" onclick="addTimeSheetOverlayOpen()"><input type="button" class="cssbutton addTimeSheet_open" value="Add Timesheet"></a--%>&nbsp;&nbsp;&nbsp; 
-                                                        <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="searchButton" value="" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                            </div>
+
+                                            <s:url var="myUrl" action="#"></s:url>
+                                                <span id="timesheetValidation"></span>
+                                                <!-- content start onsubmit="return validateDates()" -->
+                                                <div class="col-sm-12">
+                                                <s:form action="teamTimesheetSearch" onsubmit="return checkTimesheetDateRange();" theme="simple" >
+                                                    <br>
+                                                    <ul class="nav nav-pills">
+                                                        <s:hidden value="%{reportingPerson}" name="reportingPerson" id="reportingPerson"/>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">From Date</label> 
+                                                            <div class="calImage"><s:textfield cssClass="form-control " label="from date" name="startDate" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
+                                                            </div></div>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">To Date</label>
+                                                            <div class="calImage"><s:textfield cssClass="form-control " label="To date" name="endDate" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
+                                                        </div></div>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Status</label>
+                                                            <s:select id="tmstatus" name="tmstatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" tabindex="3" list="#@java.util.LinkedHashMap@{'CA':'Entered','SU':'Submitted','AP':'Approved'}"/>
                                                         </div>
-                                                    </div>
-                                                </ul>
-                                                <br>
-                                        </s:form>
-                                        <%
-                                            if (request.getParameter("resultMessage") != null) {
-                                                out.println(request.getParameter("resultMessage"));
-                                            }
-                                        %>  
-                                        <s:form>
-                                            <div class="task_content" id="task_div" align="center" style="display: none" >
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Employee</label>
+                                                            <s:select id="tmstatus" name="tmmember" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Employee" tabindex="4" theme="simple" list="teamMembersList"/>
+                                                        </div>
+                                                        <div class="col-sm-8 pull-right">
+                                                            <div class=" pull-right">
 
-                                                <div>
-                                                    <div>
+                                                                <%--a href="#" onclick="addTimeSheetOverlayOpen()"><input type="button" class="cssbutton addTimeSheet_open" value="Add Timesheet"></a--%>&nbsp;&nbsp;&nbsp; 
+                                                                <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="searchButton" value="" tabindex="5" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                </div>
+                                                            </div>
+                                                        </ul>
+                                                        <br>
+                                                </s:form>
+                                                <%
+                                                    if (request.getParameter("resultMessage") != null) {
+                                                        out.println(request.getParameter("resultMessage"));
+                                                    }
+                                                %>  
+                                                <div id="loadingTeamTimesheetSearch" class="loadingImg">
+                                                    <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                                </div>
+                                                <s:form>
+                                                    <div class="task_content" id="task_div" align="center" style="display: none" >
 
-                                                        <table id="timesheet_results" class="responsive CSSTable_task" border="5" cell-spacing="2">
+                                                        <div>
+                                                            <div>
 
-                                                            <tbody>
-                                                                <tr>
-                                                                    <th>App/Rej</th>
-                                                                    <th>Emp Name</th>
-                                                                    <th>Start Date</th>
-                                                                    <th>End Date</th>
-                                                                    <th>Billable Hours</th>
-                                                                    <th>Status</th>
-                                                                    <%--th>Reports To</th--%>
-                                                                    <th>Submitted Date</th>
-                                                                    <%--th>Approved Date</th--%>
-                                                                    <%--th>Delete</th--%>
+                                                                <table id="timesheet_results" class="responsive CSSTable_task" border="5" cell-spacing="2">
 
-                                                                </tr>
-                                                                <%
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th>Appd/Rej</th>
+                                                                            <th>Emp Name</th>
+                                                                            <th>Start Date</th>
+                                                                            <th>End Date</th>
+                                                                            <th>Billable Hours</th>
+                                                                            <th>Status</th>
+                                                                            <%--th>Reports To</th--%>
+                                                                            <th>Submitted Date</th>
+                                                                            <%--th>Approved Date</th--%>
+                                                                            <%--th>Delete</th--%>
 
-                                                                    int c = 0;
-                                                                    //out.println("request for time sheets---> "+session.getAttribute("timesheetsData"));
-                                                                    if ((List) session.getAttribute("teamTimesheetsData") != null) {
+                                                                        </tr>
+                                                                        <%
 
-                                                                        List l = (List) session.getAttribute("teamTimesheetsData");
-                                                                        //out.println("timesheet list"+l);
-                                                                        Iterator it = l.iterator();
-                                                                        while (it.hasNext()) {
-                                                                            if (c == 0) {
-                                                                                c = 1;
+                                                                            int c = 0;
+                                                                            //out.println("request for time sheets---> "+session.getAttribute("timesheetsData"));
+                                                                            if ((List) session.getAttribute("teamTimesheetsData") != null) {
+
+                                                                                List l = (List) session.getAttribute("teamTimesheetsData");
+                                                                                //out.println("timesheet list"+l);
+                                                                                Iterator it = l.iterator();
+                                                                                while (it.hasNext()) {
+                                                                                    if (c == 0) {
+                                                                                        c = 1;
+                                                                                    }
+                                                                                    TimesheetVTO usa = (TimesheetVTO) it.next();
+                                                                                    int tms_id = usa.getTimesheetid();
+                                                                                    int usr_id = usa.getUsr_id();
+                                                                                    String tm_empname = usa.getEmpName();
+                                                                                    String tm_start_date = usa.getDateStart();
+                                                                                    String tm_end_date = usa.getDateEnd();
+                                                                                    String cur_status = usa.getReportsto1status();
+                                                                                    String reports_to = usa.getReportsto1();
+                                                                                    String tm_submitted_date = usa.getSubmittedDate();
+                                                                                    String tm_approved_date = usa.getApprovedDate();
+                                                                                    double billableHr = usa.getTotalBillHrs();
+                                                                        %>
+                                                                        <tr>
+                                                                            <td>
+
+                                                                                <%--s:a href='%{#myUrl}'></s:a--%>
+                                                                                <s:url var="myUrl" action="../timesheets/getTimeSheets.action?timesheetFlag=Team">
+                                                                                    <s:param name="usr_id"><%=usr_id%></s:param>
+                                                                                    <s:param name="timesheetid"><%=tms_id%></s:param></s:url>
+
+                                                                                <s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/edit_Msb.png"/>" height="20" width="20"></s:a></td>
+                                                                            <td><%= tm_empname%></td>
+                                                                            <td><%= tm_start_date%></td>
+                                                                            <td><%= tm_end_date%></td>
+                                                                            <td><%= billableHr%></td>
+                                                                            <td><%= cur_status%></td>
+                                                                            <%--td><%= reports_to%></td--%>
+                                                                            <td><%= tm_submitted_date%></td>
+                                                                            <%--td><%= tm_approved_date%></td--%>
+                                                                            <%--td>
+                                                                                <s:url var="deleteUrl" action="deleteTimesheet">
+                                                                                    <s:param name="timesheetid"><%=tms_id%></s:param>
+                                                                                </s:url>
+                                                                                <s:a onclick="return confirm('Are you sure you want to delete this record')" id="deleteTimesheet" href='%{#deleteUrl}'><img src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="25"></s:a></td--%>
+                                                                        </tr> 
+
+                                                                        <%
+                                                                                }
+
                                                                             }
-                                                                            TimesheetVTO usa = (TimesheetVTO) it.next();
-                                                                            int tms_id = usa.getTimesheetid();
-                                                                            int usr_id = usa.getUsr_id();
-                                                                            String tm_empname = usa.getEmpName();
-                                                                            String tm_start_date = usa.getDateStart();
-                                                                            String tm_end_date = usa.getDateEnd();
-                                                                            String cur_status = usa.getReportsto1status();
-                                                                            String reports_to = usa.getReportsto1();
-                                                                            String tm_submitted_date = usa.getSubmittedDate();
-                                                                            String tm_approved_date = usa.getApprovedDate();
-                                                                            double billableHr = usa.getTotalBillHrs();
-                                                                %>
-                                                                <tr>
-                                                                    <td>
+                                                                            if (c == 0) {
+                                                                        %>
+                                                                        <tr>
+                                                                            <td colspan="9"><font style="color: red;font-size: 15px;">No Records to display</font></td>
+                                                                        </tr> 
+                                                                        <%    }
+                                                                        %>
 
-                                                                        <%--s:a href='%{#myUrl}'></s:a--%>
-                                                                        <s:url var="myUrl" action="../timesheets/getTimeSheets.action?timesheetFlag=Team">
-                                                                            <s:param name="usr_id"><%=usr_id%></s:param>
-                                                                            <s:param name="timesheetid"><%=tms_id%></s:param></s:url>
-
-                                                                        <s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/edit_Msb.png"/>" height="20" width="20"></s:a></td>
-                                                                    <td><%= tm_empname%></td>
-                                                                    <td><%= tm_start_date%></td>
-                                                                    <td><%= tm_end_date%></td>
-                                                                    <td><%= billableHr%></td>
-                                                                    <td><%= cur_status%></td>
-                                                                    <%--td><%= reports_to%></td--%>
-                                                                    <td><%= tm_submitted_date%></td>
-                                                                    <%--td><%= tm_approved_date%></td--%>
-                                                                    <%--td>
-                                                                        <s:url var="deleteUrl" action="deleteTimesheet">
-                                                                            <s:param name="timesheetid"><%=tms_id%></s:param>
-                                                                        </s:url>
-                                                                        <s:a onclick="return confirm('Are you sure you want to delete this record')" id="deleteTimesheet" href='%{#deleteUrl}'><img src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="25"></s:a></td--%>
-                                                                </tr> 
-
+                                                                    </tbody>
+                                                                </table>
+                                                                <br/>
                                                                 <%
-                                                                        }
 
-                                                                    }
-                                                                    if (c == 0) {
+
+
+                                                                    if (c > 0) {
                                                                 %>
-                                                                <tr>
-                                                                    <td colspan="9"><font style="color: red;font-size: 15px;">No Records to display</font></td>
-                                                                </tr> 
+                                                                <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                                        <option>10</option>
+                                                                        <option>15</option>
+                                                                        <option>25</option>
+                                                                        <option>50</option>
+                                                                    </select>
+                                                                    Time Sheets per page
+                                                                </label>
                                                                 <%    }
                                                                 %>
 
-                                                            </tbody>
-                                                        </table>
-                                                        <br/>
-                                                        <%
+                                                                <%
+                                                                    if (c == 1) {
+                                                                %>
+                                                                <%--  <div align="right" id="timesheetpageNavPosition" style="margin-right: 0vw;"></div> --%>
+                                                                <%                                                            }
+
+                                                                    /*if (session != null) {
+                                                                     session.removeAttribute("teamTimesheetsData");
+                                                                     }*/
+
+                                                                %>
 
 
+                                                                <div align="right" id="timesheetpageNavPosition" style="margin-right: 0vw;display: none"></div>
+                                                                <script type="text/javascript">
+                                                                    var pager = new Pager('timesheet_results', 10); 
+                                                                    pager.init(); 
+                                                                    pager.showPageNav('pager', 'timesheetpageNavPosition'); 
+                                                                    pager.showPage(1);
+                                                                </script>
 
-                                                            if (c > 0) {
-                                                        %>
-                                                        <label> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                                <option>10</option>
-                                                                <option>15</option>
-                                                                <option>25</option>
-                                                                <option>50</option>
-                                                            </select>
-                                                            Time Sheets per page
-                                                        </label>
-                                                        <%    }
-                                                        %>
-
-                                                        <%
-                                                            if (c == 1) {
-                                                        %>
-                                                        <%--  <div align="right" id="timesheetpageNavPosition" style="margin-right: 0vw;"></div> --%>
-                                                        <%                                                            }
-
-                                                            /*if (session != null) {
-                                                             session.removeAttribute("teamTimesheetsData");
-                                                             }*/
-
-                                                        %>
-
-
-                                                        <div align="right" id="timesheetpageNavPosition" style="margin-right: 0vw;display: none"></div>
-                                                        <script type="text/javascript">
-                                                            var pager = new Pager('timesheet_results', 10); 
-                                                            pager.init(); 
-                                                            pager.showPageNav('pager', 'timesheetpageNavPosition'); 
-                                                            pager.showPage(1);
-                                                        </script>
-
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </s:form>
                                             </div>
-                                        </s:form>
+                                        </div>
                                     </div>
+                                    <%--close of future_items--%>
                                 </div>
                             </div>
-                            <%--close of future_items--%>
                         </div>
                     </div>
-                </div>
+                    <!-- content end -->
+
+
+                </section><!--/form-->
             </div>
-            <!-- content end -->
-
-
-        </section><!--/form-->
-
+        </div>
         <div id="addTimeSheet">
             <div id="addTimeSheetOverlay" >
                 <div style="background-color: #3bb9ff ; padding: 0px">
                     <table>
                         <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Add&nbsp;Time&nbsp;Sheet&nbsp;&nbsp; </font></h4></td>
                         </tr>
-                        <span class=" pull-right"><h5><a href="" class="addTimeSheet_close" onclick="addTimeSheetOverlayClose()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                        <span class=" pull-right"><h5><a href="" class="addTimeSheet_close" onclick="addTimeSheetOverlayClose()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                     </table>
                 </div>
                 <div>

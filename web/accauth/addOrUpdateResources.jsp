@@ -22,7 +22,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
-        
+
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
@@ -31,182 +31,186 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/GeneralAjax.js"/>'></script>
-       
+
 
     </head>
     <body style="overflow-x: hidden" onload="getAccountNames(); getUserGroups();">
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
-                    <s:include value="/includes/template/header.jsp"/> 
+        <div id="wrap">
+
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
+                        <s:include value="/includes/template/header.jsp"/> 
+                    </div>
                 </div>
-            </div>
 
-        </header>
+            </header>
+                    <div id="main">
+            <section id="generalForm">
 
-        <section id="generalForm">
+                <div class="container">
+                    <div class="row">
+                        <s:include value="/includes/menu/LeftMenu.jsp"/> 
+                        <!-- content start -->
+                        <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
+                            <div class="features_items">
+                                <div class="col-lg-16 ">
+                                    <div class="" id="profileBox" style="float: left; margin-top: 5px">
 
-            <div class="container">
-                <div class="row">
-                    <s:include value="/includes/menu/LeftMenu.jsp"/> 
-                    <!-- content start -->
-                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
-                        <div class="features_items">
-                            <div class="col-lg-16 ">
-                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                                        <div class="backgroundcolor" >
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <s:if test="flag=='update'">
+                                                        <font color="#ffffff">Update Action Resources</font>
+                                                    </s:if>
+                                                    <s:else>
+                                                        <font color="#ffffff">Add Action Resources</font>
+                                                    </s:else>
+                                                    <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                    <s:url var="myUrl" action="searchActionResources.action">
+                                                        <s:param name="action_id"><s:property value="action_id"/></s:param> 
+                                                        <s:param name="action_name"><s:property value="action_name"/></s:param>
+                                                    </s:url>
+                                                    <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
 
-                                    <div class="backgroundcolor" >
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <s:if test="flag=='update'">
-                                                    <font color="#ffffff">Update Action Resources</font>
-                                                </s:if>
-                                                <s:else>
-                                                    <font color="#ffffff">Add Action Resources</font>
-                                                </s:else>
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                <s:url var="myUrl" action="searchActionResources.action">
-                                                    <s:param name="action_id"><s:property value="action_id"/></s:param> 
-                                                    <s:param name="action_name"><s:property value="action_name"/></s:param>
-                                                </s:url>
-                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                    </h4>
+                                                </div>
 
-                                                </h4>
                                             </div>
+                                            <!-- content start -->
+                                            <div ><label class="labelStylereq" style="color:#FF8A14;">Action Name : &nbsp; </label><span style="color: #FF8A14  "><s:property value="action_name" /></span></div>
+                                        <s:hidden id="action_id" name="action_id" value="%{action_id}"/>
+                                        <s:hidden id="id" name="id" value="%{id}"/>
+                                        <s:hidden id="authId" name="authId" />
 
-                                        </div>
-                                        <!-- content start -->
-                                        <div ><label class="labelStylereq" style="color:#FF8A14;">Action Name:&nbsp; </label><label style="color: #FF8A14  "><s:property value="action_name" /></label></div>
-                                    <s:hidden id="action_id" name="action_id" value="%{action_id}"/>
-                                    <s:hidden id="id" name="id" value="%{id}"/>
-                                    <s:hidden id="authId" name="authId" />
-
-                                    <div class="col-sm-16">
-                                        <div id="outputMessage" style="color: green"></div>
-                                        <%-- <s:form action="searchAccAuthorization" theme="simple"> --%>
-                                        <div class="col-sm-4">
-                                            <label class="labelStylereq" style="color:#56a5ec;">Account Type: </label>
-                                            <s:select  id="accType"
-                                                       name="accType"
-                                                       cssClass="SelectBoxStyles form-control"
-                                                       headerKey="-1" value="%{accType}"  
-                                                       theme="simple" onchange="getRolesForAccType();"
-                                                       list="#@java.util.LinkedHashMap@{'C':'Customer','V':'Vendor','M':'Main'}"
-                                                       />
-                                        </div>
-                                        <s:if test="flag=='update'">
-
+                                        <div class="col-sm-16">
+                                            <div id="outputMessage" style="color: green"></div>
+                                            <%-- <s:form action="searchAccAuthorization" theme="simple"> --%>
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
-                                                <s:select  id="status"
-                                                           name="status"
+                                                <label class="labelStylereq" style="color:#56a5ec;">Account Type </label>
+                                                <s:select  id="accType"
+                                                           name="accType"
                                                            cssClass="SelectBoxStyles form-control"
-                                                           headerKey="-1"  
-                                                           theme="simple"
-                                                           value="%{status}"
-                                                           list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'Inactive','All':'All'}"
+                                                           headerKey="-1" value="%{accType}"  
+                                                           theme="simple" onchange="getRolesForAccType();"
+                                                           list="#@java.util.LinkedHashMap@{'C':'Customer','V':'Vendor','M':'Main'}"
                                                            />
-                                            </div >
-                                        </s:if>
-
-                                        <div class="col-sm-4">
-                                            <label class="labelStylereq" style="color:#56a5ec;">Roles: </label>
-                                            <s:select  id="roles"
-                                                       name="roles"
-                                                       cssClass="SelectBoxStyles form-control"
-                                                       headerKey="-1"  
-                                                       theme="simple" 
-                                                       value="%{roleId}"
-                                                       list="rolesMap"
-                                                       onchange="getUserGroups();"
-                                                       />
-                                        </div >
-                                        <div class="col-sm-4" id="usergroupDiv" style="display: none">
-                                            <label class="labelStylereq" style="color:#56a5ec;">Group: </label>
-                                            <s:select  id="userGroups"
-                                                       name="userGroupId"
-                                                       cssClass="SelectBoxStyles form-control"
-                                                       theme="simple"
-                                                       headerKey="-1"
-                                                       headerValue="Select Group"
-                                                       value="%{userGroupList}"
-                                                       list="userGroupIdList"
-                                                       />
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <s:hidden name="orgId" id="orgId"/>
-                                           
-
-                                            <label class="labelStylereq" style="color:#56a5ec;">Account Name: </label>
-                                            <s:if test="accountName == 'All'">   
-                                                <s:textfield id="accountNamePopup"
-                                                             cssClass="form-control"
-                                                             type="text"
-                                                             name="accName" 
-                                                             value=" "
-                                                             placeholder="Account Name"
-                                                             onkeyup="return getAccountNames();" 
-                                                             maxLength="60"/> 
-                                            </s:if> 
-                                            <s:else>
-                                                <s:textfield id="accountNamePopup"
-                                                             cssClass="form-control"
-                                                             type="text"
-                                                             name="accName" 
-                                                             value="%{accountName}"
-                                                             placeholder="Account Name"
-                                                             onkeyup="return getAccountNames();" 
-                                                             maxLength="60"/> 
-                                            </s:else>
-                                            <span id="validationMessage" />
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label class="labelStylereq" style="color:#56a5ec;">Description: </label>
-                                            <s:textarea id="addingAccAuthDesc" cssClass="form-control" name="addingAccAuthDesc" placeholder="Description" value="%{description}" onkeydown="actionAuthDescription(this)"/>
-                                            <span class="charNum" id="addingAccAuthValid"></span> 
-                                        </div>
-
-                                        <div class="col-sm-4">
-                                            <label for="block_flag" class="checkbox" style="margin: 25px 0px">
-                                                <s:checkbox name="blockFlag" id="blockFlag" value="%{blockFlag}"/>Block Action
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-4 pull-right">
+                                            </div>
                                             <s:if test="flag=='update'">
 
-                                                <div class="col-lg-6"></div>
-                                                <div class="col-sm-6">
-                                                    <label class="labelStylereq" style="color:#56a5ec;"></label>
+                                                <div class="col-sm-4">
+                                                    <label class="labelStylereq" style="color:#56a5ec;">Status </label>
+                                                    <s:select  id="status"
+                                                               name="status"
+                                                               cssClass="SelectBoxStyles form-control"
+                                                               headerKey="-1"  
+                                                               theme="simple"
+                                                               value="%{status}"
+                                                               list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active','All':'All'}"
+                                                               />
+                                                </div >
+                                            </s:if>
 
-                                                    <button type="button"
-                                                            class="add_searchButton form-control" style="margin: 5px 0px;"
-                                                            value="Update" onclick="return insertOrUpdateActionResources('1');"><i class="fa fa-refresh"></i>&nbsp;Update</button>
-                                                </s:if>
+                                            <div class="col-sm-4">
+                                                <label class="labelStylereq" style="color:#56a5ec;">Roles </label>
+                                                <s:select  id="roles"
+                                                           name="roles"
+                                                           cssClass="SelectBoxStyles form-control"
+                                                           headerKey="-1"  
+                                                           theme="simple" 
+                                                           value="%{roleId}"
+                                                           list="rolesMap"
+                                                           onchange="getUserGroups();"
+                                                           />
+                                            </div >
+                                            <div class="col-sm-4" id="usergroupDiv" style="display: none">
+                                                <label class="labelStylereq" style="color:#56a5ec;">Group </label>
+                                                <s:select  id="userGroups"
+                                                           name="userGroupId"
+                                                           cssClass="SelectBoxStyles form-control"
+                                                           theme="simple"
+                                                           headerKey="-1"
+                                                           headerValue="Select Group"
+                                                           value="%{userGroupList}"
+                                                           list="userGroupIdList"
+                                                           />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <s:hidden name="orgId" id="orgId"/>
+
+
+                                                <label class="labelStylereq" style="color:#56a5ec;">Account Name </label>
+                                                <s:if test="accountName == 'All'">   
+                                                    <s:textfield id="accountNamePopup"
+                                                                 cssClass="form-control"
+                                                                 type="text"
+                                                                 name="accName" 
+                                                                 value=" "
+                                                                 placeholder="Account Name"
+                                                                 onkeyup="return getAccountNames();" 
+                                                                 maxLength="60"/> 
+                                                </s:if> 
                                                 <s:else>
+                                                    <s:textfield id="accountNamePopup"
+                                                                 cssClass="form-control"
+                                                                 type="text"
+                                                                 name="accName" 
+                                                                 value="%{accountName}"
+                                                                 placeholder="Account Name"
+                                                                 onkeyup="return getAccountNames();" 
+                                                                 maxLength="60"/> 
+                                                </s:else>
+                                                <span id="validationMessage" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="labelStylereq" style="color:#56a5ec;">Description </label>
+                                                <s:textarea id="addingAccAuthDesc" cssClass="form-control" name="addingAccAuthDesc" placeholder="Description" value="%{description}" onkeydown="actionAuthDescription(this)"/>
+                                                <span class="charNum" id="addingAccAuthValid"></span> 
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <label for="block_flag" class="checkbox" style="margin: 25px 0px">
+                                                    <s:checkbox name="blockFlag" id="blockFlag" value="%{blockFlag}"/>Block Action
+                                                </label>
+                                            </div>
+
+                                            <div class="col-sm-4 pull-right">
+                                                <s:if test="flag=='update'">
+
                                                     <div class="col-lg-6"></div>
                                                     <div class="col-sm-6">
                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
 
-                                                        <button type="button" style="margin: 5px 0px;"
-                                                                class="add_searchButton  form-control"
-                                                                value="" onclick="return insertOrUpdateActionResources('0');"><i class="fa fa-plus-square"></i>&nbsp;Add</button>
-                                                    </div>
-                                                </s:else>
+                                                        <button type="button"
+                                                                class="add_searchButton form-control" style="margin: 5px 0px;"
+                                                                value="Update" onclick="return insertOrUpdateActionResources('1');"><i class="fa fa-refresh"></i>&nbsp;Update</button>
+                                                    </s:if>
+                                                    <s:else>
+                                                        <div class="col-lg-6"></div>
+                                                        <div class="col-sm-6">
+                                                            <label class="labelStylereq" style="color:#56a5ec;"></label>
+
+                                                            <button type="button" style="margin: 5px 0px;"
+                                                                    class="add_searchButton  form-control"
+                                                                    value="" onclick="return insertOrUpdateActionResources('0');"><i class="fa fa-plus-square"></i>&nbsp;Add</button>
+                                                        </div>
+                                                    </s:else>
+                                                </div>
+
+
+
                                             </div>
-
-
-
                                         </div>
+                                        <%--close of future_items--%>
                                     </div>
-                                    <%--close of future_items--%>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-        </section><!--/form-->
-
+            </section><!--/form-->
+                                                    </div>
+                                                    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

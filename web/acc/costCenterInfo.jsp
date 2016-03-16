@@ -65,6 +65,7 @@
 
     </head>
     <body>
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -74,6 +75,7 @@
 
         </header>
         <%-- ------------MIDDLE -----------------------------------------%>
+        <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
@@ -88,7 +90,7 @@
                                             <i id="updownArrowLeft" onclick="toggleContentLeft('costCenterInfo')" class="fa fa-angle-up"></i> 
                                             <s:url var="backUrl" action="costCenterSearch.action">
                                             </s:url>    
-                                            <span class="pull-right"><s:a href='%{#backUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                            <span class="pull-right"><s:a href='%{#backUrl}'><i class="fa fa-undo"></i></s:a></span>
                                         </h4>
                                     </div>
                                 </div>
@@ -98,18 +100,18 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <s:hidden name="ccCode" id="ccCode" value="%{ccCode}"/>
-                                                <label>Cost Center Code:</label><font style="color: #FF8A14;"><s:property value="ccCode"></s:property></font>
+                                                <label>Cost Center Code : </label><font style="color: #FF8A14;"><s:property value="ccCode"></s:property></font>
                                             </div>
                                             <div class ="col-sm-6">
                                                 <div class="pull-right">
-                                                    <label>Cost Center Name:</label><font style="color: #FF8A14;"><s:property value="ccName"/></font>
+                                                    <label>Cost Center Name : </label><font style="color: #FF8A14;"><s:property value="ccName"/></font>
                                                 </div>
                                             </div></div>
                                         <span id="info"></span>
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <label class="labelStylereq" style="color:#56a5ec">Year:</label>
-                                                <s:textfield cssClass="form-control" id="year"  name="year" placeHolder="YYYY" value="2015" onkeypress="return validationCostCenterYear(event,this.id)"/>
+                                                <label class="labelStylereq" style="color:#56a5ec">Year</label>
+                                                <s:textfield cssClass="form-control" id="year"  name="year" value="%{dashBoardYear}" onkeypress="return validationCostCenterYear(event,this.id)"/>
                                             </div>
                                             <div class="col-sm-2 ">
                                                 <label class="labelStylereq" style="color:#56a5ec"></label>
@@ -189,7 +191,9 @@
             </div>
 
         </section>
+        </div>
         <%-- ------------MIDDLE -----------------------------------------%>
+    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

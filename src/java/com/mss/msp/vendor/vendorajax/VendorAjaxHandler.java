@@ -106,7 +106,10 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                String states = ServiceLocator.getVendorAjaxHandlerService().getVendorStates( this);
+                String states = ServiceLocator.getVendorAjaxHandlerService().getVendorStates(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(states);
@@ -136,7 +139,10 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 setSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTeamMembersList(dataSourceDataProvider.getInstance().getMyTeamMembers(getSessionId()));
-                String list = ServiceLocator.getVendorAjaxHandlerService().getVendorSearchDetails( this);
+                String list = ServiceLocator.getVendorAjaxHandlerService().getVendorSearchDetails(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(list);
@@ -170,8 +176,11 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
 
 
 
-                int result = ServiceLocator.getVendorAjaxHandlerService().updateVendorDetails( this);
+                int result = ServiceLocator.getVendorAjaxHandlerService().updateVendorDetails(this);
 //                System.out.println("===============>in ajax  handler action" + stateList);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
@@ -204,6 +213,9 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 stateList = ServiceLocator.getLocationService().getStatesStringOfCountry(httpServletRequest, getCountryId());
 //                System.out.println("===============>in ajax  handler action" + stateList);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
@@ -227,6 +239,9 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 reponseString = ServiceLocator.getVendorAjaxHandlerService().getVendorContactDetails(getOrgId());
                 System.out.println("===============>in titles" + reponseString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -251,6 +266,9 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 reponseString = ServiceLocator.getVendorAjaxHandlerService().saveVendorContacts(getVendorUserId(), userSessionId);
                 //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -274,6 +292,9 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 reponseString = ServiceLocator.getVendorAjaxHandlerService().getVendorContactSearchResults(this, getOrgId());
                 System.out.println("===============>in searchResults" + reponseString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -306,8 +327,11 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
 
                 System.out.println("this is in handler getVendorsListByTireType");
-                stateList = ServiceLocator.getVendorAjaxHandlerService().getVendorsListByTireType( this);
+                stateList = ServiceLocator.getVendorAjaxHandlerService().getVendorsListByTireType(this);
 //                System.out.println("===============>in ajax  handler action" + stateList);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
@@ -342,22 +366,22 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
 
-                setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getSessionOrgId()));
+                setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getOrgId()));
 
                 System.out.println("=============================================================================");
                 System.out.println("IN ACTION VENDOR LIST>>>>>>>>>>>>>>>>>>>>>>>>" + getVendorList() + " AND ACCNAME>>>" + getAccountName());
                 System.out.println("=============================================================================");
                 requirementVTO = dataSourceDataProvider.getInstance().setRequirementDetails(getReq_id());
-                stateList = ServiceLocator.getVendorAjaxHandlerService().SaveVendorsAssociationDetals( this);
+                stateList = ServiceLocator.getVendorAjaxHandlerService().SaveVendorsAssociationDetals(this);
 
-                    if (stateList > 0) {
+                if (stateList > 0) {
                     setMailIds(dataSourceDataProvider.getInstance().getMailIdsOfVendorManagerAndLeads(getVendorList()));
                     StringTokenizer mailID = new StringTokenizer(getMailIds(), ",");
 
                     while (mailID.hasMoreElements()) {
                         setMailIds(mailID.nextElement().toString());
                         System.out.println("&&&&&&&&&&&&&&&&&&&&&&&>>>>" + getMailIds());
-                        mailResult = mailManager.requirementReleaseMailGenerator(requirementVTO, getMailIds(), getUserSessionId(), getSessionOrgId(), getAccountName());
+                        mailResult = mailManager.requirementReleaseMailGenerator(requirementVTO, getMailIds(), getUserSessionId(), getOrgId(), getAccountName());
                     }
 
                     if (mailResult > 0) {
@@ -368,6 +392,9 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
 
                 System.out.println("Ajax Handler action in save   3");
 
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList + "");
@@ -394,8 +421,11 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
         try {
             System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                stateList = ServiceLocator.getVendorAjaxHandlerService().getVendorAssociationDetails( this);
+                stateList = ServiceLocator.getVendorAjaxHandlerService().getVendorAssociationDetails(this);
 //                System.out.println("===============>in ajax  handler action" + stateList);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
@@ -427,8 +457,11 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 System.out.println("===============>in ajax  handler action praven");
 
-                stateList = ServiceLocator.getVendorAjaxHandlerService().searchVendorAssociationDetails( this);
+                stateList = ServiceLocator.getVendorAjaxHandlerService().searchVendorAssociationDetails(this);
                 System.out.println("===============>in ajax  handler action" + stateList);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
@@ -460,8 +493,11 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 System.out.println("===============>in ajax  handler action praven");
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                vendorList = ServiceLocator.getVendorAjaxHandlerService().editVendorAssociation( getVendorId(),getSessionOrgId());
+                vendorList = ServiceLocator.getVendorAjaxHandlerService().editVendorAssociation(getVendorId(), getSessionOrgId());
                 System.out.println("===============>in ajax  handler action" + vendorList);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(vendorList);
@@ -495,6 +531,9 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
 
                 vendorName = ServiceLocator.getVendorAjaxHandlerService().getVendorNames(getTireId());
                 System.out.println("===============>in ajax  handler action" + vendorName);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(vendorName);
@@ -535,6 +574,9 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                     result = "error";
                 }
                 System.out.println("===============>in ajax  handler action" + updateResult);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -566,6 +608,9 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 System.out.println("month------->" + getMonth());
                 result = ServiceLocator.getVendorAjaxHandlerService().getVendorDashboardList(getYear(), getMonth(), getSessionOrgId());
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -579,6 +624,7 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
         }
         return null;
     }
+
     public String getVendorReqDashBoardGrid() {
         resultType = LOGIN;
         String result = "";
@@ -588,6 +634,9 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 result = ServiceLocator.getVendorAjaxHandlerService().getVendorReqDashBoardGrid(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -1015,5 +1064,4 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
     }
-    
 }

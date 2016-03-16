@@ -77,6 +77,7 @@
         <!-- end of new styles -->
     </head>
     <body style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans'" onload="doOnLoad(); doOnLoadDatePicker(); init(); initReport('<%= request.getParameter("userid")%>'); showAddressDetails('<%= request.getParameter("userid")%>');">
+        <div id="main">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -86,6 +87,7 @@
             </div><!--/header_top-->
 
         </header><!--/header-->
+      
         <section id="generalForm"><!--form-->
 
             <%--<div class="header-middle"><!--header-middle-->
@@ -120,7 +122,7 @@
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <font class="titleColor">Profile Information</font>
-                                                <span class="pull-right"><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/users/general/doEmployeeSearch.action"><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
+                                                <span class="pull-right"><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/users/general/doEmployeeSearch.action"><i class="fa fa-undo"></i></a></span>
                                                 </a>
                                             </h4>
                                         </div>
@@ -300,7 +302,7 @@
 
                                             <div class="form-controls">
                                                 <label for="leftTitle" style="margin-left: 5px">
-                                                    Assign Roles&nbsp;:
+                                                    Assign Roles&nbsp;
 
                                                 </label>
 
@@ -530,7 +532,7 @@
                                         <div class="panel-heading" >
                                             <h4 class="panel-title" >
                                                 <a data-toggle="collapse" data-parent="#accordian"  href="#" >
-                                                    <span><a href="" class="edu_popup_close pull-right"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></span>
+                                                    <span><a href="" class="edu_popup_close pull-right"><i class="fa fa-times-circle-o fa-size"></i></a></span>
                                                     <font color="#ffffff">Add Education</font>
                                                 </a> 
                                             </h4>
@@ -589,7 +591,7 @@
                                         <table>
                                             <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Edit Education Details&nbsp;&nbsp; </font></h4></td>
                                             </tr>
-                                            <span class=" pull-right"><h5><a href="" class="eduEdit_popup_close" onclick="removeDataAfterCloseOverlay()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                                            <span class=" pull-right"><h5><a href="" class="eduEdit_popup_close" onclick="removeDataAfterCloseOverlay()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                         </table>
                                     </div>
 
@@ -642,7 +644,7 @@
                                             <table>
                                                 <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Edit Skill Details&nbsp;&nbsp; </font></h4></td>
                                                 </tr>
-                                                <span class=" pull-right"><h5><a href="" class="skilledit_popup_close" onclick="removeResultMessageAll()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                                                <span class=" pull-right"><h5><a href="" class="skilledit_popup_close" onclick="removeResultMessageAll()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                             </table>
                                         </div>
                                         <div>
@@ -674,7 +676,7 @@
                                             <div class="backgroundcolor">
                                                 <table>
                                                     <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Add Skills&nbsp;&nbsp; </font></h4></td>
-                                                    <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="skilladd_popup_close" onclick="removeResultMessageAll()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="skilladd_popup_close" onclick="removeResultMessageAll()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                             </table>
                                         </div>
                                         <div class="textfieldLabel margins">
@@ -716,7 +718,7 @@
 
         </section><!--/form-->
 
-
+    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

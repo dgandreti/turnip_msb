@@ -61,6 +61,7 @@
 
     </head>
     <body style="overflow-x: hidden" onload="doOnLoadExcel() ;pagerOption()">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -69,7 +70,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
@@ -88,7 +89,7 @@
                                                 <font color="#ffffff">Selected Content</font>
                                                 <s:url var="myUrl" action="getSkillDetails.action">
                                                 </s:url>
-                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                 
                                                 <i id="updownArrow" onclick="toggleContent('searchLogger')" class="fa fa-angle-up"></i> 
                                             </h4>
@@ -127,11 +128,11 @@
 
                                             </s:else> 
                                             <div class="col-sm-3">
-                                                <label class="labelStyle" id="labelLevelStatusReq">Created Date: </label>
+                                                <label class="labelStyle" id="labelLevelStatusReq">Created Date </label>
                                                 <s:textfield tabindex="1" cssClass="form-control dateImage" name="createdDate" id="created_Date" value="" onkeypress="return enterDateRepository();"></s:textfield>
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="labelStyle" id="labelLevelStatusReq">Status: </label>
+                                                <label class="labelStyle" id="labelLevelStatusReq">Status </label>
                                                 <s:select tabindex="2" cssClass="form-control SelectBoxStyles " name="status" list="#@java.util.LinkedHashMap@{'DF':'---Select---','Success':'Success','Un-Success':'Un-Success'}"></s:select>
                                             </div>  
                                             <div class="col-sm-3">
@@ -203,11 +204,13 @@
 
             </div>
 
-        </div>
+        
 
 
         <!-- content end -->
     </section><!--/form-->
+        </div>
+    </div>
     <footer id="footer"><!--Footer-->
         <div class="footer-bottom" id="footer_bottom">
             <div class="container">

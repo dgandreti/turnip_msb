@@ -157,6 +157,7 @@
                 //  document.getElementById("docdatepicker").value=to;
                 // document.getElementById("startDate").value=overlayDate;
                 // document.getElementById("endDate").value=overlayDate;
+                document.getElementById("loadingTaskSearch").style.display="none";
             }
                         
             
@@ -247,35 +248,18 @@
                 });
             });
             
-            $(function(){
-                $(".img-swap").live('click', function() {
-                   
-                    if ($(this).attr("class") == "img-swap") {
-                       
-                        this.src = this.src.replace("next","prev");
-                    } else {
-                        this.src = this.src.replace("prev","next");
-                    }
-                    $(this).toggleClass("on");
-                });
-            });
             
             
-            if ( $(window).width() > 1400) {      
-                //Add your javascript for large screens here 
-  
-                $(document).ready(function(){
-                    $(".slide_popup").click(function(){
-                        $(".popup_block").animate({
-                            width: 'toggle'
-                        });
-                    });
-                });
             
-              
-            }
+            
         </script>
-
+        <style>
+            .task_sidePopup{
+                  background: url('${pageContext.request.contextPath}/includes/images/addtask.png')  no-repeat;
+                background-size: 25px 26px;
+                 background-position: 77% 54%;
+            }
+        </style>
     </head>
 
 
@@ -283,6 +267,7 @@
 
 
     <body style="overflow-x: hidden" onload="loadPopup(); doOnLoad(); init(); getTaskType();">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -298,7 +283,7 @@
 
 
 
-
+                    <div id="main">
 
         <section id="generalForm"><!--form-->
  
@@ -323,7 +308,7 @@
 
                                                     <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                     <font color="#ffffff">Tasks Search</font>
-                                                    <i id="updownArrow" onclick="toggleContent('showTaskSearchDetails')" class="fa fa-angle-up"></i>
+                                                    <i id="updownArrow" onclick="toggleContent('showTaskSearchDetails')" class="fa fa-minus"></i>
 
                                                 </h4>
                                             </div>
@@ -351,39 +336,39 @@
                                                 <div class="inner-reqdiv-elements">
                                                     <div class="">
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color:#56a5ec;">Task Name: </label>
-                                                            <s:textfield cssClass="form-control"  name="task_name" placeholder="Task_Name" maxLength="60"/>
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Task Name</label>
+                                                            <s:textfield cssClass="form-control"  name="task_name" placeholder="Task_Name" tabindex="1" maxLength="60"/>
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color: #56a5ec;">Task Id: </label>
-                                                            <s:textfield cssClass="form-control" id="task_id" name="task_id"  placeholder="Task_Id" maxLength="11"/>
+                                                            <label class="labelStylereq" style="color: #56a5ec;">Task Id </label>
+                                                            <s:textfield cssClass="form-control" id="task_id" name="task_id"  placeholder="Task_Id" tabindex="1" maxLength="11"/>
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color: #56a5ec;">Status: </label>
-                                                            <s:select  id="status"  name="task_status" label="Status"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="tasksStatusList" />
+                                                            <label class="labelStylereq" style="color: #56a5ec;">Status </label>
+                                                            <s:select  id="status"  name="task_status" label="Status"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="tasksStatusList" tabindex="1"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="inner-reqdiv-elements">
                                                     <div class="">
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color: #56a5ec;">Start Date: </label>
-                                                            <s:textfield cssClass=" form-control dateImage" name="docdatepickerfrom" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
-                                                        </div>
+                                                            <label class="labelStylereq" style="color: #56a5ec;">Start Date </label>
+                                                            <div class="calImage"><s:textfield cssClass=" form-control " name="docdatepickerfrom" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
+                                                            </div></div>
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color: #56a5ec;">End Date: </label>
-                                                            <s:textfield cssClass=" form-control dateImage" name="docdatepicker" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
-                                                        </div>
+                                                            <label class="labelStylereq" style="color: #56a5ec;">End Date </label>
+                                                            <div class="calImage"> <s:textfield cssClass=" form-control " name="docdatepicker" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
+                                                            </div></div>
                                                         <div class="col-sm-4">
                                                             <div class=" ">
 
                                                                 <div class="col-sm-6 pull-right">
                                                                     <label class="labelStylereq" style=""></label>
-                                                                    <a href="../tasks/addTask.action" class="add_searchButton form-control " style="margin:5px 0px;" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a> 
+                                                                    <a href="../tasks/addTask.action" class="add_searchButton form-control " style="margin:5px 0px;" tabindex="4"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a> 
                                                                 </div>
                                                                 <div class="col-sm-6 pull-right">
                                                                     <label class="labelStylereq" style=""></label>
-                                                                    <s:submit type="button"  cssClass="add_searchButton form-control " id="searchButton" value="search"  cssStyle="margin:5px 0px;" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>&nbsp;
+                                                                    <s:submit type="button"  cssClass="add_searchButton form-control " id="searchButton" value="search" tabindex="3" cssStyle="margin:5px 0px;" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>&nbsp;
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -391,6 +376,9 @@
                                                     </div>
                                                                     <div class="row"></div>
                                             </s:form>
+                                             <div id="loadingTaskSearch" class="loadingImg">
+                                                    <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                                </div>                         
                                             <s:form>
                                                 <div class="emp_Content" id="emp_div" align="center" style="display: none">
                                                     <table id="teamTaskTable" class="responsive CSSTable_task " border="5" cell-spacing="2">
@@ -461,7 +449,7 @@
 
                     <div class="addlink" >
                        
-                        <div class="alignField">  <a href="../tasks/addTask.action" >  <img src="../../includes/images/requirement.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </a></div>
+                        
 
                         <div class="alignField">
 
@@ -473,7 +461,7 @@
                         </div>
                     </div>
 
-                   <div class="slide_popup task_sidePopup"><img src="../../includes/images/next.png"  class="img-swap"></div>
+                   <div class="slide_popup task_sidePopup img-swap"><i></i></div>
                 </div>   
                 </div>
                     </div>
@@ -485,7 +473,7 @@
                         <div class="backgroundcolor">
                             <table>
                                 <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Comments Details&nbsp;&nbsp; </font></h4></td>
-                                <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="taskComments_popup_close" onclick="taskCommentsPopup();" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="taskComments_popup_close" onclick="taskCommentsPopup();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                             </table>
                         </div>
                         <div>
@@ -499,8 +487,8 @@
                 </div>
 
         </section><!--/form-->
-
-
+        </div>
+</div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

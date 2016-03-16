@@ -73,10 +73,16 @@
                     }
                 }
             };
-
+             function onLoad()
+            {
+           
+                document.getElementById("loadingCsrDetailsSearch").style.display="none";
+                
+    
+            }
         </script>
     </head>
-    <body style="overflow-x: hidden">
+    <body style="overflow-x: hidden" onload="onLoad();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -103,10 +109,10 @@
 
                                                         <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                         <font color="#ffffff">CSR Accounts</font>
-                                                        <i id="updownArrow" onclick="toggleContent('csrDetailsForm')" class="fa fa-angle-up"></i> 
+                                                        <i id="updownArrowAccount" onclick="toggleContentAccount('csrDetailsForm')" class="fa fa-angle-up"></i> 
                                                         <s:url var="myUrl" action="csrList.action">
                                                         </s:url>
-                                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                        <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                         </h4>
                                                     </div>
 
@@ -114,12 +120,12 @@
                                                 <!-- content start -->
                                                 <div class="col-sm-12">
                                                     <div id="csrDetailsForm">
-                                                        <div>  <label class="labelStylereq" style="color:#56a5ec;">CSR Name: </label>
+                                                        <div>  <label class="labelStylereq" style="color:#56a5ec;">CSR Name : </label>
                                                             <span style="color: #FF8A14;"><s:property value="csrName"/></span>
                                                     </div>
                                                     <s:hidden name="csrUserId" id="csrUserId" value="%{userId}"/>  
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Account Name: </label>
+                                                        <label class="labelStylereq" style="color:#56a5ec;">Account Name </label>
                                                         <s:textfield id="accountName"
                                                                      cssClass="form-control"
                                                                      type="text"
@@ -128,7 +134,7 @@
                                                                      tabindex="1" /> 
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
+                                                        <label class="labelStylereq" style="color:#56a5ec;">Status </label>
                                                         <s:select  id="csrStatus"
                                                                    name="csrStatus"
                                                                    cssClass="SelectBoxStyles form-control"
@@ -151,6 +157,9 @@
 
                                                         </div><br/><br/>
                                                     </div>
+                                                    <div id="loadingCsrDetailsSearch" class="loadingImg">
+                                                                                                <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                                                                            </div>
                                                     <%--<s:submit cssClass="css_button" value="show"/><br>--%>
                                                 <div class="col-sm-12">
 
@@ -183,9 +192,10 @@
                                                             <s:if test="userVTO.size > 0">
 
                                                                 <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="csr_pagerOption()" style="width: auto">
-                                                                        <option>5</option>
+                                                                        
                                                                         <option>10</option>
                                                                         <option>15</option>
+                                                                        <option>25</option>
                                                                         <option>50</option>
                                                                     </select>
                                                                     CSR's per page
@@ -214,7 +224,7 @@
                             <div class="backgroundcolor">
                                 <table>
                                     <tr><td><h4 style="font-family:cursive"><font class="titleColor" >&nbsp;&nbsp;Change Status &nbsp;&nbsp; </font></h4></td>
-                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="csrTerminateOverlay_popup_close" onclick="csrTerminateOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="csrTerminateOverlay_popup_close" onclick="csrTerminateOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                 </table>
                             </div>
                             <div>
@@ -223,7 +233,7 @@
                                     <s:hidden id="overlayOrgId" name="csrOrgId"/>
                                     <div id="outputMessageOfUpdate"></div>
                                     <div class="col-sm-10">
-                                        <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
+                                        <label class="labelStylereq" style="color:#56a5ec;">Status </label>
                                         <s:select  id="status"
                                                    name="status"
                                                    cssClass="SelectBoxStyles form-control"

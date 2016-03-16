@@ -48,6 +48,7 @@
             pager.showPageNav('pager', 'pageNavPosition');
             // document.getElementById("paginationOption").value=10;
             pager.showPage(1);
+            document.getElementById("loadingProjectSearch").style.display="none";
         });
         function pagerOption(){
 
@@ -87,6 +88,9 @@
           myCalendar2.setDateFormat("%m-%d-%Y");
           myCalendar.hideTime();
           myCalendar2.hideTime();
+          var today = new Date();
+    
+           myCalendar.setSensitiveRange(today,null);
           document.getElementById("projectStartDateOverlay").value=overlayDate;
           document.getElementById("projectTargetDateOverlay").value=overlayDate;
           document.getElementById("projectStartDate").value=overlayDate;
@@ -94,7 +98,12 @@
       };
             
       function checkAddProjectName(projName){
-               
+               if(projName.replace(/\s/g, '')=="" )
+        {
+            //alert("hello1")
+         $("#addProjectValidation").html(" <b><font color='red'>Enter Project name</font></b>");    
+         return false;
+        }
           $.ajax({url:"<%=request.getContextPath()%>/checkProjectNames.action?projectName="+ projName+"&projectFlag=main",
               success: function(data){
                    
@@ -172,10 +181,10 @@
         <div id="addProject_popup" class="overlay" style="width:75%">
             <div id="addProjectOverlay">
 
-                <div style="background-color: #3BB9FF ">
+                <div class="backgroundcolor" >
                     <table>
                         <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Add Project&nbsp;&nbsp; </font></h4></td>
-                        <span class=" pull-right"><h5><a href="" class="addProject_popup_close" onclick="removeResults()"><img id="projectsPopupCloseButton"src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a>&nbsp;</h5></span>
+                        <span class=" pull-right"><h5><a href="" class="addProject_popup_close" onclick="removeResults();searchProjects();"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
                     </table>
                 </div>
                 <div style="width:fit-content">
@@ -186,18 +195,20 @@
                         <div>
                             <div class="inner-addtaskdiv-elements">
                                 <div class="col-sm-4 required">
-                                    <label>Project Name</label><s:textfield  cssClass="form-control" id="projectNamePopup" type="text" name="projectName" placeholder="Project Name"  cssStyle="height: 25px;" onchange="checkAddProjectName(this.value);" maxlength="30"/>
+                                    <label>Project Name</label><s:textfield  cssClass="form-control" id="projectNamePopup" type="text" name="projectName" placeholder="Project Name"  cssStyle="height: 25px;" onchange="checkAddProjectName(this.value);" maxlength="30" onfocus="clearFieldValues()"/>
                                 </div>
                                 <%--div class="col-sm-3 required">
                                     <label>Status</label><s:select  id="project_statusPopup"  name="project_status" cssClass="SelectBoxStyles form-control "  theme="simple" list="{'Active','Inactive','Completed','Paused'}" cssStyle="height: 25px"/>
                                 </div--%>
 
                                 <div class="col-sm-4 required">
-                                    <label>Start Date</label><s:textfield cssClass="form-control" name="projectStartDate" id="projectStartDateOverlay" placeholder="Start Date" value="%{projectStartDate}" cssStyle="height: 25px;background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;" onkeypress="return projectDateValidation()" autocomplete="off"/>
-                                </div>
+                                    <label>Start Date</label>
+                                    <div class="calImage"><s:textfield cssClass="form-control" name="projectStartDate" id="projectStartDateOverlay" placeholder="Start Date" value="%{projectStartDate}"  onkeypress="return projectDateValidation()" autocomplete="off" onfocus="clearFieldValues()"><i class="fa fa-calendar"></i></s:textfield>
+                                    </div></div>
                                 <div class="col-sm-4 required"> 
-                                    <label>Target Date</label><s:textfield cssClass="form-control" name="projectTargetDate" value="%{projectTargetDate}" id="projectTargetDateOverlay" placeholder="Target Date" cssStyle="height: 25px;background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;"  onkeypress="return projectDateValidation();" autocomplete="off"/>
-                                </div>
+                                    <label>Target Date</label>
+                                    <div class="calImage"><s:textfield cssClass="form-control" name="projectTargetDate" value="%{projectTargetDate}" id="projectTargetDateOverlay" placeholder="Target Date"   onkeypress="return projectDateValidation();" autocomplete="off" onfocus="clearFieldValues()"><i class="fa fa-calendar"></i></s:textfield>
+                                </div></div>
                                 <div>
                                     <label class="labelStyle" style="display: none; color: red; width: auto;margin-left: 20px" id="projectNameError"></label>
                                 </div>
@@ -205,35 +216,38 @@
                                 <div class="col-sm-4 required">
                                     <label>Target hours</label>
                                     <div class="form-group input-group">
-                                        <s:textfield cssClass="form-control "  id="projectTargetHrs" placeholder="Target hours" value="" name="projectTargetHrs"  onkeypress="return noOfHoursValidate(event, this.id)"/>
+                                        <s:textfield cssClass="form-control "  id="projectTargetHrs" placeholder="Target hours" value="" name="projectTargetHrs"  onkeypress="return noOfHoursValidate(event, this.id)" onfocus="clearFieldValues()"/>
                                         <span class="input-group-addon" style="padding-top: 5px">Hrs</span>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <label>Worked hours</label>
                                     <div class="form-group input-group">
-                                        <s:textfield cssClass="form-control " id="projectWorkedHrs"   name="projectWorkedHrs" placeholder="" readonly="true" value="0.0" />
+                                        <s:textfield cssClass="form-control " id="projectWorkedHrs"   name="projectWorkedHrs" placeholder="" readonly="true" value="0.0" onfocus="clearFieldValues()"/>
                                         <span class="input-group-addon" style="padding-top: 5px">Hrs</span>
                                     </div>
                                 </div>                       
                                 <div class="col-sm-4 required "> 
-                                    <label>Cost Center</label><s:select  id="costCenterName"  name="costCenterName" cssClass="form-control SelectBoxStyles "  list="%{costCenterNames}"  headerValue="---Select---" headerKey="DF" cssStyle="margin-right:50px"/>
+                                    <label>Cost Center</label><s:select  id="costCenterName"  name="costCenterName" cssClass="form-control SelectBoxStyles "  list="%{costCenterNames}"  headerValue="---Select---" headerKey="DF" cssStyle="margin-right:50px" onfocus="clearFieldValues()"/>
                                 </div>
-                                <div class="col-md-10"></div>
-                                <div class="inner-addtaskdiv-elements">
-                                    <label class="labelStyle popupLabelStyle" style="width: 150px">Required Skill Set</label><s:textarea  cssClass="areacss" id="projectReqSkillSetPopup" type="text" name="projectReqSkillSet" placeholder="Required Skill Set" value="%{projectReqSkillSet}" onkeydown="checkCharactersSkill(this)" onblur="removeMsg()"/>
-                                </div>
+                              
+                                <div class="col-sm-12">
+                                    <label class="" style="width: 150px;padding: 0;margin-left: 1px">Required Skill Set</label><s:textarea  cssClass="areacss" id="projectReqSkillSetPopup" type="text" name="projectReqSkillSet" placeholder="Required Skill Set" value="%{projectReqSkillSet}" onkeydown="checkCharactersSkill(this)" onblur="removeMsg()" onfocus="clearFieldValues()"/>
+                                
                                 <div class="charNum" id="charNumSkill"></div>
-                                <div class="inner-addtaskdiv-elements">
-                                    <label class="labelStyle">Description</label><s:textarea id="project_descriptionPopup" name="project_description" placeholder="Enter Task Description Here" cssClass="areacss" value="%{project_description}" onkeydown="checkCharactersProjects(this)" onblur="removeMsg()"/>
                                 </div>
+                                <div class="col-sm-12">
+                                    <label class="labelStyle">Description</label><s:textarea id="project_descriptionPopup" name="project_description" placeholder="Enter Task Description Here" cssClass="areacss" value="%{project_description}" onkeydown="checkCharactersProjects(this)" onblur="removeMsg()" onfocus="clearFieldValues()"/>
+                               
                                 <div class="charNum" id="charNumProjects"></div>
+                                
+                            </div>
                             </div>
                         </div>
                     </s:form>
-                    <div  class="inner-addtaskdiv-elements" style="text-align: right">
-                        <s:reset cssClass="cssbutton " value="Clear" theme="simple" onclick="resetOverlayForm();"/>
-                        <s:submit id="addProjectButton" cssClass="cssbutton" value="Add Project" theme="simple" onclick="addProjectValidation();addProject();"/>
+                    <div  class="col-sm-12" style="text-align: right">
+                        <s:reset type="button" cssClass="cssbutton fa fa-eraser" value="Clear" theme="simple" onclick="resetOverlayForm();"/>
+                        <s:submit type="button" id="addProjectButton" cssClass="cssbutton fa fa-plus-square" value="Add Project" theme="simple" onclick="addProjectValidation();addProject();"/>
                     </div>
                 </div>
             </div>
@@ -243,7 +257,7 @@
                 <div class="backgroundcolor">
                     <table>
                         <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Skill Details&nbsp;&nbsp; </font></h4></td>
-                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="projectSkillOverlay_popup_close" onclick="reqSkillSetOverlayClose()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="projectSkillOverlay_popup_close" onclick="reqSkillSetOverlayClose()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                     </table>
                 </div>
                 <div>
@@ -262,7 +276,7 @@
                 <div class="backgroundcolor">
                     <table>
                         <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Project Description&nbsp;&nbsp; </font></h4></td>
-                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="projectsDescOverlay_popup_close" onclick="projectDescriptinOverlayClose()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="projectsDescOverlay_popup_close" onclick="projectDescriptinOverlayClose()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                     </table>
                 </div>
                 <div>
@@ -292,7 +306,7 @@
 
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Projects</font>
-                                                <i id="updownArrow" onclick="toggleContent('projectSearchForm')" class="fa fa-angle-up"></i>
+                                                <i id="updownArrow" onclick="toggleContent('projectSearchForm')" class="fa fa-minus"></i>
 
                                             </h4>
                                         </div>
@@ -304,28 +318,28 @@
                                     <div class="col-sm-12" id="profileBox" style="margin-top: -20px">
 
                                         <div id="projectSearchForm">
-                                            <div class="col-sm-12">
+                                            
                                                 <s:form action="" theme="simple" method="GET" target="%{projects}">
                                                     <br>
                                                     <span><searchProject></searchProject></span>
                                                     <div class="">
                                                         <div class="col-sm-3">
-                                                            <label >Skill Set: </label>
-                                                            <s:textfield cssClass="form-control " label="projectReqSkillSet" id="projectReqSkillSet" type="text" name="projectReqSkillSet"  placeholder="Skill Set" maxLength="100"/>
+                                                            <label >Skill Set </label>
+                                                            <s:textfield cssClass="form-control " label="projectReqSkillSet" id="projectReqSkillSet" type="text" name="projectReqSkillSet"  placeholder="Skill Set" maxLength="100" tabindex="1"/>
                                                         </div>
                                                         <div class="col-sm-3">
-                                                            <label >Project Name: </label>
-                                                            <s:textfield  cssClass="form-control " label="projectName" id="projectName" type="text" name="projectName" placeholder="Project Name" maxLength="30"/>
+                                                            <label >Project Name </label>
+                                                            <s:textfield  cssClass="form-control " label="projectName" id="projectName" type="text" name="projectName" placeholder="Project Name" maxLength="30" tabindex="2"/>
                                                         </div>
 
                                                         <div class="col-sm-3">
-                                                            <label >Start Date: </label>
-                                                            <s:textfield cssClass="form-control " id="projectStartDate" type="text" name="projectStartDate" placeholder="Project Start Date"  cssStyle="height: 25px;background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;" onkeypress=" return projectDateRepository();" autocomplete="off"/>
-                                                        </div>
+                                                            <label >Start Date </label>
+                                                            <div class="calImage"> <s:textfield cssClass="form-control " id="projectStartDate" type="text" name="projectStartDate" placeholder="Project Start Date"   onkeypress=" return projectDateRepository();" autocomplete="off" tabindex="3"><i class="fa fa-calendar"></i></s:textfield>
+                                                        </div></div>
                                                         <div class="col-sm-3">
-                                                            <label >Target Date: </label>
-                                                            <s:textfield cssClass="form-control " id="projectTargetDate" type="text" name="projectTargetDate" placeholder="Project Target Date"  cssStyle="height: 25px;background: white url(%{request.getContextPath()}/MSB/includes/images/calendar.gif) right no-repeat;padding-left: 17px;" onkeypress=" return projectDateRepository();" autocomplete="off"/>
-                                                        </div>
+                                                            <label >Target Date </label>
+                                                           <div class="calImage"> <s:textfield cssClass="form-control " id="projectTargetDate" type="text" name="projectTargetDate" placeholder="Project Target Date"   onkeypress=" return projectDateRepository();" autocomplete="off" tabindex="4"><i class="fa fa-calendar"></i></s:textfield>
+                                                        </div></div>
 
 
 
@@ -341,16 +355,18 @@
                                                 <div class="row">
                                                     <div class="col-sm-12 col-sx-12">      
                                                         <div class="col-sm-2 pull-right contact_search">   
-                                                            <s:submit type="button" cssStyle="margin:5px 0px" cssClass="add_searchButton form-control "  onclick="searchProjects();" ><i class="fa fa-search" ></i>&nbsp;Search</s:submit>
+                                                            <s:submit type="button" cssStyle="margin:5px 0px" cssClass="add_searchButton form-control "  onclick="searchProjects();" ><i class="fa fa-search" tabindex="6"></i>&nbsp;Search</s:submit>
                                                         </div>
                                                         <div class="col-sm-2 pull-right contact_search">
-                                                            <a href="" class="addProject_popup_open" ><button style="margin:5px 0px" class="add_searchButton form-control" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
+                                                            <a href="" class="addProject_popup_open" ><button style="margin:5px 0px" class="add_searchButton form-control" ><i class="fa fa-plus-square" tabindex="5"></i>&nbsp;Add</button></a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                           
                                         </div>
-
+                                         <div id="loadingProjectSearch" class="loadingImg">
+                                                    <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                                </div>                
                                         <div class="col-sm-12">
                                             <s:form id="projectResultsForm">
                                                 <div style="width: fit-content">

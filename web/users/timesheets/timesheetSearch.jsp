@@ -121,6 +121,7 @@
                 // document.getElementById("docdatepicker").value=to;
                 //document.getElementById("startDate").value=overlayDate;
                 //document.getElementById("endDate").value=overlayDate;
+                document.getElementById("loadingTimesheetSearch").style.display="none";
             }
              
             
@@ -258,7 +259,7 @@
 
                                                         <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                         <font color="#ffffff">Time Sheets Search</font>
-                                                        <i id="updownArrow" onclick="toggleContent('myTimesheetSearch')" class="fa fa-angle-up"></i>
+                                                        <i id="updownArrow" onclick="toggleContent('myTimesheetSearch')" class="fa fa-minus"></i>
 
                                                     </h4>
                                                 </div>
@@ -273,25 +274,25 @@
                                                     <ul class="nav nav-pills">
                                                         <s:hidden value="%{reportingPerson}" name="reportingPerson" id="reportingPerson"/>
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color:#56a5ec;">From Date:</label>  
-                                                            <s:textfield cssClass="form-control dateImage" label="from date" name="startDate" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
-                                                        </div>
+                                                            <label class="labelStylereq" style="color:#56a5ec;">From Date</label>  
+                                                            <div class="calImage"><s:textfield cssClass="form-control " label="from date" name="startDate" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
+                                                            </div></div>
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color:#56a5ec;">To Date:</label>
-                                                            <s:textfield cssClass="form-control dateImage" label="To date" name="endDate" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
-                                                        </div>
+                                                            <label class="labelStylereq" style="color:#56a5ec;">To Date</label>
+                                                            <div class="calImage"> <s:textfield cssClass="form-control " label="To date" name="endDate" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
+                                                            </div></div>
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
-                                                            <s:select id="tmstatus" name="tmstatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'CA':'Entered','SU':'Submitted','AP':'Approved'}"/>
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Status</label>
+                                                        <s:select id="tmstatus" name="tmstatus" cssClass="SelectBoxStyles form-control" tabindex="3" headerKey="-1" headerValue="Select Status" theme="simple" list="#@java.util.LinkedHashMap@{'CA':'Entered','SU':'Submitted','AP':'Approved'}"/>
                                                         </div>
                                                         <div class="btn_align">
                                                             <div class="col-sm-2 pull-right">
 
 
-                                                                <a href="#" onclick="addTimeSheetOverlayOpen();return clearPreviousDate();"><button class="add_searchButton addTimeSheet_open form-control" style="margin:5px 0px -17px;" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>&nbsp;&nbsp;&nbsp;
+                                                                <a href="#" onclick="addTimeSheetOverlayOpen();return clearPreviousDate();"><button class="add_searchButton addTimeSheet_open form-control" tabindex="5" style="margin:5px 0px -17px;" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>&nbsp;&nbsp;&nbsp;
                                                             </div>
                                                             <div class="col-sm-2  pull-right">
-                                                                <s:submit type="button"  cssStyle="margin:5px 0px;"  cssClass="add_searchButton form-control" id="searchButton" value="" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                <s:submit type="button"  cssStyle="margin:5px 0px;" tabindex="4" cssClass="add_searchButton form-control" id="searchButton" value="" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                                 </div>
                                                             </div>
                                                         <%
@@ -307,6 +308,9 @@
                                                         }
                                                     %>  
                                                 </s:form>
+                                                    <div id="loadingTimesheetSearch" class="loadingImg">
+                                                        <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                                   </div>
                                                 <div class="col-sm-12">
                                                     <s:form>
                                                         <div class="task_content" id="task_div" align="center" style="display: none" >
@@ -364,7 +368,7 @@
                                                                                         <s:param name="usr_id"><%=usr_id%></s:param>
                                                                                     </s:url>
 
-                                                                                    <s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/edit_Msb.png"/>" height="20" width="20"></s:a></td>
+                                                                                    <s:a href='%{#myUrl}'><i class="fa fa-pencil-square-o fa-size"></i></s:a></td>
                                                                                 <td><%= tm_start_date%></td>
                                                                                 <td><%= tm_end_date%></td>
                                                                                 <td><%= cur_status%></td>
@@ -373,7 +377,7 @@
                                                                                 <td><%= reports_to%></td>
                                                                                 <td><%= tm_approved_date%></td>
                                                                                 <td>
-                                                                                    <a href="#" onclick="deleteTimeSheet('<%=tms_id%>');" id="deleteTimesheet" ><img src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="20"></a>  
+                                                                        <center><a href="#" onclick="deleteTimeSheet('<%=tms_id%>');" id="deleteTimesheet" ><i class="fa fa-trash-o fa-size"></i></a></center>  
                                                                                 </td>
                                                                             </tr> 
                                                                             <%-- <s:url var="deleteUrl" action="deleteTimesheet">
@@ -412,7 +416,7 @@
                                                                     <% if (c > 0) {
 
                                                                     %>
-                                                                    <label> Display <select id="tpaginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                                    <label> Display <select id="tpaginationOption" tabindex="6" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
                                                                             <option>10</option>
                                                                             <option>15</option>
                                                                             <option>25</option>
@@ -446,7 +450,7 @@
 
                                     <div class="addlink" >
 
-                                        <div class="alignField"> <a href="#" onclick="addTimeSheetOverlayOpen();return clearPreviousDate();" class="addTimeSheet_open">  <img src="../../includes/images/timesheet.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </a></div>
+                                        
 
                                         <div class="alignField">
 
@@ -458,7 +462,7 @@
                                 </div>
 
 
-                                <div class="slide_popup timesheet_sidepopup"><img src="../../includes/images/next.png"  class="img-swap"></div>
+                                <div class="slide_popup timesheet_sidepopup"><i class="fa fa-calendar-plus-o img-swap"></i></div>
                             </div>
 
                         </div>
@@ -470,11 +474,11 @@
 
                 <div id="addTimeSheet">
                     <div id="addTimeSheetOverlay" >
-                        <div style="background-color: #3bb9ff ; padding: 0px">
+                        <div style="background-color: #4491df; padding: 0px">
                             <table>
                                 <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Add&nbsp;Time&nbsp;Sheet&nbsp;&nbsp; </font></h4></td>
                                 </tr>
-                                <span class=" pull-right"><h5><a href="" class="addTimeSheet_close" onclick="addTimeSheetOverlayClose()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                                <span class=" pull-right"><h5><a href="" class="addTimeSheet_close" onclick="addTimeSheetOverlayClose()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                             </table>
                         </div>
                         <div>
@@ -488,14 +492,14 @@
                                         <br> <s:radio id="radiobutton" name="myRadioButton" 
                                                  list="#@java.util.LinkedHashMap@{'2':'previous week starting on'}" onclick="return checkWeekStatus()" value="2"/>
                                         <br>
-                                        <s:textfield cssClass=" form-control dateImage" name="weekrange" id="weekrange" onkeypress="return enterTimesheetDateRepository(this)"/>
-
+                                        <div class="calImage"><s:textfield cssClass=" form-control " name="weekrange" id="weekrange" onkeypress="return enterTimesheetDateRepository(this)"><i class="fa fa-calendar"></i></s:textfield>
+                                        </div>
                                         <br> 
                                         <span><addTimesheerResult></addTimesheerResult></span>
                                         <%--s:select id="projectType" name="projectType" label="Project Type" cssClass="form-control"
                                                   list="#@java.util.LinkedHashMap@{'1':'Internal','2':'External'}" onclick="return checkWeekStatus()"/--%>
                                         <%--s:submit cssClass="col-sm-offset-4 btn cssbutton" value="Go"  onclick="false" ../timesheets/addTimeSheet.action  ></s:submit--%>
-                                        <a href="#" ><button style="margin: 5px 0px;" type="button" class="add_searchButton form-control " value="" onclick="return checkPreviousDate()">&nbsp;Go&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button></a></a>&nbsp; 
+                                        <a href="#" ><button style="margin: 5px 0px;" type="button" class="add_searchButton pull-right " value="" onclick="return checkPreviousDate()">&nbsp;Go&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button></a></a>&nbsp; 
                                     </div>
                                 </div>
                             </form>
@@ -503,6 +507,7 @@
                     </div>
                 </div>
             </div>
+                                         </div>
             <footer id="footer"><!--Footer-->
                 <div class="footer-bottom" id="footer_bottom">
                     <div class="container">
@@ -510,7 +515,7 @@
                     </div>
                 </div>
             </footer><!--/Footer-->
-        </div>
+       
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
  <script>
@@ -522,33 +527,10 @@
                 });
             });
             
-            $(function(){
-                $(".img-swap").live('click', function() {
-                   
-                    if ($(this).attr("class") == "img-swap") {
-                       
-                        this.src = this.src.replace("next","prev");
-                    } else {
-                        this.src = this.src.replace("prev","next");
-                    }
-                    $(this).toggleClass("on");
-                });
-            });
             
             
-            if ( $(window).width() > 1400) {      
-                //Add your javascript for large screens here 
-  
-                $(document).ready(function(){
-                    $(".slide_popup").click(function(){
-                        $(".popup_block").animate({
-                            width: 'toggle'
-                        });
-                    });
-                });
             
-              
-            }
+            
         </script>
         <script type="text/javascript">
             var recordPage=10;

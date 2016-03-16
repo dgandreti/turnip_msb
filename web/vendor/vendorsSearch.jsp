@@ -77,6 +77,7 @@
 
     </head>
     <body style="overflow-x: hidden" onload="doOnLoad();">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -85,6 +86,7 @@
             </div>
         </header>
         <s:include value="/includes/menu/LeftMenu.jsp"/>
+      <div id="main">
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
@@ -242,8 +244,10 @@
                     </div>
                 </div>
             </div>
-        </div>        <!-- content end -->
+                <!-- content end -->
     </section><!--/form-->
+    </div>
+    </div>
     <footer id="footer"><!--Footer-->
         <div class="footer-bottom" id="footer_bottom">
             <div class="container">

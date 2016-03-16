@@ -102,11 +102,12 @@
             </interceptor-ref>
             <interceptor-ref name="validation"/>
             <interceptor-ref name="workflow"/>
+            <interceptor-ref name="token"/>
             <result type="redirect" name="success">../acc/viewAccount.action?accountSearchID=${AccountSearchOrgId}&amp;accFlag=${"conSearch"}</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">/error.jsp</result>
             <result name="input">../exception/AccessFailed.jsp</result>
-
+            <result type="redirect" name="invalid.token">../acc/viewAccount.action?accountSearchID=${AccountSearchOrgId}&amp;accFlag=${"conSearch"}</result>
         </action>
                  <action name="doAddAccountToCsr" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="doAddAccountToCsr">
 
@@ -381,6 +382,8 @@
         <action name="getAttachmentsSearchDetails" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getAttachmentsSearchDetails">
 
         </action>
+        <action name="getTeamMemberReportingPersons" class="com.mss.msp.acc.accajax.AccountAjaxHandler" method="getTeamMemberReportingPersons">
+        </action>
     </package>
     
     <package name="Requirements" namespace="" extends="default">
@@ -458,7 +461,6 @@
         <action name="getConsultantList" class="com.mss.msp.recruitment.RecruitmentAction" method="getDefaultConsultantListDetails"></action>
         <action name="getConsultantListBySearch" class="com.mss.msp.recruitment.RecruitmentAction" method="getConsultantListDetailsBySearch"></action>
         <action name="techReview" class="com.mss.msp.recruitment.RecruitmentAction" method="techReview">
-            
             <result name="success">techReviewSearch.jsp</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
@@ -505,9 +507,11 @@
             </interceptor-ref>
             <interceptor-ref name="validation"/>
             <interceptor-ref name="workflow"/>
+            <interceptor-ref name="token"/>
             <result name="success" type="redirect">../acc/viewAccount.action?accountSearchID=${viewAccountID}&amp;accFlag=${"attachDetails"}</result>
             <result name="error">/error.jsp</result>
-            <result name="accessDenied" type="redirect">/general/deneid.action</result>  
+            <result name="accessDenied" type="redirect">/general/deneid.action</result>
+            <result name="invalid.token" type="redirect">../acc/viewAccount.action?accountSearchID=${viewAccountID}&amp;accFlag=${"attachDetails"}</result>  
         </action>
         <action name="updateVendorFormAttachments" class="com.mss.msp.recruitment.RecruitmentAction" method="updateVendorFormAttachments">
             <interceptor-ref name="completeStack" />

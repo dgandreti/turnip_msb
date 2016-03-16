@@ -48,7 +48,7 @@ public class CostCenterServiceImpl implements CostCenterService {
                 queryString = queryString + " AND ccname like '%" + costCenterAction.getCcName() + "%'";
             }
             if (!"".equalsIgnoreCase(costCenterAction.getStatus()) && costCenterAction.getStatus() != null) {
-                queryString = queryString + " AND ccstatus like '%" + costCenterAction.getStatus() + "%'";
+                queryString = queryString + " AND ccstatus like '" + costCenterAction.getStatus() + "'";
             } else {
                 queryString = queryString + " AND ccstatus like 'Active'";
             }
@@ -71,6 +71,7 @@ public class CostCenterServiceImpl implements CostCenterService {
                 str = new StringTokenizer(result, "^");
                 while (str.hasMoreElements()) {
 //                    excelColValue[k] = str.nextElement();
+                    System.out.println("");
                     costCenterVTO.setBudgetAmt(Double.parseDouble(str.nextElement().toString()));
                     costCenterVTO.setId(Integer.parseInt(str.nextElement().toString()));
                     costCenterVTO.setBudgetStatus(str.nextElement().toString());
@@ -116,7 +117,7 @@ public class CostCenterServiceImpl implements CostCenterService {
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";double bal = 0.0;
-        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int year = costCenterAction.getDashBoardYear();
         try {
             queryString = "SELECT * FROM costcenterbudgets WHERE cccode like '" + costCenterAction.getCcCode() + "' AND(startdate LIKE '%" + year + "%' OR enddate LIKE '%" + year + "%')";
             System.out.println("queryString helloooo -->" + queryString);

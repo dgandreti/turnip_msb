@@ -16,44 +16,6 @@
 
         <div class="panel-group category-products" id="accordian">
             <!--category-products-->
-            <div class="panel panel-default left-menu" id="accordian_my">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                             <i id="leftBullet" class="fa fa-briefcase"></i>
-                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
-                            Accounts
-                        </a>
-                    </h4>
-                </div>
-                <div id="sportswear" class="panel-collapse collapse">
-                    <div class="panel-body" >
-                        <ul>
-                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/acc/searchAccountsBy.action"><img src="<s:url value="/includes/images/icons/SearchGlobe.png"/>" height="15" width="15">&nbsp;Accounts&nbsp;Search</a> </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default left-menu" id="accordian_team">
-                <div class="panel-heading" >
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                             <i id="leftBullet" class="fa fa-cogs"></i>
-                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
-                            Utilities
-                        </a>
-                    </h4>
-                </div>
-                <div id="mens" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <ul>
-                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/general/changeMyPassword.action"><img src="<s:url value="/includes/images/icons/changePass.png"/>" height="15" width="15">&nbsp;Change My Pwd</a></li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
             <div class="panel panel-default left-menu" id="accordian_services">
                 <div class="panel-heading">
                     <h4 class="panel-title">
@@ -73,6 +35,45 @@
                     </div>
                 </div>
             </div>
+            <div class="panel panel-default left-menu" id="accordian_my">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+                            <i id="leftBullet" class="fa fa-briefcase"></i>
+                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
+                            Accounts
+                        </a>
+                    </h4>
+                </div>
+                <div id="sportswear" class="panel-collapse collapse">
+                    <div class="panel-body" >
+                        <ul>
+                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/acc/searchAccountsBy.action"><img src="<s:url value="/includes/images/icons/SearchGlobe.png"/>" height="15" width="15">&nbsp;Accounts&nbsp;Search</a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default left-menu" id="accordian_team">
+                <div class="panel-heading" >
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+                            <i id="leftBullet" class="fa fa-cogs"></i>
+                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
+                            Utilities
+                        </a>
+                    </h4>
+                </div>
+                <div id="mens" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul>
+                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/general/changeMyPassword.action"><img src="<s:url value="/includes/images/icons/changePass.png"/>" height="15" width="15">&nbsp;Change My Pwd</a></li>
+                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/users/tasks/doTasksSearch.action"><img src="<s:url value="/includes/images/icons/addTask.png"/>" height="15" width="15">&nbsp;Tasks</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
 
         </div><!--/category-products-->
 

@@ -133,6 +133,7 @@ public class ConsultantVTO implements Serializable {
     private String ConsultantVisa;
     private String consultantIdProof;
     private String consultantIdProofAttach;
+    private String vendorcomments;
 
     public String getConsultantIdProof() {
         return consultantIdProof;
@@ -997,5 +998,13 @@ public class ConsultantVTO implements Serializable {
 
     public void setForwardby(int forwardby) {
         this.forwardby = forwardby;
+    }
+
+    public String getVendorcomments() {
+        return vendorcomments;
+    }
+
+    public void setVendorcomments(String vendorcomments) {
+        this.vendorcomments = vendorcomments;
     }
 }

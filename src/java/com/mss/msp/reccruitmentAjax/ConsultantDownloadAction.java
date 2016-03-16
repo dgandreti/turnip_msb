@@ -81,10 +81,12 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
     private String consult_email;
     private String consult_skill;
     private String consult_phno;
-    
+    private String consult_salary;
+    private String vendorcomments;
     private String jdId;
     private String vendor;
     private String consultantFlag;
+     private String techReviewFlag;
     
     
     private String vendorFormAttachmentLocation;
@@ -161,8 +163,13 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
                 setResultMessage("record exists");
                 System.out.println(getConsultFlag());
                 setResume("Resume");
+                setTechReviewFlag(getTechReviewFlag());
+               // setVendor(getVendor());
+                System.out.println("customer flag--------------->"+getCustomerFlag());
+                setCustomerFlag(getCustomerFlag());
 
             } else {
+                setCustomerFlag(getCustomerFlag());
                 System.out.println("in else");
                 if (getAcc_attachment_id() == -1) {
                     setResume("noVisa");
@@ -176,6 +183,7 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
             }
         } catch (FileNotFoundException ex) {
             System.out.println("finle not found");
+            setCustomerFlag(getCustomerFlag());
             if (getAcc_attachment_id() == -1) {
                 setResume("noVisaFile");
             } else {
@@ -436,6 +444,30 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
 
     public void setConsultantFlag(String consultantFlag) {
         this.consultantFlag = consultantFlag;
+    }
+
+    public String getTechReviewFlag() {
+        return techReviewFlag;
+    }
+
+    public void setTechReviewFlag(String techReviewFlag) {
+        this.techReviewFlag = techReviewFlag;
+    }
+
+    public String getConsult_salary() {
+        return consult_salary;
+    }
+
+    public void setConsult_salary(String consult_salary) {
+        this.consult_salary = consult_salary;
+    }
+
+    public String getVendorcomments() {
+        return vendorcomments;
+    }
+
+    public void setVendorcomments(String vendorcomments) {
+        this.vendorcomments = vendorcomments;
     }
 
    

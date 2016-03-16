@@ -28,7 +28,7 @@
             </interceptor-stack>
             <interceptor-stack name="authorizationcheckStack">
                 <interceptor-ref name="authorizationcheck"/>
-                <interceptor-ref name="crudStack"/>  
+                <interceptor-ref name="crudStack"/>
             </interceptor-stack>                
         </interceptors>
        

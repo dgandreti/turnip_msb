@@ -70,6 +70,7 @@
     </head>
 
     <body onload="getPresentTimeYear()">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -78,7 +79,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <div class="container">
             <div class="row">
                 <!-- Main Content-->
@@ -93,7 +94,7 @@
                                     <h4 class="panel-title">
                                         <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                         <font color="#ffffff">Invoice Search</font>
-                                        <i id="updownArrow" onclick="toggleContent('doSearchInvoice')" class="fa fa-angle-up"></i> 
+                                        <i id="updownArrow" onclick="toggleContent('doSearchInvoice')" class="fa fa-minus"></i> 
                                         <%--  <s:url var="myUrl" action="#">
                                           </s:url>
                                           <span class="pull-right"><s:a href='#'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>--%>
@@ -109,7 +110,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <label class="labelStylereq" style="color:#56a5ec">Year</label>
-                                        <s:textfield id="invoiceYear" name="invoiceYear" cssClass=" form-control " onkeypress="return invoceYear(event)" />
+                                        <s:textfield id="invoiceYear" name="invoiceYear" cssClass=" form-control " onkeypress="return invoceYear(event)" value="%{invoiceYear}"/>
                                     </div>
                                     <div class="col-sm-4">
                                         <label class="labelStylereq" style="color:#56a5ec">Resource&nbsp;Name</label>
@@ -140,12 +141,15 @@
                                 <div class="col-sm-2">
                                     <label class="labelStylereq" style="color:#56a5ec"></label><br>
                                     <s:if test="#session.typeOfUsr=='VC'">
-                                        <s:submit value="Generate" cssClass="add_searchButton form-control InvoiceGenerationOverlay_popup_open" cssStyle="margin:5px 0px;" onclick="return generateInvoiceOverlay()"/>
+                                        <s:submit type="button" value="Generate" cssClass="add_searchButton form-control InvoiceGenerationOverlay_popup_open fa fa-building-o" cssStyle="margin:5px 0px;" onclick="return generateInvoiceOverlay()"/>
                                     </s:if>
                                    
                                 </div>
                                 </div>
                             </s:form>
+                              <div id="loadingInvoiceSearch" class="loadingImg">
+                                                    <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                                </div>
                              <div class="row"></div>
                             <div class="col-lg-12">
                                 <table id="InvoiceTable" class="responsive CSSTable_task" border="5"cell-spacing="2">
@@ -231,7 +235,7 @@
                 <div class="backgroundcolor">
                     <table>
                         <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Generate&nbsp;Invoice&nbsp; </font></h4></td>
-                        <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="InvoiceGenerationOverlay_popup_close" onclick="closeInvoiceOverlay()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                        <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="InvoiceGenerationOverlay_popup_close" onclick="closeInvoiceOverlay()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                     </table>
                 </div><div>
                     <span><invoiceGenerarionMessage></invoiceGenerarionMessage></span></div>
@@ -258,7 +262,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="col-lg-6">
-                        <s:submit cssClass=" col-sm-offset-10 btn cssbutton " value="Generate" type="button" onclick="return generateInvoice()"/>
+                        <s:submit  cssClass="col-sm-offset-10 btn cssbutton fa fa-building-o" value="Generate" type="button" onclick="return generateInvoice()"/>
 
                     </div>
                 </div>
@@ -266,6 +270,8 @@
 
 
         </div>
+        </div>
+    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

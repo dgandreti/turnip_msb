@@ -89,11 +89,11 @@ Author     : miracle
                     document.getElementById('duration').style.display = "block";
                     
                     // document.getElementById('durationdesr').style.display = "block";
-                    document.getElementById('billingtype1').style.display = "block";
+                    // document.getElementById('billingtype1').style.display = "block";
                 }else{
                     document.getElementById('duration').style.display = "none";
                     //document.getElementById('durationdesr').style.display = "none";
-                    document.getElementById('billingtype1').style.display = "none";
+                    // document.getElementById('billingtype1').style.display = "none";
 
                     
                 }
@@ -106,6 +106,7 @@ Author     : miracle
     </head>
 
     <body style="overflow-x: hidden" onload="showHideDuration();doOnloadEditRequirement(); paginationVC();">
+        <div id="wrap">   
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -117,6 +118,7 @@ Author     : miracle
             String flag = "reqSearch";
             String orgId = session.getAttribute(ApplicationConstants.ORG_ID).toString();
         %>
+        <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
@@ -162,34 +164,42 @@ Author     : miracle
 
 
                                             <label class=""> </label> 
-                                            <s:if test="accountFlag=='csr'" >
-                                                <s:a href='%{#myUrl}' style="color:#FC9A11;"><s:property value="%{accountName}"/></s:a>
-                                            </s:if>
-                                            <s:else>
-                                                <s:a href='#' style="color:#FC9A11;"><s:property value="%{accountName}"/></s:a>
-                                            </s:else>
-                                            <s:if test="accountFlag=='csr'" >
-                                                <s:a href='%{#reqUrl}' style="color:#FC9A11;">->Requirements List</s:a>
-                                            </s:if>
-                                            <s:else>
-                                                <s:if test="vendor!='yes'">
-                                                    <s:a href='%{#custReqUrl}' style="color:#FC9A11;">->Requirements List</s:a>        
-                                                </s:if>
-                                                <s:else>
-                                                    <s:a href='%{#venReqUrl}' style="color:#FC9A11;">->Requirements List</s:a>        
-                                                </s:else>
-                                            </s:else>
+                                                    <s:if test="accountFlag=='csr'" >
+                                                        <s:a href='%{#myUrl}' cssClass="breadcrum"><s:property value="%{accountName}"/></s:a>
+                                                    </s:if>
+                                                    <s:else>
+                                                        <s:a href='#' cssClass="breadcrum"><s:property value="%{accountName}"/></s:a>
+                                                    </s:else>
+                                                    <s:if test="accountFlag=='csr'" >
+                                                        <s:a href='%{#reqUrl}' cssClass="breadcrum">>>&nbsp;Requirements List</s:a>
+                                                    </s:if>
+                                                    <s:else>
+                                                        <s:if test="vendor!='yes'">
+                                                            <s:a href='%{#custReqUrl}' cssClass="breadcrum">>>&nbsp;Requirements List</s:a>        
+                                                        </s:if>
+                                                        <s:else>
+                                                            <s:a href='%{#venReqUrl}' cssClass="breadcrum">>>&nbsp;Requirements List</s:a>        
+                                                        </s:else>
+                                                    </s:else>
 
-                                            <span style="color:#FC9A11;">->
-                                                <s:property value="%{jdId}"/>
-                                            </span>
+                                                    <span class="breadcrumActive">>>&nbsp;
+                                                        <label class="" ><b class="breadcrumLabelColor " > Job ID:</b> </label>  
+                                                        <s:property value="%{jdId}"/>
+                                                    </span>
+
+                                                    <div class="pull-right" >
+                                                        <div  style=" margin-top:0px;margin-bottom: -7px;">
+                                                        <label class="" >&nbsp;<b class="breadcrumLabelColor " >| Job Title:</b> </label>                                         
+                                                       <s:property value="%{requirementVTO.RequirementName}"/>
+                                                    </div>
+                                                    </div>
 
 
                                         </div>
-                                        <div class="" style="float: right; margin-top:-5px; margin-bottom: -2px">
+                                        <%--<div class="" style="float: right; margin-top:-5px; margin-bottom: -2px">
                                             <label class="">Id: </label>                                         
                                             <span style="color:#FF8A14;"><s:property value="%{jdId}"/></span>
-                                        </div>
+                                        </div--%>
                                         <br/>
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs">
@@ -285,37 +295,37 @@ Author     : miracle
 
                                                                     <div class="col-sm-6 col-md-6 col-lg-4">
 
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Title </label>:<label><b class="ven_ReqEdit" ><s:property value="%{requirementVTO.RequirementName}"/></b></label></span>
+                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Title : </label><label><b class="ven_ReqEdit" ><s:property value="%{requirementVTO.RequirementName}"/></b></label></span>
                                                                         <s:hidden  id="RequirementName" type="text" value="%{requirementVTO.RequirementName}" name="RequirementName"/>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                        <label class="labelStyle" id="labelLevelStatusReq">Start Date</label>:<font class="ven_ReqEdit"><s:property value="%{requirementVTO.RequirementFrom}"/></font>
+                                                                        <label class="labelStyle" id="labelLevelStatusReq">Start Date :</label><font class="ven_ReqEdit"><s:property value="%{requirementVTO.RequirementFrom}"/></font>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Type </label>:<font id="requremenType" class="ven_ReqEdit" ></font>
+                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Type :</label><font id="requremenType" class="ven_ReqEdit" ></font>
                                                                         <s:select name="RequirementTaxTerm" id="RequirementTaxTerm" value="%{requirementVTO.RequirementTaxTerm}" list="#@java.util.LinkedHashMap@{'CO':'Contract','PE':'Permanent'}" headerKey="DF" headerValue="--select--" cssClass="ConsultBoxStyles " onfocus="removeErrorMessages() " disabled="true" onchange="showHideDuration();" cssStyle="display:none"/>
 
                                                                     </div>
 
 
                                                                     <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Positions </label>:<b class="ven_ReqEdit"><s:property  value="%{requirementVTO.RequirementNoofResources}"/></b> 
+                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Positions :</label><b class="ven_ReqEdit"><s:property  value="%{requirementVTO.RequirementNoofResources}"/></b> 
                                                                     </div>
                                                                     <s:if test="requirementVTO.RequirementTaxTerm=='PE'">
                                                                         <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Location </label>:<font id="requrementVendorLocation" class="ven_ReqEdit"  ></font>
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Location :</label><font id="requrementVendorLocation" class="ven_ReqEdit"  ></font>
                                                                             <s:select name="RequirementLocation" id="RequirementLocation" value="%{requirementVTO.RequirementLocation}" list="#@java.util.LinkedHashMap@{'ON':'Onsite','OF':'Offsite','OS':'Offshore'}" headerKey="DF" headerValue="--select--" cssClass="ConsultBoxStyles" onfocus="removeErrorMessages()" disabled="true" cssStyle="display:none"/>
 
                                                                         </div>
                                                                         <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                            <span style="white-space: nowrap"> <label class="labelStyle" id="labelLevelStatusReq">Billing Contact </label>:<font id="billingContactVendor" class="ven_ReqEdit" ></font></span>
+                                                                            <span style="white-space: nowrap"> <label class="labelStyle" id="labelLevelStatusReq">Billing Contact :</label><font id="billingContactVendor" class="ven_ReqEdit" ></font></span>
                                                                             <s:select  id="billingContact" name="buildingContact" value="%{requirementVTO.billingContact}" list="EmployeeNames" headerKey="DF" headerValue="--select--" cssClass="ConsultBoxStyles " disabled="true" cssStyle="display: none"/> </td>
 
                                                                         </div>
                                                                     </s:if> 
                                                                     <s:if test="requirementVTO.RequirementTaxTerm=='PE'">
                                                                         <div class="col-sm-4">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Min Rate </label>:<font class="ven_ReqEdit" >$&nbsp;<s:property value="%{requirementVTO.RequirementTargetRate}"/>&nbsp;/Hr</font>
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Min Rate :</label><font class="ven_ReqEdit" >$&nbsp;<s:property value="%{requirementVTO.RequirementTargetRate}"/>&nbsp;/Hr</font>
                                                                         </div>
 
                                                                     </s:if>
@@ -323,7 +333,7 @@ Author     : miracle
 
 
                                                                         <div id="duration" style="display: none;">
-                                                                            <label class="labelStylereq" style="color:#56a5ec;"> Duration </label>:<font class="ven_ReqEdit" style="padding-left:50px"><s:property value="%{requirementVTO.RequirementDuration}"/></font><font id="reqDuration" style="color: black"></font>
+                                                                            <label class="labelStylereq" style="color:#56a5ec;"> Duration :</label><font class="ven_ReqEdit" style="padding-left:50px"><s:property value="%{requirementVTO.RequirementDuration}"/></font><font id="reqDuration" style="color: black"></font>
 
 
                                                                             <s:textfield cssClass="form-control textMessageBox numeric_field" id="RequirementDuration" type="text" value="%{requirementVTO.RequirementDuration}"  placeholder="" onfocus="removeErrorMessages()" readonly="true" style="display: none"/>
@@ -333,19 +343,19 @@ Author     : miracle
 
                                                                     </div>
 
-                                                                    <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                        <div id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq" style="margin-right: 15px">Billing&nbsp;Type</label> :<font class="ven_ReqEdit" id="reqVendorBillingType" ></font>
+                                                                   <%-- <div class="col-sm-6 col-md-6 col-lg-4">
+                                                                        <div id="billingtype1" style="display: none;"><label class="labelStyle" id="labelLevelStatusReq" style="margin-right: 15px">Billing&nbsp;Type :</label> <font class="ven_ReqEdit" id="reqVendorBillingType" ></font>
                                                                             <s:select  id="billingtype" list="#@java.util.LinkedHashMap@{'After Work':'After Work','On Work':'On Work'}"  value="%{requirementVTO.billingtype}" cssClass="SelectBoxStyles form-control" cssStyle="display:none"/>      
                                                                         </div>
-                                                                    </div>
+                                                                    </div> --%>
 
                                                                     <s:if test="requirementVTO.RequirementTaxTerm=='PE'">
                                                                         <div class="col-sm-4">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Max Rate </label>:<font class="ven_ReqEdit" >$&nbsp;<s:property value="%{requirementVTO.requirementMaxRate}"/>&nbsp;/Hr</font>    
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Max Rate :</label><font class="ven_ReqEdit" >$&nbsp;<s:property value="%{requirementVTO.requirementMaxRate}"/>&nbsp;/Hr</font>    
                                                                         </div>
                                                                     </s:if>   
                                                                     <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Req.Exp. </label>:<font id="requiremenExperience" class="ven_ReqEdit" ></font>
+                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Req.Exp. :</label><font id="requiremenExperience" class="ven_ReqEdit" ></font>
                                                                         <s:select  id="RequirementYears" list="experienceMap"  value="%{requirementVTO.RequirementExp}" headerKey="-1" headerValue="--select--" cssClass="ConsultBoxStyles " onfocus="removeErrorMessages()" disabled="true" cssStyle="display:none"/>
 
                                                                     </div>
@@ -359,12 +369,12 @@ Author     : miracle
                                                                      </s:if> --%>
                                                                     <s:if test="requirementVTO.RequirementTaxTerm=='CO'">
                                                                         <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Location </label>:<font id="requrementVendorLocation" class="ven_ReqEdit" ></font>
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Location :</label><font id="requrementVendorLocation" class="ven_ReqEdit" ></font>
                                                                             <s:select name="RequirementLocation" id="RequirementLocation" value="%{requirementVTO.RequirementLocation}" list="#@java.util.LinkedHashMap@{'ON':'Onsite','OF':'Offsite','OS':'Offshore'}" headerKey="DF" headerValue="--select--" cssClass="ConsultBoxStyles" onfocus="removeErrorMessages()" disabled="true" cssStyle="display:none"/>
 
                                                                         </div>
                                                                         <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                            <span > <label class="labelStyle" id="labelLevelStatusReq">Billing Contact </label>:<font id="billingContactVendor" class="ven_ReqEdit" ></font></span>
+                                                                            <span > <label class="labelStyle" id="labelLevelStatusReq">Billing Contact :</label><font id="billingContactVendor" class="ven_ReqEdit" ></font></span>
                                                                             <s:select  id="billingContact" name="buildingContact" value="%{requirementVTO.billingContact}" list="EmployeeNames" headerKey="DF" headerValue="--select--" cssClass="ConsultBoxStyles " disabled="true" cssStyle="display: none"/> </td>
 
                                                                         </div>
@@ -372,28 +382,28 @@ Author     : miracle
 
                                                                     <s:if test="requirementVTO.RequirementTaxTerm=='CO'">
                                                                         <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Min Rate </label>:<font style="color:black">$&nbsp;<s:property value="%{requirementVTO.RequirementTargetRate}"/>&nbsp;/Hr</font>
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Min Rate :</label><font style="color:black">$&nbsp;<s:property value="%{requirementVTO.RequirementTargetRate}"/>&nbsp;/Hr</font>
                                                                         </div>
                                                                         <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Max Rate </label>:<font style="color:black">$&nbsp;<s:property value="%{requirementVTO.requirementMaxRate}"/>&nbsp;/Hr</font>     
+                                                                            <label class="labelStyle" id="labelLevelStatusReq"> Max Rate :</label><font style="color:black">$&nbsp;<s:property value="%{requirementVTO.requirementMaxRate}"/>&nbsp;/Hr</font>     
                                                                         </div>
                                                                     </s:if>
                                                                     <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                        <label class="labelStylereq " style="padding-right: 20px">Req.Category</label>:<font id="requrementVendorCategory" class="ven_ReqEdit" ></font>
+                                                                        <label class="labelStylereq " style="padding-right: 20px">Req.Category :</label><font id="requrementVendorCategory" class="ven_ReqEdit" ></font>
                                                                         <s:select id="reqCategoryValue" name="reqCategoryValue" cssClass="ConsultBoxStyles"  theme="simple" list="%{reqCategory}" value="%{requirementVTO.reqCatgory}" disabled="true" cssStyle="display:none"/>
 
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-12 row">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Qualification</label>:<p style="color:black" align="justify"><s:property value="%{requirementVTO.RequirementQualification}"/></p>
+                                                                    <label class="labelStyle" id="labelLevelStatusReq">Qualification :</label><font style="color:black" ><s:property value="%{requirementVTO.RequirementQualification}"/></font>
                                                                 </div>
                                                                 <div class="col-lg-12 row">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Description </label> :<p style="color:black" align="justify"><s:property value="%{requirementVTO.RequirementJobdesc}"/></p> 
+                                                                    <label class="labelStyle" id="labelLevelStatusReq">Description :</label> <p style="color:black" align="justify"><s:property value="%{requirementVTO.RequirementJobdesc}"/></p> 
 
                                                                 </div>
                                                                 <div class="charNum" id="JobcharNum"></div>
                                                                 <div class="col-lg-12 row">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Responsibilities </label>:<p style="color:black" align="justify"><s:property value="%{requirementVTO.RequirementResponse}"/></p> 
+                                                                    <label class="labelStyle" id="labelLevelStatusReq">Responsibilities :</label><p style="color:black" align="justify"><s:property value="%{requirementVTO.RequirementResponse}"/></p> 
 
                                                                 </div>
                                                                 <div class="charNum" id="ResponsecharNum"></div>
@@ -403,21 +413,30 @@ Author     : miracle
                                                                     <div class="row">
 
                                                                         <span class="">
-                                                                            <label class="labelStyle" id="labelLevelStatusReq" style="margin-right: 70px">Skill Set </label>:<font id="requrementSkills"  style="color: black"></font>
+                                                                            <label class="labelStyle" id="labelLevelStatusReq" style="margin-right: 70px">Skill Set :</label><font id="requrementSkills"  style="color: black"></font>
                                                                             <s:select cssClass="commentsStyle" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true" onfocus="removeErrorMessages()" value="%{requirementVTO.skillSetList}" disabled="true" cssStyle="display: none"/> 
                                                                         </span>
 
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="row">     
+                                                                 <div class="row">     
                                                                 <div class="col-sm-12">        
                                                                     <div id="reqvendorPrefer">
-                                                                        <label class="labelStyle" id="labelLevelStatusReq" style="margin-right: 70px">Preferred Skill Set </label>:<font id="requrementPreferedSkills"  style="color: black;"></font>  
+                                                                        <label class="labelStyle" id="labelLevelStatusReq" style="margin-right: 70px">Preferred Skill Set :</label><font id="requrementPreferedSkills"  style="color: black;"></font>  
                                                                         <s:select cssClass="commentsStyle" name="preSkillCategoryValue"  id="preSkillCategoryValue" list="preSkillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()" value="%{requirementVTO.preSkillSetList}" disabled="true" cssStyle="display: none"/> 
                                                                     </div>
                                                                 </div>
+                                                            </div>  
+                                                              <s:if test="requirementVTO.RequirementComments!=''">
+                                                                <div class="col-lg-12 row">
+                                                                    <label class="labelStyle" id="labelLevelStatusReq">Comments :</label> <p style="color:black" align="justify"><s:property value="%{requirementVTO.RequirementComments}"/></p> 
+
+                                                                </div>
+                                                                <div class="charNum" id="CommcharNum"></div>
+                                                            </s:if>
+       
                                                             </div>
+                                                            
 
 
                                                             <div class="col-lg-12 ">  
@@ -429,14 +448,7 @@ Author     : miracle
 
                                                             <div id="charNum"></div>
 
-                                                            <s:if test="requirementVTO.RequirementComments!=''">
-                                                                <div class="col-lg-12">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Comments </label> :<p style="color:black" align="justify"><s:property value="%{requirementVTO.RequirementComments}"/></p> 
-
-                                                                </div>
-                                                                <div class="charNum" id="CommcharNum"></div>
-                                                            </s:if>
-
+                                                           
                                                         </s:form>      
                                                     </div>    
 
@@ -466,7 +478,7 @@ Author     : miracle
                                                                             <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
                                                                             <s:param name="accFlag"><%=flag%></s:param>
                                                                         </s:url>
-                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                                         </s:if>
                                                                         <s:elseif test="accountFlag=='MyRequirements' && customerFlag=='customer'">
 
@@ -475,7 +487,7 @@ Author     : miracle
                                                                             <s:param name="orgid"><%=orgId%></s:param>
                                                                             <s:param name="customerFlag">customer</s:param>
                                                                         </s:url>
-                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
+                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span> 
                                                                         </s:elseif>
                                                                         <s:elseif test="accountFlag=='MyRequirements'">
 
@@ -484,7 +496,7 @@ Author     : miracle
                                                                             <s:param name="vendor">yes</s:param>
                                                                             <s:param name="orgid"><%=orgId%></s:param>
                                                                         </s:url>
-                                                                        <span class="pull-right" style="margin-right: 40px"> <s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
+                                                                        <span class="pull-right" style="margin-right: 40px"> <s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span> 
                                                                         </s:elseif>
                                                                         <s:elseif test="accountFlag=='OnlyMyRequirements'">
 
@@ -493,7 +505,7 @@ Author     : miracle
                                                                             <s:param name="vendor">yes</s:param>
                                                                             <s:param name="orgid"><%=orgId%></s:param>
                                                                         </s:url>
-                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
+                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span> 
                                                                         </s:elseif>
 
                                                                     <s:elseif test="accountFlag=='csr'">
@@ -503,13 +515,13 @@ Author     : miracle
                                                                             <s:param name="accFlag"><%=flag%></s:param>
 
                                                                         </s:url>
-                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
+                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span> 
                                                                         </s:elseif>
                                                                         <s:elseif test="#session.primaryrole == 13">
                                                                             <s:url var="myUrl" action="recruitment/consultant/getAllRequirementList.action">
                                                                                 <s:param name="orgid"><%=orgId%></s:param>    
                                                                             </s:url>
-                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
+                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span> 
                                                                         </s:elseif>
                                                                         <s:else>
                                                                             <s:url var="myUrl" action="recruitment/consultant/getLoginUserRequirementList.action">
@@ -517,7 +529,7 @@ Author     : miracle
                                                                             <s:param name="orgid"><%=orgId%></s:param>
                                                                             <s:param name="customerFlag">customer</s:param>
                                                                         </s:url>
-                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span> 
+                                                                        <span class="pull-right" style="margin-right: 40px"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span> 
                                                                         </s:else>                                                                  
 
                                                                 </h4>
@@ -531,10 +543,10 @@ Author     : miracle
                                                         </div>
                                                         <div class="col-sm-12" id="vendorSearchForm">
                                                             <div class="col-lg-4">   
-                                                                <label class="labelStylereq" style="color:#56a5ec;"> Type Of Tier :</label><s:select name="tireType" id="tireTypeSearch" value="" list="%{typesTiers}" headerKey="-1" headerValue="All" cssClass="SelectBoxStyles form-control" onchange="return getVendorsNames()"/>
+                                                                <label class="labelStylereq" style="color:#56a5ec;"> Type Of Tier </label><s:select name="tireType" id="tireTypeSearch" value="" list="%{typesTiers}" headerKey="-1" headerValue="All" cssClass="SelectBoxStyles form-control" onchange="return getVendorsNames()"/>
                                                             </div>
                                                             <div class="col-lg-4">
-                                                                <label class="labelStylereq" style="color:#56a5ec;"> Status :</label><s:select name="status" id="status" value="" list="#@java.util.LinkedHashMap@{'DF':'All','Active':'Active','In-Active':'In-Active'}" cssClass="SelectBoxStyles form-control"/>
+                                                                <label class="labelStylereq" style="color:#56a5ec;"> Status </label><s:select name="status" id="status" value="" list="#@java.util.LinkedHashMap@{'DF':'All','Active':'Active','In-Active':'In-Active'}" cssClass="SelectBoxStyles form-control"/>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="row">
@@ -556,22 +568,22 @@ Author     : miracle
                                                                 <div class="backgroundcolor">
                                                                     <table>
                                                                         <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Add Association&nbsp;&nbsp; </font></h4></td>
-                                                                        <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="vendorAsso_popup_close" onclick="associationOverlay();"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                                                        <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="vendorAsso_popup_close" onclick="associationOverlay();"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                                     </table>
                                                                 </div><div>
                                                                     <span><saveVendorAssociation></saveVendorAssociation></span></div>
                                                                 <div class="updateCss ReqinputStyle ">   
                                                                     <table>
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span>  Type Of Tier :</label><s:select name="tireType" id="tireType" value="" list="%{typesTiers}" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onchange="return getVendorsNames()" onfocus="return removeVendorErrorMsg();"/>
+                                                                        <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span>  Type Of Tier </label><s:select name="tireType" id="tireType" value="" list="%{typesTiers}" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onchange="return getVendorsNames()" onfocus="return removeVendorErrorMsg();"/>
                                                                     </table>
                                                                 </div> 
                                                                 <div class="updateCss ReqinputStyle ">     
                                                                     <table>
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span>  Access Time :</label><s:textfield name="accessTime" id="accessTime" value=""  cssClass="form-control dateImage" onkeypress="return enterDateRepository(this)" onfocus="return removeVendorErrorMsg();"/>
+                                                                        <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span>  Access Time </label><s:textfield name="accessTime" id="accessTime" value=""  cssClass="form-control dateImage" onkeypress="return enterDateRepository(this)" onfocus="return removeVendorErrorMsg();"/>
                                                                     </table>
                                                                 </div> 
                                                                 <div class="updateCss ReqinputStyle ">     
-                                                                    <table> <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span> Vendor Names :</label>
+                                                                    <table> <label class="labelStyle" id="labelLevelStatusReq"><span class="reqError">*</span> Vendor Names </label>
                                                                         <s:select cssClass="selectBoxStyle form-control"  list="{}" name="vendorNames" id="vendorNames" value="%{vendorNames}"  multiple="true" size="4" onfocus="return removeVendorErrorMsg();"/>   
                                                                     </table>
                                                                 </div> 
@@ -588,7 +600,7 @@ Author     : miracle
                                                                     <div class="backgroundcolor">
                                                                         <table>
                                                                             <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Edit Association&nbsp;&nbsp; </font></h4></td>
-                                                                            <span class="pull-right"> <h5 ><a href="">&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="vendorAssoEdit_popup_close" onclick="associationEditOverlayclose()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                                                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="vendorAssoEdit_popup_close" onclick="associationEditOverlayclose()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                                     </table>
 
                                                                 </div>
@@ -597,13 +609,13 @@ Author     : miracle
 
                                                                 <div class="updateCss ReqinputStyle " style="margin-left: 10px">   
                                                                     <table>
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Type Of Tier :</label><s:select name="tireTypeEdit" id="tireTypeEdit" value="" list="%{typesTiers}" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onchange="return getVendorsNames()" disabled="true"/>
+                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Type Of Tier </label><s:select name="tireTypeEdit" id="tireTypeEdit" value="" list="%{typesTiers}" headerKey="-1" headerValue="--select--" cssClass="selectBoxStyle form-control" onchange="return getVendorsNames()" disabled="true"/>
                                                                     </table>
                                                                 </div> 
 
                                                                 <div class="updateCss ReqinputStyle " style="margin-left: 10px">     
                                                                     <table>
-                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Status :</label><s:select name="statusEdit" id="statusEdit" value="" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" cssClass="selectBoxStyle form-control"/>
+                                                                        <label class="labelStyle" id="labelLevelStatusReq"> Status </label><s:select name="statusEdit" id="statusEdit" value="" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" cssClass="selectBoxStyle form-control"/>
                                                                     </table>
                                                                 </div> 
                                                                 <div class="col-lg-10"></div>
@@ -687,38 +699,38 @@ Author     : miracle
                                                                 <s:hidden name="vendorName" id="vendorName" />
                                                                 <div class="col-sm-4">
 
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">First Name:&nbsp;&nbsp;</label>
+                                                                    <label style="color:#56a5ec;" class="labelStylereq">First Name&nbsp;&nbsp;</label>
                                                                     <s:textfield cssClass="form-control" name="consult_name" id="consult_name" placeholder="First Name" value="%{consult_name}" tabindex="1" maxLength="30"/>
 
                                                                 </div>
                                                                 <div class="col-sm-4">
 
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">Last Name:&nbsp;&nbsp;</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_lstname" id="consult_lstname" placeholder="Last Name" value="%{consult_lstname}" tabindex="1" maxLength="30"/>
+                                                                    <label style="color:#56a5ec;" class="labelStylereq">Last Name&nbsp;&nbsp;</label>
+                                                                    <s:textfield cssClass="form-control" name="consult_lstname" id="consult_lstname" placeholder="Last Name" value="%{consult_lstname}" tabindex="2" maxLength="30"/>
 
                                                                 </div>
                                                                 <div class="col-sm-4">
 
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">SSN Number:&nbsp;&nbsp;</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_ssnNo" id="consult_ssnNo"  value="%{consult_ssnNo}" placeholder="SSN Number"/>
+                                                                    <label style="color:#56a5ec;" class="labelStylereq">SSN Number&nbsp;&nbsp;</label>
+                                                                    <s:textfield cssClass="form-control" tabindex="3" name="consult_ssnNo" id="consult_ssnNo"  value="%{consult_ssnNo}" placeholder="SSN Number"/>
 
                                                                 </div>
 
                                                                 <div class="col-sm-4">
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">E-Mail:</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_email" id="consult_email" placeholder="E-Mail" value="%{consult_email}" tabindex="1" maxLength="60"/>
+                                                                    <label style="color:#56a5ec;" class="labelStylereq">E-Mail</label>
+                                                                    <s:textfield cssClass="form-control" name="consult_email" id="consult_email" placeholder="E-Mail" value="%{consult_email}" tabindex="4" maxLength="60"/>
 
                                                                 </div>
 
 
                                                                 <div class="col-sm-4">
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">Skill Set:</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_skill" id="consult_skill" placeholder="Skill Set" value="%{consult_skill}" tabindex="1" maxLength="100"/>
+                                                                    <label style="color:#56a5ec;" class="labelStylereq">Skill Set</label>
+                                                                    <s:textfield cssClass="form-control" name="consult_skill" id="consult_skill" placeholder="Skill Set" value="%{consult_skill}" tabindex="5" maxLength="100"/>
                                                                 </div>
 
                                                                 <div class="col-sm-4">
-                                                                    <label style="color:#56a5ec;" class="labelStylereq">Phone:</label>
-                                                                    <s:textfield cssClass="form-control" name="consult_phno" id="consult_phno" placeholder="Phone" value="%{consult_phno}" tabindex="1" maxLength="15"/>
+                                                                    <label style="color:#56a5ec;" class="labelStylereq">Phone</label>
+                                                                    <s:textfield cssClass="form-control" name="consult_phno" id="consult_phno" placeholder="Phone" value="%{consult_phno}" tabindex="6" maxLength="15"/>
                                                                 </div>
 
 
@@ -730,13 +742,13 @@ Author     : miracle
 
                                                                     <div class="pull-right">
                                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                        <s:submit type="button" cssClass="add_searchButton form-control contact_search" id="searchButton" cssStyle="margin:5px 0px;" value="" onclick="return getConsultantListBySearch();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                        <s:submit type="button" cssClass="add_searchButton form-control contact_search" tabindex="7" id="searchButton" cssStyle="margin:5px 0px;" value="" onclick="return getConsultantListBySearch();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                                         </div>
                                                                     <s:if test="consultantFlag == 1">
                                                                         <div class="col-sm-6 pull-right">
 
                                                                             <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                            <a href="/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/addConsultant.action" ><input type="button" class=" cssbutton form-control" value="Add Consultant"></a> &nbsp;
+                                                                            <a href="/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/addConsultant.action" ><input type="button" class=" cssbutton form-control" tabindex="8" value="Add Consultant"></a> &nbsp;
 
                                                                         </div>
                                                                     </s:if>
@@ -817,15 +829,17 @@ Author     : miracle
                                                                         </script>
 
                                                                     </div>
-                                                                    <div id="downloading_grid">
-                                                                        <div class="col-lg-2 pull-right">
-                                                                            <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadResults.action?pdfHeaderName=Consultant Submitted List&requirementName='+ document.getElementById('RequirementName').value +'&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class="cssbutton form-control" value="Download PDF"></a>
+                                                                     <div class="com-sm-12">
+                                                                                  <div id ="downloading_grid" class="col-sm-6 pull-right">
+                                                                                   <div class="pull-right  req_btn col-sm-0" style="margin: 0px 0px 0px 10px">
+                                                                                    <div onclick="downloadPDFSubmittedList()" class="fa fa-download cssbutton form-control">&nbsp;DownloadPDF</div>
+                                                                                      </div>
+                                                                                    <div class="pull-right  req_btn col-sm-0">
+                                                                                   <div onclick="downloadXLSSubmittedList()" class=" fa fa-download cssbutton form-control">&nbsp;DownloadXLS</div>
+                                                                                  </div>
+                                                                                   </div>
                                                                         </div>
-                                                                        <div class="col-sm-2 pull-right">
-                                                                            <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadXlsResults.action?pdfHeaderName=Consultant Submitted List&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class=" cssbutton form-control" value="Download XLS"></a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+																		
 
                                                             </div>
 
@@ -838,7 +852,7 @@ Author     : miracle
                                                             <div class="backgroundcolor">
                                                                 <table>
                                                                     <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Forwarded By Details&nbsp;&nbsp; </font></h4></td>
-                                                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="Migration_popup_close" onclick="migration_overlayClose()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="Migration_popup_close" onclick="migration_overlayClose()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                                 </table>
                                                             </div>
                                                             <div>
@@ -913,7 +927,7 @@ Author     : miracle
                     <div class="backgroundcolor">
                         <table>
                             <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Skill Details&nbsp;&nbsp; </font></h4></td>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="recSkillOverlay_popup_close" onclick="consultantSkillCloseOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                            <span class="pull-right"> <h5>&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="recSkillOverlay_popup_close" onclick="consultantSkillCloseOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
                     <div>
@@ -936,7 +950,7 @@ Author     : miracle
                                         <s:else>
                                 <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Finder Fee Process &nbsp;&nbsp; </font></h4></td>        
                                         </s:else>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="SOW_popup_close" onclick="SOWPopupClose()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="SOW_popup_close" onclick="SOWPopupClose()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
                     <s:hidden name="rateSalary" id="rateSalary"/>
@@ -950,7 +964,7 @@ Author     : miracle
                     </s:else>
                     <br>
                     <div class="pull-right " > 
-                        <s:submit type="button" cssClass="cssbutton" id="contactSend" value="Save" onclick="saveSOWFinderFeeType();"/> 
+                        <s:submit type="button" cssClass="cssbutton fa fa-floppy-o" id="contactSend" value="Save" onclick="saveSOWFinderFeeType();"/> 
                     </div>
                     <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                 </div>
@@ -961,7 +975,7 @@ Author     : miracle
                     <div class="backgroundcolor">
                         <table>
                             <tr><td><h4 style="font-family:cursive"><font class="titleColor" id="commentsLabel">&nbsp;Comments </font></h4></td>        
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="conWithdraw_popup_close" onclick="conWithdrawClose('close')" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="conWithdraw_popup_close" onclick="conWithdrawClose('close')" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
                     <s:hidden name="reqwithdrawId" id="reqwithdrawId"/>
@@ -972,7 +986,8 @@ Author     : miracle
                     </div>
 
                     <div class="pull-right" id="withdrawButtonDiv">
-                        <s:submit type="button" cssClass="cssbutton conWithdraw_popup_close" id="contactSend" value="OK" onclick="conWithdrawClose('ok');"/> 
+                        <s:submit type="button" cssClass="cssbutton conWithdraw_popup_close" id="contactSend" value="OK" onclick="conWithdrawClose('ok');"> <i class="fa fa-check-circle-o"></i>&nbsp;Ok</s:submit>
+
                     </div>
                     <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                 </div>
@@ -984,7 +999,7 @@ Author     : miracle
                     <div class="backgroundcolor">
                         <table>
                             <tr><td><h4 style="font-family:cursive"><font class="titleColor" >&nbsp;&nbsp; Consultant Login Credentials&nbsp;&nbsp; </font></h4></td>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="consultantLoginOverlay_popup_close" onclick="consultantLoginCredential()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="consultantLoginOverlay_popup_close" onclick="consultantLoginCredential()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
                     <div>
@@ -1010,8 +1025,8 @@ Author     : miracle
 
             <%--close of overlay --%> 
         </section>
-
-
+        </div>
+</div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">
@@ -1135,6 +1150,7 @@ Author     : miracle
             };
             $('#consultantListTable').tablePaginate({navigateType:'navigator'},recordPage);
         </script>
+    
     </body>
 </html>
 

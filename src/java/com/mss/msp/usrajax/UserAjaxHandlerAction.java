@@ -23,11 +23,13 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.mss.msp.util.ApplicationConstants;
+import com.mss.msp.util.PDFGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -210,7 +212,16 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
     private String fileFileContentType;
     private String filesPath;
     private int consultantId;
-
+    private String logoFileName;
+    private String accLogoHidden;
+    
+     private int sowId;
+     private String acclogo;
+    private String poStartDate;
+    private String poEndDate;
+    private String baseRate;
+    private String overTimeRate;
+    private String overTimeLimit;
     public UserAjaxHandlerAction() {
     }
 
@@ -233,6 +244,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             // System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 boolean editoverlay = ServiceLocator.getUserAjaxHandlerService().isUserGroupExist(this.getUserId());
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write("" + editoverlay);
@@ -437,6 +451,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
 
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 searchAddressDetails = ServiceLocator.getUserAjaxHandlerService().getEmpAddressDetails(userid);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(searchAddressDetails);
@@ -464,6 +481,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int updateDetails = ServiceLocator.getUserAjaxHandlerService().setEmpAddressDetails(userid, address, address2, city, state, zip, country, phone, address_flag);
                 // System.out.println("====================================>in action for contact information---------------->");
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(updateDetails);
@@ -488,6 +508,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int updateDetails = ServiceLocator.getUserAjaxHandlerService().setEmpCAddressDetails(userid, address, address2, city, state, zip, country, phone, address_flag);
 
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(updateDetails);
@@ -767,6 +790,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int orgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
                 String action = ServiceLocator.getUserAjaxHandlerService().roleSubmit(httpServletRequest, getRoleId(), orgId);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(action);
@@ -922,6 +948,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 taskString = ServiceLocator.getUserAjaxHandlerService().getTypesOfTask(this);
                 System.out.println("===============>in task" + taskString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(taskString);
@@ -947,6 +976,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 taskString = ServiceLocator.getUserAjaxHandlerService().getRelatedToNames(this);
                 //taskString=dataSourceDataProvider.getInstance().getTeamMembers(getUserSessionId());
                 System.out.println("===============>in task" + taskString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(taskString);
@@ -981,6 +1013,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 attachmentString = ServiceLocator.getUserAjaxHandlerService().getAttachment(this);
                 System.out.println("===============>in Action----->" + attachmentString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(attachmentString);
@@ -1017,6 +1052,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
 
                 attachmentString = ServiceLocator.getUserAjaxHandlerService().doDeactiveAttachment(this);
                 System.out.println("===============>in Action----->" + attachmentString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(attachmentString);
@@ -1169,6 +1207,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             //setResultMessage(getResultMessage());
             //httpServletRequest.setAttribute("stateList", stateList);
             setResultMessage(getResultMessage());
+            httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            httpServletResponse.setHeader("Pragma", "no-cache");
+            httpServletResponse.setDateHeader("Expires", 0);
             httpServletResponse.setContentType("text");
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.getWriter().write(stateList);
@@ -1210,6 +1251,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 //please change the getreporting person method code.
                 //System.out.println("reporting person---->" + getReportingPerson());
                 System.out.println("leave list ------ " + leavesListDetails.length());
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(leavesListDetails);
@@ -1243,8 +1287,17 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             responseString = ServiceLocator.getUserAjaxHandlerService().getExternalEmployeeDetails(this);
+//            httpServletResponse.setContentType("text/xml");
+//            httpServletResponse.getWriter().write(responseString);
+            
+            httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            httpServletResponse.setHeader("Pragma", "no-cache");
+            httpServletResponse.setDateHeader("Expires", 0);
             httpServletResponse.setContentType("text/xml");
+            httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.getWriter().write(responseString);
+
+
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
@@ -1515,12 +1568,13 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         }
         return null;
     }
+
     public String removeConsultantAttachement() {
         /*
          *This if loop is to check whether there is Session or not
          **/
         File destFile1 = null;
-        String updateFile="";
+        String updateFile = "";
         try {
             String visaAttachPath = dataSourceDataProvider.getInstance().getConsultVisaAttachment(getConsultantId());
 
@@ -1529,7 +1583,7 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 destFile1 = new File(visaAttachPath);
                 System.out.println("destFile1--->" + destFile1);
                 destFile1.delete();
-                updateFile="";
+                updateFile = "";
             }
             System.out.println("destFile1--->" + destFile1);
 
@@ -1613,6 +1667,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 setAccountType(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 String result = ServiceLocator.getUserAjaxHandlerService().getHomeRedirectSearchDetails(this);
                 System.out.println("in getHomeRedirectSearchDetails action" + result);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -1643,6 +1700,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getAllRolesString(getAccountType());
                 System.out.println("in getHomeRedirectSearchDetails action" + result);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -1749,6 +1809,121 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         }
         return null;
     }
+    
+    public String logoUploadAccount() throws Exception {
+
+
+        try {
+
+            System.out.println("visaAttachemntUpload-->" + getFileFileName());
+            File destFile = null;
+             File destFile1 = null;
+               String updateFile = "";
+               System.out.println("logo hidden-->"+getAccLogoHidden());
+              System.out.println("property file-->"+Properties.getProperty("DEFAULTLOGO")); 
+            if(!"".equals(getAccLogoHidden()) && !getAccLogoHidden().equals(Properties.getProperty("DEFAULTLOGO")))
+            {
+                System.out.println("DELETING");
+                 if (getAccLogoHidden() != null) {
+                      System.out.println("DELETING null");
+                destFile1 = new File(getAccLogoHidden());
+                System.out.println("destFile1--->" + destFile1);
+                destFile1.delete();
+                updateFile = "";
+            }
+            System.out.println("destFile1 --->" + destFile1);
+            }
+            System.out.println("account logo--->"+getFileFileName());
+            if (getFileFileName() == null) {
+                System.out.println("file is null so it adds only data in task_list table");
+            } else {
+                // String visaAttachPath = dataSourceDataProvider.getInstance().getConsultVisaAttachment(getConsultantId());
+
+                // System.out.println("visaAttachPath from db-->" + visaAttachPath);
+
+                  String basename = FilenameUtils.getBaseName(fileFileName);
+                    String extension = FilenameUtils.getExtension(fileFileName);
+                String filePath = "";
+                filesPath = Properties.getProperty("ACCOUNTLOGO");
+                File createPath = new File(filesPath);
+                Date dt = new Date();
+                String month = "";
+                short week = 0;
+
+
+
+                if (dt.getMonth() == 0) {
+                    month = "Jan";
+                } else if (dt.getMonth() == 1) {
+                    month = "Feb";
+                } else if (dt.getMonth() == 2) {
+                    month = "Mar";
+                } else if (dt.getMonth() == 3) {
+                    month = "Apr";
+                } else if (dt.getMonth() == 4) {
+                    month = "May";
+                } else if (dt.getMonth() == 5) {
+                    month = "Jun";
+                } else if (dt.getMonth() == 6) {
+                    month = "Jul";
+                } else if (dt.getMonth() == 7) {
+                    month = "Aug";
+                } else if (dt.getMonth() == 8) {
+                    month = "Sep";
+                } else if (dt.getMonth() == 9) {
+                    month = "Oct";
+                } else if (dt.getMonth() == 10) {
+                    month = "Nov";
+                } else if (dt.getMonth() == 11) {
+                    month = "Dec";
+                }
+                week = (short) (Math.round(dt.getDate() / 7));
+
+                /*getrequestType is used to create a directory of the object type specified in the jsp page*/
+//                createPath = new File(createPath.getAbsolutePath() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
+                createPath = new File(createPath.getAbsolutePath() );
+                /*This creates a directory forcefully if the directory does not exsist*/
+
+                //System.out.println("path::"+createPath);
+                createPath.mkdir();
+                /*here it takes the absolute path and the name of the file that is to be uploaded*/
+                File theFile = new File(createPath.getAbsolutePath()+ File.separator + getAccountId() + '.' + extension);
+               // File destFile = new File(filePath + File.separator + getContactId() + '.' + extension);
+                setFilesPath(theFile.toString());
+                /*copies the file to the destination*/
+                //fileFileName=getAccountId();
+                destFile = new File(theFile + File.separator);
+                FileUtils.copyFile(getFile(), destFile);
+               
+               
+            }
+
+
+            System.out.println("this is printing file path data-->" + this.getFilesPath() + "...." + fileFileName);
+            // setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+            System.out.println("dest file--->"+destFile);
+           // ServiceLocator.getUserAjaxHandlerService().doUpdateLogo(getAccountId(), destFile.toString());
+
+
+
+
+            if (destFile == null) {
+                responseString = "Error";
+            }
+            if (ServiceLocator.getUserAjaxHandlerService().doUpdateLogo(getAccountId(), destFile.toString()) > 0) {
+                responseString = destFile.toString();
+            } else {
+                responseString = "Error";
+            }
+            httpServletResponse.setContentType("text");
+            httpServletResponse.getWriter().write(responseString);
+        } catch (ServiceLocatorException ex) {
+            System.err.println(ex);
+        } catch (IOException ioe) {
+            System.err.println(ioe);
+        }
+        return null;
+    }
 
     public int getUsrCatType() {
         return usrCatType;
@@ -1782,6 +1957,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 //  isExist = ServiceLocator.getUserAjaxHandlerService().checkFileName(this);
                 System.out.println("-----cheking file name exsit or not-------" + isExist);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(isExist);
@@ -1846,6 +2024,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 }
                 //result+="^";
                 System.out.println("in getHomeRedirectSearchDetails action" + result);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -1863,6 +2044,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getActionDescription(getActionName());
                 System.out.println("in getHomeRedirectSearchDetails action" + result);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -1873,7 +2057,106 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         }
         return null;
     }
+    public String poReleaseMethod() throws IOException, ServiceLocatorException, Exception {
+        try {
+            MailManager mailManager = new MailManager();
+            setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+            setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+            //responseString = ServiceLocator.getUserAjaxHandlerService().getEmpRecruitment(this);
+            //System.out.println("heelo babu--->"+Properties.getProperty("Sample.upload"));
+            //ServiceLocator.getUserAjaxHandlerService().poRelease(this);
+            String customerName = DataSourceDataProvider.getInstance().getAccountNameById(getSessionOrgId());
 
+
+            responseString = ServiceLocator.getUserAjaxHandlerService().poRelease(this);
+            //filesPath = Properties.getProperty("POATTACHMENT").toString();
+
+
+            File createPath = new File(Properties.getProperty("POATTACHMENT").toString());
+
+            System.out.println("createPath.getAbsolutePath()-->" + createPath.getAbsolutePath());
+
+
+
+
+
+
+
+            Date dt = new Date();
+            /*The month is generated from here*/
+
+            String month = "";
+            if (dt.getMonth() == 0) {
+                month = "Jan";
+            } else if (dt.getMonth() == 1) {
+                month = "Feb";
+            } else if (dt.getMonth() == 2) {
+                month = "Mar";
+            } else if (dt.getMonth() == 3) {
+                month = "Apr";
+            } else if (dt.getMonth() == 4) {
+                month = "May";
+            } else if (dt.getMonth() == 5) {
+                month = "Jun";
+            } else if (dt.getMonth() == 6) {
+                month = "Jul";
+            } else if (dt.getMonth() == 7) {
+                month = "Aug";
+            } else if (dt.getMonth() == 8) {
+                month = "Sep";
+            } else if (dt.getMonth() == 9) {
+                month = "Oct";
+            } else if (dt.getMonth() == 10) {
+                month = "Nov";
+            } else if (dt.getMonth() == 11) {
+                month = "Dec";
+            }
+            short week = (short) (Math.round(dt.getDate() / 7));
+            /*getrequestType is used to create a directory of the object type specified in the jsp page*/
+            // createPath = new File(createPath.getAbsolutePath() + "/" + getSessionOrgId() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
+            /*This creates a directory forcefully if the directory does not exsist*/
+
+
+
+
+            String poFileName = getRequirementId() + "_" + getUserId() + "PO";
+            poFileName = poFileName.concat(".pdf");
+
+            String path = createPath.getAbsolutePath() + File.separator + File.separator + getSessionOrgId() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week) + File.separator + poFileName;
+// Use relative path for Unix systems
+            String filePath = createPath.toString() + File.separator + getSessionOrgId() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week) + File.separator;
+            String fileAttch = filePath.concat(poFileName);
+
+            System.out.println("fileAttch-->" + fileAttch + "--->filepath--->" + filePath);
+            File f = new File(path);
+
+            f.getParentFile().mkdirs();
+            f.createNewFile();
+
+
+
+
+
+            /*copies the file to the destination*/
+            //   File destFile = new File(theFile + File.separator + poFileName);
+
+
+
+
+            PDFGenerator.getPOPDF(this, f.toString(), customerName);
+            System.out.println("-->" + f.toString() + "-->" + poFileName + "--->" + f.toString());
+            ServiceLocator.getUserAjaxHandlerService().insertPoAttachment(this, f.toString(), filePath, poFileName);
+            System.out.println("account logo--->" + getAcclogo());
+            mailManager.sendPOStatement(this, getAcclogo(), fileAttch, poFileName, customerName);
+
+            responseString = "send";
+            httpServletResponse.setContentType("text/xml");
+            httpServletResponse.getWriter().write(responseString);
+        } catch (IOException ioe) {
+            System.err.println(ioe);
+        }
+        return null;
+    }
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
@@ -3128,5 +3411,78 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
     public void setConsultantId(int consultantId) {
         this.consultantId = consultantId;
     }
+
+    public String getLogoFileName() {
+        return logoFileName;
+    }
+
+    public void setLogoFileName(String logoFileName) {
+        this.logoFileName = logoFileName;
+    }
+
+    public String getAccLogoHidden() {
+        return accLogoHidden;
+    }
+
+    public void setAccLogoHidden(String accLogoHidden) {
+        this.accLogoHidden = accLogoHidden;
+    }
+
+    public int getSowId() {
+        return sowId;
+    }
+
+    public void setSowId(int sowId) {
+        this.sowId = sowId;
+    }
+
+    public String getAcclogo() {
+        return acclogo;
+    }
+
+    public void setAcclogo(String acclogo) {
+        this.acclogo = acclogo;
+    }
+
+    public String getPoStartDate() {
+        return poStartDate;
+    }
+
+    public void setPoStartDate(String poStartDate) {
+        this.poStartDate = poStartDate;
+    }
+
+    public String getPoEndDate() {
+        return poEndDate;
+    }
+
+    public void setPoEndDate(String poEndDate) {
+        this.poEndDate = poEndDate;
+    }
+
+    public String getBaseRate() {
+        return baseRate;
+    }
+
+    public void setBaseRate(String baseRate) {
+        this.baseRate = baseRate;
+    }
+
+    public String getOverTimeRate() {
+        return overTimeRate;
+    }
+
+    public void setOverTimeRate(String overTimeRate) {
+        this.overTimeRate = overTimeRate;
+    }
+
+    public String getOverTimeLimit() {
+        return overTimeLimit;
+    }
+
+    public void setOverTimeLimit(String overTimeLimit) {
+        this.overTimeLimit = overTimeLimit;
+    }
+    
     
 }

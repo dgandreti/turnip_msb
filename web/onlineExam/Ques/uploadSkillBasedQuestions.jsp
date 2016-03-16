@@ -48,6 +48,7 @@
 
     </head>
     <body >
+        <div id="wrap"> 
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -58,6 +59,7 @@
 
         </header><!--/header-->
 
+        <div id="main">
         <section id="generalFormDesign"><!--form-->
 
 
@@ -80,7 +82,7 @@
                                                 <s:if test="uploadFlag=='uploadFlag'">
                                                     <s:url var="myUrl" action="getQuestionsList.action">
                                                     </s:url>
-                                                    <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                    <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                     </s:if>
 
                                             </h4>
@@ -106,24 +108,25 @@
 
                                                 <div class="col-sm-12">
                                                     <div class="col-sm-3">
-                                                        <label class="" style="color:#56a5ec;">ExamType: </label>
+                                                        <label class="" style="color:#56a5ec;">ExamType </label>
                                                         <s:select id="examType" tabindex="1" cssClass="form-control SelectBoxStyles" name="examType"  list="#@java.util.LinkedHashMap@{'T':'Technical','S':'Psychometric'}" value="%{editQues.examType}" onchange="return skillValues(this.value);"/>
                                                     </div>
                                                     <div class="col-sm-3 ">
-                                                        <label class="labelStyle" id="labelLevelStatusReq">Skills:</label> <s:select tabindex="2" cssClass="SelectBoxStyles form-control" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" /> 
+                                                        <label class="labelStyle" id="labelLevelStatusReq">Skills</label> <s:select tabindex="2" cssClass="SelectBoxStyles form-control" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" /> 
 
 
                                                     </div>  
 
                                                     <div class="col-sm-3 required"><br>
-                                                        <s:file name="xlsfile" tabindex="3" cssClass="" label="Xls File" id="file"></s:file>
+                                                        <s:file name="xlsfile" tabindex="3" cssClass="" style="width:180px" label="Xls File" id="file"></s:file>
                                                             <span style="color:#4E4E4E;font-size: 10px">Upload XLS file.</span>
                                                         </div>
 
                                                         <div class="col-sm-3">
                                                         <s:hidden name="accountType" id="accountType" value="%{accountType}"/>
 
-                                                        <sx:submit value="Upload" tabindex="4" cssClass="cssbutton_emps" name="submit" onclick="return checkExtention()"/>
+                                                        <s:submit type="button" tabindex="4" cssClass="cssbutton_emps"  name="submit" onclick="return checkExtention()" ><i class="fa fa-upload">&nbsp;Upload</i></s:submit>
+
                                                     </div>
                                                 </div>
 
@@ -172,8 +175,8 @@
 
             </section><!--/form-->
 
-            
-
+       </div>     
+    </div>
             <footer id="footer"><!--Footer-->
 
                 <div class="footer-bottom" id="footer_bottom">

@@ -1526,7 +1526,7 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
 
     }
 
-    public List defaultSearch(UsersdataHandlerAction usersdataHandlerAction) throws ServiceLocatorException {
+     public List defaultSearch(UsersdataHandlerAction usersdataHandlerAction,int sessionusrPrimaryrole) throws ServiceLocatorException {
         String result = "";
         ArrayList utilityList = new ArrayList();
         Connection connection = null;
@@ -1535,19 +1535,22 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
         String current_date = "";
         connection = ConnectionProvider.getInstance().getConnection();
         System.out.println("-----------------" + current_date);
-        String queryString = "SELECT * FROM utility_logger";
+
+        String queryString = "SELECT * FROM utility_logger WHERE 1=1";
         System.out.println("--------------" + usersdataHandlerAction.getCreatedDate());
         if (usersdataHandlerAction.getCreatedDate() != null && usersdataHandlerAction.getCreatedDate().toString().isEmpty() == false) {
             current_date = com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDateInDash(usersdataHandlerAction.getCreatedDate());
-        } else {
-            current_date = com.mss.msp.util.DateUtility.getInstance().getCurrentSQLDate();
-        }
-        queryString = queryString + " WHERE created_date LIKE '%" + current_date + "%'";
+                    queryString = queryString + " AND created_date = '%" + current_date + "%'";
+        } 
         System.out.println("--------------------" + usersdataHandlerAction.getStatus());
         if (usersdataHandlerAction.getStatus() != null && !"DF".equalsIgnoreCase(usersdataHandlerAction.getStatus())) {
             queryString = queryString + " AND utility_status LIKE '" + usersdataHandlerAction.getStatus() + "'";
         }
-        queryString = queryString + " AND created_by = " + usersdataHandlerAction.getUserSessionId();
+       if (sessionusrPrimaryrole==2 || sessionusrPrimaryrole==8) {
+            queryString = queryString + " AND created_by = " + usersdataHandlerAction.getUserSessionId();
+        }
+        
+        
         System.out.println(">>>>>>>>>>>>>query for ---->" + queryString);
         try {
             statement = connection.createStatement();

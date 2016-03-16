@@ -46,7 +46,11 @@
                 // document.getElementById("paginationOption").value=5;
                 pager.showPage(1);
             };
-           
+            function onLoadLoader(){
+                //alert("onload")
+             
+                 document.getElementById("loadingEmpSearch").style.display="none";
+            };
         </script>
         <script type="text/javascript">
             function sortables_init() {
@@ -65,7 +69,8 @@
 
         </script>
     </head>
-    <body style="overflow-x: hidden" onload="pagerOption();">
+    <body style="overflow-x: hidden" onload="pagerOption();onLoadLoader()">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -74,7 +79,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
@@ -90,7 +95,7 @@
                                             <h4 class="panel-title">
 
                                                 <font color="#ffffff">Employee Categorization</font>
-                                                <i id="updownArrow" onclick="toggleContent('empCategorizationForm')" class="fa fa-angle-up"></i> 
+                                                <i id="updownArrow" onclick="toggleContent('empCategorizationForm')" class="fa fa-minus"></i> 
                                             </h4>
                                         </div>
 
@@ -100,7 +105,7 @@
                                         <div id="empCategorizationForm">
                                             <div class="col-sm-4">
                                                 <s:hidden name="teamMemberId" id="teamMemberId" value="0"/>
-                                                <label class="labelStylereq" style="color:#56a5ec;">Employee Name: </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Employee Name </label>
                                                 <s:textfield id="empName" tabindex="1"
                                                              cssClass="form-control"
                                                              type="text"
@@ -110,7 +115,7 @@
                                                 <span id="validationMessage" />
                                             </div>
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Category Group: </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Category Group </label>
                                                 <s:select  id="categoryType"
                                                            name="categoryType" tabindex="2"
                                                            cssClass="SelectBoxStyles form-control"
@@ -122,7 +127,7 @@
                                             </div>
                                             
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Status </label>
                                                 <s:select  id="empStatus"
                                                            name="empStatus" tabindex="3"
                                                            cssClass="SelectBoxStyles form-control"
@@ -142,8 +147,11 @@
                                                           value=""  onclick="return getEmpCategories();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
 
                                                 </div></div>
+                                           
                                         <div class="col-sm-12">
-
+                                             <div id="loadingEmpSearch" class="loadingImg">
+                                                <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                            </div>
                                             <s:form>
                                                 <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
                                                     <table id="empCategorizationResults" class="responsive CSSTable_task sortable" border="5" cell-spacing="2">
@@ -178,7 +186,7 @@
                                                                     <td><s:property value="isPrimary"></s:property></td>
                                                                     <td><s:property value="status"></s:property></td>
                                                                     <td><s:property value="createdBy"></s:property></td>
-                                                                    <td><s:a href="#" onclick="empCategoryTermination('%{groupingId}');"><img src="<s:url value="/includes/images/deleteImage.png"/>" height="25" width="25"></s:a></td>
+                                                                    <td><center><s:a href="#" onclick="empCategoryTermination('%{groupingId}');"><i class="fa fa-trash-o fa-size"></i></s:a></center></td>
                                                                     </tr>
                                                             </s:iterator>
                                                         </tbody>
@@ -215,7 +223,7 @@
                     <div class="backgroundcolor">
                         <table>
                             <tr><td><h4 style="font-family:cursive"><font class="titleColor" >&nbsp;&nbsp;Assigned Groups &nbsp;&nbsp; </font></h4></td>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="categorizationOverlay_popup_close" onclick="categorizationOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="categorizationOverlay_popup_close" onclick="categorizationOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
                     <div style="margin: 10px;margin-bottom: -10px"><center>
@@ -236,6 +244,8 @@
 
             <!-- content end -->
         </section><!--/form-->
+        </div>
+    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

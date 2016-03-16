@@ -8,6 +8,7 @@ import com.mss.msp.util.ApplicationConstants;
 import com.mss.msp.util.ServiceLocator;
 import com.mss.msp.util.ServiceLocatorException;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +42,9 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
                 System.out.println("hear updation is completed....");
                 userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-
+                
+                setInvoiceYear(Calendar.getInstance().get(Calendar.YEAR));
+                
 
                 setInvoiceVto(ServiceLocator.getInvoiceService().getInvoiceDetails(this, (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString()));
                 resultType = SUCCESS;
@@ -87,7 +90,7 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
                 System.out.println("invVendor-->" + getInvVendor());
                 System.out.println("invoiceStatus-->" + getInvoiceStatus());
                 setInvoiceVto(ServiceLocator.getInvoiceService().doSearchInvoiceDetails(this, (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString()));
-
+                setInvoiceYear(getInvoiceYear());
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {

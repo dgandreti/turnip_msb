@@ -152,14 +152,19 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
         ResultSet resultSet = null;
         String queryString = "";
         int i = 0;
+         String startDate = "";
+        String endDate = "";
         //System.err.println(days+"Diff in Dyas...");
         try {
+            endDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getEndDate());
+             startDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getStartDate());
             //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "SELECT t.priority,t.task_id,t.task_name,t.task_created_date,t.task_comments,lts.task_status_name,"
                     + "CONCAT(u.first_name,'.',u.last_name) AS created "
                     + "FROM task_list t LEFT OUTER JOIN users u ON(t.task_created_by=u.usr_id) "
                     + "LEFT OUTER JOIN lk_task_status lts ON(lts.id=t.task_status) "
                     + "WHERE 1=1 AND t.task_created_by=" + taskHandlerAction.getUserSessionId() + " "
+                    + "AND  t.task_created_date BETWEEN '" + startDate + "' AND '" + endDate + "' "
                     + "OR t.pri_assigned_to=" + taskHandlerAction.getUserSessionId() + " "
                     + "OR t.sec_assigned_to=" + taskHandlerAction.getUserSessionId();
 
@@ -317,14 +322,18 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
 
 
         List tasklist = new ArrayList();
+         DateUtility dateUtility = new DateUtility();
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
         Map newMap = new HashMap();
         int i = 0;
+        String startDate = "";
+        String endDate = "";
         //System.err.println(days+"Diff in Dyas...");
         try {
-
+              endDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getEndDate());
+                startDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getStartDate());
             Map map = com.mss.msp.util.DataSourceDataProvider.getInstance().getMyTeamMembers(taskHandlerAction.getUserSessionId());
             String key, listId = "";
             System.out.println(">>>>after dsdp method>>" + map.size());
@@ -359,6 +368,7 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                     + "LEFT OUTER JOIN users us  ON(t.sec_assigned_to=us.usr_id) "
                     + "LEFT OUTER JOIN acc_projects prj ON(prj.project_id=t.task_prj_related_to) "
                     + "WHERE 1=1 AND task_created_by IN(" + taskHandlerAction.getUserSessionId() + "" + listId + ") "
+                    + "AND  t.task_created_date BETWEEN '" + startDate + "' AND '" + endDate + "' "
                     + "ORDER BY t.task_name LIMIT 100";
 
 

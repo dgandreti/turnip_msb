@@ -81,6 +81,14 @@ var mainProjectId=$("#mainProjectId").val();
         else{
         projectType="subprojects"; 
         }
+       // alert(projName)
+    if(projName.replace(/\s/g, '')=="" )
+        {
+            
+         $("updateProject").html(" <b><font color='red'>Enter Project name</font></b>");    
+         return false;
+        }
+        // alert(projName)
     $.ajax({
         url:"./checkProjectNames.action?projectName="+ projName+"&projectFlag="+projectType+"&mainProjectId="+mainProjectId,
         success: function(data){
@@ -181,7 +189,7 @@ function populateVendorTierOverlay(response){
 function getVendors(){
     //alert("hi")
     var accountSearchID=$('#accountSearchID').val();
-
+//var rNo=Math.random();
     var url='getDefaultVendorTiers.action?accountSearchID='+accountSearchID;
     var req=initRequest(url);
     req.onreadystatechange = function() {
@@ -268,6 +276,7 @@ function editVendorTierDetails(){
     var pf=$("#PF").is(':checked') ? 1 : 0;  
     var tierId=$('#tierId').val();
     var flag=true;
+    // var rndNo=Math.random();
     if(pf==0 && vendorTier==0 ){
         flag=false;
         $("e1").html(" <b><font color='red'>select either Tier or Head Hunter</font></b>");
@@ -639,6 +648,54 @@ function addProjectValidation()
         $("#projectTargetHrs").css("border", "1px solid red");
         return false;
     }
+    
+     var parentProjectTargetDate = document.getElementById('projectTargetDate').value;
+   // alert(parentProjectTargetDate)
+    //alert(projectTargetDateOverlay)
+    var splitTaskStartDate = parentProjectTargetDate.split('-');
+    var taskAddStartDate = new Date(splitTaskStartDate[2], splitTaskStartDate[0]-1 , splitTaskStartDate[1]); //Y M D 
+    var splitTaskEndDate = projectTargetDateOverlay.split('-');
+    var taskAddtargetDate = new Date(splitTaskEndDate[2], splitTaskEndDate[0]-1, splitTaskEndDate[1]); //Y M D
+    var taskStartDate = Date.parse(taskAddStartDate);
+    var taskTargetDate= Date.parse(taskAddtargetDate);
+    var  difference=(taskTargetDate - taskStartDate) / (86400000 * 7);
+   // alert(difference)
+    if(difference>0)
+    {
+             
+        // alert("hi")
+        $("#addProjectValidation").html(" <b><font color='red'>Target Date Should not Exceed Main Project Target date</font></b>");
+        document.getElementById('projectTargetDateOverlay').value="";
+        $("#projectTargetDateOverlay").css("border", "1px solid red");
+        //        $("#startDate").css("border", "1px solid red");
+        //        $("#endDate").css("border", "1px solid red");
+        $("#addProjectValidation").show().delay(4000).fadeOut();
+        //         $("#startDate").show().delay(5000).fadeOut();
+        //          $("#endDate").show().delay(5000).fadeOut();
+         return false;
+    }  
+     var splitProjectStartDate = parentProjectTargetDate.split('-');
+    var projectAddStartDate = new Date(splitProjectStartDate[2], splitProjectStartDate[0]-1 , splitProjectStartDate[1]); //Y M D 
+    var splitProjectEndDate = projectStartDateOverlay.split('-');
+    var projectAddtargetDate = new Date(splitProjectEndDate[2], splitProjectEndDate[0]-1, splitProjectEndDate[1]); //Y M D
+    var projectStartDate = Date.parse(projectAddStartDate);
+    var projectTargetDate= Date.parse(projectAddtargetDate);
+    var  projectdifference=(projectTargetDate - projectStartDate) / (86400000 * 7);
+    //alert(projectdifference)
+    if(projectdifference>0)
+    {
+             
+        // alert("hi")
+        $("#addProjectValidation").html(" <b><font color='red'>Start date Should not Exceed Main Project Target date</font></b>");
+        document.getElementById('projectStartDateOverlay').value="";
+        $("#projectStartDateOverlay").css("border", "1px solid red");
+        //        $("#startDate").css("border", "1px solid red");
+        //        $("#endDate").css("border", "1px solid red");
+        $("#addProjectValidation").show().delay(4000).fadeOut();
+        //         $("#startDate").show().delay(5000).fadeOut();
+        //          $("#endDate").show().delay(5000).fadeOut();
+         return false;
+    }
     //    
     //    if(projType=="MP"){
     //        if(costCenterName=="DF"){
@@ -693,6 +750,14 @@ function projectTeamMemberValidation(){
     // alert(id);
     //    var designation=document.getElementById("designation").value;
     // alert(designation);
+//    var reportPersonId=document.getElementById("memberPrimaryReporting").value;
+//    if(Number(reportPersonId)==Number(id) && teamMemberName!="" && teamMemberName.length>=2){
+//       // alert("in");
+//        document.getElementById("memberPrimaryReporting").value="-1"; 
+//        $("#validationMessage").html("<b><font color='red'>Team member and Reports to Should not same</font></b>");
+//        $('#validationMessage').show().fadeIn();
+//        return false;
+//    }
     if(id==0||teamMemberName=="" ||teamMemberName.length<=2){
         $("#teamMemberNamePopup").css("border","1px solid red");
         $("#validationMessage").html("<b><font color='red'>enter name</font></b>");
@@ -716,7 +781,60 @@ function updateProjectValidation()
     var projectTargetDateOverlay=document.getElementById("projectTargetDate").value;
     var editProjectTargetHrs=document.getElementById("editProjectTargetHrs").value;
     //var costCenterNam
+    var projectType = document.getElementById("projectType").value;
+    //var costCenterNam
+    //alert(projectType)
+    if(projectType=='Sub-Project')
+    {
+    var parentProjectTargetDate = document.getElementById('mainProjectTargetDate').value;
+    //alert(parentProjectTargetDate)
+    var splitProjectStartDate = parentProjectTargetDate.split('-');
+    var projectAddStartDate = new Date(splitProjectStartDate[2], splitProjectStartDate[0]-1 , splitProjectStartDate[1]); //Y M D 
+    var splitProjectEndDate = projectStartDateOverlay.split('-');
+    var projectAddtargetDate = new Date(splitProjectEndDate[2], splitProjectEndDate[0]-1, splitProjectEndDate[1]); //Y M D
+    var projectStartDate = Date.parse(projectAddStartDate);
+    var projectTargetDate= Date.parse(projectAddtargetDate);
+    var  projectdifference=(projectTargetDate - projectStartDate) / (86400000 * 7);
+    //alert(projectdifference)
+    if(projectdifference>0)
+    {
+             
+        // alert("hi")
+        $("updateProject").html(" <b><font color='red'>Start date Should not Exceed Main Project Target date</font></b>");
+        document.getElementById('projectStartDate').value="";
+        $("#projectStartDate").css("border", "1px solid red");
+        //        $("#startDate").css("border", "1px solid red");
+        //        $("#endDate").css("border", "1px solid red");
+        $("updateProject").show().delay(4000).fadeOut();
+        //         $("#startDate").show().delay(5000).fadeOut();
+        //          $("#endDate").show().delay(5000).fadeOut();
+         return false;
+    }
+    var splitTaskStartDate = parentProjectTargetDate.split('-');
+    var taskAddStartDate = new Date(splitTaskStartDate[2], splitTaskStartDate[0]-1 , splitTaskStartDate[1]); //Y M D 
+    var splitTaskEndDate = projectTargetDateOverlay.split('-');
+    var taskAddtargetDate = new Date(splitTaskEndDate[2], splitTaskEndDate[0]-1, splitTaskEndDate[1]); //Y M D
+    var taskStartDate = Date.parse(taskAddStartDate);
+    var taskTargetDate= Date.parse(taskAddtargetDate);
+    var  difference=(taskTargetDate - taskStartDate) / (86400000 * 7);
+    //alert(difference)
+    if(difference>0)
+    {
+             
+        // alert("hi")
+          $("updateProject").html(" <b><font color='red'>Target date Should not Exceed Main Project Target date</font></b>");
+       // $("#addProjectValidation").html(" <b><font color='red'>Target Date Should not Exceed Main Project Target date</font></b>");
+        document.getElementById('projectTargetDate').value="";
+        $("#projectTargetDate").css("border", "1px solid red");
+        //        $("#startDate").css("border", "1px solid red");
+        //        $("#endDate").css("border", "1px solid red");
+        $("updateProject").show().delay(4000).fadeOut();
+        //         $("#startDate").show().delay(5000).fadeOut();
+        //          $("#endDate").show().delay(5000).fadeOut();
+         return false;
+    }  
     
+    }
     var splitSDate = projectStartDateOverlay.split('-');
     var sdate = new Date(splitSDate[2], splitSDate[0]-1 , splitSDate[1]); //Y M D 
     var splitEDate = projectTargetDateOverlay.split('-');
@@ -800,6 +918,7 @@ function EmpReleasefromProject(userID){
                     // alert(req.responseText)
                     if(req.responseText==1){
                         $("emp").html(" <b><font color='green'> Terminated Succesfully</font></b>");
+                        searchTeamMembers();
                     }else{
                         $("emp").html(" <b><font color='red'>Error Occured</font></b>");
                     }
@@ -1409,7 +1528,13 @@ function populateCostCenterInfoTable(response){
                 row.append($("<td>" + Values[3]+ "</td>"));
                 var bal = Values[0]-Values[3];
                 row.append($("<td>" + parseFloat(bal).toFixed(1) +"</td>"));
-                row.append($("<td>" + Values[5] +"</td>"));
+               if(Values[5]!="null")
+                {
+                    row.append($("<td>" + Values[5] +"</td>"));       
+                }
+                else{
+                    row.append($("<td>" + "" +"</td>"));          
+                }
                 row.append($("<td>" + Values[6] +"</td>"));
             }
         }
@@ -1574,4 +1699,67 @@ function calculateTargetHrs(){
         $("#addProjectValidation").html("");
         $("#projectTargetHrs").css("border", "1px solid #ccc");
     }
+}
+function validationCostCenterBudget(evt,id)
+{ 
+    var  minRate=document.getElementById(id).value;
+    var rate=(minRate.toString()).length;
+    var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+    if ( iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57) )
+    {
+            $("#info").html(" <b><font color='red'>enter only numbers</font></b>");  
+            $("#info").show().delay(4000).fadeOut();
+        if(iKeyCode == 8)
+        {
+            return true;       
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else 
+    {
+        $("#info").html("");
+        return true;
+    }
+}
+
+
+function clearFieldValues()
+{
+   
+     
+    $("#projectNamePopup").css("border", "1px solid #ccc");
+    $("#projectStartDateOverlay").css("border", "1px solid #ccc");
+    $("#projectTargetDateOverlay").css("border", "1px solid #ccc");
+    $("#projectTargetHrs").css("border", "1px solid #ccc");
+     $("#projectReqSkillSetPopup").css("border", "1px solid #ccc");
+    $("#project_descriptionPopup").css("border", "1px solid #ccc");
+    $("#costCenterName").css("border", "1px solid #ccc");
+}
+
+
+function clearSubProjectFieldValues()
+{
+   
+     
+    $("#projectNamePopup").css("border", "1px solid #ccc");
+    $("#projectStartDateOverlay").css("border", "1px solid #ccc");
+    $("#projectTargetDateOverlay").css("border", "1px solid #ccc");
+    $("#projectTargetHrs").css("border", "1px solid #ccc");
+    $("#projectReqSkillSetPopup").css("border", "1px solid #ccc");
+    $("#project_descriptionPopup").css("border", "1px solid #ccc");
+   
+}
+
+function clearSubprojectOverlay()
+{
+    document.getElementById("projectNamePopup").value="";
+    document.getElementById("projectStartDateOverlay").value="";
+    document.getElementById("projectTargetDateOverlay").value="";
+    document.getElementById("projectTargetHrs").value="";
+    document.getElementById("projectWorkedHrs").value="";
+    document.getElementById("projectReqSkillSetPopup").value="";
+    document.getElementById("project_descriptionPopup").value="";
 }

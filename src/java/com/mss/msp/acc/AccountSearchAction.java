@@ -107,7 +107,11 @@ public class AccountSearchAction extends ActionSupport implements ServletRequest
         if (getAccountState() == null) {
             accountState = new ArrayList<State>();
         }
-        if (getAccount().getCountry() != null && getAccount().getCountry().getId() != null
+        if(getAccount().getCountry().getId() == null){
+           accountState = ServiceLocator.getLocationService().getStatesByCountry(3);
+           getAccount().getCountry().setId(3);
+        }
+        else if (getAccount().getCountry() != null && getAccount().getCountry().getId() != null
                 && getAccount().getCountry().getId().intValue() >= 0) {
             accountState = ServiceLocator.getLocationService().getStatesByCountry(getAccount().getCountry().getId());
         }
@@ -237,5 +241,4 @@ public class AccountSearchAction extends ActionSupport implements ServletRequest
     public void setResponceFlag(int responceFlag) {
         this.responceFlag = responceFlag;
     }
-    
 }

@@ -9,8 +9,11 @@
 package com.mss.msp.util;
 
 import com.mss.msp.recruitment.RecruitmentAction;
+import com.mss.msp.requirement.RequirementAction;
 import com.mss.msp.requirement.RequirementVTO;
 import com.mss.msp.usr.task.TaskHandlerAction;
+import com.mss.msp.usr.timesheets.UsrTimeSheetAction;
+import com.mss.msp.usrajax.UserAjaxHandlerAction;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -52,6 +55,7 @@ import javax.activation.MimetypesFileTypeMap;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang.StringUtils;
 
 public class MailManager {
 
@@ -89,6 +93,7 @@ public class MailManager {
         /**
          * Here set the authentication for the host *
          */
+        props.put("mail.smtp.starttls.enable","true");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", SMTP_PORT);
 
@@ -388,6 +393,8 @@ public class MailManager {
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
         props.setProperty("mail.host", SMTP_HOST);
+        
+        props.put("mail.smtp.starttls.enable","true");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", SMTP_PORT);
 
@@ -802,7 +809,7 @@ public class MailManager {
      **************************************
      *
      */
-    public int techReviewTechieEmailGenerator(RecruitmentAction recruitmentAction,String emapMailId) throws ServiceLocatorException, SQLException {
+    public int techReviewTechieEmailGenerator(RecruitmentAction recruitmentAction, String emapMailId) throws ServiceLocatorException, SQLException {
         int addEmailResult = 0;
         try {
             connection = ConnectionProvider.getInstance().getConnection();
@@ -819,46 +826,43 @@ public class MailManager {
             htmlText.append("</tr>");
             htmlText.append("<tr><td>");
             htmlText.append("<table style='background:#FFFFCC;width:100%;' color='#151B54' size='4px' height='20px' >");
-            htmlText.append("<tr><td><font color='#3399FF' size='2' face='Arial' style='font-weight:600;'><br>Hello ,"+recruitmentAction.getForwardedToName()+"</font><br></td></tr>");
+            htmlText.append("<tr><td><font color='#3399FF' size='2' face='Arial' style='font-weight:600;'><br>Hello ," + recruitmentAction.getForwardedToName() + "</font><br></td></tr>");
             htmlText.append("<tr><td colspan='2'>A Tech Review has been Forwarded by:<b><font color='#6666FF'>" + recruitmentAction.getForwardedByName() + "</font></b></td></tr>");
             htmlText.append(" <tr><td>");
             htmlText.append("<table border='0' align='left'>  ");
             htmlText.append(" <tr><td><font>Details :</font></td></tr>");
             htmlText.append("<tr><td>Consultant Name :</td><td align='left' ><font color='red' >" + recruitmentAction.getConsult_name() + "</font></td></tr> ");
-            htmlText.append(" <tr><td>Job Id:</td><td align='left' ><font color='red' > JD-" + recruitmentAction.getRequirementId()+ "</font></td></tr> ");
-            if(recruitmentAction.getConsult_jobTitle()!=null)
-            {
-             htmlText.append(" <tr><td>Job Title:</td><td align='left' ><font color='red' >" + recruitmentAction.getConsult_jobTitle() + "</font></td></tr>");   
+            htmlText.append(" <tr><td>Job Id:</td><td align='left' ><font color='red' > JD-" + recruitmentAction.getRequirementId() + "</font></td></tr> ");
+            if (recruitmentAction.getConsult_jobTitle() != null) {
+                htmlText.append(" <tr><td>Job Title:</td><td align='left' ><font color='red' >" + recruitmentAction.getConsult_jobTitle() + "</font></td></tr>");
             }
-            
+
             htmlText.append(" <tr><td>Position:</td><td align='left' ><font color='red' >" + recruitmentAction.getReqName() + "</font></td></tr> ");
-             if(!"Online".equalsIgnoreCase(recruitmentAction.getInterviewType()) && !"Psychometric".equalsIgnoreCase(recruitmentAction.getInterviewType()))
-            {
-            //System.out.println("review type in if condition"+recruitmentAction.getInterviewType());    
-            htmlText.append(" <tr><td valign='top' ><font >Review Date :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewDate() + "</font></td></tr>");
-          
-            
+            if (!"Online".equalsIgnoreCase(recruitmentAction.getInterviewType()) && !"Psychometric".equalsIgnoreCase(recruitmentAction.getInterviewType())) {
+                //System.out.println("review type in if condition"+recruitmentAction.getInterviewType());    
+                htmlText.append(" <tr><td valign='top' ><font >Review Date :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewDate() + "</font></td></tr>");
+
+
             }
-             
-                
+
+
             htmlText.append(" <br> <tr><td>Review Type:</td><td align='left' ><font color='red' >" + recruitmentAction.getInterviewType() + "</font></td></tr> ");
-            if(!"".equals(recruitmentAction.getContechNote()))
-            {
-            htmlText.append(" <br> <tr><td>Comments:</td><td align='left' ><font color='red' >" + recruitmentAction.getContechNote() + "</font></td></tr> ");    
+            if (!"".equals(recruitmentAction.getContechNote())) {
+                htmlText.append(" <br> <tr><td>Comments:</td><td align='left' ><font color='red' >" + recruitmentAction.getContechNote() + "</font></td></tr> ");
             }
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
             if (recruitmentAction.getInterviewType().equalsIgnoreCase("Face to Face")) {
                 htmlText.append(" <tr><td valign='top' ><font >Location :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewLocation() + "</font></td></tr>");
             }
             htmlText.append(" <tr><td></td></tr></table></td></tr>");
             htmlText.append(" <tr><td colspan='2'><br>Regards,</td></tr>");
             htmlText.append("<tr><td colspan='2' >Services Bay  Support Team,</td></tr> ");
-            
+
             htmlText.append("<tr><td><font color='red', size='2' face='Arial' style='font-weight:600;'>*Note:Please do not reply to this e-mail. It was generated by our System.</font></td></tr> ");
             htmlText.append("</table></td></tr></table></body></html> ");
 
@@ -933,32 +937,28 @@ public class MailManager {
             htmlText.append("<tr><td>");
             htmlText.append("<table style='background:#FFFFCC;width:100%;' color='#151B54' size='4px' height='20px' >");
             htmlText.append("<tr><td><font color='#3399FF' size='2' face='Arial' style='font-weight:600;'><br>Hello " + recruitmentAction.getConsult_name() + ",</font><br></td></tr>");
-            htmlText.append("<tr><td colspan='2'>Your Tech Review has been Scheduled On:<b><font color='#6666FF'>" + recruitmentAction.getReviewDate() + "</font></b></td></tr>");
+            htmlText.append("<tr><td colspan='2'>Your Tech Review has been Scheduled On:<b><font color='#6666FF'>" + recruitmentAction.getInterviewDate() + "(" + recruitmentAction.getTimeZone() + ")" + "</font></b></td></tr>");
+            //htmlText.append("<tr><td colspan='2'>Your Tech Review has been Scheduled On:<b><font color='#6666FF'>" + recruitmentAction.getReviewDate() + "</font></b></td></tr>");
             htmlText.append(" <tr><td>");
             htmlText.append("<table border='0' align='left'>  ");
             htmlText.append(" <tr><td><font>Details :</font></td></tr>");
-            htmlText.append(" <tr><td>Job Id:</td><td align='left' ><font color='red' > JD-" + recruitmentAction.getRequirementId()+ "</font></td></tr> ");
+            htmlText.append(" <tr><td>Job Id:</td><td align='left' ><font color='red' > JD-" + recruitmentAction.getRequirementId() + "</font></td></tr> ");
             htmlText.append(" <tr><td>Position:</td><td align='left' ><font color='red' >" + recruitmentAction.getReqName() + "</font></td></tr> ");
             //htmlText.append(" <tr><td valign='top' ><font >Review Date :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewDate() + "</font></td></tr>");
             htmlText.append(" <tr><td>Reviewer:</td><td align='left' ><font color='red' >" + recruitmentAction.getForwardedToName() + "</font></td></tr>");
             htmlText.append(" <br> <tr><td>Review Mode:</td><td align='left' ><font color='red' >" + recruitmentAction.getInterviewType() + "</font></td></tr> ");
-             if(!"".equals(recruitmentAction.getContechNote()))
-            {
-            htmlText.append(" <br> <tr><td>Comments:</td><td align='left' ><font color='red' >" + recruitmentAction.getContechNote() + "</font></td></tr> ");    
+            if (!"".equals(recruitmentAction.getContechNote())) {
+                htmlText.append(" <br> <tr><td>Comments:</td><td align='left' ><font color='red' >" + recruitmentAction.getContechNote() + "</font></td></tr> ");
             }
-            
-           
-            
-            
-            htmlText.append(" <tr><td></td></tr></table></td></tr>");
             if (recruitmentAction.getInterviewType().equalsIgnoreCase("Face to Face")) {
                 htmlText.append(" <tr><td valign='top' ><font >Location :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewLocation() + "</font></td></tr>");
             }
+             htmlText.append(" <tr><td></td></tr></table></td></tr>");
             htmlText.append(" <tr><td colspan='2'><br>All The Best,</td></tr>");
             htmlText.append(" <br><tr><td colspan='2'><br>Regards,</td></tr>");
             htmlText.append("<tr><td colspan='2' >Services Bay  Support Team,</td></tr> ");
-            
-            htmlText.append("<tr><td><font color='red', size='2' face='Arial' style='font-weight:600;'>*Note:Please do not reply to this e-mail. It was generated by our System.</font></td></tr> ");
+
+            htmlText.append("<tr><td><font color='red', size='2' face='Arial' style='font-weight:600;'>*Note: Please do not reply to this e-mail. It was generated by our System.</font></td></tr> ");
             htmlText.append("</table></td></tr></table></body></html> ");
 
             String bodyContent = htmlText.toString();
@@ -1139,7 +1139,7 @@ public class MailManager {
         return addEmailResult;
     }
 
-    public static void sendInvitationToConsultant(RecruitmentAction recruitmentAction, String emapMailId) throws Exception {
+    public static void sendInvitationToConsultant(RecruitmentAction recruitmentAction,String consultMailId, String emapMailId) throws Exception {
 
         System.out.println("In sendInvitationToConsultant()");
         String from = com.mss.msp.util.Properties.getProperty("MSB.from").toString();
@@ -1156,23 +1156,20 @@ public class MailManager {
 
                 Properties props = new Properties();
 
-                props.setProperty(
-                        "mail.transport.protocol", "smtp");
-                props.setProperty(
-                        "mail.host", SMTP_HOST);
-                props.put(
-                        "mail.smtp.auth", "true");
-                props.put(
-                        "mail.smtp.port", SMTP_PORT);
+                props.setProperty("mail.transport.protocol", "smtp");
+                props.setProperty("mail.host", SMTP_HOST);
+                
+                props.put("mail.smtp.starttls.enable","true");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.port", SMTP_PORT);
                 Authenticator auth = new SMTPAuthenticator();
                 //Session mailSession = Session.getDefaultInstance(props, null);
                 Session mailSession = Session.getDefaultInstance(props, auth);
 
                 MimeMessage message = new MimeMessage(mailSession);
                 message.setFrom(new InternetAddress(from));
-                message.setSubject(
-                        "Tech Review Alert");
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(emapMailId));
+                message.setSubject("Tech Review Alert");
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(consultMailId));
 
 // Create an alternative Multipart
                 Multipart multipart = new MimeMultipart("alternative");
@@ -1183,7 +1180,7 @@ public class MailManager {
                 multipart.addBodyPart(messageBodyPart);
 
 // Add part two, the calendar
-                BodyPart calendarPart = buildCalendarPart(recruitmentAction, emapMailId);
+                BodyPart calendarPart = buildCalendarPart(recruitmentAction, emapMailId, from);
                 multipart.addBodyPart(calendarPart);
 
 //Put the multipart in message 
@@ -1204,7 +1201,6 @@ public class MailManager {
 
     }
 
-
     private static BodyPart buildHtmlTextPart(RecruitmentAction recruitmentAction, String emapMailId) throws MessagingException {
 
         MimeBodyPart descriptionPart = new MimeBodyPart();
@@ -1217,34 +1213,37 @@ public class MailManager {
         htmlText.append("<table align='center'>");
         htmlText.append("<tr style='background:#33CCFF;height:40px;width:100%;'>");
         htmlText.append("<tr style='background:#33CCFF;height:40px;width:100%;'>");
-        htmlText.append("<td><font color='white' size='4' face='Arial'><p>Tech Review Alert</p></font></td>");
+        htmlText.append("<td><font color='white' size='4' face='Arial'><p>Tech Review Details</p></font></td>");
         htmlText.append("</tr>");
         htmlText.append("<tr><td>");
         htmlText.append("<table style='background:#FFFFCC;width:100%;' color='#151B54' size='4px' height='20px' >");
-        htmlText.append("<tr><td><font color='#3399FF' size='2' face='Arial' style='font-weight:600;'><br>Hello " + recruitmentAction.getConsult_name() + ",</font><br></td></tr>");
-        htmlText.append("<tr><td colspan='2'>Your Tech Review has been Scheduled On:<b><font color='#6666FF'>" + recruitmentAction.getReviewDate() + "</font></b></td></tr>");
+        htmlText.append("<tr><td><font color='#3399FF' size='2' face='Arial' style='font-weight:600;'><br><font color='black'>Hello &nbsp; </font>" + recruitmentAction.getConsult_name() + ",</font><br></td></tr>");
+        htmlText.append("<tr><td colspan='2'>Your Tech Review has been Scheduled On:<b><font color='#6666FF'>" + recruitmentAction.getInterviewDate() + "(" + recruitmentAction.getTimeZone() + ")" + "</font></b></td></tr>");
         htmlText.append(" <tr><td>");
         htmlText.append("<table border='0' align='left'>  ");
-        htmlText.append(" <tr><td><font>Tech Review Details :</font></td></tr>");
-        htmlText.append(" <br> <tr><td>Review Type:</td><td align='left' ><font color='red' >" + recruitmentAction.getInterviewType() + "</font></td></tr> ");
-        htmlText.append(" <tr><td>For Position:</td><td align='left' ><font color='red' >" + recruitmentAction.getReqName() + "</font></td></tr> ");
+        htmlText.append(" <tr><td><font>Details :</font></td></tr>");
+        htmlText.append(" <tr><td>Job Id:</td><td align='left' ><font color='red' > JD-" + recruitmentAction.getRequirementId() + "</font></td></tr> ");
+        htmlText.append(" <tr><td>Position:</td><td align='left' ><font color='red' >" + recruitmentAction.getReqName() + "</font></td></tr> ");
+        //htmlText.append(" <tr><td valign='top' ><font >Review Date :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewDate() + "</font></td></tr>");
         htmlText.append(" <tr><td>Reviewer:</td><td align='left' ><font color='red' >" + recruitmentAction.getForwardedToName() + "</font></td></tr>");
-        htmlText.append("<tr><td>Skill Set:</td><td align='left' ><font color='red' >" + recruitmentAction.getConSkills() + "</font></td></tr> ");
-        htmlText.append(" <tr><td valign='top' ><font >Review Date :</font></td><td align='left'><font color='red' >" + recruitmentAction.getReviewDate() + "</font></td></tr>");
-        htmlText.append(" <tr><td> Review Time   :</td>");
-        htmlText.append(" <td align='left'> <font color='red' >" + recruitmentAction.getReviewTime() + "</font></td></tr>");
-        htmlText.append(" <tr><td></td></tr></table></td></tr>");
+        htmlText.append(" <br> <tr><td>Review Mode:</td><td align='left' ><font color='red' >" + recruitmentAction.getInterviewType() + "</font></td></tr> ");
+        if (!"".equals(recruitmentAction.getContechNote())) {
+            htmlText.append(" <br> <tr><td>Comments:</td><td align='left' ><font color='red' >" + recruitmentAction.getContechNote() + "</font></td></tr> ");
+        }
         if (recruitmentAction.getInterviewType().equalsIgnoreCase("Face to Face")) {
             htmlText.append(" <tr><td valign='top' ><font >Location :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewLocation() + "</font></td></tr>");
         }
+        htmlText.append(" <tr><td></td></tr></table></td></tr>");
+
         htmlText.append(" <tr><td colspan='2'><br>All The Best,</td></tr>");
         htmlText.append(" <br><tr><td colspan='2'><br>Regards,</td></tr>");
         htmlText.append("<tr><td colspan='2' >Services Bay  Support Team,</td></tr> ");
-        htmlText.append(" <tr><td colspan='2'><font>Miracle Software Systems, Inc.</font></td></tr>");
-        htmlText.append("<tr><td><font color='red', size='2' face='Arial' style='font-weight:600;'>*Note:)lease do not reply to this e-mail. It was generated by our System.</font></td></tr> ");
+
+        htmlText.append("<tr><td><font color='red', size='2' face='Arial' style='font-weight:600;'>*Note:Please do not reply to this e-mail. It was generated by our System.</font></td></tr> ");
         htmlText.append("</table></td></tr></table></body></html> ");
 
         String bodyContent = htmlText.toString();
+
 
         System.out.println(bodyContent);
         // String content = "Tech Review invitation";
@@ -1253,7 +1252,7 @@ public class MailManager {
         return descriptionPart;
     }
 
-    private static BodyPart buildCalendarPart(RecruitmentAction recruitmentAction, String emapMailId) throws Exception {
+    private static BodyPart buildCalendarPart(RecruitmentAction recruitmentAction, String emapMailId, String from) throws Exception {
 
         BodyPart calendarPart = new MimeBodyPart();
 
@@ -1274,7 +1273,7 @@ public class MailManager {
         //   System.out.println("iCalendarDateFormat.format(start)"+iCalendarDateFormat.format(start));
         //check the icalendar spec in order to build a more complicated meeting request
 
-        String calendarContent =
+       String calendarContent =
                 "BEGIN:VCALENDAR\n"
                 + "METHOD:REQUEST\n"
                 + "PRODID: BCP - Meeting\n"
@@ -1282,41 +1281,39 @@ public class MailManager {
                 + "BEGIN:VEVENT\n"
                 + "DTSTAMP:" + iCalendarDateFormat.format(date) + "\n"
                 + "DTSTART:" + iCalendarDateFormat.format(date) + "\n"
-                // + "DTEND: \n"
+                //  + "DTEND:" + iCalendarDateFormat.format(start) + "\n"
                 + "SUMMARY:Tech Review\n"
-                + "UID:" + Math.random() + "\n"
-                // + "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:MAILTO:organizer@yahoo.com\n"
-                + "ORGANIZER:MAILTO:" + emapMailId + "\n"
-                + "LOCATION:" + recruitmentAction.getInterviewLocation() + "\n"
-                + "DESCRIPTION:Technical interview\n"
+                + "UID:324\n"
+              //  + "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:MAILTO:organizer@yahoo.com\n"
+                + "ORGANIZER:MAILTO:"+ from +"\n"
+                + "LOCATION:"+ recruitmentAction.getInterviewLocation()+"\n"
+                + "DESCRIPTION:learn some stuff\n"
                 + "SEQUENCE:0\n"
                 + "PRIORITY:5\n"
                 + "CLASS:PUBLIC\n"
                 + "STATUS:CONFIRMED\n"
                 + "TRANSP:OPAQUE\n"
                 + "BEGIN:VALARM\n"
-                + "TRIGGER:PT1440M\n"
                 + "ACTION:DISPLAY\n"
-                + "DESCRIPTION:Reminder\n"
+                + "DESCRIPTION:REMINDER\n"
+                + "TRIGGER;RELATED=START:-PT00H15M00S\n"
                 + "END:VALARM\n"
-                + //                + "BEGIN:VALARM\n"
-                //                + "ACTION:DISPLAY\n"
-                //                + "DESCRIPTION:REMINDER\n"
-                //                + "TRIGGER;RELATED=START:-PT00H15M00S\n"
-                //                + "END:VALARM\n"
-                "END:VEVENT\n"
+                + "END:VEVENT\n"
                 + "END:VCALENDAR";
+
+
 
         calendarPart.addHeader("Content-Class", "urn:content-classes:calendarmessage");
         calendarPart.setContent(calendarContent, "text/calendar;method=CANCEL");
 
         return calendarPart;
     }
+
     /**
      * *************************************
      *
      * @techReviewMailToVendor() it generates email when user forward review
-     * 
+     *
      *
      * @Author:Jagan Chukkala<jchukkala@miraclesoft.com>
      *
@@ -1326,9 +1323,7 @@ public class MailManager {
      **************************************
      *
      */
-    
-    
-    public int techReviewMailToVendor(RecruitmentAction recruitmentAction,String venEmail) throws ServiceLocatorException, SQLException {
+    public int techReviewMailToVendor(RecruitmentAction recruitmentAction, String venEmail) throws ServiceLocatorException, SQLException {
         int addEmailResult = 0;
         try {
             connection = ConnectionProvider.getInstance().getConnection();
@@ -1344,45 +1339,42 @@ public class MailManager {
             htmlText.append("</tr>");
             htmlText.append("<tr><td>");
             htmlText.append("<table style='background:#FFFFCC;width:100%;' color='#151B54' size='4px' height='20px' >");
-            htmlText.append("<tr><td><font color='#3399FF' size='2' face='Arial' style='font-weight:600;'><br>Hello ,"+recruitmentAction.getVenName()+"</font><br></td></tr>");
+            htmlText.append("<tr><td><font color='#3399FF' size='2' face='Arial' style='font-weight:600;'><br>Hello ," + recruitmentAction.getVenName() + "</font><br></td></tr>");
             htmlText.append("<tr><td colspan='2'>Tech Review has been Forwarded by:<b><font color='#6666FF'>" + recruitmentAction.getAccountName() + "</font></b></td></tr>");
             htmlText.append(" <tr><td>");
             htmlText.append("<table border='0' align='left'>  ");
             htmlText.append(" <tr><td><font>Details :</font></td></tr>");
             htmlText.append("<tr><td>Consultant Name :</td><td align='left' ><font color='red' >" + recruitmentAction.getConsult_name() + "</font></td></tr> ");
-            htmlText.append(" <tr><td>Job Id:</td><td align='left' ><font color='red' > JD-" + recruitmentAction.getRequirementId()+ "</font></td></tr> ");
-             if(recruitmentAction.getConsult_jobTitle()!=null){
-            htmlText.append(" <tr><td>Job Title:</td><td align='left' ><font color='red' >" + recruitmentAction.getConsult_jobTitle() + "</font></td></tr>");
+            htmlText.append(" <tr><td>Job Id:</td><td align='left' ><font color='red' > JD-" + recruitmentAction.getRequirementId() + "</font></td></tr> ");
+            if (recruitmentAction.getConsult_jobTitle() != null) {
+                htmlText.append(" <tr><td>Job Title:</td><td align='left' ><font color='red' >" + recruitmentAction.getConsult_jobTitle() + "</font></td></tr>");
             }
             htmlText.append(" <tr><td>Position:</td><td align='left' ><font color='red' >" + recruitmentAction.getReqName() + "</font></td></tr> ");
-            if(!"Online".equalsIgnoreCase(recruitmentAction.getInterviewType()) && !"Psychometric".equalsIgnoreCase(recruitmentAction.getInterviewType()))
-            {
-            //System.out.println("review type in if condition"+recruitmentAction.getInterviewType());    
-            htmlText.append(" <tr><td valign='top' ><font >Review Date :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewDate() + "</font></td></tr>");
-            
-         
-            if(recruitmentAction.getReviewTime()!=null)
-            {
-                htmlText.append(" <tr><td> Review Time   :</td>");
-                htmlText.append(" <td align='left'> <font color='red' >" + recruitmentAction.getTechReviewTime() + "</font></td></tr>");
+            if (!"Online".equalsIgnoreCase(recruitmentAction.getInterviewType()) && !"Psychometric".equalsIgnoreCase(recruitmentAction.getInterviewType())) {
+                //System.out.println("review type in if condition"+recruitmentAction.getInterviewType());    
+                htmlText.append(" <tr><td valign='top' ><font >Review Date :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewDate() + "(" + recruitmentAction.getTimeZone() + ")" + "</font></td></tr>");
+
+
+                if (recruitmentAction.getReviewTime() != null) {
+                    htmlText.append(" <tr><td> Review Time   :</td>");
+                    htmlText.append(" <td align='left'> <font color='red' >" + recruitmentAction.getTechReviewTime() + "</font></td></tr>");
+                }
+
             }
-            
-            }
-            
+
             htmlText.append(" <br> <tr><td>Review Type:</td><td align='left' ><font color='red' >" + recruitmentAction.getInterviewType() + "</font></td></tr> ");
-            
-          
+
+
             if (recruitmentAction.getInterviewType().equalsIgnoreCase("Face to Face")) {
                 htmlText.append(" <tr><td valign='top' ><font >Location :</font></td><td align='left'><font color='red' >" + recruitmentAction.getInterviewLocation() + "</font></td></tr>");
             }
-             if(!"".equals(recruitmentAction.getContechNote()))
-            {
-            htmlText.append(" <br> <tr><td>Comments:</td><td align='left' ><font color='red' >" + recruitmentAction.getContechNote() + "</font></td></tr> ");    
+            if (!"".equals(recruitmentAction.getContechNote())) {
+                htmlText.append(" <br> <tr><td>Comments:</td><td align='left' ><font color='red' >" + recruitmentAction.getContechNote() + "</font></td></tr> ");
             }
             htmlText.append(" <tr><td></td></tr></table></td></tr>");
             htmlText.append(" <tr><td colspan='2'><br>Regards,</td></tr>");
             htmlText.append("<tr><td colspan='2' >Services Bay  Support Team,</td></tr> ");
-            
+
             htmlText.append("<tr><td><font color='red', size='2' face='Arial' style='font-weight:600;'>*Note:Please do not reply to this e-mail. It was generated by our System.</font></td></tr> ");
             htmlText.append("</table></td></tr></table></body></html> ");
 
@@ -1425,6 +1417,622 @@ public class MailManager {
         }
         return addEmailResult;
     }
+     /**
+     * *************************************
+     *
+     * @timesheetApproveEmail() it generates email to user when reporting person approve or reject the timesheet
+     *
+     *
+     * @Author:Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * @Created Date:12/31/2015
+     *
+     *
+     **************************************
+     *
+     */
+    public int timesheetApproveEmail(UsrTimeSheetAction userTimeSheetAction,String empname) throws ServiceLocatorException, SQLException {
+        int addEmailResult = 0;
+        String status="";
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            if (userTimeSheetAction.getTempVar() == 1){
+                status="Approved";
+                }
+            else
+            {
+                status="Rejected";
+            }
+            //String emailId=DataSourceDataProvider.getInstance().getEmailId(userTimeSheetAction.getUsr_id());
+            StringBuilder htmlText = new StringBuilder();
+
+            htmlText.append("<html>");
+            htmlText.append("<head><title></title><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'> </head>");
+            htmlText.append("<body>");
+            htmlText.append("<table width='100%' cellpadding='0' cellspacing='0' border='0' bgcolor='#F6F9FB' style='width:100%; mso-cellspacing: 0px; mso-padding-alt:  0px 0px 0px 0px' >");
+            htmlText.append("<tr>");
+            htmlText.append("<td bgcolor='#Fff' width='100%' style='width:100%;'>");
+            htmlText.append("<table width='600' cellpadding='0' cellspacing='0' border='0' align='center' style='width:600px; mso-cellspacing: 0px; mso-padding-alt:0px 0px 0px 0px;color: #fff'>");
+            htmlText.append(" <tr style='height:40px'><td align='center' width='600' style='width:600px;background-color:#33BCF2'><a href=''><img src='logo.jpg' alt='loin' width='200' height='23'></a></td></tr>");
+            htmlText.append("<tr>");
+            htmlText.append("<td style='background-repeat: no-repeat;height: 140px;background-size: cover;background-position: right;background-color: #fff;background-image: url('timesheets.jpg');'>");
+            htmlText.append("<h1 style=' color: seashell; color: #fff; font-family: Roboto Slab,serif; font-size: 36px;font-weight: 300;line-height: 1.6em;text-transform: uppercase;padding-left: 356px'>Timesheets</h1><br/>");
+            htmlText.append("</td>");
+            htmlText.append("</tr>");
+            htmlText.append("<tr><td><table><tr><td></td></tr></table></td></tr>");
+            htmlText.append("<tr>");
+            htmlText.append("<td style='background-repeat: no-repeat;height: 140px;background-size: 100px 66px;background-position: right;background-color: #fff;background-image: url('date.png');'>");
+            htmlText.append("<table width='600' cellspacing='0' cellpadding='0' border='0' align='center' class='fluid'>");
+            htmlText.append("<tr><td> </td> </tr></table></tr>");
+            htmlText.append("<tr>");
+            htmlText.append("<td>");
+            htmlText.append("<table>");
+            htmlText.append("<tr style='height: 250px'>");
+            htmlText.append("<td>");
+            htmlText.append("<table style='font-style: italic; letter-spacing: 0.5px;color: #3f3f3f;border-top: 2px solid #438fc3;background-color: #f8f8f8;'>");
+            htmlText.append("<tr>");
+            htmlText.append("<td width='40'></td>");
+            htmlText.append("<td>");
+            //htmlText.append("<p>Hi, member</p>");
+            htmlText.append("<font color='blue' size='2' style='font-family:Roboto Slab,serif'><p>Hello "+empname+"</p><p>Your Time Sheet has been "+status+".</p><p><u><b>Time Sheet Details:</b></u><br>Week Start Date: "+userTimeSheetAction.getTimeSheetStartDate()+"<br>Week End Date: "+userTimeSheetAction.getTimeSheetEndDate()+"<br>Thank you.</p></font><font color='red', size='2' face='Arial'>*Note:Please do not reply to this e-mail.  It was generated by our System.</font><br clear='both'>");
+            //htmlText.append("<p> This is sent to your nominated email address .you may also view your account details here</p><br>");
+            //htmlText.append("<a style='text-decoration: none;text-align: center; color: #5e5e5e; font-size: 20px; font-weight: 100; margin-bottom: 20px;' href='#'>click here</a>");
+            htmlText.append("</td>");
+            htmlText.append("<td width='40'></td>");
+            htmlText.append("</tr></table></td></tr>");
+            htmlText.append("<tr> <td><table><tr><td width='600' height='46' align='center'>");
+            htmlText.append("<table cellspacing='0' cellpadding='20' border='0' bgcolor='#3f3f3' align='center' style='border-spacing:0;table-layout:auto;margin:0 auto'>");
+            htmlText.append("<tbody> <tr> <td align='center' style='border-collapse:collapse'>");
+            htmlText.append("<table cellspacing='0' cellpadding='0' border='0' bgcolor='#3f3f3f' align='center' style='border-spacing:0;table-layout:auto;margin:0 auto'>");
+            htmlText.append("<tbody> <tr><td width='700' style='border-collapse:collapse'>");
+            htmlText.append("<table width='520' cellspacing='0' cellpadding='0' border='0' bgcolor='#3f3f3f' align='center' style='border-collapse:collapse;border-spacing:0;table-layout:auto;margin:0 auto'>");
+            htmlText.append("<tbody>");
+            htmlText.append("<tr>");
+            htmlText.append("<td align='left' style='color:#e8e8e8;font-size:20px;font-family:Calibri,sans-serif,'Open Sans';font-weight:500;line-height:22px;border-collapse:collapse'>About Us </td>");
+            htmlText.append("</tr>");
+            htmlText.append("<tr><td height='20' style='font-size:20px;line-height:20px;border-collapse:collapse'>&nbsp; </td>");
+            htmlText.append("</tr><tr>");
+            htmlText.append("<td align='left' style='color:#848484;font-size:16px;font-family:Calibri,sans-serif,'Open Sans';line-height:20px;border-collapse:collapse'>");
+            htmlText.append("<b>ServicesBay</b> application you simplify customer relations and recruitment.");
+            htmlText.append("</td></tr>");
+            htmlText.append("<tr><td height=\"20\" style=\"font-size:20px;line-height:20px;border-collapse:collapse\">&nbsp;</td>");
+            htmlText.append("</tr><tr>");
+            htmlText.append("<td align='left' style='border-collapse:collapse'>");
+            htmlText.append("<table cellspacing='0' cellpadding='0' border='0' align='left' style='border-spacing:0;table-layout:auto;margin:0 auto'>");
+            htmlText.append("<tbody>");
+            htmlText.append("<tr><td style='border-collapse:collapse'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+            htmlText.append("<td style='border-collapse:collapse'>");
+            htmlText.append("<a class=\"btn btn-social btn-google-plus\" href=\"https://plus.google.com/+Team_MSS/\" target=\"_blank\" itemprop=\"sameAs\">");
+            htmlText.append("<img width='13' height='13' border='0' class='CToWUd' style='display:block;width:13px;min-height:13px;overflow:hidden!important' src='googleplus.png' alt='google'></a>");
+            htmlText.append("</td><td style='border-collapse:collapse'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>");
+            htmlText.append("<td style='border-collapse:collapse'>");
+            htmlText.append("<a class=\"btn btn-social btn-facebook \" href=\"https://www.facebook.com/miracle45625\" target=\"_blank\" itemprop=\"sameAs\">");
+            htmlText.append("<img width='13' height='10' border='0' class='CToWUd' style='display:block;width:13px;min-height:10px;overflow:hidden!important' src='facebook.png' alt='facebook'></a>");
+            htmlText.append("</td><td style='border-collapse:collapse'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+            htmlText.append("<td style='border-collapse:collapse'>");
+            htmlText.append(" <a class=\"btn btn-social btn-twitter\" href=\"https://twitter.com/Team_MSS\" target=\"_blank\" itemprop=\"sameAs\">");
+            htmlText.append("<img width='12' height='12' border='0' class='CToWUd' style='display:block;width:12px;min-height:12px;overflow:hidden!important' src='twitter.png' alt='linkden'></a>");
+            htmlText.append("</td><td style='border-collapse:collapse'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+            htmlText.append("<td style='border-collapse:collapse'>");
+            htmlText.append("<a class=\"btn btn-social btn-linkedin\" href=\"https://www.linkedin.com/company/miracle-software-systems-inc\" target=\"_blank\" itemprop=\"sameAs\">");
+            htmlText.append("<img width='12' height='12' border='0' class='CToWUd' style='display:block;width:12px;min-height:12px;overflow:hidden!important' src='linkedIn.png' alt='pinterest'></a>");
+            htmlText.append("</td></tr></tbody></table></td></tr></tbody></table>");
+           
+            htmlText.append("</body></html>");
+            String bodyContent = htmlText.toString();
+            //System.out.println(bodyContent);
+            System.out.println("bodyContent length---->"+bodyContent.length());
+            String sqlQuery = "INSERT INTO email_logger(from_adress,to_address,subjectcontent,bodycontent,email_status,created_by) VALUES(?,?,?,?,?,?)";
+            prepareStatement = connection.prepareStatement(sqlQuery);
+            prepareStatement.setString(1, "sb@miraclesoft.com");
+            prepareStatement.setString(2, DataSourceDataProvider.getInstance().getEmailId(userTimeSheetAction.getUsr_id()));
+            prepareStatement.setString(3, "TimeSheets");
+
+            prepareStatement.setString(4, bodyContent);
+            prepareStatement.setString(5, "pending");
+            prepareStatement.setInt(6, userTimeSheetAction.getUserSessionId());
+            System.out.println("sqlQuery " + sqlQuery);
+            addEmailResult = prepareStatement.executeUpdate();
+
+
+
+
+
+        } catch (Exception E) {
+            E.printStackTrace();
+        } finally {
+            try {
+
+                if (prepareStatement != null) {
+                    prepareStatement.close();
+                    prepareStatement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return addEmailResult;
+    }
     
-    
+    /**
+     * *************************************
+     *
+     * @timesheetAddEmail() it generates email to reporting person when user submit the timesheets
+     *
+     *
+     * @Author:Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * @Created Date:12/31/2015
+     *
+     *
+     **************************************
+     *
+     */
+    public int timesheetAddEmail(UsrTimeSheetAction userTimeSheetAction,String empname,String reportiingPersonsEmail) throws ServiceLocatorException, SQLException {
+        int addEmailResult = 0;
+        String status="";
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            
+            //String emailId=DataSourceDataProvider.getInstance().getEmailId(userTimeSheetAction.getUsr_id());
+            StringBuilder htmlText = new StringBuilder();
+
+            htmlText.append("<html>");
+            htmlText.append("<head><title></title><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'> </head>");
+            htmlText.append("<body>");
+            htmlText.append("<table width='100%' cellpadding='0' cellspacing='0' border='0' bgcolor='#F6F9FB' style='width:100%; mso-cellspacing: 0px; mso-padding-alt:  0px 0px 0px 0px' >");
+            htmlText.append("<tr>");
+            htmlText.append("<td bgcolor='#Fff' width='100%' style='width:100%;'>");
+            htmlText.append("<table width='600' cellpadding='0' cellspacing='0' border='0' align='center' style='width:600px; mso-cellspacing: 0px; mso-padding-alt:0px 0px 0px 0px;color: #fff'>");
+            htmlText.append(" <tr style='height:40px'><td align='center' width='600' style='width:600px;background-color:#33BCF2'><a href=''><img src='logo.png' alt='loin' width='200' height='23'></a></td></tr>");
+            htmlText.append("<tr>");
+            htmlText.append("<td style='background-repeat: no-repeat;height: 140px;background-size: cover;background-position: right;background-color: #fff;background-image: url('timesheets.jpg');'>");
+            htmlText.append("<h1 style=' color: seashell; color: #fff; font-family: Roboto Slab,serif; font-size: 36px;font-weight: 300;line-height: 1.6em;text-transform: uppercase;padding-left: 356px'>Timesheets</h1><br/>");
+            htmlText.append("</td>");
+            htmlText.append("</tr>");
+            htmlText.append("<tr><td><table><tr><td></td></tr></table></td></tr>");
+            htmlText.append("<tr>");
+            htmlText.append("<td style='background-repeat: no-repeat;height: 140px;background-size: 100px 66px;background-position: right;background-color: #fff;background-image: url('date.png')'>");
+            htmlText.append("<table width='600' cellspacing='0' cellpadding='0' border='0' align='center' class='fluid'>");
+            htmlText.append("<tr><td> </td> </tr></table></tr>");
+            htmlText.append("<tr>");
+            htmlText.append("<td>");
+            htmlText.append("<table>");
+            htmlText.append("<tr style='height: 250px'>");
+            htmlText.append("<td>");
+            htmlText.append("<table style='font-style: italic; letter-spacing: 0.5px;color: #3f3f3f;border-top: 2px solid #438fc3;background-color: #f8f8f8;'>");
+            htmlText.append("<tr>");
+            htmlText.append("<td width='40'></td>");
+            htmlText.append("<td>");
+            htmlText.append("<p style='color: blue' >Hi,</p>");
+            htmlText.append("<font color='blue' size='2' style='font-family:Roboto Slab,serif'><p>"+empname+" Time Sheet has been Submitted.</p><p><u><b>Time Sheet Details:</b></u><br>Week Start Date: "+userTimeSheetAction.getTimeSheetStartDate()+"<br>Week End Date: "+userTimeSheetAction.getTimeSheetEndDate()+"<br>Thank you.</p></font><font color='red', size='2' face='Arial'>*Note:Please do not reply to this e-mail.  It was generated by our System.</font><br clear='both'>");
+            //htmlText.append("<p> This is sent to your nominated email address .you may also view your account details here</p><br>");
+            //htmlText.append("<a style='text-decoration: none;text-align: center; color: #5e5e5e; font-size: 20px; font-weight: 100; margin-bottom: 20px;' href='#'>click here</a>");
+            htmlText.append("</td>");
+            htmlText.append("<td width='40'></td>");
+            htmlText.append("</tr></table></td></tr>");
+            htmlText.append("<tr> <td><table><tr><td width='600' height='46' align='center'>");
+            htmlText.append("<table cellspacing='0' cellpadding='20' border='0' bgcolor='#3f3f3' align='center' style='border-spacing:0;table-layout:auto;margin:0 auto'>");
+            htmlText.append("<tbody> <tr> <td align='center' style='border-collapse:collapse'>");
+            htmlText.append("<table cellspacing='0' cellpadding='0' border='0' bgcolor='#3f3f3f' align='center' style='border-spacing:0;table-layout:auto;margin:0 auto'>");
+            htmlText.append("<tbody> <tr><td width='700' style='border-collapse:collapse'>");
+            htmlText.append("<table width='520' cellspacing='0' cellpadding='0' border='0' bgcolor='#3f3f3f' align='center' style='border-collapse:collapse;border-spacing:0;table-layout:auto;margin:0 auto'>");
+            htmlText.append("<tbody>");
+            htmlText.append("<tr>");
+            htmlText.append("<td align='left' style='color:#e8e8e8;font-size:20px;font-family:Calibri,sans-serif,'Open Sans';font-weight:500;line-height:22px;border-collapse:collapse'>About Us </td>");
+            htmlText.append("</tr>");
+            htmlText.append("<tr><td height='20' style='font-size:20px;line-height:20px;border-collapse:collapse'>&nbsp; </td>");
+            htmlText.append("</tr><tr>");
+            htmlText.append("<td align='left' style='color:#848484;font-size:16px;font-family:Calibri,sans-serif,'Open Sans';line-height:20px;border-collapse:collapse'>");
+            htmlText.append("<b>ServicesBay</b> application you simplify customer relations and recruitment.");
+            htmlText.append("</td></tr>");
+            htmlText.append("<tr><td height=\"20\" style=\"font-size:20px;line-height:20px;border-collapse:collapse\">&nbsp;</td>");
+            htmlText.append("</tr><tr>");
+            htmlText.append("<td align='left' style='border-collapse:collapse'>");
+            htmlText.append("<table cellspacing='0' cellpadding='0' border='0' align='left' style='border-spacing:0;table-layout:auto;margin:0 auto'>");
+            htmlText.append("<tbody>");
+            htmlText.append("<tr><td style='border-collapse:collapse'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+            htmlText.append("<td style='border-collapse:collapse'>");
+            htmlText.append("<a class=\"btn btn-social btn-google-plus\" href=\"https://plus.google.com/+Team_MSS/\" target=\"_blank\" itemprop=\"sameAs\">");
+            htmlText.append("<img width='13' height='13' border='0' class='CToWUd' style='display:block;width:13px;min-height:13px;overflow:hidden!important' src='googleplus.png' alt='google'></a>");
+            htmlText.append("</td><td style='border-collapse:collapse'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>");
+            htmlText.append("<td style='border-collapse:collapse'>");
+            htmlText.append("<a class=\"btn btn-social btn-facebook \" href=\"https://www.facebook.com/miracle45625\" target=\"_blank\" itemprop=\"sameAs\">");
+            htmlText.append("<img width='13' height='10' border='0' class='CToWUd' style='display:block;width:13px;min-height:10px;overflow:hidden!important' src='facebook.png' alt='facebook'></a>");
+            htmlText.append("</td><td style='border-collapse:collapse'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+            htmlText.append("<td style='border-collapse:collapse'>");
+            htmlText.append(" <a class=\"btn btn-social btn-twitter\" href=\"https://twitter.com/Team_MSS\" target=\"_blank\" itemprop=\"sameAs\">");
+            htmlText.append("<img width='12' height='12' border='0' class='CToWUd' style='display:block;width:12px;min-height:12px;overflow:hidden!important' src='twitter.png' alt='linkden'></a>");
+            htmlText.append("</td><td style='border-collapse:collapse'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+            htmlText.append("<td style='border-collapse:collapse'>");
+            htmlText.append("<a href='http://emailonacid.us1.list-manage.com/track/click?u=b6418bd90c647b0ab5f294717&amp;id=3068995fd5&amp;e=604b7c5692' style='display:block;width:12px;min-height:12px;color:#3498db;border:0px!important;text-decoration:none' target='_blank'><a class=\"btn btn-social btn-linkedin\" href=\"https://www.linkedin.com/company/miracle-software-systems-inc\" target=\"_blank\" itemprop=\"sameAs\">");
+            htmlText.append("<img width='12' height='12' border='0' class='CToWUd' style='display:block;width:12px;min-height:12px;overflow:hidden!important' src='linkedIn.png' alt='pinterest'></a>");
+            htmlText.append("</td></tr></tbody></table></td></tr></tbody></table>");
+           
+            htmlText.append("</body></html>");
+            String bodyContent = htmlText.toString();
+            //System.out.println(bodyContent);
+            System.out.println("bodyContent length---->"+bodyContent.length());
+            String sqlQuery = "INSERT INTO email_logger(from_adress,to_address,subjectcontent,bodycontent,email_status,created_by) VALUES(?,?,?,?,?,?)";
+            prepareStatement = connection.prepareStatement(sqlQuery);
+            prepareStatement.setString(1, "sb@miraclesoft.com");
+            prepareStatement.setString(2, StringUtils.chop(reportiingPersonsEmail));
+            prepareStatement.setString(3, "TimeSheets");
+
+            prepareStatement.setString(4, bodyContent);
+            prepareStatement.setString(5, "pending");
+            prepareStatement.setInt(6, userTimeSheetAction.getUserSessionId());
+            System.out.println("sqlQuery " + sqlQuery);
+            addEmailResult = prepareStatement.executeUpdate();
+
+
+
+
+
+        } catch (Exception E) {
+            E.printStackTrace();
+        } finally {
+            try {
+
+                if (prepareStatement != null) {
+                    prepareStatement.close();
+                    prepareStatement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return addEmailResult;
+    }
+    /**
+     * *************************************
+     *
+     * @sendInvitation() to send mail to recruitment member with PO attachment
+     *
+     * @Author:jagan chukkala<jchukkala@miraclesoft.com>
+     *
+     * @Created Date:08/Jan/2016
+     *
+     *
+     **************************************
+     *
+     */
+    public static void sendPOStatement(UserAjaxHandlerAction userAjaxHandlerAction, String attach, String file,String fileName,String customerName) throws Exception {
+
+        System.out.println("In sendPOStatement()");
+        String from = com.mss.msp.util.Properties.getProperty("MSB.from").toString();
+        String fileAttachment = attach;
+        int mailFlag = Integer.parseInt(com.mss.msp.util.Properties.getProperty("Mail.Flag"));
+//        System.out.println("userid,--->"+userId);
+//        System.out.println("username,--->"+userName);
+//        System.out.println("startdate--->"+startDate);
+//        System.out.println("enddate--->"+endDate);
+//        System.out.println("logo--->"+accLogo);
+//        System.out.println("accname--->"+accName);
+        try {
+            if (mailFlag == 1) {
+//                MimetypesFileTypeMap mimetypes = (MimetypesFileTypeMap) MimetypesFileTypeMap.getDefaultFileTypeMap();
+//                mimetypes.addMimeTypes("text/calendar ics ICS");
+//
+//                //register the handling of text/calendar mime type
+//                MailcapCommandMap mailcap = (MailcapCommandMap) MailcapCommandMap.getDefaultCommandMap();
+//                mailcap.addMailcap("text/calendar;; x-java-content-handler=com.sun.mail.handlers.text_plain");
+
+
+                Properties props = new Properties();
+
+                props.setProperty("mail.transport.protocol", "smtp");
+                props.setProperty("mail.host", SMTP_HOST);
+
+                props.put("mail.smtp.starttls.enable", "true");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.port", SMTP_PORT);
+                Authenticator auth = new SMTPAuthenticator();
+                //Session mailSession = Session.getDefaultInstance(props, null);
+                Session mailSession = Session.getDefaultInstance(props, auth);
+
+                MimeMessage message = new MimeMessage(mailSession);
+                message.setFrom(new InternetAddress(from));
+                message.setSubject("ServicesBay Notification : Purchase Order");
+
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(userAjaxHandlerAction.getEmailId()));
+                MimeBodyPart messageBodyPart =
+                        new MimeBodyPart();
+                Multipart multipart = new MimeMultipart("related");
+                StringBuilder htmlText = new StringBuilder();
+                htmlText.append("<table width='650' align='center' cellspacing='0' cellpadding='0' border='0' style='width: 487.5pt;' class='MsoNormalTable'>");
+                htmlText.append("<tbody style=''><tr style=''><td valign='top' style='padding: 0in;'><p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>");
+                htmlText.append("</span></p></td></tr>");
+               
+                
+                htmlText.append("<tr style='background-color:lightgray'><td style='text-align: center;'> <img width='300' height='94' border='0' dfsrc='http://devint.1ct.es/343/images/mailer-header.png' id='_x0000_i1025' style='' src='cid:image' > </td></tr>");
+                
+                
+                htmlText.append("<tr id='SaluationSection' style=''><td valign='top' style='padding: 0in;'>");
+                htmlText.append("<table width='100%' cellspacing='0' cellpadding='0' border='0' style='width: 100%;' class='MsoNormalTable'>");
+                htmlText.append("<tbody style=''><tr style=''><td valign='top' style='padding: 0in;'><div style=''><table width='100%' cellspacing='0' cellpadding='0' border='0' style='width: 100%;' class='MsoNormalTable'>");
+                htmlText.append("<tbody style=''><tr style=''><td valign='top' style='padding: 0in;'><div align='center' style=''>");
+                htmlText.append("<table width='650' cellspacing='0' cellpadding='0' border='0' style='width: 487.5pt;' class='MsoNormalTable'><tbody style=''>");
+                htmlText.append("<tr style=''><td valign='top' style='padding: 0in;'><table width='100%' cellspacing='0' cellpadding='0' border='0' style='width: 100%;' class='MsoNormalTable'>");
+                htmlText.append("<tbody style=''><tr style=''><td valign='top' style='padding: 0in;'><div style=''><table width='100%' cellspacing='0' cellpadding='0' border='0' style='width: 100%;' class='MsoNormalTable'>");
+                htmlText.append("<tbody style=''><tr style=''><td valign='top' style='padding: 11.25pt 15pt; background: rgb(240, 252, 255) none repeat scroll 0% 0%;'><h2 style=''>");
+                htmlText.append("Dear<span style='font-family: &quot;segoe ui&quot;,sans-serif;'> "+userAjaxHandlerAction.getAccountName()+",</span></h2></td></tr><tr id='RequestDetails' style=''><td valign='top' style='padding: 0in;'>");
+
+                htmlText.append("<p style='margin-left: 11.25pt;'><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(79, 79, 79);'>Please find attached approved Purchase Order for <b> "+userAjaxHandlerAction.getUserName()+"</b> (Candidate ID - "+userAjaxHandlerAction.getUserId()+") </span>");
+                htmlText.append("</p></td></tr><tr id='RequestInformation' style=''><td valign='top' style='padding: 11.25pt 15pt;'>");
+                htmlText.append("<p style='margin-left: 1.5pt;'><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(79, 79, 79);'>Following are the details of the Purchase Order for your reference: </span></p>");
+                htmlText.append("<table width='100%' cellspacing='0' cellpadding='0' border='1' style='width: 100%; border-collapse: collapse; border: medium none;' class='MsoNormalTable'>");
+                htmlText.append("<tbody style=''><tr style=''><td valign='top' style='border: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>PO Number </span>");
+                htmlText.append("</p></td><td valign='top' style='border-style: solid solid solid none; border-top: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); border-bottom: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>"+userAjaxHandlerAction.getSowId()+"</span></p>");
+                htmlText.append("</td></tr><tr style=''><td valign='top' style='border-style: none solid solid; border-right: 1pt solid rgb(120, 204, 245); border-bottom: 1pt solid rgb(120, 204, 245); border-left: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>Subcontractor</span></p>");
+                htmlText.append("</td><td valign='top' style='border-style: none solid solid none; border-bottom: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>"+userAjaxHandlerAction.getUserName()+" (Candidate ID - "+userAjaxHandlerAction.getUserId()+")</span></p>");
+                htmlText.append("</td></tr><tr style=''><td valign='top' style='border-style: none solid solid; border-right: 1pt solid rgb(120, 204, 245); border-bottom: 1pt solid rgb(120, 204, 245); border-left: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>PO Start Date</span></p>");
+                htmlText.append("</td><td valign='top' style='border-style: none solid solid none; border-bottom: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>");
+                htmlText.append("<span id='OBJ_PREFIX_DWT132_com_zimbra_date' role='link' class='Object'>"+userAjaxHandlerAction.getPoStartDate()+"</span></span></p></td></tr>");
+                htmlText.append("<tr style=''><td valign='top' style='border-style: none solid solid; border-right: 1pt solid rgb(120, 204, 245); border-bottom: 1pt solid rgb(120, 204, 245); border-left: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>PO End Date </span></p>");
+                htmlText.append("</td><td valign='top' style='border-style: none solid solid none; border-bottom: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'><p class='MsoNormal' style=''>");
+                htmlText.append("<span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'><span id='OBJ_PREFIX_DWT133_com_zimbra_date' role='link' class='Object'>"+userAjaxHandlerAction.getPoEndDate()+"</span>");
+                htmlText.append("</span></p></td></tr><tr style=''><td valign='top' style='border-style: none solid solid; border-right: 1pt solid rgb(120, 204, 245); border-bottom: 1pt solid rgb(120, 204, 245); border-left: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>Recruiter Mail ID</span>");
+                htmlText.append("</p></td><td valign='top' style='border-style: none solid solid none; border-bottom: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>"+userAjaxHandlerAction.getEmailId()+"");
+                htmlText.append("</span></p></td></tr></tbody></table></td></tr><tr style=''><td valign='top' style='padding: 3.75pt 397.5pt 3.75pt 0in;'>");
+
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(79, 79, 79);'>&nbsp;&nbsp;&nbsp;&nbsp;Rate Details:</span></p>");
+                htmlText.append("</td></tr><tr style=''>");
+                htmlText.append("<td valign='top' style='padding: 0in;' colspan='2'><div align='center' style=''>");
+                htmlText.append("<table width='100%' cellspacing='0' cellpadding='0' border='1' style='width: 94%; border-collapse: collapse; border: medium none;' class='MsoNormalTable'>");
+                htmlText.append("<tbody style=''><tr style=''><td valign='top' style='border: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'><p class='MsoNormal' style=''>");
+
+                htmlText.append("<span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>Base Rate</span></p>");
+                htmlText.append("</td><td valign='top' style='border-style: solid solid solid none; border-top: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); border-bottom: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''>");
+                htmlText.append("<span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>Overtime Rate</span></p>");
+//                htmlText.append("</td><td valign='top' style='border-style: solid solid solid none; border-top: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); border-bottom: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+//                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>T&amp;E Rate</span>");
+                htmlText.append("</p></td><td valign='top' style='border-style: solid solid solid none; border-top: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); border-bottom: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>Overtime Limit</span></p>");
+                htmlText.append("</td></tr><tr style=''><td valign='top' style='border-style: none solid solid; border-right: 1pt solid rgb(120, 204, 245); border-bottom: 1pt solid rgb(120, 204, 245); border-left: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>"+userAjaxHandlerAction.getBaseRate()+"</span></p>");
+                htmlText.append("</td><td valign='top' style='border-style: none solid solid none; border-bottom: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                //htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>"+userAjaxHandlerAction.getBaseRate()+"</span></p>");
+                //htmlText.append("</td><td valign='top' style='border-style: none solid solid none; border-bottom: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>"+userAjaxHandlerAction.getOverTimeRate()+"</span></p>");
+                htmlText.append("</td><td valign='top' style='border-style: none solid solid none; border-bottom: 1pt solid rgb(120, 204, 245); border-right: 1pt solid rgb(120, 204, 245); padding: 3.75pt;'>");
+                htmlText.append("<p class='MsoNormal' style=''><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>"+userAjaxHandlerAction.getOverTimeLimit()+"</span></p>");
+                htmlText.append("</td></tr></tbody></table></div></td></tr>");
+                htmlText.append("<tr style='height: 11.25pt;'><td valign='top' style='padding: 0in; height: 11.25pt;'></td><td style='padding: 0in; height: 11.25pt;'></td>");
+                htmlText.append("</tr><tr id='RequestOtherDetails' style=''><td valign='top' style='padding: 0in;'>");
+                //htmlText.append("<p style='margin-left: 15pt;'><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(79, 79, 79);'>Please Note: T&amp;E would be processed through ASPEN system upon invoice being raised and uploaded in ASPEN. </span></p>");
+                htmlText.append("</td><td style='padding: 0in;'></td></tr><tr style='height: 11.25pt;'><td valign='top' style='padding: 0in; height: 11.25pt;'>");
+                htmlText.append("</td><td style='padding: 0in; height: 11.25pt;'></td></tr><tr id='RequestOtherDetails1' style=''><td valign='top' style='padding: 0in;'><p style='margin-left: 15pt;'>");
+                htmlText.append("<span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;sans-serif; color: rgb(79, 79, 79);>Incase of any discrepancy in PO, please write to the recruiter you are co-ordinating with, within the next 7 days. Please CC <span id='OBJ_PREFIX_DWT135_ZmEmailObjectHandler' role='link' class='Object'>");
+
+                htmlText.append("</span> </span></p></td><td style='padding: 0in;'></td></tr><tr style='height: 11.25pt;'>");
+                htmlText.append("<td valign='top' style='padding: 0in; height: 11.25pt;'></td><td style='padding: 0in; height: 11.25pt;'></td></tr>");
+                htmlText.append("<tr id='ApprovalMethods' style=''><td valign='top' style='padding: 0in;'></td><td style='padding: 0in;'></td></tr>");
+                htmlText.append("<tr id='twoWayReplyButtons' style=''><td valign='top' style='padding: 0in;'></td><td style='padding: 0in;'></td></tr>");
+                htmlText.append("<tr id='valedictionSection' style=''><td valign='top' style='padding: 0in;'>");
+                htmlText.append("<p style='margin-left: 15pt;'><span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(79, 79, 79);'>Regards, <br style=''>ServicesBay Team </span></p>");
+
+                htmlText.append("</td><td style='padding: 0in;'></td></tr></tbody>");
+                htmlText.append("</table></div></td></tr></tbody>");
+                htmlText.append("</table></td></tr></tbody></table><br></div></td></tr></tbody></table></div></td></tr></tbody></table></td></tr>");
+                htmlText.append("<tr id='AutoGeneratedMailOneWay' style=''><td valign='top' style='padding: 11.25pt 15pt; background: rgb(247, 247, 247) none repeat scroll 0% 0%;'><p style=''>");
+                htmlText.append("<span style='font-size: 9pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(62, 76, 81);'>** This is an Auto Generated Mail. Please Do not reply to this mail**</span>");
+                htmlText.append("</p></td></tr><tr id='footerImage' style=''>");
+                htmlText.append("<tr id='footerImage' width='100%' style='background-color:lightgray'>");
+                htmlText.append("<td><table><tr><td style='border-right:1px solid #3c3c3c'><img src='cid:image' style='width:300px;height:80px' /></td><td ><b style='text-align:center' >"+customerName+"</b></td></tr></table></td>");
+ 
+                
+                
+//                htmlText.append("<td valign='top' style='padding: 0in;'><p class='MsoNormal' style=''>");
+//                htmlText.append("<span style='font-size: 10.5pt; font-family: &quot;segoe ui&quot;,sans-serif; color: rgb(41, 56, 62);'>");
+//                htmlText.append("<img width='300' height='75' border='0'  style='' src=\"cid:image\" />"+userAjaxHandlerAction.getAccountName()+"</span>");
+//                htmlText.append("</p></td>"
+//                        + ""
+                        htmlText.append("</tr></tbody></table>");
+
+                
+                
+                String bodyContent = htmlText.toString();
+               // System.out.println(bodyContent);
+//                StringBuffer body
+//            = new StringBuffer("<html>This message contains two inline images.<br>");
+                //String htmlText = "<html><H1 style='color: red'>Hello</H1><img src=\"cid:image\"></img></html>";
+               messageBodyPart.setContent(bodyContent, "text/html; charset=utf-8");
+               messageBodyPart.setDisposition(MimeBodyPart.INLINE);
+              
+//                messageBodyPart.setContent(bodyContent
+//, "text/html");
+                // inline images
+//        Map<String, String> inlineImages = new HashMap<String, String>();
+//        inlineImages.put("image1", attach);
+                //inlineImages.put("image2", "E:/Test/cube.jpg");
+
+                //messageBodyPart.setText(htmlText);
+// Create an alternative Multipart
+
+                multipart.addBodyPart(messageBodyPart);
+//part 1, html text
+//                BodyPart messageBodyPart;
+//                messageBodyPart = buildHtmlTextPart(recruitmentAction, emapMailId);
+//                multipart.addBodyPart(messageBodyPart);
+
+// Add part two, the calendar
+//                BodyPart calendarPart = buildCalendarPart(recruitmentAction, emapMailId, from);
+//                multipart.addBodyPart(calendarPart);
+
+//Put the multipart in message 
+                MimeBodyPart messageBodyPart1 =
+                        new MimeBodyPart();
+                //messageBodyPart = new MimeBodyPart();
+                DataSource source =
+                        new FileDataSource(fileAttachment);
+//                messageBodyPart.setDataHandler(
+//                        new DataHandler(source));
+//                messageBodyPart.setFileName(fileAttachment);
+//                multipart.addBodyPart(messageBodyPart);
+
+                messageBodyPart1.setDataHandler(new DataHandler(source));
+               messageBodyPart1.setHeader("Content-Type", "image/jpeg");
+                
+                messageBodyPart1.setHeader("Content-ID", "<image>");
+               
+                multipart.addBodyPart(messageBodyPart1);
+                MimeBodyPart messageBodyPart2 =
+                        new MimeBodyPart();
+                DataSource sources =
+                        new FileDataSource(file);
+                messageBodyPart2.setDataHandler(new DataHandler(sources));
+                messageBodyPart2.setFileName(fileName);
+                multipart.addBodyPart(messageBodyPart2);
+                // Put parts in message
+
+                message.setContent(multipart);
+
+                // send the message
+                Transport transport = mailSession.getTransport("smtp");
+                transport.connect();
+                transport.sendMessage(message, message.getAllRecipients());
+                transport.close();
+            }
+
+        } catch (NoSuchProviderException ex) {
+            ex.printStackTrace();
+        } catch (MessagingException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public int requirementStatusChangeMailGenerator(RequirementAction requirementAction, String MailIds, int userId) throws ServiceLocatorException, SQLException {
+        int addEmailResult = 0;
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+
+
+            StringBuilder htmlText = new StringBuilder();
+
+            htmlText.append("<html>");
+            htmlText.append("<body>");
+            htmlText.append("<table align='center'>");
+
+            htmlText.append("<tr style='background:#33CCFF;height:40px;width:100%;'>");
+            htmlText.append("<td>");
+            htmlText.append("<font color='white' size='4' face='Arial'>");
+            htmlText.append("<p>Requirement Status Change Notification</p>");
+            htmlText.append("</font>");
+            htmlText.append("</td>");
+            htmlText.append("</tr>");
+
+            htmlText.append("<tr>");
+            htmlText.append("<td>");
+            htmlText.append("<table style='background:#FFFFCC;width:100%;' color='#151B54' size='4px' height='20px' >");
+            htmlText.append("<tr>");
+            htmlText.append("<td>");
+            htmlText.append("<font color='#3399FF' size='2' face='Arial' style='font-weight:600;'>");
+            htmlText.append("<br>Hello,  ");
+            htmlText.append("</font><br></td></tr>");
+
+            htmlText.append("<tr><td colspan='2'>");
+            htmlText.append(" Requirement status has been Changed.From Now You can add Consultant<b><font color='#6666FF'>" );
+            htmlText.append("</font></b></td></tr>");
+
+            htmlText.append("<tr><td> <table border='0' align='left'> <tr><td ><font> ");
+            htmlText.append(" Requirement Details :</font></td>");
+            htmlText.append("</tr>");
+
+            htmlText.append("<br> <tr><td>");
+            htmlText.append("Name :</td><td align='left' >");
+            htmlText.append("<font color='red' >" + requirementAction.getRequirementName() + "</font></td></tr> ");
+
+            htmlText.append(" <tr><td>  ");
+            htmlText.append("No.Of Resources :</td><td align='left' >");
+            htmlText.append("<font color='red' >" + requirementAction.getRequirementNoofResources() + "</font></td></tr> ");
+
+            htmlText.append("<tr><td>");
+            htmlText.append("Start Date :</td><td align='left' >");
+            htmlText.append("<font color='red' >" + requirementAction.getRequirementFrom() + "</font></td></tr> ");
+
+//            htmlText.append("<tr><td valign='top' ><font > ");
+//            htmlText.append("End Date :</font></td><td align='left'> ");
+//            htmlText.append(" <font color='red' >" + requirementVTO.getReqEndDate() + "</font></td></tr> ");
+
+            htmlText.append(" <tr><td> ");
+            htmlText.append("Description   :</font></td><td align='left' >");
+            htmlText.append(" <font color='red' >" + requirementAction.getRequirementJobdesc() + "</font></td></tr> ");
+            
+            
+
+            htmlText.append(" <tr><td> ");
+            htmlText.append("</td></tr>  </table> </td></tr> <tr><td colspan='2' >");
+            htmlText.append("<br>Regards,");
+            htmlText.append("</td></tr><tr><td colspan='2' >");
+            htmlText.append("Services Bay ");
+            htmlText.append(" Support Team,</td></tr><tr>");
+            htmlText.append("<td colspan='2' ><font ");
+            htmlText.append(" >Miracle Software Systems, Inc.</font>");
+            htmlText.append("<tr>");
+            htmlText.append("<td>");
+            htmlText.append("<font color='red', size='2' face='Arial' style='font-weight:600;'>*Note:Please do not reply to this e-mail. It was generated by our System.</font>");
+            htmlText.append("</td>");
+            htmlText.append("</tr>");
+            htmlText.append("</table>");
+            htmlText.append("</body>");
+            htmlText.append("</html>");
+
+            String bodyContent = htmlText.toString();
+
+            System.out.println(bodyContent);
+
+            String sqlQuery = "INSERT INTO email_logger(from_adress,to_address,subjectcontent,bodycontent,email_status,created_by) VALUES(?,?,?,?,?,?)";
+            prepareStatement = connection.prepareStatement(sqlQuery);
+            prepareStatement.setString(1, "sb@miraclesoft.com");
+            prepareStatement.setString(2, MailIds);
+            prepareStatement.setString(3, "Requirement Status "
+                    + "Change Notification");
+
+            prepareStatement.setString(4, bodyContent);
+            prepareStatement.setString(5, "pending");
+            prepareStatement.setInt(6, userId);
+            System.out.println("sqlQuery " + sqlQuery);
+            addEmailResult = prepareStatement.executeUpdate();
+
+
+
+
+
+        } catch (Exception E) {
+            E.printStackTrace();
+        } finally {
+            try {
+
+                if (prepareStatement != null) {
+                    prepareStatement.close();
+                    prepareStatement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return addEmailResult;
+    }
 }

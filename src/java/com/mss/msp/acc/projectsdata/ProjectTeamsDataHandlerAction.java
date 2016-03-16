@@ -112,6 +112,9 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 String teamMembersResultString = ServiceLocator.getProjectTeamsDataHandlerService().getTeamMemberDetails(this);
                 System.out.println("===============>in ProjectAction----->" + teamMembersResultString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(teamMembersResultString);
@@ -134,6 +137,9 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 resultString = ServiceLocator.getProjectTeamsDataHandlerService().showResourceDetails(this);
                 //System.out.println("===============>in ProjectAction----->" + teamMembersResultString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
@@ -156,6 +162,9 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int updateTeamStatus = ServiceLocator.getProjectTeamsDataHandlerService().EmpReleasefromProject(this);
                 System.out.println("===============>in ProjectAction----->" + updateTeamStatus);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 if (updateTeamStatus > 0) {
@@ -197,6 +206,9 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
 
 
                 System.out.println("--------------" + resultString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
@@ -220,6 +232,9 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
 
 
                 System.out.println("--------------" + resultString);
+               httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);

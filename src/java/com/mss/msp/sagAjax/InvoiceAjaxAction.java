@@ -48,7 +48,9 @@ public class InvoiceAjaxAction extends ActionSupport implements ServletRequestAw
                 
                 // userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 String details = ServiceLocator.getInvoiceAjaxService().getTotalHoursTooltip(this);
-              
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text/html");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(details);
@@ -71,6 +73,9 @@ public class InvoiceAjaxAction extends ActionSupport implements ServletRequestAw
                 setOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 String editoverlay = ServiceLocator.getInvoiceAjaxService().generateInvoice(this);
                 System.out.println("this is generate invoice-->" + editoverlay);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write("" + editoverlay + "");
@@ -90,6 +95,9 @@ public class InvoiceAjaxAction extends ActionSupport implements ServletRequestAw
                 setOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 String recreatedList = ServiceLocator.getInvoiceAjaxService().getRecreatedList(this);
                 System.out.println("this is generate invoice-->" + recreatedList);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write("" + recreatedList + "");

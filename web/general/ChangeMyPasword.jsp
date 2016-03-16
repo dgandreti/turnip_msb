@@ -14,19 +14,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-
         <!-- new styles -->
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ServicesBay :: Change password Page</title>
-
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/main.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive.css"/>">
+         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive_queries.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/profilediv.css"/>"><!--this is for all css in profile view -->
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
@@ -48,119 +45,113 @@
         </script>
     </head>
     <body>
-        
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
-
-                    <s:include value="/includes/template/header.jsp"/> 
-                </div>
-            </div><!--/header_top-->
-
-        </header><!--/header-->
-        <div class="wrap_pwd">
-        <section id="generalForm" class=""><!--form-->
-
-            <%--<div class="header-middle"><!--header-middle-->
-                <div class="container">
-                    
-                    <div class="row">
-                        <s:include value="/includes/menu/generalTopMenu.jsp"/> 
+        <div id="wrap">
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
+                        <s:include value="/includes/template/header.jsp"/> 
                     </div>
-                        
-               </div>
-            </div> --%>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4 col-md-3 col-lg-2 sidemenu">
+                </div><!--/header_top-->
+            </header><!--/header-->
+            <div id="main">
+                <div class="wrap_pwd">
+                    <section id="generalForm" class=""><!--form-->
+                        <%--<div class="header-middle"><!--header-middle-->
+                            <div class="container">
+                                
+                                <div class="row">
+                                    <s:include value="/includes/menu/generalTopMenu.jsp"/> 
+                                </div>
+                           </div>
+                        </div> --%>
+                        <div class="container">
+                            <div class="row">
+                                <s:include value="/includes/menu/LeftMenu.jsp"/> 
+                                <div class="col-sm-12 col-md-8 col-lg-7 right_block">
+                                    <div class="">
+                                        <div class="features_items"><!--features_items-->
+                                            <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                                                <div class="backgroundcolor" >
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                            <font color="#ffffff">Change your password</font>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <font id="resMessage" style="color: green;font-size: 12px;"><s:property value="#request.resultMessage"/></font>
+                                                <span><resetMessage></resetMessage></span>
+                                                <div class="password_box" ><!--login form-->
 
-                        <s:include value="/includes/menu/LeftMenu.jsp"/> 
-                    </div>
-                    <div class="col-sm-8 col-md-7 col-lg-6 col-lg-offset-1">
-                        <div class="">
-                            <div class="features_items"><!--features_items-->
-                                <div class="col-lg-12 ">
-                                    <div class="" id="profileBox" style="float: left; margin-top: 5px">
-
-                                        <div class="backgroundcolor" >
-
-
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-
-                                                    <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                    <font color="#ffffff">Change your password</font>
-
-                                                </h4>
-                                            </div>
-
-                                        </div>
-                                        <font id="resMessage" style="color: green;font-size: 12px;"><s:property value="#request.resultMessage"/></font>
-                                        <span><resetMessage></resetMessage></span>
-                                        <div class="" ><!--login form-->
-
-                                            <form id="ResetPassword" action="resetMyPassword" onclick="return checkPasswordMatch();" >
-                                                <%//if(request.getAttribute(ApplicationConstants.RESULT_MSG)!=null){
-                                                    //out.println(request.getAttribute(ApplicationConstants.RESULT_MSG));
-                                                    //}                                
+                                                    <form id="ResetPassword" action="resetMyPassword" onclick="return checkPasswordMatch();" >
+                                                        <%//if(request.getAttribute(ApplicationConstants.RESULT_MSG)!=null){
+                                                            //out.println(request.getAttribute(ApplicationConstants.RESULT_MSG));
+                                                            //}                                
 %>
-                                                <div class="required">
-                                                    <div class="col-lg-5 col-sm-5 req_margin">
-                                                        <label id="labelLevelStatusReq">Current Password</label>                            
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 req_margin">
-                                                        <s:password name="curPwd" cssClass="form-control" id="curPwd"  placeholder="Current Password"  required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"  onchange="matchCurrentPassword()"    title="Password must contain at least 6 characters, including UPPER/lowercase and numbers"   tabindex="3"/>
-                                                    </div>
-                                                    <div class="col-lg-5 col-sm-5 req_margin">
-                                                        <label id="labelLevelStatusReq">New Password</label>                            
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 req_margin">
-                                                        <s:password name="newpwd" cssClass="form-control" id="pwd1"  placeholder="New Password"  required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"  onchange="form.cnfrmpwd.pattern=this.value"    title="Password must contain at least 6 characters, including UPPER/lowercase and numbers"   tabindex="3"/>
-                                                    </div>
+                                                        <div class="required">
+                                                            <div class="col-lg-5 col-sm-5 req_margin">
+                                                                <label id="labelLevelStatusReq">Current Password</label>                            
+                                                            </div>
+                                                            <div class="col-lg-6 col-sm-6 req_margin">
+                                                                <s:password name="curPwd" cssClass="form-control" id="curPwd"  placeholder="Current Password"  required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"  onchange="matchCurrentPassword()"    title="Password must contain at least 6 characters, including UPPER/lowercase and numbers"   tabindex="1"/>
+                                                            </div>
+                                                            <div class="col-lg-5 col-sm-5 req_margin">
+                                                                <label id="labelLevelStatusReq">New Password</label>                            
+                                                            </div>
+                                                            <div class="col-lg-6 col-sm-6 req_margin">
+                                                                <s:password name="newpwd" cssClass="form-control" id="pwd1"  placeholder="New Password"  required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"  onchange="form.cnfrmpwd.pattern=this.value"    title="Password must contain at least 6 characters, including UPPER/lowercase and numbers"   tabindex="2"/>
+                                                            </div>
 
-                                                    <div class="col-lg-5 col-sm-5 req_margin">     
-                                                        <label id="labelLevelStatusReq">Confirm Password</label>                          
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 req_margin"> 
-                                                        <s:password  name="cnfrmpwd" cssClass="form-control" id="pwd2" placeholder="Confirm Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"    oninvalid="setCustomValidity('Please enter the same Password as above')"   onchange="try{setCustomValidity('')}catch(e){}" tabindex="4"/>
-                                                    </div>
+                                                            <div class="col-lg-5 col-sm-5 req_margin">     
+                                                                <label id="labelLevelStatusReq">Confirm Password</label>                          
+                                                            </div>
+                                                            <div class="col-lg-6 col-sm-6 req_margin"> 
+                                                                <s:password  name="cnfrmpwd" cssClass="form-control" id="pwd2" placeholder="Confirm Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"    oninvalid="setCustomValidity('Please enter the same Password as above')"   onchange="try{setCustomValidity('')}catch(e){}" tabindex="3"/>
+                                                            </div>
+
+                                                            <br>
+                                                             <div  class="">
+                                                                <div style="float:left" class="col-sm-8 req_margin ">  
+
+                                                                    <div align="right"><button type="submit" id="" value="Submit" tabindex="4" class="cssbutton req_margin align_left fa fa-check-circle-o">&nbsp;Submit</button>
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                                <div style="float:left" class="col-sm-3 req_margin "> 
+
+                                                                    <div align="right"><button type="reset" value="Cancel" tabindex="5" class="cssbutton req_margin align_left  fa fa-times" style="margin:5px 12px;" onclick="javascript:history.back();">&nbsp;Cancel</button>
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
                                                 </div>
-
-                                                <div class="col-sm-12">  
-                                                    <s:submit  cssClass="cssbutton req_margin"  type="submit" value="submit"/>
-                                                </div>
-                                            </form>
-
+                                            </div>
+                                            <!-- maps end -->
                                         </div>
                                     </div>
-
-                                    <!-- maps end -->
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <!-- content end -->
+                        <!-- content start -->
+                    </section><!--/form-->
                 </div>
             </div>
-            <!-- content end -->
-
-            <!-- content start -->
-
-        </section><!--/form-->
- </div>
-        <div style="height: 95px"></div>
-
+        </div>
         <footer id="footer"><!--Footer-->
-
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">
                     <s:include value="/includes/template/footer.jsp"/>
                 </div>
             </div>
-
         </footer><!--/Footer-->
-   
-<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
-
-
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

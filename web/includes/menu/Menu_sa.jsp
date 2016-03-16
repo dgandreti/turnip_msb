@@ -38,6 +38,25 @@
                     </div>
                 </div>
             </div>
+           <div class="panel panel-default left-menu" id="accordian_services">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#womens">
+                            <i id="leftBullet" class="fa fa-tachometer"></i>
+                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
+                            Dashboard
+                        </a>
+                    </h4>
+                </div>
+                <div id="womens" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul>
+                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/dashboard/dashBoardDetails.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Requirements</a></li>
+                            <%-- <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/general/changeMyPassword.action">Change My Pwd</a></li>     --%>
+                        </ul>
+                    </div>
+                </div>
+            </div>             
             <div class="panel panel-default left-menu" id="accordian_team">
                 <div class="panel-heading" >
                     <h4 class="panel-title">
@@ -62,25 +81,7 @@
                 </div>
             </div>
 
-            <div class="panel panel-default left-menu" id="accordian_services">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#womens">
-                            <i id="leftBullet" class="fa fa-tachometer"></i>
-                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
-                            Dashboard
-                        </a>
-                    </h4>
-                </div>
-                <div id="womens" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <ul>
-                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/dashboard/dashBoardDetails.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;DashBoard</a></li>
-                            <%-- <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/general/changeMyPassword.action">Change My Pwd</a></li>     --%>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            
 
         </div><!--/category-products-->
 

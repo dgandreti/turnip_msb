@@ -92,6 +92,7 @@ public class CostCenterAction extends ActionSupport implements ServletRequestAwa
         resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
+                setDashBoardYear(Calendar.getInstance().get(Calendar.YEAR));
                 setCostCenterSearchList(ServiceLocator.getCostCenterService().costCenterInfoSearch(this));
                 resultType = SUCCESS;
             } catch (Exception ex) {

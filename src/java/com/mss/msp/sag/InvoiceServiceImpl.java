@@ -48,12 +48,12 @@ public class InvoiceServiceImpl implements InvoiceService {
                 sqlquery = "SELECT inv.invoiceid,inv.totalhrs,totalamt,invoicestatus,invoicemonth,"
                         + "invoiceyear,inv.usr_id,CONCAT(first_name,'.',last_name) NAMES,account_name AS custname "
                         + "FROM invoice inv LEFT OUTER JOIN  users u ON (inv.usr_id=u.usr_id)"
-                        + "  LEFT OUTER JOIN accounts acc ON (inv.custorg_id=acc.account_id) WHERE inv.frm_orgid=" + invoiceAction.getSessionOrgId();
+                        + "  LEFT OUTER JOIN accounts acc ON (inv.custorg_id=acc.account_id) WHERE inv.frm_orgid=" + invoiceAction.getSessionOrgId()+" and invoiceyear=" + invoiceAction.getInvoiceYear();
             } else {
                 sqlquery = "   SELECT inv.invoiceid,inv.totalhrs,totalamt,invoicestatus,invoicemonth,"
                         + "invoiceyear,inv.usr_id,CONCAT(first_name,'.',last_name) NAMES,account_name AS custname "
                         + "FROM invoice inv LEFT OUTER JOIN  users u ON (inv.usr_id=u.usr_id) "
-                        + "LEFT OUTER JOIN accounts acc ON (inv.frm_orgid=acc.account_id) WHERE  inv.custorg_id=" + invoiceAction.getSessionOrgId();
+                        + "LEFT OUTER JOIN accounts acc ON (inv.frm_orgid=acc.account_id) WHERE  inv.custorg_id=" + invoiceAction.getSessionOrgId()+" and invoiceyear=" + invoiceAction.getInvoiceYear();
             }
             sqlquery += " order by NAMES limit 100 ";
 

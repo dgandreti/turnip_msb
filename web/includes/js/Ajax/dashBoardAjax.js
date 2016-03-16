@@ -143,10 +143,10 @@ function dashboardMessage(message)
 {
     //  alert(message.id);
     if(message.id=="customerBoard"){
-        document.getElementById("headingmessage").innerHTML='Customer Dashboard<i  class="fa fa-angle-up " id="updownArrow" onclick="toggleContent(\'customerDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
+        document.getElementById("headingmessage").innerHTML='Customer Dashboard<i  class="fa fa-angle-up " id="updownArrowAccount" onclick="toggleContentAccount(\'customerDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
     }
     if(message.id=="vendorBoard"){
-        document.getElementById("headingmessage").innerHTML='Vendor Dashboard<i  class="fa fa-angle-up " id="updownArrow" onclick="toggleContent(\'vendorDivision\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
+        document.getElementById("headingmessage").innerHTML='Vendor Dashboard<i  class="fa fa-angle-up " id="updownArrowAccount" onclick="toggleContentAccount(\'vendorDivision\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
     }
 }
 
@@ -223,7 +223,7 @@ function populateCustomerDashBoardTable(response){
         $("#individualCustomerYearChart").css('visibility', 'hidden');
         var row = $("<tr />")
         $("#customerDashboardResults").append(row);
-        row.append($('<td colspan="6"><font style="color: red;font-size: 15px;">No Records to display</font></td>'));
+        row.append($('<td colspan="7"><font style="color: red;font-size: 15px;">No Records to display</font></td>'));
         $(".page_option").css('display', 'none');
         
     }
@@ -250,7 +250,11 @@ function showChart(cust,open,release,close)
         //        width: 370,
         //        height:300,
         title: 'Customer Requirements Yearly Analysis',
-        colors: ['#0000FF', '#00FF00', '#FF0000']
+        colors: ['#0000FF', '#00FF00', '#FF0000'],
+        legend: {
+            position: 'top', 
+            alignment: 'center'
+        }
     // animation: {
     //duration: 1000,
     //easing: 'linear'
@@ -557,7 +561,7 @@ function validationDashboardVendorYear(evt)
     
     var rate=(minRate.toString()).length;
    
-    alert(rate)
+    // alert(rate)
     var iKeyCode = (evt.which) ? evt.which : evt.keyCode
     
     if ( iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57) )
@@ -876,6 +880,10 @@ function showCostCenterChart(month,open,release,close,costcenterResponse,quarter
                 title: "Cost Centers",
                 titleColor:"green"
             //                textStyle: {color: '#24BEFF'}
+            },
+            legend: {
+                position: 'top', 
+                alignment: 'center'
             }
         }
     }
@@ -897,6 +905,10 @@ function showCostCenterChart(month,open,release,close,costcenterResponse,quarter
             hAxis: {
                 title: "Projects",
                 titleColor:"green"
+            },
+            legend: {
+                position: 'top', 
+                alignment: 'center'
             }
         }
     }
@@ -914,13 +926,17 @@ function showCostCenterChart(month,open,release,close,costcenterResponse,quarter
             hAxis: {
                 title: "Quartes",
                 titleColor:"green"
+            },
+            legend: {
+                position: 'top', 
+                alignment: 'center'
             }
         }
     }
     if(costcenterResponse=="costcenterresponse"){
         var chart = new google.visualization.ColumnChart(document.getElementById('costcentersBarchart'));
         
-        function selectHandler() {
+        function selectHandlers() {
             var selectedItem = chart.getSelection()[0];
             if (selectedItem) {
                 var practice = data.getValue(selectedItem.row, 0);
@@ -928,7 +944,7 @@ function showCostCenterChart(month,open,release,close,costcenterResponse,quarter
                 getCostCenterDashboardList(practice,"costcenters");
             }
         }
-        google.visualization.events.addListener(chart, 'select', selectHandler);
+        google.visualization.events.addListener(chart, 'select', selectHandlers);
        
         // Instantiate and draw our chart, passing in some options.
         chart.draw(data, options);
@@ -1003,17 +1019,36 @@ function getMainProjectsChart(){
 }
 
 function getProjectDashboardList(selectedValue,flag){
-    //alert("dfd");
+    // alert("selectedValue-->"+selectedValue);
     // $("#individualCustomerYearChart").css('visibility', 'visible');
     
   
     // var mainprojects=null;
     // var subprojects=null;
     // alert("flag-->"+flag);
-    if(flag=="mainprojects")
+    
+    
+    if(flag=="mainprojectsselected")
     {
-        var mainprojectsList=document.getElementById("mainprojectsList").value
-        //  alert("mainprojectsList"+mainprojectsList);
+        var subprojectsMap=document.getElementById("mainprojectsList").value;
+        //   alert("subprojectsMap-->"+subprojectsMap);
+    
+        var flags=subprojectsMap.split("FLAG");
+        var addList=flags[0].split("^");
+        for(var k=0;k<addList.length-1;k++){        
+            var subproValues=addList[k].split("=");
+            if (subproValues[1] == selectedValue) {
+                finalId=subproValues[0];
+                break ;
+            } 
+        }
+       flag="mainprojects"; 
+    }
+    
+   else if(flag=="mainprojects")
+    {
+        var mainprojectsList=document.getElementById("mainprojectsList").value;
+        // alert("mainprojectsList"+mainprojectsList);
     
         var mainprojectsValues=  mainprojectsList.replace(/[{()}]/g, '');
         var mainprofflagList=mainprojectsValues.split("FLAG")
@@ -1026,18 +1061,13 @@ function getProjectDashboardList(selectedValue,flag){
                 finalId=Values[0]
                 break ;
             }
-        // }
         }
-    //  alert("final ID-->"+finalId);
-    // document.getElementById("mainprojects").value=selectedValue;
-    // mainprojects=selectedValue; 
-    // alert("quarters value-->"+quarters);
     }
     
-    if(flag=="subprojects")
+  else if(flag=="subprojects")
     {
-        var subprojectsMap=document.getElementById("subprojectsMap").value
-        // alert("subprojectsMap-->"+subprojectsMap);
+        var subprojectsMap=document.getElementById("subprojectsMap").value;
+        //   alert("subprojectsMap-->"+subprojectsMap);
     
         var flags=subprojectsMap.split("FLAG");
         var addList=flags[0].split("^");
@@ -1048,19 +1078,8 @@ function getProjectDashboardList(selectedValue,flag){
                 break ;
             } 
         }
-    // alert("final sub ID-->"+finalId);
-    //  var costcenternames=document.getElementById("costcenternames").value; 
-    //  mainprojects=document.getElementById("mainprojects").value;
-    //  subprojects=selectedValue;
-    // alert("in if costcenternames-->"+costcenternames);
     }
-    
-    
-    // alert("main projects-->"+mainprojects);
-    // alert("sub projects-->"+subprojects);
-    
     var dashYears=$('#dashBoardYear').val();
-  
     if(flag=="subprojects"){
         // alert(" in if");
         //  var costCenters=$('#costCenters').val();
@@ -1074,12 +1093,12 @@ function getProjectDashboardList(selectedValue,flag){
         var url='getProjectDashboardList.action?dashBoardYear='+dashYears+'&mainProjectID='+finalId+'&projectsFlag='+flag;
         document.getElementById("resouresDiv").style.display = 'none';   
     }
-    // alert(url);
+    //  alert(url);
     var req=initRequest(url);
     req.onreadystatechange = function() {
         document.getElementById('loadingDashboardPage').style.display = 'block';
         if (req.readyState == 4 && req.status == 200) {
-            //  alert(req.responseText);
+           // alert(req.responseText);
             $('#loadingDashboardPage').hide();
             populateProjectsDashBoardTable(req.responseText,selectedValue);
         } 
@@ -1120,10 +1139,11 @@ function populateProjectsDashBoardTable(response,selectedValue){
             document.getElementById("resourcesnorecords").style.display = 'none';
         }
         else if(response=="nosubprojects"){
-            //   alert("nosubprojects");
+            //   alert("nosubprojects-->"+response);
             // $("#subProjectsBarchart").css('visibility', 'hidden');
             // $("#subProjectsnorecords").css('visibility', 'visible');
             
+            document.getElementById("subProjectsDiv").style.display = 'block';
             document.getElementById("subProjectsBarchart").style.display = 'none';
             document.getElementById("subProjectsnorecords").style.display = 'block';
             // document.getElementById("norecords").style.display = 'block';
@@ -1134,7 +1154,8 @@ function populateProjectsDashBoardTable(response,selectedValue){
             // document.getElementById("norecords").style.display = 'block';
             document.getElementById('subProjectsnorecords').innerHTML = "<font color=red> No Sub Projects to Display!</font>";
             document.getElementById("resouresDiv").style.display = 'none';
-            document.getElementById("resourcesnorecords").style.display = 'none';        
+            document.getElementById("resourcesnorecords").style.display = 'none';   
+        // alert("nosubprojects end-->"+response);
         }
         else if(response=="noresources"){
             //   alert("noresources");
@@ -1155,6 +1176,7 @@ function populateProjectsDashBoardTable(response,selectedValue){
         else
         {
             var subprojectsMap="";
+            var mainprojectsList="";
             //        $select.find('option').remove();
             //        $('<option>').val(-1).text('All').appendTo($select);
             for(var i=0;i<dashBoardReq.length-1;i++){   
@@ -1169,6 +1191,10 @@ function populateProjectsDashBoardTable(response,selectedValue){
                     var subProjects=Values[5];
                     // alert("subProjects--values--"+subProjects);
                     if(subProjects=="mainprojects"){
+                        mainprojectsList=mainprojectsList+Values[3]+"="+Values[0]+"^";
+                        document.getElementById("mainprojectsList").value=mainprojectsList;
+                       // alert(document.getElementById("mainprojectsList").value);
+                        
                         //document.getElementById("mainProjectsDiv").style.display = 'block';
                         //  $("#Barchart").css('visibility', 'visible');
                         document.getElementById("Barchart").style.display = 'block';
@@ -1193,6 +1219,9 @@ function populateProjectsDashBoardTable(response,selectedValue){
                 //alert(month);
                 }
             }
+            //   alert(project);
+            //  alert(targetHrs);
+            //  alert(workedHrs);
             //            if(subProjects=="subprojects"){
             //                //  alert("in if")
             //                document.getElementById("subProjectsSelectDiv").style.display = 'block';
@@ -1227,7 +1256,7 @@ function populateProjectsDashBoardTable(response,selectedValue){
 
 function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours,selectedValue)
 {
-    // alert(subProjects);
+    //    alert("showProjectsChart-->"+subProjects);
     //    var quarter=$('#quarter').val();
     //    if(quarter=="DF"){
     //        document.getElementById("costCentersSelectDiv").style.display = 'none';   
@@ -1260,12 +1289,14 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
     }
     else
     {
+      //  alert("subProjects-->"+subProjects);
         for (var i = 0; i < project.length; i++){
             Combined[i + 1] = [ project[i], targetHrs[i], workedHrs[i] ];
         }
     }
     //second parameter is false because first row is headers, not data.
     var data = google.visualization.arrayToDataTable(Combined, false);
+    // alert("main Projects data-->"+data);
     if(subProjects=="mainprojects"){
         document.getElementById('chartTitle').innerHTML = "<font color=green><b>Projects Analysis</b></font>";
         var options = {
@@ -1285,6 +1316,10 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
                 title: "Main Projects",
                 titleColor:"green"
             //                textStyle: {color: '#24BEFF'}
+            },
+            legend: {
+                position: 'top', 
+                alignment: 'center'
             }
         }
     }
@@ -1307,6 +1342,10 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
             hAxis: {
                 title: "Resources",
                 titleColor:"green"
+            },
+            legend: {
+                position: 'top', 
+                alignment: 'center'
             }
         }
     }
@@ -1333,13 +1372,28 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
                 title: "Sub Projects",
                 titleColor:"green"
             //                textStyle: {color: '#24BEFF'}
+            },
+            legend: {
+                position: 'top', 
+                alignment: 'center'
             }
+           
         }
     }
-    if(resourceHours=="resourceworkedhrs"){
-        //   alert("in if");
-        // document.getElementById("resouresDiv").style.display = 'block';
-        var chart = new google.visualization.ColumnChart(document.getElementById('BarchartForResources'));
+   
+    if(subProjects=="mainprojects"){
+       //  alert("subProjects-->"+subProjects);
+        var chart = new google.visualization.ColumnChart(document.getElementById('Barchart'));
+        
+        function selectMainProHandlers() {
+            var selectedItem = chart.getSelection()[0];
+            if (selectedItem) {
+                var practice = data.getValue(selectedItem.row, 0);
+               //  alert('The user selected--> '+practice);
+                getProjectDashboardList(practice,"mainprojectsselected");
+            }
+        }
+        google.visualization.events.addListener(chart, 'select', selectMainProHandlers);
        
         // Instantiate and draw our chart, passing in some options.
         chart.draw(data, options);
@@ -1348,9 +1402,7 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
             chart.draw(data, options);
         });
     }
-    else
-    {
-        //  alert("in else");
+    else if(subProjects=="subprojects"){
         var chart = new google.visualization.ColumnChart(document.getElementById('subProjectsBarchart'));
      
      
@@ -1370,7 +1422,19 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
             chart.draw(data, options);
         });
     }
+    //   alert("in if");
+    // document.getElementById("resouresDiv").style.display = 'block';
+    else
+    {
+        var chart = new google.visualization.ColumnChart(document.getElementById('BarchartForResources'));
+       
+        // Instantiate and draw our chart, passing in some options.
+        chart.draw(data, options);
         
+        $(window).resize(function () {
+            chart.draw(data, options);
+        }); 
+    }
 }
 
 function settingProjectValue(){

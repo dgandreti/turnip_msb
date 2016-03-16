@@ -16,6 +16,28 @@
 
         <div class="panel-group category-products" id="accordian">
             <!--category-productsr-->
+            <s:if test="%{#session['usrgrpid']==1}">
+                <div class="panel panel-default left-menu" id="accordian_services">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+                                <i id="leftBullet" class="fa fa-cogs"></i>
+                                <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
+                                Dashboard
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="mens" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+
+                                <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/dashboard/getVendorRequirementsDashboards.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Requirements&nbsp;</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </s:if>
             <div class="panel panel-default left-menu" id="accordian_my">
                 <div class="panel-heading">
                     <h4 class="panel-title">
@@ -99,26 +121,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default left-menu" id="accordian_services">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                            <i id="leftBullet" class="fa fa-cogs"></i>
-                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
-                            Dashboard
-                        </a>
-                    </h4>
-                </div>
-                <div id="mens" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <ul>
-                            <s:if test="%{#session['usrgrpid']==1}">
-                                <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/dashboard/getVendorRequirementsDashboards.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Requirements&nbsp;</a></li>
-                            </s:if>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
 
         </div><!--/category-productsr-->
 

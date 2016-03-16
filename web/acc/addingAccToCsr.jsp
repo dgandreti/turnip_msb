@@ -50,6 +50,7 @@
     </head>
 
     <body onload="getStockSymbol($(acc_country).val());">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -58,7 +59,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <div class="container">
             <div class="row">
                 <!-- Main Content-->
@@ -77,7 +78,7 @@
                                             <s:param name="accountSearchID"><s:property value="orgUserId"/></s:param> 
                                             <s:param name="accFlag">CsrSearch</s:param>
                                         </s:url>
-                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                        <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                     </h4>
                                 </div>
                             </div> 
@@ -88,26 +89,26 @@
 
                                         <div class="col-sm-4">
 
-                                            <label class="labelStylereq" style="color:#56a5ec">Account Name:</label>
+                                            <label class="labelStylereq" style="color:#56a5ec">Account Name</label>
                                         <s:textfield name="accountName" cssClass="form-control" disabled="true" tabindex="1" />
 
                                             <s:hidden name="orgUId" value="%{orgUserId}"/>
                                         </div>
                                         <div class="col-sm-4">
 
-                                            <label class="labelStylereq" style="color:#56a5ec">CSR:</label>
+                                            <label class="labelStylereq" style="color:#56a5ec">CSR</label>
                                             <s:textfield cssClass="form-control " name="Name" id="csrName" placeholder="CSR" onkeyup="return getCSRNames();" autocomplete='off' maxLength="60" tabindex="2"/>
                                             <s:hidden name="csrId" id="csrId"/>
                                             <span id="validationMessage" />
                                         </div>
                                         <div class="col-sm-4">
 
-                                            <label class="labelStylereq" style="color:#56a5ec">Status:</label>
+                                            <label class="labelStylereq" style="color:#56a5ec">Status</label>
                                             <s:select id="csrStatus" name="csrStatus" cssClass="SelectBoxStyles form-control "   theme="simple" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"  disabled="true" tabindex="3"/>
                                         </div>
                                         <div class="col-sm-10"></div>
                                         <div class="col-sm-2">
-                                        <s:submit type="button" cssStyle="margin:5px 0px;" value="" cssClass="add_searchButton form-control" onclick="doAddAccountToCsr()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                            <s:submit type="button" cssStyle="margin:5px 0px;" value="" cssClass="add_searchButton form-control" tabindex="4" onclick="doAddAccountToCsr()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                         </div>
                                         </div>
                                 </div>
@@ -117,7 +118,9 @@
                 </div><!-- Add Form-->
             </div>
         </div>
-                                    <div style="height: 378px;"></div>
+                                        
+        </div>    
+        </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

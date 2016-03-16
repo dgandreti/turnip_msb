@@ -74,6 +74,9 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
            
                 
                 System.out.println("--------------"+resultString);
+                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
@@ -104,6 +107,9 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
            
                 
                 System.out.println("--------------"+resultString);
+                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
@@ -129,7 +135,10 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
                 System.out.println("-----enter in cc------------orject names-------");
                  resultString= ServiceLocator.getCostCenterAjaxHandlerService().getProjectNamesInCostCenter(this);
                  System.out.println("----------projects namess in cocst center-----------"+resultString);
-                httpServletResponse.setContentType("text");
+                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
+                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
             } catch (Exception ex) {
@@ -151,6 +160,9 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
             try {
                 String resultString = null;
                 resultString = ServiceLocator.getCostCenterAjaxHandlerService().costCenterInfoSearchList(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
@@ -181,6 +193,9 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
                     resultString = ServiceLocator.getCostCenterAjaxHandlerService().addCostCenter(this);
                 }
                 System.out.println("--------------" + resultString);
+                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
@@ -207,7 +222,10 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                  resultString= ServiceLocator.getCostCenterAjaxHandlerService().addCostCenterBudget(this);
-                httpServletResponse.setContentType("text");
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
+                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
             } catch (Exception ex) {
@@ -231,7 +249,10 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                  resultString= ServiceLocator.getCostCenterAjaxHandlerService().getCostCenterBudgetDetails(this);
-                httpServletResponse.setContentType("text");
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
+                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
             } catch (Exception ex) {

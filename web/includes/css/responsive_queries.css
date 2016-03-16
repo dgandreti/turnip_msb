@@ -10,12 +10,26 @@ root {
     display: block;
 }
 
+.right_content{
+    border-left:1px solid #ccc;
+}
+
+
+
+.password_box{
+    margin-left: 10%;
+    margin-right: 20%;
+    width:70%;
+}
+
 .budget_search{
     width:150px;
 }
 
+.right_block{
+    border-left:1px solid #ccc;
+}
 
-    
 .wrap_pwd{
     margin-left:10%;
     margin-right:10%;
@@ -27,93 +41,153 @@ root {
 }
 
 .contactinfo{
-	margin-left: 7%;
+    margin-left: 3%;
+    margin-top: 12px; 
 }
 
 
+@media (max-width:499px){
+    .align_left{
+       float:left; 
+       width:100%;
+    }
+    
+}
+@media  (min-width: 280px) and (max-width:577px){
+    #footer{
+        height: 26%;
+    }
+}
+
+
+
+@media  (min-width: 240px) and (max-width:640px){
+    .header_top{
+        background-size: cover;
+    }
+    
+    #myCarousel{
+        display: none;
+    }
+}
+
+/*@media  (min-width: 647px){
+    .header_top{
+        background-size: contain;
+    }
+}*/
+
 @media all and (max-width: 1070px) and (min-width: 420px), (min-width: 800px) {
-  .btn_order{
+    .btn_order{
         margin-right: 3%;
     }
 }
+
+@media (max-width: 987px){
+    .right_content{
+        border-left: 0 !important;
+    }
+}
+
 @media (min-width: 300px) and (max-width: 762px){
     .dashboard_option{
         font-size:9px;
         position: absolute;
         top: 217px;
     }
+
+    .vertical-center {
+        min-height: 100%;  /* Fallback for vh unit */
+        /*  min-height: 100vh;  You might also want to use
+                                'height' property instead.
+                                
+                                Note that for percentage values of
+                                'height' or 'min-height' properties,
+                                the 'height' of the parent element
+                                should be specified explicitly.
+          
+                                In this case the parent of '.vertical-center'
+                                is the <body> element */
+
+        /* Make it a flex container */
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex; 
+
+        /* Align the bootstrap's container vertically */
+        -webkit-box-align : center;
+        -webkit-align-items : center;
+        -moz-box-align : center;
+        -ms-flex-align : center;
+        align-items : center;
+
+        /* In legacy web browsers such as Firefox 9
+           we need to specify the width of the flex container */
+        width: 100%;
+
+        /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+           hence the bootstrap's container won't be aligned to the center anymore.
         
-        .vertical-center {
-                min-height: 100%;  /* Fallback for vh unit */
-                /*  min-height: 100vh;  You might also want to use
-                                        'height' property instead.
-                                        
-                                        Note that for percentage values of
-                                        'height' or 'min-height' properties,
-                                        the 'height' of the parent element
-                                        should be specified explicitly.
-                  
-                                        In this case the parent of '.vertical-center'
-                                        is the <body> element */
-
-                /* Make it a flex container */
-                display: -webkit-box;
-                display: -moz-box;
-                display: -ms-flexbox;
-                display: -webkit-flex;
-                display: flex; 
-
-                /* Align the bootstrap's container vertically */
-                -webkit-box-align : center;
-                -webkit-align-items : center;
-                -moz-box-align : center;
-                -ms-flex-align : center;
-                align-items : center;
-
-                /* In legacy web browsers such as Firefox 9
-                   we need to specify the width of the flex container */
-                width: 100%;
-
-                /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
-                   hence the bootstrap's container won't be aligned to the center anymore.
-                
-                   Therefore, we should use the following declarations to get it centered again */
-                -webkit-box-pack : center;
-                -moz-box-pack : center;
-                -ms-flex-pack : center;
-                -webkit-justify-content : center;
-                justify-content : center;
-            }
-    
-    
-}
-
-    @media  (min-width: 768px) and (max-width:943px){
-    
-.wrap_pwd{
-    margin-left:1%;
-    margin-right:1%;
-}
+           Therefore, we should use the following declarations to get it centered again */
+        -webkit-box-pack : center;
+        -moz-box-pack : center;
+        -ms-flex-pack : center;
+        -webkit-justify-content : center;
+        justify-content : center;
     }
-    
+    side_popup{
+        display:none;
+    }
+
+    .panel_home{
+        height:220px;
+        width:100%;
+    }
+
+}
+
+@media  (min-width: 768px) and (max-width:943px){
+
+    .wrap_pwd{
+        margin-left:1%;
+        margin-right:1%;
+    }
+}
 
 
+
+@media  (max-width: 1024px){
     
-    
+    .panel_home{
+        margin-left:0;
+    }
+}
+
 
 
 @media  (min-width: 800px){
+
+    .btn_align{
+        margin-top: 74px;
+    }
+
+
+
+}
+.sign-in>a:focus{text-decoration:none;background-color:transparent !important}
+
+
+.sign-in>a{
+    text-decoration:none;background-color:transparent !important;
+}
+
+.header_image li  a:focus{text-decoration:none;background-color:transparent !important}
+
+
     
-.btn_align{
-    margin-top: 74px;
-}
-
-
-
-}
-
-
-
+    
 @media  (min-width: 1024px) and (max-width: 1200px){
 
 
@@ -124,11 +198,11 @@ root {
     .pinned{
         display: none;
     }
-    
+
     .scrollable{
         overflow-x: scroll;
     }
-    
+
 
     .wrapper{
         width:1070px ;
@@ -146,7 +220,16 @@ root {
 
 
 
+@media (max-width: 1280px){
+    .intro_slider{
+        width:104%;
+        margin:0;
+    }
 
+    #multiple_devices{
+        width: 1244px;
+    }
+} 
 
 
 @media (min-width: 1280px){
@@ -156,7 +239,15 @@ root {
     }
 
     .right_content{
-        width:1016px;
+        width:1040px;
+    }
+    
+    .anchorstyle{
+        margin-right: 9%;
+    }
+    
+    .register{
+        margin-right:3% !important;
     }
 
     .wrapper{
@@ -170,7 +261,7 @@ root {
     .foot{
         width:1265px;
     }
-    
+
     .btn_order{
         margin:0;
     }
@@ -178,9 +269,13 @@ root {
     .register_form{
         width: 1280px;
     }
-    
+
     .socialHover{
         margin-right: 60px;
+    }
+    
+    #header_top > .container{
+        width:1280px;
     }
 }
 
@@ -189,7 +284,7 @@ root {
     .right_content{
         width:1085px;
     }
-    
+
 }
 
 
@@ -216,50 +311,33 @@ root {
             width:1890px;
         }*/
 
-    
+
     .side_popup{
         left:320px;
     }
+
+    /*    .slide_popup{
     
+            background-size: 30px 30px;
+            background-repeat: no-repeat;
+            width:50px;
+            height:50px;
+            background-color: #FF6600;
+            border-left: solid #1B9BFF 4px;
+            background-position: center;
+            box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.35);
+    
+        }*/
     .slide_popup{
-        
-        	background-size: 30px 30px;
-                background-repeat: no-repeat;
-                width:50px;
-                height:50px;
-               background-color: #FF6600;
-               border-left: solid #1B9BFF 4px;
-               background-position: center;
-                box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.35);
-    
+        border-left:1px solid #21a6d8 ;
     }
-    
-    .account{
-        background-image: url('../../includes/images/icons/addAccount.png');
-    }
-    
-    .budget{
-          background-image: url('../../includes/images/icons/dollar.png');
-    }
-    
-    .requirementPopup{
-         background-image: url('../../includes/images/icons/requirement.png');
-    }
-    
-    .timesheet_sidepopup{
-        background-image: url('../../includes/images/icons/timesheet_icon.png');
-    }
-    
-    .task_sidePopup{
-        background-image: url('../../includes/images/icons/addTask.png');
-    }
-    
-    
+
+ 
 
 
-.slide_popup img{
-    display:none;
-}
+
+
+   
 }
 
 @media (min-width: 1900px){

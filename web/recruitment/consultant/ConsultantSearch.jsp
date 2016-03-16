@@ -61,6 +61,7 @@
                 pager.showPageNav('pager', 'taskpageNavPosition');
                 //document.getElementById("cpaginationOption").value=10;
                 pager.showPage(1);
+                document.getElementById("loadingConsultantSearch").style.display="none";
             };
             //            function cpagerOption(){
             //
@@ -101,6 +102,7 @@
 
 
     <body style="overflow-x: hidden" onload="consultantPage();StateChange();jumper();">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -116,7 +118,7 @@
 
 
 
-
+                    <div id="main">
         <section id="generalForm"><!--form-->
 
 
@@ -135,7 +137,7 @@
 
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Consultant Search</font>
-                                                <i id="updownArrow" onclick="toggleContent('getConsultant')" class="fa fa-angle-up"></i> 
+                                                <i id="updownArrow" onclick="toggleContent('getConsultant')" class="fa fa-minus"></i> 
 
                                             </h4>
                                         </div>
@@ -169,16 +171,16 @@
                                                 <div class="inner-reqdiv-elements">
 
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec">Name:</label>
+                                                        <label class="labelStylereq" style="color:#56a5ec">Name</label>
                                                         <s:textfield cssClass="form-control" name="consult_name" id="consult_name" placeholder="Name" value="%{consult_name}" tabindex="1" maxLength="60"/>
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec">Email Id:</label>
-                                                        <s:textfield cssClass="form-control" name="consult_email" id="consult_email" placeholder="Email" value="%{consult_email}" tabindex="1" maxLength="60"/>
+                                                        <label class="labelStylereq" style="color:#56a5ec">Email Id</label>
+                                                        <s:textfield cssClass="form-control" name="consult_email" id="consult_email" placeholder="Email" value="%{consult_email}" tabindex="2" maxLength="60"/>
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec">Status:</label>
-                                                        <s:select cssClass="SelectBoxStyles form-control" name="consult_status" id="consult_status" headerKey="-1" headerValue="-- Select status--"  list="{'Active','In-Active'}" tabindex="1"/>
+                                                        <label class="labelStylereq" style="color:#56a5ec">Status</label>
+                                                        <s:select cssClass="SelectBoxStyles form-control" name="consult_status" id="consult_status" headerKey="-1" headerValue="-- Select status--"  list="{'Active','In-Active'}" tabindex="3"/>
                                                     </div>
 
 
@@ -209,42 +211,42 @@
 
                                                     <s:hidden name="consultState" id="consultState" value="%{consult_State}"/>
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec">Country:</label>
-                                                        <s:select cssClass="form-control SelectBoxStyles" name="consult_Country" id="consult_Country" headerKey="-1" headerValue="All" list="consult_WCountry" onchange="StateChange()" tabindex="5" />
+                                                        <label class="labelStylereq" style="color:#56a5ec">Country</label>
+                                                        <s:select cssClass="form-control SelectBoxStyles" name="consult_Country" id="consult_Country" headerKey="-1" headerValue="All" list="consult_WCountry" onchange="StateChange()" tabindex="4" />
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec">State:</label>
+                                                        <label class="labelStylereq" style="color:#56a5ec">State</label>
                                                         <s:select cssClass="form-control SelectBoxStyles" name="consult_State" id="consult_State"  headerKey="-1" headerValue="Select state" list="{}"  tabindex="5" value="%{consult_State}"/> 
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec">City:</label>
-                                                        <s:textfield cssClass="form-control" name="consult_City" id="consult_City" placeholder="Enter City"  tabindex="1" />
+                                                        <label class="labelStylereq" style="color:#56a5ec">City</label>
+                                                        <s:textfield cssClass="form-control" name="consult_City" id="consult_City" placeholder="Enter City"  tabindex="6" />
                                                     </div>
 
 
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec">Phone:</label>
-                                                        <s:textfield cssClass="form-control" name="consult_phno" id="consult_phno" placeholder="Phone" value="%{consult_phno}" tabindex="1" maxLength="15"/>
+                                                        <label class="labelStylereq" style="color:#56a5ec">Phone</label>
+                                                        <s:textfield cssClass="form-control" name="consult_phno" id="consult_phno" placeholder="Phone" value="%{consult_phno}" tabindex="7" maxLength="15"/>
                                                     </div>
 
                                                     <s:if test="consultantFlag == 'Team' || consultantFlag == 'All'">
                                                         <div class="col-sm-4" >
-                                                            <label class="labelStylereq" style="color:#56a5ec;margin-right: 10px;" >Members:</label>
+                                                            <label class="labelStylereq" style="color:#56a5ec;margin-right: 10px;" >Members</label>
                                                             <%--<s:select id="teamMembers" value=""  name="teamMembers" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="--Please Select--" theme="simple" list="teamMembersList"/>--%>
-                                                            <s:textfield cssClass="form-control" id="enameForRecruitment"  name="enameForRecruitment" onkeyup="return getEmpRecruitment();" autocomplete='off' maxLength="30" placeholder="Name" onfocus="return removeErrorMsgForTechie();"/>
+                                                            <s:textfield cssClass="form-control" id="enameForRecruitment"  name="enameForRecruitment" onkeyup="return getEmpRecruitment();" autocomplete='off' maxLength="30" tabindex="8" placeholder="Name" onfocus="return removeErrorMsgForTechie();"/>
                                                             <s:hidden cssClass="form-control" id="enameIdForRecruitment"  name="enameIdForRecruitment"  autocomplete='off' maxLength="30" onfocus="return removeErrorMsgForTechie();"/>
                                                         </div>
                                                     </s:if>
                                                     <s:hidden name="consultantFlag" id="consultantFlag" value="%{consultantFlag}"/>
                                                     <div class="col-sm-4">
-                                                        <label class="labelStyle" id="labelLevelStatusReq">Specialization </label> <s:select cssClass="" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true"/> 
+                                                        <label class="labelStyle" id="labelLevelStatusReq">Specialization </label> <s:select cssClass="" name="skillCategoryValue" tabindex="9"  id="skillCategoryValue" list="skillValuesMap" multiple="true"/> 
                                                         <s:hidden id="skillValues" name="skillValues" />
                                                     </div>
                                                     <div class="col-sm-4"></div>
                                                     <div class="col-sm-4"></div>
                                                     <div class="col-sm-2 pull-right">
                                                         <label class="labelStylereq" style=""></label>
-                                                        <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="searchButton" value="" onclick="submmition();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                        <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" tabindex="10" id="searchButton" value="" onclick="submmition();"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                     </div>
 
                                                 </div>
@@ -256,6 +258,9 @@
                                     </div>
                                     <div id="responseMessage" style="color: green;margin-left: 2%"></div>
                                     <div class="col-sm-12">
+                                         <div id="loadingConsultantSearch" class="loadingImg">
+                                                <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                            </div>
                                         <s:form>
                                             <div class="task_content" id="task_div" align="center" style="display: none" >
 
@@ -332,7 +337,6 @@
                                                                     </tr>
                                                                 </s:if>
                                                                 <s:iterator  value="ConsultantListDetails">
-                                                                    <s:hidden id="rec_exits" value="yes"/>
                                                                     <%
                                                                         String strFlag = request.getParameter("consultantFlag");
                                                                     %>
@@ -342,6 +346,7 @@
                                                                         <s:param name="consultantFlag"><%= strFlag%></s:param>
                                                                     </s:url>
                                                                     <tr>
+                                                                        <s:hidden id="rec_exits" value="yes"/>
                                                                         <td> <s:a href='%{#myUrl}'><s:property value="%{consult_name}"></s:property></s:a></td>
                                                                         <td><s:property value="consult_email"></s:property></td>
                                                                         <s:if test="%{consult_skill.length()>8}">
@@ -381,7 +386,7 @@
                                             </div>
                                             <div id="downloading_grid">
                                                 <div class="col-lg-2 pull-right">
-                                                    <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadResults.action?pdfHeaderName=Consultant List&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class=" cssbutton form-control" value="Download"></a>
+                                                    <div onclick="downloadPDFConsultantList()" tabindex="11" class="fa fa-download cssbutton form-control">&nbsp;DownloadPDF</div>
                                                 </div>
                                             </div>
                                         </s:form>
@@ -406,7 +411,7 @@
                     <div class="backgroundcolor">
                         <table>
                             <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Skill Details&nbsp;&nbsp; </font></h4></td>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="consultantSkillOverlay_popup_close" onclick="consultantSkillOverlayClose()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="consultantSkillOverlay_popup_close" onclick="consultantSkillOverlayClose()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
                     <div>
@@ -420,6 +425,8 @@
             </div>
             <%--close of overlay --%> 
         </section><!--/form-->
+                    </div>
+    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

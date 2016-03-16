@@ -37,81 +37,86 @@
             }label[for="pwd2"] {
                 color: #56a5ec;
             }
+
+
         </style>
     </head>
     <body>
-        
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
+        <div id="wrap">  
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
 
-                    <s:include value="/includes/template/header.jsp"/> 
-                </div>
-            </div><!--/header_top-->
-
-        </header><!--/header-->
-
-        <section id="generalFormDesign"><!--form-->
-            <div class="container wrap_pwd">
-                <div class="row col-lg-offset-1">
-                    <div class="col-sm-4 col-md-3 col-lg-2 sidemenu">
-                    <s:include value="/includes/menu/LeftMenu.jsp"/> 
+                        <s:include value="/includes/template/header.jsp"/> 
                     </div>
-                    <div class="col-sm-8 col-md-7 col-lg-6 col-lg-offset-2" style="background-color:#fff">
-                        <div class="features_items"><!--features_items-->
-                            <div class="col-lg-12 ">
-                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
-                                    <div class="backgroundcolor" >
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <font color="#ffffff">Reset user password</font>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <!-- Start Special Centered Box -->
-                                    <div class="" ><!--login form-->
-                                        <form id="ResetPassword" action="changeUserPassword" >
-                                            <%//if(request.getAttribute(ApplicationConstants.RESULT_MSG)!=null){
-                                                //out.println(request.getAttribute(ApplicationConstants.RESULT_MSG));
-                                                //}                                
-                                            %>
-                                            <font style="color: green;font-size: 12px;"><s:property value="#request.resultMessage"/></font>
-                                            <span><resetMessage></resetMessage></span>
-                                            <div class=" required"> 
-                                                <div class="col-lg-5  col-sm-5 req_margin">
-                                                    <label id="labelLevelStatusReq" >Email</label> 
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 req_margin">
-                                                    <s:textfield id="email" name="emailId" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"  cssClass="form-control"  placeholder="Email Id" required="true" oninvalid="setCustomValidity('Must be valid email')"   onchange="try{setCustomValidity('')}catch(e){}" onblur="checkEmailIdExistance();" tabindex="2" maxLength="60"/>
-                                                </div>
-                                                <div class="col-lg-5  col-sm-5 req_margin"> 
-                                                    <label id="labelLevelStatusReq">New Password</label> 
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6  req_margin">
-                                                    <s:password name="newpwd" id="pwd1" placeholder="Password"  required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" cssClass="form-control" onchange="form.cnfrmpwd.pattern=this.value"    title="Password must contain at least 6 characters, including UPPER/lowercase and numbers"   tabindex="3"/>
-                                                </div>
-                                                <div class="col-lg-5 col-sm-5 req_margin">
-                                                    <label id="labelLevelStatusReq">Confirm Password</label> 
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 req_margin">
-                                                    <s:password name="cnfrmpwd" id="pwd2" placeholder="Confirm Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"  cssClass="form-control"  oninvalid="setCustomValidity('Please enter the same Password as above')"   onchange="try{setCustomValidity('')}catch(e){}" tabindex="4"/>
-                                                </div> 
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <s:submit  cssClass="cssbutton" type="submit" value="submit"/>
-                                            </div>
-                                        </form>
+                </div><!--/header_top-->
 
+            </header><!--/header-->
+
+            <div id="main">
+                <section id="generalFormDesign"><!--form-->
+                    <div class="container">
+                        <div class="col-sm-12">
+
+                            <s:include value="/includes/menu/LeftMenu.jsp"/> 
+
+                            <div class="col-sm-12 col-md-8 col-lg-7 right_block">
+                                <div class="features_items"><!--features_items-->
+
+                                    <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                                        <div class="backgroundcolor" >
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <font color="#ffffff">Reset user password</font>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <!-- Start Special Centered Box -->
+                                        <div class="col-sm-12 password_box"><!--login form-->
+                                            <form id="ResetPassword" action="changeUserPassword" >
+                                                <%//if(request.getAttribute(ApplicationConstants.RESULT_MSG)!=null){
+                                                    //out.println(request.getAttribute(ApplicationConstants.RESULT_MSG));
+                                                    //}                                
+%>
+                                                <font style="color: green;font-size: 12px;"><s:property value="#request.resultMessage"/></font>
+                                                <span><resetMessage></resetMessage></span>
+                                                <div class=" required"> 
+                                                    <div class="col-lg-5  col-sm-5 req_margin">
+                                                        <label id="labelLevelStatusReq" >Email</label> 
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 req_margin">
+                                                        <s:textfield id="email" name="emailId" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"  cssClass="form-control"  placeholder="Email Id" required="true" oninvalid="setCustomValidity('Must be valid email')"   onchange="try{setCustomValidity('')}catch(e){}" onblur="checkEmailIdExistance();" tabindex="1" maxLength="60"/>
+                                                    </div>
+                                                    <div class="col-lg-5  col-sm-5 req_margin"> 
+                                                        <label id="labelLevelStatusReq">New Password</label> 
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6  req_margin">
+                                                        <s:password name="newpwd" id="pwd1" placeholder="Password"  required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" cssClass="form-control" onchange="form.cnfrmpwd.pattern=this.value"    title="Password must contain at least 6 characters, including UPPER/lowercase and numbers"   tabindex="2"/>
+                                                    </div>
+                                                    <div class="col-lg-5 col-sm-5 req_margin">
+                                                        <label id="labelLevelStatusReq">Confirm Password</label> 
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 req_margin">
+                                                        <s:password name="cnfrmpwd" id="pwd2" placeholder="Confirm Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"  cssClass="form-control"  oninvalid="setCustomValidity('Please enter the same Password as above')"   onchange="try{setCustomValidity('')}catch(e){}" tabindex="3"/>
+                                                    </div> 
+                                                </div>
+                                                <div class="col-sm-11" >
+                                           <div class=" col-sm-13 req_margin ">
+                                               <div align="right"><button type="submit" id="" value="Submit" tabindex="4" class="cssbutton req_margin align_left fa fa-check-circle-o">&nbsp;Submit</button>
+                                           </div>
+                                                    </div>
+
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- content start -->
                     </div>
-                </div>
-                <!-- content start -->
+                </section><!--/form-->
             </div>
-        </section><!--/form-->
-
+        </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

@@ -97,4 +97,10 @@ public interface UserAjaxHandlerService {
     public String getEmpRecruitment(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
 
     public int doUpdateVisaAttachment(int consultantId, String fileName) throws ServiceLocatorException;
+    
+    public int doUpdateLogo(String accountId, String fileName) throws ServiceLocatorException;  
+    
+     public String poRelease(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
+    public String insertPoAttachment(UserAjaxHandlerAction userAjaxHandlerAction,String filePath,String files,String fileName) throws ServiceLocatorException;
+
 }

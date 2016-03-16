@@ -68,11 +68,9 @@ public class AuthorizationcheckInterceptor implements Interceptor, StrutsStatics
 
             Connection connection = null;
             PreparedStatement preparedStatement = null;
-            Statement statement = null;
             ResultSet resultSet = null;
             Connection connection1 = null;
             PreparedStatement preparedStatement1 = null;
-            Statement statement1 = null;
             ResultSet resultSet1 = null;
             int result = 0;
             String resultMessage = "";

@@ -13,6 +13,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -568,7 +569,7 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 System.out.println(getAccountType() + ">>>>>>>>>>homeRedirectActionId>>>>" + getHomeRedirectActionId());
-                String accType =(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
+                String accType = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 System.out.println("------------------->" + accType + "-----------------------" + getHomeRedirectActionId());
                 int roleId = 0;
@@ -578,7 +579,7 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                     if (getHomeRedirectActionId() == 0) {
                         if ("AC".equalsIgnoreCase(accType)) {
                             roleId = 2;
-                           
+
                         } else {
                             roleId = 8;
                         }
@@ -611,7 +612,6 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
         return resultType;
     }
 
-
     /**
      * *****************************************************************************
      * Date : 08/28/2015 praveen <pkatru@miraclesoft.com> loadData() loading
@@ -628,8 +628,8 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                 System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-                
-               // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
+
+                // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
@@ -850,7 +850,8 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                 System.out.println("getting path from ----------->" + getPath());
                 workbook.close();
                 String res = ServiceLocator.getUsersdataHandlerservicee().getCellContentValues(list, this, k, "Accounts", stringForBatch);
-                utility_logger = ServiceLocator.getUsersdataHandlerservicee().defaultSearch(this);
+                    int sessionusrPrimaryrole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                utility_logger = ServiceLocator.getUsersdataHandlerservicee().defaultSearch(this,sessionusrPrimaryrole);
                 //System.out.println("-------------- after procedure------------" + res);
 
 
@@ -869,8 +870,33 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+                
+                   int sessionusrPrimaryrole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                Calendar now = Calendar.getInstance();
+                now.add(Calendar.MONTH, 1);
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                utility_logger = ServiceLocator.getUsersdataHandlerservicee().defaultSearch(this);
+                if (getCreatedDate() == null) {
+                    String monthString = "";
+                    String dateString = "";
+
+                    int month = now.get(Calendar.MONTH) + 1;
+                    int date = now.get(Calendar.DATE);
+                    if (date < 10) {
+                        dateString = "0" + now.get(Calendar.DATE);
+                    } else {
+                        dateString = "" + now.get(Calendar.DATE);
+                    }
+                    if (month < 10) {
+                        monthString = "0" + (now.get(Calendar.MONTH));
+                    } else {
+                        monthString = "" + (now.get(Calendar.MONTH));
+                    }
+                    // setEndDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));   
+                    setCreatedDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));
+                }
+             
+                  utility_logger = ServiceLocator.getUsersdataHandlerservicee().defaultSearch(this,sessionusrPrimaryrole);
+                setCreatedDate(getCreatedDate());
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
@@ -960,7 +986,8 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                 System.out.println("getting path from ----------->" + getPath());
                 workbook.close();
                 String res = ServiceLocator.getUsersdataHandlerservicee().getCellContentValues(list, this, k, getLoadingFileType(), stringForBatch);
-                utility_logger = ServiceLocator.getUsersdataHandlerservicee().defaultSearch(this);
+                int sessionusrPrimaryrole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                utility_logger = ServiceLocator.getUsersdataHandlerservicee().defaultSearch(this,sessionusrPrimaryrole);
                 resultType = SUCCESS;
 
             }

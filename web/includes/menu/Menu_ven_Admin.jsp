@@ -20,6 +20,24 @@
         %>
         <div class="panel-group category-products" id="accordian">
             <!--category-productsr-->
+            <div class="panel panel-default left-menu" id="accordian_services">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+                            <i id="leftBullet" class="fa fa-cogs"></i>
+                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
+                            Dashboard
+                        </a>
+                    </h4>
+                </div>
+                <div id="mens" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul>
+                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/vendor/vendorDashboard.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Requirements&nbsp;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="panel panel-default left-menu" id="accordian_my">
                 <div class="panel-heading">
                     <h4 class="panel-title">
@@ -87,29 +105,13 @@
                             <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/general/resetUserPassword.action"><img src="<s:url value="/includes/images/icons/resetPass.png"/>" height="15" width="15">&nbsp;Reset User Pwd</a></li>
                             <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/users/general/loadDataForUser.action"><img src="<s:url value="/includes/images/icons/homeredirect.png"/>" height="12" width="12">&nbsp;Upload&nbsp;Contacts</a></li>
                             <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/users/general/getHomeRedirectDetails.action"><img src="<s:url value="/includes/images/icons/homeredirect.png"/>" height="15" width="15">&nbsp;Home&nbsp;Redirection</a></li>
+                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/users/general/searchLogger.action?loggerFlag=left"><img src="<s:url value="/includes/images/icons/log_search.png"/>" height="15" width="15">&nbsp;Logger&nbsp;Search</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="panel panel-default left-menu" id="accordian_services">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                            <i id="leftBullet" class="fa fa-cogs"></i>
-                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
-                            Dashboard
-                        </a>
-                    </h4>
-                </div>
-                <div id="mens" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <ul>
-                            <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/vendor/vendorDashboard.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Requirements&nbsp;</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
 
         </div><!--/category-productsr-->
 

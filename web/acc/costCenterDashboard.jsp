@@ -41,6 +41,7 @@
 
     </head>
     <body style="overflow-x: hidden">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -48,7 +49,7 @@
                 </div>
             </div>
         </header>
-        
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
@@ -78,7 +79,7 @@
                                                     <s:hidden id="quarters"/>
                                                     <s:hidden id="costcenternames"/>
                                                     <div class="col-sm-2">
-                                                        <label class="" style="color:#56a5ec;">Year: </label>
+                                                        <label class="" style="color:#56a5ec;">Year </label>
                                                         <s:textfield cssClass="form-control" id="dashBoardYear"
                                                                      name="dashBoardYear" placeholder="Year" onkeyup="getQuartersChart();" tabindex="1"
                                                                      />
@@ -95,7 +96,7 @@
                                                     </div> --%>
                                                     <s:if test="#session.primaryrole == 0">
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color:#56a5ec;">Customer: </label>
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Customer </label>
                                                             <s:hidden name="orgId" id="orgId"/>
                                                             <s:textfield id="accountNamePopup" autocomplete="off" 
                                                                          cssClass="form-control"
@@ -211,6 +212,7 @@
 
                 <!-- content end -->
         </section><!--/form-->
+                    </div>
         <s:if test="costCenterVTOList.size != 0">
             <script>
                 //alert("In outSide");
@@ -275,6 +277,7 @@
             </script>
 
         </s:if>
+                    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

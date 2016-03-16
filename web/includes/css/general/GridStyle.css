@@ -1,8 +1,10 @@
-
+.bx_style{
+    width:100% !important;
+}
 .CSSTable_task {
     margin:0px;padding:0px;
     width:100%;
-    border:1px solid #7E7E7E;
+    border:1px solid #EFEFEF;
     border-collapse: separate;
     
     -webkit-border-radius: 7px;
@@ -23,7 +25,7 @@
     -moz-border-radius-topleft:5px;
     -webkit-border-top-left-radius:5px;
     border-top-left-radius:5px;
-    background-color: #add8ec;
+    background-color: #fff;
 }.CSSTable_task table{
     border-collapse: collapse;
     border-spacing: 0;
@@ -53,21 +55,23 @@
 }
 .CSSTable_task th{
     vertical-align:middle;
-    border:1px solid #B76EB8;
+    border:1px solid #EFEFEF;
     border-width:0px 1px 1px 0px;
     text-align:left;
     padding:7px 5px;
-    font-size:15px;
-    font-family:Arial;
+    font-size:13px;
+    /*font-family:Arial;*/
     font-weight:bold;
     color:#FFFFFF;
-    background-color:#6495ED;
+    /*background-color:#6495ED;*/
+    /*background-color:#45b5de;*/
+    background-color: #4491df;
 }
-.CSSTable_task tr:nth-child(odd){ background-color:#87CEFA; }
-.CSSTable_task tr:nth-child(even)    { background-color:#ADD8E6; }
+.CSSTable_task tr:nth-child(odd){ background-color:#E0E0E0; }
+.CSSTable_task tr:nth-child(even)    { background-color:#fff; }
 .CSSTable_task td{
     vertical-align:middle;
-    border:1px solid #7E7E7E;
+    border:1px solid #EFEFEF;
     border-width:0px 1px 1px 0px;
     text-align:left;
     padding:6px;
@@ -438,7 +442,7 @@ div#timesheetMisc_Overlay {
 
 }
 .timesheetbutton {
-    background: none repeat scroll 0 0 #3bb9ff;
+    background: none repeat scroll 0 0 #4491DF;
     border: medium none;
     border-radius: 5px;
     color: #ffffff;
@@ -448,6 +452,15 @@ div#timesheetMisc_Overlay {
     margin-bottom: 5px;
 }
 
+.timesheetbutton:hover{
+    background-color: #45b5de;
+}
+
+
+.inner-addtaskdiv-elements1 input{
+    margin-left:12px;
+    
+}
 .contactInputStyle{
     /*    width: 138px;
         margin-right: 17px;
@@ -594,4 +607,12 @@ div#consultantdivEmail
 .consul_Customerlabel
 {
     color:#56a5ec;
+}
+
+.breadcrumLabelColor
+{
+    color: #178FFF;
+}
+.scrollTimeSheet{
+    overflow: auto;
 }

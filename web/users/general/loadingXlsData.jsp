@@ -61,6 +61,7 @@
 
     </head>
     <body style="overflow-x: hidden" onload="doOnLoadExcel() ;pagerOption()">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -69,7 +70,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
@@ -86,7 +87,7 @@
 
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Selected Content</font>
-                                                <i id="updownArrow" onclick="toggleContent('searchLogger')" class="fa fa-angle-up"></i> 
+                                                <i id="updownArrow" onclick="toggleContent('searchLogger')" class="fa fa-minus"></i> 
                                             </h4>
                                         </div>
 
@@ -124,14 +125,14 @@
                                             </s:else> 
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <label class="labelStyle" id="labelLevelStatusReq">Created Date: </label>
-                                                    <s:textfield cssClass="form-control dateImage" name="createdDate" id="created_Date" value="" onkeypress="return enterDateRepository();"></s:textfield>
-                                                </div>
+                                                    <label class="labelStyle" id="labelLevelStatusReq">Created Date </label>
+                                                    <div class="calImage"><s:textfield cssClass="form-control " name="createdDate" id="created_Date" value="%{createdDate}" onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
+                                                    </div></div>
                                                 <div class="col-sm-3">
-                                                    <label class="labelStyle" id="labelLevelStatusReq">Status: </label>
+                                                    <label class="labelStyle" id="labelLevelStatusReq">Status </label>
                                                     <s:select cssClass="form-control SelectBoxStyles " name="status" list="#@java.util.LinkedHashMap@{'DF':'---Select---','Success':'Success','Un-Success':'Un-Success'}"></s:select>
                                                 </div>  
-                                                <div class="col-sm-3 pull-right">
+                                                <div class="col-sm-3 col-md-2 pull-right">
                                                     <label class="labelStyle" id="labelLevelStatusReq"></label>
                                                     <s:submit type="button" value="" cssStyle="margin:5px" cssClass="add_searchButton form-control"> <i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                 </div> 
@@ -209,6 +210,8 @@
 
             <!-- content end -->
         </section><!--/form-->
+         </div>
+        </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">
@@ -217,6 +220,7 @@
             </div>
 
         </footer>
+   
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
         <script>
             setTimeout(function(){              

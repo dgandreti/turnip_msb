@@ -58,11 +58,12 @@ public class AccountDetails {
     private String skillValues;
     private List skillValueList;
     private String reqSkillSet;
+    private String accLogo;
 
     public AccountDetails() {
     }
 
-    public AccountDetails(Integer id, String name, String url, String status, String region, String stockSymbol, String description, String industry, String taxId, Integer budget, Integer revenue, String phone, String fax, String noemp, String territory, String country, String address1, String address2, String state, String zip, String city, Integer accountType, String lkState, String lkCountry, String lkIndustry, String lkAccountType, String lkVendor, String emailExt, String bankAccountNumber, String bankName, String bankAddress, String bankCity, String bankZip, String bankRoutingNumber, Integer isPrimary, String beneficiaryName,String skillValues) {
+    public AccountDetails(Integer id, String name, String url, String status, String region, String stockSymbol, String description, String industry, String taxId, Integer budget, Integer revenue, String phone, String fax, String noemp, String territory, String country, String address1, String address2, String state, String zip, String city, Integer accountType, String lkState, String lkCountry, String lkIndustry, String lkAccountType, String lkVendor, String emailExt, String bankAccountNumber, String bankName, String bankAddress, String bankCity, String bankZip, String bankRoutingNumber, Integer isPrimary, String beneficiaryName, String skillValues, String accLogo) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -100,7 +101,8 @@ public class AccountDetails {
         this.bankAccountNumber = bankAccountNumber;
         this.isPrimary = isPrimary;
         this.beneficiaryName = beneficiaryName;
-         this.skillValues = skillValues;
+        this.skillValues = skillValues;
+        this.accLogo = accLogo;
     }
 
     public Integer getId() {
@@ -426,5 +428,12 @@ public class AccountDetails {
     public void setReqSkillSet(String reqSkillSet) {
         this.reqSkillSet = reqSkillSet;
     }
-    
+
+    public String getAccLogo() {
+        return accLogo;
+    }
+
+    public void setAccLogo(String accLogo) {
+        this.accLogo = accLogo;
+    }
 }

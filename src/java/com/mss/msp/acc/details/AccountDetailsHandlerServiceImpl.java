@@ -53,7 +53,12 @@ public class AccountDetailsHandlerServiceImpl implements AccountDetailsHandlerSe
         if(details.getBankAccountNumber()!=null){
        details.setBankRoutingNumber(com.mss.msp.util.DataUtility.decrypted(details.getBankRoutingNumber()));
     }
-
+         if(details.getAccLogo()==null)
+        {
+            System.out.println("logo babu----------------------------------->"+details.getAccLogo());
+          details.setAccLogo(Properties.getProperty("DEFAULTLOGO"));
+          
+        }
 
         //get look up names fomr lk tables =>CHANGE LATER<=
        /* if((id>0)){

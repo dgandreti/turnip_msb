@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ServicesBay :: Account Search Page</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
-         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/home/home.css"/>">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/home/home.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/main.css"/>">
@@ -24,7 +24,7 @@
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive_queries.css"/>">
-<script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <%--script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
@@ -35,43 +35,20 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
-         <script>
+        <script>
             $(document).ready(function(){
-//                alert("acc")
+                //                alert("acc")
                 $(".img-swap").click(function(){
                     $(".popup_block").animate({
                         width: 'toggle'
                     });
                 });
+                document.getElementById("loadingAcoountSearch").style.display="none";
             });
             
-            $(function(){
-                $(".img-swap").live('click', function() {
-                   
-                    if ($(this).attr("class") == "img-swap") {
-                       
-                        this.src = this.src.replace("next","prev");
-                    } else {
-                        this.src = this.src.replace("prev","next");
-                    }
-                    $(this).toggleClass("on");
-                });
-            });
+           
             
-            
-            if ( $(window).width() > 1400) {      
-                //Add your javascript for large screens here 
-//  alert("large screens")
-                $(document).ready(function(){
-                    $(".slide_popup").click(function(){
-                        $(".popup_block").animate({
-                            width: 'toggle'
-                        });
-                    });
-                });
-            
-              
-            }
+        
         </script>
 
 
@@ -105,361 +82,370 @@
         </script>
         <style>
 
-        
 
             
+
         </style>
     </head>
     <body style="overflow-x: hidden" onload="loadPopup(); doOnLoad();">
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
-                    <s:include value="/includes/template/header.jsp"/>
+        <div id="wrap">
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
+                        <s:include value="/includes/template/header.jsp"/>
+                    </div>
                 </div>
-            </div>
-        </header>
-        
-        <!-- Model popup -->
-        
+            </header>
 
-        <!-- Model popup, end -->
-        <section id="generalForm"><!--form-->
-            <div  class="container">
-                <div class="row">
-                    <!-- content start -->
-                    <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
-                        <div class="features_items">
-                            <div class="col-sm-12 ">
-                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
-                                    <div class="backgroundcolor" >
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                <font color="#ffffff">Account Search</font>
-                                                <i id="updownArrow" onclick="toggleContent('searchAccountsBy')" class="fa fa-angle-up"></i> 
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <!-- content start -->
-                                    <div class="col-sm-12">
-                                        <s:form action="searchAccountsBy"  method="post" theme="simple" >
-                                            <br>
-                                            <%--div class="row">
-                                                <div class="col-sm-4">
-                                                    <label class="accountLabel" style="" >Name:</label>
-                                                    <s:textfield  cssClass="textbox" label="accountName" id="accountName"
-                                                                  type="text" name="account.name" placeholder="Account Name"
-                                                                  value="%{account.name}"
-                                                                  />
+            <!-- Model popup -->
+
+
+            <!-- Model popup, end -->
+            <div id="main">
+
+                <section id="generalForm"><!--form-->
+                    <div  class="container">
+                        <div class="row">
+                            <!-- content start -->
+                            <s:include value="/includes/menu/LeftMenu.jsp"/>
+                            <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
+                                <div class="features_items">
+                                    <div class="col-sm-12 ">
+                                        <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                                            <div class="backgroundcolor" >
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                        <font color="#ffffff">Account Search</font>
+                                                        <i id="updownArrow" onclick="toggleContent('searchAccountsBy')" class="fa fa-minus"></i> 
+                                                    </h4>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <label class="accountLabel" style="">URL:</label>
-                                                    <s:textfield cssClass="textbox" id="accountUrl" type="text"
-                                                                 name="account.url" placeholder="Account Url"
-                                                                 value="%{account.url}"/>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="accountLabel" style="" >Zip:</label>
-                                                    <s:textfield cssClass="textbox" id="accountZip" type="dropdown"
-                                                                 name="account.zip" placeholder="Zip"
-                                                                 value="%{account.zip}"/>
-                                                </div>
-                                            </div--%>
-                                            <div class="inner-reqdiv-elements">
-                                               
-                                                    <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Name: </label>
-                                                        <s:textfield  cssClass="form-control" label="accountName" id="accountName"
-                                                                      type="text" name="account.name" placeholder="Account Name"
-                                                                      value="%{account.name}" maxLength="60"
-                                                                      />
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">URL:</label>
-                                                        <s:textfield cssClass="form-control" id="accountUrl" type="text"
-                                                                     name="account.url" placeholder="Account Url"
-                                                                     value="%{account.url}" maxLength="60"/>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Zip:</label>
-                                                        <s:textfield cssClass="form-control" id="accountZip" type="dropdown"
-                                                                     name="account.zip" placeholder="Zip"
-                                                                     value="%{account.zip}" maxLength="10"/>
-                                                    </div>
-                                               
                                             </div>
-
-
-                                            <%--div class="row">
-                                                <div class="col-sm-4">
-                                                    <label class="accountLabel" style="">Date:</label>
-                                                    <s:textfield cssClass="textbox" id="accountLastAccessDate"
-                                                                 type="dropdown" name="account.lastAccessDate"
-                                                                 placeholder="Last access date" value="%{account.lastAccessDate}"
-                                                                 />
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="accountLabel" style="">Country:</label>
-                                                    <s:select  id="Countries" type="dropdown"
-                                                               listKey="%{id}" listValue="%{name}"
-                                                               name="account.country.id" placeholder="Country"
-                                                               value="%{account.country.id}"
-                                                               list="countries" label="Country" headerKey="-1"
-                                                               headerValue="Select Country"
-                                                               cssClass="selectBoxStyle" onchange="javascript: getStates($(Countries).val(),'#accountState')"/>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="accountLabel" style="">State:</label>
-                                                    <s:select  id="accountState" type="dropdown"
-                                                               name="account.state.id" placeholder="State"
-                                                               value="%{account.state.id}"
-                                                               list="accountState" label="State" headerKey="-1"
-                                                               listKey="%{id}" listValue="%{name}"
-                                                               headerValue="Select State"
-                                                               cssClass="selectBoxStyle"/>
-                                                </div>
-                                            </div--%>
-                                            <div class="inner-reqdiv-elements">
-                                                
-                                                    <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Date: </label>
-                                                        <s:textfield cssClass="form-control dateImage" id="accountLastAccessDate"
-                                                                     type="dropdown" name="account.lastAccessDate"
-                                                                     placeholder="Last access date" value="%{account.lastAccessDate}"
-                                                                     onkeypress="return enterDateRepositoryAccount(this)"
-                                                                     />
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Country:</label>
-                                                        <s:select  id="Countries" type="dropdown"
-                                                                   listKey="%{id}" listValue="%{name}"
-                                                                   name="account.country.id" placeholder="Country"
-                                                                   value="%{account.country.id}"
-                                                                   list="countries" label="Country" headerKey="-1"
-                                                                   headerValue="Select Country"
-                                                                   cssClass="SelectBoxStyles form-control" onchange="javascript: getStates($(Countries).val(),'#accountState')"/>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">State:</label>
-                                                        <s:select  id="accountState" type="dropdown"
-                                                                   name="account.state.id" placeholder="State"
-                                                                   value="%{account.state.id}"
-                                                                   list="accountState" label="State" headerKey="-1"
-                                                                   listKey="%{id}" listValue="%{name}"
-                                                                   headerValue="Select State"
-                                                                   cssClass="SelectBoxStyles form-control"/>
-                                                    </div>
-                                                
-                                            </div>
-
-
-                                            <%--div class="row">
-                                                <div class="col-sm-4">
-                                                    <label class="accountLabel" style="">Type:</label>
-                                                    <s:select  id="accountType" type="dropdown"
-                                                               name="account.typeId" placeholder="Type"
-                                                               value="%{account.typeId}"
-                                                               list="types" label="AccountType" headerKey="-1"
-                                                               headerValue="Select Account Type"
-                                                               cssClass="selectBoxStyle"/>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="accountLabel" style="">Industry:</label>
-                                                    <s:select  id="accountIndustry" type="dropdown"
-                                                               name="account.industryId" placeholder="Industry"
-                                                               value="%{account.industryId}"
-                                                               list="industries" label="Industry" headerKey="-1"
-                                                               headerValue="Select Industry"
-                                                               cssClass="selectBoxStyle"/>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="accountLabel" style="">Status:</label>
-                                                    <s:select  id="accountStatus" type="dropdown"
-                                                               name="account.status" placeholder="Status"
-                                                               value="%{account.status}"
-                                                               list="accountStatus" label="Status" headerKey="-1"
-                                                               headerValue="Select Status"
-                                                               cssClass="selectBoxStyle "/>
-                                                </div>
-                                            </div--%>
-                                            <div class="inner-reqdiv-elements">
-                                                
-                                                    <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Type: </label>
-                                                        <s:select  id="accountType" type="dropdown"
-                                                                   name="account.typeId" placeholder="Type"
-                                                                   value="%{account.typeId}"
-                                                                   list="types" label="AccountType" headerKey="-1"
-                                                                   headerValue="Select Account Type"
-                                                                   cssClass="SelectBoxStyles form-control"/>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Industry:</label>
-                                                        <s:select  id="accountIndustry" type="dropdown"
-                                                                   name="account.industryId" placeholder="Industry"
-                                                                   value="%{account.industryId}"
-                                                                   list="industries" label="Industry" headerKey="-1"
-                                                                   headerValue="Select Industry"
-                                                                   cssClass="SelectBoxStyles form-control"/>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
-                                                        <s:select  id="accountStatus" type="dropdown"
-                                                                   name="account.status" placeholder="Status"
-                                                                   value="%{account.status}"
-                                                                   list="accountStatus" label="Status" headerKey="-1"
-                                                                   headerValue="Select Status"
-                                                                   cssClass="SelectBoxStyles form-control"/>
-                                                    </div>
-                                                   
-                                                    <div class="col-sm-2 pull-right">
-
-                                                        <s:submit type="button" cssClass="add_searchButton  form-control"
-                                                                  value="" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                            <!-- content start -->
+                                            <div class="col-sm-12">
+                                                <s:form action="searchAccountsBy"  method="post" theme="simple" >
+                                                    <br>
+                                                    <%--div class="row">
+                                                        <div class="col-sm-4">
+                                                            <label class="accountLabel" style="" >Name:</label>
+                                                            <s:textfield  cssClass="textbox" label="accountName" id="accountName"
+                                                                          type="text" name="account.name" placeholder="Account Name"
+                                                                          value="%{account.name}"
+                                                                          />
                                                         </div>
-                                                    
-                                                </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="accountLabel" style="">URL:</label>
+                                                            <s:textfield cssClass="textbox" id="accountUrl" type="text"
+                                                                         name="account.url" placeholder="Account Url"
+                                                                         value="%{account.url}"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="accountLabel" style="" >Zip:</label>
+                                                            <s:textfield cssClass="textbox" id="accountZip" type="dropdown"
+                                                                         name="account.zip" placeholder="Zip"
+                                                                         value="%{account.zip}"/>
+                                                        </div>
+                                                    </div--%>
+                                                    <div class="inner-reqdiv-elements">
 
-                                            <%--div class="row">
-                                                <div class="col-sm-4"> <s:submit type="submit" cssClass="cssbutton_emps field-margin"
-                                                          value="Search" cssStyle="margin:0px"/></div>
-                                                <div class="col-sm-4"></div>
-                                            </div--%>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Name </label>
+                                                            <s:textfield  cssClass="form-control" label="accountName" id="accountName"
+                                                                          type="text" name="account.name" placeholder="Account Name"
+                                                                          value="%{account.name}" maxLength="60"
+                                                                          />
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">URL</label>
+                                                            <s:textfield cssClass="form-control" id="accountUrl" type="text"
+                                                                         name="account.url" placeholder="Account Url"
+                                                                         value="%{account.url}" maxLength="60"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Zip</label>
+                                                            <s:textfield cssClass="form-control" id="accountZip" type="dropdown"
+                                                                         name="account.zip" placeholder="Zip"
+                                                                         value="%{account.zip}" maxLength="10"/>
+                                                        </div>
 
-                                        </s:form>
-                                        <br>
-                                        <div class="row"></div>
-                                        <%--<s:submit cssClass="css_button" value="show"/><br>--%>
-                                        <div class="col-sm-12">
-                                            <s:form>
-                                                <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
-                                                    <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
-                                                        <table id="accountSearchResults" class="responsive CSSTable_task sortable" border="5">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <th>Name</th>
-                                                                    <th class="unsortable">URL </th>
-                                                                    <th>Account Type</th>
-                                                                    <th class="unsortable">LastAccessBy</th>
-                                                                    <th class="unsortable">LastAccessDate</th>
-                                                                    <th class="unsortable">State</th>
-                                                                    <th>Status</th>
-                                                                </tr>
-                                                            <s:if test="accounts.size == 0">
-                                                                <tr>
-                                                                    <td colspan="7"><font style="color: red;font-size: 15px;text-align: center">No Records to display</font></td>
-                                                                </tr>
-                                                            </s:if>
-                                                            <% String flag = "accDetails";%>
-                                                            <s:iterator  value="accounts">
-                                                                <!--build url TO goto Account Details-->
-                                                                <s:url id="accountDetailsUrl" action="viewAccount" namespace="/acc" encode="true">
-                                                                    <s:param name="accountSearchID" value="%{id}" />
-                                                                    <s:param name="accFlag"><%= flag%></s:param>
-                                                                </s:url>
-                                                                <tr>
-                                                                    <td><s:a href="%{accountDetailsUrl}"><s:property value="name"></s:property></s:a></td>
-                                                                    <td><s:a href="#" onclick="window.open('http://%{url}');"><s:property value="url" /></s:a></td>
-                                                                    <td><s:property value="type"></s:property></td>
-                                                                    <%--<td><s:a href="javascript:getEmpMailPhone(%{lastAccessById});" class="emailPhoneShow_popup_open"><s:property value="lastAccessBy"></s:property></s:a></td>--%>
-                                                                    <td><s:a href="#" onclick="getEmpMailPhone(%{lastAccessById});" cssClass="emailPhoneShow_popup_open"><s:property value="lastAccessBy"></s:property></s:a></td>
-                                                                    <td><s:property value="lastAccessDateString"></s:property></td>
-                                                                    <td><s:property value="state.name"></s:property></td>
-                                                                    <td><s:property value="status"></s:property></td>
+                                                    </div>
 
-                                                                    </tr>
-                                                            </s:iterator>
 
-                                                        </tbody>
-                                                    </table>
-                                                    <br/>
-                                                    <s:if test="accounts.size > 0">
-                                                        <label> Display <select id="paginationOption" onchange="pagerOption()" style="width: auto" class="disPlayRecordsCss">
-                                                                <option>10</option>
-                                                                <option>15</option>
-                                                                <option>25</option>
-                                                                <option>50</option>
-                                                            </select>
-                                                            Accounts per page
-                                                        </label>
-                                                    </s:if>
+                                                    <%--div class="row">
+                                                        <div class="col-sm-4">
+                                                            <label class="accountLabel" style="">Date:</label>
+                                                            <s:textfield cssClass="textbox" id="accountLastAccessDate"
+                                                                         type="dropdown" name="account.lastAccessDate"
+                                                                         placeholder="Last access date" value="%{account.lastAccessDate}"
+                                                                         />
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="accountLabel" style="">Country:</label>
+                                                            <s:select  id="Countries" type="dropdown"
+                                                                       listKey="%{id}" listValue="%{name}"
+                                                                       name="account.country.id" placeholder="Country"
+                                                                       value="%{account.country.id}"
+                                                                       list="countries" label="Country" headerKey="-1"
+                                                                       headerValue="Select Country"
+                                                                       cssClass="selectBoxStyle" onchange="javascript: getStates($(Countries).val(),'#accountState')"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="accountLabel" style="">State:</label>
+                                                            <s:select  id="accountState" type="dropdown"
+                                                                       name="account.state.id" placeholder="State"
+                                                                       value="%{account.state.id}"
+                                                                       list="accountState" label="State" headerKey="-1"
+                                                                       listKey="%{id}" listValue="%{name}"
+                                                                       headerValue="Select State"
+                                                                       cssClass="selectBoxStyle"/>
+                                                        </div>
+                                                    </div--%>
+                                                    <div class="inner-reqdiv-elements">
+
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Date </label>
+                                                            <div class="calImage"><s:textfield cssClass="form-control  " id="accountLastAccessDate"
+                                                                         type="dropdown" name="account.lastAccessDate"
+                                                                         placeholder="Last access date" value="%{account.lastAccessDate}"
+                                                                         onkeypress="return enterDateRepositoryAccount(this)"
+                                                                         ><i class="fa fa-calendar"></i></s:textfield>
+                                                                </div></div>
+                                                            <div class="col-sm-4">
+                                                                <label class="labelStylereq" style="color:#56a5ec;">Country</label>
+                                                            <s:select  id="Countries" type="dropdown"
+                                                                       listKey="%{id}" listValue="%{name}"
+                                                                       name="account.country.id" placeholder="Country"
+                                                                       value="%{account.country.id}"
+                                                                       list="countries" label="Country" headerKey="-1"
+                                                                       headerValue="Select Country"
+                                                                       cssClass="SelectBoxStyles form-control" onchange="javascript: getStates($(Countries).val(),'#accountState')"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">State</label>
+                                                            <s:select  id="accountState" type="dropdown"
+                                                                       name="account.state.id" placeholder="State"
+                                                                       value="%{account.state.id}"
+                                                                       list="accountState" label="State" headerKey="-1"
+                                                                       listKey="%{id}" listValue="%{name}"
+                                                                       headerValue="Select State"
+                                                                       cssClass="SelectBoxStyles form-control"/>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <%--div class="row">
+                                                        <div class="col-sm-4">
+                                                            <label class="accountLabel" style="">Type:</label>
+                                                            <s:select  id="accountType" type="dropdown"
+                                                                       name="account.typeId" placeholder="Type"
+                                                                       value="%{account.typeId}"
+                                                                       list="types" label="AccountType" headerKey="-1"
+                                                                       headerValue="Select Account Type"
+                                                                       cssClass="selectBoxStyle"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="accountLabel" style="">Industry:</label>
+                                                            <s:select  id="accountIndustry" type="dropdown"
+                                                                       name="account.industryId" placeholder="Industry"
+                                                                       value="%{account.industryId}"
+                                                                       list="industries" label="Industry" headerKey="-1"
+                                                                       headerValue="Select Industry"
+                                                                       cssClass="selectBoxStyle"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="accountLabel" style="">Status:</label>
+                                                            <s:select  id="accountStatus" type="dropdown"
+                                                                       name="account.status" placeholder="Status"
+                                                                       value="%{account.status}"
+                                                                       list="accountStatus" label="Status" headerKey="-1"
+                                                                       headerValue="Select Status"
+                                                                       cssClass="selectBoxStyle "/>
+                                                        </div>
+                                                    </div--%>
+                                                    <div class="inner-reqdiv-elements">
+
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Type </label>
+                                                            <s:select  id="accountType" type="dropdown"
+                                                                       name="account.typeId" placeholder="Type"
+                                                                       value="%{account.typeId}"
+                                                                       list="types" label="AccountType" headerKey="-1"
+                                                                       headerValue="Select Account Type"
+                                                                       cssClass="SelectBoxStyles form-control"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Industry</label>
+                                                            <s:select  id="accountIndustry" type="dropdown"
+                                                                       name="account.industryId" placeholder="Industry"
+                                                                       value="%{account.industryId}"
+                                                                       list="industries" label="Industry" headerKey="-1"
+                                                                       headerValue="Select Industry"
+                                                                       cssClass="SelectBoxStyles form-control"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Status</label>
+                                                            <s:select  id="accountStatus" type="dropdown"
+                                                                       name="account.status" placeholder="Status"
+                                                                       value="%{account.status}"
+                                                                       list="accountStatus" label="Status" headerKey="-1"
+                                                                       headerValue="Select Status"
+                                                                       cssClass="SelectBoxStyles form-control"/>
+                                                        </div>
+
+                                                        <div class="col-sm-2 pull-right">
+
+                                                            <s:submit type="button" cssClass="add_searchButton  form-control"
+                                                                      value="" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                            </div>
+
+                                                        </div>
+
+                                                    <%--div class="row">
+                                                        <div class="col-sm-4"> <s:submit type="submit" cssClass="cssbutton_emps field-margin"
+                                                                  value="Search" cssStyle="margin:0px"/></div>
+                                                        <div class="col-sm-4"></div>
+                                                    </div--%>
 
                                                 </s:form>
+                                                <br>
+                                                <div class="row"></div>
+                                                <div id="loadingAcoountSearch" class="loadingImg">
+                                                    <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                                </div>
+                                                <%--<s:submit cssClass="css_button" value="show"/><br>--%>
+                                                <div class="col-sm-12">
+                                                    <s:form>
+                                                        <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
+                                                            <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
+                                                                <table id="accountSearchResults" class="responsive CSSTable_task sortable" border="5">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th>Name</th>
+                                                                            <th class="unsortable">URL </th>
+                                                                            <th>Account Type</th>
+                                                                            <th class="unsortable">LastAccessBy</th>
+                                                                            <th class="unsortable">LastAccessDate</th>
+                                                                            <th class="unsortable">State</th>
+                                                                            <th>Status</th>
+                                                                        </tr>
+                                                                    <s:if test="accounts.size == 0">
+                                                                        <tr>
+                                                                            <td colspan="7"><font style="color: red;font-size: 15px;text-align: center">No Records to display</font></td>
+                                                                        </tr>
+                                                                    </s:if>
+                                                                    <% String flag = "accDetails";%>
+                                                                    <s:iterator  value="accounts">
+                                                                        <!--build url TO goto Account Details-->
+                                                                        <s:url id="accountDetailsUrl" action="viewAccount" namespace="/acc" encode="true">
+                                                                            <s:param name="accountSearchID" value="%{id}" />
+                                                                            <s:param name="accFlag"><%= flag%></s:param>
+                                                                        </s:url>
+                                                                        <tr>
+                                                                            <td><s:a href="%{accountDetailsUrl}"><s:property value="name"></s:property></s:a></td>
+                                                                            <td><s:a href="#" onclick="window.open('http://%{url}');"><s:property value="url" /></s:a></td>
+                                                                            <td><s:property value="type"></s:property></td>
+                                                                            <%--<td><s:a href="javascript:getEmpMailPhone(%{lastAccessById});" class="emailPhoneShow_popup_open"><s:property value="lastAccessBy"></s:property></s:a></td>--%>
+                                                                            <td><s:a href="#" onclick="getEmpMailPhone(%{lastAccessById});" cssClass="emailPhoneShow_popup_open"><s:property value="lastAccessBy"></s:property></s:a></td>
+                                                                            <td><s:property value="lastAccessDateString"></s:property></td>
+                                                                            <td><s:property value="state.name"></s:property></td>
+                                                                            <td><s:property value="status"></s:property></td>
+
+                                                                            </tr>
+                                                                    </s:iterator>
+
+                                                                </tbody>
+                                                            </table>
+                                                            <br/>
+                                                            <s:if test="accounts.size > 0">
+                                                                <label> Display <select id="paginationOption" onchange="pagerOption()" style="width: auto" class="disPlayRecordsCss">
+                                                                        <option>10</option>
+                                                                        <option>15</option>
+                                                                        <option>25</option>
+                                                                        <option>50</option>
+                                                                    </select>
+                                                                    Accounts per page
+                                                                </label>
+                                                            </s:if>
+
+                                                        </s:form>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <%--close of future_items--%>
                                     </div>
                                 </div>
-                                <%--close of future_items--%>
                             </div>
-                        </div>
-                    </div>
                             <s:if test="%{responceFlag==0}">
-<!--            <div id="grayBG_default" class="grayBox animated fadeInLeftBig">
-                <table class="tabside_popup">
-                    <tr class="popup_element"><td><img src="../includes/images/addAccount.png" style="width:40px;height:40px"><h4><font class="titleColor">&nbsp;Account&nbsp;&nbsp; </font></h4></td>
-                    <div class="popupClose pull-right" id="" ><a href="#"  onclick="closePopup();"   class="close_img" data-toggle="" data-target="" application_id=""><img   src="<s:url value="/includes/images/close_popup.png"/>" height="15" width="15"></a>  </div>
-                </table>
-                <div class="addlink" style="" >   &nbsp;&nbsp;Here you can :  
-                    <a href="accountadd.action" class="add_Acc">Add Account</a> </div>
-            </div>
-                -->
-                <div class="side_popup">
+                                <!--            <div id="grayBG_default" class="grayBox animated fadeInLeftBig">
+                                                <table class="tabside_popup">
+                                                    <tr class="popup_element"><td><img src="../includes/images/addAccount.png" style="width:40px;height:40px"><h4><font class="titleColor">&nbsp;Account&nbsp;&nbsp; </font></h4></td>
+                                                    <div class="popupClose pull-right" id="" ><a href="#"  onclick="closePopup();"   class="close_img" data-toggle="" data-target="" application_id=""><img   src="<s:url value="/includes/images/close_popup.png"/>" height="15" width="15"></a>  </div>
+                                                </table>
+                                                <div class="addlink" style="" >   &nbsp;&nbsp;Here you can :  
+                                                    <a href="accountadd.action" class="add_Acc">Add Account</a> </div>
+                                            </div>
+                                -->
+                                <div class="side_popup">
 
-                <div class="popup_block"> 
+                                    <div class="popup_block"> 
 
-                    <div class="addlink" style="height: 80px;" >
-                        <s:url id="myUrl" action="/../../../Requirements/addRequirements.action">
-                                <s:param name="accountSearchID"><s:property value="orgid"/></s:param>
-                                <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
-                            </s:url>
-                       
-                        <div class="alignField">  <a href="accountadd.action" class="add_Acc">  <img src="../includes/images/addAccount.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </a></div>
+                                        <div class="addlink" style="height: 30px;" >
+                                            <s:url id="myUrl" action="/../../../Requirements/addRequirements.action">
+                                                <s:param name="accountSearchID"><s:property value="orgid"/></s:param>
+                                                <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
+                                            </s:url>
 
-                        <div class="alignField">
+                                            <!--<div class="alignField">  <a href="accountadd.action" class="add_Acc">  <img src="../includes/images/addAccount.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </a></div>-->
 
-                           
-                           
-                         <a href="accountadd.action" class="add_Acc">Add Account</a> </div>
-                            </div>
-                       
-                        </div>
-               
+                                            <div class="alignField">
 
-                    <div class="slide_popup account"><img src="../includes/images/next.png"  class="img-swap"></div>
-                </div>
-				
 
-        </s:if>
-                </div>
-            </div> 
-            <div id="emailPhoneShow_popup">
-                <div id="emailPhoneShowBoxOverlay" >
-                    <div style="background-color: #3bb9ff ; padding: 0px">
-                        <table>
-                            <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Employee Details&nbsp;&nbsp; </font></h4></td>
-                            </tr>
-                            <span class=" pull-right"><h5><a href="" class="emailPhoneShow_popup_close" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
-                        </table>
-                    </div>
-                    <div>
-                        <form action="#" theme="simple" >
-                            <div>
-                                <div class="inner-reqdiv-elements">
-                                    <table>
-                                        <span><error></error></span>
-                                        <s:textfield name="email"  label="Email-Id:" id="email"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
-                                        <s:textfield name="contactNo"  label="Contact No:" id="contactNo"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
 
-                                    </table>
+                                                <a href="accountadd.action" class="add_Acc">Add Account</a> </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="slide_popup account"><i class="fa fa-user-plus fa-2 img-swap" ></i></div>
                                 </div>
+
+
+                            </s:if>
+                        </div>
+                    </div> 
+                    <div id="emailPhoneShow_popup">
+                        <div id="emailPhoneShowBoxOverlay" >
+                            <div class="overlayOrButton_color">
+                                <table>
+                                    <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Employee Details&nbsp;&nbsp; </font></h4></td>
+                                    </tr>
+                                    <span class=" pull-right"><h5><a href="" class="emailPhoneShow_popup_close close_bg" ><i class="fa fa-times-circle-o fa-2x"></i></a></h5></span>
+                                </table>
                             </div>
-                        </form>
+                            <div>
+                                <form action="#" theme="simple" >
+                                    <div>
+                                        <div class="inner-reqdiv-elements">
+                                            <table>
+                                                <span><error></error></span>
+                                                <s:textfield name="email"  label="Email-Id" id="email"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
+                                                <s:textfield name="contactNo"  label="Contact No" id="contactNo"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <!-- content end -->
+                </section><!--/form-->
             </div>
-            <!-- content end -->
-        </section><!--/form-->
+
+        </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

@@ -56,9 +56,11 @@
       
       <action name="userRegistration" class="com.mss.msp.general.GeneralAction" method="UserRegistration">
             <interceptor-ref name="crudStack" />
+            <interceptor-ref name="token"/>
             <result name="success">../exception/RegistrationSuccess.jsp</result>
             <result name="error">../exception/403.jsp?resultMessage=${resultMessage}</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="invalid.token">../exception/RegistrationSuccess.jsp</result>
         </action>
         
        <!-- <action name="homeredirect" class="com.mss.msp.general.LoginAction" method="getMyhomePage">
@@ -75,7 +77,7 @@
             <result name="error" type="redirect">./login.action</result>
         </action>
          
-         <action name="deneid" class="com.mss.msp.general.LoginAction" method="accessDeneid">
+        <action name="deneid" class="com.mss.msp.general.LoginAction" method="accessDeneid">
             <result name="success">home.jsp</result>
         </action>
         

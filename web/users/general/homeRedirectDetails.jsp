@@ -78,7 +78,13 @@
                     }
                 }
             };
-
+            function onLoad()
+            {
+                //alert("hello")
+                document.getElementById("loadingHomeRedirectSearch").style.display="none";
+                
+    
+            }
         </script>
     </head>
     <body style="overflow-x: hidden" onload="onLoad();">
@@ -107,79 +113,85 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
                                                         <font color="#ffffff">Home Redirect Search</font>
-                                                        <i id="updownArrow" onclick="toggleContent('homeRedirectForm')" class="fa fa-angle-up"></i> 
+                                                        <i id="updownArrow" onclick="toggleContent('homeRedirectForm')" class="fa fa-minus"></i> 
                                                     </h4>
                                                 </div>
                                             </div>
                                             <!-- content start -->
                                             <div class="col-sm-12">
                                                 <div class="row">
-                                                <div id="homeRedirectForm">
-                                                    <s:hidden id="acc_type" name="acc_type" value="%{#session.typeOfUsr}"/>     
-                                                    <s:if test="#session.typeOfUsr!='AC' && #session.typeOfUsr!='VC'"> 
-                                                        <div class="col-sm-3">
-                                                            <label class="labelStylereq" style="color:#56a5ec;">Account Name: </label>
-                                                            <s:select  id="accountName"
-                                                                       name="accountName"
-                                                                       cssClass="SelectBoxStyles form-control"
-                                                                       headerKey="-1"
-                                                                       headerValue="All"
-                                                                       theme="simple"
-                                                                       list="accountsMap"
-                                                                       />
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <label class="labelStylereq" style="color:#56a5ec;">Type of User:</label>
-                                                            <s:select  id="typeOfUser"
-                                                                       name="typeOfUser"
-                                                                       cssClass="SelectBoxStyles form-control"
-                                                                       headerKey="-1"
-                                                                       headerValue="All"
-                                                                       theme="simple"
-                                                                       list="#@java.util.LinkedHashMap@{'SA':'Site Admin','AC':'Customer','VC':'Vendor','E':'Employee','CO':'Consultant'}"
-                                                                       />
-                                                        </div>
-                                                    </s:if>
-                                                    <s:else>
-                                                        <s:hidden id="accountName" name="accountName" value="-1"/>
-                                                    </s:else>
-                                                    <div class="col-sm-3">
-                                                        <label class="labelStylereq" style="color:#56a5ec;">Primary Role:</label>
-                                                        <s:select  id="primaryRole"
-                                                                   name="primaryRole"
-                                                                   cssClass="SelectBoxStyles form-control"
-                                                                   headerKey="-1" 
-                                                                   headerValue="All"
-                                                                   theme="simple"
-                                                                   list="rolesMap"
-                                                                   />
-                                                    </div>
-
-                                                    <div class="col-sm-6 pull-right">
-
-                                                        <s:url id="homeRedirectUrl" action="doAddOrEditHomeRedirect.action">
-                                                            <s:param name="homeRedirectActionId">0</s:param>
-                                                        </s:url>
-
-                                                        <div class="pull-right col-sm-5">
-                                                            <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                            <s:a href='%{#homeRedirectUrl}'><button class="add_searchButton form-control " style="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a> 
-                                                        </div>
-                                                        <div class="pull-right col-sm-5">
-                                                            <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                            <span class=""><s:submit type="button"
-                                                                      cssClass="add_searchButton  form-control"
-                                                                      value="" cssStyle="margin:5px 0px;" onclick="getHomeRedirectSearchDetails();"><i class="fa fa-search"></i>&nbsp;Search</s:submit></span>
+                                                    <div id="homeRedirectForm">
+                                                        <s:hidden id="acc_type" name="acc_type" value="%{#session.typeOfUsr}"/>     
+                                                        <s:if test="#session.typeOfUsr!='AC' && #session.typeOfUsr!='VC'"> 
+                                                            <div class="col-sm-4">
+                                                                <label class="labelStylereq" style="color:#56a5ec;">Account Name </label>
+                                                                <s:select  id="accountName"
+                                                                           name="accountName"
+                                                                           cssClass="SelectBoxStyles form-control"
+                                                                           tabindex="1"
+                                                                           headerKey="-1"
+                                                                           headerValue="All"
+                                                                           theme="simple"
+                                                                           list="accountsMap"
+                                                                           />
                                                             </div>
+                                                            <div class="col-sm-4">
+                                                                <label class="labelStylereq" style="color:#56a5ec;">Type of User</label>
+                                                                <s:select  id="typeOfUser"
+                                                                           name="typeOfUser"
+                                                                           cssClass="SelectBoxStyles form-control"
+                                                                           tabindex="2"
+                                                                           headerKey="-1"
+                                                                           headerValue="All"
+                                                                           theme="simple"
+                                                                           list="#@java.util.LinkedHashMap@{'SA':'Site Admin','AC':'Customer','VC':'Vendor','E':'Employee','CO':'Consultant'}"
+                                                                           />
+                                                            </div>
+                                                        </s:if>
+                                                        <s:else>
+                                                            <s:hidden id="accountName" name="accountName" value="-1"/>
+                                                        </s:else>
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Primary Role</label>
+                                                            <s:select  id="primaryRole"
+                                                                       name="primaryRole"
+                                                                       cssClass="SelectBoxStyles form-control"
+                                                                       tabindex="3"
+                                                                       headerKey="-1" 
+                                                                       headerValue="All"
+                                                                       theme="simple"
+                                                                       list="rolesMap"
+                                                                       value="-1"
+                                                                       />
+                                                        </div>
 
-                                                        </div></div>
-                                                </div>
+                                                        <div class="col-sm-6 pull-right">
+
+                                                            <s:url id="homeRedirectUrl" action="doAddOrEditHomeRedirect.action">
+                                                                <s:param name="homeRedirectActionId">0</s:param>
+                                                            </s:url>
+
+                                                            <div class="pull-right col-sm-4">
+                                                                <label class="labelStylereq" style="color:#56a5ec;"></label>
+                                                                <s:a href='%{#homeRedirectUrl}'><button class="add_searchButton form-control " tabindex="5" style="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a> 
+                                                            </div>
+                                                            <div class="pull-right col-sm-4">
+                                                                <label class="labelStylereq" style="color:#56a5ec;"></label>
+                                                                <span class=""><s:submit type="button"
+                                                                          cssClass="add_searchButton  form-control" tabindex="4"
+                                                                          value="" cssStyle="margin:5px 0px;" onclick="getHomeRedirectSearchDetails();"><i class="fa fa-search"></i>&nbsp;Search</s:submit></span>
+                                                                </div>
+
+                                                            </div></div>
+                                                    </div>
                                                 </div>
                                             <%--</s:form>       --%>
                                             <br>
                                             <%--<s:submit cssClass="css_button" value="show"/><br>--%>
                                             <div class="col-sm-12">
-
+                                                <div id="loadingHomeRedirectSearch" class="loadingImg">
+                                                    <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                                </div>
                                                 <s:form>
                                                     <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
                                                         <table id="homeRedirectTable" class="responsive CSSTable_task sortable" border="5" cell-spacing="2">
@@ -228,7 +240,7 @@
                                                             </tbody>
                                                         </table>
                                                         <br/>
-                                                        <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                        <label class="page_option"> Display <select id="paginationOption" tabindex="6" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
                                                                 <option>10</option>
                                                                 <option>15</option>
                                                                 <option>25</option>
@@ -261,7 +273,7 @@
                             <div class="backgroundcolor">
                                 <table>
                                     <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Comments Details&nbsp;&nbsp; </font></h4></td>
-                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="homeRedirectComments_popup_close" onclick="homeRedirectCommentsPopup();" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="homeRedirectComments_popup_close" onclick="homeRedirectCommentsPopup();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                 </table>
                             </div>
                             <div>

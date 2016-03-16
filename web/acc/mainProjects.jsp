@@ -50,6 +50,8 @@
 
     </head>
     <body>
+        <div id="wrap">
+        
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -59,7 +61,7 @@
 
         </header>
 
-        <div>
+                <div id="main">
             <section id="generalForm"><!--form-->
                 <div class="container">
                     <div class="row">
@@ -94,6 +96,7 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+         </div>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
          <script>
             ;
@@ -139,6 +142,7 @@
                             // alert(document.getElementById("projectReqSkillSet").value+"--------------hii")
                             $(projectsPage).children().remove();
                             document.getElementById('projectsPage').innerHTML = data;
+                             document.getElementById("loadingProjectSearch").style.display="none";
                         },
                         type: 'GET'
                     });
@@ -164,7 +168,7 @@
             function addProject(){
                 var projectNamePopup = document.getElementById("projectNamePopup").value;
                 var projectWorkedHrs = document.getElementById("projectWorkedHrs").value;
-                alert(projectWorkedHrs)
+                //alert(projectWorkedHrs)
                 var projectStartDateOverlay=document.getElementById("projectStartDateOverlay").value;
                 var projectTargetDateOverlay=document.getElementById("projectTargetDateOverlay").value;
                 var projectTargetHrs=document.getElementById("projectTargetHrs").value;
@@ -207,18 +211,40 @@
                         $("#addProjectValidation").html(" <font color='red'>Please , Enter the Project name!</font>");
                         $("#projectNamePopup").css("border", "1px solid red");
                         return false;
-                    }if(difference<=0){
+                    }
+                   
+                    if(projectStartDateOverlay=="")
+                    {
+                        $("#addProjectValidation").html(" <b><font color='red'>project start date is required</font></b>");
+                        $("#projectStartDateOverlay").css("border", "1px solid red");
+                        return false;
+                    }
+                    
+                   
+                    
+                    if(projectTargetDateOverlay=="")
+                    {
+                        $("#addProjectValidation").html(" <b><font color='red'>project target date is required</font></b>");
+                        $("#projectTargetDateOverlay").css("border", "1px solid red");
+                        return false;
+                    }
+                  
+                    if(difference<=0){
                         $("#addProjectValidation").html(" <b><font color='red'>Start date must be less then target date</font></b>");
                         $("#projectStartDateOverlay").css("border", "1px solid red");
                         $("#projectTargetDateOverlay").css("border", "1px solid red");
                         return false;
                     }
+                    
+                  
                     if(projectTargetHrs=="")
                     {
+                        
                         $("#addProjectValidation").html(" <font color='red'>Please, Enter the Target hours!</font>");
                         $("#projectTargetHrs").css("border", "1px solid red");
                         return false;
                     }
+                 
                     if(costCenterName=="DF"){
                         $("#addProjectValidation").html(" <font color='red'>Please, Select the Cost center!</font>");
                         $("#costCenterName").css("border", "1px solid red");
@@ -234,5 +260,6 @@
             };
         </script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
+   
     </body>
 </html>

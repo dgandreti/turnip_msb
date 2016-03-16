@@ -1,9 +1,9 @@
 (function($){
     $.fn.extend({
-            
+           
         tablePaginate: function(options,recordPage) {
-             
-     //alert(recordPage)
+          
+            //alert(recordPage)
             var defaults = {
                 recordPerPage:recordPage,				// Display records per page
                 pageNumber:1,					// GoTo Pagenumber - Default : 1
@@ -19,7 +19,7 @@
 				
             // GET total Records length
             var totalRecords=$(el).find('tbody').find('tr').length;
-                // alert(totalRecords+ "-options")               
+            // alert(totalRecords+ "-options")               
             if($(el).find('tbody').find('tr').find('td')[0].colSpan>='2')
             {
                 $(".pagination").css('display','none');
@@ -34,7 +34,7 @@
             }
 							
             // Identify Start & End values
-             //alert(defaults.recordPerPage);
+            //alert(defaults.recordPerPage);
             var end = defaults.pageNumber * defaults.recordPerPage;
             var start = end - defaults.recordPerPage;
             start=start;
@@ -46,7 +46,7 @@
             var totalPages = Math.ceil((totalRecords-1)/defaults.recordPerPage);
             var pno=parseInt(defaults.pageNumber);
 			
-                   //alert(totalPages)    
+            //alert(totalPages)    
                       
                                
                            
@@ -58,8 +58,8 @@
                 var prevPage = parseInt(defaults.pageNumber) - 1;
                 nextPage = (nextPage >= totalPages) ? totalPages : nextPage;
                 prevPage = (prevPage < firstPage) ? firstPage : prevPage;
-                buildButtons += "<a href='javascript:void(0);' id='"+firstPage+"' class='btn btn-warning pagination-btn'><i class='fa fa-angle-double-left' style='font-size: 14px; background-color: #396E9D; color: white; border-radius: 13px; width: 165%;'></i></a>";
-                buildButtons += "<a href='javascript:void(0);' id='"+prevPage+"' class='btn btn-warning pagination-btn'><i class='fa fa fa-chevron-circle-left' style='color:#56A5EC;'></i></a>";
+                buildButtons += "<a href='javascript:void(0);' id='"+firstPage+"' class='btn btn-warning pagination-btn'><i class='fa fa-angle-double-left' style='color:#396E9D;'></i></a>";
+                buildButtons += "<a href='javascript:void(0);' id='"+prevPage+"' class='btn btn-warning pagination-btn'><i class='fa fa-angle-left' style='color:#396E9D;'></i></a>";
                                      
                                          
                                           
@@ -187,8 +187,8 @@
                     buildButtons +="</a>";
                 }
                 // alert("hi"+buildButtons)
-                buildButtons += "<a href='javascript:void(0);' id='"+nextPage+"' class='btn btn-warning pagination-btn'><i class='fa fa-chevron-circle-right' style='color:#56A5EC;'></i></a>";				
-                buildButtons += "<a href='javascript:void(0);' id='"+totalPages+"' class='btn btn-warning pagination-btn'><i class='fa fa-angle-double-right' style='font-size: 14px; background-color: #396E9D ; color: white; border-radius: 13px; width: 165%;'></i></a>";
+                buildButtons += "<a href='javascript:void(0);' id='"+nextPage+"' class='btn btn-warning pagination-btn'><i class='fa fa-angle-right' style='color:#396E9D;'></i></a>";				
+                buildButtons += "<a href='javascript:void(0);' id='"+totalPages+"' class='btn btn-warning pagination-btn'><i class='fa fa-angle-double-right' style='color:#396E9D;'></i></a>";
                                	
             }else{				
                 // Display page numbers

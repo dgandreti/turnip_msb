@@ -57,13 +57,13 @@ public class BudgetServiceImpl implements BudgetService {
                         + "FROM prjbudget b "
                         + "LEFT OUTER JOIN acc_projects p ON(p.project_id=b.prjid) "
                         + "LEFT OUTER JOIN costcenter c ON(c.cccode=p.cccode) "
-                        + "WHERE 1=1 AND b.STATUS IN('Submitted','Approved','Rejected') AND p.acc_id=" + budgetAction.getSessionOrgId();
+                        + "WHERE 1=1 AND b.STATUS IN('Submitted','Approved','Rejected') AND b.YEAR = "+year+" AND p.acc_id=" + budgetAction.getSessionOrgId();
             } else {
                 queryString = "SELECT c.ccname,p.cccode,b.id,p.proj_name,p.proj_type,b.estbugetamt,b.balbudgetamt,b.STATUS,b.qutindetifier,b.YEAR,b.description "
                         + "FROM prjbudget b "
                         + "LEFT OUTER JOIN acc_projects p ON(p.project_id=b.prjid) "
                         + "LEFT OUTER JOIN costcenter c ON(c.cccode=p.cccode) "
-                        + "WHERE p.created_by=" + budgetAction.getUserSessionId() + " AND p.acc_id=" + budgetAction.getSessionOrgId();
+                        + "WHERE p.created_by=" + budgetAction.getUserSessionId() + "  AND b.YEAR = "+year+" AND p.acc_id=" + budgetAction.getSessionOrgId();
             }
 
 

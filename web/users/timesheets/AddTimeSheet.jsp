@@ -50,6 +50,7 @@
 
     </head>
     <body onload="getProjets();onloadTotal()">
+       <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -57,7 +58,8 @@
                 </div>
             </div>
         </header>         
-        <section id="generalForm"><!--form-->
+       <div id="main">
+                <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/> 
@@ -68,9 +70,9 @@
                                 <div id="projectsOverlay">
                                     <div class="backgroundcolor">
                                         <table>
-                                            <tr><td><h4 style=""><font color="#ffffff">Present Projects</font></h4></td>
+                                            <tr><td><h4 style=""><font color="#ffffff">&nbsp;Present Projects</font></h4></td>
                                             </tr>
-                                            <span class=" pull-right"><h5><a href="timesheetSearch.action" class="projects_popup_close" onclick="addTimeSheetOverlayClose()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                                            <span class=" pull-right"><h5><a href="timesheetSearch.action" class="projects_popup_close" onclick="addTimeSheetOverlayClose()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                         </table>
                                     </div>
 
@@ -96,7 +98,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-5 pull-right">
                                             <a href="../timesheets/addTimeSheet.action" ><button  style="margin: 5px 0px;" type="button" class="add_searchButton form-control" value="" onclick="return projectsData()">&nbsp;Go&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button>&nbsp;
                                         </div>
                                     </s:form>
@@ -107,9 +109,9 @@
                                 <div id="timesheetMisc_Overlay">
                                     <div class="backgroundcolor">
                                         <table>
-                                            <tr><td><h4 style=""><font color="#ffffff">Miscellaneous</font></h4></td>
+                                            <tr><td><h4 style=""><font color="#ffffff">&nbsp;Miscellaneous</font></h4></td>
                                             </tr>
-                                            <span class=" pull-right"><h5><a href="" class="timesheetMisc_popup_close" onclick="addTimeSheetOverlayClose()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                                            <span class=" pull-right"><h5><a href="" class="timesheetMisc_popup_close" onclick="addTimeSheetOverlayClose()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                         </table>
                                     </div>
 
@@ -143,8 +145,8 @@
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <font color="#ffffff"> Add TimeSheet </font>
-                                                <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
+                                                <font color="#ffffff"> Add TimeSheet </font> 
+                                                <span class="pull-right"><a href="#" onclick="history.back();return false;"><i class="fa fa-undo"></i></a></span>
 
                                             </h4>
                                         </div>
@@ -176,17 +178,17 @@
                                         <br/>
                                         <br/>
                                         <div class="inner-addtaskdiv-elements1">
-                                            <div class="col-sm-4"><label class="labelStyle" id="labelLevelStatusReq">Week Start Date:</label> <s:textfield cssClass="timesheetdatebox" name="timeSheetStartDate" id="timeSheetStartDate" placeholder="StartDate" value="%{timeSheetVTO.timeSheetStartDate}" onchange="return betweenDate();" readonly="true" cssStyle="z-index: 10000004;" tabindex="1"/></div>
-                                            <div class="col-sm-4">  <label class="labelStyle" id="labelLevelStatusReq">Week End Date:</label><s:textfield cssClass="timesheetdatebox" name="timeSheetEndDate" value="%{timeSheetVTO.timeSheetEndDate}" id="timeSheetEndDate" placeholder="EndDate" onchange="return betweenDate();" readonly="true" tabindex="1"/></div>
-                                            <div class="col-sm-4">   <label class="labelStyle" id="labelLevelStatusReq">Submit Date:</label> <s:textfield cssClass="timesheetdatebox" name="timeSheetSubmittedDate" id="timeSheetSubmittedDate" placeholder="SubmitDate" value="%{timeSheetVTO.submittedDate}" onchange="return betweenDate();" cssStyle="z-index: 10000004;" readonly="true" tabindex="1"/></div>
+                                            <div class="col-sm-4"><label class="labelStyle" id="labelLevelStatusReq">Week Start Date</label> <s:textfield cssClass="timesheetdatebox" name="timeSheetStartDate" id="timeSheetStartDate" placeholder="StartDate" value="%{timeSheetVTO.timeSheetStartDate}" onchange="return betweenDate();" readonly="true" cssStyle="z-index: 10000004;" tabindex="1"/></div>
+                                            <div class="col-sm-4">  <label class="labelStyle" id="labelLevelStatusReq">Week End Date</label><s:textfield cssClass="timesheetdatebox" name="timeSheetEndDate" value="%{timeSheetVTO.timeSheetEndDate}" id="timeSheetEndDate" placeholder="EndDate" onchange="return betweenDate();" readonly="true" tabindex="1"/></div>
+                                            <div class="col-sm-4">   <label class="labelStyle" id="labelLevelStatusReq">Submit Date</label> <s:textfield cssClass="timesheetdatebox" name="timeSheetSubmittedDate" id="timeSheetSubmittedDate" placeholder="SubmitDate" value="%{timeSheetVTO.submittedDate}" onchange="return betweenDate();" cssStyle="z-index: 10000004;" readonly="true" tabindex="1"/></div>
                                         </div>
                                         <%-- <div class="inner-addtaskdiv-elements1">
                                              <a href="#" ><input type="button" class="timesheetbutton projects_popup_open" value="new" onclick="ProjectsOverlayOpen1()"></a>
                                              <a href="#" ><input type="button" class="timesheetbutton timesheetMisc_popup_open" value="Miscellaneous" onclick="MiscellaneousOverlayOpen()"></a>
                                          </div>--%>
                                         <div class="col-sm-12">            
-                                            <div class="inner-addtaskdiv-elements" id="addtimesheet">
-                                                <table class="responsive"> 
+                                            <div class="inner-addtaskdiv-elements scrollTimeSheet" id="addtimesheet" >
+                                                <table class=""> 
                                                     <tr>
                                                         <td><label class="labelStyle ReqinputStyleTime add-to" id="labelLevelStatusReq" ></label></td>
                                                         <td><s:textfield name="weeklyDates1" id="weeklyDates1" cssClass="noBorder tsDate tsColor" value="%{timeSheetVTO.weeklyDates1}" readonly="true" tabindex="-1"/></td>
@@ -379,7 +381,7 @@
                                                             </div>
                                                             <div class="col-sm-5">
                                                                 <div class=" form-group req-textarea">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq">Notes:</label> <s:textarea name="timeSheetNotes" id="timeSheetNotes" cssClass="commentsStyle" value="" placeholder="Enter Here" rows="3" onkeydown="timeSheetsNotes(this)" onblur="removeErrorMessages()" tabindex="1"/>
+                                                                    <label class="labelStyle" id="labelLevelStatusReq">Notes</label> <s:textarea name="timeSheetNotes" id="timeSheetNotes" cssClass="commentsStyle" value="" placeholder="Enter Here" rows="3" onkeydown="timeSheetsNotes(this)" onblur="removeErrorMessages()" tabindex="1"/>
                                                                 </div>
 
                                                                 <div class="charNum" id="notes" style="width:80%"></div>
@@ -387,36 +389,37 @@
 
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-10 pull-right"> 
+                                                    <div class="col-sm-12 pull-right"> 
 
-                                                        <div class="col-sm-4 pull-right">
-                                                            <a href="#" ><button type="button" class="add_searchButton form-control fa fa-eraser" value="" style="margin: 5px 0px;" onclick="clearTimesheets()">&nbsp;Clear</button></a>
+                                                        <div class="col-sm-3 col-md-3  pull-right">
+                                                            <a href="#" ><button type="button" class="add_searchButton form-control fa fa-eraser" tabindex="4" value="" style="margin: 5px 0px;" onclick="clearTimesheets()">&nbsp;Clear</button></a>
                                                             <s:hidden name="tempVar" id="tempVar" value=""/>
                                                         </div>
 
-                                                        <div class="col-sm-4 pull-right">
-                                                            <s:submit type="button" cssClass="add_searchButton form-control"  value="" theme="simple" cssStyle="margin:5px 0px;"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                        <div class="col-sm-3 col-md-3  pull-right">
+                                                            <s:submit type="button" cssClass="add_searchButton form-control"  value="" theme="simple" tabindex="3" cssStyle="margin:5px 0px;"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                            
                                                         </div>
-                                                        <div class="col-sm-4 pull-right">
-                                                            <s:submit type="button" cssClass="add_searchButton form-control"  value="" theme="simple" cssStyle="margin:5px 0px;" onclick="setTemVar1()"><i class="fa fa-check-circle-o"></i>&nbsp;Save&Submit</s:submit>
+                                                        <div class="col-sm-4 col-md-3  pull-right">
+                                                        <s:submit type="button" cssClass="add_searchButton form-control"  value="" theme="simple" cssStyle="margin:5px 0px;" tabindex="2" onclick="setTemVar1()"><i class="fa fa-check-circle-o"></i>&nbsp;Save&Submit</s:submit>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-12">    <s:label><font color="red">*NOTE: After submitting this timesheet you can't edit.</font></s:label></div>
-
-
-
+                                                    <div class="co-sm-12">    <s:label><font color="red">*NOTE: After submitting this timesheet you can't edit.</font></s:label></div>
                                                     <%--  <s:reset cssClass="cssbutton " value="Clear" theme="simple"  /> &nbsp;    
                                                       <s:submit cssClass="cssbutton"  value="submit" theme="simple"/>
                                                   </div>--%>
+                                                      </div>   
+
+
+
+
+                                        </div>  
+                                                       </div>   
+                                                    <s:token />
                                                 </s:form>       
-                                            </div>   
+                                           
 
-
-
-
-                                        </div>
-
-                                    </div>                  
+                                                  
                                     <%--close of future_items--%>
                                 </div>
                             </div>
@@ -428,7 +431,8 @@
 
         </section>
 
-
+   </div>
+            </div>
 
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">

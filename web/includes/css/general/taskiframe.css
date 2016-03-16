@@ -408,7 +408,7 @@ div.pager span.active {
 
 
 #taskedit-heading{
-    background-color: #3bb9ff;
+    background-color: #4491DF;
     text-decoration-color: #ffffff;
 }
 #task-save{
@@ -473,6 +473,8 @@ div#taskAttachOverlay {
     overflow-x: hidden;
     height: auto;
     width: 100%;
+    
+    
 }
 
 

@@ -141,11 +141,11 @@ function getCostCenterName(){
     var req=initRequest(url);
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
-            alert(req.responseText);
+           // alert(req.responseText);
             var add=req.responseText.split("|");
             if(add[1]=="CCN")
             {
-                alert(add[0]);
+               // alert(add[0]);
                 $("e").html("<b><font color='red'>No Budget for cost center <br> so you cann't budget for this project</font> </b>");
                 $("e").show().delay(4000).fadeOut();
                 document.getElementById("costCenterBudgetAmt").value="";
@@ -179,7 +179,7 @@ function populateCCDetails(response){
             document.getElementById("costCenterName").value=Values[0];//cost center name;
             document.getElementById("costCenterCode").value=Values[4];//cost center code;
             document.getElementById("oquarterId").value=Values[6];
-            document.getElementById("oyear").value=Values[5];
+            //document.getElementById("oyear").value=Values[5];
             var id=document.getElementById("oestimateBudget").id;
             if(id=="oestimateBudget"){
                 var costCenterBudgetAmt = document.getElementById("costCenterBudgetAmt").value;

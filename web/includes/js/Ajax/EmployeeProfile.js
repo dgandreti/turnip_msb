@@ -2551,6 +2551,7 @@ function openUploadFileDialogue(){
 
 }
 function openUploadFileDialogueClose(){
+    $("imageErrorMsg").html("");
     var specialBox = document.getElementById('imageupdateOverlay');
     if(specialBox.style.display == "block"){       
         specialBox.style.display = "none";         

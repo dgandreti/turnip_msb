@@ -40,6 +40,7 @@
         <!-- end of new styles -->
     </head>
     <body style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans'">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -49,6 +50,7 @@
         </header><!--/header-->
         <!-- overlays code starts from -->   
         <!-- overlays ended here -->
+        <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row" >
@@ -199,6 +201,8 @@
             <!-- content end -->
 
         </section><!--/form-->
+        </div>
+    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

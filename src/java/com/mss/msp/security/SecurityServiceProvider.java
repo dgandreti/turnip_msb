@@ -120,7 +120,7 @@ public class SecurityServiceProvider {
         //System.out.println("Encrypted Password: " + encryptedPassword);
         return encryptedPassword;
 
-    }
+    } 
 
     public static String doRedirect(int orgId, String typeofuser, int primaryrole) throws ServiceLocatorException, SQLException {
         String actionName = "";

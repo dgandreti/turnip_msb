@@ -7,6 +7,7 @@ package com.mss.msp.acc.accajax;
 import com.mss.msp.acc.Account;
 import com.mss.msp.util.ApplicationConstants;
 import com.mss.msp.util.DataSourceDataProvider;
+import com.mss.msp.util.Properties;
 import com.mss.msp.util.ServiceLocator;
 import com.mss.msp.util.ServiceLocatorException;
 import com.opensymphony.xwork2.ActionSupport;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
@@ -84,7 +86,7 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
     private String locationId;
     private String locationStatus;
     private String locationName;
-     private int viewAccountID;
+    private int viewAccountID;
     private String validFrom;
     private String validTo;
     private String vendorDocs;
@@ -92,12 +94,16 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
     private int acc_attachment_id;
     private int attachment_id;
     private String attachmentTitle;
+
     public String csrStatusChange() {
         int responseStrign;
         if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 userSessionId = Integer.parseInt(servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 responseStrign = ServiceLocator.getAccountAjaxHandlerService().csrStatusChange(this, getOrgUserId());
+                servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(responseStrign);
@@ -116,6 +122,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 userSessionId = Integer.parseInt(servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 responseStrign = ServiceLocator.getAccountAjaxHandlerService().doAddAccountToCsr(this, getOrgUserId());
                 System.out.println("this is adding acc to csr value--->" + responseStrign);
+                servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write("" + responseStrign + "");
@@ -149,6 +158,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
 
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().getCsrDetailsTable(this, getOrgUserId());
                 System.out.println("===============>in searchResults" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -293,6 +305,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 typeOfAccount = dataSourceDataProvider.getInstance().getTypeOfAccount(getAccountSearchOrgId());
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().getContactDetails(getAccountSearchOrgId(), typeOfAccount);
                 System.out.println("===============>in titles" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -306,6 +321,7 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         }
         return null;
     }
+
     /**
      * *************************************
      *
@@ -326,8 +342,11 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
             System.out.println("orgid" + getAccountSearchOrgId());
             if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 //typeOfAccount = dataSourceDataProvider.getInstance().getTypeOfAccount(getAccountSearchOrgId());
-                reponseString = ServiceLocator.getAccountAjaxHandlerService().getLocationDetails(getAccountSearchOrgId(),this);
+                reponseString = ServiceLocator.getAccountAjaxHandlerService().getLocationDetails(getAccountSearchOrgId(), this);
                 System.out.println("===============>in titles" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -341,11 +360,11 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         }
         return null;
     }
+
     /**
      * *************************************
      *
-     * @editLocations() method is used to edit Location details of
-     * account
+     * @editLocations() method is used to edit Location details of account
      *
      * @Author:jagan<jchukkala@miraclesoft.com>
      *
@@ -353,7 +372,6 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
      *
      **************************************
      */
-    
     public String editLocations() {
         resultType = LOGIN;
         String reponseString = "";
@@ -361,9 +379,12 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
             System.out.println("Ajax Handler action -->editLocations()");
             System.out.println("orgid" + getAccountSearchOrgId());
             if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-               
+
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().editLocationDetails(this);
                 System.out.println("===============>in titles" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -377,6 +398,7 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         }
         return null;
     }
+
     /**
      * *************************************
      *
@@ -389,7 +411,6 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
      *
      **************************************
      */
-    
     public String addOrUpdateLocations() {
         resultType = LOGIN;
         String reponseString = "";
@@ -400,6 +421,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 setUserSessionId(Integer.parseInt(servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().addOrUpdateLocationDetails(this, getOrgUserId());
                 System.out.println("===============>in searchResults" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -413,6 +437,7 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         }
         return null;
     }
+
     public String saveUserContacts() {
         resultType = LOGIN;
         String reponseString = "";
@@ -427,6 +452,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                     dataSourceDataProvider.getInstance().updateAccountLastAccessedBy(getAccountSearchOrgId(), getUserSessionId(), message);
                 }
                 //System.out.println("===============>in titles" + repoString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -451,6 +479,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 typeOfAccount = dataSourceDataProvider.getInstance().getTypeOfAccount(getAccountSearchOrgId());
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().getContactSearchResults(this, getAccountSearchOrgId());
                 System.out.println("===============>in searchResults" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -486,7 +517,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 System.out.println("$$$$$$$$$$$$$ ENTERED INTO THE ACCOUNT AJAX HANDLER ACTION $$$$$$$$$$$$$$$$$");
                 String details = dataSourceDataProvider.getInstance().getEmailPhoneDetails(getUserId());
                 System.out.println("AFTER DSDP CALL>>>>>>>>>>>IN ACTION");
-
+ servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(details);
@@ -506,6 +539,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         try {
             result = DataSourceDataProvider.getInstance().checkLoginIdExistance(getContactEmail());
             //  System.out.println("result-------"+result);
+             servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
             if (result == 0) {
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
@@ -531,6 +567,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
             try {
                 result = DataSourceDataProvider.getInstance().checkLoginIdExistance(getContactEmail());
                 //  System.out.println("result-------"+result);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 if (result == 0) {
                     servletResponse.setContentType("text");
                     servletResponse.setCharacterEncoding("UTF-8");
@@ -561,6 +600,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
 //            setResultMessage(getResultMessage());
 //            httpServletRequest.setAttribute("stateList", states);
 //            setResultMessage(getResultMessage());
+            servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
             servletResponse.setContentType("text");
             servletResponse.setCharacterEncoding("UTF-8");
             servletResponse.getWriter().write(states);
@@ -599,6 +641,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 setVendorTierMap(dataSourceDataProvider.getInstance().getVendorTierTypes());
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().getDefaultVendorTiers(this);
                 System.out.println("===============>in searchResults" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -635,6 +680,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 setVendorTierMap(dataSourceDataProvider.getInstance().getVendorTierTypes());
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().addVendorTierToCustmer(this);
                 System.out.println("===============>in searchResults" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -671,6 +719,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 setVendorTierMap(dataSourceDataProvider.getInstance().getVendorTierTypes());
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().editVendorTierDetails(this);
                 System.out.println("===============>in searchResults" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -708,6 +759,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 setVendorTierMap(dataSourceDataProvider.getInstance().getVendorTierTypes());
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().searchVendorTierDetails(this);
                 System.out.println("===============>in searchResults" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -745,7 +799,10 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
 
                 //reponseString = ServiceLocator.getAccountAjaxHandlerService().getReportingPersonDetails(this, getDesignationId());
                 System.out.println("===============>in searchResults" + reponseString);
-                servletResponse.setContentType("text");
+                
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
 
@@ -777,7 +834,10 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         try {
             if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 resultString = ServiceLocator.getAccountAjaxHandlerService().getVendorDetails(this);
-                servletResponse.setContentType("text");
+               
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(resultString);
                 resultType = null;
@@ -808,7 +868,10 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
             if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 setUserSessionId(Integer.parseInt(servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 resultString = ServiceLocator.getAccountAjaxHandlerService().saveVendorTierDetails(this);
-                servletResponse.setContentType("text");
+                
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(resultString);
                 resultType = null;
@@ -855,7 +918,10 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                     responseString = "Do you want to send Login Credentials To Email?";
                 }
                 //System.out.println("===============>in titles" + repoString);
-                servletResponse.setContentType("text");
+                
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(responseString);
 
@@ -889,7 +955,10 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 setUserSessionId(Integer.parseInt(servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().getVendorTierOverlayDetails(this);
                 System.out.println("===============>in searchResults" + reponseString);
-                servletResponse.setContentType("text");
+                
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
 
@@ -930,6 +999,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
                 if (result == 0) {
                     responseString = "error";
                 }
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(responseString);
@@ -940,18 +1012,22 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         }
         return null;
     }
-     public String getAttachmentDetails() {
+
+    public String getAttachmentDetails() {
         resultType = LOGIN;
         String reponseString = "";
         try {
             System.out.println("Ajax Handler action -->getAttachmentDetails");
             System.out.println("orgid" + getAccountSearchOrgId());
-             System.out.println("orgid" + getViewAccountID());
+            System.out.println("orgid" + getViewAccountID());
             if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 typeOfAccount = dataSourceDataProvider.getInstance().getTypeOfAccount(getViewAccountID());
-                   System.out.println("typeOfAccount" + typeOfAccount);
+                System.out.println("typeOfAccount" + typeOfAccount);
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().getAttachmentDetails(getViewAccountID(), typeOfAccount);
                 System.out.println("===============>in titles" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -965,19 +1041,22 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         }
         return null;
     }
-      
-       public String getVendorFormEditDetails() {
+
+    public String getVendorFormEditDetails() {
         resultType = LOGIN;
         String reponseString = "";
         try {
             System.out.println("Ajax Handler action -->getAttachmentDetails");
             System.out.println("orgid" + getAccountSearchOrgId());
-             System.out.println("orgid" + getViewAccountID());
+            System.out.println("orgid" + getViewAccountID());
             if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-               // typeOfAccount = dataSourceDataProvider.getInstance().getTypeOfAccount(getViewAccountID());
-                   System.out.println("getAcc_attachment_id" + getAttachment_id());
-                reponseString = ServiceLocator.getAccountAjaxHandlerService().getVendorFormEditDetails(getViewAccountID(),getAttachment_id());
+                // typeOfAccount = dataSourceDataProvider.getInstance().getTypeOfAccount(getViewAccountID());
+                System.out.println("getAcc_attachment_id" + getAttachment_id());
+                reponseString = ServiceLocator.getAccountAjaxHandlerService().getVendorFormEditDetails(getViewAccountID(), getAttachment_id());
                 System.out.println("===============>in titles" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -991,10 +1070,8 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         }
         return null;
     }
-      
-      
-      
-      public String getAttachmentsSearchDetails() {
+
+    public String getAttachmentsSearchDetails() {
         resultType = LOGIN;
         String reponseString = "";
         try {
@@ -1003,6 +1080,9 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
             if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 reponseString = ServiceLocator.getAccountAjaxHandlerService().getAttachmentsSearchDetails(this, getViewAccountID());
                 System.out.println("===============>in searchResults" + reponseString);
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
                 servletResponse.setContentType("text");
                 servletResponse.setCharacterEncoding("UTF-8");
                 servletResponse.getWriter().write(reponseString);
@@ -1014,6 +1094,50 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         } catch (Exception e) {
             resultType = ERROR;
         }
+        return null;
+    }
+
+    public String getTeamMemberReportingPersons() {
+        if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+            try {
+                int orgId = Integer.parseInt(servletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
+                String allRoles = "";
+                int userRole = dataSourceDataProvider.getInstance().getUsrRoleById(getUserId());
+                String usrRole = String.valueOf(userRole);
+                //,7,11,14
+                if ("7".equals(usrRole) || "11".equals(usrRole) || "14".equals(usrRole)) {
+                    allRoles = "13,4,5,3,6";
+                } else {
+                    allRoles = Properties.getProperty("REPORTSTOROLES");
+                }
+                System.out.println("allRoles-->" + allRoles);
+                //  String usrRole = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString();
+                String finalReportsList = "";
+                String allRoleArray[] = allRoles.split(",");
+
+                for (int i = 0; i < allRoleArray.length; i++) {
+                    if (allRoleArray[i].equals(usrRole)) {
+                        break;
+                    } else {
+                        finalReportsList += allRoleArray[i] + ",";
+                    }
+
+                }
+                System.out.println("finalReportsList" + finalReportsList);
+                finalReportsList = StringUtils.chop(finalReportsList);
+                System.out.println("finalReportsList" + finalReportsList);
+                String reportingPersons = dataSourceDataProvider.getInstance().getTeamMemberReportingPersons(getUserId(), finalReportsList, orgId, getProjectID());
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);
+                servletResponse.setContentType("text");
+                servletResponse.setCharacterEncoding("UTF-8");
+                servletResponse.getWriter().write(reportingPersons);
+
+            } catch (Exception e) {
+            }
+        }
+
         return null;
     }
 
@@ -1465,15 +1589,15 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         return validFrom;
     }
 
-     public void setValidFrom(String validFrom) {
-       try {
-           if((!"".equals(validFrom))&& (!"null".equals(validFrom))){
-            this.validFrom = com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDate1(validFrom);
-           }else{
-           this.validFrom=validFrom;
-           }
+    public void setValidFrom(String validFrom) {
+        try {
+            if ((!"".equals(validFrom)) && (!"null".equals(validFrom))) {
+                this.validFrom = com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDate1(validFrom);
+            } else {
+                this.validFrom = validFrom;
+            }
         } catch (ServiceLocatorException ex) {
-           System.out.println("exception "+ex);
+            System.out.println("exception " + ex);
         }
     }
 
@@ -1481,15 +1605,15 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
         return validTo;
     }
 
-   public void setValidTo(String validTo) {
-       try {
-           if((!"".equals(validTo))&& (!"null".equals(validTo))){
-            this.validTo = com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDate1(validTo);
-           }else{
-           this.validTo=validTo;
-           }
+    public void setValidTo(String validTo) {
+        try {
+            if ((!"".equals(validTo)) && (!"null".equals(validTo))) {
+                this.validTo = com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDate1(validTo);
+            } else {
+                this.validTo = validTo;
+            }
         } catch (ServiceLocatorException ex) {
-           System.out.println("exception "+ex);
+            System.out.println("exception " + ex);
         }
     }
 
@@ -1540,6 +1664,4 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
     public void setLocationName(String locationName) {
         this.locationName = locationName;
     }
-    
-    
 }

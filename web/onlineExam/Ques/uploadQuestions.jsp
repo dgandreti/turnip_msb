@@ -48,6 +48,7 @@
         </script>
     </head>
     <body>
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -57,7 +58,7 @@
             </div><!--/header_top-->
 
         </header><!--/header-->
-
+        <div id="main">
         <section id="generalFormDesign"><!--form-->
 
             <%--<div class="header-middle"><!--header-middle-->
@@ -118,8 +119,8 @@
 
         </section><!--/form-->
 
-        <div style="height: 95px"></div>
-
+        </div>
+        </div>
         <footer id="footer"><!--Footer-->
 
             <div class="footer-bottom" id="footer_bottom">

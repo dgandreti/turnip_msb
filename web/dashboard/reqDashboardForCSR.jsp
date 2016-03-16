@@ -82,6 +82,7 @@
         <!-- end of new styles -->
     </head>
     <body onload="getCustomerRequirementsDashBoard();">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -91,7 +92,7 @@
 
         </header>
 
-
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
@@ -106,7 +107,7 @@
                         <ul class="active_details" >
                             <li class="dropdown"  >
                                 <a class="dropdown-toggle " data-toggle="dropdown"  href="#" title="Dashboard Tabs"   style="background-color: #000; width:40px;"><img src="<s:url value="/includes/images/toggleMenu.png"/>" height="40" width="38"></a>
-                            <headingmess id="headingmessage"  class="accDetails" >Customer Dashboard<i class="fa fa-angle-up" id="updownArrow" onclick="toggleContent('customerDiv')" style="margin-top: 0vw;position:absolute;color:#56a5ec"></i></headingmess>
+                            <headingmess id="headingmessage"  class="accDetails" >Customer Dashboard<i class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount('customerDiv')" style="margin-top: 0vw;position:absolute;color:#56a5ec"></i></headingmess>
                             <!-- Nav tabs -->
                             <ul class="panel-body nav-stacked  dropdown-menu " style="position:absolute">
 
@@ -126,17 +127,17 @@
 
                                     <div class="row" id="vendorDivision">
                                         <div class="col-sm-2">
-                                            <label class="labelStylereq" style="color:#56a5ec;">Year: </label>
+                                            <label class="labelStylereq" style="color:#56a5ec;">Year </label>
                                             <s:textfield cssClass="form-control" name="vdashYears" id="vdashYears" placeholder="Year" value="%{year}" onkeypress="return validationDashboardVendorYear(event)" tabindex="1" />
                                         </div>
                                         <div class="col-sm-4">
-                                            <label class="labelStylereq" style="color:#56a5ec;">Vendor: </label>
+                                            <label class="labelStylereq" style="color:#56a5ec;">Vendor </label>
                                             <s:hidden name="vendorOrgId" id="vendorOrgId"/>
                                             <s:textfield id="vendorAccountNamePopup" autocomplete="off" 
                                                          cssClass="form-control"
                                                          type="text"
                                                          name="accName"
-                                                         placeholder="Account Name" 
+                                                         placeholder="Vendor Name" 
                                                          onkeyup="return getAccountsNames('V');" onkeydown="return removeTextFieldData();" maxLength="60" tabindex="2" />
 
 
@@ -192,11 +193,11 @@
                                         <span id="reqCustomerDashBoardValidation"></span>
                                         <div class="row" id="customerDiv">
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Year: </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Year </label>
                                                 <s:textfield cssClass="form-control" name="dashYears" id="dashYears" placeholder="Year" value="%{year}" onkeypress="return validationDashboardCustomerYear(event)" tabindex="1" />
                                             </div>
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Customer: </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Customer </label>
                                                 <s:hidden name="orgId" id="orgId"/>
                                                 <s:textfield id="accountNamePopup" autocomplete="off" 
                                                              cssClass="form-control"
@@ -290,15 +291,15 @@
                     </div>
                 </div>
             </div>
-        </div>
+      
 
 
         <div id="csrCustomerReq_popup">
             <div id="recruiterBox" class="marginTasks">
                 <div class="backgroundcolor">
                     <table>
-                        <tr><td><h4 style="font-family:cursive"><font class="titleColor">No.Of&nbsp;Requirements&nbsp;Posted </font></h4></td>
-                        <span class="pull-right"> <h5 ><a href="" class="csrCustomerReq_popup_close" onclick="csrCustReqOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                        <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;No.Of&nbsp;Requirements&nbsp;Posted </font></h4></td>
+                        <span class="pull-right"> <h5 ><a href="" class="csrCustomerReq_popup_close" onclick="csrCustReqOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                     </table>
                 </div>
                 <div style="margin: 10px;margin-bottom: -10px"><center>
@@ -324,8 +325,8 @@
             <div id="csrVenBox" class="marginTasks">
                 <div class="backgroundcolor">
                     <table>
-                        <tr><td><h4><font class="titleColor">No.Of&nbsp;Requirements&nbsp;won/loss&nbsp;&nbsp; </font></h4></td>
-                        <span class="pull-right"> <h5 ><a href="" class="csrVendorReq_popup_close" onclick="csrVenOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                        <tr><td><h4><font class="titleColor">&nbsp;No.Of&nbsp;Requirements&nbsp;won/loss&nbsp;&nbsp; </font></h4></td>
+                        <span class="pull-right"> <h5 ><a href="" class="csrVendorReq_popup_close" onclick="csrVenOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                     </table>
                 </div>
                 <div style="margin: 10px;margin-bottom: -10px"><center>
@@ -349,6 +350,8 @@
             </div>
         </div>
     </section ><!--form-->
+        </div>
+</div>
     <footer id="footer"><!--Footer-->
 
         <div class="footer-bottom" id="footer_bottom">

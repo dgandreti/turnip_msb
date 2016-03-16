@@ -145,7 +145,7 @@
                         <div style="background-color: #3BB9FF ">
                             <table>
                                 <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Add Resume&nbsp;&nbsp; </font></h4></td>
-                                <span class=" pull-right"><h5><a href="" class="consultAttachment_popup_close" onclick="attachPopJs();showAttachmentDetails('<%= request.getParameter("consult_id")%>');"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a>&nbsp;</h5></span>
+                                <span class=" pull-right"><h5><a href="" class="consultAttachment_popup_close" onclick="attachPopJs();showAttachmentDetails('<%= request.getParameter("consult_id")%>');"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
                             </table>
                         </div>
                         <div>

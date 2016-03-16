@@ -277,6 +277,9 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 responseString = ServiceLocator.getExamQuestionsHandlerservice().getImagePath(this);
                 //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(responseString);
@@ -320,6 +323,9 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
 
                
                 //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(buffer.toString());

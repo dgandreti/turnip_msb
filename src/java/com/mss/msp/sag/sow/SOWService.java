@@ -18,16 +18,18 @@ public interface SOWService {
     public List getSOWSearchResults(SOWAction sowAction) throws ServiceLocatorException;
 
     public String getSOWEditDetails(SOWAction sowAction) throws ServiceLocatorException;
-    
+
     public String doAddUpdateSOWDetails(SOWAction sowAction) throws ServiceLocatorException;
-    
+
     public int doAddSOWAttachment(SOWAction sowAction) throws ServiceLocatorException;
-    
+
     public List getSOWAttachments(SOWAction sowAction) throws ServiceLocatorException;
-    
-     public String doInsertSAGRecord(SOWAction sowAction) throws ServiceLocatorException;
-     
-     public int SOWSaveOrSubmit(SOWAction sowAction) throws ServiceLocatorException;
-    
-     public String sowRecreateEdit(SOWAction sowAction) throws ServiceLocatorException;
+
+    public String doInsertSAGRecord(SOWAction sowAction) throws ServiceLocatorException;
+
+    public int SOWSaveOrSubmit(SOWAction sowAction) throws ServiceLocatorException;
+
+    public String sowRecreateEdit(SOWAction sowAction) throws ServiceLocatorException;
+
+    public String poDownloadButton(SOWAction aThis) throws ServiceLocatorException;
 }

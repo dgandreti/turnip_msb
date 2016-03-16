@@ -60,7 +60,7 @@
                                         <div id="fileMessage"></div>
                                          </div>
                                          <div class="field">
-                                            <label class="main">Living&nbsp;Country:</label>
+                                            <label class="main">Living&nbsp;Country</label>
                                             <select name="livingCountry" id="livingCountry">
                                                 <option value="India">India</option>
                                                   <option value="USA">USA</option>
@@ -68,31 +68,31 @@
                                             </select>
                                             <span class="error"></span> </div> 
                                     <div class="field">
-                                        <label class="main">Reg.Type:</label>
+                                        <label class="main">Reg.Type</label>
                                         <select name="regType" id="regType">
                                             <option value="E"> Employee </option>
                                             <option value="CO"> Consultant</option>
                                         </select>
                                     </div>
                                         <div class="field">
-                                            <label class="main">Login Id:</label>
+                                            <label class="main">Login Id</label>
                                             <input name="loginId" id="loginId" type="email" placeholder="loginId" >
                                             <span class="error"></span> </div>
                                         <div class="field">
-                                            <label class="main">First Name: </label>
+                                            <label class="main">First Name </label>
                                             <input name="firstName" id="firstName" maxlength="30" type="text" >
                                             <span class="error"></span> </div>
                                         <div class="field">
-                                            <label class="main">Middle Name: </label>
+                                            <label class="main">Middle Name </label>
                                             <input name="middleName" id="middleName" type="text" >
                                             <span class="error"></span> </div>
                                         <div class="field">
-                                            <label class="main">Last Name: </label>
+                                            <label class="main">Last Name </label>
                                             <input name="lastName" id="lastName" maxlength="30" type="text" >
                                             <span class="error"></span> </div>
                                              
                                         <div class="field">
-                                            <label class="main">Gender:</label>
+                                            <label class="main">Gender</label>
                                             <p class="group">
                                                 <label>
                                                     <input name="gender" type="radio" value="male">
@@ -103,11 +103,11 @@
                                             </p>
                                             <span class="error"></span> </div>
                                             <div class="field">
-                                            <label class="main" id="text_alignment">Date of Birth:</label>
+                                            <label class="main" id="text_alignment">Date of Birth</label>
                                             <input name="dob" id="dob" type="text" placeholder="mm/dd/yyyy" class="datepicker">
                                             <span class="error"></span> </div>
                                         <div class="field">
-                                            <label class="main">Marital Status:</label>
+                                            <label class="main">Marital Status</label>
                                             <p class="group">
                                                 <label>
                                                     <input name="maritalStatus" type="radio" value="single">
@@ -118,11 +118,11 @@
                                             </p>
                                             <span class="error"></span> </div>
                                        <div class="field">
-                                            <label class="main">Profile Image:</label>
+                                            <label class="main">Profile Image</label>
                                             <input id="picture" name="picture" id="picture" type="file" multiple >
                                             <span class="error"></span> </div>
                                         <div class="field">
-                                            <label class="main">Phone:</label>
+                                            <label class="main">Phone</label>
                                             <input name="phone" id="phone" type="text">
                                             <span class="error"></span> </div>
 
@@ -137,26 +137,26 @@
 
                                      <section class="idealsteps-step">
                                          
-                                         <label class="main" style="font-size:16px">Contact&nbsp;Address:</label>
+                                         <label class="main" style="font-size:16px">Contact&nbsp;Address</label>
                                          <div class="field">
                                                <div id="load" style="color: green;display: none;">Loading..</div>
                                         <div id="resultMessage"></div>
                                          </div>
                                          
                                         <div class="field">
-                                            <label class="main">Address line 1: </label>
+                                            <label class="main">Address line 1 </label>
                                             <input name="officeAddress1" id="officeAddress1" maxlength="100" type="text" >
                                             <span class="error"></span> </div>
                                         <div class="field">
-                                            <label class="main">Address line 2: </label>
+                                            <label class="main">Address line 2 </label>
                                             <input name="officeAddress2" id="officeAddress2" maxlength="100"  type="text" >
                                             <span class="error"></span> </div>
                                         <div class="field">
-                                            <label class="main">City: </label>
+                                            <label class="main">City </label>
                                             <input name="officeCity" id="officeCity" maxlength="10" type="text" >
                                             <span class="error"></span> </div>
                                         <div class="field">
-                                            <label class="main">State:</label>
+                                            <label class="main">State</label>
                                             <select name="options" id="officeState">
                                                 <option value="default">&ndash; Select a State &ndash;</option>
                                                 
@@ -174,16 +174,16 @@
                                             </select>
                                             <span class="error"></span> </div>
                                             <div class="field">
-                                            <label class="main">Country: </label>
+                                            <label class="main">Country </label>
                                             <input name="officeCountry" id="officeCountry" maxlength="10" type="text" >
                                             <span class="error"></span> </div>
                                             
                                         <div class="field">
-                                            <label class="main">Zip:</label>
+                                            <label class="main">Zip</label>
                                             <input name="zip" id="zip" type="text" maxlength="5" placeholder="00000">
                                             <span class="error"></span> </div>
                                         <div class="field">
-                                            <label class="main">Contact&nbsp;Phone:</label>
+                                            <label class="main">Contact&nbsp;Phone</label>
                                             <input name="officePhone" id="officePhone" type="text" placeholder="">
                                             <span class="error"></span> </div>
 

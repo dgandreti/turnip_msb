@@ -389,6 +389,9 @@ document.getElementById("qname").innerHTML =question;
 
 function skillValues(id){
    var editskill=$('#editskill').val();
+   if(editskill==undefined){
+       editskill =0;
+   }
     if(id=='T')
         {
             flag=1;

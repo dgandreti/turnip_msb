@@ -100,6 +100,9 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setRoleValue(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLEVALUE).toString());
                 String csrReq = ServiceLocator.getBudgetService().getProjectBudgetSearchResults(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -144,6 +147,9 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
                 } else {
                     csrReq = ServiceLocator.getBudgetService().saveProjectBudgetDetails(this);
                 }
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -176,6 +182,9 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 String csrReq = ServiceLocator.getBudgetService().getProjectBudgetDetailsToViewOnOverlay(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -208,6 +217,9 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 String csrReq = ServiceLocator.getBudgetService().doBudgetRecordDelete( this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -235,6 +247,9 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
             try {
                 String costCenterName = ServiceLocator.getBudgetService().getCostCentertDetailsByProjectId(this);
                 System.out.println("-------------cost yar----------"+getYear());
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(costCenterName);

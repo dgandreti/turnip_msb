@@ -89,7 +89,7 @@
             <div style="background-color: #3BB9FF ">
               <table>
                 <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Add Opportunity&nbsp;&nbsp; </font></h4></td>
-                <span class=" pull-right"><h5><a href="" class="task_popup_close"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a>&nbsp;</h5></span>
+                <span class=" pull-right"><h5><a href="" class="task_popup_close"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
               </table>
             </div>
 
@@ -99,19 +99,19 @@
                     <!--Account ID, Opportunity Type, Opportunity Name, Opportunity Comments-->
                    <tr>
                         <div class="inner-addtaskdiv-elements " >
-                            <label class="labelStyle field-margin">Opportunity Name: </label><s:textfield  cssClass="inputStyleCustom" id="opportunity_Name" name="opportunityName" value="%{opportunityName}" size="40"/><label class="labelStyle" style="display: none; color: red; width: auto" id="opportunityNameError"></label>
+                            <label class="labelStyle field-margin">Opportunity Name </label><s:textfield  cssClass="inputStyleCustom" id="opportunity_Name" name="opportunityName" value="%{opportunityName}" size="40"/><label class="labelStyle" style="display: none; color: red; width: auto" id="opportunityNameError"></label>
                             <div style="color: red; margin-left: 40px;  width: auto" id="oppNameError"></div>
                         </div>
                    </tr>
                    <tr>
                         <div class="inner-addtaskdiv-elements " >
-                            <label class="labelStyle field-margin">Opportunity Description: </label><s:textarea  cssClass="inputStyleCustom" id="opportunityDesc" name="opportunityDesc" value="%{opportunityDesc}"/><label class="labelStyle" style="display: none; color: red; width: auto" id="opportunityDescError"></label>
+                            <label class="labelStyle field-margin">Opportunity Description </label><s:textarea  cssClass="inputStyleCustom" id="opportunityDesc" name="opportunityDesc" value="%{opportunityDesc}"/><label class="labelStyle" style="display: none; color: red; width: auto" id="opportunityDescError"></label>
                             <div class="labelStyle" style="color: red; margin-left: 40px; width: auto" id="oppDescError"></div>
                         </div>
                    </tr>
                    <tr>
                         <div class="inner-addtaskdiv-elements " >
-                            <label class="labelStyle field-margin">Opportunity Comments: </label><s:textarea  cssClass="inputStyleCustom" id="opportunityComments" name="opportunityComments" value="%{opportunityComments}"/><label class="labelStyle" style="display: none; color: red; width: auto" id="opportunityCommentsError"></label>
+                            <label class="labelStyle field-margin">Opportunity Comments </label><s:textarea  cssClass="inputStyleCustom" id="opportunityComments" name="opportunityComments" value="%{opportunityComments}"/><label class="labelStyle" style="display: none; color: red; width: auto" id="opportunityCommentsError"></label>
                         </div>
                    </tr>
                    <tr>
@@ -184,7 +184,7 @@
                                                         <table>
                                                             <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Employee Details&nbsp;&nbsp; </font></h4></td>
                                                             </tr>
-                                                            <span class=" pull-right"><h5><a href="" class="emailPhoneShow_popup_close" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                                                            <span class=" pull-right"><h5><a href="" class="emailPhoneShow_popup_close" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                         </table>
                                                     </div>
                                                     <div>
@@ -193,8 +193,8 @@
                                                                 <div class="inner-reqdiv-elements">
                                                                     <table>
                                                                         <span><error></error></span>
-                                                                        <s:textfield name="email"  label="Email-Id:" id="email"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
-                                                                        <s:textfield name="contactNo"  label="Contact No:" id="contactNo"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
+                                                                        <s:textfield name="email"  label="Email-Id" id="email"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
+                                                                        <s:textfield name="contactNo"  label="Contact No" id="contactNo"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
 
                                                                     </table>
                                                                 </div>

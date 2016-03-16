@@ -43,7 +43,14 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/sweetalert.min.js"/>'></script>
 
 
-
+        <style>
+            .budget{
+                
+                background: url('${pageContext.request.contextPath}/includes/images/budget.png')  no-repeat;
+                background-size: 25px 26px;
+                 background-position: 77% 54%;
+            }
+        </style>
 
          <script>
             $(document).ready(function(){
@@ -52,35 +59,13 @@
                         width: 'toggle'
                     });
                 });
-            });
-            
-            $(function(){
-                $(".img-swap").live('click', function() {
-                   
-                    if ($(this).attr("class") == "img-swap") {
-                       
-                        this.src = this.src.replace("next","prev");
-                    } else {
-                        this.src = this.src.replace("prev","next");
-                    }
-                    $(this).toggleClass("on");
-                });
+                 document.getElementById("loadingBudjetSearch").style.display="none";
             });
             
             
-            if ( $(window).width() > 1400) {      
-                //Add your javascript for large screens here 
-  
-                $(document).ready(function(){
-                    $(".slide_popup").click(function(){
-                        $(".popup_block").animate({
-                            width: 'toggle'
-                        });
-                    });
-                });
             
-              
-            }
+            
+           
         </script>
         <script>
             $(document).ready(function(){
@@ -107,6 +92,8 @@
         
     </head>
     <body style="overflow-x: hidden" onload="loadPopup();" >
+        <div id="wrap">
+        
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -117,7 +104,7 @@
 
 
 
-
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div  class="container">
 
@@ -133,7 +120,7 @@
                                             <h4 class="panel-title">
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Budget Details</font>
-                                                <i id="updownArrow" onclick="toggleContent('projectbudgetForm')" class="fa fa-angle-up"></i> 
+                                                <i id="updownArrow" onclick="toggleContent('projectbudgetForm')" class="fa fa-minus"></i> 
                                             </h4>
                                         </div>
                                     </div>
@@ -147,32 +134,32 @@
                                             <div class="inner-reqdiv-elements">
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <label class="" style="color:#56a5ec;">Year: </label>
-                                                        <s:textfield cssClass="form-control" id="budgetYear"
+                                                        <label class="" style="color:#56a5ec;">Year </label>
+                                                        <s:textfield cssClass="form-control" id="budgetYear" tabindex="1"
                                                                      name="year" value="%{year}" onkeypress="return validationYear(event)"
                                                                      />
                                                     </div>
                                                     <div class="col-sm-3">
-                                                        <label class="" style="color:#56a5ec;">Projects: </label>
-                                                        <s:select cssClass="SelectBoxStyles form-control" name="project" id="project" headerKey="-1" headerValue="All" list="projectsMap" />
+                                                        <label class="" style="color:#56a5ec;">Projects </label>
+                                                        <s:select cssClass="SelectBoxStyles form-control" tabindex="2" name="project" id="project" headerKey="-1" headerValue="All" list="projectsMap" />
                                                     </div>
                                                     <div class="col-sm-3">
-                                                        <label class="" style="color:#56a5ec;">Quarter: </label>
-                                                        <s:select cssClass="SelectBoxStyles form-control" name="quarterId" id="quarterId" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Q1':'Q1','Q2':'Q2','Q3':'Q3','Q4':'Q4'}" />
+                                                        <label class="" style="color:#56a5ec;">Quarter </label>
+                                                        <s:select cssClass="SelectBoxStyles form-control" tabindex="3" name="quarterId" id="quarterId" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Q1':'Q1','Q2':'Q2','Q3':'Q3','Q4':'Q4'}" />
                                                     </div>
                                                     <div class="col-sm-3">
-                                                        <label class="" style="color:#56a5ec;">Status: </label>
-                                                        <s:select cssClass="SelectBoxStyles form-control" name="status" id="status" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Entered':'Entered','Submitted':'Submitted','Approved':'Approved','Rejected':'Rejected'}" />
+                                                        <label class="" style="color:#56a5ec;">Status </label>
+                                                        <s:select cssClass="SelectBoxStyles form-control" tabindex="4" name="status" id="status" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Entered':'Entered','Submitted':'Submitted','Approved':'Approved','Rejected':'Rejected'}" />
                                                     </div>
 
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-3 pull-right budget_search">
-                                                        <s:a href="#" ><input type="button" class="cssbutton_search form-control" value="Search" style="margin:5px;padding:0" onclick="getProjectBudgetSearch();"></s:a>
+                                                        <s:a href="#" ><button type="button" tabindex="6" class="add_searchButton form-control" value="" style="margin:5px;padding:0" onclick="getProjectBudgetSearch();"><i class="fa fa-search"></i>&nbsp;Search</button></s:a>
                                                     </div>
                                                     <s:if test="roleValue!='Director'">
                                                         <div class="col-sm-3 pull-right contact_search">
-                                                            <s:a href="#" cssClass="projectBudget_popup_open" onclick="projectBudgetOverlay('Add');"><button class="cssbutton_emps form-control" style="margin:5px;padding:0" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
+                                                            <s:a href="#" cssClass="projectBudget_popup_open" onclick="projectBudgetOverlay('Add');"><button class="add_searchButton form-control" tabindex="5" style="margin:5px;padding:0" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
                                                         </div>
                                                     </s:if>
 
@@ -182,8 +169,11 @@
                                     </s:form>
                                     <span> <br/></span>
                                         <%--<s:submit cssClass="css_button" value="show"/><br>--%>
+                                    <div id="loadingBudjetSearch" class="loadingImg">
+                                                    <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                    </div>
                                     <div class="col-sm-12">
-
+                                         
                                         <s:form>
                                             <div class="emp_Content" id="emp_div" align="center"  >
                                                 <span><d></d></span>
@@ -251,13 +241,13 @@
                                                                 </s:else>
                                                                 <s:if test="roleValue!='Director'">
                                                                     <s:if test="status=='Submitted'">
-                                                                        <td><img style="opacity: 0.4;" src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="25"></td>
+                                                                        <td><center><i class="fa fa-trash-o fa-size" style="opacity: 0.2;"></i></center></td>
                                                                         </s:if>
                                                                         <s:elseif test="status=='Approved'">
-                                                                        <td><img style="opacity: 0.4;" src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="25"></td>
+                                                                        <td><center><i class="fa fa-trash-o fa-size" style="opacity: 0.2;"></i></center></td>
                                                                         </s:elseif>
                                                                         <s:else>
-                                                                        <td><s:a href="#" onclick="return doBudgetRecordDelete('%{id}');"><img src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="25"></s:a></td>
+                                                                        <td><center><s:a href="#" onclick="return doBudgetRecordDelete('%{id}');"><i class="fa fa-trash-o fa-size"></i></s:a></center></td>
                                                                         </s:else>
                                                                     </s:if>
                                                             </tr>
@@ -266,7 +256,7 @@
                                                     </tbody>
                                                 </table>
                                                 <br/>
-                                                <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                <label class="page_option"> Display <select id="paginationOption" tabindex="7" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
                                                         <option>10</option>
                                                         <option>15</option>
                                                         <option>25</option>
@@ -303,7 +293,7 @@
 
 
 
-                                    <div class="alignField"> <a href="#"  onclick="projectBudgetOverlay('Add');" class="projectBudget_popup_open"  data-toggle="" data-target="" application_id="">    <img src="../includes/images/moneysign1.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </a></div>
+                                    
 
                                         <div class="alignField">
 
@@ -315,7 +305,7 @@
                                     </div>
                                 </div>
 
-                                <div class="slide_popup budget"><img src="../includes/images/next.png"  class="img-swap" onclick="sidepopup()"></div>
+                                <div class="slide_popup budget img-swap" onclick="sidepopup()"></i></div>
                             </div>
                     </s:if>
                 </div>
@@ -326,7 +316,7 @@
                     <div class="backgroundcolor">
                         <table>
                             <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Skill Details&nbsp;&nbsp; </font></h4></td>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="budgetCommentsOverlay_popup_close" onclick="budgetCommentsOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="budgetCommentsOverlay_popup_close" onclick="budgetCommentsOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
                     <div>
@@ -350,7 +340,7 @@
                     <div class="backgroundcolor">
                         <table>
                             <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Budget Details&nbsp;&nbsp; </font></h4></td>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="projectBudget_popup_close" onclick="closeProjectBudgetOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="projectBudget_popup_close" onclick="closeProjectBudgetOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
                     <div class="row row2"> <span><e></e></span></div>
@@ -362,52 +352,61 @@
                     <!--<div id="reviewalignBox">-->
                     <div class="row row2">
                         <div class="col-lg-4">
-                            <label class="popuplabel">Project : </label>
+                            <label class="popuplabel">Project  </label>
                             <s:select cssClass="form-control SelectBoxStyles" 
                                       name="oproject" 
                                       id="oproject" 
                                       list="projectsMap" 
+                                      tabindex="1"
                                       onchange = "return getCostCenterName();"
                                       />
                         </div>
-                        <div class="col-lg-4">  
+                        <div class="col-lg-2">  
                             <label class="popuplabel">Cost&nbsp;Center&nbsp;Name:</label>
-                            <s:textfield cssClass="noBorder" readonly="true" name="costCenterName" id="costCenterName" value=""/>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-2">
+                            <s:textfield cssClass="noBorder" readonly="true" name="costCenterName"  tabindex="2" id="costCenterName" value=""/>
+                        </div>
+                        
                             <s:if test="#session.primaryrolevalue=='Director'">
-                                <label class="popuplabel">Available&nbsp;Budget($):</label>
-                                <s:textfield cssClass="noBorder" readonly="true" name="costCenterBudgetAmt" id="costCenterBudgetAmt" value=""/>
-                            </s:if>
+                                <div class="col-lg-2">
+                                <label class="popuplabel">Available&nbsp;Budget&nbsp;($):</label>
+                                </div>   
+                         <div class="col-sm-2">
+                                <s:textfield cssClass="noBorder" readonly="true" name="costCenterBudgetAmt"  tabindex="3" id="costCenterBudgetAmt" value=""/>
+                         </div>
+                        </s:if>
                             <s:else>  
                                 <label class="popuplabel">&nbsp;</label>
                                 <s:hidden name="costCenterBudgetAmt" id="costCenterBudgetAmt" value=""/>
                             </s:else>
                         </div>
-                    </div>
+                
                     <div class="row row2">
                         <div class ="col-lg-4">
                             <span class="required">
-                                <label class="popuplabel">Year: </label>
+                                <label class="popuplabel">Year </label>
                                 <s:select type="text"
                                           name="oyear"
                                           cssClass="form-control SelectBoxStyles"
                                           id="oyear" 
+                                           tabindex="3"
                                           onkeypress="return validationYearOverlay(event)"
                                           list="{}" disabled="true"
                                           ></s:select>
                             </span>
                         </div>
                         <div class="col-lg-4">
-                            <label class="">Quarter:</label>
+                            <label class="">Quarter</label>
                             <s:select cssClass="form-control SelectBoxStyles" 
                                       name="oquarterId" 
                                       id="oquarterId" disabled="true"
+                                       tabindex="4"
                                       list="#@java.util.LinkedHashMap@{'Q1':'Q1','Q2':'Q2','Q3':'Q3','Q4':'Q4'}" 
                                       />
                         </div>
                         <div class="required col-lg-4">
-                            <label class="">Estimated&nbsp;Amount: </label>
+                            <label class="">Estimated&nbsp;Amount </label>
                             <div class=" input-group ">
                                 <!--<a href="#" data-toggle="tooltip" title="please"--> 
                                 <span class="input-group-addon" style="padding-top: 5px">$</span>
@@ -418,6 +417,7 @@
                                              placeholder="Estimated Amount"
                                              onkeypress="return estimateBudgetValidation(event)"
                                              maxLength="10"
+                                              tabindex="5"
                                              onfocus="return removeBudgetErrorMsg();"
                                              onblur="return calculateAmt()"
                                              />
@@ -431,7 +431,7 @@
                     <div class="row row2">
                         <div style="display: none" id="consumedAmt">
                             <div class="required col-lg-4">
-                                <label class="">Consumed&nbsp;Amount: </label>
+                                <label class="">Consumed&nbsp;Amount </label>
                                 <div class=" input-group ">
                                     <span class="input-group-addon " style="padding-top: 5px" >$</span>
                                     <s:textfield type="text"
@@ -439,6 +439,7 @@
                                                  cssClass="form-control "
                                                  id="oconsumedAmt"
                                                  maxLength="10"
+                                                  tabindex="5"
                                                  onfocus="return removeBudgetErrorMsg();"
                                                  readonly="true"
                                                  />
@@ -447,7 +448,7 @@
                             <!--</div>-->
 
                             <div class="col-lg-4">
-                                <label class="">Remaining&nbsp;Amount: </label>
+                                <label class="">Remaining&nbsp;Amount</label>
                                 <div class=" input-group ">
                                     <span class="input-group-addon" style="padding-top: 5px">$</span>
                                     <s:textfield type="text"
@@ -455,6 +456,7 @@
                                                  cssClass="form-control"
                                                  id="oremainingAmt"
                                                  maxLength="10"
+                                                  tabindex="5"
                                                  onfocus="return removeBudgetErrorMsg();"
                                                  readonly="true"
                                                  />
@@ -466,7 +468,7 @@
 
                     <!--</div>-->
                     <span class="required">
-                        <label class="headingLabel">Comments:</label>
+                        <label class="headingLabel">Comments</label>
                         <!--<div id="reviewalignBox">-->
                         <div class="inner-techReviewdiv-elements">
                             <s:textarea id="ocomments"
@@ -474,6 +476,7 @@
                                         cssClass="reviewareacss"
                                         type="text"
                                         placeholder="Any comments"
+                                         tabindex="6"
                                         value="" onkeydown="checkCharactersComment(this)"   onfocus="return removeBudgetErrorMsg();"/>
                         </div>
                         <div class="charNum" id="description_feedback"></div>
@@ -481,7 +484,7 @@
                     </span>
                     <s:if test="roleValue=='Director'">
                         <span class="required">
-                            <label class="headingLabel">Approve/Rejection Comments:</label>
+                            <label class="headingLabel">Approve/Rejection Comments</label>
                             <!--<div id="reviewalignBox">-->
                             <div class="inner-techReviewdiv-elements">
                                 <s:textarea id="approveComments"
@@ -498,20 +501,23 @@
                     <div class="inner-techReviewdiv-elements">
                         <div id="oLaybuttons">
                             <s:if test="roleValue=='Director'">
-                                <div class="pull-right "><s:submit cssClass="cssbutton" onclick="saveBudgetDetails('A');" value="Approve"></s:submit></div>
-                                <div class="pull-right "><s:submit cssClass="cssbutton" onclick="saveBudgetDetails('R');" value="Reject"></s:submit></div>
+                                <div class="pull-right "><s:submit type="button" cssClass="cssbutton  fa fa-check-circle-o" onclick="saveBudgetDetails('A');" style="" value="Approve"></s:submit></div>
+                                <div class="pull-right "><s:submit type="button" cssClass="cssbutton fa fa-times"  onclick="saveBudgetDetails('R');" style="" value="Reject">
+                                       </s:submit></div>
                             </s:if>
                             <s:else>
-                                <div class="pull-right "><s:submit cssClass="cssbutton" onclick="saveBudgetDetails('SB');" value="Save&Submit"></s:submit></div>
-                                <div class="pull-right "><s:submit cssClass="cssbutton" onclick="saveBudgetDetails('S');" value="Save"></s:submit></div>
+                                <div class="pull-right "><s:submit type="button" cssClass="cssbutton fa fa-check-square-o" onclick="saveBudgetDetails('SB');"  tabindex="8" value="Save&Submit"></s:submit></div>
+                                <div class="pull-right "><s:submit type="button" cssClass="cssbutton fa fa-floppy-o" style="" onclick="saveBudgetDetails('S');"  tabindex="7" value="Save"></s:submit></div>
                             </s:else>
+
                         </div>
                     </div>
                 </div>
                 <%--close of future_items--%>
             </div>
         </section><!--/form-->
-
+                </div>
+ </div>
 
         <%-- model window popup --%>
         <footer id="footer"><!--Footer-->
@@ -546,5 +552,6 @@
         
         </script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
+   
     </body>
 </html>

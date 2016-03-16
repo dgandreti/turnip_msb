@@ -66,7 +66,7 @@ public interface UsersdataHandlerservice {
 
     public String getCellContentValues(List list, UsersdataHandlerAction usersdataHandlerAction, int count, String type, String columsString) throws ServiceLocatorException;
 
-    public List defaultSearch(UsersdataHandlerAction usersdataHandlerAction) throws ServiceLocatorException;
+    public List defaultSearch(UsersdataHandlerAction usersdataHandlerAction,int sessionusrPrimaryrole) throws ServiceLocatorException;
 
     public int getIndustryValue(String industry) throws ServiceLocatorException;
 

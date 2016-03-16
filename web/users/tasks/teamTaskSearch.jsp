@@ -166,6 +166,7 @@
                 // document.getElementById("docdatepicker").value=to;
                 // document.getElementById("startDate").value=overlayDate;
                 // document.getElementById("endDate").value=overlayDate;
+                 document.getElementById("loadingTeamTaskSearch").style.display="none";
             }
             
             
@@ -242,7 +243,8 @@
 
 
     <body style="overflow-x: hidden" onload="jumper();doOnLoad();onLoad(); init(); getTaskType();">
-        <header id="header"><!--header-->
+     
+        <div id="wrap"><header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
 
@@ -253,7 +255,7 @@
 
         </header>
 
-
+<div id="main">
 
 
 
@@ -277,7 +279,7 @@
 
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Tasks Search</font>
-                                                <i id="updownArrow" onclick="toggleContent('showTeamTaskSearchDetails')" class="fa fa-angle-up"></i>
+                                                <i id="updownArrow" onclick="toggleContent('showTeamTaskSearchDetails')" class="fa fa-minus"></i>
 
                                             </h4>
                                         </div>
@@ -305,29 +307,29 @@
 
                                             <div class="inner-reqdiv-elements">
                                                 <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color:#56a5ec;">Task Name: </label>
+                                                    <label class="labelStylereq" style="color:#56a5ec;">Task Name </label>
                                                     <s:textfield cssClass="form-control"  name="task_name" placeholder="Task_Name" maxLength="60"/>
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color: #56a5ec;">Task Id: </label>
+                                                    <label class="labelStylereq" style="color: #56a5ec;">Task Id </label>
                                                     <s:textfield cssClass="form-control" id="task_id" name="task_id"  placeholder="Task_Id" />
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color: #56a5ec;">Status: </label>
+                                                    <label class="labelStylereq" style="color: #56a5ec;">Status </label>
                                                     <s:select  id="status"  name="task_status" label="Status"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="tasksStatusList" />
                                                 </div>
                                             </div>
                                             <div class="inner-reqdiv-elements">
                                                 <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color: #56a5ec;">Start Date: </label>
-                                                    <s:textfield cssClass=" form-control dateImage" name="docdatepickerfrom" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"/>
-                                                </div>
+                                                    <label class="labelStylereq" style="color: #56a5ec;">Start Date </label>
+                                                    <div class="calImage"><s:textfield cssClass=" form-control " name="docdatepickerfrom" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
+                                                    </div></div>
                                                 <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color: #56a5ec;">End Date: </label>
-                                                    <s:textfield cssClass=" form-control dateImage" name="docdatepicker" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
-                                                </div>
+                                                    <label class="labelStylereq" style="color: #56a5ec;">End Date </label>
+                                                    <div class="calImage"><s:textfield cssClass=" form-control" name="docdatepicker" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
+                                                    </div></div>
                                                 <div class="col-sm-4">
-                                                    <label class="labelStylereq" style="color: #56a5ec;">Team Member: </label>
+                                                    <label class="labelStylereq" style="color: #56a5ec;">Team Member </label>
                                                     <s:select  id="teamMember"  name="teamMember" label="teamMember"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="teamMemberNames" />
                                                 </div>
 
@@ -345,7 +347,9 @@
                                                 </div>
                                         </s:form>
                                         <div class="row"></div>
-
+                                        <div id="loadingTeamTaskSearch" class="loadingImg">
+                                                    <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                                </div> 
                                             <s:form>
                                                 <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
                                                     <table id="teamTaskTable" class="responsive CSSTable_task " border="5" cell-spacing="2">
@@ -426,7 +430,7 @@
                     <div class="backgroundcolor">
                         <table>
                             <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Comments Details&nbsp;&nbsp; </font></h4></td>
-                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="taskComments_popup_close" onclick="taskCommentsPopup();" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                            <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="taskComments_popup_close" onclick="taskCommentsPopup();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
                     <div>
@@ -441,7 +445,8 @@
 
         </section><!--/form-->
 
-
+   </div>
+            </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

@@ -21,6 +21,7 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.mss.msp.acc.AccountAction;
 import com.mss.msp.recruitment.RecruitmentAction;
 import com.mss.msp.requirement.RequirementVTO;
 import com.mss.msp.sag.sow.SOWAction;
@@ -519,7 +520,7 @@ public class DataSourceDataProvider {
 
             queryString = "SELECT pt.usr_id,pt.designation,first_name,last_name,pt.current_status FROM project_team pt LEFT OUTER JOIN users u ON ((pt.usr_id=u.usr_id)) WHERE pt.reportsto1=? AND pt.current_status LIKE 'Active'";
             preparedStatement = connection.prepareStatement(queryString);
-            System.out.println("query==========>" + queryString);
+            System.out.println("getMyTeamMembers()-->query==========>" + queryString);
 
             myTeamMembers = getMyTeamMembersUpTo(reportsTo, preparedStatement);
 
@@ -569,7 +570,7 @@ public class DataSourceDataProvider {
         String value = null;
 
         try {
-            //System.out.println("Main ReportsTo:" + reportsTo);
+            System.out.println("Main ReportsTo:" + reportsTo);
             theStatement.setInt(1, reportsTo);
 
 
@@ -578,12 +579,13 @@ public class DataSourceDataProvider {
                 key = resultSet.getInt("usr_id");
                 value = resultSet.getString("first_name") + "." + resultSet.getString("last_name");
                 myTeamManagersMap.put(key, value);
+                System.out.println("in while--->" + myTeamManagersMap);
                 // If the Team Member is a Manager then Get his Team Members List
                 // if ((resultSet.getInt("designation")) != 0 || (resultSet.getInt("designation")) != 0 || (resultSet.getInt("is_PMO") != 0) || (resultSet.getInt("is_sbteam") != 0)) {
                 if (DataUtility.getInstance().getTimsheetAccessingRolesList().contains(resultSet.getInt("designation"))) {
                     keys[keyCnt] = key;
                     keyCnt++;
-                    //  System.out.println("keyCnt--- Value"+keyCnt);
+                    System.out.println("keyCnt--- Value" + keyCnt);
 
                 }
             }
@@ -611,6 +613,7 @@ public class DataSourceDataProvider {
             throw new ServiceLocatorException(sql);
         }
         myTeamManagersMap = sortMapByValues(myTeamManagersMap);
+        System.out.println("myTeamManagersMap-->" + myTeamManagersMap);
         return myTeamManagersMap; // returning the object.
     } //closing the method
 
@@ -2193,14 +2196,15 @@ public class DataSourceDataProvider {
      *
      **************************************
      */
-    public int checkConsultantLoginId(String emailId, int vendorId) throws ServiceLocatorException {
+    public int checkConsultantLoginId(String emailId, int usrId,int vendorId) throws ServiceLocatorException {
 
         int count = 0;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "Select count(*) as id from users where email1 like '" + emailId + "'";
+       String queryString = "Select count(*) as id from users where email1 like '" + emailId + "'"
+                + " AND created_by_org_id=" + vendorId + " ";
         //System.out.println("queryString-->" + queryString);
         try {
             statement = connection.createStatement();
@@ -2417,7 +2421,7 @@ public class DataSourceDataProvider {
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
 
-                attachmentLocation += resultSet.getString("attachment_path") + File.separator+ resultSet.getString("attachment_name");
+                attachmentLocation += resultSet.getString("attachment_path") + File.separator + resultSet.getString("attachment_name");
 
             }
 
@@ -3492,7 +3496,7 @@ public class DataSourceDataProvider {
                 recruitmentAction.setConEmail(resultSet.getString("conEmail"));
                 recruitmentAction.setEmpEmail(resultSet.getString("empEmail"));
                 recruitmentAction.setConSkills(resultSet.getString("consultant_skills"));
-                
+
                 if (resultSet.getDate("scheduled_date") != null) {
                     recruitmentAction.setReviewDate(com.mss.msp.util.DateUtility.getInstance().convertDateYMDtoMDY(resultSet.getString("scheduled_date")));
                 } else {
@@ -4136,21 +4140,24 @@ public class DataSourceDataProvider {
         int resultString = 0;
         connection = ConnectionProvider.getInstance().getConnection();
         try {
-           queryString = "SELECT COUNT(createdbyOrgId) as count FROM req_con_rel  WHERE  status not like '%SOW%' and reqId=" + req_id;
+            queryString = "SELECT COUNT(createdbyOrgId) as count FROM req_con_rel  WHERE  status not like '%SOW%' and reqId=" + req_id;
             if (orgId != 0) {
                 queryString = queryString + " AND createdbyOrgId=" + orgId;
             }
-              System.out.println("getNoOfSubmisions query ===================================================================================================================->"+queryString);
+            System.out.println("getNoOfSubmisions query ===================================================================================================================->" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
                 resultString = resultSet.getInt("count");
             }
-        } catch (SQLException sql) {
-            throw new ServiceLocatorException(sql);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         } finally {
             try {
-
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
                 if (statement != null) {
                     statement.close();
                     statement = null;
@@ -4617,7 +4624,7 @@ public class DataSourceDataProvider {
         if (roleValue.equalsIgnoreCase("Director")) {
             queryString = "SELECT project_id,proj_name FROM acc_projects WHERE acc_id=" + orgId;
         } else {
-            queryString = "SELECT project_id,proj_name FROM acc_projects WHERE created_by=" + userSessionId + " AND acc_id=" +  orgId+" AND proj_type = 'MP'";
+            queryString = "SELECT project_id,proj_name FROM acc_projects WHERE created_by=" + userSessionId + " AND acc_id=" + orgId + " AND proj_type = 'MP'";
         }
         System.out.println(">>>>>>>>>>>>PROJECT LIST>>>>" + queryString);
         try {
@@ -4835,12 +4842,11 @@ public class DataSourceDataProvider {
 //        } else if ("VC".equalsIgnoreCase(accType)) {
 //            queryString = "SELECT account_id,account_name FROM accounts LEFT OUTER JOIN org_rel ON(account_id=related_org_Id) WHERE type_of_relation = 'V'";
 //        } else {
-         if(OrgId>0){
-            queryString = "SELECT account_id,account_name FROM accounts where account_id="+OrgId; 
-         }
-         else{
-            queryString = "SELECT account_id,account_name FROM accounts"; 
-         }
+        if (OrgId > 0) {
+            queryString = "SELECT account_id,account_name FROM accounts where account_id=" + OrgId;
+        } else {
+            queryString = "SELECT account_id,account_name FROM accounts";
+        }
 //        }
         System.out.println(">>>>>>>>>>>>PROJECT LIST>>>>" + queryString);
         try {
@@ -5122,29 +5128,38 @@ public class DataSourceDataProvider {
         connection = ConnectionProvider.getInstance().getConnection();
         String queryString = "";
 
-       // queryString = "SELECT usr_id,org_id,type_of_user FROM users WHERE cur_status='Active' AND  email1  ='" + conEmail + "'";
-queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud.ssn_number FROM usr_details ud LEFT OUTER JOIN users u ON(ud.usr_id=u.usr_id)  WHERE cur_status='Active' AND  email1  ='" + conEmail + "'";
+        // queryString = "SELECT usr_id,org_id,type_of_user FROM users WHERE cur_status='Active' AND  email1  ='" + conEmail + "'";
+        // queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud.ssn_number FROM usr_details ud LEFT OUTER JOIN users u ON(ud.usr_id=u.usr_id)  WHERE cur_status='Active' AND  email1  ='" + conEmail + "'";
+        if ("IC".equals(resourceType)) {
+            System.out.println("-->"+resourceType);
+            queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud.ssn_number FROM usr_details ud LEFT OUTER JOIN users u ON(ud.usr_id=u.usr_id)  WHERE cur_status='Active' AND  email1  ='" + conEmail + "'"
+                    + " AND created_by_org_id="+sessionOrgId;
+        } else {
+            System.out.println("-->"+resourceType);
+            queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud.ssn_number FROM usr_details ud LEFT OUTER JOIN users u ON(ud.usr_id=u.usr_id)  WHERE cur_status='Active' AND  email1  ='" + conEmail + "'"
+                    + " AND org_id="+sessionOrgId;
+        }
         System.out.println(">>>>>>  getEmiltExistOrNot -->" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                String ssn="";
-                if(resultSet.getString("ssn_number")!=null&&!"".equals(resultSet.getString("ssn_number"))){
-                    ssn=com.mss.msp.util.DataUtility.decrypted(resultSet.getString("ssn_number")); 
+                String ssn = "";
+                if (resultSet.getString("ssn_number") != null && !"".equals(resultSet.getString("ssn_number"))) {
+                    ssn = com.mss.msp.util.DataUtility.decrypted(resultSet.getString("ssn_number"));
                 }
                 if ("IC".equalsIgnoreCase(resultSet.getString("type_of_user"))) {
-                    result = resultSet.getString("usr_id") + "#IC#" +ssn;
+                    result = resultSet.getString("usr_id") + "#IC#" + ssn;
                 } else {
                     if (sessionOrgId == resultSet.getInt("org_id")) {
-                        result = resultSet.getString("usr_id") + "#VC#"+ssn;
+                        result = resultSet.getString("usr_id") + "#VC#" + ssn;
                     } else {
                         result = null;
                     }
                 }
 
                 String str1 = resultSet.getString("consultant_skills");
-                if (str1 != null&&!"".equals(str1)) {
+                if (str1 != null && !"".equals(str1)) {
                     StringTokenizer stk1 = new StringTokenizer(str1, ",");
                     String skillsResultString = "";
                     while (stk1.hasMoreTokens()) {
@@ -5158,7 +5173,7 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
                 } else {
                     result += "#" + "null";
                 }
-                System.out.println("Reesult in dsdp---->"+result);
+                System.out.println("Reesult in dsdp---->" + result);
             }
             return result;
 
@@ -5296,19 +5311,31 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
      *
      **************************************
      */
-    public Map getReporingByProjectId(int prjId) throws ServiceLocatorException {
+    public Map getReporingByProjectId(AccountAction accountAction, String finalReportsList) throws ServiceLocatorException {
         Map rolesMap = new HashMap();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT CONCAT(u.first_name,'.',u.last_name) AS NAME,pt.usr_id "
-                + "FROM project_team pt "
-                + "LEFT OUTER JOIN users u ON(u.usr_id=pt.usr_id) "
-                + "WHERE pt.project_id=" + prjId + " "
-                + "AND pt.designation IN(3,4,5,13,6) "
-                + "AND pt.current_status='Active'";
 
+
+        if (accountAction.getProjectFlag() != null && !"".equals(accountAction.getProjectFlag().trim())) {
+            queryString = "SELECT CONCAT(u.first_name,'.',u.last_name) AS NAME,pt.usr_id "
+                    + "FROM project_team pt "
+                    + "LEFT OUTER JOIN users u ON(u.usr_id=pt.usr_id) "
+                    + "WHERE pt.project_id=" + accountAction.getProjectID() + " "
+                    + "AND pt.designation IN(" + finalReportsList + ") "
+                    + "AND pt.current_status='Active'";
+        } else {
+            queryString = "SELECT CONCAT(u.first_name,'.',u.last_name) AS NAME,pt.usr_id "
+                    + "FROM project_team pt "
+                    + "LEFT OUTER JOIN users u ON(u.usr_id=pt.usr_id) "
+                    + "WHERE pt.project_id=" + accountAction.getProjectID() + " "
+                    + "AND pt.designation IN(" + finalReportsList + ") "
+                    + "AND pt.usr_id NOT IN(" + accountAction.getUserID() + ") "
+                    + "AND pt.current_status='Active'";
+        }
         System.out.println(">>>>>>>>>>>>PROJECT LIST>>>>" + queryString);
         try {
             statement = connection.createStatement();
@@ -5882,7 +5909,7 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         Statement statement = null;
         ResultSet resultSet = null;
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT id,skill_name FROM lk_skills WHERE STATUS='Active' AND online_flag="+ flag +" ";
+        String queryString = "SELECT id,skill_name FROM lk_skills WHERE STATUS='Active' AND online_flag=" + flag + " ";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -5918,7 +5945,6 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return customerMap;
 
     }
-   
 
     public String getReqSkillsSet(int skillId) throws ServiceLocatorException {
 
@@ -5964,24 +5990,24 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return resultString;
 
     }
-    
+
     public int getReqSkillId(String skillName) throws ServiceLocatorException {
-        System.out.println("in getReqSkillId--------->"+skillName);
+        System.out.println("in getReqSkillId--------->" + skillName);
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        int resultString=0;
+        int resultString = 0;
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT ls.id FROM lk_skills ls WHERE ls.skill_name='"+skillName+"'";
+        String queryString = "SELECT ls.id FROM lk_skills ls WHERE ls.skill_name='" + skillName + "'";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
                 resultString = resultSet.getInt("id");
-                System.out.println("resultString in while------>"+resultString);
+                System.out.println("resultString in while------>" + resultString);
             }
-           // resultString = resultString + ',';
-               System.out.println("resultString after while------>"+resultString);
+            // resultString = resultString + ',';
+            System.out.println("resultString after while------>" + resultString);
 
         } catch (SQLException ex) {
             System.out.println("req skills category method-->" + ex.getMessage());
@@ -6008,10 +6034,11 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
                 throw new ServiceLocatorException(ex);
             }
         }
-      //  System.out.println("getReqSkillsSet queryString-->" + queryString);
+        //  System.out.println("getReqSkillsSet queryString-->" + queryString);
         return resultString;
 
     }
+
     /**
      * *****************************************************************************
      * Date : september 30, 2015, 04:13 PM EST
@@ -6020,7 +6047,6 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
      * ForUse : getting Budget data based on the cost center Code id
      * *****************************************************************************
      */
-
     public String getCostCenterBudget(String ccCode) {
 
         Connection connection = null;
@@ -6033,9 +6059,9 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
-            System.out.println("----------"+queryString);
+            System.out.println("----------" + queryString);
             while (resultSet.next()) {
-                resultString += resultSet.getDouble("budgetamt") + "^" + resultSet.getInt("id")+"^"+resultSet.getString("status");
+                resultString += resultSet.getDouble("budgetamt") + "^" + resultSet.getInt("id") + "^" + resultSet.getString("status");
             }
         } catch (Exception sqe) {
             sqe.printStackTrace();
@@ -6060,7 +6086,8 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return resultString;
 
     }
-     /**
+
+    /**
      * *****************************************************************************
      * Date : October 07, 2015, 04:13 PM IST
      * Author:Manikanta<meeralla@miraclesoft.com>
@@ -6068,14 +6095,14 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
      *
      * *****************************************************************************
      */
-    public Map getProjectsMap(int orgId,String projectType,int year) throws ServiceLocatorException {
+    public Map getProjectsMap(int orgId, String projectType, int year) throws ServiceLocatorException {
 
         Map projectsMap = new HashMap();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT project_id,proj_name FROM acc_projects WHERE proj_type='"+projectType+"' "
+        String queryString = "SELECT project_id,proj_name FROM acc_projects WHERE proj_type='" + projectType + "' "
                 + " AND (EXTRACT(YEAR FROM proj_stdate) = " + year + "  OR EXTRACT(YEAR FROM proj_trdate) =" + year + " )"
                 + " AND acc_id=" + orgId;
         try {
@@ -6112,6 +6139,7 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return projectsMap;
 
     }
+
     public Map getCostCenterNames(int sessionOrgId) throws ServiceLocatorException {
         Map ccNames = new HashMap();
         Connection connection = null;
@@ -6229,7 +6257,7 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return attempt;
 
     }
-    
+
     public Map getSkillsQuestionsMap(String validKey) throws ServiceLocatorException {
         Map skillsQuestionsMap = new TreeMap();
         Connection connection = null;
@@ -6343,8 +6371,8 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return skillsQuestionsMap;
 
     }
-    
-    public Map getSkillsMap(int  contechReviewId) throws ServiceLocatorException {
+
+    public Map getSkillsMap(int contechReviewId) throws ServiceLocatorException {
         Map skillsQuestionsMap = new TreeMap();
         Connection connection = null;
         Statement statement = null;
@@ -6366,7 +6394,7 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
 
         connection = ConnectionProvider.getInstance().getConnection();
 
-        queryString = "SELECT option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM sb_onlineexam WHERE techreviewid="+ contechReviewId +" ";
+        queryString = "SELECT option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM sb_onlineexam WHERE techreviewid=" + contechReviewId + " ";
 
 
 
@@ -6389,62 +6417,62 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
             }
             if (!"".equals(option1)) {
                 String[] parts1 = option1.split("-");
-                if(Integer.parseInt(parts1[1])!=0){
-                 skillsQuestionsMap.put(parts1[0],StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts1[0]))));   
+                if (Integer.parseInt(parts1[1]) != 0) {
+                    skillsQuestionsMap.put(parts1[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts1[0]))));
                 }
             }
             if (!"".equals(option2)) {
                 String[] parts2 = option2.split("-");
-                if(Integer.parseInt(parts2[1])!=0){
-                skillsQuestionsMap.put(parts2[0],StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts2[0]))));
+                if (Integer.parseInt(parts2[1]) != 0) {
+                    skillsQuestionsMap.put(parts2[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts2[0]))));
                 }
             }
             if (!"".equals(option3)) {
                 String[] parts3 = option3.split("-");
-                if(Integer.parseInt(parts3[1])!=0){
-                skillsQuestionsMap.put(parts3[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts3[0]))));
+                if (Integer.parseInt(parts3[1]) != 0) {
+                    skillsQuestionsMap.put(parts3[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts3[0]))));
                 }
             }
             if (!"".equals(option4)) {
                 String[] parts4 = option4.split("-");
-                if(Integer.parseInt(parts4[1])!=0){
-                skillsQuestionsMap.put(parts4[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts4[0]))));
+                if (Integer.parseInt(parts4[1]) != 0) {
+                    skillsQuestionsMap.put(parts4[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts4[0]))));
                 }
             }
             if (!"".equals(option5)) {
                 String[] parts5 = option5.split("-");
-                if(Integer.parseInt(parts5[1])!=0){
-                skillsQuestionsMap.put(parts5[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts5[0]))));
+                if (Integer.parseInt(parts5[1]) != 0) {
+                    skillsQuestionsMap.put(parts5[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts5[0]))));
                 }
             }
             if (!"".equals(option6)) {
                 String[] parts6 = option6.split("-");
-                if(Integer.parseInt(parts6[1])!=0){
-                skillsQuestionsMap.put(parts6[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts6[0]))));
+                if (Integer.parseInt(parts6[1]) != 0) {
+                    skillsQuestionsMap.put(parts6[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts6[0]))));
                 }
             }
             if (!"".equals(option7)) {
                 String[] parts7 = option7.split("-");
-                if(Integer.parseInt(parts7[1])!=0){
-                skillsQuestionsMap.put(parts7[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts7[0]))));
+                if (Integer.parseInt(parts7[1]) != 0) {
+                    skillsQuestionsMap.put(parts7[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts7[0]))));
                 }
             }
             if (!"".equals(option8)) {
                 String[] parts8 = option8.split("-");
-                if(Integer.parseInt(parts8[1])!=0){
-                skillsQuestionsMap.put(parts8[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts8[0]))));
+                if (Integer.parseInt(parts8[1]) != 0) {
+                    skillsQuestionsMap.put(parts8[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts8[0]))));
                 }
             }
             if (!"".equals(option9)) {
                 String[] parts9 = option9.split("-");
-                if(Integer.parseInt(parts9[1])!=0){
-                skillsQuestionsMap.put(parts9[0],StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts9[0]))));
+                if (Integer.parseInt(parts9[1]) != 0) {
+                    skillsQuestionsMap.put(parts9[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts9[0]))));
                 }
             }
             if (!"".equals(option10)) {
                 String[] parts10 = option10.split("-");
-                if(Integer.parseInt(parts10[1])!=0){
-                skillsQuestionsMap.put(parts10[0],StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts10[0]))));
+                if (Integer.parseInt(parts10[1]) != 0) {
+                    skillsQuestionsMap.put(parts10[0], StringUtils.chop(getReqSkillsSet(Integer.parseInt(parts10[0]))));
                 }
             }
 
@@ -6477,7 +6505,7 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return skillsQuestionsMap;
 
     }
-    
+
     public String getExamStatus(int conTechReviewId) throws ServiceLocatorException {
 
         Connection connection = null;
@@ -6485,7 +6513,7 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         ResultSet resultSet = null;
         String examStatus = "";
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT examstatus FROM sb_onlineexam WHERE techreviewid=" + conTechReviewId +"";
+        String queryString = "SELECT examstatus FROM sb_onlineexam WHERE techreviewid=" + conTechReviewId + "";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -6522,7 +6550,8 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return examStatus;
 
     }
-     /**
+
+    /**
      * *****************************************************************************
      * Date : october 6, 2015, 5:40 PM IST
      * Author:jagan<jchukkala@miraclesoft.com>
@@ -6574,7 +6603,8 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return attempt;
 
     }
-     /**
+
+    /**
      * *****************************************************************************
      * Date : october 1, 2015, 3:40 PM IST
      * Author:jagan<jchukkala@miraclesoft.com>
@@ -6630,15 +6660,16 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         }
         return isExpired;
     }
-    public int getNoOfRightAns(int skillId,int examId) throws ServiceLocatorException {
+
+    public int getNoOfRightAns(int skillId, int examId) throws ServiceLocatorException {
 
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String resultString = "";
-        int result=0;
+        int result = 0;
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT COUNT(IF(ansstatus='R',1, NULL)) AS rightans FROM sb_onlineexamsummery WHERE skillid="+skillId+" AND examid="+examId+"";
+        String queryString = "SELECT COUNT(IF(ansstatus='R',1, NULL)) AS rightans FROM sb_onlineexamsummery WHERE skillid=" + skillId + " AND examid=" + examId + "";
         System.out.println("getNoOfRightAns queryString-->" + queryString);
         try {
             statement = connection.createStatement();
@@ -6672,10 +6703,11 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
                 throw new ServiceLocatorException(ex);
             }
         }
-        System.out.println("result--->"+result);
+        System.out.println("result--->" + result);
         return result;
 
     }
+
     public int doMailExtensionVerify(String mailExt) throws ServiceLocatorException {
 
         int count = 0;
@@ -6684,7 +6716,7 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         ResultSet resultSet = null;
         connection = ConnectionProvider.getInstance().getConnection();
         String queryString = "";
-            queryString = "SELECT count(*) as id FROM siteaccess_mail_ext WHERE email_ext LIKE '"+mailExt+"'";
+        queryString = "SELECT count(*) as id FROM siteaccess_mail_ext WHERE email_ext LIKE '" + mailExt + "'";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -6717,12 +6749,12 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         }
         return count;
     }
-    
-  public PdfPTable getITextPDFTable(String gridData, PdfPTable table) throws ServiceLocatorException {
+
+    public PdfPTable getITextPDFTable(String gridData, PdfPTable table) throws ServiceLocatorException {
 
 
         if (!"".equals(gridData)) {
-            
+
             // int Count = stk.countTokens();
             //  System.out.println("Total Count-->" + Count);
             String[] s = gridData.split("\\^");
@@ -6746,16 +6778,17 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
 
         return table;
 
-    }   
-   /**
+    }
+
+    /**
      * *****************************************************************************
      * Date : November 11, 2015, 3:00 PM IST
      * Author:jagan<jchukkala@miraclesoft.com>
      *
-     * ForUse : getting the Recruitment Team For an Account 
+     * ForUse : getting the Recruitment Team For an Account
      * *****************************************************************************
      */
-  public Map getEmpConsultantTeamMap(int orgId) throws ServiceLocatorException {
+    public Map getEmpConsultantTeamMap(int orgId) throws ServiceLocatorException {
 
         Map empTeam = new HashMap();
         Connection connection = null;
@@ -6763,16 +6796,16 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         ResultSet resultSet = null;
         connection = ConnectionProvider.getInstance().getConnection();
         //String queryString = "SELECT u.usr_id,CONCAT_WS(' ',u.first_name,u.middle_name,u.last_name) AS NAME FROM users u LEFT OUTER JOIN usr_roles ur ON u.usr_id=ur.usr_id WHERE ur.role_id=11  AND u.org_id=" + orgId;
-      
-         String queryString = "SELECT CONCAT(u.first_name,'.',u.last_name) AS NAME,u.usr_id  FROM users u "
+
+        String queryString = "SELECT CONCAT(u.first_name,'.',u.last_name) AS NAME,u.usr_id  FROM users u "
                 + " LEFT OUTER JOIN usr_roles ur ON u.usr_id=ur.usr_id "
                 + " LEFT OUTER JOIN usr_grouping ug ON ug.usr_id=u.usr_id "
-                + " WHERE   ur.role_id=11  AND u.org_id="+orgId+" AND cat_type=1";
-        
-        
-        System.out.println("employee-->"+queryString);
-        
-        
+                + " WHERE   ur.role_id=11  AND u.org_id=" + orgId + " AND cat_type=1";
+
+
+        System.out.println("employee-->" + queryString);
+
+
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -6807,21 +6840,22 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         return empTeam;
 
     }
-  /*by  divya gandreti*/
-  public String getActionDescription(String actionName) throws ServiceLocatorException{
+    /*by  divya gandreti*/
+
+    public String getActionDescription(String actionName) throws ServiceLocatorException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         connection = ConnectionProvider.getInstance().getConnection();
         String queryString = "";
         String resultString = "";
-            queryString = "SELECT description FROM ac_action WHERE action_name = SUBSTRING_INDEX(SUBSTRING_INDEX('"+actionName+"','/',-1),'.',1)";
-         System.out.println(">>>>>>>>>>>>Action Description>>>>" + queryString);
+        queryString = "SELECT description FROM ac_action WHERE action_name = SUBSTRING_INDEX(SUBSTRING_INDEX('" + actionName + "','/',-1),'.',1)";
+        System.out.println(">>>>>>>>>>>>Action Description>>>>" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                resultString +=  resultSet.getString("description") ;
+                resultString += resultSet.getString("description");
             }
         } catch (SQLException ex) {
             System.out.println("getAllRoles method-->" + ex.getMessage());
@@ -6850,22 +6884,23 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         }
         return resultString;
     }
-/* by divya gandreti*/
-  public List getActionNamesList(int orgId,int roleId,String accType) {
+    /* by divya gandreti*/
+
+    public List getActionNamesList(int orgId, int roleId, String accType) {
         ArrayList actionNames = new ArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String queryString = "";
         try {
-            queryString = "SELECT DISTINCT action_name FROM home_redirect_action WHERE STATUS ='Active' AND type_of_user LIKE '"+accType+"'";// AND primaryrole="+roleId;//+" AND (org_id="+orgId+" OR org_id=0)";
+            queryString = "SELECT DISTINCT action_name FROM home_redirect_action WHERE STATUS ='Active' AND type_of_user LIKE '" + accType + "'";// AND primaryrole="+roleId;//+" AND (org_id="+orgId+" OR org_id=0)";
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 actionNames.add(resultSet.getString("action_name"));
             }
-            System.out.println("----------------------"+queryString);
+            System.out.println("----------------------" + queryString);
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -6890,26 +6925,25 @@ queryString = "SELECT u.usr_id,u.org_id,u.type_of_user , ud.consultant_skills,ud
         System.out.println(actionNames);
         return actionNames;
     }
-  /**
+
+    /**
      * *****************************************************************************
      * Date : December 15, 2015, 3:00 PM IST
      * Author:jagan<jchukkala@miraclesoft.com>
      *
-     * ForUse : getting the vendor employee email 
+     * ForUse : getting the vendor employee email
      * *****************************************************************************
      */
-  
-  
-public void getVendorEmpEmail(RecruitmentAction recruitmentAction) throws ServiceLocatorException {
+    public void getVendorEmpEmail(RecruitmentAction recruitmentAction) throws ServiceLocatorException {
 
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String vendorEmp = "";
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT CONCAT(c.first_name,'.',c.last_name)AS NAME ,c.email1 AS venEmail FROM users c " +
-                             " LEFT OUTER JOIN req_con_rel rcr ON(rcr.created_By=c.usr_id) "+
-                             " WHERE rcr.reqId="+recruitmentAction.getRequirementId()+" AND rcr.consultantId="+recruitmentAction.getConsult_id()+" ";
+        String queryString = "SELECT CONCAT(c.first_name,'.',c.last_name)AS NAME ,c.email1 AS venEmail FROM users c "
+                + " LEFT OUTER JOIN req_con_rel rcr ON(rcr.created_By=c.usr_id) "
+                + " WHERE rcr.reqId=" + recruitmentAction.getRequirementId() + " AND rcr.consultantId=" + recruitmentAction.getConsult_id() + " ";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -6943,10 +6977,11 @@ public void getVendorEmpEmail(RecruitmentAction recruitmentAction) throws Servic
                 throw new ServiceLocatorException(ex);
             }
         }
-        
+
 
     }
-public String getConsultVisaAttachment(int consultantId) {
+
+    public String getConsultVisaAttachment(int consultantId) {
 
         Connection connection = null;
         Statement statement = null;
@@ -6956,7 +6991,7 @@ public String getConsultVisaAttachment(int consultantId) {
         //System.err.println(days+"Diff in Dyas...");
         try {
             System.out.println("in DownloadAction");
-         //   if(consult_acc_attachment_id==0)
+            //   if(consult_acc_attachment_id==0)
             //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "SELECT idproofattachment FROM usr_details WHERE usr_id=" + consultantId + "";
 
@@ -6994,5 +7029,376 @@ public String getConsultVisaAttachment(int consultantId) {
         }
         return attachmentLocation;
 
+    }
+
+    /**
+     * *****************************************************************************
+     * Date : DEC 15, 2015, 3:00 PM IST Author:jagan<jchukkala@miraclesoft.com>
+     *
+     * ForUse : getting the getReportingPerson email
+     * *****************************************************************************
+     */
+    public String getReportingPersonsEmail(int userId) {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "", reportingMails = "";
+        int i = 0;
+        //System.err.println(days+"Diff in Dyas...");
+        try {
+            //System.out.println("in DownloadAction");
+            //   if(consult_acc_attachment_id==0)
+            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
+            // queryString = "SELECT idproofattachment FROM usr_details WHERE usr_id=" + consultantId + "";
+            queryString = " SELECT u.email1 FROM project_team pt LEFT OUTER JOIN users u ON(u.usr_id=pt.reportsto1)"
+                    + " WHERE pt.usr_id = " + userId + " AND pt.current_status = 'Active' AND pt.reportsto1 != -1";
+            System.out.println("queryString-->" + queryString);
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+
+                reportingMails += resultSet.getString("email1") + ",";
+
+            }
+
+            System.out.println("reporting emails-->" + reportingMails);
+
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        }
+        return reportingMails;
+
+    }
+
+    /**
+     * *****************************************************************************
+     * Date : DEC 15, 2015, 3:00 PM IST Author:jagan<jchukkala@miraclesoft.com>
+     *
+     * ForUse : To check the user is existed or not for project for customer
+     * *****************************************************************************
+     */
+    public String checkUserExistOrNotForProjectRespectedOrg(int userId, int orgId) throws ServiceLocatorException {
+
+        int usr_id = 0;
+        String existOrNot = "";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        connection = ConnectionProvider.getInstance().getConnection();
+        //String queryString = "Select usr_id from users where email1 like '" + emailId + "'";
+        String queryString = "SELECT COUNT(project_id)AS total FROM project_team WHERE usr_id=" + userId + " AND account_id=" + orgId + " AND current_status='Active'";
+
+        System.out.println("queryString-->" + queryString);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                //System.out.println("projects-->"+resultSet.getString("total"));
+
+                if (resultSet.getInt("total") == 0) {
+                    existOrNot = "notExisted";
+                    System.out.println("" + existOrNot);
+                } else {
+                    existOrNot = "Existed";
+                    System.out.println("" + existOrNot);
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        return existOrNot;
+    }
+
+    /**
+     * *****************************************************************************
+     * Date : JAN 07, 2016, 3:00 PM IST Author:Manikanta
+     * Eeralla<meeralla@miraclesoft.com>
+     *
+     * ForUse : To get Team Members Reporting Persons.
+     * *****************************************************************************
+     */
+    public String getTeamMemberReportingPersons(int userId, String finalReportsList, int orgId, int projectID) throws ServiceLocatorException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String resultString = "";
+
+        queryString = "SELECT DISTINCT(pt.usr_id),CONCAT(u.first_name,'.',u.last_name) AS NAME "
+                + "FROM project_team pt "
+                + "LEFT OUTER JOIN users u ON(u.usr_id=pt.usr_id) "
+                + " WHERE  pt.designation IN(" + finalReportsList + ") "
+                + " AND pt.project_id=" + projectID + " "
+                + " AND pt.current_status='Active'"
+                + " AND pt.account_id=" + orgId + " ";
+        System.out.println(">>>>>>>>>>>>getTeamMemberReportingPersons>>>>" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                resultString += resultSet.getInt("pt.usr_id") + "|" + resultSet.getString("NAME") + "^";
+            }
+        } catch (SQLException ex) {
+            System.out.println("getAllRoles method-->" + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        return resultString;
+    }
+    public String getGridData(String query, String flag, String accType) throws ServiceLocatorException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String resultString = "";
+        String decryptedSSN = "";
+        queryString = query;
+        String postedDate="";
+        System.out.println(">>>>>>>>>>>>getTeamMemberReportingPersons>>>>" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            if ("Req".equals(flag)) {
+                if ("AC".equalsIgnoreCase(accType)) {
+                    resultString = "Job Id" + "|" + "Jog Title" + "|" + "Positions" + "|" + "Skills Set" + "|" + "Posted Date" + "|" + "Status" + "|" + "No of Submissions" + "^";
+                } else {
+                    resultString = "Job Id" + "|" + "Jog Title" + "|" + "Customer" + "|" + "Skills Set" + "|" + "Posted Date" + "|" + "Status" + "^";
+                }
+
+                while (resultSet.next()) {
+                    java.util.Date myDate = resultSet.getDate("created_date");
+                    if (myDate != null) {
+                        postedDate = com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(myDate);
+                    } else {
+                        postedDate = "---";
+                    }
+                    String status = "";
+                    if (resultSet.getString("req_status").equalsIgnoreCase("O")) {
+                        status = "Opened";
+                    } else if (resultSet.getString("req_status").equalsIgnoreCase("R")) {
+                        status = "Released";
+                    } else if (resultSet.getString("req_status").equalsIgnoreCase("OR")) {
+                        status = "Open for Resume";
+                    } else if (resultSet.getString("req_status").equalsIgnoreCase("C")) {
+                        status = "Closed";
+                    } else if (resultSet.getString("req_status").equalsIgnoreCase("F")) {
+                        status = "Forecast";
+                    } else if (resultSet.getString("req_status").equalsIgnoreCase("I")) {
+                        status = "Inprogess";
+                    } else if (resultSet.getString("req_status").equalsIgnoreCase("H")) {
+                        status = "Hold";
+                    } else if (resultSet.getString("req_status").equalsIgnoreCase("W")) {
+                        status = "Withdrawn";
+                    } else if (resultSet.getString("req_status").equalsIgnoreCase("S")) {
+                        status = "Won";
+                    } else if (resultSet.getString("req_status").equalsIgnoreCase("L")) {
+                        status = "Lost";
+                    }
+                    if ("AC".equalsIgnoreCase(accType)) {
+                        resultString += resultSet.getString("jdid") + "|"
+                                + resultSet.getString("req_name") + "|"
+                                + resultSet.getString("no_of_resources") + "|"
+                                + resultSet.getString("req_skills") + "|"
+                                + postedDate + "|"
+                                + status + "|"
+                                + com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfSubmisions(resultSet.getInt("requirement_id"), 0) + "^";
+                    } else {
+                        resultString += resultSet.getString("jdid") +"|"+
+                                resultSet.getString("req_name")+"|"+
+                                resultSet.getString("account_name")+"|"+ 
+                                resultSet.getString("req_skills")+"|"
+                                +postedDate+"|"+ status +"^";
+//                                com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("req_contact1")) + "|"
+//                                + resultSet.getString("req_name") + "|"
+//                                + resultSet.getString("preferred_skills") + "|"
+//                                + resultSet.getString("tax_term") + "|"
+//                                + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("req_st_date")) + "|"
+//                                + resultSet.getString("req_contact1") + "|$"
+//                                + com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("req_contact2")) + "/Hr^";
+                    }
+                }
+            } else if ("Sub".equals(flag)) {
+                if ("AC".equalsIgnoreCase(accType)) {
+                    resultString = "Vendor" + "|" + "Candidate Name" + "|" + "Submitted Date" + "|" + "SSN No" + "|" + "Skills" + "|" + "Status" + "|" + "Rate" + "^";
+                } else {
+                    resultString = "Candidate Name" + "|" + "Submitted Date" + "|" + "SSN No" + "|" + "Email" + "|" + "Skills" + "|" + "Phone Number" + "|" + "Status" + "|" + "Rate" + "^";
+                }
+                while (resultSet.next()) {
+                    if (resultSet.getString("ssn_number") != null && !"".equalsIgnoreCase(resultSet.getString("ssn_number"))) {
+                        decryptedSSN = com.mss.msp.util.DataUtility.decrypted(resultSet.getString("ssn_number"));
+                    }
+                    if ("AC".equalsIgnoreCase(accType)) {
+                        resultString += com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("created_by_org_id")) + "|"
+                                + resultSet.getString("name") + "|"
+                                + com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(resultSet.getDate("created_date")) + "|"
+                                + decryptedSSN + "|"
+                                + resultSet.getString("consultant_skills") + "|"
+                                + resultSet.getString("status") + "|"
+                                + resultSet.getString("rate_salary") + "/Hr^";
+                    } else {
+                        resultString += resultSet.getString("name") + "|"
+                                + com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(resultSet.getDate("created_date")) + "|"
+                                + decryptedSSN + "|"
+                                + resultSet.getString("email1") + "|"
+                                + resultSet.getString("consultant_skills") + "|"
+                                + resultSet.getString("phone1") + "|"
+                                + resultSet.getString("status") + "|"
+                                + resultSet.getString("rate_salary") + "/Hr^";
+                    }
+                }
+            } else {
+                resultString = "Name" + "|" + "E-Mail" + "|" + "Skill Set" + "|" + "Rate/Salary" + "|" + "Phone Number" + "|" + "Status" + "^";
+                while (resultSet.next()) {
+                    resultString += resultSet.getString("name") + "|"
+                            + resultSet.getString("email1") + "|"
+                            + resultSet.getString("consultant_skills") + "|"
+                            + resultSet.getString("rate_salary") + "|"
+                            + resultSet.getString("phone1") + "|"
+                            + resultSet.getString("cur_status") + "|"
+                            + "^";
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("-----------------------------" + resultString + "--------------------------------------------------\n" + queryString);
+        return resultString;
+    }
+     public String getMailIdsOfVendorAssociated(String requirementId) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String resultString = "";
+        String resultStr = "";
+        int count = 0;
+
+        try {
+            queryString = "SELECT u.usr_id,u.email1,is_primary FROM usr_grouping ug LEFT OUTER JOIN users u ON(ug.usr_id=u.usr_id)"
+                    + "WHERE is_primary=1 AND org_id IN(SELECT crl.vendor_id FROM req_ven_rel req "
+                    + "JOIN customer_ven_rel crl ON ( req.ven_id=crl.vendor_id) "
+                    + "WHERE req.STATUS='Active' AND crl.STATUS='Active' AND req.req_id="+requirementId+" AND req_access_time< '"+com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime()+"')";
+            System.out.println("queryString--In DSDP getMailIdsOfVendorManagerLeads>>>>" + queryString);
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+
+            while (resultSet.next()) {
+
+                resultString += resultSet.getString("email1") + ",";
+
+            }
+            if (null != resultString && resultString.length() > 0) {
+                int endIndex = resultString.lastIndexOf(",");
+                if (endIndex != -1) {
+                    resultStr = resultString.substring(0, endIndex); // not forgot to put check if(endIndex != -1)
+                }
+            }
+            System.out.println(queryString+"-----------------------------------------getMailIdsOfVendorManager>>>>>>>" + resultStr);
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        }
+        return resultStr;
     }
 }

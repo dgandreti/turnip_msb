@@ -1,10 +1,14 @@
 
-var editCalendar;
+
 function doOnLoad() {
+    var editCalendar;
     editCalendar = new dhtmlXCalendarObject(["start_date","end_date"]);
     editCalendar.setSkin('omega');
     editCalendar.setDateFormat("%m-%d-%Y");
     editCalendar.hideTime();
+     var today = new Date();
+    
+    editCalendar.setSensitiveRange(today,null);
     var task_related=document.getElementById("taskRelatedTo").value;
     if(task_related==2){
         $("#csrDiv").css('visibility', 'hidden');
@@ -12,6 +16,8 @@ function doOnLoad() {
 }
 /* start, function creted by Aklakh for select task types */
 function getTaskType(){
+    $("#secondaryReport").val("");
+    clearTable();
     var task_related=document.getElementById("taskRelatedTo").value;
     //alert(task_related)
     if(task_related==1){
@@ -30,6 +36,8 @@ function getTaskType(){
         req.send(null);
     }
     if(task_related==2){
+        var $select = $('#taskType');
+        $select.find('option').remove();   
         $("#csrDiv").css('visibility', 'hidden');
     }
     getRelatedNames();
@@ -120,8 +128,10 @@ function doDownload(id)
 }
 
 
-$(document).ready(function() {
+function attachementPopUp(){
 
+    $("#upaloadMessages").html("");
+    
     specialBox = document.getElementById('taskAttachOverlay');
     if(specialBox.style.display == "block"){       
         specialBox.style.display = "none";         
@@ -129,7 +139,7 @@ $(document).ready(function() {
         specialBox.style.display = "block";      
     }
     $('#taskAttachments_popup').popup( );
-});
+}
 
 //function doUpdateTaskInfo()
 //{
@@ -196,7 +206,12 @@ function doUpdateTaskInfo()
     var task_comments=document.getElementById("task_comments").value;
 
     var pri_assign_to=document.getElementById("primary_assign").value;
-   
+    //alert(pri_assign_to)
+    if(pri_assign_to=="")
+    {
+        $("UpdateTaskInfo").html(" <b><font color='red'>Plase select Primary assign</font></b>");
+        return false;
+    }
 
     var sec_assign_to=document.getElementById("secondaryId").value;
     if(editTaskValidation()){
@@ -317,7 +332,7 @@ function updateNoteDetails(){
             if (req.readyState == 4 && req.status == 200) {
                 //alert("success")
                 $("UpdateNoteInfo").html(" <b><font color='green'> &nbsp&nbspNotes Information updated Successfully.</font></b>");
-
+                getNotesDetailsBySearch();
             } 
         };
         req.open("GET",url,"true");
@@ -328,6 +343,8 @@ function updateNoteDetails(){
 }
 
 function addNotesDetails(){
+   
+    document.getElementById("addNoteButton").disabled = true;
     var taskid=document.getElementById("taskid").value;
     var note_name=document.getElementById("noteNamesadd").value;
     var note_comments=document.getElementById("noteCommentsadd").value;
@@ -337,7 +354,11 @@ function addNotesDetails(){
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 $("InsertNoteInfo").html(" <b><font color='green'> &nbsp&nbspNotes Information Added Successfully.</font></b>");
+                document.getElementById("noteNamesadd").value ="";
+                document.getElementById("noteCommentsadd").value="";
+                document.getElementById("addNoteButton").disabled = false;
                 doGetNotesDetails()
+              
             } 
         };
         req.open("GET",url,"true");
@@ -485,6 +506,25 @@ function addTaskValidation(){
         $("editTask").html("");
         $("#endDate").css("border","1px solid #3BB9FF")
     }
+     var splitTaskStartDate = startDate.split('-');
+    var taskAddStartDate = new Date(splitTaskStartDate[2], splitTaskStartDate[0]-1 , splitTaskStartDate[1]); //Y M D 
+    var splitTaskEndDate = endDate.split('-');
+    var taskAddtargetDate = new Date(splitTaskEndDate[2], splitTaskEndDate[0]-1, splitTaskEndDate[1]); //Y M D
+    var taskStartDate = Date.parse(taskAddStartDate);
+    var taskTargetDate= Date.parse(taskAddtargetDate);
+    var  difference=(taskTargetDate - taskStartDate) / (86400000 * 7);
+    if(difference<0)
+    {
+             
+        // alert("hi")
+        $("editTask").html(" <b><font color='red'>Start date Must be less than End date</font></b>");
+        //        $("#startDate").css("border", "1px solid red");
+        //        $("#endDate").css("border", "1px solid red");
+      
+        //         $("#startDate").show().delay(5000).fadeOut();
+        //          $("#endDate").show().delay(5000).fadeOut();
+        return false;
+    }  
     if(taskName==""){
         $("editTask").html("<b><font color='red'> enter title</font></b>");
         $("#task_name").css("border","1px solid red");
@@ -494,7 +534,55 @@ function addTaskValidation(){
         $("editTask").html("");
         $("#task_name").css("border","1px solid #3BB9FF")
     }
-    return dateValidation(startDate,endDate,editTask);
+    var FileUploadPath = document.getElementById('taskAttachment').value;
+
+               
+      
+    //To check if user upload any file
+    if (FileUploadPath != '') {
+       
+        // $("editTask").html("<font color='red'>Please upload a file</font>");
+        //        return false;
+        //    } else {
+        var Extension = FileUploadPath.substring(
+            FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
+            
+        if (Extension == "pdf" || Extension == "doc" || Extension == "docx" ) {
+            var fileSize = document.getElementById("taskAttachment").files[0];
+            var sizeInMb = (fileSize.size/1024)/1024;
+            //alert(sizeInMb)
+            var sizeLimit= 2;
+            //alert(sizeInMb)
+            if(FileUploadPath.length>50)
+            {
+                                                                                                    
+                $("editTask").html("<font color=red>file name should not more than 30 characters</font>");
+                //alert("please select the file length");   
+                return false;
+            }
+            
+            if (sizeInMb > sizeLimit) {
+                //alert("more size")
+                $("#taskAttachment").val("");
+                 $("editTask").html("<font color=red>File size must be less than 2MB.</font>"); 
+                // $("#formValidationMsg").html("<font color='red'>File size must be less than 2MB.</font>");
+                return false;
+            }
+            else{
+           
+                $("editTask").html(" ");
+                return true;
+            }
+        } 
+        else {
+            $("#taskAttachment").val("");
+            $("editTask").html("<font color='red'> Allows only doc ,docx or pdf type.</font>");
+            return false;
+        }
+        
+        
+    }
+   
     return true;
 
 }
@@ -529,6 +617,7 @@ function addNotesValidation(){
     if(note_name==""||note_name==null){
         $("InsertNoteInfo").html("<font color='red'>Please, Enter Notes Name</font>");
         // $("#noteNamesadd").css("border","1px solid red");
+        document.getElementById("addNoteButton").disabled = false;
         $("InsertNoteInfo").show().delay(4000).fadeOut();
         return false;
         
@@ -541,6 +630,7 @@ function addNotesValidation(){
     if(note_comments==""||note_comments==null){
         $("InsertNoteInfo").html("<font color='red'>Please, Enter Description</font>");
         // $("#noteCommentsadd").css("border","1px solid red");
+        document.getElementById("addNoteButton").disabled = false;
         $("InsertNoteInfo").show().delay(4000).fadeOut();
         return false;
     }
@@ -688,4 +778,55 @@ function checkEditTaskDescription(id){
 function clearNotesFields(){
     document.getElementById("noteNamesadd").value="";
     document.getElementById("noteCommentsadd").value="";
+}
+
+function attachmentUploadValidation(){
+    var FileUploadPath = document.getElementById('taskAttachment').value;
+
+               
+      
+    //To check if user upload any file
+    if (FileUploadPath == '') {
+       
+        $("#upaloadMessages").html("<font color='red'>Please upload a file</font>");
+        return false;
+    } else {
+        var Extension = FileUploadPath.substring(
+            FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
+            
+        if (Extension == "pdf" || Extension == "doc" || Extension == "docx" ) {
+            var fileSize = document.getElementById("taskAttachment").files[0];
+            var sizeInMb = (fileSize.size/1024)/1024;
+            //alert(sizeInMb)
+            var sizeLimit= 2;
+            //alert(sizeInMb)
+            if(FileUploadPath.length>50)
+            {
+                                                                                                    
+                document.getElementById('upaloadMessages').innerHTML = "<font color=red>file name should not maore than 30 characters</font>";  
+                //alert("please select the file length");   
+                return false;
+            }
+            
+            if (sizeInMb > sizeLimit) {
+                //alert("more size")
+                $("#taskAttachment").val("");
+                document.getElementById('upaloadMessages').innerHTML = "<font color=red>File size must be less than 2MB.</font>";  
+                // $("#formValidationMsg").html("<font color='red'>File size must be less than 2MB.</font>");
+                return false;
+            }
+            else{
+           
+                $("#upaloadMessages").html(" ");
+                return true;
+            }
+        } 
+        else {
+            $("#taskAttachment").val("");
+            $("#upaloadMessages").html("<font color='red'> Allows only doc ,docx or pdf type.</font>");
+            return false;
+        }
+        
+        
+    }
 }

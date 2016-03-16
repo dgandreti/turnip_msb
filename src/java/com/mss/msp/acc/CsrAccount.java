@@ -39,7 +39,7 @@ public class CsrAccount {
     private Double budget;
     private String phone;
     private String fax;
-    private Integer noemp; //number of employees
+    private String noemp; //number of employees
     /**
      * address *
      */
@@ -239,11 +239,11 @@ public class CsrAccount {
         this.address2 = address2;
     }
 
-    public Integer getNoemp() {
+    public String getNoemp() {
         return noemp;
     }
 
-    public void setNoemp(Integer noemp) {
+    public void setNoemp(String noemp) {
         this.noemp = noemp;
     }
 

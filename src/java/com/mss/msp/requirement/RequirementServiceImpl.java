@@ -439,7 +439,7 @@ public class RequirementServiceImpl implements RequirementService {
         try {
 
             queryString = "SELECT jdid,requirement_id,req_name,no_of_resources,req_skills,req_st_date,req_status,preferred_skills "
-                    + "FROM acc_requirements WHERE acc_id=" + requirementAction.getAccountSearchID() + " order by req_name,FIELD(req_status,'O','R','C'),req_created_date desc LIMIT 100 ";
+                    + "FROM acc_requirements WHERE acc_id=" + requirementAction.getAccountSearchID() + " order by jdid desc LIMIT 100 ";
 
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
@@ -739,27 +739,27 @@ public class RequirementServiceImpl implements RequirementService {
             int sessionusrPrimaryrole = requirementAction.getPrimaryRole();
             if (typeofusr.equalsIgnoreCase("VC")) {
 //              
-                queryString = "SELECT created_date,tax_term,jdid,requirement_id,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_created_by,req_status,req_contact1,req_contact2 ,created_by_org_id,target_rate,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel ON requirement_id=req_id WHERE ven_id=" + requirementAction.getSessionOrgId() + " AND  NOW() >= req_access_time AND  STATUS LIKE 'Active' ";
+                queryString = "SELECT account_name,r.created_date,tax_term,jdid,requirement_id,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_created_by,req_status,req_contact1,req_contact2 ,created_by_org_id,target_rate,max_rate FROM acc_requirements acc LEFT OUTER JOIN req_ven_rel r ON requirement_id=req_id  LEFT OUTER JOIN accounts a ON account_id= created_by_org_id WHERE ven_id=" + requirementAction.getSessionOrgId() + " AND  NOW() >= req_access_time AND  r.STATUS LIKE 'Active' ";
 
             } else {
 
 
                 if (sessionusrPrimaryrole == 3) { // for pr.manager
-                    queryString = "SELECT DISTINCT(requirement_id),req_created_by,created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                    queryString = "SELECT DISTINCT(requirement_id),account_name,req_created_by,r.created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel r ON requirement_id=req_id LEFT OUTER JOIN accounts a ON account_id= created_by_org_id "
                             + " WHERE 1=1 AND  acc_id=" + requirementAction.getSessionOrgId() + " AND  req_created_by=" + requirementAction.getUserSessionId();
                 } else if (sessionusrPrimaryrole == 1) {
-                    queryString = "SELECT DISTINCT(requirement_id),req_created_by,created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                    queryString = "SELECT DISTINCT(requirement_id),account_name,req_created_by,r.created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel r ON requirement_id=req_id LEFT OUTER JOIN accounts a ON account_id= created_by_org_id "
                             + " WHERE 1=1 AND  acc_id=" + requirementAction.getAccountSearchID();
                 } else {
                     // queryString = "SELECT * FROM acc_requirements JOIN usr_grouping ON (req_category=cat_type) WHERE usr_id=" + requirementAction.getUserSessionId() + " and acc_id=" + requirementAction.getSessionOrgId() + " ";
-                    queryString = "SELECT DISTINCT(requirement_id),req_created_by,created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel  ON requirement_id=req_id "
+                    queryString = "SELECT DISTINCT(requirement_id),account_name,req_created_by,r.created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel r ON requirement_id=req_id LEFT OUTER JOIN accounts a ON account_id= created_by_org_id "
                             + " WHERE 1=1 AND  acc_id=" + requirementAction.getSessionOrgId();
                 }
             }
 
 
 
-            if (requirementAction.getJdId() != null) {
+            if (requirementAction.getJdId() != null && !"".equals(requirementAction.getJdId())) {
                 queryString += " and jdid like '%" + requirementAction.getJdId() + "%'";
             }
 
@@ -785,13 +785,13 @@ public class RequirementServiceImpl implements RequirementService {
 
             if (!requirementAction.getVendor().equalsIgnoreCase("yes")) {
                 if (!"-1".equalsIgnoreCase(requirementAction.getRequirementStatus())) {
-                    queryString += " and req_status like '%" + requirementAction.getRequirementStatus() + "%'";
+                    queryString += " and req_status = '" + requirementAction.getRequirementStatus() + "'";
                 }
             } else if (typeofusr.equalsIgnoreCase("VC")) {
-                queryString += " and req_status like '%R%'";
+                queryString += " and (req_status = 'R' OR req_status = 'OR')";
             } else {
                 if (!"-1".equalsIgnoreCase(requirementAction.getRequirementStatus())) {
-                    queryString += " and req_status like '%" + requirementAction.getRequirementStatus() + "%'";
+                    queryString += " and req_status = '" + requirementAction.getRequirementStatus() + "'";
                 }
             }
             if (!"".equals(requirementAction.getReqStart()) && !"".equals(requirementAction.getReqEnd())) {
@@ -823,14 +823,17 @@ public class RequirementServiceImpl implements RequirementService {
                     queryString += " and MATCH(req_skills) AGAINST ('" + str + "' IN BOOLEAN MODE)";
                 }
             }
-            if (!"".equals(requirementAction.getJobTitle())) {
-                queryString += " and req_name like '%" + requirementAction.getJobTitle() + "%'";
+            if (!"".equals(requirementAction.getJobTitle()) && requirementAction.getJobTitle() != null) {
+                queryString += " and req_name like '%" + requirementAction.getJobTitle().trim() + "%'";
             }
             if (requirementAction.getReqCreatedBy() != -1 && requirementAction.getReqCreatedBy() != 0) {
                 queryString += " and req_created_by = " + requirementAction.getReqCreatedBy() + " ";
             }
+            if (!"".equals(requirementAction.getCustomerName()) && requirementAction.getCustomerName() != null) {
+                queryString += " and account_name LIKE '%" + requirementAction.getCustomerName().trim() + "%' ";
+            }
 
-            queryString += " GROUP BY requirement_id  order by req_name,FIELD(req_status,'O','R','OR','C','F','I','H','W','S','L'),req_created_date desc LIMIT 100";
+            queryString += " GROUP BY requirement_id  order by jdid desc LIMIT 100";
             System.out.println("query....." + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -887,7 +890,7 @@ public class RequirementServiceImpl implements RequirementService {
                         + resultSet.getString("req_contact2") + "|"
                         + com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("req_contact1")) + "|"
                         + com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("req_contact2")) + "|"
-                        + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("created_by_org_id")) + "|"
+                        + resultSet.getString("account_name") + "|"
                         + resultSet.getString("req_skills") + "|"
                         + resultSet.getString("preferred_skills") + "|"
                         + resultSet.getString("jdid") + "|"
@@ -896,7 +899,8 @@ public class RequirementServiceImpl implements RequirementService {
                         + resultSet.getString("target_rate") + "|"
                         + resultSet.getString("max_rate") + "|"
                         + com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfSubmisions(resultSet.getInt("requirement_id"), 0) + "|"
-                        + postedDate + "^";
+                        + postedDate + "|"
+                        + queryString + "^";
             }
             // System.out.println("result=========>" + resultString);
         } catch (SQLException ex) {
@@ -1357,6 +1361,7 @@ public class RequirementServiceImpl implements RequirementService {
                         + "LEFT OUTER JOIN accounts a ON(a.account_id=acc_id) "
                         + "LEFT OUTER JOIN csrorgrel csr ON(a.account_id=csr.org_id) "
                         + "WHERE DATE_FORMAT(req_st_date,'%Y')=" + requirementAction.getDashYears() + " "
+                        + "AND csr.STATUS = 'active'"
                         + "AND csr.csr_id=" + requirementAction.getUserSessionId() + " ";
             }
 

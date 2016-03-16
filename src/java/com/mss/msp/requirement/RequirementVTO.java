@@ -463,6 +463,7 @@ public class RequirementVTO {
     }
 
     public String getRequirementQualification() {
+        requirementQualification = requirementQualification.replaceAll("<br/>", "\n");
         return requirementQualification;
     }
 

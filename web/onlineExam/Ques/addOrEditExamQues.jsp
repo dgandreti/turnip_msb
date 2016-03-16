@@ -33,7 +33,7 @@
 
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
-        
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/account/formVerification.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.maskedinput.js"/>"></script>
@@ -48,21 +48,21 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
         <script>
             function checkanswerType(){
-               // alert("hii")
+                // alert("hii")
                 var answerType=document.getElementById('answerType').value;
                 var quesId=$("#quesId").val();
                 
              
-                    var answer=document.getElementsByName('answer');
-                    var ans_value;
+                var answer=document.getElementsByName('answer');
+                var ans_value;
               
                     
-                    var ans1=document.getElementById('ans1'); 
-                    var ans2=document.getElementById('ans2'); 
-                    var ans3=document.getElementById('ans3'); 
-                    var ans4=document.getElementById('ans4'); 
-                    var ans5=document.getElementById('ans5'); 
-                    var ans6=document.getElementById('ans6'); 
+                var ans1=document.getElementById('ans1'); 
+                var ans2=document.getElementById('ans2'); 
+                var ans3=document.getElementById('ans3'); 
+                var ans4=document.getElementById('ans4'); 
+                var ans5=document.getElementById('ans5'); 
+                var ans6=document.getElementById('ans6'); 
                 
                 
                 if(answerType=='S')
@@ -73,12 +73,12 @@
                     if(quesId>0){
                         //alert("quesId"+quesId)
                     
-                    ans1.checked = false;
-                    ans2.checked = false;
-                    ans3.checked = false;
-                    ans4.checked = false;
-                    ans5.checked = false;
-                    ans6.checked = false;
+                        ans1.checked = false;
+                        ans2.checked = false;
+                        ans3.checked = false;
+                        ans4.checked = false;
+                        ans5.checked = false;
+                        ans6.checked = false;
                     }
                     
                 }else{
@@ -86,13 +86,13 @@
                     document.getElementById('answer1').style.display = "block"; 
                     document.getElementById('answer').style.display = "none";
                     if(quesId>0){
-                         //  alert("quesId"+quesId)
+                        //  alert("quesId"+quesId)
                     
-                   for(var i = 0; i < answer.length; i++){
+                        for(var i = 0; i < answer.length; i++){
                        
                             answer[i].checked = undefined;
                         
-                    }
+                        }
                     }
                 }
             }
@@ -106,7 +106,7 @@
                 var question=$("#question").val();
                 var showImg=$("#showImg").val();
                 var oldPath=$("#oldPath").val();
-               // alert("oldPath"+oldPath)
+                // alert("oldPath"+oldPath)
                 
                 var isPic=document.getElementById('isPic');
                 var option1=$("#option1").val();  
@@ -127,23 +127,22 @@
                         ans_value = answer[i].value;
                     }
                 }
-                if(isPic.checked != true)
+               
+                if(question=="")
                 {
-                    if(question=="")
-                    {
-                        $("#formValidationMsg").html("<font color='red'>please enter Question</font>");
-                        $("#question").css('border','1px solid red');
-                        return false; 
-                    } else
-                    {
-                        $("formValidationMsg").html(" ");
-                        $("#question").css("border", "1px solid green");
+                    $("#formValidationMsg").html("<font color='red'>please enter Question</font>");
+                    $("#question").css('border','1px solid red');
+                    return false; 
+                } else
+                {
+                    $("formValidationMsg").html(" ");
+                    $("#question").css("border", "1px solid green");
                   
-                    }
                 }
                 
+                
                 if(isPic.checked == true && (quesId == 0 || oldPath=="")){
-                   // alert("showImg"+showImg)
+                    // alert("showImg"+showImg)
                     if (showImg == ""  ) {
                         $("#formValidationMsg").html("<font color='red'>please upload Image related to the Question</font>");
                         $("#showImg").css('border','1px solid red');
@@ -162,7 +161,7 @@
                         || Extension == "jpeg" || Extension == "jpg") {
                         var fileSize = document.getElementById("showImg").files[0];
                         var sizeInMb = (fileSize.size/1024)/1024;
-                       // alert(sizeInMb)
+                        // alert(sizeInMb)
                         var sizeLimit= 2;
                         if (sizeInMb > sizeLimit) {
                             $("#formValidationMsg").html("<font color='red'>File size must be less than 2MB.</font>");
@@ -203,7 +202,7 @@
                     $("formValidationMsg").html(" ");
                   
                 }else{
-                    alert("ans1.checked"+ans1.checked)
+                    //alert("ans1.checked"+ans1.checked)
                     $("#formValidationMsg").html("<font color='red'>please select atleast one answer</font>");
                  
                     return false; 
@@ -239,6 +238,24 @@
             $("#showImg").change(function(){
                 readURL(this);
             });
+            function clearImage(){
+                document.getElementById('isPic').checked=false;
+                var isPic=document.getElementById('isPic')
+                if(isPic.checked == true){
+                    
+                    document.getElementById('browsePicture').style.display='block';
+                }
+                else
+                {
+                   
+                    document.getElementById('browsePicture').style.display='none';
+                }
+                document.getElementById('selectedImg').src="";
+                
+               
+            }
+            
+            
         </script>
 
 
@@ -246,275 +263,294 @@
     </head>
 
     <body onload="checkanswerType();showBrowse();skillValues(examType.value);">
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
-                    <s:include value="/includes/template/header.jsp"/>
-                </div>
-            </div>
-
-        </header>
-
-        <div class="container">
-            <div class="row">
-                <!-- Main Content-->
-                <s:include value="/includes/menu/LeftMenu.jsp"/>
-                <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="">
-                    <!-- Add Form Area -->
-                    <div class="col-sm-12">
-
-                        <div class="" id="profileBox" style="float: left; margin-top: 15px; margin-bottom: 20px">
-                            <!-- Add Form Header-->
-                            <div class="backgroundcolor" >
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-
-                                        <s:if test="quesId!=0">
-                                            <font color="#ffffff">Edit&nbsp;Exam&nbsp;Questions</font>
-
-                                        </s:if>
-                                        <s:else>
-                                            <font color="#ffffff">Add&nbsp;Exam&nbsp;Questions</font>
-
-                                        </s:else>
-                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                        <s:url var="myUrl" action="storeAddOrEditExamQues.action">
-                                            <s:param name="quesId"><s:property value="quesId"/></s:param> 
-                                        </s:url>
-
-                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-
-                                        <span class="pull-right"><a href="../Ques/getQuestionsList.action"><img  src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
-                                    </h4>
-                                </div>
-                            </div>
-                            <!-- Add Form-->
-                            <div class="col-sm-12" style="margin-bottom: 20px">
-                                <br>
-
-                                <s:form action="storeAddOrEditExamQues" id="addEditForm" method="post"  enctype="multipart/form-data" theme="simple" >
-                                    <span id="resume"><font style='color:green;font-size:15px;'><s:property value="successMsg"/></font></span>
-                                    <div class="col-sm-12">
-                                        <span id="formValidationMsg"></span>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <label class="" style="color:#56a5ec;">ExamType: </label>
-
-                                                <s:select id="examType" cssClass="form-control SelectBoxStyles" name="examType"  list="#@java.util.LinkedHashMap@{'T':'Technical','S':'Psychometric'}" value="%{editQues.examType}" onchange="return skillValues(this.value);" tabindex="1" />
-                                            </div>
-                                                <s:hidden id="editskill" value="%{editQues.skillCategoryValue1}"/>
-                                            
-                                            <div class="col-sm-3">
-                                                <label class="" style="color:#56a5ec;">Skill: </label>
-
-                                                <s:select id="skillCategoryValue" cssClass="form-control SelectBoxStyles" name="skillCategoryValue"  list="skillValuesMap" value="%{editQues.skillCategoryValue1}" tabindex="2" />
-                                            </div>
-
-                                            <div class="col-sm-3">
-                                                <label class="" style="color:#56a5ec;">Level: </label>
-
-                                                <s:select id="level" cssClass="form-control SelectBoxStyles" name="level" value="%{editQues.level}" list="#@java.util.LinkedHashMap@{'L':'Low','M':'Medium','H':'High'}"  tabindex="3" 
-                                                          />
-                                            </div>
-
-                                            <div class="col-sm-3">
-                                                <label class="" style="color:#56a5ec;">Status: </label>
-
-                                                <s:select id="status" cssClass="form-control SelectBoxStyles" name="status"  list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" value="%{editQues.status}" tabindex="4" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                             <div class="col-sm-3">
-                                                <label class="" style="color:#56a5ec;">Answer&nbsp;Type </label>
-                                                <s:hidden name="quesId" id="quesId" value="%{quesId}"/>
-                                                <s:hidden id="successMsg" name="successMsg" value="%{successMsg}"/>
-                                                <s:select id="answerType" cssClass="form-control SelectBoxStyles" name="answerType" value="%{editQues.answerType}" list="#@java.util.LinkedHashMap@{'S':'Single','M':'Multiple'}" onchange="checkanswerType();" tabindex="5"/>
-                                            </div> 
-
-                                           
-                                            <div class="col-sm-3 form-group" style="margin-top: 2vw;">
-
-                                                <label class="checkbox-inline"> Is&nbsp;Pictorial<s:checkbox cssClass="form-group"   name="isPic" id="isPic" value="%{editQues.isPic}" onclick="showBrowse();" tabindex="6" /> </label>
-
-                                            </div>
-                                        </div></div>
-
-
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-12" id="questionTextArea">
-                                                <span>
-                                                    <label class="labelStyle2">Question</label>
-                                                    <s:textarea name="question" id="question" placeholder="Question" rows="8" value="%{editQues.question}" cssClass="form-control" tabindex="7" maxLength="5000" /> 
-                                                </span>
-                                            </div>
-                                        </div></div>
-
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <s:url id="image" action="rImage" namespace="/renderImage">
-                                                <s:param name="path" value="editQues.question_path"></s:param>
-                                            </s:url>
-                                            <s:hidden name="oldPath" id="oldPath" value="%{editQues.question_path}"/>
-                                            <div class="col-lg-12" id="browsePicture" style="display:none;">
-                                                <label class="labelStyle2">Image&nbsp;related&nbsp;to&nbsp;above&nbsp;Question</label>
-                                                <span>
-                                                    <s:if test='editQues.question_path != null'>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-responsive" src='<s:property value="#image"/>' height="50%" width="50%"/></s:if>
-                                                    <s:file name="quesImage"  label="Upload File"  id="showImg" onchange="readURL(this)" tabindex="8" ></s:file>
-                                                    &nbsp;&nbsp;<img id="selectedImg" src="#" alt="selected image:" height="50%" width="50%"/>
-                                                </span>
-                                            </div>
-
-                                        </div></div>
-
-
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <span>
-                                                    <label class="labelStyle2">Option1</label>
-                                                    <s:textarea name="option1" id="option1" placeholder="Option1" rows="8" cssClass="form-control " value="%{editQues.option1}" tabindex="9" maxLength="5000" /> 
-
-                                                </span>
-                                                <br />
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <span>
-                                                    <label class="labelStyle2">Option2 </label>
-                                                    <s:textarea name="option2" id="option2" placeholder="Option2" rows="8" cssClass="form-control" value="%{editQues.option2}" tabindex="10" maxLength="5000"/> 
-
-                                                </span>
-                                            </div>
-
-
-                                            <br/>
-                                        </div></div>
-
-
-
-
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <span>
-                                                    <label class="labelStyle2">Option3</label>
-                                                    <s:textarea name="option3" id="option3" placeholder="Option3"  rows="8" cssClass="form-control " value="%{editQues.option3}" tabindex="11" maxLength="5000"/> 
-                                                    <span id="accountTypeValidation" class="accDetailsError"></span>
-                                                </span>
-                                            </div>
-
-                                            <div class="col-sm-6">
-                                                <span>
-                                                    <label class="labelStyle2">option4</label>
-                                                    <s:textarea name="option4" id="option4" placeholder="Option4" rows="8" cssClass="form-control" value="%{editQues.option4}" tabindex="12" maxLength="5000"/> 
-                                                </span></div>
-
-                                        </div></div>
-
-                                    <div class="col-sm-12">         
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <span>
-                                                    <label class="labelStyle2"> option5 </label>
-                                                    <s:textarea name="option5" id="option5" placeholder="Option5" rows="8" cssClass="form-control" value="%{editQues.option5}" tabindex="13" maxLength="5000"/> 
-                                                </span></div>
-
-                                            <div class="col-sm-6">
-                                                <span>
-                                                    <label class="labelStyle2"> option6 </label>
-                                                    <s:textarea name="option6" id="option6" placeholder="Option6" rows="8" cssClass="form-control" value="%{editQues.option6}" tabindex="14" maxLength="5000"/> 
-                                                </span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-12">         
-                                        <div class="row">
-                                            <div class="col-sm-10">
-                                                <span>
-
-                                                    <label class="labelStyle2"> Answers </label>
-                                                    <div id="answer" style="disply:none">
-                                                        <s:radio cssClass="" name="answer" id="answer" value="%{editQues.answer}" list="{'Answer1','Answer2','Answer3','Answer4','Answer5','Answer6'}" cssStyle="width: 50px;" tabindex="15" />
-                                                    </div>
-
-                                                    <%--  <div class="col-lg-3">
-                                                          <br>
-                                                          <label for="" class="checkbox">
-                                                              <s:checkbox id="usrPrimary" name="usrPrimary"  value="%{primaryvalue}"/>IsPrimary
-                                                          </label>
-                                                      </div> --%>
-
-
-
-                                                    <div id="answer1" class="form-group" style="display: none"> 
-                                                        <label class="checkbox-inline"> Answer1 <s:checkbox cssClass=""  name="ans1" id="ans1" value="%{editQues.ans1}" tabindex="16" /></label>
-                                                        <label class="checkbox-inline"> Answer2 <s:checkbox cssClass=""  name="ans2" id="ans2" value="%{editQues.ans2}" tabindex="17" /></label>
-                                                        <label class="checkbox-inline"> Answer3 <s:checkbox cssClass=""  name="ans3" id="ans3" value="%{editQues.ans3}" tabindex="18" /></label>
-                                                        <label class="checkbox-inline"> Answer4 <s:checkbox cssClass=""  name="ans4" id="ans4" value="%{editQues.ans4}" tabindex="19" /></label>
-                                                        <label class="checkbox-inline"> Answer5 <s:checkbox cssClass=""  name="ans5" id="ans5" value="%{editQues.ans5}" tabindex="20" /></label>
-                                                        <label class="checkbox-inline"> Answer6 <s:checkbox cssClass=""  name="ans6" id="ans6" value="%{editQues.ans6}" tabindex="21" /></label>
-                                                    </div>
-
-
-
-                                                </span> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">         
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <span>
-                                                    <label class="labelStyle2"><span class="accDetailsError">*</span>Explanation</label>
-                                                    <s:textarea name="explanation" id="explanation" placeholder="Explanation" rows="8" cssClass="form-control" value="%{editQues.explanation}" tabindex="22" maxLength="6000"/> 
-
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                     
-                                        <div class="col-sm-4 ">
-                                            <div class="col-sm-7 pull-left">
-                                                <%--s:reset type="button" cssClass="cssbutton_emps field-margin" key="reset" value="Clear"/--%>
-                                                <s:reset type="button" cssStyle="margin:5px -1vw;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" tabindex="23" />
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="col-sm-7">
-                                                <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel" tabindex="24"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4 ">
-                                            <div class="col-sm-7 pull-right">
-                                                <s:submit type="button" id="addEditSubmit" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" onclick="return checkValidationsForAddQues();" tabindex="25" ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <p id="errorMessage" align="center" class="accDetailsError" >
-                                            <s:property value="resultMessage"  />
-                                        </p></div>
-                                    </s:form>
-                            </div>
-                        </div>
-
-
+        <div id="wrap">
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
+                        <s:include value="/includes/template/header.jsp"/>
                     </div>
+                </div>
 
+            </header>
+            <div id="main">
+                <div class="container">
+                    <div class="row">
+                        <!-- Main Content-->
+                        <s:include value="/includes/menu/LeftMenu.jsp"/>
+                        <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="">
+                            <!-- Add Form Area -->
+                            <div class="col-sm-12">
+
+                                <div class="" id="profileBox" style="float: left; margin-top: 15px; margin-bottom: 20px">
+                                    <!-- Add Form Header-->
+                                    <div class="backgroundcolor" >
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+
+                                                <s:if test="quesId!=0">
+                                                    <font color="#ffffff">Edit&nbsp;Exam&nbsp;Questions</font>
+
+                                                </s:if>
+                                                <s:else>
+                                                    <font color="#ffffff">Add&nbsp;Exam&nbsp;Questions</font>
+
+                                                </s:else>
+                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                <s:url var="myUrl" action="storeAddOrEditExamQues.action">
+                                                    <s:param name="quesId"><s:property value="quesId"/></s:param> 
+                                                </s:url>
+
+                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+
+                                                <span class="pull-right"><a href="../Ques/getQuestionsList.action"><i class="fa fa-undo"></i></a></span>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <!-- Add Form-->
+                                    <div class="col-sm-12" style="margin-bottom: 20px">
+                                        <br>
+
+                                        <s:form action="storeAddOrEditExamQues" id="addEditForm" method="post"  enctype="multipart/form-data" theme="simple" >
+                                            <span id="resume"><font style='color:green;font-size:15px;'><s:property value="successMsg"/></font></span>
+                                            <div class="col-sm-12">
+                                                <span id="formValidationMsg"></span>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="" style="color:#56a5ec;">ExamType </label>
+
+                                                        <s:select id="examType" cssClass="form-control SelectBoxStyles" name="examType"  list="#@java.util.LinkedHashMap@{'T':'Technical','S':'Psychometric'}" value="%{editQues.examType}" onchange="return skillValues(this.value);" tabindex="1" />
+                                                    </div>
+                                                    <s:hidden id="editskill" value="%{editQues.skillCategoryValue1}"/>
+
+                                                    <div class="col-sm-3">
+                                                        <label class="" style="color:#56a5ec;">Skill </label>
+
+                                                        <s:select id="skillCategoryValue" cssClass="form-control SelectBoxStyles" name="skillCategoryValue"  list="skillValuesMap" value="%{editQues.skillCategoryValue1}" tabindex="2" />
+                                                    </div>
+
+                                                    <div class="col-sm-3">
+                                                        <label class="" style="color:#56a5ec;">Level </label>
+
+                                                        <s:select id="level" cssClass="form-control SelectBoxStyles" name="level" value="%{editQues.level}" list="#@java.util.LinkedHashMap@{'L':'Low','M':'Medium','H':'High'}"  tabindex="3" 
+                                                                  />
+                                                    </div>
+
+                                                    <div class="col-sm-3">
+                                                        <label class="" style="color:#56a5ec;">Status </label>
+
+                                                        <s:select id="status" cssClass="form-control SelectBoxStyles" name="status"  list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" value="%{editQues.status}" tabindex="4" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="" style="color:#56a5ec;">Answer&nbsp;Type </label>
+                                                        <s:hidden name="quesId" id="quesId" value="%{quesId}"/>
+                                                        <s:hidden id="successMsg" name="successMsg" value="%{successMsg}"/>
+                                                        <s:select id="answerType" cssClass="form-control SelectBoxStyles" name="answerType" value="%{editQues.answerType}" list="#@java.util.LinkedHashMap@{'S':'Single','M':'Multiple'}" onchange="checkanswerType();" tabindex="5"/>
+                                                    </div> 
+
+
+                                                    <div class="col-sm-3 form-group" style="margin-top: 2vw;">
+
+                                                        <label class="checkbox-inline"> Is&nbsp;Pictorial<s:checkbox cssClass="form-group"   name="isPic" id="isPic" value="%{editQues.isPic}" onclick="showBrowse();" tabindex="6" /> </label>
+
+                                                    </div>
+                                                </div></div>
+
+
+                                            <div class="col-sm-12 required">
+                                                <div class="row">
+                                                    <div class="col-sm-12" id="questionTextArea">
+                                                        <span>
+                                                                <label class="labelStyle2">Question</label>
+                                                                <s:textarea name="question" id="question" placeholder="Question" rows="8" value="%{editQues.question}" cssClass="form-control" tabindex="7" maxLength="5000" /> 
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <s:url id="image" action="rImage" namespace="/renderImage">
+                                                        <s:param name="path" value="editQues.question_path"></s:param>
+                                                    </s:url>
+                                                    <s:hidden name="oldPath" id="oldPath" value="%{editQues.question_path}"/>
+                                                    <div class="col-lg-12 required" id="browsePicture" style="display:none;">
+                                                            <label class="labelStyle2">Image&nbsp;related&nbsp;to&nbsp;above&nbsp;Question</label>
+                                                            <span>
+                                                                <s:if test='editQues.question_path != null'>
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-responsive" src='<s:property value="#image"/>' height="50%" width="50%"/></s:if>
+                                                                <s:file name="quesImage"  label="Upload File"  id="showImg" onchange="readURL(this)" tabindex="8" ></s:file>
+                                                                &nbsp;&nbsp;<img id="selectedImg" src="#" alt="selected image:" height="50%" width="50%"/>
+                                                            </span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-6 required">
+                                                        <span>
+                                                                <label class="labelStyle2">Option1</label>
+                                                                <s:textarea name="option1" id="option1" placeholder="Option1" rows="8" cssClass="form-control " value="%{editQues.option1}" tabindex="9" maxLength="5000" /> 
+                                                        </span>
+                                                        <br />
+                                                    </div>
+                                                    <div class="col-sm-6 required">
+                                                        <span>
+                                                           
+                                                                <label class="labelStyle2">Option2 </label>
+                                                                <s:textarea name="option2" id="option2" placeholder="Option2" rows="8" cssClass="form-control" value="%{editQues.option2}" tabindex="10" maxLength="5000"/> 
+                                                          
+                                                        </span>
+                                                    </div>
+
+
+                                                    <br/>
+                                                </div></div>
+
+
+
+
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <span>
+                                                            <label class="labelStyle2">Option3</label>
+                                                            <s:textarea name="option3" id="option3" placeholder="Option3"  rows="8" cssClass="form-control " value="%{editQues.option3}" tabindex="11" maxLength="5000"/> 
+                                                            <span id="accountTypeValidation" class="accDetailsError"></span>
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <span>
+                                                            <label class="labelStyle2">option4</label>
+                                                            <s:textarea name="option4" id="option4" placeholder="Option4" rows="8" cssClass="form-control" value="%{editQues.option4}" tabindex="12" maxLength="5000"/> 
+                                                        </span></div>
+
+                                                </div></div>
+
+                                            <div class="col-sm-12">         
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <span>
+                                                            <label class="labelStyle2"> option5 </label>
+                                                            <s:textarea name="option5" id="option5" placeholder="Option5" rows="8" cssClass="form-control" value="%{editQues.option5}" tabindex="13" maxLength="5000"/> 
+                                                        </span></div>
+
+                                                    <div class="col-sm-6">
+                                                        <span>
+                                                            <label class="labelStyle2"> option6 </label>
+                                                            <s:textarea name="option6" id="option6" placeholder="Option6" rows="8" cssClass="form-control" value="%{editQues.option6}" tabindex="14" maxLength="5000"/> 
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                                    
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <span>
+                                                            <div class="col-sm-12 required">
+                                                                <label class="labelStyle2"> Answers </label>
+                                                            </div>
+                                                            <div id="answer" style="disply:none">
+                                                                <s:radio cssClass="" name="answer" id="answer" value="%{editQues.answer}" list="{'Answer1','Answer2','Answer3','Answer4','Answer5','Answer6'}" cssStyle="width: 50px;" tabindex="15" />
+                                                            </div>
+
+                                                            <%--  <div class="col-lg-3">
+                                                                  <br>
+                                                                  <label for="" class="checkbox">
+                                                                      <s:checkbox id="usrPrimary" name="usrPrimary"  value="%{primaryvalue}"/>IsPrimary
+                                                                  </label>
+                                                              </div> --%>
+
+
+
+                                                            <div id="answer1" class="form-group" style="display: none"> 
+                                                                <label class="checkbox-inline"> Answer1 <s:checkbox cssClass=""  name="ans1" id="ans1" value="%{editQues.ans1}" tabindex="16" /></label>
+                                                                <label class="checkbox-inline"> Answer2 <s:checkbox cssClass=""  name="ans2" id="ans2" value="%{editQues.ans2}" tabindex="17" /></label>
+                                                                <label class="checkbox-inline"> Answer3 <s:checkbox cssClass=""  name="ans3" id="ans3" value="%{editQues.ans3}" tabindex="18" /></label>
+                                                                <label class="checkbox-inline"> Answer4 <s:checkbox cssClass=""  name="ans4" id="ans4" value="%{editQues.ans4}" tabindex="19" /></label>
+                                                                <label class="checkbox-inline"> Answer5 <s:checkbox cssClass=""  name="ans5" id="ans5" value="%{editQues.ans5}" tabindex="20" /></label>
+                                                                <label class="checkbox-inline"> Answer6 <s:checkbox cssClass=""  name="ans6" id="ans6" value="%{editQues.ans6}" tabindex="21" /></label>
+                                                            </div>
+
+
+
+                                                        </span> 
+                                                    </div>
+                                                </div>
+                                          
+                                            <div class="col-sm-12">         
+                                                <div class="row">
+                                                    <div class="col-sm-12 ">
+                                                        <span>
+                                                            <label class="labelStyle2">Explanation</label>
+                                                            <s:textarea name="explanation" id="explanation" placeholder="Explanation" rows="8" cssClass="form-control" value="%{editQues.explanation}" tabindex="22" maxLength="6000"/> 
+
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-sm-12 ">
+                                                <!--<div class="col-lg-6"></div>-->
+                                                <div class="col-sm-2 pull-right">
+                                                    <%--s:reset type="button" cssClass="cssbutton_emps field-margin" key="reset" value="Clear"/--%>
+                                                    <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" onclick="clearImage();" tabindex="23" />
+                                                </div>
+                                                <div class="col-sm-2 pull-right">
+                                                    <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel" tabindex="24" />
+                                                </div>
+                                                <div class="col-sm-2 pull-right">
+                                                    <s:submit type="button" id="addEditSubmit" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" onclick="return checkValidationsForAddQues();" tabindex="25" ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                </div>
+                                            </div>
+
+                                            <%-- <div class="row">
+
+                                                <div class="col-sm-4 ">
+                                                    <div class="col-sm-7 pull-left">
+                                                        <s:reset type="button" cssStyle="margin:5px -1vw;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" tabindex="23" onclick="clearImage()" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="col-sm-7">
+                                                        <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel" tabindex="24"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 ">
+                                                    <div class="col-sm-7 pull-right">
+                                                        <s:submit type="button" id="addEditSubmit" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" onclick="return checkValidationsForAddQues();" tabindex="25" ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            --%>
+                                            <div class="row">
+                                                <p id="errorMessage" align="center" class="accDetailsError" >
+                                                    <s:property value="resultMessage"  />
+                                                </p></div>
+                                            </s:form>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">
@@ -523,6 +559,6 @@
             </div>
         </footer>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
-<script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
+        <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

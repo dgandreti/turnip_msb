@@ -159,74 +159,27 @@
 	* http://www.opensource.org/licenses/mit-license.php
 	*/
 
-	$(document).ready(function(){
-
-		'use strict';
-
-		$.scrollUp = function (options) {
-
-			// Defaults
-			var defaults = {
-				scrollName: 'scrollUp', // Element ID
-				topDistance: 600, // Distance from top before showing element (px)
-				topSpeed: 800, // Speed back to top (ms)
-				animation: 'fade', // Fade, slide, none
-				animationInSpeed: 200, // Animation in speed (ms)
-				animationOutSpeed: 200, // Animation out speed (ms)
-				scrollText: '', // Text for element
-				scrollImg: false, // Set true to use image
-				activeOverlay: false // Set CSS color to display scrollUp active point, e.g '#00FFFF'
-			};
-
-			var o = $.extend({}, defaults, options),
-				scrollId = '#' + o.scrollName;
-
-			// Create element
-			$('<a/>', {
-				id: o.scrollName,
-				href: '#top',
-				title: o.scrollText
-			}).appendTo('body');
-			
-			// If not using an image display text
-			if (!o.scrollImg) {
-				$(scrollId).text(o.scrollText);
-			}
-
-			// Minium CSS to make the magic happen
-			$(scrollId).css({'display':'none','position': 'fixed','z-index': '2147483647'});
-
-			// Active point overlay
-			if (o.activeOverlay) {
-				$("body").append("<div id='"+ o.scrollName +"-active'></div>");
-				$(scrollId+"-active").css({ 'position': 'absolute', 'top': o.topDistance+'px', 'width': '100%', 'border-top': '1px dotted '+o.activeOverlay, 'z-index': '2147483647' });
-			}
-
-			// Scroll function
-			$(window).scroll(function(){	
-				switch (o.animation) {
-					case "fade":
-						$( ($(window).scrollTop() > o.topDistance) ? $(scrollId).fadeIn(o.animationInSpeed) : $(scrollId).fadeOut(o.animationOutSpeed) );
-						break;
-					case "slide":
-						$( ($(window).scrollTop() > o.topDistance) ? $(scrollId).slideDown(o.animationInSpeed) : $(scrollId).slideUp(o.animationOutSpeed) );
-						break;
-					default:
-						$( ($(window).scrollTop() > o.topDistance) ? $(scrollId).show(0) : $(scrollId).hide(0) );
-				}
-			});
-
-			// To the top
-			$(scrollId).click( function(event) {
-				$('html, body').animate({scrollTop:0}, o.topSpeed);
-				event.preventDefault();
-			});
-
-		};
-		
-		$.scrollUp();
-
-	});
+	
+$(document).ready(function(){
+    $(function () {
+        $.scrollUp({
+            scrollName: 'scrollUp', // Element ID
+            scrollDistance: 300, // Distance from top/bottom before showing element (px)
+            scrollFrom: 'top', // 'top' or 'bottom'
+            scrollSpeed: 300, // Speed back to top (ms)
+            easingType: 'linear', // Scroll to top easing (see http://easings.net/)
+            animation: 'fade', // Fade, slide, none
+            animationSpeed: 200, // Animation in speed (ms)
+            scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
+            //scrollTarget: false, // Set a custom target element for scrolling to the top
+            scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
+            scrollTitle: false, // Set a custom <a> title if required.
+            scrollImg: false, // Set true to use image
+            activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+            zIndex: 2147483647 // Z-Index for the overlay
+        });
+    });
+});
 	
 	
 	
@@ -406,7 +359,7 @@
 					from: 0,
 					to: $endNum,
 					speed: 3000,
-					refreshInterval: 30,
+					refreshInterval: 30
 				});
 			},{accX: 0, accY: 0});
 		});
@@ -430,7 +383,7 @@
 					from: 0,
 					to: $endNum,
 					speed: 1800,
-					refreshInterval: 30,
+					refreshInterval: 30
 				});
 			},{accX: 0, accY: 0});
 		});

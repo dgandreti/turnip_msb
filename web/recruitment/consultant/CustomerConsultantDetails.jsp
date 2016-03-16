@@ -105,7 +105,7 @@
                                                             <s:param name="consultantFlag"><s:property value="%{consultantFlag}"/></s:param> 
 
                                                         </s:url>
-                                                        <span class="pull-right" ><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                        <span class="pull-right" ><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                         </s:if>
                                                         <s:if test="consultFlag=='customer'">
 
@@ -136,13 +136,13 @@
                                                             </s:url>
                                                         </s:else>
 
-                                                        <span class="pull-right" ><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                        <span class="pull-right" ><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                         </s:if>
                                                         <s:if test="consultFlag =='consultant'">
                                                             <s:url var="myUrl" action="../../users/general/myprofile.action">
                                                                 <%--s:param name="consultantFlag"><s:property value="%{consultantFlag}"/></s:param--%> 
                                                             </s:url>
-                                                        <span class="pull-right" ><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                        <span class="pull-right" ><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                         </s:if>
                                                 </h4>
                                             </div>
@@ -171,6 +171,7 @@
                                                 <s:hidden id="consultantFlag" name="consultantFlag" value="%{consultantFlag}" />
                                                 <s:hidden id="addressFlag" name="addressFlag" value="%{consultantVTO.address_flag}" />
                                                 <s:hidden value="%{consultantVTO.consult_email}" name="consult_email" />
+                                                <s:hidden id="techReviewFlag" name="techReviewFlag" value="%{techReviewFlag}" />
                                                 <div class="col-sm-12" style="background-color: white; padding-top: 4px;">
                                                     <!--<div class="col-lg-4 " >-->
                                                     <div class="row">
@@ -195,8 +196,8 @@
 
                                                             <%--<s:textfield cssClass="consultantAlingment" value="%{consultantVTO.consult_lstname}" readonly="true"></s:textfield>--%>
                                                         </div>
-                                                         
-                                                            <s:if test="consultantVTO.consult_midname!=''">   
+
+                                                        <s:if test="consultantVTO.consult_midname!=''">   
                                                             <div class="col-sm-6 col-md-6 col-lg-4">
                                                                 <label class="labelStyle" id="labelLevelStatusReq" >Middle Name&nbsp;&nbsp;&nbsp;</label>:<font class="ven_ReqEdit"><s:property value="%{consultantVTO.consult_midname}"/></font>
                                                                 <%--<s:textfield cssClass="consultantAlingment" value="%{consultantVTO.consult_midname}"></s:textfield>--%>
@@ -206,10 +207,10 @@
                                                             <label class="labelStyle" id="labelLevelStatusReq">Available&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>:<font class="ven_ReqEdit" id="consultantAvailableCustomer"></font>
                                                             <s:select id="consultantAvailable" cssClass="ConsultBoxStyles" value="%{consultantVTO.consult_available}" list="#@java.util.LinkedHashMap@{'Y':'Yes','N':'No'}" disabled="true" cssStyle="display: none"></s:select>
                                                             </div>
-                                                            
-                                                        
 
-                                                       
+
+
+
                                                         <s:if test="consultantVTO.consult_favail!=''">
                                                             <div class="col-sm-6 col-md-6 col-lg-4">
                                                                 <label class="labelStyle" id="labelLevelStatusReq" >Available Date&nbsp;&nbsp;&nbsp;</label>:<font class="ven_ReqEdit"><s:property value="%{consultantVTO.consult_favail}"/></font>
@@ -244,32 +245,31 @@
                                                         </s:if>
                                                         <!--</div>-->   
                                                         <!--<div class="row">-->
-                                                        <s:if test="consultantVTO.consult_alterEmail!=''">
-                                                            <div class="col-sm-6 col-md-6 col-lg-4">
+                                                        
 
-                                                                <label class="labelStyle" id="labelLevelStatusReq">Alternate Email&nbsp;&nbsp;</label>:<font class="ven_ReqEdit"><s:property value="%{consultantVTO.consult_alterEmail}"/></font>
-                                                                <%--<s:textfield cssClass="consultantAlingment" value="%{consultantVTO.consult_alterEmail}" readonly="true"> </s:textfield>--%>
-                                                            </div>  
+                                                        <s:if test="consultantVTO.consult_ssnNo!=''">
+                                                            <div class="col-sm-6 col-md-6 col-lg-4">
+                                                                <label class="labelStyle" id="labelLevelStatusReq" >SSN No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>:<font class="ven_ReqEdit"><s:property value="%{consultantVTO.consult_ssnNo}"/></font>
+                                                                <%--<s:textfield cssClass="consultantAlingment" value="%{consultantVTO.consult_ssnNo}" readonly="true"></s:textfield>--%>
+                                                            </div>
                                                         </s:if>
-                                                       
-                                                            <s:if test="consultantVTO.consult_ssnNo!=''">
-                                                                <div class="col-sm-6 col-md-6 col-lg-4">
-                                                                    <label class="labelStyle" id="labelLevelStatusReq" >SSN No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>:<font class="ven_ReqEdit"><s:property value="%{consultantVTO.consult_ssnNo}"/></font>
-                                                                    <%--<s:textfield cssClass="consultantAlingment" value="%{consultantVTO.consult_ssnNo}" readonly="true"></s:textfield>--%>
-                                                                </div>
-                                                            </s:if>
-                                                       
+
                                                         <s:if test="consultantVTO.address_flag!='emp'" >  
                                                             <div class="col-sm-6 col-md-6 col-lg-4">
                                                                 <label class="labelStyle" id="labelLevelStatusReq" >Living Country&nbsp;&nbsp;&nbsp;</label>:<font id="consultantLivingCountry" class="ven_ReqEdit"></font>
                                                                 <s:select id ="consultantCountry" cssClass="ConsultBoxStyles" value="%{consultantVTO.consult_lcountry}" list="country" cssStyle="display: none" ></s:select>
                                                                 </div>
                                                         </s:if>   
+                                                        <s:if test="techReviewFlag=='techReview'" >  </s:if>
+                                                        <s:else>
+                                                            <div class="col-sm-6 col-md-6 col-lg-4 required">
+                                                                <label class="labelStyle " id="labelLevelStatusReq" >Expected&nbsp;&nbsp;&nbsp;</label>:$&nbsp;<font id="" class="ven_ReqEdit"><s:property value="%{consult_salary}"/></font>&nbsp;/Hr
+                                                                <s:hidden id="consultantExpected" name="consultantExpected" value="%{consult_salary}"/>
+                                                                <%--<s:select id ="consultantCountry" cssClass="ConsultBoxStyles" value="%{consultantVTO.consult_lcountry}" list="country" cssStyle="display: none" ></s:select>--%>
+                                                            </div>
+                                                        </s:else>
                                                         <!--</div>--> 
-                                                        <div class="col-sm-6 col-md-6 col-lg-4 required">
-                                                            <label class="labelStyle " id="labelLevelStatusReq" >Expected&nbsp;&nbsp;&nbsp;</label>:$&nbsp;<font id="" class="ven_ReqEdit"><s:property value="%{consult_salary}"/></font>&nbsp;/Hr
-                                                            <%--<s:select id ="consultantCountry" cssClass="ConsultBoxStyles" value="%{consultantVTO.consult_lcountry}" list="country" cssStyle="display: none" ></s:select>--%>
-                                                        </div>
+
                                                         <s:if test="#session.typeOfUsr=='VC'">
                                                             <s:if test=" consultantVTO.consult_linkedInId!='' || consultantVTO.consult_twitterId!='' || consultantVTO.consult_facebookId.length()!='' ">    
                                                                 <div class="col-sm-6 col-md-6 col-lg-4"> 
@@ -345,6 +345,7 @@
                                                                             <tr id="trStyleContact"><td>&nbsp;&nbsp;Permanent Address &nbsp;&nbsp;</td></tr>
                                                                         </table>
                                                                     </div>
+                                                                    <div style="background-color: white;Border: 1px solid #876;margin-top: 10px"></div>
                                                                     <s:hidden label="Same as Permanent Address" name="consult_checkAddress"  id="consult_checkAddress" value="%{consultantVTO.address_flag}" onclick="sameAsAddress();"   ></s:hidden>
                                                                         <br/>
                                                                         <div class="col-sm-10 col-md-offset-1">
@@ -392,6 +393,7 @@
                                                                             <tr id="trStyleContact" ><td>&nbsp;&nbsp;Current Address &nbsp;&nbsp;</td></tr>
                                                                         </table>
                                                                     </div>
+                                                                    <div style="background-color: white;Border: 1px solid #876;margin-top: 10px"></div>
                                                                     <br/>
                                                                     <div  class="col-sm-10 col-md-offset-1">
                                                                         <s:if test="consultantVTO.consult_CAddress!=''" >
@@ -457,10 +459,11 @@
                                                     <s:hidden id="accountFlag" name="accountFlag" value="%{accountFlag}"/>
                                                     <s:hidden id="customerFlag" name="customerFlag" value="%{customerFlag}"/>
                                                     <s:hidden id="jdId" name="jdId" value="%{consultantVTO.jdId}"/>
+                                                    <s:hidden id="vendorcomments" name="vendorcomments" value="%{consultantVTO.vendorcomments}"/>
                                                     <div class="row">
                                                         <div class="col-sm-6" style="margin-top: 7px">
 
-                                                            <label class="labelStyle" id="labelLevelStatusReq"  >Skills&nbsp;&nbsp;:</label><font class="ven_ReqEdit"><s:property value="%{consultantVTO.consult_skill}"/></font>
+                                                            <label class="labelStyle" id="labelLevelStatusReq"  >Skills&nbsp;&nbsp;</label><font class="ven_ReqEdit">:<s:property value="%{consultantVTO.consult_skill}"/></font>
                                                             <%--<s:property   value="%{consultantVTO.consult_skill}"></s:property>--%>
 
                                                         </div>
@@ -488,6 +491,13 @@
                                                             </div>
                                                         </s:if> 
                                                     </div>
+                                                    <s:if test="consultantVTO.vendorcomments!=''&&consultantVTO.vendorcomments!=null">
+                                                        <div class="row">
+                                                            <label class="labelStyle" id="labelLevelStatusReq" >Vendor comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>:<font class="ven_ReqEdit">
+                                                            <p><s:property value="%{consultantVTO.vendorcomments}"/></p></font>
+                                                        </div>
+                                                        
+                                                    </s:if>
                                                 </div>
                                             </form>
                                         </div>

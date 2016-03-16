@@ -38,6 +38,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.maskedinput.js"/>"></script>
     </head>
     <body style="overflow-x: hidden">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -46,7 +47,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
@@ -74,15 +75,15 @@
                                             <br>
                                             <span cellspacing="30">
                                                 <div class="employeefield-margin" >
-                                                    <label class="csslabel2" style="margin-right: -5px">Email Id:</label>
+                                                    <label class="csslabel2" style="margin-right: -5px">Email Id</label>
                                                     <s:textfield cssClass="textbox field-margin" id="empLoginId" type="text" name="empLoginId"  placeholder="Email Id"/>   
                                                 </div>
                                                 <div class="employeefield-margin" >
-                                                    <label class="csslabel2" style="margin-right: -18px">Emp Name:</label>
+                                                    <label class="csslabel2" style="margin-right: -18px">Emp Name</label>
                                                     <s:textfield cssClass="textbox field-margin inputTextBlue" theme="simple" id="empName" type="text" name="empName" placeholder="Employee Name" />
                                                 </div>
                                                 <div class="employeefield-margin" >
-                                                    <label class="csslabel2" style="margin-right:-18px ">W Phone:</label>
+                                                    <label class="csslabel2" style="margin-right:-18px ">W Phone</label>
                                                     <s:textfield cssClass="textbox field-margin" id="workPhone" type="text" name="workPhone" placeholder="Work Phone No." />  
                                                 </div> <%--  <s:select cssClass="selectBoxStyle field-margin" id="organization" name="organization" headerKey="" headerValue="Select Organization" theme="simple" list="{'marketing','Sales'}"/>--%>
                                                 <div class="employeefield-margin" >
@@ -90,11 +91,11 @@
                                                     <s:select id="departmentId" name="departmentId" cssClass="selectBoxStyle field-margin" headerKey="-1" headerValue="Select Department" theme="simple" list="departments" />
                                                 </div>
                                                 <div class="employeefield-margin" >
-                                                    <label class="csslabel2 ">Rep Person:</label>
+                                                    <label class="csslabel2 ">Rep Person</label>
                                                     <s:select id="reportingPerson" name="reportingPerson" cssClass="selectBoxStyle field-margin" headerKey="-1" headerValue="Select Reporting Person" theme="simple" list="reportsTo" />                                    
                                                 </div>
                                                 <div class="employeefield-margin" >
-                                                    <label class="csslabel2">Cur status:</label>
+                                                    <label class="csslabel2">Cur status</label>
                                                     <s:select name="status" id="status" label="Status"  cssClass="selectBoxStyle field-margin" theme="simple" list="{'Active','Inactive','Registered'}" />    <br/>                                       
                                                 </div>
                                                 <div class="checkbox-inline selectBOx-field-margin" >
@@ -202,9 +203,11 @@
                     </div>
                 </div>
             </div>
+                             </section><!--/form-->
         </div>
         <!-- content end -->
-    </section><!--/form-->
+   
+    </div>
     <footer id="footer"><!--Footer-->
         <div class="footer-bottom" id="footer_bottom">
             <div class="container">

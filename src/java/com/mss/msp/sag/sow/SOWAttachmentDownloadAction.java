@@ -76,6 +76,8 @@ public class SOWAttachmentDownloadAction implements Action, ServletRequestAware,
     private String vendorComments;
     private String customerComments;
     private String tabFlag;
+    private String serviceId;
+    private String serviceType;
 
     /**
      * Creates a new instance of DownloadAction
@@ -152,7 +154,7 @@ public class SOWAttachmentDownloadAction implements Action, ServletRequestAware,
             }
         } catch (FileNotFoundException ex) {
             System.out.println("finle not found");
-            setFileExists("NotFound");
+            setFileExists("NotExisted");
             setTabFlag("AT");
             resultType = INPUT;
 
@@ -315,6 +317,22 @@ public class SOWAttachmentDownloadAction implements Action, ServletRequestAware,
 
     public void setTabFlag(String tabFlag) {
         this.tabFlag = tabFlag;
+    }
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 
 }

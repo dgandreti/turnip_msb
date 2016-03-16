@@ -6,6 +6,7 @@ package com.mss.msp.sag.sow;
 
 import com.mss.msp.util.ConnectionProvider;
 import com.mss.msp.util.DataUtility;
+import com.mss.msp.util.DateUtility;
 import com.mss.msp.util.ServiceLocatorException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -166,7 +167,7 @@ public class SOWServiceImpl implements SOWService {
                 sowVto.setRequirementName(resultSet.getString("req_name"));
                 // sowVto.setCustomerName(resultSet.getString("account_name"));
                 sowVto.setConsultantId(resultSet.getString("usr_id"));
-                   migId = com.mss.msp.util.DataSourceDataProvider.getInstance().doCheckEmailExistsOrNot(resultSet.getInt("usr_id"), resultSet.getInt("reqId"));
+                migId = com.mss.msp.util.DataSourceDataProvider.getInstance().doCheckEmailExistsOrNot(resultSet.getInt("usr_id"), resultSet.getInt("reqId"));
                 if (migId > 0) {
                     sowVto.setMigrateStatus("Yes");
                     //System.out.println(">>>>>>>>>>>>>>>>>>>>MIGRATE STATUS>>>>"+sowVto.getMigrateStatus());
@@ -632,7 +633,9 @@ public class SOWServiceImpl implements SOWService {
 
     public int SOWSaveOrSubmit(SOWAction sowAction) throws ServiceLocatorException {
         System.out.println("================================IN IMPL============================");
+        System.out.println("sowAction.getTransAmt()-->"+sowAction.getTransAmt());
         CallableStatement callableStatement = null;
+        DateUtility dateUtility = new DateUtility();
         // PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String sqlquery = "";
@@ -643,7 +646,7 @@ public class SOWServiceImpl implements SOWService {
             connection = ConnectionProvider.getInstance().getConnection();
             System.out.println("****************** ENTERED INTO THE TRY BLOCK *******************");
             if (sowAction.getSOWFlag() == 1) {
-                callableStatement = connection.prepareCall("{CALL spSOWOrFinderFeeUpdate(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+                callableStatement = connection.prepareCall("{CALL spSOWOrFinderFeeUpdate(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             } else {
                 callableStatement = connection.prepareCall("{CALL spSOWOrFinderFeeRecreation(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             }
@@ -659,7 +662,11 @@ public class SOWServiceImpl implements SOWService {
                 callableStatement.setString(2, Double.toString(sowAction.getServiceVersion()));
             }
             callableStatement.setString(3, sowAction.getNetTerms());
-            callableStatement.setString(4, sowAction.getSubmittedPayRate().replaceAll(",", ""));
+            if (sowAction.getSubmittedPayRate() != null) {
+                callableStatement.setString(4, sowAction.getSubmittedPayRate().replaceAll(",", ""));
+            } else {
+                callableStatement.setString(4, sowAction.getSubmittedPayRate());
+            }
             callableStatement.setString(5, sowAction.getSubmittedPayRateType());
             callableStatement.setString(6, sowAction.getCustomerComments());
             callableStatement.setString(7, sowAction.getVendorComments());
@@ -705,9 +712,29 @@ public class SOWServiceImpl implements SOWService {
             callableStatement.setString(26, sowAction.getTransNo());
             callableStatement.setString(27, sowAction.getTypeOfUser());
             callableStatement.setString(28, sowAction.getDeductionAmt());
-            callableStatement.registerOutParameter(29, java.sql.Types.INTEGER);
-            isExceute = callableStatement.execute();
-            result = callableStatement.getInt(29);
+            if (sowAction.getSOWFlag() == 1) {
+                if (sowAction.getStartDate() != null&&!"".equals(sowAction.getStartDate())) {
+                    callableStatement.setString(29, dateUtility.getInstance().convertStringToMySQLDateInDash(sowAction.getStartDate()));
+                } else {
+                    callableStatement.setString(29, sowAction.getStartDate());
+                }
+                if (sowAction.getEndDate() != null&&!"".equals(sowAction.getEndDate())) {
+                    callableStatement.setString(30, dateUtility.getInstance().convertStringToMySQLDateInDash(sowAction.getEndDate()));
+                } else {
+                    callableStatement.setString(30, sowAction.getEndDate());
+                }
+                callableStatement.setString(31, sowAction.getRolesAndResponsibilites());
+                callableStatement.setString(32, sowAction.getOverTimeRate());
+                callableStatement.setString(33, sowAction.getOverTimeLimit());
+                callableStatement.registerOutParameter(34, java.sql.Types.INTEGER);
+                isExceute = callableStatement.execute();
+                result = callableStatement.getInt(34);
+            } else {
+                callableStatement.registerOutParameter(29, java.sql.Types.INTEGER);
+                isExceute = callableStatement.execute();
+                result = callableStatement.getInt(29);
+            }
+
             if (result > 0) {
                 sowAction.setResultMessage("Record Updated Successfully!");
                 System.out.println("****************** in impl result after Procedure:::::::::" + result);
@@ -832,5 +859,50 @@ public class SOWServiceImpl implements SOWService {
         }
         return resultString;
 
+    }
+
+    public String poDownloadButton(SOWAction sowAction) throws ServiceLocatorException {
+        ResultSet resultSet = null;
+        String queryString = "";
+        String resultString = "";
+        try {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>TYPE OF USER>>>>>>>>>>>>>" + sowAction.getTypeOfUser());
+            connection = ConnectionProvider.getInstance().getConnection();
+            // System.out.println(">" + sowAction.getConsultantId() + ">" + sowAction.getRequirementId() + ">" + sowAction.getConsultantName() + ">" + sowAction.getCustomerId());
+            queryString = "SELECT acc_attachment_id FROM serviceagreements s JOIN acc_rec_attachment WHERE serviceid=" + sowAction.getServiceId() + " AND usr_id=object_id AND object_type='PO'";
+
+            System.out.println(">>>>QueryString>>>>>" + queryString);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                resultString = resultSet.getString("acc_attachment_id");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                try {
+                    throw new ServiceLocatorException(ex);
+                } catch (ServiceLocatorException ex1) {
+                    ex1.printStackTrace();
+                }
+            }
+        }
+        return resultString;
     }
 }

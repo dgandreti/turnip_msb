@@ -597,10 +597,11 @@ function getContactSearchResults(){
 function getVendorsNames()
 {
     var tireType=document.getElementById("tireType").value;
+     var orgId=$("#accountSearchID").val();
     if(tireType=="DF")
       
         return false;
-    var url='getVendorsListByTireType.action?tireType='+tireType;
+    var url='getVendorsListByTireType.action?tireType='+tireType+'&orgId='+orgId;
 
     var req=initRequest(url);
     req.onreadystatechange = function() {
@@ -631,7 +632,7 @@ function populateVendorsNames(response)
 function saveVendorAssociation(){
     initSessionTimer();
     var tireType=document.getElementById("tireType").value;
-    
+    var orgId=$("#accountSearchID").val();
     var vendorList = [];    
     $("#vendorNames :selected").each(function(){
         vendorList.push($(this).val()); 
@@ -644,7 +645,7 @@ function saveVendorAssociation(){
     //var url='SaveVendorsAssociationDetals.action?tireType='+tireType+'&vendorList='+vendorList+'&accessTime='+accessTime+'req_id='+req_id;
     if(validateVendorAssociation())
     {
-        var url='SaveVendorsAssociationDetals.action?vendorList='+vendorList+'&accessTime='+accessTime+'&req_id='+req_id;
+        var url='SaveVendorsAssociationDetals.action?vendorList='+vendorList+'&accessTime='+accessTime+'&req_id='+req_id+'&orgId='+orgId;
         var req=initRequest(url);
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
@@ -999,7 +1000,9 @@ function vendorAssociationGridDisplay(response){
         row.append($('<td colspan="6"><font style="color: red;font-size: 15px;">No Records to display</font></td>'));
         $(".page_option").css('display', 'none');
     }
-  $('#vendorAssociationResults').tablePaginate({navigateType:'navigator'},recordPage);
+    $('#vendorAssociationResults').tablePaginate({
+        navigateType:'navigator'
+    },recordPage);
     pag.init(); 
   
 }
@@ -1011,7 +1014,7 @@ function searchVendorAssociationDetails()
     //alert(tireType)
     var status=document.getElementById("status").value;
     var RequirementId=$('#RequirementId').val();
-     var randomNum = Math.random();
+    var randomNum = Math.random();
     //alert(status)
     var url='Requirements/searchVendorAssociationDetails.action?tireType='+tireType+'&status='+status+'&RequirementId='+RequirementId+'&randomNum='+randomNum;
     var req=initRequest(url);
@@ -1263,7 +1266,7 @@ function getConsultantList(){
     return false;  
 }
 function consultantListGridDisplay(response){
-     $(".page_option").css('display', 'block');
+    $(".page_option").css('display', 'block');
     var typeOfUser=$('#typeOfUser').val();
     //alert(typeOfUser)
     var requirementId=$("#RequirementId").val();
@@ -1283,13 +1286,14 @@ function consultantListGridDisplay(response){
     {
         table.deleteRow(i);
     }
-    if(vendor!='yes'){
-           var res="Vendor" + "|" + "Candidate Name" + "|" + "Submitted Date" +"|" + "SSN No" + "|" + "Skills" +"|"+ "Status"  + "|" + "Rate" + "^";
-    }
-    else
-    {
-         var res="Candidate Name" + "|" + "Submitted Date"+"|" + "SSN No"   + "|" + "Email" + "|"  + "Skills" +"|" + "Phone Number"+ "|" + "Status" + "|"+ "Rate" + "^";      
-    }
+    var res;
+//    if(vendor!='yes'){
+//        var res="Vendor" + "|" + "Candidate Name" + "|" + "Submitted Date" +"|" + "SSN No" + "|" + "Skills" +"|"+ "Status"  + "|" + "Rate" + "^";
+//    }
+//    else
+//    {
+//        var res="Candidate Name" + "|" + "Submitted Date"+"|" + "SSN No"   + "|" + "Email" + "|"  + "Skills" +"|" + "Phone Number"+ "|" + "Status" + "|"+ "Rate" + "^";      
+//    }
     if(response.length>0){
         for(var i=0;i<eduList.length-1;i++){   
        
@@ -1299,28 +1303,30 @@ function consultantListGridDisplay(response){
          
                 var row = $("<tr />")
           
-                if(vendor!='yes'){
-                     res=res+(Values[7] +"|"+ Values[1]+"|"+ Values[11]+"|"+Values[14]+"|"+ Values[3]+"|"+Values[5]+"|$"+ Values[8]+"/Hr^");      
-                }
-                else
-                {
-                    res=res+(Values[1]+"|"+ Values[11]+"|"+ Values[14]+"|"+ Values[2]+"|"+ Values[3]+"|"+ Values[4]+"|"+ Values[5]+"|$"+ Values[8]+"/Hr^");      
-                }
-                
+//                if(vendor!='yes'){
+                    res=Values[16];
+//                        res+(Values[7] +"|"+ Values[1]+"|"+ Values[11]+"|"+Values[14]+"|"+ Values[3]+"|"+Values[5]+"|$"+ Values[8]+"/Hr^");      
+//                }
+//                else
+//                {
+//                    res=res+(Values[1]+"|"+ Values[11]+"|"+ Values[14]+"|"+ Values[2]+"|"+ Values[3]+"|"+ Values[4]+"|"+ Values[5]+"|$"+ Values[8]+"/Hr^");      
+//                }
+//                
                 $("#consultantListTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
                 if(vendor!='yes'){
                     row.append($("<td>" + Values[7] + "</td>"));
                 }
                 // row.append($('<td><a href=../recruitment/consultant/editConsultantDetails.action?vendor='+ vendor +'&consult_id='+Values[0]+'&consultFlag='+consultFlag  +'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&accountFlag='+accountFlag+'&jdId='+jdId+'&customerFlag='+customerFlag+">"+ Values[1] +"</a></td>"));
+                var v_comments = Values[15].trim().replace(/ /g, '%20');
                 if(vendor!='yes'){
-                    row.append($('<td><a   href=../recruitment/consultant/getConsultantDetails.action?vendor='+ vendor +'&consult_id='+Values[0]+'&consultFlag='+consultFlag  +'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&accountFlag='+accountFlag+'&jdId='+jdId+'&customerFlag='+customerFlag+'&consult_salary='+Values[8]+">"+ Values[1] +"</a></td>"));
+                    row.append($('<td><a   href=../recruitment/consultant/getConsultantDetails.action?vendor='+ vendor +'&consult_id='+Values[0]+'&consultFlag='+consultFlag  +'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&accountFlag='+accountFlag+'&jdId='+jdId+'&customerFlag='+customerFlag+'&consult_salary='+Values[8]+'&vendorcomments='+v_comments+">"+ Values[1] +"</a></td>"));
                 }else{
-                    row.append($('<td><a href=../recruitment/consultant/getConsultantDetails.action?vendor='+ vendor +'&consult_id='+Values[0]+'&consultFlag='+consultFlag  +'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&accountFlag='+accountFlag+'&jdId='+jdId+'&customerFlag='+customerFlag+'&consult_salary='+Values[8]+">"+ Values[1] +"</a></td>"));
+                    row.append($('<td><a href=../recruitment/consultant/getConsultantDetails.action?vendor='+ vendor +'&consult_id='+Values[0]+'&consultFlag='+consultFlag  +'&requirementId='+requirementId+'&accountSearchID='+accountSearchID+'&accountFlag='+accountFlag+'&jdId='+jdId+'&customerFlag='+customerFlag+'&consult_salary='+Values[8]+'&vendorcomments='+v_comments+">"+ Values[1] +"</a></td>"));
                 }
                 //row.append($("<td>" + Values[7] + "</td>"));
                 row.append($("<td>" + Values[11] + "</td>")); // postedDate
                 row.append($("<td>" + Values[14] + "</td>"));
-                 if(vendor=='yes'){
+                if(vendor=='yes'){
                     row.append($("<td>" + Values[2] + "</td>"));
                 }
                 if(Values[3]=='null'||Values[3]==""){
@@ -1361,9 +1367,9 @@ function consultantListGridDisplay(response){
                     }
                 }
                 row.append($("<td>$" + Values[8] + "/Hr.</td>"));
-                row.append($("<td><figcaption><button type='button' value="+ Values[6] +" onclick=doAttachmentDownload("+ Values[6] +")><img src='./../includes/images/download.png' height='20' width='20' ></button></figcaption></td>"));
+                row.append($("<td><figcaption><button type='button' value="+ Values[6] +" onclick=doAttachmentDownload("+ Values[6] +")><i class='fa fa-download ' ></i></button></figcaption></td>"));
                 if(vendor!='yes'){
-                    row.append($('<td><a href=.././Requirements/techReview.action?requirementId='+requirementId+'&consult_id='+Values[0]+'&accountSearchID='+accountSearchID+'&jdId='+jdId+'&accountFlag='+accountFlag+">Click</td>"));
+                    row.append($('<td><a href=.././Requirements/techReview.action?requirementId='+requirementId+'&consult_id='+Values[0]+'&accountSearchID='+accountSearchID+'&jdId='+jdId+'&accountFlag='+accountFlag+'&techReviewStatus='+Values[5]+">Click</td>"));
                 }
                 if(typeOfUser=='AC'){
                     if(RequirementTaxTerm=='PE' && (Values[5]=='Selected' || Values[5]=='Denied' )){
@@ -1379,7 +1385,7 @@ function consultantListGridDisplay(response){
                     }
                 }
                 
-                 if(vendor=='yes'){
+                if(vendor=='yes'){
                     if(Values[5]=='Withdraw' || Values[5]=='Rejected'){
                         row.append($('<td><a href="#" ><img style="opacity: 0.4;cursor:default" src="../includes/images/removeCons.png" height="20" width="20"></td>'));
                     }else {
@@ -1435,12 +1441,14 @@ function consultantListGridDisplay(response){
     {
         var row = $("<tr />")
         $("#consultantListTable").append(row);
-        row.append($('<td colspan="10"><font style="color: red;font-size: 15px;">No Records to display</font></td>')); 
+        row.append($('<td colspan="11"><font style="color: red;font-size: 15px;">No Records to display</font></td>')); 
         document.getElementById("downloading_grid").style.display="none";
         $(".page_option").css('display', 'none');
     }
 
-  $('#consultantListTable').tablePaginate({navigateType:'navigator'},recordPage);
+    $('#consultantListTable').tablePaginate({
+        navigateType:'navigator'
+    },recordPage);
     pager.init(); 
    
 }
@@ -1519,13 +1527,13 @@ function consultantWithdrawnPopup(consultantID,reqID){
     {
        
         if(consultantID=="okDisable"){
-           // $("#commentsLabel").html("Vendor Comments");
-           // document.getElementById("commentsLabel").innerHTML="Vendor Comments";    
+        // $("#commentsLabel").html("Vendor Comments");
+        // document.getElementById("commentsLabel").innerHTML="Vendor Comments";    
         }
         if(consultantID == "customercomments"){
-          // $("#commentsLabel").html("Comments");
-           // document.getElementById("commentsLabel").innerHTML="Comments";  
-            //  alert(consultantID);
+        // $("#commentsLabel").html("Comments");
+        // document.getElementById("commentsLabel").innerHTML="Comments";  
+        //  alert(consultantID);
         }
         if(reqID=="null"){
             document.getElementById("withdrawComments").value="";   
@@ -1539,7 +1547,7 @@ function consultantWithdrawnPopup(consultantID,reqID){
     {
         document.getElementById("withdrawComments").value="";  
         document.getElementById("withdrawButtonDiv").style.display="block";
-      //  document.getElementById("commentsLabel").innerHTML="Status Comments";
+    //  document.getElementById("commentsLabel").innerHTML="Status Comments";
     }
     var specialBox = document.getElementById('conWithdrawBox');
     if(specialBox.style.display == "block"){       
@@ -1809,7 +1817,7 @@ function getSearchRequirementsList()
 // add by Aklakh
 function populateReqTableReq(response){
     //alert(response);  
-     $(".page_option").css('display', 'block');
+    $(".page_option").css('display', 'block');
     var reqList=response.split("^");
     var accountFlag="csr";
     var vendor=$("#vendor").val();
@@ -1867,7 +1875,9 @@ function populateReqTableReq(response){
         row.append($('<td colspan="9"><font style="color: red;font-size: 15px;">No Records to display</font></td>'));
         $(".page_option").css('display', 'none');
     }
- $('#reqTableInAccount').tablePaginate({navigateType:'navigator'},recordPage);
+    $('#reqTableInAccount').tablePaginate({
+        navigateType:'navigator'
+    },recordPage);
    
     reqPag.init();     
     
@@ -2470,9 +2480,7 @@ function populateVendorDashboard(response){
         $("#BarchartDiv").css('visibility', 'hidden');
     
     }
-    dashPager.init();
-    dashPager.showPageNav('dashPager', 'pageNavPosition');
-    dashPager.showPage(1);
+ $('#dashboardResults').tablePaginate({navigateType:'navigator'},recordPage);;
 }
 
 function showChart(month,reqCount,selected,rejected,servicing,shortlisted,processing )
@@ -2480,47 +2488,50 @@ function showChart(month,reqCount,selected,rejected,servicing,shortlisted,proces
     // alert(month.length);
      
     var Combined = new Array();
-            Combined[0] = ['Year', 'Processing','Servicing', 'Selected','Short Listed','Rejected'];
-            for (var i = 0; i < month.length; i++){
-                Combined[i + 1] = [ month[i], processing[i], servicing[i], selected[i], shortlisted[i], rejected[i] ];
-            }
-            //alert(Combined+"------>Combined");
-            //second parameter is false because first row is headers, not data.
-            var data = google.visualization.arrayToDataTable(Combined, false);
+    Combined[0] = ['Year', 'Processing','Servicing', 'Selected','Short Listed','Rejected'];
+    for (var i = 0; i < month.length; i++){
+        Combined[i + 1] = [ month[i], processing[i], servicing[i], selected[i], shortlisted[i], rejected[i] ];
+    }
+    //alert(Combined+"------>Combined");
+    //second parameter is false because first row is headers, not data.
+    var data = google.visualization.arrayToDataTable(Combined, false);
     
-            var options = {
-                // width: 370,
-                // height:300,
-                legend: { position: 'top', alignment: 'center' },
-               // title: 'Monthly Analysis',
-                colors: ['#0000FF', '#00FF00', '#FF0000'],
-                titleColor: "green",
-                    vAxis: {
-                        title: "Consultants",
-                        titleColor: "green"
-                    },
-                    hAxis: {
-                        title: "Months",
-                        titleColor: "green"
-                    }
-                // animation: {
-                //duration: 1000,
-                //easing: 'linear'
-                //vAxis: {
-                //viewWindow: {
-                //max: 8
-            }
-            var chart = new google.visualization.ColumnChart(document.getElementById('Barchart'));
-            document.getElementById('chartTitle').innerHTML = "<font color=green><b>Consultants Monthly Analysis</b></font>";
-            drawChart();
-            function drawChart() {
-                // Instantiate and draw our chart, passing in some options.
-                chart.draw(data, options);
-            }
+    var options = {
+        // width: 370,
+        // height:300,
+        legend: {
+            position: 'top', 
+            alignment: 'center'
+        },
+        // title: 'Monthly Analysis',
+        colors: ['#0000FF', '#00FF00', '#FF0000'],
+        titleColor: "green",
+        vAxis: {
+            title: "Consultants",
+            titleColor: "green"
+        },
+        hAxis: {
+            title: "Months",
+            titleColor: "green"
+        }
+    // animation: {
+    //duration: 1000,
+    //easing: 'linear'
+    //vAxis: {
+    //viewWindow: {
+    //max: 8
+    }
+    var chart = new google.visualization.ColumnChart(document.getElementById('Barchart'));
+    document.getElementById('chartTitle').innerHTML = "<font color=green><b>Consultants Monthly Analysis</b></font>";
+    drawChart();
+    function drawChart() {
+        // Instantiate and draw our chart, passing in some options.
+        chart.draw(data, options);
+    }
             
-            $(window).resize(function () {
-                drawChart();
-            });
+    $(window).resize(function () {
+        drawChart();
+    });
     
 }
 
@@ -2680,13 +2691,13 @@ function SOWPopupClose(){
 }
 function enterDateRepositoryAccount(id)
 {
-    $(id).val(" ");
+    $(id).val("");
     return false;
 }
 function questionOverlay(response){
     // alert("overlay");
-     document.getElementById("qname").style.display='none';
-      document.getElementById("hideText").style.display='block';
+    document.getElementById("qname").style.display='none';
+    document.getElementById("hideText").style.display='block';
     document.getElementById("quesDetails").value=response;
     var specialBox = document.getElementById("quesOverlayBox");
     if(specialBox.style.display == "block"){       
@@ -2702,7 +2713,7 @@ function questionOverlay(response){
 function getImagePath(quesId,question){
   
     var url='getImagePath.action?quesId='+quesId;
-     document.getElementById("quesDetails").value=question;
+    document.getElementById("quesDetails").value=question;
     //alert(url);
     
     var req=initRequest(url);
@@ -2710,9 +2721,9 @@ function getImagePath(quesId,question){
         
         if (req.readyState == 4 && req.status == 200) {
            
-           // alert("response"+req.responseText);
+            // alert("response"+req.responseText);
             document.getElementById("qname").style.display='block';
-           // document.getElementById("hideText").style.display='none';
+            // document.getElementById("hideText").style.display='none';
           
             var oldChild=document.getElementById("qname").lastChild;
 
@@ -2747,3 +2758,115 @@ function questionOverlayImage(){
         ); 
 }
 
+function clearResourceName()
+{
+    document.getElementById("teamMemberNamePopup").value="";
+    document.getElementById("teamMemberId").value="";
+}
+
+function openUploadFileDialogue(){
+    // alert("hello")
+    document.getElementById("errorLogoValidation").innerHTML="";
+    var specialBox = document.getElementById('imageupdateOverlay');
+    if(specialBox.style.display == "block"){       
+        specialBox.style.display = "none";         
+    } else {
+        specialBox.style.display = "block";      
+    }
+    // Initialize the plugin    
+    $('#imageupdate_popup').popup(      
+        );
+
+}
+
+
+function logoUpload(){
+    //alert("hello");
+                                                                                            
+    var accountId = $('#viewAccountID').val();
+                                                                                            
+    //alert(accountId);
+    var filePath =document.getElementById('file').value;
+    //alert("--"+filePath+"--")
+    if(filePath=="")
+    {
+                                                                                                    
+        document.getElementById('errorLogoValidation').innerHTML = "<font color=red>please select the file</font>";  
+        //alert("please select the file"); 
+                                                                                              
+        return false;
+    }
+                                                                                           
+    if(filePath.length>30)
+    {
+                                                                                                    
+        document.getElementById('errorLogoValidation').innerHTML = "<font color=red>file name should not maore than 30 characters</font>";  
+        //alert("please select the file length");   
+        return false;
+    }
+    var accLogoHidden =document.getElementById('accLogoHidden').value;
+    //alert(filePath);
+    //alert(accLogoHidden);
+    //    if(imagePath == null || (imagePath =="")){
+    //        document.getElementById('message').innerHTML = "<font color=red>please upload file</font>"
+    //        return false;
+    //    }
+   
+    
+    // document.getElementById("load").style.display = 'block';
+    if(filePath!="" ){ 
+        $.ajaxFileUpload({
+            url:'logoUpload.action?accountId='+accountId+'&accLogoHidden='+accLogoHidden,//
+            secureuri:false,//false
+            fileElementId:'file',//id  <input type="file" id="logo" name="logo" />
+            dataType: 'json',// json
+            success: function(data,status){
+                //alert("suceess")
+                window.location="../acc/viewAccount.action?accountSearchID="+accountId+"&accFlag=accDetails";
+            },
+            error: function(e){
+            
+                // document.getElementById("load").style.display = 'none';
+                document.getElementById('errorLogoValidation').innerHTML = "<font color=red>Please try again later</font>";
+       
+            }
+        });
+    }
+    return false;
+                                                                                              
+//}	
+                                                                                           
+}
+function onChangeLogo()
+{
+                                                                                           
+    var filePath =document.getElementById('file').value;
+    if(filePath!="" )
+    {
+                    
+        var Extension = filePath.substring(
+            filePath.lastIndexOf('.') + 1).toLowerCase();
+        if (Extension == "gif" || Extension == "png" || Extension == "bmp"
+            || Extension == "jpeg" || Extension == "jpg") {
+            //alert("on change")
+            var fileSize = document.getElementById("file").files[0];
+            var sizeInMb = (fileSize.size/1024)/1024;
+            //alert(sizeInMb)
+            var sizeLimit= 2;
+            if (sizeInMb > sizeLimit) {
+                //alert("more size")
+                $("#file").val("");
+                document.getElementById('errorLogoValidation').innerHTML = "<font color=red>File size must be less than 2MB.</font>";  
+                // $("#formValidationMsg").html("<font color='red'>File size must be less than 2MB.</font>");
+                return false
+            }
+        } 
+        else {
+            //alert("change the format")
+            $("#file").val("");
+            document.getElementById('errorLogoValidation').innerHTML = "<font color=red>please upload file types of GIF, PNG, JPG, JPEG and BMP.</font>";  
+            // $("#formValidationMsg").html("<font color='red'>please upload file types of GIF, PNG, JPG, JPEG and BMP.</font>");
+            return false;
+        }  
+    }
+}

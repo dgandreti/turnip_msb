@@ -196,22 +196,22 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
                                 if (dbProfilImagePath != null) {
                                     File imageFile = new File(dbProfilImagePath);
                                     if (imageFile.exists() == false) {
-                                        if("M".equals(dbgender)){
+                                        if ("F".equals(dbgender)) {
+                                            session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.FEMALEIMAGE"));
+
+                                        } else {
                                             session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.GENERALIMAGE"));
                                         }
-                                        else{
-                                        session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.FEMALEIMAGE"));
-                                        }
-                                        } else {
+                                    } else {
                                         session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, dbProfilImagePath);
                                     }
                                 } else {
-                                    if("M".equals(dbgender)){
-                                            session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.GENERALIMAGE"));
-                                        }
-                                        else{
+                                    if ("F".equals(dbgender)) {
                                         session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.FEMALEIMAGE"));
-                                        }
+
+                                    } else {
+                                        session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, Properties.getProperty("Profile.GENERALIMAGE"));
+                                    }
                                 }
                                 session.setAttribute(ApplicationConstants.MSTATUS, dbmstatus);
                                 session.setAttribute(ApplicationConstants.AliasName, dbalias);
@@ -276,9 +276,9 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
                                 String resactionName = "";
                                 // if (DataSourceDataProvider.getInstance().getactionsCount(dbOrgId, dbTypeOfUsr, primaryRole) > 0) {
                                 resactionName = SecurityServiceProvider.doRedirect(dbOrgId, dbTypeOfUsr, primaryRole);
-                                if(resactionName.equals("../general/logout.action")){
-                                getHttpServletRequest().setAttribute("errorMessage", "<font color=\"red\" size=\"1.5\">Sorry Your Account is InActive! </font>");
-                                resultType = INPUT; 
+                                if (resactionName.equals("../general/logout.action")) {
+                                    getHttpServletRequest().setAttribute("errorMessage", "<font color=\"red\" size=\"1.5\">Sorry Your Account is InActive! </font>");
+                                    resultType = INPUT;
                                 }
                                 if (resactionName.equals("")) {
                                     resactionName = SecurityServiceProvider.doRedirect(0, dbTypeOfUsr, primaryRole);
@@ -439,7 +439,8 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
         }
         return resultType;
     }
-   public String accessDeneid() throws Exception {
+
+    public String accessDeneid() throws Exception {
 
         // no operation
         System.out.println("accessDeneid");
@@ -447,6 +448,7 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 
         return SUCCESS;
     }
+
     public void logUserAccess() throws Exception {
         try {
             if (getHttpServletRequest().getSession(false) != null) {

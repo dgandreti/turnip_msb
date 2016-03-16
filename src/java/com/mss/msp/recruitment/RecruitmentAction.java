@@ -147,9 +147,8 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     private String visaAttachmentFileName;
     private String visaAttachmentPath;
     private String consultantIdProof;
-    
-    /* Consultant Activity End*/
 
+    /* Consultant Activity End*/
     public RecruitmentAction() {
     }
     /**
@@ -313,6 +312,8 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     private String reviewType;
     private String venEmail;
     private String venName;
+    private String vendorcomments;
+    private String checked;
     public String getGridPDFDownload() {
         return gridPDFDownload;
     }
@@ -419,7 +420,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 setSkillValuesMap(skillsmap);
                 // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 ConsultantListDetails = ServiceLocator.getRecruitmentService().getConsListDetails(this);
-
+                setConsultantFlag(getConsultantFlag());
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 //List errorMsgList = ExceptionToListUtility.errorMessagetUserLeavesServiceges(ex);
@@ -479,6 +480,9 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 requirementskDetails = ServiceLocator.getRecruitmentService().getRequirementDetails(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(requirementskDetails);
@@ -769,6 +773,9 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 consultantList = ServiceLocator.getRecruitmentService().getConsultantListDetails(httpServletRequest, this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(consultantList);
@@ -802,6 +809,9 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 consultantList = ServiceLocator.getRecruitmentService().searchConsultantListDetails(httpServletRequest, this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(consultantList);
@@ -926,6 +936,9 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 //System.out.println("--------------> Consult Id"+getConsult_id());
                 String activityDetails = ServiceLocator.getRecruitmentService().getActivityDetails(getConsult_id());
                 // System.out.println("" + activityDetails);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(activityDetails);
@@ -995,6 +1008,9 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 setActivityRelation("acc");
                 String activityString = ServiceLocator.getRecruitmentService().getConsultantActivityDetailsbyActivityId(this);
                 // System.out.println("activityString"+activityString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(activityString);
@@ -1185,23 +1201,26 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 if (result > 0) {
                     dataSourceDataProvider.getInstance().getMailIdsOfConAndEmp(this);
                     dataSourceDataProvider.getInstance().getVendorEmpEmail(this);
-                    System.out.println("MAIL IDS IN ACTION AFTER DSDP::>>>>" + getConEmail() + "  " + getEmpEmail());
+                    //System.out.println("MAIL IDS IN ACTION AFTER DSDP::>>>>" + getConEmail() + "  " + getEmpEmail());
                     if ("Online".equals(getInterviewType()) || "Psychometric".equals(getInterviewType())) {
                         setReqName(DataSourceDataProvider.getInstance().getReqNameById(getRequirementId()));
                         mailResult = mailManager.doAddTechReviewEmailLogger(this, validKey, getConEmail(), accToken, getReqName());
                         mailResult = mailManager.techReviewTechieEmailGenerator(this, getEmpEmail());
                         mailResult = mailManager.techReviewMailToVendor(this, getVenEmail());
                     } else {
-                        mailManager.sendInvitationToConsultant(this, getEmpEmail());
+                        mailManager.sendInvitationToConsultant(this, getConEmail(), getEmpEmail());
                         mailResult = mailManager.techReviewTechieEmailGenerator(this, getEmpEmail());
                         mailResult = mailManager.techReviewMailToVendor(this, getVenEmail());
                         conMailResult = mailManager.techReviewConsultantEmailGenerator(this);
                     }
                     if (mailResult > 0 && conMailResult > 0) {
-                        System.out.println("Email logger added ================================>%%%%%%%%%%%%%%%%%%%%%%%%");
+                        //System.out.println("Email logger added ================================>%%%%%%%%%%%%%%%%%%%%%%%%");
                     }
                 }
-                System.out.println("in recruitment action" + result);
+                // System.out.println("in recruitment action" + result);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -1266,6 +1285,9 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String result = ServiceLocator.getRecruitmentService().getSearchTechReviewList(this);
                 System.out.println("in recruitment action" + result);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -1296,6 +1318,9 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String result = ServiceLocator.getRecruitmentService().getConsultDetailsOnOverlay(this);
                 System.out.println("in recruitment action" + result);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
@@ -1336,7 +1361,9 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                     resultString = "0";
                     httpServletResponse.getWriter().write(resultString);
                 }
-
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultMessage = ERROR;
@@ -1537,6 +1564,9 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                         System.out.println("no");
                     }
                 }
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
@@ -3724,6 +3754,22 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
 
     public void setConsultantIdProof(String consultantIdProof) {
         this.consultantIdProof = consultantIdProof;
+    }
+
+    public String getVendorcomments() {
+        return vendorcomments;
+    }
+
+    public void setVendorcomments(String vendorcomments) {
+        this.vendorcomments = vendorcomments;
+    }
+    
+    public String getChecked() {
+        return checked;
+    }
+
+    public void setChecked(String checked) {
+        this.checked = checked;
     }
     
 }

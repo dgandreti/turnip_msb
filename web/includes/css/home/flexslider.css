@@ -41,7 +41,7 @@ html[xmlns] .slides {display: block;}
 *********************************/
 .flexslider, .flexslider-thumbs {margin: 0; background: transparent; position: relative; zoom: 1;}
 .content_slider, .intro_slider, .blog-img-slider {position: relative;padding-bottom:0;}
-.flex-viewport {min-height: 300px;max-height: 2000px; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; transition: all 1s ease;
+.flex-viewport {min-height: 300px;max-height: 375px; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; transition: all 1s ease;
 background-color:  rgb(152,152,152); 
     background-color:  rgba(152,152,152,0.2); 
 }

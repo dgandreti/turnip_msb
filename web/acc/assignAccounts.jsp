@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <meta charset="utf-8">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ServicesBay :: Assigned Accounts Page</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
@@ -25,91 +25,93 @@
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <%--script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script--%>
-        
-        
+
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/account/accountDetailsAJAX.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
-        
-    
+
+
     </head>
     <body style="overflow-x: hidden">
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
-                    <s:include value="/includes/template/header.jsp"/>
-                </div>
-            </div>
-        </header>
-      
-        <section id="generalForm"><!--form-->
-            <div  class="container">
-                <div class="row">
-                      <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <!-- content start -->
-                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
-                        <div class="features_items">
-<!--                            <div class="col-sm-12 ">-->
-                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
-                                    <div class="backgroundcolor" >
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                <font color="#ffffff">Assign Accounts</font>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <!-- content start -->
-                                    <div class="col-sm-12">
-                                        <form autocomplete="off">
-                                         <s:hidden id="toCSRID" name="toCSRID"/>
-                                         <s:hidden id="fromCSRID" name="fromCSRID"/>
-
-<!--                                    <div class="inner-reqdiv-elements"> -->
-                                        <span id="validationMessage"></span>
-                                     <div class="row">    
-                                      <div class="col-sm-4">
-                                       <label class="labelStylereq" style="color:#56a5ec;">Accounts:</label>
-                                       <s:select id="typeTransfer" name="typeTransfer" value="" cssClass="SelectBoxStyles form-control" theme="simple" list="#@java.util.LinkedHashMap@{'TA':'Transfer Accounts','CA':'Copy Accounts'}" onchange="setTransferCopy();" tabindex="1" />
-                                      </div>
-                                      <div class="col-sm-4">
-                                          <label class="labelStylereq" style="color:#56a5ec;">From CSR:</label>
-                                          <s:textfield cssClass=" form-control" name="fromCSR" placeholder="From CSR"  id="fromCSR" tabindex="2"  onkeyup="return getCSR();" onfocus="return removeErrorMsg();" maxLength="60" />
-                                      </div>
-                                      <div class="col-sm-4">
-                                          <label class="labelStylereq" style="color:#56a5ec;">To CSR:</label>
-                                         <s:textfield cssClass=" form-control" name="toCSR" placeholder="To CSR"  id="toCSR" tabindex="3"  onkeyup="return getToCSR();" onfocus="return removeErrorMsg();" maxLength="60" />
-                                      </div>
-                                     </div>
-<!--                                    </div>  -->
-                                       </div>  
-                                    <div class="inner-reqdiv-elements">  
-                                      <div class="row">
-                                          <div class="col-sm-2 pull-right">
-                                             
-                                                  <s:submit type="button" cssClass="add_searchButton form-control"
-                                                                     id="transfer" value="Next" cssStyle="margin:5px 0px;" onclick="return transferAccounts();" tabindex="4" >&nbsp Next &nbsp;<i class="fa fa-arrow-right"></i></s:submit>
-                                          </div>
-                                        <%--  <div class="col-lg-2">  
-                                                 <s:submit type="button" cssClass="cssbutton_emps form-control"
-                                                                  id="copy" value="Copy" cssStyle="margin-left:0px" onclick="return transferAccounts();"/>
-                                             --%>
-                                          </div> 
-                                      </div>  
-                                     
-                                      </form>
-                                   
-                                </div>
-                            
-<!--                        </div>-->
+        <div id="wrap">
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
+                        <s:include value="/includes/template/header.jsp"/>
                     </div>
                 </div>
+            </header>
+            <div id="main">
+                <section id="generalForm"><!--form-->
+                    <div  class="container">
+                        <div class="row">
+                            <s:include value="/includes/menu/LeftMenu.jsp"/>
+                            <!-- content start -->
+                            <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
+                                <div class="features_items">
+                                    <!--                            <div class="col-sm-12 ">-->
+                                    <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                                        <div class="backgroundcolor" >
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                    <font color="#ffffff">Assign Accounts</font>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <!-- content start -->
+                                        <div class="col-sm-12">
+                                            <form autocomplete="off">
+                                                <s:hidden id="toCSRID" name="toCSRID"/>
+                                                <s:hidden id="fromCSRID" name="fromCSRID"/>
+
+                                                <!--                                    <div class="inner-reqdiv-elements"> -->
+                                                <span id="validationMessage"></span>
+                                                <div class="row">    
+                                                    <div class="col-sm-4">
+                                                        <label class="labelStylereq" style="color:#56a5ec;">Accounts</label>
+                                                        <s:select id="typeTransfer" name="typeTransfer" value="" cssClass="SelectBoxStyles form-control" theme="simple" list="#@java.util.LinkedHashMap@{'TA':'Transfer Accounts','CA':'Copy Accounts'}" onchange="setTransferCopy();" tabindex="1" />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="labelStylereq" style="color:#56a5ec;">From CSR</label>
+                                                        <s:textfield cssClass=" form-control" name="fromCSR" placeholder="From CSR"  id="fromCSR" tabindex="2"  onkeyup="return getCSR();" onfocus="return removeErrorMsg();" maxLength="60" />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="labelStylereq" style="color:#56a5ec;">To CSR</label>
+                                                        <s:textfield cssClass=" form-control" name="toCSR" placeholder="To CSR"  id="toCSR" tabindex="3"  onkeyup="return getToCSR();" onfocus="return removeErrorMsg();" maxLength="60" />
+                                                    </div>
+                                                </div>
+                                                <!--                                    </div>  -->
+                                        </div>  
+                                        <div class="inner-reqdiv-elements">  
+                                            <div class="row">
+                                                <div class="col-sm-2 pull-right">
+
+                                                    <s:submit type="button" cssClass="add_searchButton form-control"
+                                                              id="transfer" value="Next" cssStyle="margin:5px 0px;" onclick="return transferAccounts();" tabindex="4" >&nbsp Next &nbsp;<i class="fa fa-arrow-right"></i></s:submit>
+                                                </div>
+                                                <%--  <div class="col-lg-2">  
+                                                         <s:submit type="button" cssClass="cssbutton_emps form-control"
+                                                                          id="copy" value="Copy" cssStyle="margin-left:0px" onclick="return transferAccounts();"/>
+                                                --%>
+                                            </div> 
+                                        </div>  
+
+                                        </form>
+
+                                    </div>
+
+                                    <!--                        </div>-->
+                                </div>
+                            </div>
+                        </div>
+                </section><!--/form-->
             </div>
-            </section><!--/form-->
-            <div style="height: 372px"></div>
+        </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

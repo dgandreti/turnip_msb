@@ -22,11 +22,13 @@
         <action name="storeProofData" class="com.mss.msp.requirement.RequirementAction" method="storeProofData">
             <!--<interceptor-ref name="crudStack" />-->
             <interceptor-ref name="authorizationcheckStack" />
+             <interceptor-ref name="token"/>
             <result name="success" type="redirect">doAddConsultantForReq.action?requirementId=${reqId}&amp;jdId=${jdId}&amp;orgid=${orgId}&amp;jobTitle=${jobTitle}&amp;targetRate=${targetRate}&amp;resultFlag=${"added"}&amp;maxRate=${requirementMaxRate}</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>
             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+            <result name="invalid.token" type="redirect" >doAddConsultantForReq.action?requirementId=${reqId}&amp;jdId=${jdId}&amp;orgid=${orgId}&amp;jobTitle=${jobTitle}&amp;targetRate=${targetRate}&amp;resultFlag=${"added"}&amp;maxRate=${requirementMaxRate}</result>
         </action>
         <action name="getMyConsultantSearch" class="com.mss.msp.recruitment.RecruitmentAction" method="getMyConsultantSearch">
             <!--<interceptor-ref name="crudStack" />-->
@@ -101,9 +103,11 @@
             </interceptor-ref>
             <interceptor-ref name="validation"/>
             <interceptor-ref name="workflow"/>
+             <interceptor-ref name="token"/>
             <result name="success" type="redirect">./addConsultant.action?consultFlag=${consultFlag}</result>
             <result name="error">/error.jsp</result>
-            <result name="accessDenied" type="redirect">/general/deneid.action</result>  
+            <result name="accessDenied" type="redirect">/general/deneid.action</result> 
+             <result name="invalid.token" type="redirect">./addConsultant.action?consultFlag=${consultFlag}</result> 
         </action> 
         <!-- To get the State add by Aklakh   -->       
         <action name="getState" class="com.mss.msp.general.GeneralAction" method="getState">
@@ -165,6 +169,11 @@
                  <param name="requirementId">${requirementId}</param>
                 <param name="jdId">${jdId}</param>
                 <param name="accountSearchID">${accountSearchID}</param>
+                <param name="techReviewFlag">${techReviewFlag}</param>
+                <param name="vendor">${vendor}</param>
+                <param name="customerFlag">${customerFlag}</param>
+                <param name="consult_salary">${consult_salary}</param>
+                <param name="vendorcomments">${vendorcomments}</param>
             </result>
         </action>
         <action name="downloadAttachmentTechReview" class="com.mss.msp.reccruitmentAjax.ConsultantDownloadAction" method="downloadResume"> 
@@ -179,10 +188,12 @@
         </action>
         <action name="addConsultAttachment" class="com.mss.msp.recruitment.RecruitmentAction" method="addConsultAttachment">
             <interceptor-ref name="crudStack" />
+             <interceptor-ref name="token"/>
             <result type="redirect" name="success">editConsultantDetails.action?consult_id=${consult_id}&amp;consultFlag=${consultFlag}</result> 
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="invalid.token" type="redirect">editConsultantDetails.action?consult_id=${consult_id}&amp;consultFlag=${consultFlag}</result>
         </action>
         
         <!-- Added By Kiran To get consultant Activity -->

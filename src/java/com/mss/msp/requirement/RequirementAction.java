@@ -139,6 +139,8 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
     private String vendorComments;
     private String ssnNo;
     private String requirementQualification;
+    private String customerName;
+    private String status_check;
 
     public RequirementAction() {
     }
@@ -217,7 +219,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(), skillsmap);
                 //  setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 //  setPreSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-                requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(), skillsmap);
+                //requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(), skillsmap);
                 resultMessage = SUCCESS;
             }
         } catch (Exception ex) {
@@ -239,6 +241,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 System.out.println("account Search id" + getAccountSearchID());
                 requirement = ServiceLocator.getRequirementService().addRequirementDetails(this, getOrgId());
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write("" + requirement + "");
@@ -310,6 +315,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
         String resultMessage;
         resultMessage = LOGIN;
         int updated = 0;
+        int mailResult=0;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 System.out.println("ddddd" + getRequirementId() + "     " + getRequirementFrom() + "   " + getRequirementAddress());
@@ -320,6 +326,21 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 // setSales(dataSourceDataProvider.getInstance().getSalesTeam(org_id));
 
                 updated = ServiceLocator.getRequirementService().updateRequirement(userid, this);
+                System.out.println(getRequirementStatus()+"-----------status------------------------"+getStatus_check());
+                if (updated > 0) {
+                    if ((!"OR".equalsIgnoreCase(getStatus_check()))&&("OR".equalsIgnoreCase(getRequirementStatus()))) {
+                        setMailIds(DataSourceDataProvider.getInstance().getMailIdsOfVendorAssociated(getRequirementId()));
+                        StringTokenizer mailID = new StringTokenizer(getMailIds(), ",");
+                        while (mailID.hasMoreElements()) {
+                            setMailIds(mailID.nextElement().toString());
+                            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&>>>>" + getMailIds());
+                            mailResult = mailManager.requirementStatusChangeMailGenerator(this , getMailIds(), userid);
+                        }
+                        if (mailResult > 0) {
+                            System.out.println("Email logger added ================================>%%%%%%%%%%%%%%%%%%%%%%%%");
+                        }
+                    }
+                }
                 System.out.println("updated" + updated);
 
             } catch (Exception ex) {
@@ -352,6 +373,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 System.out.println("############# IN REQUIREMENT ACTIONNNNNNNNNNNNNNNNNNNNNNNNNN");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 requirementskDetails = ServiceLocator.getRequirementService().getRequirementDetails(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(requirementskDetails);
@@ -383,6 +407,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String list = ServiceLocator.getRequirementService().getReqDetailsBySearch(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(list);
@@ -414,6 +441,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String skills = ServiceLocator.getRequirementService().getSkillDetaisls(this);
                 skills = skills.replaceAll("<br/>", "\n");
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(skills);
@@ -599,6 +629,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 String list = ServiceLocator.getRequirementService().getSearchRequirementsList(httpServletRequest, this, skillsmap);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(list);
@@ -628,6 +661,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 String list = ServiceLocator.getRequirementService().getRecruiterOverlay(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(list);
@@ -646,6 +682,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 String list = ServiceLocator.getRequirementService().getSkillOverlay(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(list);
@@ -664,6 +703,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 String list = ServiceLocator.getRequirementService().getPreSkillOverlay(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(list);
@@ -700,6 +742,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 System.out.println("In Action doReleaseRequirements-->reqId-->" + getRequirementId());
 
                 int record = ServiceLocator.getRequirementService().doReleaseRequirements(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write("" + record + "");
@@ -731,6 +776,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 String csrReq = ServiceLocator.getRequirementService().getRequirementDashBoardDetails(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -763,6 +811,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 String csrReq = ServiceLocator.getRequirementService().getRequirementDashBoardDetailsOnOverlay(this);
                 //please change query after uncomment above line.
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -794,6 +845,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String csrReq = null;//ServiceLocator.getRequirementService().getVendorRequirementDashBoardDetails(httpServletRequest, this);
                 //please change query after uncomment it and remove null;
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -824,6 +878,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String csrReq = ServiceLocator.getRequirementService().getVendorRequirementsDashBoard(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -855,6 +912,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 System.out.println("IN ACTION getVendorDashBoardDetailsOnOverlay()");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String csrReq = ServiceLocator.getRequirementService().getVendorDashBoardDetailsOnOverlay(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -912,6 +972,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 String csrReq = ServiceLocator.getRequirementService().getCustomerRequirementDashBoardDetails(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
@@ -943,6 +1006,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String skills = ServiceLocator.getRequirementService().getPreferedSkillDetails(this);
                 skills = skills.replaceAll("<br/>", "\n");
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(skills);
@@ -1768,5 +1834,21 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
 
     public void setRequirementQualification(String requirementQualification) {
         this.requirementQualification = requirementQualification;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getStatus_check() {
+        return status_check;
+    }
+
+    public void setStatus_check(String status_check) {
+        this.status_check = status_check;
     }
 }

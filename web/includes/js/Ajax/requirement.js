@@ -74,6 +74,10 @@ function getSearchRequirementsList()
     var reqCategoryValue=$("#reqCategoryValue").val();
     var reqCreatedBy=$("#reqCreatedBy").val();
     var requirementValidation =document.getElementById("requirementValidation");
+    var customerName = $("#customerName").val();
+    if(customerName==undefined){
+        customerName="";
+    }
     //  alert(reqCreatedBy)
     if(reqCategoryValue==undefined)
     {
@@ -132,7 +136,8 @@ function getSearchRequirementsList()
     '&skillCategoryArry='+skillCategoryArry+
     '&requirementStatus='+requirementStatus+
     '&reqCategoryValue='+reqCategoryValue+
-    '&reqStart='+reqStart+'&reqEnd='+reqEnd+'&accountFlag='+accountFlag+'&vendor='+vendor+'&reqCreatedBy='+reqCreatedBy;
+    '&reqStart='+reqStart+'&reqEnd='+reqEnd+'&accountFlag='+accountFlag+'&vendor='+vendor+
+    '&reqCreatedBy='+reqCreatedBy+'&customerName='+customerName;
     // alert(url);
     
     var req=initRequest(url);
@@ -176,14 +181,15 @@ function populateReqTableReq(response){
     {
         table.deleteRow(i);
     }
-    if(vendor=='yes')
-    {
-        var res = "Job Id" + "|" + "Jog Title" + "|" + "Customer" + "|" + "Skills Set" + "|" + "Posted Date" +"|" + "Status" + "^"; // for grid download
-    }
-    else
-    {
-       var res = "Job Id" + "|" + "Jog Title" + "|" + "Positions" + "|" + "Skills Set" + "|" + "Posted Date" + "|" + "Status" + "|" + "No of Submissions" + "^"; // for grid download
-    }
+    var res;
+    //    if(vendor=='yes')
+    //    {
+    //        var res = "Job Id" + "|" + "Jog Title" + "|" + "Customer" + "|" + "Skills Set" + "|" + "Posted Date" +"|" + "Status" + "^"; // for grid download
+    //    }
+    //    else
+    //    {
+    //       var res = "Job Id" + "|" + "Jog Title" + "|" + "Positions" + "|" + "Skills Set" + "|" + "Posted Date" + "|" + "Status" + "|" + "No of Submissions" + "^"; // for grid download
+    //    }
     if(response.length>0){
         for(var i=0;i<reqList.length-1;i++){     
        
@@ -192,14 +198,16 @@ function populateReqTableReq(response){
                                                          
                 var reqRow = $("<tr />")
                 $("#reqTableInRecruiter").append(reqRow); //this will append tr element to table... keep its reference for a while since we will add cels into it
-                if(vendor=='yes')
-                {
-                    res=res+(Values[12] +"|"+ Values[1]+"|"+ Values[9]+"|"+ Values[10]+"|"+Values[18]+"|"+ Values[4]+"^");      
-                }
-                else
-                {
-                    res=res+(Values[12]+"|"+ Values[1]+"|"+ Values[2]+"|"+ Values[10]+"|"+Values[18]+ "|"+ Values[4]+"|"+Values[17]+"^");      
-                }
+                //                if(vendor=='yes')
+                //                {
+                res=Values[19];
+                //                        res+(Values[12] +"|"+ Values[1]+"|"+ Values[9]+"|"+ Values[10]+"|"+Values[18]+"|"+ Values[4]+"^");      
+                //                }
+                //                else
+                //                {
+                //                    res=Values[19];
+                //                        res+(Values[12]+"|"+ Values[1]+"|"+ Values[2]+"|"+ Values[10]+"|"+Values[18]+ "|"+ Values[4]+"|"+Values[17]+"^");      
+                //                }
                 if(vendor=='yes'){
                     reqRow.append($('<td><a href="../../Requirements/requirementedit.action?jdId='+ Values[12] +'&accountSearchID='+orgid+'&requirementId='+Values[0]+'&accountFlag='+accountFlag+'&vendor=yes" > ' + Values[12] + "</td>"));
                     reqRow.append($("<td>" +Values[1] + "</td>"));
@@ -231,7 +239,7 @@ function populateReqTableReq(response){
                 //                }
                 //                // reqRow.append($('<td><a href="#" class="recSkillOverlay_popup_open" onclick="showReqSkillOverlay('+Values[0]+');" >Click'+"</td>"));
                 // reqRow.append($('<td><a href="#" class="preSkillOverlay_popup_open" onclick="showPreReqSkillOverlay('+Values[0]+');" >Click'+"</td>"));
-               /* if(vendor!='yes'){
+                /* if(vendor!='yes'){
  
                     reqRow.append($('<td><a href="" class="recruiterOverlay_popup_open" onclick="showOverlayRecruiter('+Values[5]+');" >'+Values[7]+"</td>"));
                     reqRow.append($('<td><a href="" class="recruiterOverlay_popup_open" onclick="showOverlayRecruiter('+Values[6]+');" >'+Values[8]+"</td>"));
@@ -249,25 +257,25 @@ function populateReqTableReq(response){
                     if(Values[4]=='Opened')
                     {
                         if(role==3 || role==13){
-                            reqRow.append($('<td><center><a href="#" onclick="doReleaseRequirement('+Values[0]+','+orgid+',\''+Values[14]+ '\');">'+"<img src='../../includes/images/release.png' height='20' width='20' ></center></td>"));
+                            reqRow.append($('<td><center><a href="#" onclick="doReleaseRequirement('+Values[0]+','+orgid+',\''+Values[14]+ '\');">'+"<i class='fa fa-arrow-circle-o-right fa-size'></i></center></td>"));
                         }
                         else
                         {
-                            reqRow.append($('<td><center><a href="#" >'+"<img src='../../includes/images/release.png' height='20' width='20' style='opacity:0.3' ></center></td>"));       
+                            reqRow.append($('<td><center><a href="#" >'+"<i class='fa fa-arrow-circle-o-right fa-size' style='opacity: 0.3' ></i></center></td>"));       
                         }
                     }else{
-                        reqRow.append($('<td><center><a href="#" >'+"<img src='../../includes/images/release.png' height='20' width='20' style='opacity:0.3' ></center></td>"));
+                        reqRow.append($('<td><center><a href="#" >'+"<i class='fa fa-arrow-circle-o-right fa-size' style='opacity: 0.3' ></i></center></td>"));
                     }
                 }
                 if(vendor=='yes'){
-                    if(Values[4]=='Closed'){
-                        reqRow.append($('<td><center>'+"<img src='../../includes/images/addCons.png' height='20' width='20' style='opacity:0.3' ></center></td>"));      
+                    if(Values[4]=='Closed'||Values[4]=='Released'){
+                        reqRow.append($('<td><center>'+"<i class='fa fa-user-plus fa-size' style='opacity:0.3'></i></center></td>"));      
                     }else{
-                        reqRow.append($('<td><center><a href="../../recruitment/consultant/doAddConsultantForReq.action?requirementId='+Values[0]+'&jdId='+Values[12]+'&jobTitle='+Values[1]+'&targetRate='+Values[15]+'&maxRate='+Values[16]+'&orgid='+orgid+'">'+"<img src='../../includes/images/addCons.png' height='20' width='20' ></center></td>"));      
+                        reqRow.append($('<td><center><a href="../../recruitment/consultant/doAddConsultantForReq.action?requirementId='+Values[0]+'&jdId='+Values[12]+'&jobTitle='+Values[1]+'&targetRate='+Values[15]+'&maxRate='+Values[16]+'&orgid='+orgid+'">'+"<i class='fa fa-user-plus fa-size'></i></center></td>"));      
                     }
                 }
                 if(role==3){
-                    reqRow.append($('<td><center><a href="<%=request.getContextPath()%>/../../../Requirements/doCopyRequirement.action?customerFlag='+customer+'&accountSearchID='+orgid+'&requirementId='+Values[0]+'">'+"<img src='../../includes/images/copyImage.png' height='20' width='20' ></center></td>"));      
+                    reqRow.append($('<td><center><a href="<%=request.getContextPath()%>/../../../Requirements/doCopyRequirement.action?customerFlag='+customer+'&accountSearchID='+orgid+'&requirementId='+Values[0]+'">'+"<i class='fa fa-files-o fa-size' ></i></center></td>"));      
                 }
                 
                 
@@ -304,7 +312,7 @@ function doOnLoadReqList() {
     //myCalendar.setDateFormat("%m/%d/%Y %H:%i");
     myCalendar.setDateFormat("%m-%d-%Y");
     myCalendar.hideTime();
-    
+    document.getElementById("loadingRequirements").style.display="none";
 }
 
 function reqSkillOverlay(response){
@@ -570,7 +578,7 @@ function updateVendorDetails()
     var req=initRequest(url);
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
-            $("UpdateVendorInfo").html(" <b><font class='StripForResultMessage' style='font-size:12px' color='green'>Vendor Information updated Successfully.</font></b><br>");
+            $("UpdateVendorInfo").html("<font class='StripForResultMessage' style='font-size:12px' color='green'>Vendor Information updated Successfully.</font><br>");
         } 
    
     };
@@ -1326,10 +1334,19 @@ function getEmailExistance(){
     var conEmail=$("#conEmail").val();
     var reqId=$("#reqId").val();
     var resourceType=$("#resourceType").val();
+    var contactType=$("#contactType").val();
+    if(conEmail.replace(/\s/g, '')=="" )
+    {
+        $("e1").html(" <font color='red'>Please Enter email</font>");
+        $("e1").css("margin-left", "30px");
+        $("#skillField").css('display', 'none'); 
+
+        return false;  
+    }
     // alert(conEmail+" and...........>  "+reqId)
     // alert(resourceType)
     if(EmailValidation1(conEmail)){
-        var url='../../recruitment/consultant/getConsultanceExistance.action?conEmail='+conEmail+'&resourceType='+resourceType+'&reqId='+reqId;
+        var url='../../recruitment/consultant/getConsultanceExistance.action?conEmail='+conEmail+'&resourceType='+resourceType+'&reqId='+reqId+'&contactType='+contactType;
         //alert(url);
         var req=initRequest(url);
         req.onreadystatechange = function() {
@@ -1341,46 +1358,50 @@ function getEmailExistance(){
                     var Values=resultMsg.split("#");
                     if(Values[2]!=""){
                         document.getElementById("ssnNo").value=Values[2];
-                        document.getElementById("ssnNo").disabled = true; 
+                        document.getElementById("ssnNo").readOnly = true; 
                     }
                     else{
-                        document.getElementById("ssnNo").disabled = false;
+                        document.getElementById("ssnNo").readOnly = false;
                         document.getElementById("ssnNo").value ="";
                     }
                     // alert(Values[0])
                     //alert(Values[1])
                     if(Values[0]==3){
                         $("e1").html("");
-                        $("e1").html(" <b><font color='red'>Already consultant exists.</font></b>");
+                        $("e1").html(" <font color='red'>Already consultant exists.</font>");
+                        $("e1").css("margin-left", "30px");
                         document.getElementById("conEmail").value="";
-//                        $("#IsEmployee").css('visibility', 'hidden');
-                        $("#skillField").css('visibility', 'hidden');
+                        //                        $("#IsEmployee").css('visibility', 'hidden');
+                        $("#skillField").css('display', 'none');
                     }
                     if(Values[0]==2){
                         $("e1").html("");
-                        $("e1").html(" <b><font color='green'>email is valid.</font></b>");
-                        $("#skillField").css('visibility', 'visible');
+                        $("e1").html(" <font color='green'>Email is valid.</font>");
+                        $("e1").css("margin-left", "30px");
+                        $("#skillField").css('display', 'block');
                     }
                     if(Values[0]==1){
                         //alert("sorry email doesnt exist")
                         $("e1").html("");
-                        $("e1").html(" <b><font color='red'>sorry email doesnt exist.</font></b>");
+                        $("e1").html(" <font color='red'>Sorry email doesn't exist.</font>");
+                        $("e1").css("margin-left", "30px");
                         document.getElementById("conEmail").value="";
-                        $("#skillField").css('visibility', 'hidden');
-//                        $("#IsEmployee").css('visibility', 'hidden');
+                        $("#skillField").css('display', 'none');
+                    //                        $("#IsEmployee").css('visibility', 'hidden');
                     }
                     document.getElementById("resourceType").value=Values[1];
                     var val=  Values[3].replace(/[\[\]']+/g,'');
-//                    resourceVendorType();
+                    //                    resourceVendorType();
                     setSkillForVendorEmployee(val,id);
                 } else{
                     $("e1").html("");
-                    $("e1").html(" <b><font color='red'>sorry email doesnt exist.</font></b>");
+                    $("e1").html("<font color='red'>sorry email doesnt exist.</font>");
+                    $("e1").css("margin-left", "30px");
                     document.getElementById("conEmail").value="";
                     document.getElementById("resourceType").value="Val";
-                    $("#skillField").css('visibility', 'hidden');
-//                    $("#IsEmployee").css('visibility', 'hidden');
-//                    resourceVendorType();
+                    $("#skillField").css('display', 'none');
+                //                    $("#IsEmployee").css('visibility', 'hidden');
+                //                    resourceVendorType();
                 }
             }
         };
@@ -1389,9 +1410,10 @@ function getEmailExistance(){
         req.send(null);
     }else{
         $("e1").html("");
-        $("e1").html(" <b><font color='red'>sorry email not valid.</font></b>");
-        $("#skillField").css('visibility', 'hidden');
-//        $("#IsEmployee").css('visibility', 'hidden');
+        $("e1").html("<font color='red'>Sorry email not valid.</font>");
+        $("e1").css("margin-left", "30px");
+        $("#skillField").css('display', 'none');
+    //        $("#IsEmployee").css('visibility', 'hidden');
     }
     return false;
 }
@@ -1445,6 +1467,9 @@ function checkRecordInReqConRel(conId,reqId){
     return false;
 }
 function addconsultantValidation(){
+    var fullPath = document.getElementById('file').value;
+  
+    // alert(fullPath); 
     var skillCatArry = [];    
     $("#skillListValue :selected").each(function(){
         skillCatArry.push($(this).val()); 
@@ -1474,18 +1499,20 @@ function addconsultantValidation(){
     {
         // alert("no email");
         $("e1").html(" <b><font color='red'>Email Should not be empty</font></b>");
-        
+        $("e1").css("margin-left", "30px");
         return false;
     }
     if(ratePerHour=="")
     {
         // alert("no ratePerHour");
         $("e1").html(" <b><font color='red'>Please Enter Rate/Hr </font></b>");
+        $("e1").css("margin-left", "30px");
         return false;
     }
     if(skillCatArry==""){
        
-        $("e1").html(" <b><font color='red'>Please select skill</font></b>");
+        $("e1").html(" <b><font color='red'>Please select Skill</font></b>");
+        $("e1").css("margin-left", "30px");
         //  $("#skillListValue").css("border", "1px solid red");
         // $("e1").show().delay(4000).fadeOut();
         return false;
@@ -1497,24 +1524,73 @@ function addconsultantValidation(){
     {
         // alert("no email");
         $("e1").html(" <b><font color='red'>Email Must be Valid</font></b>");
-        
+        $("e1").css("margin-left", "30px");
         return false;
     }
     if(!ratepattern.test(ratePerHour))
     {
         // alert("no ratePerHour");
         $("e1").html(" <b><font color='red'>Rate/Hr Must be valid</font></b>");
+        $("e1").css("margin-left", "30px");
         return false;
     }
     if(file=="" && isHidden==false)
     {
         // alert("no ratePerHour");
         $("e1").html(" <b><font color='red'>Please upload the attachment</font></b>");
+        $("e1").css("margin-left", "30px");
         return false;
     }
     if(file!='' && isHidden==false)
-    {
-        var allowed_extensions = new Array("pdf","doc","docx");
+    { 
+        // 
+        // document.getElementById('message').innerHTML = '';
+        var fullPath = document.getElementById('file').value;
+  
+       // alert(fullPath);     
+        var size = document.getElementById('file').files[0].size;
+        var extension = fullPath.substring(fullPath.lastIndexOf('.')+1);
+
+        if(extension=="pdf"||extension=="doc"|| extension=="docx"){
+            var size = document.getElementById('file').files[0].size;
+            //alert(parseInt(size));
+           // alert(fullPath.length);       
+            if(fullPath.length>50){
+                //alert(fullPath.length);
+                document.getElementById('file').value = '';
+                $("e1").html(" <font color=red>File name length must be less than 50 characters!</font>");
+                // document.getElementById('message').innerHTML = "<font color=red>File name length must be less than 50 characters!</font>"
+                // showAlertModal("File size must be less than 2 MB");
+                return (false);
+            }
+            else 
+            {
+                if(parseInt(size)<2097152) {
+                
+                  
+                }else {
+                    document.getElementById('file').value = '';
+                    $("e1").html("<font color=red>File size must be less than 2 MB.</font>");
+                    // document.getElementById('message').innerHTML = "<font color=red>File size must be less than 2 MB.</font>"
+                    // showAlertModal("File size must be less than 2 MB");
+                    return (false);
+                }
+            }
+        }
+        else 
+        {
+            document.getElementById('file').value = "";
+            $("e1").html("<font color=red>Invalid file extension! Please select pdf or doc or docx file.</font>");
+            // document.getElementById('message').innerHTML = "<font color=red>Invalid file extension!Please select pdf or doc or docx or gif or jpg or png or jpeg file.</font>"
+            return false;
+        }
+    }
+
+        
+    //  
+     
+        
+    /*     var allowed_extensions = new Array("pdf","doc","docx");
         var file_extension = file.split('.').pop(); // split function will split the filename by dot(.), and pop function will pop the last element from the array which will give you the extension as well. If there will be no extension then it will return the filename.
 
         for(var i = 0; i < allowed_extensions.length; i++)
@@ -1525,9 +1601,9 @@ function addconsultantValidation(){
             }
         }
         $("e1").html(" <b><font color='red'>The file uploaded is invalid type</font></b>");
-
+        $("e1").css("margin-left", "30px");
         return false;
-    }
+    } */
     //    else
     //    { 
     //        // var url='Requirements/storeProofData.action?proofType='+proofType+'&ppno='+ppno+'&pan='+pan+'&reqId='+reqId+'&conEmail='+conEmail+'&ratePerHour='+ratePerHour;
@@ -1808,14 +1884,17 @@ function ratePerHourValidation(){
     var rate=document.getElementById("ratePerHour").value;
     pattern = /^[0-9]+$/;
     if(rate=="" || rate==null){
-        $("e1").html("<font color='red'>field is required</font>");
+        $("e1").html("<font color='red'>Field is required</font>");
+        $("e1").css("margin-left", "30px");
         $("#ratePerHour").css("border", "1px solid red");
         return false;
     }
     else if(!pattern.test(rate))
     {
-        $("e1").html("<font color='red'>must be valid number");
+        $("e1").html("<font color='red'>Must be valid number");
+        $("e1").css("margin-left", "30px");
         $("#ratePerHour").css("border", "1px solid red");
+        document.getElementById("ratePerHour").value="";
         return false;
     }
     else
@@ -1918,11 +1997,30 @@ function commentsCheckCharacters(id){
     return false;
 };
 function display_downloadButtons(){
-var val = document.getElementById("rec_exits").value;
+    var val = document.getElementById("rec_exits").value;
     if (val=="no"){
         $("#downloading_grid").css('display', 'none');
     }
     else{
         $("#downloading_grid").css('display', '');
     }
+}
+function clearConsultantSubmissionFields(){
+    $("#conEmail").val("");
+    $("#ratePerHour").val("");
+    $("#ssnNo").val("");
+    $("#file").val("");
+    $("#skillField").css('display', 'none');  
+}
+function downloadPDFRequirementList(){
+    var gridDownload=document.getElementById('gridDownload').value;
+    var url= "../../recruitment/consultant/downloadResults.action?pdfHeaderName=Requirements List&gridDownload="
+    +gridDownload+"&gridDownloadFlag=Req";
+    window.location=url;
+}
+function downloadXLSRequirementList(){
+    var gridDownload=document.getElementById('gridDownload').value;
+    var url= "../../recruitment/consultant/downloadXlsResults.action?pdfHeaderName=Requirements List&gridDownload="
+    +gridDownload+"&gridDownloadFlag=Req";
+    window.location=url;
 }

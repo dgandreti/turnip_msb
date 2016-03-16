@@ -48,7 +48,7 @@
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/TaskAjax.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/dashboard.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
-
+         <script type="text/JavaScript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $('#autoUpdate').hide();
@@ -102,6 +102,7 @@
         <sx:head />
     </head>
     <body onload="doOnLoad(); init(); getTaskType(); " style="overflow-x: hidden">
+         <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -110,7 +111,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <section id="generalForm"><!--form-->
 
 
@@ -125,8 +126,8 @@
                                 <div class="col-lg-14">
                                     <div class="panel panel-info">
                                         <div class="panel-heading" id="taskedit-heading">
-                                            <font class="titleColor">&nbsp;&nbsp;&nbsp;Edit Task  </font>
-                                            <span class="pull-right"><a href="#"><img onclick="history.back();return false;" src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></a></span>
+                                            <font class="titleColor">&nbsp;&nbsp;&nbsp;Edit Task  </font>  
+                                            <span class="pull-right"><a href="#" style="margin-right:9px" onclick="history.back();return false;"><i class="fa fa-undo"></i></a></span>
                                         </div>
                                         <div class="panel-body" id="panel-task-body" >
                                             <!-- Nav tabs -->
@@ -140,68 +141,69 @@
                                             </ul>
                                             <div class="tab-content">
                                                 <div class="tab-pane fade in active" id="home">
-                                                    <span ><UpdateTaskInfo></UpdateTaskInfo></span>
+                                                   
                                                     <form  theme="simple">
                                                         <div><br>
                                                             <span id="editTaskValidate"><editTask></editTask></span>
+                                                             <span ><UpdateTaskInfo></UpdateTaskInfo></span>
                                                             <div class="inner-reqdiv-elements">
                                                                 <div class=" ">
                                                                     <div class="col-sm-4 required">
-                                                                        <label class="labelStylereq" style="color: #56a5ec;">StartDate: </label>
-                                                                        <s:textfield cssClass="form-control dateImage" name="startDate" id="start_date"  value="%{tasksVto.start_date}" tabindex="1"  onkeypress="return enterTaskDateRepository(this)"/>
+                                                                        <label class="labelStylereq" style="color: #56a5ec;">StartDate </label>
+                                                                        <div class="calImage"><s:textfield cssClass="form-control " name="startDate" id="start_date"  value="%{tasksVto.start_date}" tabindex="1"  onkeypress="return enterTaskDateRepository(this)"><i class="fa fa-calendar"></i></s:textfield>
                                                                         <s:hidden name="taskid" value="%{taskid}" id="taskid"/>
-                                                                    </div>
+                                                                        </div></div>
                                                                     <div class="col-sm-4 required">
-                                                                        <label class="labelStylereq" style="color: #56a5ec;">EndDate: </label>
-                                                                        <s:textfield cssClass="form-control dateImage" name="endDate" id="end_date"  value="%{tasksVto.end_date}" tabindex="1"  onkeypress="return enterTaskDateRepository(this)"/>
-                                                                    </div>
+                                                                        <label class="labelStylereq" style="color: #56a5ec;">EndDate </label>
+                                                                        <div class="calImage"> <s:textfield cssClass="form-control " name="endDate" id="end_date"  value="%{tasksVto.end_date}" tabindex="2"  onkeypress="return enterTaskDateRepository(this)"><i class="fa fa-calendar"></i></s:textfield>
+                                                                        </div></div>
                                                                     <div class="col-sm-4 ">
-                                                                        <label class="labelStylereq" style="color: #56a5ec;">Status: </label>
-                                                                        <s:select  id="task_status"  name="taskStatus" cssClass="SelectBoxStyles form-control" headerKey="-1" theme="simple" list="tasksStatusList" value="%{tasksVto.task_status}" />
+                                                                        <label class="labelStylereq" style="color: #56a5ec;">Status </label>
+                                                                        <s:select  id="task_status"  name="taskStatus" cssClass="SelectBoxStyles form-control" headerKey="-1" theme="simple" list="tasksStatusList" tabindex="3" value="%{tasksVto.task_status}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="inner-reqdiv-elements">
                                                                 <div class=" ">
                                                                     <div class="col-sm-4">
-                                                                        <label class="labelStylereq" style="color: #56a5ec;">Priority: </label>
-                                                                        <s:select  id="taskPriority"  name="priority" cssClass="SelectBoxStyles form-control" headerKey="M" headerValue="Medium" theme="simple"  list="#@java.util.LinkedHashMap@{'L':'Low','H':'High'}" value="%{tasksVto.task_priority}"  />
+                                                                        <label class="labelStylereq" style="color: #56a5ec;">Priority </label>
+                                                                        <s:select  id="taskPriority"  name="priority" cssClass="SelectBoxStyles form-control" headerKey="M" headerValue="Medium" theme="simple"  tabindex="4" list="#@java.util.LinkedHashMap@{'L':'Low','H':'High'}" value="%{tasksVto.task_priority}"  />
                                                                     </div>
                                                                     <div class="col-sm-4">
-                                                                        <label class="labelStylereq" style="color: #56a5ec;">Related To: </label>
-                                                                        <s:select  id="taskRelatedTo" name="taskRelatedTo" cssClass="SelectBoxStyles form-control" headerKey="-1"  theme="simple" list="tasksRelatedToList"  onchange="getTaskType();" value="%{tasksVto.task_related_to}"  />
+                                                                        <label class="labelStylereq" style="color: #56a5ec;">Related To </label>
+                                                                        <s:select  id="taskRelatedTo" name="taskRelatedTo" cssClass="SelectBoxStyles form-control" headerKey="-1"  theme="simple" list="tasksRelatedToList"  onchange="getTaskType();" tabindex="5" value="%{tasksVto.task_related_to}"  />
                                                                         <s:hidden name="taskid" value="%{taskid}" id="taskid"/>
                                                                     </div>
                                                                     <div class="col-sm-4" id="csrDiv">
-                                                                        <label class="labelStylereq" style="color: #56a5ec;">Projects: </label>
-                                                                        <s:select  id="taskType"   name="taskType" cssClass="SelectBoxStyles form-control" headerKey="-1"  theme="simple" list="%{tasksVto.typeMaps}" value="%{tasksVto.task_prj_related_to}" onchange="getRelatedNames();" />
+                                                                        <label class="labelStylereq" style="color: #56a5ec;">Projects </label>
+                                                                        <s:select  id="taskType"   name="taskType" cssClass="SelectBoxStyles form-control" headerKey="-1"  theme="simple" list="%{tasksVto.typeMaps}" value="%{tasksVto.task_prj_related_to}" tabindex="6" onchange="getRelatedNames();" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="inner-reqdiv-elements required">
                                                                 <div class="col-sm-12">
-                                                                <label class="labelStylereq" style="color: #56a5ec;">Title:</label>
-                                                                <s:textfield name="taskName" id="task-textform" placeholder="Enter Title Here" cssClass="form-control" value="%{tasksVto.task_title}" maxLength="60" />
+                                                                <label class="labelStylereq" style="color: #56a5ec;">Title</label>
+                                                                <s:textfield name="taskName" id="task-textform" placeholder="Enter Title Here" cssClass="form-control" value="%{tasksVto.task_title}" tabindex="7" maxLength="60" />
                                                                 </div>
                                                                 </div>
                                                             <div class="inner-reqdiv-elements">
                                                                 <div class="col-sm-12">
-                                                                <label class="labelStylereq" style="color: #56a5ec;">Description:</label>
-                                                                <s:textarea name="task_comments" id="task_comments" placeholder="Enter Task Description Here" cssClass="form-control" value="%{tasksVto.task_comments}" onkeypress="checkEditTaskDescription(this)" maxLength="60"/>
+                                                                <label class="labelStylereq" style="color: #56a5ec;">Description</label>
+                                                                <s:textarea name="task_comments" id="task_comments" placeholder="Enter Task Description Here" cssClass="form-control" value="%{tasksVto.task_comments}" onkeypress="checkEditTaskDescription(this)" tabindex="8" maxLength="60"/>
                                                                 </div>
                                                                 </div>
                                                               <div class="charNum" id="description_feedback"></div>
                                                             <div class="inner-reqdiv-elements">
                                                                 <div class="col-sm-13">
                                                                     <div class="col-sm-4">
-                                                                        <label class="labelStylereq" style="color: #56a5ec;">Primary AssignTo: </label>
-                                                                        <s:select  id="primary_assign"  name="primaryAssign" cssClass="SelectBoxStyles form-control" headerKey="-1" theme="simple" list="teamMemberNames" value="%{tasksVto.pri_assigned_to}" />
+                                                                        <label class="labelStylereq" style="color: #56a5ec;">Primary AssignTo </label>
+                                                                        <s:select  id="primary_assign"  name="primaryAssign" cssClass="SelectBoxStyles form-control" headerKey="-1" theme="simple" list="teamMemberNames" tabindex="9" value="%{tasksVto.pri_assigned_to}" />
                                                                         <s:hidden name="secondaryId" id="secondaryId" value="%{tasksVto.sec_reportsId}" />
                                                                         <s:hidden name="primaryId" id="primaryId" value="%{tasksVto.pri_assigned_to}" />
                                                                     </div>
                                                                     <div class="col-sm-4">
-                                                                        <label class="labelStylereq" style="color: #56a5ec;">Secondary AssignTo:</label>
-                                                                        <s:textfield  id="secondaryReport"  name="sec_assign_to" placeholder="SecondaryAssignTo" cssClass="form-control"  theme="simple" onkeyup="return getSecondaryAssignedNames();" value="%{tasksVto.sec_assigned_to}" autocomplete='off' maxLength="30"/>
+                                                                        <label class="labelStylereq" style="color: #56a5ec;">Secondary AssignTo</label>
+                                                                        <s:textfield  id="secondaryReport"  name="sec_assign_to" placeholder="SecondaryAssignTo" cssClass="form-control"  theme="simple" onkeyup="return getSecondaryAssignedNames();" value="%{tasksVto.sec_assigned_to}" autocomplete='off' tabindex="10" maxLength="30"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -211,7 +213,7 @@
                                                                 <div class="panel panel-warning">
                                                                     <div class="panel-heading"> 
                                                                         <div class="form-group">
-                                                                            <s:checkbox name="textcheck" style="color:#0066FF;" id="checkbox1" label="Do you need alert" onchange="toggleDisabled(this.checked)" />
+                                                                            <s:checkbox name="textcheck" style="color:#0066FF;" id="checkbox1" label="Do you need alert" onchange="toggleDisabled(this.checked)" tabindex="11" />
                                                                         </div>
                                                                     </div>
                                                                     <div class="panel-body" id="autoUpdate">
@@ -227,14 +229,14 @@
                                                                         <div class="form-group ">
                                                                             <div class="">
                                                                                 <div class="col-sm-4">
-                                                                                    <label class="labelStylereq" style="color: #56a5ec;">Alert me:</label>
-                                                                                    <s:select  cssClass="SelectBoxStyles form-control" name="alertme" theme="simple" list="#@java.util.LinkedHashMap@{'EM':'every month','BW':'before week','BD':'before 1 day'}" /><br>
+                                                                                    <label class="labelStylereq" style="color: #56a5ec;">Alert me</label>
+                                                                                    <s:select  cssClass="SelectBoxStyles form-control" name="alertme" theme="simple" tabindex="12" list="#@java.util.LinkedHashMap@{'EM':'every month','BW':'before week','BD':'before 1 day'}" /><br>
                                                                                 </div>
 
                                                                                 <div class="col-sm-8">
                                                                                     <span class="required">
-                                                                                        <label class="labelStylereq" style="color: #56a5ec;">Alert message:</label>
-                                                                                        <s:textarea name="alerttextarea" placeholder="Alert message" cssClass="form-control" />
+                                                                                        <label class="labelStylereq" style="color: #56a5ec;">Alert message</label>
+                                                                                        <s:textarea name="alerttextarea" placeholder="Alert message" cssClass="form-control" tabindex="13"/>
                                                                                     </span>
                                                                                 </div>
 
@@ -246,22 +248,23 @@
                                                             </div>
                                                                                     <div class="col-lg-10"></div>
                                                             <div  class="col-sm-2 pull-right">
-                                                                <s:submit type="button"  cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" theme="simple"  onclick="return doUpdateTaskInfo();"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                                <s:submit type="button"  cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" theme="simple" tabindex="14" onclick="return doUpdateTaskInfo();"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                                             </div>
                                                         </div>
                                                     </form>
                                                 </div>
                                                 <div id="taskAttachments_popup">
                                                     <div id="taskAttachOverlay">
-                                                        <div style="background-color: #3BB9FF ">
+                                                        <div class="overlayOrButton_color">
                                                             <table>
                                                                 <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Task Attachments Details&nbsp;&nbsp; </font></h4></td>
-                                                                <span class=" pull-right"><h5><a href="" class="taskAttachments_popup_close"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a>&nbsp;</h5></span>
+                                                                <span class=" pull-right"><h5><a href="" class="taskAttachments_popup_close" onclick="attachementPopUp()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
                                                             </table>
                                                         </div>
                                                         <div>
                                                             <br>
-                                                            <s:form action="addAttachment"  theme="simple"   enctype="multipart/form-data" >
+                                                             <span id="upaloadMessages"></span>
+                                                            <s:form action="addAttachment"  theme="simple"   enctype="multipart/form-data" onsubmit="return attachmentUploadValidation();">
                                                                 <div>
                                                                     <div class="inner-addtaskdiv-elements">
                                                                         <s:hidden id="downloadFlag" name="downloadFlag" value="%{downloadFlag}"/>
@@ -269,9 +272,9 @@
                                                                         <s:file name="taskAttachment" id="taskAttachment"/>
                                                                     </div>
                                                                     <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
-                                                                    <center><s:submit cssClass="cssbutton" value="ADD" theme="simple"  /></center><br>
+                                                                    <center><s:submit type="button" cssClass="cssbutton fa fa-upload" value="Upload" theme="simple"  /></center><br>
                                                                 </div>
-
+                                                                <s:token />
                                                             </div>
                                                         </s:form>
                                                     </div>
@@ -337,14 +340,14 @@
                                                                                 %>
                                                                                 <div class="logcol logclr" >
                                                                                     <br><font style="color: red;font-size: 15px;">No Records to display</font>
-                                                                                    <br><br>&nbsp;&nbsp;<a href="" class="taskAttachments_popup_open" ><button type="button" ><img src="<s:url value="/includes/images/add3.png"/>" height="65" width="65" ></button></a>
+                                                                                    <br><br>&nbsp;&nbsp;<a href="" class="taskAttachments_popup_open" ><button type="button" onclick="attachementPopUp()"><img src="<s:url value="/includes/images/add3.png"/>" height="65" width="65" ></button></a>
                                                                                 </div>
                                                                                 <%                                                                                    } else {
                                                                                 %>
 
 
                                                                                 <div class="logcol logclr" >
-                                                                                    <br><br>&nbsp;&nbsp;<a href="" class="taskAttachments_popup_open" ><button type="button" ><img src="<s:url value="/includes/images/add3.png"/>" height="65" width="65" ></button></a>
+                                                                                    <br><br>&nbsp;&nbsp;<a href="" class="taskAttachments_popup_open" ><button type="button"  onclick="attachementPopUp()"><img src="<s:url value="/includes/images/add3.png"/>" height="65" width="65" ></button></a>
                                                                                 </div>
                                                                                 <%                                                                                    }
                                                                                 %>
@@ -375,9 +378,9 @@
 
 
                                                         <!-- content start -->
-                                                        <div class="col-md-12 col-md-offset-0" style="background-color:#fff">
+                                                        <div class="" style="background-color:#fff">
                                                             <div class="features_items">
-                                                                <div class="col-lg-12 ">
+                                                                <div class="">
                                                                     <div class="" id="profileBox" style="float: center; margin-top: 5px">
                                                                         <div class="backgroundcolor" >
                                                                             <div class="panel-heading">
@@ -407,8 +410,8 @@
                                                                                         <span><notesErrorMsg></notesErrorMsg></span>
                                                                                         <div>
                                                                                             <div class="col-sm-4">
-                                                                                                <label class="labelStylereq " style="color:#56a5ec;">Notes Name:</label>
-                                                                                                <s:textfield cssClass="form-control"  name="notes" id="notes_NameSearch" placeholder="Notes" onclick="clearResultMsg()" maxLength="60"/>
+                                                                                                <label class="labelStylereq " style="color:#56a5ec;">Notes Name</label>
+                                                                                                <s:textfield cssClass="form-control"  name="notes" id="notes_NameSearch" placeholder="Notes" onclick="clearResultMsg()" maxLength="60" tabindex="1"/>
                                                                                             </div>  
                                                                                             <div class="col-sm-1">
                                                                                                 
@@ -418,11 +421,11 @@
                                                                                                 <div class="row">
                                                                                                     <div class="col-sm-6">
                                                                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                                        <s:submit type="button" cssClass="add_searchButton form-control " id="searchButton" value="search" onclick="clearResultMsg();return getNotesDetailsBySearch()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                                                        <s:submit type="button" cssClass="add_searchButton form-control " id="searchButton" value="search" onclick="clearResultMsg();return getNotesDetailsBySearch()" cssStyle="margin:5px 0px;" tabindex="2"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                                                                     </div>
                                                                                                     <div class="col-sm-6">
                                                                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                                        <a href="" class="Note_popup_open" ><button type="button" class="add_searchButton form-control " value="" style="margin:5px 0px;" onclick="clearNotesFields();"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
+                                                                                                        <a href="" class="Note_popup_open" ><button type="button" class="add_searchButton form-control " value="" style="margin:5px 0px;" onclick="clearNotesFields();" tabindex="3"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
                                                                                                         
                                                                                                     </div>
                                                                                                     
@@ -464,10 +467,10 @@
                                                             <div id="Note_popup">
                                                                 <div id="AddNoteOverlay">
 
-                                                                    <div style="background-color: #3BB9FF ">
+                                                                    <div class="overlayOrButton_color">
                                                                         <table>
                                                                             <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;ADD Notes Details&nbsp;&nbsp; </font></h4></td>
-                                                                            <span class=" pull-right"><h5><a href="" class="Note_popup_close" onclick="removeResultMsg()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a>&nbsp;</h5></span>
+                                                                            <span class=" pull-right"><h5><a href="" class="Note_popup_close" onclick="removeResultMsg()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
                                                                         </table>
                                                                     </div>
                                                                     <div>
@@ -477,18 +480,18 @@
                                                                             <div>
                                                                                 <span ><InsertNoteInfo></InsertNoteInfo></span>
                                                                                 <div class="inner-addtaskdiv-elements required">
-                                                                                    <label style="color:#56a5ec;" class="task-label">Notes&nbspNames:</label>
+                                                                                    <label style="color:#56a5ec;" class="task-label">&nbsp;Notes&nbspNames&nbsp;</label>
                                                                                     <s:textfield name="noteNames"  id="noteNamesadd" placeholder="Notes Names" cssClass="form-control" maxLength="60"/>
-                                                                                    <label style="color:#56a5ec;" class="task-label">Description:</label>
+                                                                                    <label style="color:#56a5ec;" class="task-label">&nbsp;Description&nbsp;</label>
                                                                                     <s:textarea name="noteComments" id="noteCommentsadd" placeholder="Description" cssClass="form-control" />
                                                                                 </div> 
                                                                                 <div class="col-lg-6"></div>
-                                                                                <div  class="col-sm-4 pull-right">
-                                                                                     <s:submit type="button" cssClass="add_searchButton form-control" cssStyle="margin:5px 0px;" value="" theme="simple" onclick="return addNotesDetails()"><i class="fa fa-plus-square"></i>&nbsp;AddNote</s:submit>
+                                                                                <div  class="col-sm-3 pull-right">
+                                                                                    <s:submit type="button" id="addNoteButton" cssClass="add_searchButton form-control" cssStyle="margin:5px 0px;" value="" theme="simple" onclick="return addNotesDetails()"><i class="fa fa-plus-square"></i>&nbsp;Save</s:submit>
                                                                                     
                                                                                     <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
                                                                                 </div>
-                                                                                 <div  class="col-sm-4 pull-right">
+                                                                                 <div  class="col-sm-3 pull-right">
                                                                                    <s:reset type="button" cssClass="add_searchButton form-control fa fa-eraser " cssStyle="margin:5px 0px;" value="Clear" theme="simple" />
                                                                                 </div>
 
@@ -503,10 +506,10 @@
                                                             <div id="notes_popup">
                                                                 <div id="NotesOverlay">
 
-                                                                    <div style="background-color: #3BB9FF ">
+                                                                    <div class="overlayOrButton_color">
                                                                         <table>
                                                                             <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Edit Notes Details&nbsp;&nbsp; </font></h4></td>
-                                                                            <span class=" pull-right"><h5><a href="" class="notes_popup_close" onclick="removeResultMsg()"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a>&nbsp;</h5></span>
+                                                                            <span class=" pull-right"><h5><a href="" class="notes_popup_close" onclick="removeResultMsg()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
                                                                         </table>
                                                                     </div>
 
@@ -519,22 +522,19 @@
 
                                                                                 <form>
                                                                                     <div class="inner-addtaskdiv-elements required">
-                                                                                        <label style="color:#56a5ec;" class="task-label">Notes&nbspNames:</label>
+                                                                                        <label style="color:#56a5ec;" class="task-label">&nbsp;Notes&nbspNames&nbsp;</label>
                                                                                         <s:hidden name="id" id="id" />
                                                                                         <s:hidden name="taskid" id="taskidoverlay"/>
                                                                                         <s:textfield name="noteNames"  id="noteNames" cssClass="form-control" maxLength="60"/>
-                                                                                        <label style="color:#56a5ec;" class="task-label">Description:</label>
+                                                                                        <label style="color:#56a5ec;" class="task-label">&nbsp;Description&nbsp;</label>
                                                                                         <s:textarea name="noteComments" id="noteComments" cssClass="form-control" />
                                                                                     </div> 
                                                                                    
-                                                                                    <div  class="col-sm-4 pull-right">
-                                                                                        <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" theme="simple" onclick="return updateNoteDetails()"><i class="fa fa-plus-square"></i>&nbsp;AddNote</s:submit>
+                                                                                    <div  class="col-sm-3 pull-right">
+                                                                                        <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" theme="simple" onclick="return updateNoteDetails()"><i class="fa fa-refresh"></i>&nbsp;Update</s:submit>
                                                                                        
                                                                                     </div>
-                                                                                    <div  class="col-sm-4 pull-right">
-                                                                                        <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
-                                                                                         <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser " value="Clear" theme="simple" />
-                                                                                    </div>
+                                                                                   
                                                                                 </form>
                                                                             </div>           
                                                                         </div>
@@ -571,6 +571,8 @@
             </div>
             <!-- content end -->
         </section><!--/form-->
+            </div>
+            </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

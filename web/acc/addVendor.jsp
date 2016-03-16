@@ -49,6 +49,7 @@
 
     </head>
     <body onload="doOnLoad();">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -58,10 +59,12 @@
 
         </header>
         <%-- ------------MIDDLE -----------------------------------------%>
+        <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
                     <s:include value="/includes/menu/LeftMenu.jsp"/>
+                  <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                     <div class="features_items">
                         <div class="" id="profileBox" style="float: left; margin-top: 5px">
                             <div class="backgroundcolor" >
@@ -72,31 +75,31 @@
                                             <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
                                             <s:param name="accFlag">venSearch</s:param>
                                         </s:url>
-                                        <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                        <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                       </h4>
                                 </div>
                             </div>
-                            <label class="">Account Name:<font style="color: #FF8A14;"><s:property value="%{accountName}"/></font></label>
+                            <label class="">Account Name : <font style="color: #FF8A14;"><s:property value="%{accountName}"/></font></label>
                             <div class="inner-reqdiv-elements">
                                 <span><e></e></span>
                                 <div class="row">
-                                    <div class="col-lg-3">
+                                    <div class="col-sm-3">
                                         <s:hidden name="accountSearchID" id="accountSearchID" value="%{accountSearchID}" />
                                         <s:hidden name="vendorId" id="vendorId" />
-                                        <label class="labelStylereq" style="color: #56a5ec">Vendor Name:</label>
+                                        <label class="labelStylereq" style="color: #56a5ec">Vendor Name</label>
                                         <s:textfield cssClass="form-control" id="vendorName" placeholder="Vendor Name"  name="vendorName" onkeyup="return getVendorNames();" autocomplete='off' maxLength="60"/>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <label class="labelStylereq" style="color: #56a5ec">URL:</label>
+                                    <div class="col-sm-3">
+                                        <label class="labelStylereq" style="color: #56a5ec">URL</label>
                                         <s:textfield cssClass="form-control " id="vendorURL"  name="vendorURL" disabled="true" maxLength="60"/>
                                     </div>
 
-                                    <div class="col-lg-3">
-                                        <label class="labelStylereq" style="color: #56a5ec">Tier:</label>
+                                    <div class="col-sm-3">
+                                        <label class="labelStylereq" style="color: #56a5ec">Tier</label>
                                         <s:select cssClass="SelectBoxStyles form-control" name="vendorTier" id="vendorTier" headerKey="0" headerValue="--select--" list="vendorTierMap"/>
                                     </div>
-                                    <div class="col-lg-2"><br>
-                                        <label class="labelStylereq" style="color: #56a5ec">Head Hunter:</label>
+                                    <div class="col-sm-2">
+                                        <label class="labelStylereq" style="color: #56a5ec">Head Hunter</label>
                                         <s:checkbox name="PF" id="PF" />
                                     </div>
                                 </div>
@@ -104,15 +107,15 @@
                             <div class="inner-reqdiv-elements">
                                 <div class="inner-techReviewdiv-elements"><span id="validationMessage" /></div> 
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <label class="labelStylereq" style="color: #56a5ec">Comments:</label>
-                                        <s:textarea cssClass="form-control" cssStyle="width=100%" name="vendorComments" placeholder="Comments" id="vendorComments" onkeyup="checkCommentsChars(this)"/>
+                                    <div class="col-sm-12">
+                                        <label class="labelStylereq" style="color: #56a5ec">Comments</label>
+                                        <s:textarea cssClass="form-control" cssStyle="width=100%" name="vendorComments" placeholder="Comments" id="vendorComments"  onkeyup="checkCommentsChars(this)"/>
                                     </div>
                                 </div>
-                                     <div class="charNum pull-left" id="JobcharNum"></div>
+                                     <div class="charNum " id="JobcharNum" ></div>
                                 <div class="row">
-                                    <div class="col-lg-10"></div>
-                                    <div class="col-lg-2">
+                                    
+                                    <div class="col-sm-2 pull-right">
                                        
                                         <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" onclick="saveVendorTierDetails();" theme="simple"  ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                     </div>
@@ -121,11 +124,13 @@
                             <%--</s:form>--%>
                         </div>
                     </div>
+                  </div>
                 </div>
             </div>
         </section>
-                        <div style="height: 233px"></div>
+        </div>            
         <%-- ------------MIDDLE -----------------------------------------%>
+    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

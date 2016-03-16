@@ -8,6 +8,57 @@
 		
 /*scroll to top*/
 
+// $(document).ready(function(){
+//
+//    function putFooter(){
+//        var wh = $(window).height();
+//        var dh = $("#everything").height();
+//        if(dh < wh - 104) { /*104: #thefooter height in px*/
+//            $("#footer").addClass("footerissticky");
+////            alert("add footerissticky");
+//        }
+//        else {
+//            $("#footer").removeClass("footerissticky");
+////             alert("no footerissticky")
+//        }
+//    }
+//
+//    putFooter();
+//    $(window).click(function(){
+//        putFooter();
+//    });
+//    $(document).click(function(){
+//        alert("hi")
+//        putFooter();
+//    }); 
+//    
+//    $(body).resize(function(){
+//        alert("resize")
+//        putFooter();
+//    });
+//
+//});
+//  
+//  
+//  $("a").click("load",function(){
+//      //alert("tab")
+//    putFooter1();
+//});
+//function putFooter1(){
+//        var wh = $(window).height();
+//        var dh = $("#everything").height();
+//        if(dh < wh - 104) { /*104: #thefooter height in px*/
+//            $("#footer").addClass("footerissticky");
+////            alert("add footerissticky");
+//        }
+//        else {
+//            $("#footer").removeClass("footerissticky");
+////             alert("no footerissticky")
+//        }
+//    }
+
+
+
 $(document).ready(function(){
     $(function () {
         $.scrollUp({
@@ -37,7 +88,7 @@ $( "#loginForm" ).validate({
         logiId: {
             required: true,
             email: true
-        }
+        } 
     }
 });
 
@@ -101,13 +152,13 @@ function toggleContent(id) {
     if(contentId.style.display == "none")
     {
         contentId.style.display = "";
-        document.getElementById("updownArrow").className="fa fa-angle-up";
+        document.getElementById("updownArrow").className="fa fa-minus";
     }
     else
     {
         contentId.style.display = "none";
        
-        document.getElementById("updownArrow").className="fa fa-angle-down";
+        document.getElementById("updownArrow").className="fa fa-plus";
          
     }
 
@@ -123,13 +174,13 @@ function toggleContent1(id) {
     if(contentId.style.display == "none")
     {
         contentId.style.display = "";
-        document.getElementById("updownArrow1").className="fa fa-angle-up";
+        document.getElementById("updownArrow1").className="fa fa-minus";
     }
     else
     {
         contentId.style.display = "none";
          
-        document.getElementById("updownArrow1").className="fa fa-angle-down";
+        document.getElementById("updownArrow1").className="fa fa-plus";
          
     }
 
@@ -259,12 +310,12 @@ function toggleContentRequirement(id)
     if(contentId.style.display == "none")
     {
         contentId.style.display = "";
-        document.getElementById("updownArrow").className="fa fa-sort-asc";
+        document.getElementById("updownArrowVen").className="fa fa-sort-asc";
     }
     else
     {
         contentId.style.display = "none";
-        document.getElementById("updownArrow").className="fa fa-sort-desc";
+        document.getElementById("updownArrowVen").className="fa fa-sort-desc";
     }
 
 }
@@ -283,3 +334,23 @@ function toggleContentRequirement(id)
     }
 
 }             
+function toggleContentAccount(id) {
+    // Get the DOM reference
+
+    var contentId = document.getElementById(id);
+    // Toggle
+
+    if(contentId.style.display == "none")
+    {
+        contentId.style.display = "";
+        document.getElementById("updownArrowAccount").className="fa fa-angle-up";
+    }
+    else
+    {
+        contentId.style.display = "none";
+       
+        document.getElementById("updownArrowAccount").className="fa fa-angle-down";
+         
+    }
+
+} 

@@ -55,6 +55,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
+import com.mss.msp.util.ServiceLocatorException;
 
 /**
  *
@@ -142,6 +143,7 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
     private String contactType;
     private String rejectionComments;
     private int createdByOrgId;
+    private String gridDownloadFlag;
 
     public String getContactType() {
         return contactType;
@@ -214,7 +216,11 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 String resultNumber = "";
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getEmiltExistOrNot(this.getResourceType(), this.getConEmail(), this.getSessionOrgId());
+                System.out.println("this.contactType()-->" + this.getContactType());
+
+                String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getEmiltExistOrNot(this.getContactType(), this.getConEmail(), this.getSessionOrgId());
+
+                // String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getEmiltExistOrNot(this.getResourceType(), this.getConEmail(), this.getSessionOrgId());
 
                 String checkResult = "";
 
@@ -233,6 +239,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
 
                 //not valid email id
                 System.out.println("in recruitment action" + resultNumber);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultNumber);
@@ -261,8 +270,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
         int result;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID) != null) {
             int sessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
+            int sessionOrgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
             try {
-                result = DataSourceDataProvider.getInstance().checkConsultantLoginId(getConsultantId(), sessionId);
+                result = DataSourceDataProvider.getInstance().checkConsultantLoginId(getConsultantId(), sessionId, sessionOrgId);
                 //  System.out.println("result-------"+result);
                 if (result == 0) {
                     httpServletResponse.setContentType("text");
@@ -273,6 +283,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                     httpServletResponse.setCharacterEncoding("UTF-8");
                     httpServletResponse.getWriter().write(ERROR);
                 }
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 System.err.println("resultString---->" + result);
 
             } catch (Exception ex) {
@@ -309,6 +322,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
             //int searchDetails = ServiceLocator.getRecruitmentService().getAddedConsultantDetails(httpServletRequest, orgId, this);
 
             System.out.println("result-----------======>>>" + res);
+            httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            httpServletResponse.setHeader("Pragma", "no-cache");
+            httpServletResponse.setDateHeader("Expires", 0);
             httpServletResponse.setContentType("text/html");
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.getWriter().write(res);
@@ -341,7 +357,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 // resultMessage = SUCCESS;
 
                 System.out.println("-----after impl in action" + attachmentList);
-
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(attachmentList);
@@ -379,6 +397,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
 
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().getConsultantTechReviews(this);
                 //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -413,6 +434,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
 
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().techReviewCommentsOverlay(this);
                 //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -448,6 +472,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
 
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().getTechReviewResultOnOverlay(this);
                 //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -472,6 +499,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 int oId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().questionsCount(this, oId);
                 System.out.println("===============>in titles" + reponseString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -496,6 +526,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 System.out.println("skillSetCategory--->" + getSkillCategoryArry());
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().questionsCountCheck(this, orgId);
                 System.out.println("===============>in titles" + reponseString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -520,6 +553,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 System.out.println("skillSetCategory--->" + getSkillCategoryArry());
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().skillsQuestions(this, orgId);
                 System.out.println("===============>in titles" + reponseString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -556,6 +592,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
 
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().saveOnlineExamStatus(this);
                 //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -575,12 +614,14 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
             resultType = SUCCESS;
 
             System.out.println("=================>Entered into the doDownloadResults");
-
+            String accType = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
             ServletContext context = ServletActionContext.getServletContext();
 
             String contextPath = context.getRealPath(File.separator);
             //String[] s = new ;
             if (!"".equals(getGridDownload())) {
+                String data = DataSourceDataProvider.getInstance().getGridData(getGridDownload(), getGridDownloadFlag(), accType);
+                setGridDownload(data);
                 //  System.out.println("Total Count-->" + Count);
                 String[] s = getGridDownload().split("\\^");
                 int columnCount = 0;
@@ -602,36 +643,36 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 ByteArrayOutputStream baos = new HeaderFooter().createPdf(table);
 
                 // Create a stamper that will copy the document to a new file
-                PdfReader reader = new PdfReader(((ByteArrayOutputStream) baos).toByteArray());
-                OutputStream out = new ByteArrayOutputStream();
-                PdfStamper stamper = new PdfStamper(reader, out);
-                // Reader reader = new InputStreamReader(new ByteArrayInputStream(baos.toByteArray()));
-                int i = 1;
-                PdfContentByte under;
-                PdfContentByte over;
-                Image image = Image.getInstance(contextPath + "/includes/images/logo.png");
+            /*  PdfReader reader = new PdfReader(((ByteArrayOutputStream) baos).toByteArray());
+                 OutputStream out = new ByteArrayOutputStream();
+                 PdfStamper stamper = new PdfStamper(reader, out);
+                 // Reader reader = new InputStreamReader(new ByteArrayInputStream(baos.toByteArray()));
+                 int i = 1;
+                 PdfContentByte under;
+                 PdfContentByte over;
+                 Image image = Image.getInstance(contextPath + "/includes/images/logo.png");
 
-                BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA,
-                        BaseFont.WINANSI, BaseFont.EMBEDDED);
+                 BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA,
+                 BaseFont.WINANSI, BaseFont.EMBEDDED);
 
-                image.setRotation((float) Math.PI / 4);
-                image.setAbsolutePosition(40, 160);
-                image.setTransparency(new int[]{0x00, 0x10});
-                // image.scaleAbsolute(120f, 60f);
-                System.out.println("reader.getNumberOfPages()-->" + reader.getNumberOfPages());
-                while (i <= reader.getNumberOfPages()) {
-                    // Watermark under the existing page
-                    under = stamper.getUnderContent(i);
-                    under.addImage(image);
-                    // Text over the existing page
-                    over = stamper.getOverContent(i);
-                    over.beginText();
-                    over.setFontAndSize(bf, 14);
-                    over.endText();
-                    i++;
-                }
-                stamper.close();
-
+                 image.setRotation((float) Math.PI / 4);
+                 image.setAbsolutePosition(40, 160);
+                 image.setTransparency(new int[]{0x00, 0x10});
+                 // image.scaleAbsolute(120f, 60f);
+                 System.out.println("reader.getNumberOfPages()-->" + reader.getNumberOfPages());
+                 while (i <= reader.getNumberOfPages()) {
+                 // Watermark under the existing page
+                 under = stamper.getUnderContent(i);
+                 under.addImage(image);
+                 // Text over the existing page
+                 over = stamper.getOverContent(i);
+                 over.beginText();
+                 over.setFontAndSize(bf, 14);
+                 over.endText();
+                 i++;
+                 }
+                 stamper.close(); 
+                 */
                 // setting some response headers
 //            httpServletResponse.setHeader("Expires", "0");
 //            httpServletResponse.setHeader("Cache-Control",
@@ -647,12 +688,12 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 // the contentlength
                 // httpServletResponse.setContentLength(out.size());
                 // write ByteArrayOutputStream to the ServletOutputStream
-                httpServletResponse.getOutputStream().write(((ByteArrayOutputStream) out).toByteArray());
+                httpServletResponse.getOutputStream().write(((ByteArrayOutputStream) baos).toByteArray());
                 //  OutputStream os = httpServletResponse.getOutputStream();
                 //  baos.writeTo(os);
 
-                out.flush();
-                out.close();
+                baos.flush();
+                baos.close();
             }
 
         } catch (Exception ex) {
@@ -833,6 +874,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 int reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().doWithdrawConsultant(this);
                 //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -859,6 +903,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                     reponseString = "Rejected Successfully";
                 }
                 //System.out.println("===============>in titles" + repoString);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
@@ -873,8 +920,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
         return null;
     }
 
-    public String doDownloadXlsResults() throws IOException, WriteException, BiffException {
+    public String doDownloadXlsResults() throws IOException, WriteException, BiffException, ServiceLocatorException {
         String filename = getPdfHeaderName();
+        String accType = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
         filename = filename.concat(".xls");
         OutputStream out = null;
         httpServletResponse.setContentType("application/vnd.ms-excel");
@@ -885,6 +933,8 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
         WritableSheet wsheet = wworkbook.createSheet("First Sheet", 0);
         Label label;
         if (!"".equals(getGridDownload())) {
+            String data = DataSourceDataProvider.getInstance().getGridData(getGridDownload(), getGridDownloadFlag(), accType);
+            setGridDownload(data);
             WritableFont cellFont = new WritableFont(WritableFont.TIMES, 12);
             cellFont.setColour(Colour.PINK);
 
@@ -1445,5 +1495,13 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
 
     public void setPdfHeaderName(String pdfHeaderName) {
         this.pdfHeaderName = pdfHeaderName;
+    }
+
+    public String getGridDownloadFlag() {
+        return gridDownloadFlag;
+    }
+
+    public void setGridDownloadFlag(String gridDownloadFlag) {
+        this.gridDownloadFlag = gridDownloadFlag;
     }
 }

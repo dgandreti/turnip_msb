@@ -20,28 +20,49 @@
 <%-- <div class="row headerAlingment"></div>--%>
 <div class="row">
     <div class="col-sm-6">
-        <div class="contactinfo">
-            <ul class="nav nav-pills">
-                <li><a href="<%=request.getContextPath()%>/general/login.action"><img src="<s:url value="/includes/images/logo.png"/>" alt="loin" width="200" height="33"/></a></li>
-            </ul>
-        </div>
+
+        <ul class="nav nav-pills header_image"  style="margin-left:9px">
+            <s:if test="#session.userId == null">
+                <li><a href="<%=request.getContextPath()%>/general/logout.action"><img src="<s:url value="/includes/images/logo30.png"/>" alt="loin" width="200" height="44"/></a></li>
+                    </s:if>
+                    <s:else>
+                <li><a href="#modal-one" ><img src="<s:url value="/includes/images/logo30.png"/>" alt="loin" width="200" height="44"/></a></li>
+                <div class="ownmodal" id="modal-one" aria-hidden="true">
+                    <div class="ownmodal-dialog">
+                        <div class="ownmodal-header">
+                            <h2>Session will Expired</h2>
+                            <a href="#ownclose" class="ownbtn-close" aria-hidden="true"><i class="fa fa-times"></i></a> 
+                        </div>
+                        <div class="ownmodal-body">
+                            <p>If you click on OK then your session will be closed</p>
+                        </div>
+                        <div class="ownmodal-footer">
+                            <a href="<%=request.getContextPath()%>/general/logout.action" class="ownbtn" >OK</a>
+                            <a href="#ownclose" class="ownbtn">Cancel</a> 
+                            <!--CHANGED TO "#close"-->
+                        </div>
+                    </div>
+                </div>
+            </s:else>
+        </ul>
+
     </div>
 
 
 
 
     <s:if test="#session.userId == null">  
-        <div class="social-icons">
-            <ul class="nav navbar-nav navbar-right" style="margin-right: 8%;">
+        <div class="social-icons col-sm-6">
+            <ul class="nav navbar-nav navbar-right pull-right register">
 
-                 <s:if test="home!='No'&&home!='Logout'">
-                    <li class="sign-in sign_in"><a class="login_open" href="#" data-toggle="modal" data-target="#myLogin">SIGN IN</a></li>
-                    
+                <s:if test="home!='No'&&home!='Logout'">
+                    <li class="sign-in sign_in"><a class="login_open" href="#" data-toggle="modal" data-target="#myLogin">Sign in</a></li>
+
                     <li><a href="<%=request.getContextPath()%>/general/register.action?home=No">Register</a></li>
                 </s:if>
                 <s:if test="home=='No'||home=='Logout'">
-                    <li><a href="<%=request.getContextPath()%>/general/login.action"><i class="fa"><img class="fa" src="<s:url value="/includes/images/login.png"/>" alt="loin" height="20"/></a></i></li>
-                            </s:if>
+                    <li><a href="<%=request.getContextPath()%>/general/login.action"><i class="fa fa-home fa-size"></i></a></i></li>
+                </s:if>
 
             </ul>
 
@@ -66,9 +87,9 @@
                 %>
 
 
-                <ul class="" >
+                <ul class="" style="margin-top: -10px ">
 
-                    <li class="dropdown"  >
+                    <li class="dropdown_profilemenu">
 
 
                         <!--<ul class="nav navbar-nav">-->
@@ -78,11 +99,11 @@
                                 <s:url id="image" action="rImage" namespace="/renderImage">
                                     <s:param name="path" value="%{#session.usrImagePath}"></s:param>
                                 </s:url>
-                                <img alt="Employee Image" src="<s:property value="#image"/>"  alt="loin" height="40px" width="40px">
+                                <img alt="Employee Image" src="<s:property value="#image"/>"  alt="login" height="30px" width="27px">
                             </td>
                             <td style="white-space: nowrap">
                                 <ul class="dropdown-menu pull-right multi-column columns-2" style="height:auto;" role="menu" aria-labelledby="dropdownMenu2">
-                                    <li style="position: absolute;top:-8px;left: 170px;"><div class="arrow"></div></li>
+                                    <li style="position: absolute;top:-8px;left: 50%;"><div class="arrow"></div></li>
                                     <div class="row ">
                                         <div class="col-sm-5">
                                             <ul class="multi-column-dropdown">
@@ -109,11 +130,11 @@
                                         </div>
                                     </div>
                                 </ul>
-                                <font style="color:#FAF6F6;font-size:15px;font-weight:400;font-family:Roboto,sans-serif">
+                                <font style="color:#FAF6F6;font-size:12px;font-weight:400;font-family:Roboto,sans-serif">
                                 <%-- <s:text name="Welcome :"/> --%>
                                 </font>
                                 <a id="dropdownMenu2" class="dropdown-toggle" aria-expanded="flase" data-toggle="dropdown" href="#">
-                                    <font style="color:#D6E3F2;font-size:15px;font-weight:600;font-family:Roboto,sans-serif">
+                                    <font style="color:#D6E3F2;font-size:12px;font-weight:600;font-family:Roboto,sans-serif">
                                     <s:property value="#session.firstName"/>&nbsp;<s:property value="#session.lastName"/>
                                     <span class=""><i class="fa fa-angle-down"></i></span>
                                     </font></a>
@@ -123,10 +144,10 @@
                                      //out.println("userType"+userType);
                                      if (userType.equalsIgnoreCase("E") || userType.equalsIgnoreCase("SA")) {
                                  %>--%>
-                                <font style="color:#FAF6F6;font-size:15px;font-weight:400;font-family:Roboto,sans-serif">
+                                <font style="color:#FAF6F6;font-size:12px;font-weight:400;font-family:Roboto,sans-serif">
                                 <%-- <s:text name="Role :"/> --%>
                                 </font>
-                                <font style="color:#D6E3F2;font-size:15px;font-weight:600;font-family:Roboto,sans-serif">
+                                <font style="color:#D6E3F2;font-size:12px;font-weight:600;font-family:Roboto,sans-serif">
                                 [<s:property value="#session.primaryrolevalue" />]
                                 </font>
                                 <%-- <s:select headerKey="0" list="#session.rolesMap" value="#session.primaryrole" theme="simple" id="headSelectBoxStyle" onchange="performAction('/general/roleSubmit.action',this)" /> --%>
@@ -144,7 +165,7 @@
                     </li>
                 </ul>
             </div>
-                            
+
         </div>
     </s:else>
 </div>

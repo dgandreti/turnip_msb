@@ -29,6 +29,7 @@
 
     </head>
     <body>
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top" id="header_top"><!--header_top-->
                 <div class="container">
@@ -37,7 +38,7 @@
             </div><!--/header_top-->
 
         </header><!--/header-->
-
+        <div id="main">
         <section id="generalForm"><!--form--> 
 
             <div class="col-lg-12">
@@ -97,7 +98,8 @@
             </div>
 
         </section><!--/form-->
-
+        </div>
+    </div>
         <footer id="footer"><!--Footer-->
 
             <div class="footer-bottom" id="footer_bottom" >

@@ -98,6 +98,8 @@
             <!--<interceptor-ref name="crudStack" />-->
             <interceptor-ref name="authorizationcheckStack" />
             <result type="redirectAction" name="success">
+                <param name="serviceId">${serviceId}</param>
+                <param name="serviceType">${serviceType}</param>
                 <param name="actionName">SOWEditAction</param>
                 <param name="consultantId">${consultantId}</param>
                 <param name="requirementId">${requirementId}</param>
@@ -134,14 +136,17 @@
                 <param name="status">${status}</param>
                 <param name="fileExists">${fileExists}</param>
                 <param name="tabFlag">${tabFlag}</param>
+                <param name="serviceId">${serviceId}</param>
+                <param name="serviceType">${serviceType}</param>
             </result>
             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
         </action>
         <action name="doInsertSAGRecord" class="com.mss.msp.sag.sow.SOWAction" method="doInsertSAGRecord">
            
         </action> 
+        <action name="poDownloadButton" class="com.mss.msp.sag.sow.SOWAction" method="poDownloadButton"/>
         <action name="SOWSaveOrSubmit" class="com.mss.msp.sag.sow.SOWAction" method="SOWSaveOrSubmit">
-           <interceptor-ref name="authorizationcheckStack" />
+            <interceptor-ref name="authorizationcheckStack" />
             <result type="redirectAction" name="success">
                 <param name="actionName">getSowList</param>
                 <param name="resultMessage">${resultMessage}</param>

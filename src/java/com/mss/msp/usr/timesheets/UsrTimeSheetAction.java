@@ -20,6 +20,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import com.mss.msp.util.DateUtility;
+import com.mss.msp.util.MailManager;
 import java.util.Calendar;
 import java.util.Iterator;
 
@@ -312,7 +313,7 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
     }
 
     public String getAddTimeSheetAdd() {
-        resultMessage = LOGIN;
+        resultType = LOGIN;
         /* for checking Timesheet exists */
         String isTimeSheetExist = "";
         String timeSheetMessage = "";
@@ -355,13 +356,13 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                     setTimeSheetVTO(timeSheetVTO);
                 }
 
-                resultMessage = SUCCESS;
+                resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
-        return resultMessage;
+        return resultType;
 
     }
 
@@ -387,6 +388,9 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                     System.out.println("in if bcoxz flag value is MY");
                 }
 
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(projectDetails);
@@ -404,6 +408,7 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
         resultType = LOGIN;
         System.out.println("#####TimesheetAdd Action########");
         try {
+            MailManager mailManager = new MailManager();
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 //   setReportsTo(dataSourceDataProvider.getInstance().getReportingPersonIDByUserId(getUserSessionId()));
@@ -411,6 +416,12 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 int timesheetAdd = ServiceLocator.getUserTimesheetService().AddTimesheet(this);
                 System.out.println("timesheetAdd is" + timesheetAdd);
                 if (timesheetAdd > 0) {
+                    if (getTempVar() == 1) {
+                        System.out.println("timesheet submitteing ");
+                        String reportiingPersonsEmail = dataSourceDataProvider.getInstance().getReportingPersonsEmail(getUserSessionId());
+                        String empName = DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId());
+                        mailManager.timesheetAddEmail(this, empName, reportiingPersonsEmail);
+                    }
                     resultMessage = "<font color=\"green\" size=\"1.5\">The TimeSheet Successfully Added for WeekStartDate: " + getTimeSheetStartDate() + " And WeekEndDate:" + getTimeSheetEndDate() + "</font>";
                 } else {
                     resultMessage = "<font color=\"red\" size=\"1.5\">Error occour Adding for WeekStartDate: " + getTimeSheetStartDate() + " And WeekEndDate:" + getTimeSheetEndDate() + "</font>";
@@ -433,6 +444,7 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
             try {
                 setUserId(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
+                System.out.println("userid--->" + userid);
                 Map map = DataSourceDataProvider.getInstance().getMyTeamMembers(userid);
                 //String teamMembers=DataSourceDataProvider.getInstance().getTeamMembersListString(map);
                 System.out.println("timesheet Start date--->" + getStartDate());
@@ -567,11 +579,19 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
         resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
+                MailManager mailManager = new MailManager();
                 System.out.println("in edit timesheets");
                 System.out.println("project id" + getTempVar());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int editTimeSheet = ServiceLocator.getUserTimesheetService().editTimeSheet(this);
                 if (editTimeSheet > 0) {
+                    if (getTempVar() == 2) {
+                        // System.out.println("timesheet submitteing ");
+                        String reportingPersonsEmail = dataSourceDataProvider.getInstance().getReportingPersonsEmail(getUserSessionId());
+                        String empName = DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId());
+                        mailManager.timesheetAddEmail(this, empName, reportingPersonsEmail);
+                    }
+
                     resultMessage = "<font color=\"green\" size=\"2.5\">The TimeSheet Updated Successfully for WeekStartDate: " + getTimeSheetStartDate() + " And WeekEndDate:" + getTimeSheetEndDate() + "</font>";
                 } else {
                     resultMessage = "<font color=\"red\" size=\"2.5\">Error occured while updating timesheet for WeekStartDate: " + getTimeSheetStartDate() + " And WeekEndDate:" + getTimeSheetEndDate() + "</font>";
@@ -589,6 +609,7 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
         resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
+                MailManager mailManager = new MailManager();
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int isUpdated = ServiceLocator.getUserTimesheetService().approveRejectTimeSheet(this);
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
@@ -598,6 +619,11 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 System.out.println("approve" + isUpdated);
                 if (isUpdated > 0) {
                     resultMessage = "<font color=\"green\" size=\"2.5\">The TimeSheet Updated Successfully for WeekStartDate: " + getTimeSheetStartDate() + " And WeekEndDate:" + getTimeSheetEndDate() + "</font>";
+                    String empName = DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUsr_id());
+                    //System.out.println("timeSheetStartDate"+getTimeSheetStartDate()+"-->timeSheetEndDate"+getTimeSheetEndDate()+"==empName=="+empName);
+
+                    mailManager.timesheetApproveEmail(this, empName);
+
                 } else {
                     resultMessage = "<font color=\"red\" size=\"2.5\">Error occured while updating timesheet for WeekStartDate: " + getTimeSheetStartDate() + " And WeekEndDate:" + getTimeSheetEndDate() + "</font>";
                 }
@@ -641,6 +667,9 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                     List prevoiusWeekDaysList = ServiceLocator.getUserTimesheetService().getweekStartAndEndDays(previouseCalender);
                     isPreviousTimeSheetExist = ServiceLocator.getUserTimesheetService().checkTimeSheetExists(prevoiusWeekDaysList, userId);
                     System.out.println("isTimeSheetExist::::::::previous" + isPreviousTimeSheetExist);
+                    httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                    httpServletResponse.setHeader("Pragma", "no-cache");
+                    httpServletResponse.setDateHeader("Expires", 0);
                     httpServletResponse.setContentType("text");
                     httpServletResponse.setCharacterEncoding("UTF-8");
                     httpServletResponse.getWriter().write(isPreviousTimeSheetExist);
@@ -661,6 +690,9 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                      */
                     isTimeSheetExist = ServiceLocator.getUserTimesheetService().checkTimeSheetExists(currentWeekDaysList, userId);
                     System.out.println("isTimeSheetExist::::::::" + isTimeSheetExist);
+                    httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                    httpServletResponse.setHeader("Pragma", "no-cache");
+                    httpServletResponse.setDateHeader("Expires", 0);
                     httpServletResponse.setContentType("text");
                     httpServletResponse.setCharacterEncoding("UTF-8");
                     httpServletResponse.getWriter().write(isTimeSheetExist);

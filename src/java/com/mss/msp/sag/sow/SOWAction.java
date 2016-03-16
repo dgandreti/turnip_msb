@@ -17,12 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 
 /**
  *
  * @author miracle
  */
-public class SOWAction extends ActionSupport implements ServletRequestAware {
+public class SOWAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
 
     private HttpServletRequest httpServletRequest;
     private HttpServletResponse httpServletResponse;
@@ -92,6 +93,11 @@ public class SOWAction extends ActionSupport implements ServletRequestAware {
     private DataSourceDataProvider DataSourceDataProvider;
     private String sowHisStatus;
     private String serviceTypeRedirect;
+    private String startDate;
+    private String endDate;
+    private String rolesAndResponsibilites;
+    private String overTimeRate;
+    private String overTimeLimit;
 
     public String getSowList() {
         resultType = LOGIN;
@@ -112,7 +118,6 @@ public class SOWAction extends ActionSupport implements ServletRequestAware {
         }
         return resultType;
     }
-    
 
     public String getSOWSearchResults() {
         resultType = LOGIN;
@@ -301,6 +306,9 @@ public class SOWAction extends ActionSupport implements ServletRequestAware {
                 System.out.println(">>>>>>>>RESLT IN ACTION>>" + res);
 
                 System.out.println(">>>>>>RESULT TO AJAX>>>" + res);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(res);
@@ -311,6 +319,7 @@ public class SOWAction extends ActionSupport implements ServletRequestAware {
         }
         return null;
     }
+
     public String SOWSaveOrSubmit() {
         resultType = LOGIN;
         int update = 0;
@@ -329,16 +338,18 @@ public class SOWAction extends ActionSupport implements ServletRequestAware {
                 }
                 if (getSOWFlag() == 1) {
                     resultType = SUCCESS;
-                } else if(getSOWFlag() == 2){
+                } else if (getSOWFlag() == 2) {
                     resultType = "successRedirect";
                 }
             }
-            }  catch (Exception ex) {
+        } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
+            ex.printStackTrace();
             resultType = ERROR;
         }
         return resultType;
     }
+
     public String sowRecreateEdit() {
         resultType = LOGIN;
         try {
@@ -358,10 +369,43 @@ public class SOWAction extends ActionSupport implements ServletRequestAware {
         }
         return resultType;
     }
-
+public String poDownloadButton() {
+        resultType = LOGIN;
+        String update = "";
+        try {
+            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+                System.out.println("im in doInsertSAGRecord Action...............................");
+                setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+                setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+                setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
+                update = ServiceLocator.getSOWService().poDownloadButton(this);
+                System.out.println("-----------------------"+update);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
+                httpServletResponse.setContentType("text");
+                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.getWriter().write(update);
+            }
+        } catch (Exception ex) {
+            httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
+            ex.printStackTrace();
+            resultType = ERROR;
+        }
+        return null;
+    }
     @Override
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
+    }
+    /**
+     *
+     * This method is used to set the Servlet Response
+     *
+     * @param httpServletResponse
+     */
+    public void setServletResponse(HttpServletResponse httpServletResponse) {
+        this.httpServletResponse = httpServletResponse;
     }
 
     public int getUserSeessionId() {
@@ -881,5 +925,44 @@ public class SOWAction extends ActionSupport implements ServletRequestAware {
     public void setServiceTypeRedirect(String serviceTypeRedirect) {
         this.serviceTypeRedirect = serviceTypeRedirect;
     }
-    
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getRolesAndResponsibilites() {
+        return rolesAndResponsibilites;
+    }
+
+    public void setRolesAndResponsibilites(String rolesAndResponsibilites) {
+        this.rolesAndResponsibilites = rolesAndResponsibilites;
+    }
+
+    public String getOverTimeRate() {
+        return overTimeRate;
+    }
+
+    public void setOverTimeRate(String overTimeRate) {
+        this.overTimeRate = overTimeRate;
+    }
+
+    public String getOverTimeLimit() {
+        return overTimeLimit;
+    }
+
+    public void setOverTimeLimit(String overTimeLimit) {
+        this.overTimeLimit = overTimeLimit;
+    }
 }

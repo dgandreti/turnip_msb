@@ -103,7 +103,8 @@
         <action name="updateProject" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="updateProject">
             <!--<interceptor-ref name="crudStack" />-->
             <interceptor-ref name="authorizationcheckStack" />
-            <result name="success" type="chain">projectDetails</result>
+            <result name="success" type="redirect">projectDetails.action?projectID=${projectID}&amp;accountID=${accountID}&amp;resultMessage=${resultMessage}</result>
+            <!--<result name="success" type="chain">projectDetails</result>-->
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>

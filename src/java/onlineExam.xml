@@ -7,7 +7,7 @@
       <constant name="struts.devMode" value="true" />
     <package name="onlineExam" namespace="/onlineExam/Ques" extends="default">
         
-         <action name="downloadSampleExamQuesFile" class="com.mss.msp.usersdata.DownloadExcel" method="downloadSample">
+        <action name="downloadSampleExamQuesFile" class="com.mss.msp.usersdata.DownloadExcel" method="downloadSample">
         </action>
         
         <action name="loadDataForQues" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="loadData">
@@ -42,7 +42,7 @@
             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
         </action>-->
         
-          <action name="getQuestionsList" class="com.mss.msp.onlineexam.questions.ExamQuestionsAction" method="getQuestionsList">
+        <action name="getQuestionsList" class="com.mss.msp.onlineexam.questions.ExamQuestionsAction" method="getQuestionsList">
             <interceptor-ref name="crudStack" />
            
             <result name="success">examQuestionsListpage.jsp</result>
@@ -50,10 +50,10 @@
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>
             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
-          </action>
+        </action>
         
         
-          <action name="getQuestionsSearchList" class="com.mss.msp.onlineexam.questions.ExamQuestionsAction" method="getQuestionsSearchList">
+        <action name="getQuestionsSearchList" class="com.mss.msp.onlineexam.questions.ExamQuestionsAction" method="getQuestionsSearchList">
             <interceptor-ref name="crudStack" />
            
             <result name="success">examQuestionsListpage.jsp</result>
@@ -81,7 +81,7 @@
             
         </action>
         
-         <action name="searchLoggerForQues" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="searchLogger">
+        <action name="searchLoggerForQues" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="searchLogger">
             <interceptor-ref name="crudStack" />
             <result name="success">loadingExamQues.jsp</result>
             <result type="redirect" name="login">../../general/login.action</result>
@@ -99,17 +99,17 @@
             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
         </action>
         
-         <action name="storeAddOrEditExamQues" class="com.mss.msp.onlineexam.questions.ExamQuestionsAction" method="storeAddOrEditExamQues">
+        <action name="storeAddOrEditExamQues" class="com.mss.msp.onlineexam.questions.ExamQuestionsAction" method="storeAddOrEditExamQues">
             <interceptor-ref name="crudStack" />
           
-                  <result type="redirectAction" name="success">
+            <result type="redirectAction" name="success">
                 <param name="actionName">doAddOrEditExamQues</param>
                 <param name="quesId">${quesId}</param>
                 <param name="successMsg">${successMsg}</param>
                 
             </result>
                 
-                <!--<param name="msgFlag">${msgFlag}</param>-->
+            <!--<param name="msgFlag">${msgFlag}</param>-->
                
             
             <result type="redirect" name="login">../../general/login.action</result>
@@ -125,7 +125,7 @@
             <result name="error">validationexpiredpage.jsp</result>
 
         </action>
-         <action name="doValidateConsultant" class="com.mss.msp.onlineexam.OnlineExamAction" method="doValidateInfo">
+        <action name="doValidateConsultant" class="com.mss.msp.onlineexam.OnlineExamAction" method="doValidateInfo">
             <!--<interceptor-ref name="crudStack" />-->
             <!--<interceptor-ref name="authorizationcheckStack" />-->
             <result>onlineexaminstructionspage.jsp</result>
@@ -152,7 +152,7 @@
 
         </action>
         
-         <action name="getImagePath" class="com.mss.msp.onlineexam.questions.ExamQuestionsAction" method="getImagePath">
+        <action name="getImagePath" class="com.mss.msp.onlineexam.questions.ExamQuestionsAction" method="getImagePath">
         </action>
         <action name="getSkillValuesOnChange" class="com.mss.msp.onlineexam.questions.ExamQuestionsAction" method="getSkillValuesOnChange">
         </action>

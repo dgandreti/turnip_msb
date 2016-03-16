@@ -24,7 +24,7 @@
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
+       
         
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
@@ -34,8 +34,10 @@
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/glinechart.js"/>"></script>
+         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
     </head>
-    <body style="overflow-x: hidden">
+    <body style="overflow-x: hidden" onload="pagerOption();">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -43,7 +45,7 @@
                 </div>
             </div>
         </header>
-        
+         <div id="main">
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
@@ -68,25 +70,25 @@
 
                                             <div class="inner-reqdiv-elements">
                                                 <div class="row">
-                                                    <div class="col-sm-2">
-                                                        <label class="" style="color:#56a5ec;">Year: </label>
+                                                    <div class="col-sm-3">
+                                                        <label class="" style="color:#56a5ec;">Year </label>
                                                         <s:textfield cssClass="form-control" id="year"
                                                                      name="year" placeholder="Year"  tabindex="1"
                                                                      />
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        <label class="" style="color:#56a5ec;">Month: </label>
+                                                    <div class="col-sm-3">
+                                                        <label class="" style="color:#56a5ec;">Month </label>
                                                         <s:select id="month" cssClass="form-control SelectBoxStyles" name="month" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'1':'January','2':'February','3':'March','4':'April','5':'May','6':'June','7':'July','8':'August','9':'September','10':'October','11':'November','12':'December'}" tabindex="2" />
                                                     </div>
 
-                                                    <div class="col-sm-2">
-                                                        <div class="row">
-                                                            <div class="col-sm-11">
+                                                    <div class="col-sm-3 pull-right">
+                                                        <div class="pull-right">
+                                                       
                                                                 <label class="" style="color:#56a5ec;"></label> 
                                                                 <%--<s:submit type="submit" cssClass="cssbutton_emps form-control"
                                                                         value="Search" onclick="getVendorDashboardList();"/> --%>
-                                                                <a href="#" ><input type="button" class="cssbutton_action_search form-control" value="Search" style="margin:5px" onclick="getVendorDashboardList();" tabindex="3" ></a>
-                                                            </div>
+                                                                <a href="#" ><input type="button" class="cssbutton_action_search form-control" value="Search" style="margin:5px" onclick="getVendorDashboardList(); pagerOption();" tabindex="3" ></a>
+                                                           
                                                         </div>
                                                     </div>   
                                                 </div>
@@ -212,6 +214,8 @@
                 </div>
             </div>        <!-- content end -->
         </section><!--/form-->
+         </div>
+        </div>
         <script>
             //alert("In outSide");
             var Combined = new Array();

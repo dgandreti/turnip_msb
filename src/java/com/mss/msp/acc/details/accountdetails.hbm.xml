@@ -6,6 +6,7 @@
         <property column="account_name" name="name"/>
         <property column="account_url" name="url"/>
         <property column="status" name="status"/>
+        <property column="acc_logo" name="accLogo"/>
         <join optional="true" table="acc_basic_info">
             <key column="acc_id" update="false"/>
             <property column="acc_region" name="region"/>

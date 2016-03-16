@@ -549,6 +549,8 @@ function editActivityValidate(){
 
 function attachPopJs(){
     //alert("hii");
+   
+         $("#message").html("");
     var specialBox = document.getElementById('taskAttachOverlay');
     if(specialBox.style.display == "block"){       
         specialBox.style.display = "none";         

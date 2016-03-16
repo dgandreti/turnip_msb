@@ -49,6 +49,7 @@
                 pager.showPageNav('pager', 'pageNavPosition');
                 // document.getElementById("paginationOption").value=10;
                 pager.showPage(1);
+                document.getElementById("loadingResourceSearch").style.display="none";
             });
            
         </script>
@@ -70,6 +71,7 @@
         </script>
     </head>
     <body style="overflow-x: hidden" onload="getRolesForAccType();getAccountNames();">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -78,7 +80,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <section id="generalForm">
 
             <div class="container">
@@ -94,16 +96,16 @@
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <font color="#ffffff">Action Resources</font>
-                                                <i id="updownArrow" onclick="toggleContent('searchAccAuthorization')" class="fa fa-angle-up"></i> 
+                                                <i id="updownArrowAccount" onclick="toggleContentAccount('searchAccAuthorization')" class="fa fa-angle-up"></i> 
                                                 <s:url var="myUrl" action="getAccAuthrization.action">
                                                 </s:url>
-                                                <span class="pull-right"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>
+                                                <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                 </h4>
                                             </div>
 
                                         </div>
                                         <!-- content start -->
-                                        <div ><label class="labelStylereq" style="color: #56a5ec;">Action Name:&nbsp; </label><label style="color: #FF8A14;"><s:property value="action_name" /></label></div>
+                                        <div ><label class="labelStylereq" style="color: #56a5ec;">Action Name : &nbsp; </label><span style="color: #FF8A14;"><s:property value="action_name" /></span></div>
                                     <s:hidden id="action_id" name="action_id" value="%{action_id}"/>
                                     <s:hidden id="action_name" name="action_name" value="%{action_name}"/>
                                     <s:hidden id="authId" name="authId" value="authrization"/>
@@ -112,10 +114,11 @@
                                         <div class="row">
                                         <s:form action="searchAccAuthorization" theme="simple">
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Account Type: </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Account Type </label>
                                                 <s:select  id="accType"
                                                            name="accType"
                                                            cssClass="SelectBoxStyles form-control"
+                                                           tabindex="1"
                                                            headerKey="-1"  
                                                            headerValue="All"
                                                            theme="simple" onchange="getRolesForAccType();"
@@ -123,20 +126,22 @@
                                                            />
                                             </div>
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Status: </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Status </label>
                                                 <s:select  id="status"
                                                            name="status"
                                                            cssClass="SelectBoxStyles form-control"
+                                                           tabindex="2"
                                                            headerKey="-1"  
                                                            theme="simple"
-                                                           list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'Inactive','All':'All'}"
+                                                           list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active','All':'All'}"
                                                            />
                                             </div >
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Roles: </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Roles </label>
                                                 <s:select  id="roles"
                                                            name="roles"
                                                            cssClass="SelectBoxStyles form-control"
+                                                           tabindex="3"
                                                            headerKey="-1" 
                                                            theme="simple"
                                                            headerValue="All"
@@ -145,9 +150,10 @@
                                             </div >
                                             <div class="col-sm-4">
                                                 <s:hidden name="orgId" id="orgId"/>
-                                                <label class="labelStylereq" style="color:#56a5ec;">Account Name: </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Account Name </label>
                                                 <s:textfield id="accountNamePopup"
                                                              cssClass="form-control"
+                                                             tabindex="4"
                                                              type="text"
                                                              name="accName"
                                                              placeholder="Account Name"
@@ -156,19 +162,21 @@
                                             </div>
                                             <div class="col-sm-2 pull-right">
                                                 <label class="labelStylereq" style="color:#56a5ec;"> </label>
-                                                <a href='actionResourcesForAddOrUpdate.action?action_id=<s:property value="%{action_id}"/>&AMP;action_name=<s:property value="%{action_name}"/>&AMP;accType=C' style="margin: 5px 0px;" class="add_searchButton form-control"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
+                                                <a href='actionResourcesForAddOrUpdate.action?action_id=<s:property value="%{action_id}"/>&AMP;action_name=<s:property value="%{action_name}"/>&AMP;accType=C' style="margin: 5px 0px;" tabindex="6" class="add_searchButton form-control"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
 
                                             </div>
                                             <div class="col-sm-2 pull-right">
                                                 <label class="labelStylereq" style="color:#56a5ec;"> </label>
                                                 <button type="button" style="margin: 5px 0px;"
-                                                        class="add_searchButton  form-control"
+                                                        class="add_searchButton  form-control" tabindex="5"
                                                         value="" onclick="return getActionResorucesSearchResults();"><i class="fa fa-search"></i>&nbsp;Search</button>
                                             </div>
                                                 </div>
                                             <br>
                                         </s:form>
-
+                                         <div id="loadingResourceSearch" class="loadingImg">
+                                                <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                            </div>   
                                         <%--<s:submit cssClass="css_button" value="show"/><br>--%>
                                         <div class="col-sm-12">
 
@@ -213,14 +221,14 @@
                                                                     <td><s:property value="rollName"></s:property></td>
                                                                     <td><s:property value="status"></s:property></td>
                                                                     <td><s:property value="description"></s:property></td>
-                                                                    <td><s:a href="#" onclick="actionResourceTermination('%{id}','%{action_id}');"><img src="<s:url value="/includes/images/delete.png"/>" height="25" width="25"></s:a></td>
+                                                                    <td><s:a href="#" onclick="actionResourceTermination('%{id}','%{action_id}');"><i class="fa fa-trash-o fa-size"></i></s:a></td>
                                                                     </tr>
                                                             </s:iterator>
                                                         </tbody>
                                                     </table>
                                                     <br/>
 
-                                                    <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                    <label class="page_option"> Display <select id="paginationOption" tabindex="7" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
                                                             <option>10</option>
                                                             <option>15</option>
                                                             <option>25</option>
@@ -259,6 +267,8 @@
 
             <!-- content end -->
         </section><!--/form-->
+        </div>
+        </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

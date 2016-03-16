@@ -139,6 +139,9 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
         System.out.println("===== ACCOUNT VIEW =====");
         try {
             String id = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
+         
+                    System.out.println("accountSearchID--->"+accountSearchID);
+                    System.out.println("accFlag-->"+accFlag);
             if (accountSearchID != null) {
                 id = accountSearchID;
             } else {
@@ -300,7 +303,7 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
 
                 setIndustryMap(ServiceLocator.getLookUpHandlerService().getIndustryTypesMap());
                 setExperience(DataSourceDataProvider.getInstance().getYearsOfExp());
-                
+
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillMap(skillsmap);
@@ -351,7 +354,16 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
             System.out.println("checkAddress" + isCheckAddress());
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                String sessionGender = session.getAttribute(ApplicationConstants.GENDER).toString();
+                Object sessionGender = session.getAttribute(ApplicationConstants.GENDER);
+                System.out.println("sessionGender-->" + sessionGender);
+                
+                int userCount = ServiceLocator.getAccountAjaxHandlerService().getUserCount(getContactId());
+                System.out.println("userCount-->" + userCount);
+                if (userCount == 0 && "Active".equals(getStatus())) {
+                    System.out.println("userCount-if->" + userCount);
+                    ServiceLocator.getAccountAjaxHandlerService().saveUserContacts(getContactId(), getUserSessionId());
+                }
+                
                 String resultString = ServiceLocator.getAccountDetailsService().updateAccountContactDetails(this);
                 System.out.println("result " + resultString);
                 System.out.println("workLocation " + getWorkLocation());
@@ -359,19 +371,19 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
                     //dataSourceDataProvider.getInstance().updateAccountLastAccessedBy(Integer.parseInt(getAccountSearchID()), getUserSessionId(), "ContactUpdated");
                 }
                 if (!getGender().equals(sessionGender)) {
-                        String femaleImage = Properties.getProperty("Profile.FEMALEIMAGE");
-                        String maleImage = Properties.getProperty("Profile.GENERALIMAGE");
-                        System.out.println("gender"+getGender()+"-->Session gender-->"+sessionGender);
-                        if ("M".equals(getGender())) {
-                            System.out.println("in if");
-                            session.setAttribute(ApplicationConstants.GENDER, "M");
-                            session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, maleImage);
-                        } else {
-                             System.out.println("in else");
-                            session.setAttribute(ApplicationConstants.GENDER, "F");
-                            session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, femaleImage);
-                        }
+                    String femaleImage = Properties.getProperty("Profile.FEMALEIMAGE");
+                    String maleImage = Properties.getProperty("Profile.GENERALIMAGE");
+                    System.out.println("gender" + getGender() + "-->Session gender-->" + sessionGender);
+                    if ("M".equals(getGender())) {
+                        System.out.println("in if");
+                        session.setAttribute(ApplicationConstants.GENDER, "M");
+                        session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, maleImage);
+                    } else {
+                        System.out.println("in else");
+                        session.setAttribute(ApplicationConstants.GENDER, "F");
+                        session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, femaleImage);
                     }
+                }
                 resultMessage = SUCCESS;
             } catch (Exception e) {
                 e.printStackTrace();

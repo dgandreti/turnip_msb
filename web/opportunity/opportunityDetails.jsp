@@ -38,6 +38,7 @@
 
     </head>
     <body>
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -46,7 +47,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <section id="generalForm">
             <div class="container">
                 <div class="row">
@@ -73,20 +74,20 @@
                                                 <!--Account ID, Opportunity Type, Opportunity Name, Opportunity Comments-->
                                                   <tr>
                                                     <div class="inner-addtaskdiv-elements " >
-                                                        <label class="labelStyle ">Opportunity Name: </label><s:textfield id="oppName"  cssClass="oppTextField" name="opportunity.opportunityName" key="opportunity.opportunityName" value="%{opportunity.opportunityName}" onchange=""/>
+                                                        <label class="labelStyle ">Opportunity Name </label><s:textfield id="oppName"  cssClass="oppTextField" name="opportunity.opportunityName" key="opportunity.opportunityName" value="%{opportunity.opportunityName}" onchange=""/>
                                                         <div style="color: red; width: auto" id="opportunityNameError"></div>
                                                     </div>
                                                   </tr>
                                                   <tr>
                                                     <div class="inner-addtaskdiv-elements " >
                                                         <s:hidden name="opportunityID" value="%{opportunitID}"/>
-                                                        <label class="labelStyle ">Opportunity Description (200 Characters Max): </label><s:textarea id="oppDesc"  cssClass="oppTextArea" name="opportunity.opportunityDesc" key="opportunity.opportunityDesc" value="%{opportunity.opportunityDesc}" onchange=""/>
+                                                        <label class="labelStyle ">Opportunity Description (200 Characters Max) </label><s:textarea id="oppDesc"  cssClass="oppTextArea" name="opportunity.opportunityDesc" key="opportunity.opportunityDesc" value="%{opportunity.opportunityDesc}" onchange=""/>
                                                         <div class="labelStyle" style="color: red; width: auto" id="opportunityDescError"></div>
                                                     </div>
                                                   </tr>
                                                   <tr>
                                                     <div class="inner-addtaskdiv-elements " >
-                                                        <label class="labelStyle ">Opportunity Comments: </label><s:textarea  cssClass="oppTextArea" name="opportunity.opportunityComments" key="opportunity.opportunityComments" value="%{opportunity.opportunityComments}" onchange=""/>
+                                                        <label class="labelStyle ">Opportunity Comments </label><s:textarea  cssClass="oppTextArea" name="opportunity.opportunityComments" key="opportunity.opportunityComments" value="%{opportunity.opportunityComments}" onchange=""/>
                                                         <label class="labelStyle" style="display: none; color: red; width: auto" id="opportunityCommentsError"></label>
                                                     </div>
                                                   </tr>
@@ -107,7 +108,8 @@
             </div>
 
         </section>
-
+        </div>
+    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

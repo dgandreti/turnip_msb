@@ -101,10 +101,9 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
     private HttpServletRequest httpServletRequest;
     private HttpServletResponse httpServletResponse;
     private Map teamMemberNames;
-
     /**
-     * Added by kbissell
-     * Holds the names of the Main/Sub projects that the User is on(user is team member)
+     * Added by kbissell Holds the names of the Main/Sub projects that the User
+     * is on(user is team member)
      *
      * Holds the selected Main and Sub project
      */
@@ -139,7 +138,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
 
             // System.out.println("session value-->"+httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-                 Calendar now = Calendar.getInstance();
+                Calendar now = Calendar.getInstance();
                 now.add(Calendar.MONTH, 1);
                 String monthString = "";
                 String dateString = "";
@@ -157,7 +156,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     monthString = "" + (now.get(Calendar.MONTH) + 1);
                 }
                 setEndDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));
-                System.out.println("get end date------------->"+getEndDate());
+                System.out.println("get end date------------->" + getEndDate());
                 //substract months from current date using Calendar.add method
                 now = Calendar.getInstance();
                 now.add(Calendar.MONTH, -1);
@@ -180,12 +179,12 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 }
 
                 setStartDate(startMonthString + "-" + startDateString + "-" + now.get(Calendar.YEAR));
-                   System.out.println("get start date------------->"+getStartDate());
-                
+                System.out.println("get start date------------->" + getStartDate());
+
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
                 setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
-                teamtaskDetails = ServiceLocator.getTaskHandlerService().getLoggedInEmpTasksDetails( this);
+                teamtaskDetails = ServiceLocator.getTaskHandlerService().getLoggedInEmpTasksDetails(this);
                 System.out.println(teamtaskDetails.size());
                 resultType = SUCCESS;
             }
@@ -218,6 +217,47 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
                 setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
                 teamtaskDetails = ServiceLocator.getTaskHandlerService().getEmployeeTasksDetails(this);
+//                Calendar now = Calendar.getInstance();
+//                now.add(Calendar.MONTH, 1);
+//                String monthString = "";
+//                String dateString = "";
+//
+//                int month = now.get(Calendar.MONTH) + 1;
+//                int date = now.get(Calendar.DATE);
+//                if (date < 10) {
+//                    dateString = "0" + now.get(Calendar.DATE);
+//                } else {
+//                    dateString = "" + now.get(Calendar.DATE);
+//                }
+//                if (month < 10) {
+//                    monthString = "0" + (now.get(Calendar.MONTH) + 1);
+//                } else {
+//                    monthString = "" + (now.get(Calendar.MONTH) + 1);
+//                }
+                setEndDate(getDocdatepicker());
+                System.out.println("get end date------------->" + getEndDate());
+                //substract months from current date using Calendar.add method
+//                now = Calendar.getInstance();
+//                now.add(Calendar.MONTH, -1);
+//
+//                String startMonthString = "";
+//                String startDateString = "";
+//
+//                int startMonth = now.get(Calendar.MONTH) + 1;
+//                int startDate = now.get(Calendar.DATE);
+//
+//                if (startDate < 10) {
+//                    startDateString = "0" + now.get(Calendar.DATE);
+//                } else {
+//                    startDateString = "" + now.get(Calendar.DATE);
+//                }
+//                if (startMonth < 10) {
+//                    startMonthString = "0" + (now.get(Calendar.MONTH) + 1);
+//                } else {
+//                    startMonthString = "" + (now.get(Calendar.MONTH) + 1);
+//                }
+
+                setStartDate(getDocdatepickerfrom());
                 System.out.println(teamtaskDetails.size());
                 if (teamtaskDetails.size() > 0) {
                     resultType = SUCCESS;
@@ -234,7 +274,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         return resultType;
     }
 
-     /**
+    /**
      * *************************************
      *
      * @getTaskDetails() method is used to get task details and appends on
@@ -257,7 +297,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
                 //setTasksRelatedToList(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
                 tasksVto = (ServiceLocator.getTaskHandlerService().getEditTaskDetails(this));
-                taskAttachments = (dataSourceDataProvider.getInstance().getAttachmentDetails( this));
+                taskAttachments = (dataSourceDataProvider.getInstance().getAttachmentDetails(this));
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
@@ -337,7 +377,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     }
                     short week = (short) (Math.round(dt.getDate() / 7));
                     /*getrequestType is used to create a directory of the object type specified in the jsp page*/
-                    createPath = new File(createPath.getAbsolutePath() +  File.separator + String.valueOf(dt.getYear() + 1900) +  File.separator+ month +  File.separator + String.valueOf(week));
+                    createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
                     /*This creates a directory forcefully if the directory does not exsist*/
 
                     //System.out.println("path::"+createPath);
@@ -349,7 +389,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
 
                     //setFilePath(theFile.toString());
                     /*copies the file to the destination*/
-                    File destFile = new File(theFile+File.separator+taskAttachmentFileName);
+                    File destFile = new File(theFile + File.separator + taskAttachmentFileName);
                     setFilePath(destFile.toString());
                     //System.out.println(">>>>>>>>>>>>>>>>>>PATH>>>>>>>>>>>>"+destFile);
                     FileUtils.copyFile(taskAttachment, destFile);
@@ -417,7 +457,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         try {
 
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-                 Calendar now = Calendar.getInstance();
+                Calendar now = Calendar.getInstance();
                 now.add(Calendar.MONTH, 1);
                 String monthString = "";
                 String dateString = "";
@@ -435,8 +475,8 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     monthString = "" + (now.get(Calendar.MONTH) + 1);
                 }
                 setEndDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));
-                System.out.println("end date----------->"+getEndDate());
-                
+                System.out.println("end date----------->" + getEndDate());
+
 
                 //substract months from current date using Calendar.add method
                 now = Calendar.getInstance();
@@ -460,14 +500,15 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 }
 
                 setStartDate(startMonthString + "-" + startDateString + "-" + now.get(Calendar.YEAR));
-                System.out.println("start date------------->"+getStartDate());
-                
+                System.out.println("start date------------->" + getStartDate());
+
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+                setTeamMemberNames(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
                 setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
                 teamtaskDetails = ServiceLocator.getTaskHandlerService().getLoggedInTeamTasksDetails(this);
                 Iterator i = teamtaskDetails.iterator();
-                teamMemberNames = (java.util.Map) i.next();
+                // teamMemberNames = (java.util.Map) i.next();
                 System.out.println(teamtaskDetails.size());
                 resultType = SUCCESS;
             }
@@ -506,6 +547,15 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
                 setTeamMemberNames(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
                 teamtaskDetails = ServiceLocator.getTaskHandlerService().getTeamTasksDetails(this);
+                
+                 setEndDate(getDocdatepicker());
+                System.out.println("end date----------->"+getEndDate());
+                
+
+                //substract months from current date using Calendar.add method
+                
+                
+                setStartDate(getDocdatepickerfrom());
                 System.out.println(getTeamMember());
                 System.out.println(teamtaskDetails.size());
                 if (teamtaskDetails.size() > 0) {
@@ -579,7 +629,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     }
                     short week = (short) (Math.round(dt.getDate() / 7));
                     /*getrequestType is used to create a directory of the object type specified in the jsp page*/
-                    createPath = new File(createPath.getAbsolutePath() +  File.separator + String.valueOf(dt.getYear() + 1900) +  File.separator + month +  File.separator + String.valueOf(week));
+                    createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
                     /*This creates a directory forcefully if the directory does not exsist*/
 
                     //System.out.println("path::"+createPath);
@@ -693,6 +743,9 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 System.out.println(this.getTaskid());
                 String resultMsg = ServiceLocator.getTaskHandlerService().getNotesDetails(this);
                 System.out.println(resultMsg);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultMsg);
@@ -726,6 +779,9 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 System.out.println(this.getTaskid());
                 String resultMsg = ServiceLocator.getTaskHandlerService().getNotesDetailsOverlay(this);
                 System.out.println(resultMsg);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultMsg);
@@ -819,14 +875,13 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         return resultType;
     }
 
-    private void populateProjectsDropDowns(){
+    private void populateProjectsDropDowns() {
 //        try {
 //            userMainProjects = ServiceLocator.getProjectDataHandlerService().getProjectsByUserAndType(userId, "MP");
 //            userSubProjects = ServiceLocator.getProjectDataHandlerService().getProjectsByUserAndType(userId, "SP");
 //        } catch (ServiceLocatorException ex) {
 //            Logger.getLogger(TaskHandlerAction.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-
     }
 
     /**
@@ -846,7 +901,10 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 String resultMsg = ServiceLocator.getTaskHandlerService().getNotesDetailsBySearch(this);
-                System.out.println(resultMsg+"praveen kumar pjpjpjppjpjpjpj");
+                System.out.println(resultMsg + "praveen kumar pjpjpjppjpjpjpj");
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultMsg);
@@ -857,7 +915,8 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         }
         return null;
     }
-/**
+
+    /**
      * *************************************
      *
      * @getNotesDetails() method is used to get task details and appends on
@@ -879,6 +938,9 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 System.out.println(this.getTaskid());
                 String resultMsg = ServiceLocator.getTaskHandlerService().getCommentsOnOverlay(this);
                 System.out.println(resultMsg);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultMsg);
@@ -889,6 +951,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         }
         return null;
     }
+
     /**
      *
      * This method is used to set the Servlet Response

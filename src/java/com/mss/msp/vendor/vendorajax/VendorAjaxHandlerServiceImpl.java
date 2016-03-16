@@ -604,7 +604,7 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
 
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "SELECT vendor_id,account_name FROM accounts JOIN customer_ven_rel c ON vendor_id=account_id JOIN lk_vendor_type lk ON vendor_tier_id=lk.id WHERE c.STATUS='Active' AND vendor_tier_id = " + vendorAjaxHandler.getTireType() + " AND customer_id= " + vendorAjaxHandler.getSessionOrgId();
+            String queryString = "SELECT vendor_id,account_name FROM accounts JOIN customer_ven_rel c ON vendor_id=account_id JOIN lk_vendor_type lk ON vendor_tier_id=lk.id WHERE c.STATUS='Active' AND vendor_tier_id = " + vendorAjaxHandler.getTireType() + " AND customer_id= " + vendorAjaxHandler.getOrgId();
             System.out.println("this is query.." + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -800,11 +800,9 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                resultString += resultSet.getString("id") + "|" + resultSet.getString("vendor_type") + "|" + resultSet.getString("createdUser") + "|" + dateUtility.getInstance().convertToviewFormatInDashWithTime(resultSet.getString("req_access_time")) + "|" + resultSet.getString("status") + "|" + resultSet.getString("account_name") + "|" + resultSet.getString("req_name") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfSubmisions(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getAvgRateByOrg(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "^";
-
+                resultString += resultSet.getString("id") + "|" + resultSet.getString("vendor_type") + "|" + resultSet.getString("createdUser") + "|" + dateUtility.getInstance().convertToviewFormatInDashWithTime(resultSet.getString("req_access_time")) + "|" + resultSet.getString("status") + "|" + resultSet.getString("account_name") + "|" + resultSet.getString("req_name") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfSubmisions(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getAvgRateByOrg(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "|" + resultSet.getString("ven_id") + "^";
+              //  resultString += resultSet.getString("id") + "|" + resultSet.getString("vendor_type") + "|" + resultSet.getString("createdUser") + "|" + dateUtility.getInstance().convertToviewFormatInDashWithTime(resultSet.getString("req_access_time")) + "|" + resultSet.getString("status") + "|" + resultSet.getString("account_name") + "|" + resultSet.getString("req_name") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfSubmisions(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getAvgRateByOrg(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "^";
             }
-
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {

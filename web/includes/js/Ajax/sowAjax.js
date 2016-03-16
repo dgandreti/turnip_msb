@@ -19,6 +19,8 @@ function doSOWAttachmentDownload(acc_attachment_id)
     var customerName=$('#customerName').val();
     var status=$('#status').val();
     var rateSalary=$('#rateSalary').val();
+    var serviceId=$('#serviceId').val();
+    var serviceType=$('#serviceType').val();
     var url='sowDownloadAttachment.action?acc_attachment_id='+acc_attachment_id
     +'&consultantId='+consultantId
     +'&requirementId='+requirementId
@@ -30,6 +32,8 @@ function doSOWAttachmentDownload(acc_attachment_id)
     +'&customerName='+customerName
     +'&status='+status
     +'&rateSalary='+rateSalary
+    +'&serviceId='+serviceId
+    +'&serviceType='+serviceType
     ;
     //alert(url)
     window.location = url;
@@ -78,7 +82,8 @@ function migration_overlayClose(){
     }
     $('#Migration_popup').popup(      
         );    
-    $("mig").html("");        
+    $("mig").html("");       
+    window.location="getSowList.action";
 }
 function userMigration(){
     // alert("in mig")
@@ -540,8 +545,8 @@ function getRecreatedList(){
 
 function populateRecreatedList(response)
 {
-$(".page_option").css('display', 'block');  
-  var serviceTypeRedirect= document.getElementById("serviceTypeRedirect").value;
+    $(".page_option").css('display', 'block');  
+    var serviceTypeRedirect= document.getElementById("serviceTypeRedirect").value;
     var serviceId= document.getElementById("serviceId").value;
     var consultantName = document.getElementById("consultantName").value;
     var customerName = document.getElementById("customerName").value;
@@ -590,10 +595,12 @@ $(".page_option").css('display', 'block');
         $("#sowResults").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
          
         row.append($('<td colspan="10"> <font style="color: red;font-size: 15px;"><center>No Records to display</center></font></td>'));
-$(".page_option").css('display', 'none');
+        $(".page_option").css('display', 'none');
     }
- $('#sowResults').tablePaginate({navigateType:'navigator'},recordPage);  
-   pager.init(); 
+    $('#sowResults').tablePaginate({
+        navigateType:'navigator'
+    },recordPage);  
+    pager.init(); 
 
 }
 function hoursValidations(){
@@ -610,4 +617,235 @@ function hoursValidations(){
         $('#estHrsDivId').show();
         $('#otFlagDivId').show();  
     }
+}
+function releasePo(id,reqId)
+{
+    //alert(id)
+    swal({
+    
+        title: "Are You Sure to Release ?",
+  
+        //text: "Tranfering csr",
+        textSize:"170px",
+        type: "warning",
+  
+        showCancelButton: true,
+        confirmButtonColor: "#3498db",
+  
+        //cancelButtonColor: "#56a5ec",
+        cancelButtonText: "No",
+        confirmButtonText: "Yes",
+        closeOnConfirm: false,
+        closeOnCancel: false
+ 
+    },
+    function(isConfirm){
+            
+        if (isConfirm) {
+             
+            var url=CONTENXT_PATH+"/poRelease.action?sowId="+id+"&requirementId="+reqId;
+       
+            //alert(url)
+            var req=initRequest(url);
+            req.onreadystatechange = function() {
+                if (req.readyState == 4 && req.status == 200) {
+                //alert("success");
+                } 
+            };
+            req.open("GET",url,"true");
+            req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            req.send(null);
+            swal("Success", " Successfully Forwarded ", "success");
+        }
+        
+    
+         
+        else {
+     
+            swal("Cancelled", " Cancelled ", "error");
+ 
+      
+        }
+    });
+}
+function SOWApproveOverlay(){
+    
+    
+    document.getElementById("deductionAmt_overlay").value=document.getElementById("deductionAmt").value;
+    document.getElementById("serviceId_overlay").value=document.getElementById("serviceId").value;
+    var specialBox = document.getElementById("attachmentBox");
+    if(specialBox.style.display == "block"){       
+        specialBox.style.display = "none";         
+    } else {
+        specialBox.style.display = "block";      
+    }
+    $('#SOWApproveOverlay_popup').popup(      
+        );    
+    $("sowApprove").html("");
+    document.getElementById("startDate").value="";
+     $("#startDate").css("border", "1px solid #ccc");
+    document.getElementById("endDate").value="";
+      $("#endDate").css("border", "1px solid #ccc");
+    document.getElementById("overTimeRate").value="";
+      $("#overTimeRate").css("border", "1px solid #ccc");
+     document.getElementById("overTimeLimit").value="";
+        $("#overTimeLimit").css("border", "1px solid #ccc");
+    document.getElementById("rolesAndResponsibilites").value="";  
+       $("#rolesAndResponsibilites").css("border", "1px solid #ccc");
+}
+var myCalendar;
+function onloadDates(){
+    myCalendar = new dhtmlXCalendarObject(["startDate","endDate"]);
+    myCalendar.setSkin('omega');
+    myCalendar.setDateFormat("%m-%d-%Y");
+    myCalendar.hideTime();
+}
+function enterDateRepository()
+{
+    document.getElementById('startDate').value = "";
+    document.getElementById('endDate').value = "";
+    return false;
+}
+function SOWApproveValidation(){
+    var startDate = $("#startDate").val();
+    var endDate = $("#endDate").val(); 
+    var rolesAndResponsibilites = $("#rolesAndResponsibilites").val();
+    var overTimeLimit=$("#overTimeLimit").val();
+    var overTimeRate=$("#overTimeRate").val();
+    var splitProjectStartDate = startDate.split('-');
+    var sDate = new Date(splitProjectStartDate[2], splitProjectStartDate[0]-1 , splitProjectStartDate[1]); //Y M D 
+    var splitProjectTargetDate = endDate.split('-');
+    var eDate = new Date(splitProjectTargetDate[2], splitProjectTargetDate[0]-1, splitProjectTargetDate[1]); //Y M D
+    var mainStartDate = Date.parse(sDate);
+    var mainEndDate= Date.parse(eDate);
+    if(startDate=="")
+    {
+        $("sowApprove").html(" <b><font color='red'>Start Date is required</font></b>");
+        $("#startDate").css("border", "1px solid red");
+        return false;
+    }
+    else
+        {
+           $("#startDate").css("border", "1px solid #ccc");   
+        }
+    if(endDate=="")
+    {
+        $("sowApprove").html(" <b><font color='red'>End Date is required</font></b>");
+        $("#endDate").css("border", "1px solid red");
+        return false;
+    }
+    else
+        {
+           $("#endDate").css("border", "1px solid #ccc");   
+        }
+    if(overTimeRate=="")
+    {
+        $("sowApprove").html(" <b><font color='red'>Over Time Rate is required</font></b>");
+        $("#overTimeRate").css("border", "1px solid red");
+        return false;
+    }
+     else
+        {
+           $("#overTimeRate").css("border", "1px solid #ccc");   
+        }
+    
+    if(overTimeLimit=="")
+    {
+        $("sowApprove").html(" <b><font color='red'>Over Time Limit is required</font></b>");
+        $("#overTimeLimit").css("border", "1px solid red");
+        return false;
+    }
+     else
+        {
+           $("#overTimeLimit").css("border", "1px solid #ccc");   
+        }
+    
+    if(rolesAndResponsibilites=="")
+    {
+        $("sowApprove").html(" <b><font color='red'>Roles and Responsibilites are required</font></b>");
+        $("#rolesAndResponsibilites").css("border", "1px solid red");
+        return false;
+    }
+     else
+        {
+           $("#rolesAndResponsibilites").css("border", "1px solid #ccc");   
+        }
+    var  difference=(mainEndDate - mainStartDate) / (86400000 * 7);
+    if(difference<0)
+    {
+        $("sowApprove").html(" <b><font color='red'>invalid range</font></b>");
+        $("#startDate").css("border", "1px solid red");
+        $("#endDate").css("border", "1px solid red");
+        return false;
+    } 
+    
+    else
+    {
+        $("sowApprove").html("");
+        $("#startDate").css("border", "1px solid #3BB9FF"); 
+        $("#endDate").css("border", "1px solid #3BB9FF"); 
+        $("#overTimeRate").css("border", "1px solid #3BB9FF"); 
+        $("#overTimeLimit").css("border", "1px solid #3BB9FF"); 
+        $("#rolesAndResponsibilites").css("border", "1px solid #3BB9FF"); 
+        return true;
+    }
+}
+function POdownloadButton(){
+    var serviceId=$("#serviceId").val();
+//    alert("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"+serviceId)
+    var url=CONTENXT_PATH+'/sag/sow/poDownloadButton.action?serviceId='+serviceId;
+    var req=initRequest(url);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+//            alert(req.responseText)
+            document.getElementById("attach_id").value=req.responseText;  
+            if(req.responseText==""){
+                document.getElementById("download_button").style.display="none";
+//                alert("in if")
+            }
+            else
+            {
+                document.getElementById("download_button").style.display="";
+//                alert("in else")
+            }
+        } 
+    };
+    req.open("GET",url,"true");
+    req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    req.send(null);
+    return false;
+}
+function doPODownload(){
+    var attach_id =document.getElementById("attach_id").value;
+    // window.location = 'sowDownloadAttachment.action?acc_attachment_id='+attach_id;
+    var consultantId=$('#consultantId').val();
+    var requirementId=$('#requirementId').val();
+    var customerId=$('#customerId').val();
+    var vendorId=$('#vendorId').val();
+    var consultantName=$('#consultantName').val();
+    var vendorName=$('#vendorName').val();
+    var requirementName=$('#requirementName').val();
+    var customerName=$('#customerName').val();
+    var status=$('#status').val();
+    var rateSalary=$('#rateSalary').val();
+    var serviceId=$('#serviceId').val();
+    var serviceType=$('#serviceType').val();
+    var tabFlag='y';
+    var url='sowDownloadAttachment.action?acc_attachment_id='+attach_id
+    +'&consultantId='+consultantId
+    +'&requirementId='+requirementId
+    +'&customerId='+customerId
+    +'&vendorId='+vendorId
+    +'&consultantName='+consultantName
+    +'&vendorName='+vendorName
+    +'&requirementName='+requirementName
+    +'&customerName='+customerName
+    +'&status='+status
+    +'&rateSalary='+rateSalary
+    +'&serviceId='+serviceId
+    +'&serviceType='+serviceType
+    +'&tabFlag='+tabFlag
+    ;
+//    alert(tabFlag)
+    window.location = url;
 }

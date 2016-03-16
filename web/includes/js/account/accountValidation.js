@@ -365,7 +365,7 @@ function editAccountValidation()
         $("#account_country").css("border", "1px solid red");
     }
     else{
-        $("#account_country").css("border", "1px solid green");
+//        $("#account_country").css("border", "1px solid green");
         $('#countryError').html("");
     }
     getStates($(this).val(),"account_state");
@@ -378,7 +378,7 @@ function editAccountValidation()
         $('#stateError').html("SELECT A STATE");
     }
     else{
-       $("#account_state").css("border","1px solid green");
+//       $("#account_state").css("border","1px solid green");
         $('#stateError').html("");
     }
  }
@@ -399,10 +399,10 @@ function editAccountValidation()
         $('#industryError').css("color","red");
         $('#industryError').html("SELECT AN INDUSTRY");
     }
-    else{
-       $("#account_industry").css("border","1px solid green");
-        $('#industryError').html("");
-    }
+//    else{
+//       $("#account_industry").css("border","1px solid green");
+//        $('#industryError').html("");
+//    }
  }
 //function accNoOfEmpValidate(evt){
 //    // alert("Account validate");

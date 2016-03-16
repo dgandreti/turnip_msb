@@ -78,13 +78,15 @@ Author     : Praveen<pkatru@miraclesoft.com>
         </script>
 
         <style>
-
+            .requirementPopup img{
+               margin-left: -4%;
+            }
 
         </style>
 
 
     </head>
-    <body style="overflow-x: hidden" onload="doOnLoadReqList();  loadPopup();reqPagination();">
+    <body style="overflow-x: hidden" onload="doOnLoadReqList(); loadPopup();reqPagination();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -101,7 +103,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                             <table>
                                 <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Add Consultant Details&nbsp;&nbsp; </font></h4></td>
                                 </tr>
-                                <span class=" pull-right"><h5><a href="#"  class="addVendorConsultant_popup_close" onclick="storeReqIdinOverlay(21)"><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
+                                <span class=" pull-right"><h5><a href="#"  class="addVendorConsultant_popup_close" onclick="storeReqIdinOverlay(21)"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                             </table>
                         </div>
                         <div>
@@ -112,20 +114,20 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                         <s:hidden name="conId" id="conId" ></s:hidden>
                                         <s:hidden name="reqId" id="reqId" ></s:hidden>
                                         <s:hidden name="orgid" id="orgid" ></s:hidden>
-                                        <label class="labelStyleAddCon">Email:</label><s:textfield name="email" id="conEmail" theme="simple" cssClass="addConInputStyle" onblur="getEmailExistance();" onclick="clearConultantAddOverlay()"/><font color="red">*</font>
+                                        <label class="labelStyleAddCon">Email</label><s:textfield name="email" id="conEmail" theme="simple" cssClass="addConInputStyle" onblur="getEmailExistance();" onclick="clearConultantAddOverlay()"/><font color="red">*</font>
                                     </div>
                                     <div class="innerAddConElements">
                                         <label class="labelStyleAddCon">ProofType</label><s:select id="proofType" cssClass="reqSelectStyle" name="proofType" list="#@java.util.LinkedHashMap@{'N':'--Select--','PN':'PAN','PP':'Passport'}" onchange="setPPorPAN(this.value);" onclick="clearConultantAddOverlay()"/>
                                     </div>
                                     <div>
                                         <div class="innerAddConElements" id="ppId">
-                                            <label class="labelStyleAddCon">PassPortNo:</label><s:textfield name="ppno" id="ppno" theme="simple" cssClass="addConInputStyle" onclick="clearConultantAddOverlay()"/>
+                                            <label class="labelStyleAddCon">PassPortNo</label><s:textfield name="ppno" id="ppno" theme="simple" cssClass="addConInputStyle" onclick="clearConultantAddOverlay()"/>
                                         </div>
                                         <div class="innerAddConElements" id="panId">
-                                            <label class="labelStyleAddCon">Pan no:</label><s:textfield name="pan" id="pan" theme="simple" cssClass="addConInputStyle" onclick="clearConultantAddOverlay()"/>
+                                            <label class="labelStyleAddCon">Pan no</label><s:textfield name="pan" id="pan" theme="simple" cssClass="addConInputStyle" onclick="clearConultantAddOverlay()"/>
                                         </div>
                                         <div class="innerAddConElements">
-                                            <label class="labelStyleAddCon">Rate/Hr:</label><span>$</span><s:textfield name="ratePerHour" id="ratePerHour" theme="simple" cssClass="addConInputStyle80" onclick="clearConultantAddOverlay()"/><font color="red">*</font>
+                                            <label class="labelStyleAddCon">Rate/Hr</label><span>$</span><s:textfield name="ratePerHour" id="ratePerHour" theme="simple" cssClass="addConInputStyle80" onclick="clearConultantAddOverlay()"/><font color="red">*</font>
                                         </div>
                                     </div>
                                     <div class="pull-right">
@@ -160,7 +162,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                     <h4 class="panel-title">
                                                         <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                         <font color="#ffffff">Requirement List </font>
-                                                        <i id="updownArrow" onclick="toggleContent('RequirementListAllForm')" class="fa fa-angle-up"></i>
+                                                        <i id="updownArrow" onclick="toggleContent('RequirementListAllForm')" class="fa fa-minus"></i>
                                                     </h4>
                                                 </div>
                                             </div>
@@ -174,38 +176,42 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                         <s:hidden name="accountFlag" id="accountFlag" value="%{accountFlag}" ></s:hidden>
                                                         <s:hidden name="customerFlag" id="customerFlag" value="%{customerFlag}" ></s:hidden> 
 
-                                                        <div class="col-sm-12">
-                                                            <div class="row">
-                                                                <div class="col-sm-4">
-                                                                    <label class="labelStylereq " style="color:#56a5ec;">Job Id:</label>
-                                                                    <s:textfield cssClass="form-control" name="jdId" id="jdId" placeholder="Job Id"/>
+                                                            <div class="col-sm-12">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4">
+                                                                        <label class="labelStylereq " style="color:#56a5ec;">Job Id</label>
+                                                                    <s:textfield cssClass="form-control" tabindex="1" name="jdId" id="jdId" placeholder="Job Id"/>
                                                                     <%--<s:select id="jobTitle" name="jobTitle" cssClass="reqSelectStyle" headerKey="-1" headerValue="jobTitle" theme="simple" list="{'Developer','Tester','Manager'}" />--%>
                                                                 </div>
                                                                 <div class="col-sm-4">
-                                                                    <label class="labelStylereq " style="color:#56a5ec;">Job Title:</label>
-                                                                    <s:textfield cssClass="form-control" name="jobTitle" id="jobTitle" placeholder="Job Title"/>
+                                                                    <label class="labelStylereq " style="color:#56a5ec;">Job Title</label>
+                                                                    <s:textfield cssClass="form-control" tabindex="2" name="jobTitle" id="jobTitle" placeholder="Job Title"/>
                                                                     <%--<s:select id="jobTitle" name="jobTitle" cssClass="reqSelectStyle" headerKey="-1" headerValue="jobTitle" theme="simple" list="{'Developer','Tester','Manager'}" />--%>
                                                                 </div>  
                                                                 <s:if test="#session.primaryrole==13 || #session.primaryrole==3 || #session.primaryrole==9 || #session.primaryrole==5">
                                                                     <div class="col-sm-4">
                                                                         <label class="labelStylereq " style="color:#56a5ec;">Req.Category</label>
-                                                                        <s:select id="reqCategoryValue" name="reqCategoryValue" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="%{reqCategory}" />
+                                                                        <s:select id="reqCategoryValue" tabindex="3" name="reqCategoryValue" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="%{reqCategory}" />
                                                                     </div>
                                                                 </s:if>
                                                                 <s:if test="vendor=='yes'">
                                                                     <div class="col-sm-4">
-                                                                        <label class="labelStylereq" style="color:#56a5ec;">Start Date:</label>  
-                                                                        <s:textfield cssClass=" form-control dateImage" name="reqStart" id="reqStart" placeholder="FromDate"  tabindex="1"  onkeypress="return enterDateRepository(this);" onfocus="return removeEndDateErrorMsg();"/>
+                                                                        <label class="labelStylereq" style="color:#56a5ec;">Customer&nbsp;Name</label>
+                                                                        <s:textfield cssClass=" form-control " name="customerName" placeholder="Customer Name"  id="customerName" tabindex="4"/>
                                                                     </div>
                                                                     <div class="col-sm-4">
-                                                                        <label class="labelStylereq" style="color:#56a5ec;">End Date:</label>
-                                                                        <s:textfield cssClass=" form-control dateImage" name="reqEnd" placeholder="ToDate"  id="reqEnd" tabindex="2"  onkeypress="return enterDateRepository(this);" onfocus="return removeEndDateErrorMsg();"/>
-                                                                    </div>
-                                                                </s:if>
-                                                                <s:if test="#session.primaryrole==13">
+                                                                        <label class="labelStylereq" style="color:#56a5ec;">Start Date</label>  
+                                                                        <div class="calImage"><s:textfield cssClass=" form-control  " name="reqStart" id="reqStart" placeholder="FromDate"  tabindex="5"  onkeypress="return enterDateRepository(this);" onfocus="return removeEndDateErrorMsg();"><i class="fa fa-calendar"></i></s:textfield>
+                                                                            </div></div>
+                                                                        <div class="col-sm-4">
+                                                                            <label class="labelStylereq" style="color:#56a5ec;">End Date</label>
+                                                                            <div class="calImage"><s:textfield cssClass=" form-control  " name="reqEnd" placeholder="ToDate"  id="reqEnd" tabindex="6"  onkeypress="return enterDateRepository(this);" onfocus="return removeEndDateErrorMsg();"><i class="fa fa-calendar"></i></s:textfield>
+                                                                            </div></div>
+                                                                    </s:if>
+                                                                    <s:if test="#session.primaryrole==13">
                                                                     <div class="col-sm-4">
                                                                         <label class="labelStylereq " style="color:#56a5ec;">Created By</label>
-                                                                        <s:select id="reqCreatedBy" name="reqCreatedBy" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="--Select--" theme="simple" list="%{reqCreatedByMap}" />
+                                                                        <s:select id="reqCreatedBy" name="reqCreatedBy" tabindex="7" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="--Select--" theme="simple" list="%{reqCreatedByMap}" />
                                                                     </div>
                                                                 </s:if>
                                                                 <s:else>
@@ -220,37 +226,37 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                     <div class="col-sm-4">
                                                                         <%--<label class="labelStylereq " style="color:#56a5ec;">Status:</label>
                                                                         <s:select id="requirementStatus" name="requirementStatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="#@java.util.LinkedHashMap@{'R':'Released','C':'Closed'}" />--%>
-                                                                        <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
-                                                                        <s:select id="requirementStatus" name="requirementStatus" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="#@java.util.LinkedHashMap@{'O':'Opened','R':'Released','OR':'Open for Resume','C':'Closed','F':'Forecast','I':'Inprogess','H':'Hold','W':'Withdrawn','S':'Won','L':'Lost'}" />
+                                                                        <label class="labelStylereq" style="color:#56a5ec;">Status</label>
+                                                                        <s:select id="requirementStatus" name="requirementStatus" tabindex="8" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="#@java.util.LinkedHashMap@{'O':'Opened','R':'Released','OR':'Open for Resume','C':'Closed','F':'Forecast','I':'Inprogess','H':'Hold','W':'Withdrawn','S':'Won','L':'Lost'}" />
                                                                     </div>
 
                                                                     <div class="col-sm-4">
-                                                                        <label class="labelStylereq" style="color:#56a5ec;">Start Date:</label>  
-                                                                        <s:textfield cssClass=" form-control dateImage" name="reqStart" id="reqStart" placeholder="FromDate"  tabindex="1"  onkeypress="return enterDateRepository(this);" onfocus="return removeEndDateErrorMsg();"/>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <label class="labelStylereq" style="color:#56a5ec;">End Date:</label>
-                                                                        <s:textfield cssClass=" form-control dateImage" name="reqEnd" placeholder="ToDate"  id="reqEnd" tabindex="2"  onkeypress="return enterDateRepository(this);" onfocus="return removeEndDateErrorMsg();"/>
-                                                                    </div>
-                                                                </s:if>
+                                                                        <label class="labelStylereq" style="color:#56a5ec;">Start Date</label>  
+                                                                        <div class="calImage"><s:textfield cssClass=" form-control " name="reqStart" id="reqStart" placeholder="FromDate"  tabindex="9"  onkeypress="return enterDateRepository(this);" onfocus="return removeEndDateErrorMsg();"><i class="fa fa-calendar"></i></s:textfield>
+                                                                            </div></div>
+                                                                        <div class="col-sm-4">
+                                                                            <label class="labelStylereq" style="color:#56a5ec;">End Date</label>
+                                                                            <div class="calImage"><s:textfield cssClass=" form-control " name="reqEnd" placeholder="ToDate"  id="reqEnd" tabindex="10"  onkeypress="return enterDateRepository(this);" onfocus="return removeEndDateErrorMsg();"><i class="fa fa-calendar"></i></s:textfield>
+                                                                            </div></div>
+                                                                    </s:if>
                                                                 <div class="col-sm-6">
                                                                     <label class="labelStyle" id="labelLevelStatusReq">Specialization </label>
-                                                                    <s:select cssClass="" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true"/> 
+                                                                    <s:select cssClass="" name="skillCategoryValue" tabindex="11" id="skillCategoryValue" list="skillValuesMap" multiple="true"/> 
 
                                                                 </div>
 
 
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-6 pull-right">
 
 
-                                                                    <div class="col-sm-4 pull-right btn_alignment">
+                                                                    <div class="pull-right btn_alignment">
 
                                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                        <s:submit type="button" cssClass="add_searchButton form-control contact_search"
+                                                                        <s:submit type="button" cssClass="add_searchButton form-control contact_search" tabindex="12"
                                                                                   value="Search" onclick="return getSearchRequirementsList()" cssStyle="margin:5px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
 
                                                                         </div>
-                                                                        <div class="col-sm-4 pull-right btn_alignment">
+                                                                        <div class="pull-right btn_alignment">
 
                                                                         <s:if test="#session.primaryrole==3">
                                                                             <s:url id="myUrl" action="/../../../Requirements/addRequirements.action">
@@ -258,7 +264,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                                 <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
                                                                             </s:url>
                                                                             <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                            <s:a  href='%{#myUrl}' cssClass="add_searchButton form-control contact_search" style="margin:5px"><i class="fa fa-plus-square"></i>&nbsp;Add</s:a> 
+                                                                            <s:a  href='%{#myUrl}' cssClass="add_searchButton form-control contact_search" tabindex="13" style="margin:5px"><i class="fa fa-plus-square"></i>&nbsp;Add</s:a> 
                                                                         </s:if>
 
 
@@ -274,9 +280,11 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                             </div> 
                                         </div>
 
-
+                                        <div id="loadingRequirements" class="loadingImg"  >
+                                            <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>
+                                        </div>
                                         <%--<s:submit cssClass="css_button" value="show"/><br>--%>
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12  share">
                                             <span><releaseMessage></releaseMessage></span>
                                             <s:form>
 
@@ -326,7 +334,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                 </tr>
                                                             </s:if>
                                                             <s:iterator  value="requirementlistVTO">
-                                                                <s:hidden id="rec_exits" value="yes"/>
+
                                                                 <!--build url TO goto Account Details-->
                                                                 <s:if test="customerFlag=='customer'">
                                                                     <s:url id="myUrl" action="Requirements/requirementedit.action" namespace="/" encode="true">
@@ -347,7 +355,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                     </s:url>
                                                                 </s:else>
                                                                 <tr>
-
+                                                                    <s:hidden name="rec_exits" id="rec_exits" value="yes"/>
                                                                     <td><s:a href='%{#myUrl}'><s:property value="%{jdId}"></s:property></s:a></td>
                                                                     <td><s:property value="title"/></td>
                                                                     <s:if test="#session.primaryrole == 13">
@@ -392,44 +400,44 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                         </s:elseif> --%>
                                                                         <s:if test="status=='Opened'">
                                                                             <s:if test="#session.primaryrole == 3">
-                                                                                <td><center><s:a href="#" onclick="doReleaseRequirement(%{id},%{orgid},'%{taxTerm}')"><img src="<s:url value="/includes/images/release.png"/>" height="20" width="20"></s:a></center></td>
+                                                                                <td><center><s:a href="#" onclick="doReleaseRequirement(%{id},%{orgid},'%{taxTerm}')"><i class="fa fa-arrow-circle-o-right fa-size"></i></s:a></center></td>
                                                                             </s:if>
                                                                             <s:elseif test="#session.primaryrole == 13">
-                                                                        <td><center><s:a href="#" onclick="doReleaseRequirement(%{id},%{orgid},'%{taxTerm}')"><img src="<s:url value="/includes/images/release.png"/>" height="20" width="20"></s:a></center></td>
-                                                                        </s:elseif>
-                                                                    </s:if>
+                                                                        <td><center><s:a href="#" onclick="doReleaseRequirement(%{id},%{orgid},'%{taxTerm}')"><i class="fa fa-arrow-circle-o-right fa-size"></i></s:a></center></td>
+                                                                    </s:elseif>
                                                                     <s:else>
-                                                                    <td><center><img src="<s:url value="/includes/images/release.png"/>" height="20" width="20" style="opacity: 0.3"></center></td>                                                                                
+                                                                        <td><center><i class="fa fa-arrow-circle-o-right fa-size" style="opacity: 0.3" ></i></center></td>                                                                                
                                                                     </s:else>
-                                                                    <s:else>
-                                                                    <td><center><img src="<s:url value="/includes/images/release.png"/>" height="20" width="20" style="opacity: 0.3"></center></td>                                                                                
-                                                                    </s:else>
+                                                                </s:if>
+                                                                <s:else>
+                                                                    <td><center><i class="fa fa-arrow-circle-o-right fa-size" style="opacity: 0.3" ></i></center></td>                                                                                
                                                                 </s:else>
-                                                                <s:if test="vendor=='yes'">
-                                                                    <s:if test="status=='Closed'||status=='Released'">
-                                                                    <td><center><img src="<s:url value="/includes/images/addCons.png"/>" height="20" width="20" style="opacity: 0.3"/></center></td>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                        <s:url id="addConsult" action="/recruitment/consultant/doAddConsultantForReq.action" namespace="/" encode="true">
-                                                                            <s:param name="requirementId" value="%{id}" />
-                                                                            <s:param name="jdId" value="%{jdId}"></s:param>
-                                                                            <s:param name="jobTitle" value="%{title}"></s:param>
-                                                                            <s:param name="orgid"><s:property value="orgid"/></s:param>
-                                                                            <s:param name="targetRate"><s:property value="%{targetRate}"/></s:param>
-                                                                            <s:param name="maxRate"><s:property value="%{requirementMaxRate}"/></s:param>
-                                                                        </s:url>
-                                                                    <td><center><s:a href="%{#addConsult}"><img src="<s:url value="/includes/images/addCons.png"/>" height="20" width="20"></s:a></center></td>
-                                                                    </s:else>
+                                                            </s:else>
+                                                            <s:if test="vendor=='yes'">
+                                                                <s:if test="status=='Closed'||status=='Released'">
+                                                                    <td><center><i class="fa fa-user-plus fa-size" style="opacity: 0.3"></i></center></td>
                                                                 </s:if>
-                                                                <s:if test="#session.primaryrole == 3">
-                                                                    <s:url id="copyReq" action="/../../../Requirements/doCopyRequirement.action">
-                                                                        <s:param name="accountSearchID"><s:property value="orgid"/></s:param>
-                                                                        <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
+                                                                <s:else>
+                                                                    <s:url id="addConsult" action="/recruitment/consultant/doAddConsultantForReq.action" namespace="/" encode="true">
                                                                         <s:param name="requirementId" value="%{id}" />
+                                                                        <s:param name="jdId" value="%{jdId}"></s:param>
+                                                                        <s:param name="jobTitle" value="%{title}"></s:param>
+                                                                        <s:param name="orgid"><s:property value="orgid"/></s:param>
+                                                                        <s:param name="targetRate"><s:property value="%{targetRate}"/></s:param>
+                                                                        <s:param name="maxRate"><s:property value="%{requirementMaxRate}"/></s:param>
                                                                     </s:url>
+                                                                    <td><center><s:a href="%{#addConsult}"><i class="fa fa-user-plus fa-size"></i></s:a></center></td>
+                                                                </s:else>
+                                                            </s:if>
+                                                            <s:if test="#session.primaryrole == 3">
+                                                                <s:url id="copyReq" action="/../../../Requirements/doCopyRequirement.action">
+                                                                    <s:param name="accountSearchID"><s:property value="orgid"/></s:param>
+                                                                    <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
+                                                                    <s:param name="requirementId" value="%{id}" />
+                                                                </s:url>
 
-                                                                <td><center><s:a href='%{copyReq}' ><img src="<s:url value="/includes/images/copyImage.png"/>" height="20" width="20"></s:a></center></td>
-                                                                </s:if>
+                                                                <td><center><s:a href='%{copyReq}' ><i class="fa fa-files-o fa-size" ></i></s:a></center></td>
+                                                            </s:if>
 
 
 
@@ -439,9 +447,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                         </tbody>
                                                     </table>
                                                     <br/>
-                                                    <div id="loadingRequirements" class="loadingImg" style="display: none" >
-                                                        <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>
-                                                    </div>
+
                                                     <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
                                                             <option>10</option>
                                                             <option>15</option>
@@ -460,12 +466,15 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                     </script>
                                                     <s:hidden name="gridDownload" id="gridDownload" value="%{gridPDFDownload}"/>
 
-                                                    <div id ="downloading_grid">
-                                                        <div class="col-sm-2 pull-right">
-                                                            <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadResults.action?pdfHeaderName=Requirements List&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class=" cssbutton form-control" value="Download PDF"></a>
+
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div id ="downloading_grid" class="col-sm-6 pull-right">
+                                                        <div class="pull-right  req_btn col-sm-0" style="margin: 0px 0px 0px 10px">
+                                                            <div onclick="downloadPDFRequirementList()" tabindex="14" class="fa fa-download cssbutton form-control">&nbsp;DownloadPDF</div>
                                                         </div>
-                                                        <div class="col-sm-2 pull-right">
-                                                            <a href='' onclick="this.href='/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/downloadXlsResults.action?pdfHeaderName=Requirements List&gridDownload='+document.getElementById('gridDownload').value"><input type="button" class=" cssbutton form-control" value="Download XLS"></a>
+                                                        <div class="pull-right  req_btn col-sm-0">
+                                                            <div onclick="downloadXLSRequirementList()" tabindex="15" class=" fa fa-download cssbutton form-control">&nbsp;DownloadXLS</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -478,7 +487,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                             <div class="backgroundcolor">
                                                 <table>
                                                     <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Contact Information&nbsp;&nbsp; </font></h4></td>
-                                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="recruiterOverlay_popup_close" onclick="closeRecruiterOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="recruiterOverlay_popup_close" onclick="closeRecruiterOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                 </table>
                                             </div>
                                             <div><center>
@@ -497,7 +506,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                 <div class="backgroundcolor">
                                                     <table>
                                                         <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Skill Details&nbsp;&nbsp; </font></h4></td>
-                                                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="recSkillOverlay_popup_close" onclick="reqSkillOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="recSkillOverlay_popup_close" onclick="reqSkillOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                     </table>
                                                 </div>
                                                 <div>
@@ -517,7 +526,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                 <div class="backgroundcolor">
                                                     <table>
                                                         <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Skill Details&nbsp;&nbsp; </font></h4></td>
-                                                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="preSkillOverlay_popup_close" onclick="preSkillOverlay()" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
+                                                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="preSkillOverlay_popup_close" onclick="preSkillOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                     </table>
                                                 </div>
                                                 <div>
@@ -537,26 +546,26 @@ Author     : Praveen<pkatru@miraclesoft.com>
 
                                     <div class="popup_block"> 
 
-                                        <div class="addlink" style="height: 80px;" >
+                                        <div class="addlink" style="height: 30px;" >
                                             <s:url id="myUrl" action="/../../../Requirements/addRequirements.action">
                                                 <s:param name="accountSearchID"><s:property value="orgid"/></s:param>
                                                 <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
                                             </s:url>
 
-                                            <div class="alignField"> <s:a href='%{#myUrl}'>    <img src="../../includes/images/requirement.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </s:a></div>
+
 
                                             <div class="alignField">
 
 
 
                                                 <s:a href='%{#myUrl}'>   Add Requirement  </s:a>
+                                                </div>
+
                                             </div>
-
                                         </div>
-                                    </div>
 
-                                    <div class="slide_popup requirementPopup"><img src="../../includes/images/next.png"  class="img-swap"></div>
-                                </div>
+                                        <div class="slide_popup requirementPopup"><img src="../../includes/images/requirement_1.png" style="width:24px;height:26px;"  class="img-swap"></div>
+                                    </div>
 
 
                             </s:if>
@@ -564,15 +573,15 @@ Author     : Praveen<pkatru@miraclesoft.com>
                     </div>        <!-- content end -->
                 </section><!--/form-->
             </div>
-
-            <footer id="footer"><!--Footer-->
-                <div class="footer-bottom" id="footer_bottom">
-                    <div class="container">
-                        <s:include value="/includes/template/footer.jsp"/>
-                    </div>
-                </div>
-            </footer><!--/Footer-->
         </div>
+        <footer id="footer"><!--Footer-->
+            <div class="footer-bottom" id="footer_bottom">
+                <div class="container">
+                    <s:include value="/includes/template/footer.jsp"/>
+                </div>
+            </div>
+        </footer><!--/Footer-->
+
         <script language="JavaScript" src='<s:url value="/includes/js/general/popupoverlay.js"/>'></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/selectivity-full.min.js"/>"></script> 
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
@@ -617,33 +626,10 @@ Author     : Praveen<pkatru@miraclesoft.com>
                 });
             });
             
-            $(function(){
-                $(".img-swap").live('click', function() {
-                   
-                    if ($(this).attr("class") == "img-swap") {
-                       
-                        this.src = this.src.replace("next","prev");
-                    } else {
-                        this.src = this.src.replace("prev","next");
-                    }
-                    $(this).toggleClass("on");
-                });
-            });
+           
             
             
-            if ( $(window).width() > 1400) {      
-                //Add your javascript for large screens here 
-  
-                $(document).ready(function(){
-                    $(".slide_popup").click(function(){
-                        $(".popup_block").animate({
-                            width: 'toggle'
-                        });
-                    });
-                });
-            
-              
-            }
+           
         </script>
         <script type="text/JavaScript">
             display_downloadButtons();

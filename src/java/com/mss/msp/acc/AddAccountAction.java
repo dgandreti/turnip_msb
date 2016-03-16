@@ -122,7 +122,12 @@ public class AddAccountAction extends ActionSupport implements ServletRequestAwa
         } else if (account.getUrl() == null || account.getUrl().equals("")) {
             isVaildInput = false;
             resultMessage = "Please enter an Account Url";
-        } else if (account.getEmail_ext() == null || account.getEmail_ext().equals("")) {
+        }
+        else if (account.getTypeId() == null || account.getTypeId().intValue() < 0) {
+            isVaildInput = false;
+            resultMessage = "Please select an Account Type";
+        }
+        else if (account.getEmail_ext() == null || account.getEmail_ext().equals("")) {
             isVaildInput = false;
             resultMessage = "Please enter Email extension";
         } else if (account.getAddress1() == null || account.getAddress1().equals("")) {
@@ -154,10 +159,7 @@ public class AddAccountAction extends ActionSupport implements ServletRequestAwa
         //      isVaildInput = false;
         //      resultMessage = "Please enter a shorter description ("+ApplicationConstants.ACCOUNT_DESCRIPTION_LENGTH+" Characters) or less";
         //    }
-        else if (account.getTypeId() == null || account.getTypeId().intValue() < 0) {
-            isVaildInput = false;
-            resultMessage = "Please select an Account Type";
-        }
+        
 //    else if (account.getTypeId().intValue() == 5) {
 //      if (account.getVendorTypeId() == null || account.getVendorTypeId().intValue() < 0) {
 //        isVaildInput = false;

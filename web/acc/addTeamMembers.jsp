@@ -51,6 +51,7 @@
 
     </head>
     <body style="overflow-x: hidden" onload="getReportingPerson()">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -59,7 +60,7 @@
             </div>
 
         </header>
-
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div class="container">
                 <div class="row">
@@ -93,7 +94,7 @@
                                                         <s:param name="projectID"><s:property value="projectID"/></s:param>
                                                         <s:param name="accountID"><s:property value="accountID"/></s:param>
                                                     </s:url>
-                                                    <span class="pull-right"><s:a href='%{myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="30" style="margin-top: 0px; margin-right: 5px"></s:a></span>
+                                                    <span class="pull-right"><s:a href='%{myUrl}'><i style="margin-top: 0px; margin-right: 5px" class="fa fa-undo"></i></s:a></span>
                                                     </h4>
                                                 </div>
                                             </div>
@@ -104,7 +105,7 @@
                                         <div class="tab-pane fade in active" id="teamMember">
                                             <div class="" id="profileBox" style="float: left; margin-top: 5px"> 
 
-                                                <div style="background-color: #3BB9FF ">
+                                                <div class="backgroundcolor" >
                                                     <table>
                                                         <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Edit Team Member&nbsp;&nbsp; </font></h4></td>
                                                                     <s:url var="myUrl" action="../projectDetails.action">
@@ -112,7 +113,7 @@
                                                                         <s:param name="accountID"><s:property value="accountID"/></s:param>
 
                                                             </s:url>
-                                                        <span class="pull-right"><s:a href='%{myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="30" width="30"></s:a></span>
+                                                        <span class="pull-right"><s:a href='%{myUrl}'><i style="margin-top: 14px; margin-right: 18px" class="fa fa-undo"></i></s:a></span>
                                                         </table>
                                                     </div>
 
@@ -123,7 +124,7 @@
                                                 <div >
 
                                                     <form action="addTeamMemberToProject" theme="simple" id="overlayForm" >
-
+                                                        <s:hidden id="projectFlag" name="projectFlag" value="%{projectFlag}" />
                                                         <div>
                                                             <% if (request.getAttribute("resultMessage") != null) {
                                                                     out.println("<font style='color:green;'>" + request.getAttribute("resultMessage") + "</font>");
@@ -137,8 +138,8 @@
 
                                                             </div>
                                                             <div class="inner-addtaskdiv-elements">
-                                                                <div class="col-sm-4 ">
-                                                                    <label  for="projectName">Project&nbsp;&nbsp;Name&nbsp;:&nbsp;</label><label style="color:#FF8A14;"><s:property value="account.projectName"/></label><%--s:textfield  cssClass="form-control" id="projectName"  name="projectName" value="%{account.projectName}" /--%>
+                                                                <div class="col-sm-8 ">
+                                                                    <label  for="projectName">Project&nbsp;&nbsp;Name:&nbsp;&nbsp;</label><span style="color:#FF8A14;"><s:property value="account.projectName"/></span><%--s:textfield  cssClass="form-control" id="projectName"  name="projectName" value="%{account.projectName}" /--%>
                                                                 </div> 
                                                             </div>
                                                             <br/>
@@ -158,7 +159,7 @@
                                                                     <div class="col-sm-4">
                                                                         <label  for="teamMemberNamePopup">Resource</label>
 
-                                                                        <s:select  id="resourceType"  name="resourceType" cssClass="form-control SelectBoxStyles "  theme="simple" list="#@java.util.LinkedHashMap@{'E':'Employee','C':'Consultant'}" tabindex="1" />
+                                                                        <s:select  id="resourceType"  name="resourceType" cssClass="form-control SelectBoxStyles "  theme="simple" list="#@java.util.LinkedHashMap@{'E':'Employee','C':'Consultant'}" tabindex="1" onchange="clearResourceName()"/>
                                                                     </div>
                                                                 </s:else>
                                                                 <s:if test="%{projectFlag!='addMember'}">
@@ -188,7 +189,7 @@
                                                             <div class="inner-addtaskdiv-elements">
 
                                                                 <div class="col-sm-4">
-                                                                    <s:hidden value="%{account.reportsto1}" />
+                                                                     <s:hidden value="%{account.reportsto1}" id="reportPerson" name="reportPerson"/>
                                                                     <label  for="primaryReportingPopup" >Reports To</label><s:select  cssClass="SelectBoxStyles form-control" id="memberPrimaryReporting" name="reportsto1"  headerKey="-1" headerValue="Select Contact"  list="reportsTOMap" value="%{account.reportsto1}" tabindex="4" />
                                                                 </div>
 
@@ -215,14 +216,14 @@
                                                                 <s:if test="%{projectFlag!='addMember'}">
                                                                     <div  class="col-sm-4 pull-right">
                                                                         <br>  
-                                                                        <s:submit cssClass="cssbutton pull-right" value="Update" theme="simple" onclick="return projectTeamMemberValidation();" tabindex="7"/>
+                                                                        <s:submit type="button" cssClass="cssbutton pull-right fa fa-refresh" value="Update" theme="simple" onclick="return projectTeamMemberValidation();" tabindex="7"/>
                                                                     </div>
                                                                 </s:if>
                                                                 <s:else>
-                                                                    <div  class="col-sm-4">
+                                                                   <div  class="col-sm-6">
                                                                         <br>
-                                                                        <s:reset cssClass="cssbutton " value="Clear" theme="simple" onclick="resetOverlayForm();" tabindex="8" />
-                                                                        <s:submit cssClass="cssbutton" value="Save" theme="simple" onclick="return projectTeamMemberValidation();" tabindex="9" />
+                                                                        <s:reset type="button" cssClass="cssbutton fa fa-eraser" style="height:30px" value="Clear" theme="simple" onclick="resetOverlayForm();" tabindex="8" />
+                                                                        <s:submit type="button" cssClass="cssbutton fa fa-floppy-o" style="height:30px" value="Save" theme="simple" onclick="return projectTeamMemberValidation();" tabindex="9" />
                                                                     </div>
                                                                 </s:else>
                                                             </div>
@@ -248,7 +249,7 @@
 
                                                                 </s:url>
 
-                                                                <span class="pull-right"><s:a href='%{myUrl}'><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25" style="margin-top: 0px; margin-right: 5px" ></s:a></span>
+                                                                <span class="pull-right"><s:a href='%{myUrl}'><i style="margin-top: 0px; margin-right: 5px" class="fa fa-undo"></i></s:a></span>
                                                                 </h4>
                                                             </div>
                                                         </div>
@@ -257,10 +258,10 @@
                                                     <s:hidden id="teamMemberFlag" name="teamMemberFlag" value="%{teamMemberFlag}" />
 
                                                     <div class="col-sm-4 ">
-                                                        <label  for="projectName">Project&nbsp;&nbsp;Name&nbsp;:&nbsp;</label><label style="color:#FF8A14;"><s:property value="account.projectName"/></label><%--s:textfield  cssClass="form-control" id="projectName"  name="projectName" value="%{account.projectName}" /--%>
+                                                        <label  for="projectName">Project&nbsp;&nbsp;Name&nbsp;:&nbsp;&nbsp;</label><span style="color:#FF8A14;"><s:property value="account.projectName"/></span><%--s:textfield  cssClass="form-control" id="projectName"  name="projectName" value="%{account.projectName}" /--%>
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <label  for="projectEmpName">Employee&nbsp;&nbsp;Name&nbsp;:&nbsp;</label><label style="color:#FF8A14;"><s:property value="account.teamMemberIdname"/></label><%--s:textfield  cssClass="form-control" id="projectEmpName"  name="projectEmpName" value="%{account.projectEmpName}" /--%>
+                                                        <label  for="projectEmpName">Employee&nbsp;&nbsp;Name&nbsp;:&nbsp;&nbsp;</label><span style="color:#FF8A14;"><s:property value="account.teamMemberIdname"/></span><%--s:textfield  cssClass="form-control" id="projectEmpName"  name="projectEmpName" value="%{account.projectEmpName}" /--%>
                                                     </div>
 
                                                     <br/>
@@ -296,7 +297,7 @@
                                                                     doubleCssClass="form-control"
                                                                     />	
                                                             </div>
-                                                            <s:submit cssClass="cssbutton" cssStyle="float:right" value="Update" />
+                                                            <s:submit type="button" cssClass="cssbutton fa fa-refresh" cssStyle="float:right; height:32px" value="Update" />
                                                         </div> 
 
                                                     </div>
@@ -315,8 +316,10 @@
             </div>
             <!-- content end -->
 
+        
         </div>
-    </div>
+        </div>
+    
 
 
 
@@ -336,6 +339,7 @@
         //alert("--->assignTeam<----") 
     }
 </script>
+    </div>
 <footer id="footer"><!--Footer-->
     <div class="footer-bottom" id="footer_bottom">
         <div class="container">

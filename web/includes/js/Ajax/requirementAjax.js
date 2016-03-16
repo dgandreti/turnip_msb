@@ -46,292 +46,7 @@ function initRequest(url) {
     }    
 }
 
-function RequirementValidations(skillCategoryArry){
-    var fromValue=$("#RequirementFrom").val();
-    // var toValue=$("#RequirementTo").val();
-    var Exp=$("#RequirementExp").val();
-    var Years=$("#RequirementYears").val();
-    var status=$("#RequirementStatus").val();
-    var name=$("#RequirementName").val();
-    var noofresources=$("#RequirementNoofResources").val();
-    var skill=$("#RequirementSkills").val();
-    //  var comment=$("#RequirementComments").val();
-    //  var desc=$("#RequirementDescription").val();
-    var targetrate=$("#RequirementTargetRate").val();
-    var duration=$("#RequirementDuration").val();
-    var contact1=$("#RequirementContact1").val();
-    var reason=$("#RequirementReason").val();
-    var presales1=$("#RequirementPresales1").val();
-    var contact2=$("#RequirementContact2").val();
-    var taxterm=$("#RequirementTaxTerm").val();
-    var presales2=$("#RequirementPresales2").val();
-    var practice=$("#RequirementPractice").val();
-    var location=$("#RequirementLocation").val();
-    var contactno=$("#RequirementContactNo").val();
-    var state=$("#RequirementState").val();
-    var country=$("#RequirementCountry").val();
-    var address=$("#RequirementAddress").val();
-    var responsibilities=$("#RequirementResponse").val();
-    var jobdesc=$("#RequirementJobdesc").val();
-    var billingContact=$("#billingContact").val();
-    var requirementDurationDescriptor=$("#requirementDurationDescriptor").val();
-    var requirementMaxRate=$("#requirementMaxRate").val();
-    var requirementQualification = $("#requirementQualification").val();
-    if(skillCategoryArry==""){
-       
-        $("editrequirementerror").html(" <b><font color='red'>Skill field is required</font></b>");
-        $("#skillCategoryValue").css("border", "1px solid red");
-        return false;
-    } else
-{
-        $("editrequirementerror").html("");
-        $("#skillCategoryValue").css("border", "1px solid green");
-    }
-    if(name==""||name.length>50){
-        
-        $("editrequirementerror").html(" <b><font color='red'>enter valid requirement name</font></b>");
-        $("#RequirementName").css("border", "1px solid red");
-        return false;
-    }
-    if(fromValue==""){
-       
-        $("editrequirementerror").html(" <b><font color='red'>fromdate field is required</font></b>");
-        $("#RequirementFrom").css("border", "1px solid red");
-        return false;
-    }
-    if(taxterm=="DF"){
-        $("editrequirementerror").html(" <b><font color='red'>Type field is required</font></b>");
-        $("#RequirementTaxTerm").css("border", "1px solid red");
-        return false;
-    }
-    if(contact1=="-1"){
-        
-        $("editrequirementerror").html(" <b><font color='red'>Approver field is required</font></b>");
-        $("#RequirementContact1").css("border", "1px solid red");
-        return false;
-    }
-    
-    if(noofresources==""||noofresources.length>9){
-       
-        $("editrequirementerror").html(" <b><font color='red'>enter valid noOfResources field value</font></b>");
-        $("#RequirementNoofResources").css("border", "1px solid red");
-        return false;
-    }
-    if(targetrate==""||targetrate.length>10){
-      
-        $("editrequirementerror").html(" <b><font color='red'>enter valid minimum rate</font></b>");
-        $("#RequirementTargetRate").css("border", "1px solid red");
-        return false;
-    } 
-    if(requirementMaxRate==""||requirementMaxRate.length>10){
-      
-        $("editrequirementerror").html(" <b><font color='red'>enter valid maximum rate</font></b>");
-        $("#requirementMaxRate").css("border", "1px solid red");
-        return false;
-    }
-    // alert("min rate---->"+targetrate +" max rate---->"+requirementMaxRate);
-    var diff=requirementMaxRate-targetrate;
-    if(diff<0)
-    {
-        $("editrequirementerror").html("<b><font color='red'>Maximum rate should be Greater than Minimum rate</font></b>");
-        $("#requirementMaxRate").css("border","1px solid red");
-        return false;
-    } 
-    if(contact2=="-1"){
-   
-        $("editrequirementerror").html(" <b><font color='red'>Requisitioner field is required</font></b>");
-        $("#RequirementContact2").css("border", "1px solid red");
-        return false;
-    }
-    if(taxterm!="PE") {
-        if(duration==""||duration.length>10){
-        
-            $("editrequirementerror").html(" <b><font color='red'>enter valid duration</font></b>");
-            $("#RequirementDuration").css("border", "1px solid red");
-            return false;
-        }
-    }
-    
-    if(taxterm!="PE") {
-       
-   
-        if(requirementDurationDescriptor=="-1")
-        {
-            $("editrequirementerror").html("<b><font color='red'>enter hrs/weeks/months</font></b>");
-            $("#requirementDurationDescriptor").css("border","1px solid red");
-            return false;
-        }
-    }
- 
-    if(location=="DF"){
-        $("editrequirementerror").html(" <b><font color='red'>location field is required</font></b>");
-        $("#RequirementLocation").css("border", "1px solid red");
-        return false;
-    }
-    if(Exp== -1){
-        
-        $("editrequirementerror").html(" <b><font color='red'>type field is required</font></b>");
-        $("#RequirementExp").css("border", "1px solid red");
-        return false;
-    }
-    if(requirementQualification==""){
-       
-        $("editrequirementerror").html(" <b><font color='red'>Qualification field is required</font></b>");
-        $("#requirementQualification").css("border", "1px solid red");
-        return false;
-    } else{
-        $("editrequirementerror").html("");
-        $("#requirementQualification").css("border", "1px solid green");
-    }
-    if(Years==-1){
-        
-        $("editrequirementerror").html(" <b><font color='red'>Experience field is required</font></b>");
-        $("#RequirementYears").css("border", "1px solid red");
-        return false;
-    }
-    if(billingContact=="DF"){
-        $("editrequirementerror").html(" <b><font color='red'>billingContact field is required</font></b>");
-        $("#billingContact").css("border", "1px solid red");
-        return false;
-    }
-    if(responsibilities==""){
-        $("editrequirementerror").html(" <b><font color='red'>responsibilities field is required</font></b>");
-        $("#RequirementResponse").css("border", "1px solid red");
-        return false;
-    }
-    if(jobdesc==""){
-        $("editrequirementerror").html(" <b><font color='red'>job desc field is required</font></b>");
-        $("#RequirementJobdesc").css("border", "1px solid red");
-        return false;
-    }
-    if(skill==""){
-       
-        $("editrequirementerror").html(" <b><font color='red'>skill set field is required</font></b>");
-        $("#RequirementSkills").css("border", "1px solid red");
-        return false;
-    }
-   
-   
-         
 
-  
-    
-    
-    
-     
-   
-    
-    if(reason=="DF"){
-       
-        $("editrequirementerror").html(" <b><font color='red'> reason field is required</font></b>");
-        $("#RequirementReason").css("border", "1px solid red");
-        return false;
-    }
-    
-     
-  
-    
-    if(status=="DF"){
-     
-        $("editrequirementerror").html(" <b><font color='red'>status field is required</font></b>");
-        $("#RequirementStatus").css("border", "1px solid red");
-        return false;
-    }
- 
-   
-    if(practice=="-1"){
-        
-        $("editrequirementerror").html(" <b><font color='red'>practice field is required</font></b>");
-        $("#RequirementPractice").css("border", "1px solid red");
-        return false;
-    }
-    
-   
-   
-    if(contactno==""){
-        $("editrequirementerror").html(" <b><font color='red'>contact number field is required</font></b>");
-        $("#RequirementContactNo").css("border", "1px solid red");
-        return false;
-    }
-    
-    if(state=="-1"){
-        $("editrequirementerror").html(" <b><font color='red'>state field is required</font></b>");
-        $("#RequirementState").css("border", "1px solid red");
-        return false;
-    }
-    if(country=="-1"){
-        $("editrequirementerror").html(" <b><font color='red'>Country field is required</font></b>");
-        $("#RequirementCountry").css("border", "1px solid red");
-        return false;
-    }
-    if(address==""){
-        $("editrequirementerror").html(" <b><font color='red'>address field is required</font></b>");
-        $("#RequirementAddress").css("border", "1px solid red");
-        return false;
-    }
-  
-   
-    
-    //    if(desc==""){
-    //       
-    //        $("editrequirementerror").html(" <b><font color='red'>description field is required</font></b>");
-    //        $("#RequirementDescription").css("border", "1px solid red");
-    //        return false;
-    //    }
-    
-    //    if(comment==""){
-    //      
-    //        $("editrequirementerror").html(" <b><font color='red'>comments field is required</font></b>");
-    //        $("#RequirementComments").css("border", "1px solid red");
-    //        return false;
-    //    }
-   
-    //    var res = fromValue.split(" ");
-    //    fromValue=res[0];
-    //    var res1 = toValue.split(" ");
-    //    toValue=res1[0];
-    //    if (Date.parse(fromValue) >= Date.parse(toValue)) {
-    //        $("editrequirementerror").html(" <b><font color='red'>Invalid Date Range!\nFrrom Date cannot be after To Date!</font></b>");
-    //        $("#RequirementFrom").css("border", "1px solid red");
-    //        $("#RequirementTo").css("border", "1px solid red");
-    //
-    //        return false;
-    //    }
-    //    else{
-    $("editrequirementerror").html("");
-    $("#RequirementFrom").css("border", "1px solid #3BB9FF");
-    //$("#RequirementComments").css("border", "1px solid #3BB9FF");
-    // $("#RequirementDescription").css("border", "1px solid #3BB9FF");
-    $("#RequirementSkills").css("border", "1px solid #3BB9FF");
-    $("#RequirementJobdesc").css("border", "1px solid #3BB9FF");
-    $("#RequirementResponse").css("border", "1px solid #3BB9FF");
-    $("#RequirementAddress").css("border", "1px solid #3BB9FF");
-    $("#RequirementCountry").css("border", "1px solid #3BB9FF");
-    $("#RequirementState").css("border", "1px solid #3BB9FF");
-    $("#RequirementContactNo").css("border", "1px solid #3BB9FF");
-    $("#RequirementLocation").css("border", "1px solid #3BB9FF");
-    $("#RequirementPractice").css("border", "1px solid #3BB9FF");
-    $("#RequirementExp").css("border", "1px solid #3BB9FF");
-    $("#RequirementDuration").css("border", "1px solid #3BB9FF");
-    $("#RequirementStatus").css("border", "1px solid #3BB9FF");
-    $("#RequirementPresales2").css("border", "1px solid #3BB9FF");
-    $("#RequirementPresales1").css("border", "1px solid #3BB9FF");
-    $("#RequirementTargetRate").css("border", "1px solid #3BB9FF");
-    $("#RequirementNoofResources").css("border", "1px solid #3BB9FF");
-    $("#RequirementTaxTerm").css("border", "1px solid #3BB9FF");
-    $("#RequirementReason").css("border", "1px solid #3BB9FF");
-    $("#RequirementTo").css("border", "1px solid #3BB9FF");
-    $("#RequirementName").css("border", "1px solid #3BB9FF");
-    $("#RequirementContact2").css("border", "1px solid #3BB9FF");
-    $("#RequirementContact1").css("border", "1px solid #3BB9FF");
-    $("#billingContact").css("border","1px solid #3BB9FF");
-    $("#requirementDurationDescriptor").css("border","1px solid #3BB9FF");
-    $("#requirementMaxRate").css("border","1px solid #3BB9FF"); 
-    
-    return true;
-//    }
-  
-};
 
 function addRequirement()
 {
@@ -441,14 +156,16 @@ function addRequirement()
 
  
         var req=initRequest(url);
+        $('html,body').scrollTop(0);
         req.onreadystatechange = function() {
+            document.getElementById('loadingAddReq').style.display = 'block';
             if (req.readyState == 4 && req.status == 200) {
-            
+                $('#loadingAddReq').hide();
                 if(req.responseText==0){
-                    $("editrequirementerror").html(" <b><font color='red'>No requirement Added</font></b>");
+                    $("editrequirementerror").html(" <b><font color='red'>Requirement is not Added</font></b>");
                 }else
                 {
-                    $("editrequirementerror").html(" <b><font color='green'>Requirement successfully Added</font></b>");
+                    $("editrequirementerror").html(" <b><font color='green'>Requirement Added Successfully</font></b>");
                     requirementClearValidation();
                 }
             //setPrimaryAssigned(req.responseText);
@@ -546,49 +263,34 @@ function doReqOnLoad() {
 
 
 function removeErrorMessages(){
-    $("#charNum").html(" ");
-    $("#ResponsecharNum").html(" ");
-    $("#req_Qualification").html(" ");
-    $("#JobcharNum").html(" ");
-    $("#SkillcharNum").html(" ");
+    //alert("hello")
+    $("#charNum").html("");
+    $("#ResponsecharNum").html("");
+    $("#req_Qualification").html("");
+    $("#JobcharNum").html("");
+    $("#SkillcharNum").html("");
     $("#PreferredSkillcharNum").html("");
     $("#CommcharNum").html("");
     $("editrequirementerror").html("");
     $("#RequirementName").css("border", "1px solid #53C2FF");
     $("#RequirementFrom").css("border", "1px solid #53C2FF");
-    $("#requirementMaxRate").css("border","1px solid #3BB9FF");
-    //  $("#RequirementTo").css("border", "1px solid #53C2FF");
-    $("#RequirementTargetRate").css("border", "1px solid #53C2FF");
-    $("#RequirementExp").css("border", "1px solid #53C2FF");
-    $("#RequirementYears").css("border", "1px solid #53C2FF");
-    $("#RequirementContact1").css("border", "1px solid #53C2FF");
-    $("#RequirementReason").css("border", "1px solid #53C2FF");
-    $("#RequirementPresales1").css("border", "1px solid #53C2FF");
-    $("#RequirementPractice").css("border", "1px solid #53C2FF");
-    $("#RequirementContact2").css("border", "1px solid #53C2FF");
     $("#RequirementTaxTerm").css("border", "1px solid #53C2FF");
-    $("#RequirementPresales2").css("border", "1px solid #53C2FF");
-    $("#RequirementDuration").css("border", "1px solid #53C2FF");
+    $("#RequirementContact1").css("border", "1px solid #53C2FF");
     $("#RequirementNoofResources").css("border", "1px solid #53C2FF");
-    $("#RequirementStatus").css("border", "1px solid #53C2FF");
-    $("#RequirementLocation").css("border", "1px solid #53C2FF");
-    $("#RequirementContactNo").css("border", "1px solid #53C2FF");
-    $("#RequirementCountry").css("border", "1px solid #53C2FF");
-    $("#RequirementState").css("border", "1px solid #53C2FF");
-    $("#RequirementAddress").css("border", "1px solid #ccc");
-    $("#RequirementResponse").css("border", "1px solid #ccc");
-    $("#RequirementJobdesc").css("border", "1px solid #ccc");
-    $("#RequirementSkills").css("border", "1px solid #ccc");
-    $("#skillCategoryValue").css("border", "1px solid #ccc");
-    
-    $("#RequirementDescription").css("border", "1px solid #ccc");
-    $("#RequirementComments").css("border", "1px solid #ccc");
-    $("#RequirementPreferredSkills").css("border","1px solid #ccc");
-    $("#requirementDurationDescriptor").css("border","1px solid #ccc");
-    
-    $("#billingContact").css("border","1px solid #ccc");
-    $("#requirementQualification").css("border","1px solid #ccc");
+     $("#RequirementTargetRate").css("border", "1px solid #53C2FF");
      
+    $("#requirementMaxRate").css("border","1px solid #3BB9FF");
+    $("#RequirementContact2").css("border", "1px solid #53C2FF");
+    $("#RequirementDuration").css("border", "1px solid #53C2FF");
+    $("#requirementDurationDescriptor").css("border","1px solid #ccc");
+     $("#billingContact").css("border","1px solid #ccc");
+      $("#RequirementLocation").css("border", "1px solid #53C2FF");
+      $("#RequirementYears").css("border", "1px solid #53C2FF");
+       $("#requirementQualification").css("border","1px solid #ccc");
+        $("#RequirementJobdesc").css("border", "1px solid #ccc");
+        $("#RequirementResponse").css("border", "1px solid #ccc");
+        $("#skillCategoryValue").css("border", "1px solid #ccc");
+   
 }
 function editRequirementDateValidation()
 {
@@ -629,12 +331,12 @@ function updaterequirements(){
     var requirementDurationDescriptor=$("#requirementDurationDescriptor").val();
     var responsibilitiesText = document.getElementById("RequirementResponse").value;
     responsibilitiesText = responsibilitiesText.replace(/\r?\n/g, '<br/>');
-    var responsibilities=document.getElementById("RequirementResponse").innerHTML = responsibilitiesText;
+    //var responsibilities=document.getElementById("RequirementResponse").innerHTML = responsibilitiesText;
     //alert(responsibilities);
     
     var jobDescText = document.getElementById("RequirementJobdesc").value;
     jobDescText = jobDescText.replace(/\r?\n/g, '<br/>');
-    var jobdesc=document.getElementById("RequirementJobdesc").innerHTML = jobDescText;   
+    //var jobdesc=document.getElementById("RequirementJobdesc").innerHTML = jobDescText;   
     //var jobdesc=$("#RequirementJobdesc").val();
 
     //    var prefferdSkillsText = document.getElementById("RequirementPreferredSkills").value;
@@ -660,12 +362,13 @@ function updaterequirements(){
 
     var commentsText = document.getElementById("RequirementComments").value;
     commentsText = commentsText.replace(/\r?\n/g, '<br/>');
-    var comment=document.getElementById("RequirementComments").innerHTML = commentsText;
+    // var comment=document.getElementById("RequirementComments").innerHTML = commentsText;
     var requirementMaxRate=document.getElementById("requirementMaxRate").value;
     var billingtype=$("#billingtype").val();
     var qualification = $("#requirementQualification").val();
     qualification = qualification.replace(/\r?\n/g, '<br/>');
-    var requirementQualification = document.getElementById("requirementQualification").innerHTML = qualification;
+    var status_check=$("#status_check").val();
+    //var requirementQualification = document.getElementById("requirementQualification").innerHTML = qualification;
     
     //    var responsibilities=$("#RequirementResponse").val();
     //    var jobdesc=$("#RequirementJobdesc").val();
@@ -679,25 +382,29 @@ function updaterequirements(){
     
         var url='../Requirements/updateRequirements.action?RequirementId='+reqId+'&RequirementFrom='+fromValue+
         '&RequirementStatus='+status+'&RequirementName='+name+'&RequirementNoofResources='+noofresources+'&skillCategoryArry='+skillCategoryArry+
-        '&RequirementComments='+comment+'&RequirementTargetRate='+targetrate+'&RequirementDuration='+
+        '&RequirementComments='+commentsText+'&RequirementTargetRate='+targetrate+'&RequirementDuration='+
         duration+'&RequirementContact1='+contact1+
         '&RequirementContact2='+contact2+'&RequirementTaxTerm='+taxterm+
         '&RequirementLocation='+location+
-        '&RequirementResponse='+responsibilities+'&RequirementJobdesc='
-        +jobdesc+'&preSkillCategoryArry='+preSkillCategoryArry+'&RequirementYears='+Exp+'&billingContact='+billingContact+
+        '&RequirementResponse='+responsibilitiesText+'&RequirementJobdesc='
+        +jobDescText+'&preSkillCategoryArry='+preSkillCategoryArry+'&RequirementYears='+Exp+'&billingContact='+billingContact+
         '&requirementDurationDescriptor='+requirementDurationDescriptor+'&requirementMaxRate='+requirementMaxRate+
-        '&billingtype='+billingtype+'&requirementQualification='+requirementQualification;
+        '&billingtype='+billingtype+'&requirementQualification='+qualification+'&status_check='+status_check;
         //  alert(url)
         var req=initRequest(url);
+        $('html,body').scrollTop(0);
         req.onreadystatechange = function() {
-       
-            if (req.readyState == 4 && req.status == 200) {
-                $("editrequirementerror").html(" <b><font color='green'>Record updated successfully </font></b>");
-                  
-            }
-            else
-            {
-                $("editrequirementerror").html(" <b><font color='red'>Record not updated</font></b>");
+            document.getElementById('loadingReq').style.display = 'block';
+            if (req.readyState == 4) {
+                if (req.status == 200) {
+                    $('#loadingReq').hide();
+                    $("editrequirementerror").html(" <b><font color='green'>Record updated successfully </font></b>");
+                     document.getElementById("status_check").value=status;
+                }
+                else
+                {
+                    $("editrequirementerror").html(" <b><font color='red'>Record not updated</font></b>");
+                }
             }
         };
         req.open("GET",url,"true");
@@ -809,33 +516,42 @@ function acceptNumbers(evt){
     }
 };
 
-function requirementClearValidation()
+
+    function requirementClearValidation()
 {
+   // alert(type)
     document.getElementById('RequirementName').value= "";
     document.getElementById('RequirementFrom').value = "";
-    document.getElementById('RequirementTaxTerm').selectedIndex = "0";
+    //document.getElementById('RequirementTaxTerm').value = type;
     document.getElementById('RequirementContact1').selectedIndex = "0";
+    
+    
     
     document.getElementById('RequirementNoofResources').value = "";
     document.getElementById('RequirementTargetRate').value = "";
-    document.getElementById('RequirementLocation').selectedIndex = "0";
+    document.getElementById('requirementMaxRate').value= ""; 
+    
     document.getElementById('RequirementContact2').selectedIndex = "0"; 
     document.getElementById('RequirementDuration').value ="";
     document.getElementById('requirementDurationDescriptor').selectedIndex = "0";
-    
+     document.getElementById('billingContact').selectedIndex = "0";
+     document.getElementById('RequirementLocation').selectedIndex = "0";
     document.getElementById('RequirementYears').selectedIndex = "0";
-    document.getElementById('billingContact').selectedIndex = "0";
-    document.getElementById('reqCategoryValue').selectedIndex = "0";
-     
-    
-    document.getElementById('RequirementResponse').value = "";
+   
+    document.getElementById('reqCategoryValue').value = "1";
+    document.getElementById('requirementQualification').value= ""; 
     document.getElementById('RequirementJobdesc').value = "";
-    document.getElementById('RequirementPreferredSkills').value = "";
-    document.getElementById('RequirementSkills').value = "";
+    document.getElementById('RequirementResponse').value = "";
+    
+   
+    
+     $("#skillCategoryValue").selectivity('clear');
+     $("#preSkillCategoryValue").selectivity('clear');
     //    document.getElementById('RequirementDescription').value = "";
     document.getElementById('RequirementComments').value= "";
-    document.getElementById('requirementMaxRate').value= ""; 
+    
 }
+
 function RequirementMaxRate(evt){
     //alert("heelo")
     var  maxRate=document.getElementById("requirementMaxRate").value;
@@ -1042,3 +758,168 @@ function QualificationCheckCharacters(id){
     })
     return false;
 }
+function downloadPDFSubmittedList(){
+    var gridDownload=document.getElementById('gridDownload').value;
+    var url= "./../recruitment/consultant/downloadResults.action?pdfHeaderName=Consultant Submitted List&gridDownload="
+        +gridDownload+"&gridDownloadFlag=Sub";
+   window.location=url;
+}
+function downloadXLSSubmittedList(){
+    var gridDownload=document.getElementById('gridDownload').value;
+    var url= "./../recruitment/consultant/downloadXlsResults.action?pdfHeaderName=Consultant Submitted List&gridDownload="
+        +gridDownload+"&gridDownloadFlag=Sub";
+   window.location=url;
+}
+
+
+function RequirementValidations(skillCategoryArry){
+    var name=$("#RequirementName").val();
+    var fromValue=$("#RequirementFrom").val();
+    var taxterm=$("#RequirementTaxTerm").val();
+    var contact1=$("#RequirementContact1").val();
+    var noofresources=$("#RequirementNoofResources").val();
+    var targetrate=$("#RequirementTargetRate").val();
+    var requirementMaxRate=$("#requirementMaxRate").val();
+    var contact2=$("#RequirementContact2").val();
+    var duration=$("#RequirementDuration").val();
+    var requirementDurationDescriptor=$("#requirementDurationDescriptor").val();
+     var billingContact=$("#billingContact").val();
+     var location=$("#RequirementLocation").val();
+      var Years=$("#RequirementYears").val();
+     var requirementQualification = $("#requirementQualification").val();  
+      var jobdesc=$("#RequirementJobdesc").val();
+       var responsibilities=$("#RequirementResponse").val();
+    
+   if(name==""||name.length>50){
+        
+        $("editrequirementerror").html(" <b><font color='red'>enter valid requirement name</font></b>");
+        $("#RequirementName").css("border", "1px solid red");
+        return false;
+    }
+   if(fromValue==""){
+       
+        $("editrequirementerror").html(" <b><font color='red'>fromdate field is required</font></b>");
+        $("#RequirementFrom").css("border", "1px solid red");
+        return false;
+    }
+    if(taxterm=="DF"){
+        $("editrequirementerror").html(" <b><font color='red'>Type field is required</font></b>");
+        $("#RequirementTaxTerm").css("border", "1px solid red");
+        return false;
+    }
+    if(contact1=="-1"){
+        
+        $("editrequirementerror").html(" <b><font color='red'>Approver field is required</font></b>");
+        $("#RequirementContact1").css("border", "1px solid red");
+        return false;
+    }
+     if(noofresources==""||noofresources.length>9){
+       
+        $("editrequirementerror").html(" <b><font color='red'>enter valid Positions field value</font></b>");
+        $("#RequirementNoofResources").css("border", "1px solid red");
+        return false;
+    }
+   if(targetrate==""||targetrate.length>10){
+      
+        $("editrequirementerror").html(" <b><font color='red'>enter valid minimum rate</font></b>");
+        $("#RequirementTargetRate").css("border", "1px solid red");
+        return false;
+    } 
+    if(requirementMaxRate==""||requirementMaxRate.length>10){
+      
+        $("editrequirementerror").html(" <b><font color='red'>enter valid maximum rate</font></b>");
+        $("#requirementMaxRate").css("border", "1px solid red");
+        return false;
+    }
+    // alert("min rate---->"+targetrate +" max rate---->"+requirementMaxRate);
+    var diff=requirementMaxRate-targetrate;
+    if(diff<0)
+    {
+        $("editrequirementerror").html("<b><font color='red'>Maximum rate should be Greater than Minimum rate</font></b>");
+        $("#requirementMaxRate").css("border","1px solid red");
+        return false;
+    } 
+     if(contact2=="-1"){
+   
+        $("editrequirementerror").html(" <b><font color='red'>Requisitioner field is required</font></b>");
+        $("#RequirementContact2").css("border", "1px solid red");
+        return false;
+    }
+    if(taxterm!="PE") {
+        if(duration==""||duration.length>10){
+        
+            $("editrequirementerror").html(" <b><font color='red'>enter valid duration</font></b>");
+            $("#RequirementDuration").css("border", "1px solid red");
+            return false;
+        }
+    }
+    if(taxterm!="PE") {
+       
+   
+        if(requirementDurationDescriptor=="-1")
+        {
+            $("editrequirementerror").html("<b><font color='red'>enter hrs/weeks/months</font></b>");
+            $("#requirementDurationDescriptor").css("border","1px solid red");
+            return false;
+        }
+    }
+    if(billingContact=="DF"){
+        $("editrequirementerror").html(" <b><font color='red'>billingContact field is required</font></b>");
+        $("#billingContact").css("border", "1px solid red");
+        return false;
+    }
+    if(location=="DF"){
+        $("editrequirementerror").html(" <b><font color='red'>location field is required</font></b>");
+        $("#RequirementLocation").css("border", "1px solid red");
+        return false;
+    }
+    if(Years==-1){
+        
+        $("editrequirementerror").html(" <b><font color='red'>Experience field is required</font></b>");
+        $("#RequirementYears").css("border", "1px solid red");
+        return false;
+    }
+    if(requirementQualification==""){
+       
+        $("editrequirementerror").html(" <b><font color='red'>Qualification field is required</font></b>");
+        $("#requirementQualification").css("border", "1px solid red");
+        return false;
+    } 
+    if(jobdesc==""){
+        $("editrequirementerror").html(" <b><font color='red'>job desc field is required</font></b>");
+        $("#RequirementJobdesc").css("border", "1px solid red");
+        return false;
+    }
+     if(responsibilities==""){
+        $("editrequirementerror").html(" <b><font color='red'>responsibilities field is required</font></b>");
+        $("#RequirementResponse").css("border", "1px solid red");
+        return false;
+    }
+    if(skillCategoryArry==""){
+       
+        $("editrequirementerror").html(" <b><font color='red'>Skill field is required</font></b>");
+        $("#skillCategoryValue").css("border", "1px solid red");
+        return false;
+    } 
+    
+    $("editrequirementerror").html("");
+    $("#RequirementName").css("border", "1px solid #3BB9FF");
+    $("#RequirementFrom").css("border", "1px solid #3BB9FF");
+    $("#RequirementTaxTerm").css("border", "1px solid #3BB9FF");
+    $("#RequirementContact1").css("border", "1px solid #3BB9FF");
+    $("#RequirementNoofResources").css("border", "1px solid #3BB9FF");
+    $("#RequirementTargetRate").css("border", "1px solid #3BB9FF");
+    $("#requirementMaxRate").css("border","1px solid #3BB9FF"); 
+    $("#RequirementContact2").css("border", "1px solid #3BB9FF");
+    $("#RequirementDuration").css("border", "1px solid #3BB9FF");
+    $("#requirementDurationDescriptor").css("border","1px solid #3BB9FF");
+     $("#billingContact").css("border","1px solid #3BB9FF");
+     $("#RequirementLocation").css("border", "1px solid #3BB9FF");
+     $("#RequirementYears").css("border", "1px solid #3BB9FF");
+     $("#requirementQualification").css("border", "1px solid #3BB9FF");
+      $("#RequirementJobdesc").css("border", "1px solid #3BB9FF");
+ 
+    $("#RequirementResponse").css("border", "1px solid #3BB9FF");
+     $("#skillCategoryValue").css("border", "1px solid #3BB9FF");
+  return true;
+    }

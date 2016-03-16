@@ -55,12 +55,14 @@
 
         <div class="container register_form">
             <section class="af-wrapper">
-                <h2 style="text-align: center;font-weight: bold;">Vendor Registration</h2>
-
+                <h2 class="vendorHeading">Vendor Registration</h2>
+                <div class="pull-right"><font style="color: red">* To Show only required fields&nbsp;</font><label style="cursor: pointer;color: blue;font-weight: normal" for="af-showreq" >click here.</label></div>
                 <input id="af-showreq" class="af-show-input" type="checkbox" name="showreq"/>
-                <div> <label for="af-showreq" class="af-show">Show only required fields</label></div>
                 <s:form action="userRegistration.action" cssClass="af-form" id="af-form"  method="post" name="userLoginForm"   validate="" theme="simple"> 
                     <div class="row">
+
+
+
                         <s:if test="%{resultMessage=='NULL'}">
                             <span id="resultMessage" style="color:red;width: auto">Not Inserted Successfully..!!</span>
                         </s:if> 
@@ -73,7 +75,7 @@
                         <h3>Vendor Details</h3>
                         <div class="af-outer af-required  ">
                             <div class="af-inner">
-                                <label for="input-oname">Name<font style="color: red">*</font></label>
+                                <label for="input-oname">Name<font style="color: red"> *</font></label>
                                     <s:textfield name="orgName" type="text" id="orgName" maxLength="60" required="required" placeholder="Vendor Name"
                                                  onblur="javascript: orgNameCheck('#orgName','#orgNameCheckSpan')"/>
                                 <span id="orgNameCheckSpan"></span>
@@ -82,7 +84,7 @@
 
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-owebadd">URL<font style="color: red">*</font></label>
+                                <label for="input-owebadd">URL<font style="color: red"> *</font></label>
                                     <s:textfield name="org_web_address" type="text" id="org_web_address" maxLength="60" required="required" placeholder="Vendor URL"
                                                  onblur="javascript: orgWebAddressCheck('#org_web_address','#orgWebCheckSpan')"/>
                                 <span id="orgWebCheckSpan"></span>
@@ -102,7 +104,7 @@
 
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-add1">Address 1<font style="color: red">*</font></label>
+                                <label for="input-add1">Address 1<font style="color: red"> *</font></label>
                                     <s:textfield name="org_address1" type="text" maxLength="100" id="org_address1" required="required" placeholder="Address 1"/>
 
                             </div>
@@ -116,7 +118,7 @@
                         </div>
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-ocity">City<font style="color: red">*</font></label>
+                                <label for="input-ocity">City<font style="color: red"> *</font></label>
                                     <s:textfield name="org_city" type="text" id="org_city" maxLength="20" required="required" placeholder="City"/>
 
                             </div>
@@ -124,7 +126,7 @@
 
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-ocountry">Country<font style="color: red">*</font></label>
+                                <label for="input-ocountry">Country<font style="color: red"> *</font></label>
                                     <s:select name="org_country" type="text" id="org_country" required="required" placeholder="Country"
                                               headerKey="-1" headerValue="Select Country" theme="simple" value="3"
                                               list="%{countryList}" onchange="regStateChange(this.id)"/>
@@ -134,7 +136,7 @@
 
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-ostate">state<font style="color: red">*</font></label>
+                                <label for="input-ostate">State<font style="color: red"> *</font></label>
                                     <s:select name="org_state" type="text" id="org_state" required="required" placeholder="State"
                                               headerKey="" headerValue="Select State" theme="simple"
                                               list="{}" />
@@ -159,31 +161,38 @@
 
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-title">Title<font style="color: red">*</font></label>
+                                <label for="input-title">Title<font style="color: red"> *</font></label>
                                     <s:textfield name="title" type="text" maxLength="30" id="title" required="required" placeholder="Title"/>
                             </div>
                         </div>
                         <div class="af-outer af-required" >
+                            
                             <div class="af-inner">
-                                <label for="input-noemp">Number of Employees<font style="color: red">*</font></label>
+                                <label for="input-noemp">No. of Employees<font style="color: red"> *</font></label>
+                              
                                     <s:textfield  name="noOfEmployees" type="text" maxLength="7" id="noOfEmployees" required="required" placeholder="Number of Employees"/>
-                            </div>
+                             
+                        </div>
                         </div>
                     </div>
                     <div class="row">
-                        <h3 >Administrator</h3>
-                        <div class="col-lg-12">
-                            <div class="col-lg-8">
-                                <s:checkbox name="checkAddress"  id="checkAddress" onclick="userRegFillAddress();"  ></s:checkbox>
-                                    <label class="checkboxLabel" for="checkAddress">Same as Above Address</label>
-                                    <span><j2></j2></span>
-                                </div>
-                                <div class="col-lg-4"></div>
+                       <h3 >Administrator</h3>
+                        <div class="col-sm-12">
+                            <div class="col-sm-2"></div>
+                            <div class="">
+                                
+                                <s:checkbox name="checkAddress" style="float:left;margin:8px" tabindex="13" id="checkAddress" onclick="userRegFillAddress();" ></s:checkbox>
+                       
+                            </div> <div  class="col-sm-6">  <label class="checkboxLabel" for="checkAddress" style="width:171px;float: left" >Same as Above Address</label>
+                                
+                          <span><j2></j2></span>
                             </div>
-                            <div class="af-outer af-required">
-                                <div class="af-inner">
+                                <div class="col-sm-4"></div>
+                        </div>
+                        <div class="af-outer af-required">
+                            <div class="af-inner">
 
-                                    <label for="input-fname">First Name<font style="color: red">*</font></label>
+                                <label for="input-fname">First Name<font style="color: red"> *</font></label>
 
                                 <s:textfield  name="first_name" type="text" id="first_name" maxLength="30" required="required" placeholder="First Name" x-moz-errormessage="Please enter the First Name"/>
 
@@ -192,7 +201,7 @@
 
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-lname">last Name<font style="color: red">*</font></label>
+                                <label for="input-lname">Last Name<font style="color: red"> *</font></label>
                                     <s:textfield name="last_name" type="text" id="last_name" maxLength="30" required="required" placeholder="Last Name"/>
 
                             </div>
@@ -206,7 +215,7 @@
                         </div>
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-phone">office Phone<font style="color: red">*</font></label>
+                                <label for="input-phone">Office Phone<font style="color: red"> *</font></label>
                                     <s:textfield name="office_Phone" type="text" id="office_Phone" placeholder="Phone" required="required"  />
 
                             </div>
@@ -221,7 +230,7 @@
                         </div>
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-oemail">Office Email<font style="color: red">*</font></label>
+                                <label for="input-oemail">Office Email<font style="color: red"> *</font></label>
                                     <s:textfield name="office_emailId" type="email" maxLength="60" id="office_emailId" required="required" placeholder="Office Email Address" onblur="return regOfficeEmailValidation()"/>
                                 <span id="officeemail"></span>
                             </div>
@@ -237,7 +246,7 @@
 
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-add1">Address 1<font style="color: red">*</font></label>
+                                <label for="input-add1">Address 1<font style="color: red"> *</font></label>
                                     <s:textfield name="address1" type="text" maxLength="100" id="address1" required="required" placeholder="Address 1"/>
 
                             </div>
@@ -251,14 +260,14 @@
                         </div>
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-city">City<font style="color: red">*</font></label>
+                                <label for="input-city">City<font style="color: red"> *</font></label>
                                     <s:textfield name="city" type="text" maxLength="20" id="city" required="required" placeholder="City"/>
 
                             </div>
                         </div>
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-cont">Country<font style="color: red">*</font></label>
+                                <label for="input-cont">Country<font style="color: red"> *</font></label>
                                     <s:select name="country" type="text" id="country" required="required" placeholder="Country"
                                               headerKey="-1" headerValue="Select Country" theme="simple" cssClass="SelectBoxStyles" value="3"
                                               list="%{countryList}" onchange="regStateChange(this.id)"/>
@@ -267,7 +276,7 @@
                         </div>
                         <div class="af-outer af-required">
                             <div class="af-inner">
-                                <label for="input-state">State<font style="color: red">*</font></label>
+                                <label for="input-state">State<font style="color: red"> *</font></label>
                                     <s:select name="state1" type="text" id="state1" required="required" placeholder="State"
                                               headerKey="-1" headerValue="Select State" theme="simple"
                                               list="{}"/>
@@ -291,8 +300,16 @@
                             </div>
                         </div>
                     </div>
-                    <s:submit value="Register" type="submit" />
-                    <s:reset value="Reset" type="reset"/>
+                    <div class="row">
+                        <div class="pull-right_vendor">
+
+                            <s:reset value="Reset" cssClass="add_searchButton fa fa-eraser" style="width:75px;height:30px" type="button" onclick="clearRegistraionForm()"/>
+                            <s:submit value="Register" cssClass="add_searchButton fa fa-floppy-o" style="width:75px;height:30px" type="button" />
+
+                        </div>
+                    </div>
+
+                    <s:token />
                 </s:form>
             </section>
         </div>
@@ -308,8 +325,9 @@
         </footer><!--/Footer-->
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script>
-            $("#org_fax").mask("99/99/9999");
-            $("#zip").mask("99/99/9999");
+            $("#org_fax").mask("(999)-999-9999");
+          //  $("#zip").mask("99/99/9999");
+            
         </script>
     </body>
 </html>

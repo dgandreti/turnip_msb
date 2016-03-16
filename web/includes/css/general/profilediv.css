@@ -20,7 +20,7 @@ div#selectivityProfileBox{
     width: 100%; 
     height: 100%;
     background: #f9f9f9;
-    color: #56a5ec;
+    /*color: #56a5ec;*/
     border-radius: 3px; 
     border: 1px solid #FFF;
 }
@@ -56,7 +56,7 @@ div#profileBox2{
 }
 .backgroundcolor1{
     background-color: #30D630;
-    border-radius:4px 4px 0px 0px;
+/*    border-radius:4px 4px 0px 0px;*/
     padding-left: 15px;
 }
 div#picture
@@ -306,8 +306,10 @@ table.Edu th td{
 }
 label
 {
-    color: #56a5ec;
+    /*color: #56a5ec;*/
     font-size: 14px;
+    font-weight: normal !important;
+    color: #494949 !important;
 }
 div#permanentAddressOverlay
 {
@@ -325,9 +327,10 @@ div#permanentAddressOverlay
 }
 
 .backgroundcolor{
-    background-color: #3BB9FF;
+    /*background-color: #45b5de;*/
+    background-color: #4491df;
     border-radius:4px 4px 0px 0px;
-    padding-left: 15px;
+    /*padding-left: 15px;*/
 }
 .backgroundcolorforBtn{
     background-color: #3BB9FF;
@@ -538,19 +541,21 @@ div#eduEditBoxOverlay {
 }
 
 .form-control{
-    height: 27px;
-    padding: 0px 12px;
+    height: 29px;
+    padding: 0 6px;
+/*    height: 27px;
+    padding: 0px 12px;*/
 }
 .SelectBoxStyles{
     -moz-appearance: none;
     -webkit-appearance: none;
-    background: url("../../../includes/images/drop_down.png") no-repeat scroll 98% 10px #fff;
+    background: url("../../../includes/images/drop_down.png") no-repeat scroll 98% 12px #fff;
     border-radius: 5px;
     border: 1px solid #ccc;
-    color: #000;
-    font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;
-    height: 27px;
-    padding: 0 10px 0 4px;
+    /*color: #000;*/
+    /*font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;*/
+    height: 29px;
+    padding: 0 0 0 2px;
     /*    padding: 0 5px;*/
     width: 100%;
 }
@@ -616,11 +621,11 @@ div#eduEditBoxOverlay {
 .dateImage{
     -moz-appearance: none;
     -webkit-appearance: none;
-    background: url("../../../includes/images/calendar.gif") no-repeat scroll 95% 4px #fff;
+    background: url("../../../includes/images/calendar.gif") no-repeat scroll 98% 6px #fff; 
     border-radius: 5px;
     color: #000;
     font: 100%/1.5 Optima,"caption",Lucida,"Lucida Sans Unicode",sans-serif;
-    height: 27px;
+    height: 29px;
     padding: 0 5px;
     width: 100%;
 }
@@ -722,7 +727,7 @@ div#emailPhoneShowBoxOverlay {
     overflow-x: hidden;
 }
 .req-textarea{
-    margin-left:20px; margin-right: 20px;
+/*    margin-left:20px; margin-right: 20px;*/
 }
 
 .SmallTextBox{
@@ -738,16 +743,15 @@ div#emailPhoneShowBoxOverlay {
 }
 .charNum
 {
-    margin-left: 15px;
+    margin-left: 5px;
     font-family: sans-serif;
     font-size: 13px;
     color: #3A3A3A;
 }
 div#vendorAssocitaionOverlay{
-margin-left: 10%;
+
     display: none;
     z-index: 3;
-height: 220px;
     background: #f9f9f9;
     color: #3711F5;
     border-radius: 3px; 
@@ -934,8 +938,8 @@ div#imageupdateOverlay{
 .tsDate{
     width:75px;
 }
-.required label:before{
-    content:"*";
+.required label:after{
+    content:" *";
     color: red;
 }
 
@@ -1219,3 +1223,18 @@ div#ConsultantAddressBox {
     width: 100%;
     z-index: 2;
 }
+ .imgLogo { 
+    display: table;
+    width: 100%;height:115px;
+    text-align: center;
+    color: #56a5ec;
+    background-color: #f9f9f9;
+    z-index: auto;
+
+}
+
+.imgLogo img{
+   border: 1px solid #56a5ec;
+}
+
+

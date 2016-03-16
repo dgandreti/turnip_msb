@@ -18,14 +18,16 @@
         <action name="getExternalEmployeeDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getExternalEmployeeDetails"/>
         <action name="getTechEmployeeDetails" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getTechEmployeeDetails"/>
         <action name="getEmpRecruitment" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getEmpRecruitment"/>
+        
         <action name="getExternalEmployee2Details" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getExternalEmployee2Details"/>
         <action name="getVendorNamesAutoPopulate" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getVendorNames"/>
         <action name="getCsrNamesAutoPopulate" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getCsrNames"/>
-        
+        <action name="logoUpload" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="logoUploadAccount"/>
         <action name="getAccountNamesForHomeRedirection" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getAccountNames"/>
         <action name="getQuestion" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="getQuestion"/>
         <action name="visaAttachemntUpload" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="visaAttachemntUpload"/>
         <action name="removeConsultantAttachement" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="removeConsultantAttachement"/>
+        <action name="poRelease" class="com.mss.msp.usrajax.UserAjaxHandlerAction" method="poReleaseMethod"/>
     </package>
  
     <package name="struts2" extends="json-default">  

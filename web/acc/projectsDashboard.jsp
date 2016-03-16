@@ -38,6 +38,7 @@
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/dashBoardAjax.js"/>'></script>
     </head>
     <body style="overflow-x: hidden">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -45,7 +46,7 @@
                 </div>
             </div>
         </header>
-       
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
@@ -75,7 +76,7 @@
                                                      <s:hidden id="mainprojects"/>
                                                     <s:hidden id="subprojects"/>
                                                     <div class="col-sm-2">
-                                                        <label class="" style="color:#56a5ec;">Year: </label>
+                                                        <label class="" style="color:#56a5ec;">Year </label>
                                                         <s:textfield cssClass="form-control" id="dashBoardYear"
                                                                      name="dashBoardYear" placeholder="Year" onkeyup="getMainProjectsChart();" tabindex="1"
                                                                      />
@@ -98,18 +99,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-                                        <%--div class="row">
-                                            <div class="col-sm-4"> <s:submit type="submit" cssClass="cssbutton_emps field-margin"
-                                                      value="Search" cssStyle="margin:0px"/></div>
-                                            <div class="col-sm-4"></div>
-                                        </div--%>
-
                                     </s:form>
-
-                                    <%--<s:submit cssClass="css_button" value="show"/><br>--%>
-
                                     <script>
                                         google.load('visualization', '1.1', {
                                             'packages': ['corechart']
@@ -118,30 +108,16 @@
                                         var projects = new Array();
                                         var targethrs = new Array();
                                         var workedhrs=new Array();
-                                        //  var balanceAmt =new Array();
                                     </script>
                                     <s:if test="searchDetails.size != 0">
                                         <s:iterator  value="searchDetails">
-                                            <%--<s:property value="accountName"></s:property>
-                                            <s:property value="budgetAmt"></s:property>
-                                            <s:property value="spentAmt"></s:property>
-                                            <s:property value="balanceAmt"></s:property> --%>
                                             <script>
                                                 projects.push('<s:property value="projectName"></s:property>')
-                                                                
                                                 targethrs.push(parseInt('<s:property value="projectTargetHrs"></s:property>'))
                                                 workedhrs.push(parseInt('<s:property value="projectWorkedHrs"></s:property>'));
-                                                <%--    balanceAmt.push(parseInt('<s:property value="balanceAmt"></s:property>'));  --%>
-                                                            
                                             </script>
-
                                         </s:iterator>
                                     </s:if>
-                                    <%--close of future_items--%>
-                                    <%-- <div class="col-lg-2" id="subProjectsSelectDiv" style="display: none">
-                                         <label  >Sub Projects </label><s:select  id="subProjects"  name="subProjects" cssClass="form-control SelectBoxStyles "  headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{}" onchange="settingProjectResourcesValue();"/>
-                                     </div> --%>
-
                                     <div class="col-sm-12"><br></div>
                                     <div class="col-sm-12">
                                         <div class="col-lg-12 panel panel-default panel-heading">
@@ -149,7 +125,6 @@
                                             <br>
                                             <span id="norecords"></span>
                                             <div id="Barchart"></div>
-
                                         </div>
                                     </div>
                                     <div class="col-sm-12"><br></div>
@@ -159,7 +134,6 @@
                                             <br>
                                             <span id="subProjectsnorecords"></span>
                                             <div id="subProjectsBarchart"></div>
-
                                         </div>
                                     </div>
                                     <div class="col-sm-12" style="display: none" id="resouresDiv">
@@ -168,40 +142,28 @@
                                             <br>
                                             <span id="resourcesnorecords"></span>
                                             <div id="BarchartForResources"></div>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
             <!-- content end -->
         </section><!--/form-->
+        </div>
         <s:if test="searchDetails.size != 0">
             <script>
-                //alert("In outSide");
                 var Combined = new Array();
                 Combined[0] = ['Project','Target Hours', 'Worked Hours'];
                 for (var i = 0; i < projects.length; i++){
                     Combined[i + 1] = [projects[i],targethrs[i], workedhrs[i]];
                 }
-                //alert(Combined+"------>Combined");
-                //second parameter is false because first row is headers, not data.
                 var data = google.visualization.arrayToDataTable(Combined, false);
-    
                 var options = {
-                    // width: 370,
-                    // height:300,
-                    
                     colors: ['#0000FF', '#00FF00'],
                     titleColor: "green",
-                    //  bar: {groupWidth: '300%'},
                     vAxis: {
                         title: "Hours",
                         titleColor: "green"
@@ -209,15 +171,7 @@
                     hAxis: {
                         title: "Projects",
                         titleColor: "green"
-                        // slantedText: true, 
-                        //  slantedTextAngle: 2 
                     }
-                    // animation: {}
-                    //duration: 1000,
-                    //easing: 'linear'
-                    //vAxis: {
-                    //viewWindow: {
-                    //max: 8}
                 }
                 var chart = new google.visualization.ColumnChart(document.getElementById('Barchart'));
                 document.getElementById('chartTitle').innerHTML = "<font color=green><b> Projects Analysis</b></font>";
@@ -225,16 +179,11 @@
                     var selectedItem = chart.getSelection()[0];
                     if (selectedItem) {
                         var practice = data.getValue(selectedItem.row, 0);
-                       //  alert('The user selected--> '+practice);
                       getProjectDashboardList(practice,"mainprojects");
                     }
                 }
                 google.visualization.events.addListener(chart, 'select', selectHandler); 
-              
-                // Instantiate and draw our chart, passing in some options.
                 chart.draw(data, options);
-               
-            
                 $(window).resize(function () {
                     chart.draw(data, options);
                 });
@@ -243,11 +192,11 @@
         </s:if>
         <s:if test="searchDetails.size == 0">
             <script>
-                // $("#BarchartDiv").css('visibility', 'hidden');
                 document.getElementById("norecords").innerHTML="<font color='red'>No Records to display</font>";
             </script>
 
         </s:if>
+    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

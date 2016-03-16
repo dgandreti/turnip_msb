@@ -114,6 +114,7 @@ function validateForm() {
         //$('#resultMessage').html('<span>Invalid data present in the fields!</span>');
         return false;
     }
+    document.getElementById("addaccountsave").disabled=true;
   return !hasNullField;
 }
 
@@ -288,6 +289,7 @@ function getValidExtention(){
       }
       else{
            $("#orgExtCheckSpan").html("  <b><font color='red'><br>Please enter valid email extension!</font></b>");
+            $("#orgExtCheckSpan").show().delay(3000).fadeOut();
           mailExtention.focus();
           return false;
       }

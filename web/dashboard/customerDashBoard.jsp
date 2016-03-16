@@ -69,6 +69,7 @@
 
     </head>
     <body style="overflow-x: hidden" onload="getCustomerDashboardList(); customerDboard();">
+        <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -76,7 +77,7 @@
                 </div>
             </div>
         </header>
-
+                <div id="main">
         <section id="generalForm"><!--form-->
             <div  class="container">
                 <div class="row">
@@ -91,7 +92,7 @@
                                             <h4 class="panel-title">
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Requirements</font>
-                                                <i id="updownArrow" onclick="toggleContent('customerDashboardForm')" class="fa fa-angle-up"></i> 
+                                                <i id="updownArrow" onclick="toggleContent('customerDashboardForm')" class="fa fa-minus"></i> 
                                             </h4>
                                         </div>
                                     </div>
@@ -104,7 +105,7 @@
                                             <div class="inner-reqdiv-elements">
                                                 <div class="row">
                                                     <div class="col-sm-2">
-                                                        <label class="" style="color:#56a5ec;">Year: </label>
+                                                        <label class="" style="color:#56a5ec;">Year </label>
                                                         <s:textfield cssClass="form-control" id="year"
                                                                      name="year" placeholder="Year" 
                                                                      onkeypress="return validationDashboardYear(event)"
@@ -112,7 +113,7 @@
                                                                      />
                                                     </div>
                                                     <div class="col-sm-2">
-                                                        <label class="" style="color:#56a5ec;">Month: </label>
+                                                        <label class="" style="color:#56a5ec;">Month </label>
                                                         <s:select id="month" cssClass="form-control SelectBoxStyles" name="month" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December'}" tabindex="2" />
                                                     </div>
 
@@ -160,7 +161,7 @@
                                                         </tr>
                                                         <s:if test="customerDashBoardList.size == 0">
                                                             <tr>
-                                                                <td colspan="6"><font style="color: red;font-size: 15px;text-align: center">No Records to display</font></td>
+                                                                <td colspan="7"><font style="color: red;font-size: 15px;text-align: center">No Records to display</font></td>
                                                             </tr>
                                                         </s:if>
 
@@ -223,6 +224,9 @@
                 </div>
             </div>        <!-- content end -->
         </section><!--/form-->
+        </div>
+        </div>
+                            
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

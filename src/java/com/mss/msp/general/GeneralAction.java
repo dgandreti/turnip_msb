@@ -336,6 +336,9 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
 //            setResultMessage(getResultMessage());
 //            httpServletRequest.setAttribute("stateList", states);
 //            setResultMessage(getResultMessage());
+            httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
             httpServletResponse.setContentType("text");
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.getWriter().write(states);
@@ -405,6 +408,9 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
             try {
                 result = DataSourceDataProvider.getInstance().checkResetEmailId(getEmailId(),Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 //  System.out.println("result-------"+result);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 if (result == 0) {
                     httpServletResponse.setContentType("text");
                     httpServletResponse.setCharacterEncoding("UTF-8");
@@ -442,6 +448,7 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
             setUserSessionId((Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString())));
             try {
                 result = ServiceLocator.getGeneralService().verifyCurrentPassword(this);
+                
                 if (result > 0) {
                     httpServletResponse.setContentType("text");
                     httpServletResponse.setCharacterEncoding("UTF-8");
@@ -451,6 +458,9 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
                     httpServletResponse.setCharacterEncoding("UTF-8");
                     httpServletResponse.getWriter().write(ERROR);
                 }
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
                 System.err.println("resultString---->" + result);
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
@@ -498,7 +508,10 @@ public String doMailExtensionVerify() throws ServiceLocatorException {
             try {
                 result = DataSourceDataProvider.getInstance().doMailExtensionVerify(getEmail_ext());
                 System.out.println("---------------------"+result);
-                    httpServletResponse.setContentType("text");
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);   
+                httpServletResponse.setContentType("text");
                     httpServletResponse.setCharacterEncoding("UTF-8");
                  if(result>0){   
                     httpServletResponse.getWriter().write("Exist");

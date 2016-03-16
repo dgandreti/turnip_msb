@@ -28,6 +28,7 @@
         </action>
          <action name="userXlsFileUpload" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="doXlsFileUpload">
            <interceptor-ref name="authorizationcheckStack" />
+           <interceptor-ref name="token"/>
             <result name="success">userContentAddingByXls.jsp</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
@@ -39,9 +40,11 @@
                 <param name="accountSearchOrgId">${accountSearchOrgId}</param>
                 <param name="fileExist">${fileExist}</param>
             </result>
+            <result name="invalid.token" >userContentAddingByXls.jsp</result>
         </action>
          <action name="xlsFileUpload" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="doXlsFileUpload">
             <interceptor-ref name="authorizationcheckStack" />
+            <interceptor-ref name="token"/>
             <result name="success">contentAddingbyXls.jsp</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
@@ -52,21 +55,26 @@
                 <param name="accountType">${accountType}</param>
                 <param name="fileExist">${fileExist}</param>
             </result>
+            <result name="invalid.token" >contentAddingbyXls.jsp</result>
         </action>
         <action name="getCellContentValues" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getCellContentValues">
             <interceptor-ref name="authorizationcheckStack" />
+            <interceptor-ref name="token"/>
             <result name="success">loadingXlsData.jsp</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>
              <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+             <result name="invalid.token" >loadingXlsData.jsp</result>
         </action>
         <action name="getCellContentValuesForUser" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="getCellContentValuesForUser">
            <interceptor-ref name="authorizationcheckStack" />
+           <interceptor-ref name="token"/>
             <result name="success">loadingXlsData.jsp</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result name="invalid.token" >loadingXlsData.jsp</result>
         </action>
         <action name="downloadXlsRecords" class="com.mss.msp.usersdata.DownloadExcel" method="downloadExcelAttachment">
             <interceptor-ref name="authorizationcheckStack" />
@@ -292,10 +300,11 @@
             </interceptor-ref>
             <interceptor-ref name="validation"/>
             <interceptor-ref name="workflow"/>
+            <interceptor-ref name="token"/>
             <result name="success" type="redirect">./doTasksSearch.action</result>
             <result name="error">/error.jsp</result>
             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
-            
+            <result name="invalid.token" type="redirect">./doTasksSearch.action</result>
         </action>
         <!-- adding new task by rk-->
         <action name="doTeamTasksSearch" class="com.mss.msp.usr.task.TaskHandlerAction" method="getTeamTaskDetails">
@@ -318,10 +327,12 @@
         </action>
         <action name="addAttachment" class="com.mss.msp.usr.task.TaskHandlerAction" method="addAttachment">
             <interceptor-ref name="crudStack" />
+            <interceptor-ref name="token"/>
             <result type="redirect" name="success">../../users/tasks/getTaskDetails.action?taskid=${taskid}</result> 
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>
+            <result type="redirect" name="invalid.token">../../users/tasks/getTaskDetails.action?taskid=${taskid}</result> 
         </action>
         <action name="addTask" class="com.mss.msp.usr.task.TaskHandlerAction" method="addTask">
             <!--<interceptor-ref name="crudStack" />-->
@@ -456,7 +467,8 @@
         <action name="getProjects" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="getTimeSheetBeforeAdd">
         </action> 
         <action name="AddTimesheet" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="addTimesheet">
-            <interceptor-ref name="authorizationcheckStack" />  
+            <interceptor-ref name="authorizationcheckStack" />
+            <interceptor-ref name="token"/>
             <result type="redirectAction">
                 <param name="actionName">timesheetSearch</param>
                 <param name="resultMessage">${resultMessage}</param>
@@ -466,6 +478,10 @@
             <result name="error" type="redirect">../../exception/403.jsp</result>
             <result type="redirect" name="accessFailed">../exception/accessFailed.action</result>
             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+            <result type="redirectAction" name="invalid.token">
+                <param name="actionName">timesheetSearch</param>
+                <param name="resultMessage">${resultMessage}</param>
+            </result>
         </action>
         <!-- Added by Kiran and Jagan -->
         <action name="teamTimesheet" class="com.mss.msp.usr.timesheets.UsrTimeSheetAction" method="doTeamTimesheetSearch">
