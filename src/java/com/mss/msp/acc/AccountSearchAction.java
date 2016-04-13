@@ -15,12 +15,13 @@ import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.hibernate.Session;
+import org.apache.log4j.*;
 
 /**
  *
@@ -28,6 +29,7 @@ import org.hibernate.Session;
  */
 public class AccountSearchAction extends ActionSupport implements ServletRequestAware {
 
+    private static Logger log = Logger.getLogger(AccountSearchAction.class);
     /**
      * The httpServletRequest is used for storing httpServletRequest Object.
      */
@@ -54,7 +56,10 @@ public class AccountSearchAction extends ActionSupport implements ServletRequest
      * Holds Page Search values *
      */
     private Account account;
+    
+   // private static org.apache.log4j.Logger log = Logger.getLogger(AccountSearchAction.class);
 
+    // not using this method
     public String searchAccount() {
         String resultType = LOGIN;
         populateData();
@@ -62,21 +67,26 @@ public class AccountSearchAction extends ActionSupport implements ServletRequest
         return resultType;
     }
 
+    
+    /**
+     * *****************************************************************************
+     *
+     * Method : searchAccountBy() is for getting accounts
+     *
+     * *****************************************************************************
+     */
     public String searchAccountBy() {
         String resultType = LOGIN;
-        System.out.println("in accounts search loading1");
+        log.info("********************AccountSearchAction :: searchAccountBy Method Start*********************");
         if (getAccount() == null) {
             setAccount(new Account());
         }
-        System.out.println("in accounts search loading2");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-            System.out.println("in accounts search loading3");
             populateData();
             try {
                 Integer orgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
                 //session usr id and primary role check wether csr or not if csr send usr_id
                 int usrPriRole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
-                System.out.println("in accounts search loading4-->" + usrPriRole);
                 setResponceFlag(usrPriRole);
 
                 int csrId = 0;
@@ -87,10 +97,10 @@ public class AccountSearchAction extends ActionSupport implements ServletRequest
                 if (!(accounts.size() > 0)) {
                     accounts = new ArrayList<Account>();
                 }
-
-
+                log.info("********************AccountSearchAction :: searchAccountBy Method End*********************");
                 resultType = SUCCESS;
             } catch (Exception ex) {
+                log.log(Level.ERROR, "Attempiting to get Account info\nerrorMessage: " + ex);
                 httpServletRequest.getSession(false).setAttribute("Attempiting to get Account info\nerrorMessage:", ex.toString());
                 System.out.println(ex);
                 resultType = ERROR;
@@ -99,7 +109,15 @@ public class AccountSearchAction extends ActionSupport implements ServletRequest
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     *
+     * Method : searchAccountBy() is for getting accounts
+     *
+     * *****************************************************************************
+     */
     private void populateData() {
+        System.out.println("********************AccountSearchAction :: populateData Method Start*********************");
         populateStatus();
         populateCountries();
         populateIndustry();
@@ -107,21 +125,33 @@ public class AccountSearchAction extends ActionSupport implements ServletRequest
         if (getAccountState() == null) {
             accountState = new ArrayList<State>();
         }
-        if(getAccount().getCountry().getId() == null){
-           accountState = ServiceLocator.getLocationService().getStatesByCountry(3);
-           getAccount().getCountry().setId(3);
-        }
-        else if (getAccount().getCountry() != null && getAccount().getCountry().getId() != null
+        if (getAccount().getCountry().getId() == null) {
+            accountState = ServiceLocator.getLocationService().getStatesByCountry(3);
+            getAccount().getCountry().setId(3);
+        } else if (getAccount().getCountry() != null && getAccount().getCountry().getId() != null
                 && getAccount().getCountry().getId().intValue() >= 0) {
             accountState = ServiceLocator.getLocationService().getStatesByCountry(getAccount().getCountry().getId());
         }
+        System.out.println("********************AccountSearchAction :: populateData Method End*********************");
     }
-    //divya gandreti
+
+    /**
+     * *****************************************************************************
+     *
+     * Author : Divya Gandreti <dgandreti@miraclesoft.com>
+     *
+     * Method : assignedRoles() is for getting accounts
+     *
+     * *****************************************************************************
+     */
     public String assignedRoles() {
         String resultType = LOGIN;
+        System.out.println("********************AccountSearchAction :: assignedRoles Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+
             try {
                 resultType = SUCCESS;
+                System.out.println("********************AccountSearchAction :: assignedRoles Method End*********************");
             } catch (Exception e) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", e.toString());
                 System.out.println("Exception" + e);

@@ -19,7 +19,6 @@ public class UserVTO {
     private int log_id;
     private String loggerCreatedDate;
     private String loggerFlag;
-    
     private int empId;
     private String empLoginId;
     private String first_name;

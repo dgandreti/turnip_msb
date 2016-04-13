@@ -112,7 +112,6 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
     private int userOrgSessionId;
     private int categoryType;
     private int primary;
-    //private int userId;
     private int usrCategoryValue;
     private String usrStatus;
     private String usrDescription;
@@ -134,7 +133,6 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
     private File xlsfile;
     private String xlsfileContentType;
     private String xlsfileFileName;
-    //  
     private File fileWithPath;
     private Map rowMap;
     private Map columnsMap;
@@ -181,82 +179,99 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
     private int sessionOrgId;
     private String accountName;
     private List actionName;
-    //
+    private String sessionFirstName;
+    private String sessionLastName;
 
     public UsersdataHandlerAction() {
     }
     private DataSourceDataProvider dataSourceDataProvider;
 
-    /**
+   /**
+     * *****************************************************************************
+     * Date :
      *
-     * This method is used to personal employee profile
+     * Author :praveen<pkatru@miraclesoft.com>
      *
-     * added by praveen<pkatru@miraclesoft.com>
+     * ForUse : getMyProfile() method is used to personal employee profile
+     * 
+     *
+     * *****************************************************************************
      */
     public String getMyProfile() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: getMyProfile Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                // System.err.println("get my profile action");
                 if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString().equalsIgnoreCase("CO")) {
                     setUserAddress(ServiceLocator.getUsersdataHandlerservicee().getEmployeeAddress(httpServletRequest, "consultant_address"));
                 } else {
                     setUserAddress(ServiceLocator.getUsersdataHandlerservicee().getEmployeeAddress(httpServletRequest, "usr_address"));
                 }
-
-
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getMyProfile Method End*********************");
         return resultType;
     }
+    
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getSkillDetails() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
 
     public String getSkillDetails() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: getSkillDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
 
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
 
-                // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getSkillDetails Method End*********************");
         return resultType;
     }
 
-    /**
+     /**
+     * *****************************************************************************
+     * Date :
      *
-     * This method is used to GET employee profile
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * added by praveen<pkatru@miraclesoft.com>
+     * ForUse : getempProfile() method is used to GET employee profile
+     * 
+     *
+     * *****************************************************************************
      */
     public String getempProfile() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: getempProfile Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                // System.err.println("get emp profile action");
                 setPrimaryRole(Integer.parseInt(DataSourceDataProvider.getInstance().getUsrPrimaryRole(this.getUserid()).split("$$")[0]));
-                //setNotAssignedRoles(ServiceLocator.getUsersdataHandlerservicee().getNotAssignedRoles(httpServletRequest, this.getUserid()));
-                //setAssignedRoles(ServiceLocator.getUsersdataHandlerservicee().getAssignedRoles(httpServletRequest, this.getUserid()));
-                //setOrgRoles(ServiceLocator.getUsersdataHandlerservicee().getAllRoles(httpServletRequest, this.getUserid()));
-                //above method written by jagan
                 setCountries(com.mss.msp.util.DataSourceDataProvider.getInstance().getCountryNames());
                 setEmpDetails(ServiceLocator.getUsersdataHandlerservicee().getEmployeeDetails(this.getUserid()));
                 setDepartment(ServiceLocator.getUsersdataHandlerservicee().getDepartment_Names(this));
                 if (getResultFlag() > 0) {
                     addActionMessage("Profile update successfully");
                 }
-
                 resultType = SUCCESS;
 
             }
@@ -264,26 +279,28 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getempProfile Method End*********************");
         return resultType;
     }
 
+     /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : 
+     *
+     * ForUse : doAddOrUpdateEmpRoles() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String doAddOrUpdateEmpRoles() throws Exception {
         resultType = LOGIN;
+         System.out.println("********************UsersdataHandlerAction :: doAddOrUpdateEmpRoles Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                //int usrId=Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //setUserid(usrId);
-                //System.out.println("doAddOrUpdateEmpRoles");
-
-                //System.out.println("primary roll-->" + getPrimaryRole() + "--getaddedoles-->" + getAddedRolesList());
-
                 String[] rightParams = (String[]) parameters.get("addedRolesList");
-                //leftSideEmployeeRoles
-
-                // System.out.println("rightParams.length--->" + rightParams.length);
-
                 int insertedRows = ServiceLocator.getUsersdataHandlerservicee().insertRoles(rightParams, getUserid(), getPrimaryRole());
-                // resultMessage = "<font color=\"green\" size=\"1.5\">Roles has been successfully Added!</font>";
                 if (insertedRows > 0) {
                     addActionMessage("Roles has been successfully Added!");
                 } else {
@@ -291,32 +308,34 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                 }
                 httpServletRequest.setAttribute(ApplicationConstants.RESULT_MSG, resultMessage);
                 resultType = SUCCESS;
-
             }
         } catch (Exception ex) {
-            //System.out.println("doAddOrUpdateEmpRoles-->" + ex.getMessage());
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
-
+         System.out.println("********************UsersdataHandlerAction :: doAddOrUpdateEmpRoles Method End*********************");
         return resultType;
     }
 
+    
     /**
+     * *****************************************************************************
+     * Date :
      *
-     * This method is used to update employee profile
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * added by praveen<pkatru@miraclesoft.com>
+     * ForUse : updateEmpProfile() method is used to update employee profile
+     * 
+     *
+     * *****************************************************************************
      */
     public String updateEmpProfile() {
         resultType = LOGIN;
+         System.out.println("********************UsersdataHandlerAction :: updateEmpProfile Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //  System.err.println("update profile action");
-
                 ServiceLocator.getUsersdataHandlerservicee().updateEmpDetails(this, userSessionId);
-                //  System.out.println("hear updation is completed....");
                 addActionMessage("Profile Updated successfully");
                 resultType = SUCCESS;
             }
@@ -324,30 +343,33 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+         System.out.println("********************UsersdataHandlerAction :: updateEmpProfile Method End*********************");
         return resultType;
     }
 
+   
     /**
+     * *****************************************************************************
+     * Date :
      *
-     * This method is used to GET employee profile
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * added by praveen<pkatru@miraclesoft.com>
+     * ForUse : getUserRoles() method is used to GET employee profile
+     * 
+     *
+     * *****************************************************************************
      */
     public String getUserRoles() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: getUserRoles Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                // System.err.println("get emp profile action");
                 String role = DataSourceDataProvider.getInstance().getUsrPrimaryRole(this.getUserid());
                 String[] parts = role.split("#");
-                String part1 = parts[0]; // 004
+                String part1 = parts[0]; 
                 String part2 = parts[1];
                 String type_of_relation = com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationType(this.getAccountSearchID());
                 setPrimaryRole(Integer.parseInt(part1));
-                /*setOrgRoles(ServiceLocator.getUsersdataHandlerservicee().getAllRoles(httpServletRequest, this.getUserid()));
-                 setNotAssignedRoles(ServiceLocator.getUsersdataHandlerservicee().getNotAssignedRoles(httpServletRequest, this.getUserid()));
-                 setAssignedRoles(ServiceLocator.getUsersdataHandlerservicee().getAssignedRoles(httpServletRequest, this.getUserid()));
-                 */
                 setOrgRoles(ServiceLocator.getUsersdataHandlerservicee().getAllRoles(this.getUserid(), type_of_relation));
                 setNotAssignedRoles(ServiceLocator.getUsersdataHandlerservicee().getNotAssignedRoles(this.getUserid(), type_of_relation));
                 setAssignedRoles(ServiceLocator.getUsersdataHandlerservicee().getAssignedRoles(this.getUserid()));
@@ -363,54 +385,65 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getUserRoles Method End*********************");
         return resultType;
     }
 
-    /**
+
+     /**
      * *****************************************************************************
-     * Date : july 15 2015 Author : manikanta<meeralla@miraclesoft.com>
-     * getCsrList() getting the csrs List
+     * Date :  july 15 2015
+     *
+     * Author : manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : getCsrList() method is used to getting the csr List
+     * 
+     *
      * *****************************************************************************
      */
     public String getCsrList() {
+        System.out.println("********************UsersdataHandlerAction :: getCsrList Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //  System.err.println("update profile action");
-
                 userVTO = ServiceLocator.getUsersdataHandlerservicee().getCsrList(this, userSessionId);
-                //  System.out.println("hear updation is completed....");
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getCsrList Method End*********************");
         return resultType;
     }
 
-    /**
+   
+     /**
      * *****************************************************************************
-     * Date : july 15 2015 Author : manikanta<meeralla@miraclesoft.com>
-     * getCsrAccounts() getting the csrs Accounts
+     * Date :  july 15 2015
+     *
+     * Author : manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : getCsrAccounts() method is used to getting the csr Accounts
+     * 
+     *
      * *****************************************************************************
      */
     public String getCsrAccounts() {
         resultType = LOGIN;
+         System.out.println("********************UsersdataHandlerAction :: getCsrAccounts Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //  System.err.println("update profile action");
-
                 userVTO = ServiceLocator.getUsersdataHandlerservicee().getCsrAccounts(this);
-                //  System.out.println("hear updation is completed....");
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+         System.out.println("********************UsersdataHandlerAction :: getCsrAccounts Method End*********************");
         return resultType;
     }
     private int usrCatType;
@@ -459,50 +492,62 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
         this.catValuesList = catValuesList;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :  
+     *
+     * Author : 
+     *
+     * ForUse : getEmployeeCategorization() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String getEmployeeCategorization() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: getEmployeeCategorization Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                //userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 userOrgSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
-                //  System.err.println("update profile action");
                 setCategoryTypes(dataSourceDataProvider.getInstance().getRequiteCategory());
                 userVTO = ServiceLocator.getUsersdataHandlerservicee().getEmployeeCategorization(this, userOrgSessionId);
-                //  System.out.println("hear updation is completed....");
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getEmployeeCategorization Method End*********************");
         return resultType;
     }
 
-    /**
+    
+     /**
+     * *****************************************************************************
+     * Date :  
      *
-     * This method is used to GET employee profile
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * added by praveen<pkatru@miraclesoft.com>
+     * ForUse : getUserGroping() method is used to 
+     * 
+     *
+     * *****************************************************************************
      */
     public String getUserGroping() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: getUserGroping Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 if ("add".equalsIgnoreCase(getAddOrUpdate())) {
-                    System.out.println("In getUserGroping ADD-->");
                     setUsrCategory(com.mss.msp.util.DataSourceDataProvider.getInstance().getRequiteCategory());
                     setCatValuesMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getRequiteCategory(getUsrCatType()));
                 } else if ("update".equalsIgnoreCase(getAddOrUpdate())) {
-                    System.out.println("In getUserGroping Update---->");
                     setUsrCategory(com.mss.msp.util.DataSourceDataProvider.getInstance().getRequiteCategory());
                     setCatValuesMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getRequiteCategory(getUsrCatType()));
-
                     ServiceLocator.getUsersdataHandlerservicee().getUserGroupingData(this);
                 } else {
-                    System.out.println("in getUserGroping not ADD,Update--->");
                     if (getPrimary() == 1) {
-                        System.out.println("in if-->" + getPrimary());
                         setPrimaryvalue(true);
                     } else {
                         setPrimaryvalue(false);
@@ -517,31 +562,36 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getUserGroping Method End*********************");
         return resultType;
 
     }
 
-    /**
+    
+     /**
      * *****************************************************************************
-     * Date : july 15 2015 Author :ramakrishna<lankireddy@miraclesoft.com>
-     * getHomeRedirectDetails() getting HomeRedirectDetails List
+     * Date :  july 15 2015
+     *
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse : getHomeRedirectDetails() method is used to getting HomeRedirectDetails List
+     * 
+     *
      * *****************************************************************************
      */
     public String getHomeRedirectDetails() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: getHomeRedirectDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String accType = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("------------------->" + accType);
                 if ("AC".equalsIgnoreCase(accType)) {
                     setAccountType("AC");
                 } else if ("VC".equalsIgnoreCase(accType)) {
                     setAccountType("VC");
-                } //                else {
-                //                    setSessionOrgId(0);
-                //                }
+                } 
                 else {
                     setSessionOrgId(0);
                     setAccountsMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getAllAccounts(getSessionOrgId()));
@@ -554,27 +604,32 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getHomeRedirectDetails Method End*********************");
         return resultType;
     }
 
-    /**
+    
+     /**
      * *****************************************************************************
-     * Date : july 15 2015 Author :ramakrishna<lankireddy@miraclesoft.com>
-     * getHomeRedirectDetails() getting HomeRedirectDetails List
+     * Date :  july 15 2015
+     *
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse : doAddOrEditHomeRedirect() method is used to getting HomeRedirectDetails List
+     * 
+     *
      * *****************************************************************************
      */
     public String doAddOrEditHomeRedirect() {
         resultType = LOGIN;
+         System.out.println("********************UsersdataHandlerAction :: doAddOrEditHomeRedirect Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                System.out.println(getAccountType() + ">>>>>>>>>>homeRedirectActionId>>>>" + getHomeRedirectActionId());
                 String accType = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("------------------->" + accType + "-----------------------" + getHomeRedirectActionId());
                 int roleId = 0;
                 if ("AC".equalsIgnoreCase(accType) || "VC".equalsIgnoreCase(accType)) {
-                    //setAccountName(com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(getSessionOrgId()));
                     setAccountType(accType);
                     if (getHomeRedirectActionId() == 0) {
                         if ("AC".equalsIgnoreCase(accType)) {
@@ -592,16 +647,13 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                             String value = (String) mapEntry.getValue();
                             setAccountName(value);
                             setAccountSearchOrgId(keyValue);
-                            System.out.println();
                         }
                     }
                 }
                 if (getHomeRedirectActionId() > 0) {
-                    System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                     setRolesMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getAllRoles(getAccountType()));
                     homeVto = ServiceLocator.getUsersdataHandlerservicee().getHomeRedirectDetailsForEdit(this);
                 }
-//                System.out.println(">>>>" + homeVto.toString());
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
@@ -609,59 +661,63 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+         System.out.println("********************UsersdataHandlerAction :: doAddOrEditHomeRedirect Method End*********************");
         return resultType;
     }
 
-    /**
+    
+     /**
      * *****************************************************************************
-     * Date : 08/28/2015 praveen <pkatru@miraclesoft.com> loadData() loading
-     * date trough xml file.
+     * Date :  August 28 2015
+     *
+     * Author : praveen <pkatru@miraclesoft.com>
+     *
+     * ForUse : loadData() method is used to loading date through xml file.
+     * 
+     *
      * *****************************************************************************
      */
     public String loadData() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: loadData Method Start*********************");
         try {
-            System.out.println("-----------------------------------in load");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("----------------------------------in if");
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-
-                // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: loadData Method End*********************");
         return resultType;
     }
 
-    /**
+   
+     /**
      * *****************************************************************************
-     * Date : 08/28/2015 praveen <pkatru@miraclesoft.com> loadData() loading
-     * date trough xml file.
+     * Date :  August 28 2015
+     *
+     * Author : praveen <pkatru@miraclesoft.com>
+     *
+     * ForUse : doXlsFileUpload() method is used to loading date through xml file.
+     * 
+     *
      * *****************************************************************************
      */
     public String doXlsFileUpload() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: doXlsFileUpload Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                System.out.println("this is file " + getXlsfile());
-                System.out.println("this is file name " + getXlsfileFileName());
-                System.out.println("this is file content type " + getXlsfileContentType());
-
                 if (getXlsfileFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filePath = Properties.getProperty("Task.Attachment");
                     File createPath = new File(filePath);
                     Date dt = new Date();
-                    /*The month is generated from here*/
-
                     String month = "";
                     if (dt.getMonth() == 0) {
                         month = "Jan";
@@ -689,26 +745,15 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                         month = "Dec";
                     }
                     short week = (short) (Math.round(dt.getDate() / 7));
-                    /*getrequestType is used to create a directory of the object type specified in the jsp page*/
                     createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
-                    /*This creates a directory forcefully if the directory does not exsist*/
-
-                    //System.out.println("path::"+createPath);
                     createPath.mkdir();
-                    /*here it takes the absolute path and the name of the file that is to be uploaded*/
                     File theFile = new File(createPath.getAbsolutePath());
-
                     setFilePath(theFile.toString());
-                    /*copies the file to the destination*/
                     File destFile = new File(theFile + File.separator + xlsfileFileName);
                     FileUtils.copyFile(xlsfile, destFile);
                 }
-                System.out.println("this is file path getFilePath--->" + getFilePath());
                 setPath(getFilePath() + File.separator + xlsfileFileName);
-                System.out.println("-----------------" + getPath());
-                System.out.println("this is file path getFilePath--->" + getFilePath());
                 setFileWithPath(new File(getFilePath() + File.separator + xlsfileFileName));
-                System.out.println("this is file path getFilePath--->" + getFileWithPath());
                 String FileNameExist = ServiceLocator.getUserAjaxHandlerService().checkFileName(xlsfileFileName);
                 if ("Exist".equals(FileNameExist)) {
                     setFileExist("File Name Already Exists!!");
@@ -717,56 +762,39 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                     ServiceLocator.getUsersdataHandlerservicee().doXlsFileUpload(this, xlsfileFileName);
                     resultType = SUCCESS;
                 }
-
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: doXlsFileUpload Method End*********************");
         return resultType;
     }
 
+    
     /**
      * *****************************************************************************
-     * Date : 08/28/2015 praveen <pkatru@miraclesoft.com> loadData() loading
-     * date trough xml file.
+     * Date :  August 28 2015
+     *
+     * Author : praveen <pkatru@miraclesoft.com>
+     *
+     * ForUse : getCellContentValues() method is used to 
+     * 
+     *
      * *****************************************************************************
      */
     public String getCellContentValues() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: getCellContentValues Method Start*********************");
         try {
-            System.out.println("----------------in con");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+                setSessionFirstName(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.FIRST_NAME).toString());
+                setSessionLastName(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.Last_NAME).toString());
                 setFileWithPath(new File(getPath()));
-                System.out.println("------------------------" + getLoadingFileType());
-
                 Workbook workbook = Workbook.getWorkbook(getFileWithPath());
                 Sheet sheet = workbook.getSheet(0);
                 int count = sheet.getRows();
-                System.out.println(" i am printing rows count:" + count);
-                System.out.println(" i am printing rows count:" + count);
-                System.out.println("this is accountName-->" + getColumnValue());
-                System.out.println("this is url-->" + getAccUrl());
-                System.out.println("this is accType-->" + getAccType());
-                System.out.println("this is extention-->" + getMailExt());
-                System.out.println("this is address1-->" + getAccAddress1());
-                System.out.println("this is address2-->" + getAccAddress2());
-                System.out.println("this is city-->" + getAccCity());
-                System.out.println("this is state-->" + getAccState());
-                System.out.println("this is zip-->" + getZip());
-                System.out.println("this is country-->" + getAccCountry());
-                System.out.println("this is phone-->" + getPhone());
-                System.out.println("this is fax-->" + getAccFax());
-                System.out.println("this is industry-->" + getIndustry());
-                System.out.println("this is region-->" + getRegion());
-                System.out.println("this is terrotory-->" + getTerritory());
-                System.out.println("this is no.of emp-->" + getNoOfEmp());
-                System.out.println("this is tax id-->" + getTaxId());
-                System.out.println("this is stockSymbol-->" + getStockSymbol());
-                System.out.println("this is Revenue-->" + getRevenue());
-                System.out.println("this is description-->" + getDescription());
                 Cell rows = null;
                 List<String> rowList = new ArrayList<String>();
                 Map rowMap = new HashMap();
@@ -804,7 +832,6 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                 Cell cellValue = null;
                 List<String[]> list = new ArrayList<String[]>();
                 Map columnsMap = new HashMap();
-                //String dataString = "";
 
                 for (int j = 1; j < rowsCount; j++) {
                     String dataArray[] = new String[k];
@@ -815,22 +842,6 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                             cellValue = sheet.getCell(excelColValue[i], j);
                             if (!cellValue.getContents().contains("|") && !cellValue.getContents().contains("^")) {
 
-//                                if (i == 11 && (cellValue.getContents() != "" || cellValue.getContents() != null)) {
-//                                    String industry;
-//                                    industry = cellValue.getContents();
-//                                    int industryValue = ServiceLocator.getUsersdataHandlerservicee().getIndustryValue(industry);
-//                                    dataArray[i] = industryValue + "";
-//                                } else if (i == 7 && (cellValue.getContents() != "" || cellValue.getContents() != null)) {
-//                                    String country;
-//                                    country = cellValue.getContents();
-//                                    int countryValue = ServiceLocator.getUsersdataHandlerservicee().getCountryValue(country);
-//                                    dataArray[i] = countryValue + "";
-////                                } else if (i == 8 && (cellValue.getContents() != "" || cellValue.getContents() != null)) {
-////                                    String state;
-////                                    state = cellValue.getContents();
-////                                    int stateValue = ServiceLocator.getUsersdataHandlerservicee().getStateValue(state, sheet.getCell(excelColValue[i - 1], j).getContents());
-////                                    dataString += stateValue + "|";
-//                                } else 
                                 {
                                     dataArray[i] = cellValue.getContents().trim() + "";
                                 }
@@ -840,20 +851,14 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                         } else {
                             dataArray[i] = "";
                         }
-                        //System.out.println("--->"+dataArray[i]);
                     }
                     list.add(dataArray);
                 }
                 setRowMap(rowMap);
-                // System.out.println("this is complete String of data-->" + dataString);
-                System.out.println("here i am printing content of row" + rowList);
-                System.out.println("getting path from ----------->" + getPath());
                 workbook.close();
                 String res = ServiceLocator.getUsersdataHandlerservicee().getCellContentValues(list, this, k, "Accounts", stringForBatch);
                     int sessionusrPrimaryrole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
                 utility_logger = ServiceLocator.getUsersdataHandlerservicee().defaultSearch(this,sessionusrPrimaryrole);
-                //System.out.println("-------------- after procedure------------" + res);
-
 
                 resultType = SUCCESS;
 
@@ -863,11 +868,24 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             ex.printStackTrace();
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getCellContentValues Method End*********************");
         return resultType;
     }
 
+     /**
+     * *****************************************************************************
+     * Date :  
+     *
+     * Author :
+     *
+     * ForUse : searchLogger() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String searchLogger() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: searchLogger Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 
@@ -875,25 +893,6 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                 Calendar now = Calendar.getInstance();
                 now.add(Calendar.MONTH, 1);
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                if (getCreatedDate() == null) {
-                    String monthString = "";
-                    String dateString = "";
-
-                    int month = now.get(Calendar.MONTH) + 1;
-                    int date = now.get(Calendar.DATE);
-                    if (date < 10) {
-                        dateString = "0" + now.get(Calendar.DATE);
-                    } else {
-                        dateString = "" + now.get(Calendar.DATE);
-                    }
-                    if (month < 10) {
-                        monthString = "0" + (now.get(Calendar.MONTH));
-                    } else {
-                        monthString = "" + (now.get(Calendar.MONTH));
-                    }
-                    // setEndDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));   
-                    setCreatedDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));
-                }
              
                   utility_logger = ServiceLocator.getUsersdataHandlerservicee().defaultSearch(this,sessionusrPrimaryrole);
                 setCreatedDate(getCreatedDate());
@@ -904,31 +903,37 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             ex.printStackTrace();
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: searchLogger Method End*********************");
         return resultType;
     }
 
+     /**
+     * *****************************************************************************
+     * Date :  
+     *
+     * Author :
+     *
+     * ForUse : getCellContentValuesForUser() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String getCellContentValuesForUser() {
         resultType = LOGIN;
+        System.out.println("********************UsersdataHandlerAction :: getCellContentValuesForUser Method Start*********************");
         try {
-            System.out.println("----------------in con");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setFileWithPath(new File(getPath()));
-                System.out.println("------------------------" + getLoadingFileType());
                 Workbook workbook = Workbook.getWorkbook(getFileWithPath());
                 Sheet sheet = workbook.getSheet(0);
                 int count = sheet.getRows();
-                System.out.println(" i am printing rows count:" + count);
-                System.out.println("this is firstName-->" + getContactFname());
-                System.out.println("this is middle-->" + getContactMname());
-                System.out.println("this is last-->" + getContactLname());
                 Cell rows = null;
                 List<String> rowList = new ArrayList<String>();
                 Map rowMap = new HashMap();
                 String accRecord = "";
                 String stringForBatch = "";
-
                 stringForBatch = getContactFname().trim() + "|"
                         + getContactMname().trim() + "|"
                         + getContactLname().trim() + "|"
@@ -958,7 +963,6 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                 Cell cellValue = null;
                 List<String[]> list = new ArrayList<String[]>();
                 Map columnsMap = new HashMap();
-                //String dataString = "";
 
                 for (int j = 1; j < rowsCount; j++) {
                     String dataArray[] = new String[k];
@@ -981,9 +985,6 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
                     list.add(dataArray);
                 }
                 setRowMap(rowMap);
-                // System.out.println("this is complete String of data-->" + dataString);
-                System.out.println("here i am printing content of row" + rowList);
-                System.out.println("getting path from ----------->" + getPath());
                 workbook.close();
                 String res = ServiceLocator.getUsersdataHandlerservicee().getCellContentValues(list, this, k, getLoadingFileType(), stringForBatch);
                 int sessionusrPrimaryrole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
@@ -996,6 +997,7 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
             ex.printStackTrace();
             resultType = ERROR;
         }
+        System.out.println("********************UsersdataHandlerAction :: getCellContentValuesForUser Method End*********************");
         return resultType;
     }
 
@@ -2022,5 +2024,21 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
 
     public void setActionName(List actionName) {
         this.actionName = actionName;
+    }
+
+    public String getSessionFirstName() {
+        return sessionFirstName;
+    }
+
+    public void setSessionFirstName(String sessionFirstName) {
+        this.sessionFirstName = sessionFirstName;
+    }
+
+    public String getSessionLastName() {
+        return sessionLastName;
+    }
+
+    public void setSessionLastName(String sessionLastName) {
+        this.sessionLastName = sessionLastName;
     }
 }

@@ -62,8 +62,6 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
     private String fileName;
     private String consult_AttachmentLocation;
     private int acc_attachment_id;
-    
-    
     private String resume;
     private String resultMessage;
     private String resultType;
@@ -86,10 +84,9 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
     private String jdId;
     private String vendor;
     private String consultantFlag;
-     private String techReviewFlag;
-    
-    
+    private String techReviewFlag;
     private String vendorFormAttachmentLocation;
+
     /**
      * Creates a new instance of DownloadAction
      */
@@ -104,20 +101,25 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
-    
-    
-    
 
     @SuppressWarnings("static-access")
     public void setServletResponse(HttpServletResponse httpServletResponse) {
-        this.httpServletResponse = httpServletResponse; 
+        this.httpServletResponse = httpServletResponse;
     }
-   public String downloadResume() throws Exception {
+
+    /* **************************************************************
+     * 
+     * Method: downloadResume() is to download The Resume of the user
+     * 
+     * ***************************************************************
+     */
+    public String downloadResume() throws Exception {
         try {
+            System.out.println("Consultant Download action -->downloadResume()");
             resultType = null;
-            //this.setAttachmentLocation(httpServletRequest.getParameter("attachmentLocation"));
+
             this.setAcc_attachment_id(Integer.parseInt(httpServletRequest.getParameter("acc_attachment_id").toString()));
-            System.out.println("=================>Entered into the DownloadAction");
+
             try {
                 if (getAcc_attachment_id() == -1) {
                     this.setConsult_AttachmentLocation(dataSourceDataProvider.getInstance().getConsultVisaAttachment(getConsult_id()));
@@ -125,29 +127,27 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
                     this.setConsult_AttachmentLocation(dataSourceDataProvider.getInstance().getConsult_AttachmentLocation(this.getAcc_attachment_id()));
                 }
             } catch (ServiceLocatorException se) {
-                System.out.println("in sub try" + se.getMessage());
             }
             fileName = this.getConsult_AttachmentLocation()
                     .substring(this.getConsult_AttachmentLocation().lastIndexOf(File.separator) + 1, getConsult_AttachmentLocation().length());
             httpServletResponse.setContentType("application/force-download");
-            System.out.println("=================>" + fileName);
-            //String=fileLocaiton
-            System.out.println("getAttachmentLocation()-->" + getConsult_AttachmentLocation());
+
+
+
             if (!File.separator.equals(getConsult_AttachmentLocation()) && !"null".equals(getConsult_AttachmentLocation()) && getConsult_AttachmentLocation() != null && getConsult_AttachmentLocation().length() != 0) {
 
 
                 File file = new File(getConsult_AttachmentLocation());
-                System.out.println(file);
+
                 inputStream = new FileInputStream(file);
                 outputStream = httpServletResponse.getOutputStream();
                 if (outputStream == null) {
-                    System.out.println("yes");
                 } else {
-                    System.out.println("        jjjjjjjjjjjj   no");
+
                     httpServletResponse.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
                     int noOfBytesRead = 0;
                     byte[] byteArray = null;
-                    System.out.println("Iam hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
                     while (true) {
                         byteArray = new byte[1024];
                         noOfBytesRead = inputStream.read(byteArray);
@@ -155,34 +155,34 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
                             break;
                         }
                         outputStream.write(byteArray, 0, noOfBytesRead);
-                        //System.out.println("while");
+
                     }
                     inputStream.close();
                     outputStream.close();
                 }
                 setResultMessage("record exists");
-                System.out.println(getConsultFlag());
+
                 setResume("Resume");
                 setTechReviewFlag(getTechReviewFlag());
-               // setVendor(getVendor());
-                System.out.println("customer flag--------------->"+getCustomerFlag());
+
+
                 setCustomerFlag(getCustomerFlag());
 
             } else {
                 setCustomerFlag(getCustomerFlag());
-                System.out.println("in else");
+
                 if (getAcc_attachment_id() == -1) {
                     setResume("noVisa");
                 } else {
                     setResume("noResume");
                 }
 
-                System.out.println("in reqqlllllllllllllll" + getConsult_id());
-                // httpServletRequest.getSession(false).setAttribute("resultMessage", "<font style='color:red;font-size:15px;'>No Attachment exists !!</font>");
+
+
                 resultType = INPUT;
             }
         } catch (FileNotFoundException ex) {
-            System.out.println("finle not found");
+
             setCustomerFlag(getCustomerFlag());
             if (getAcc_attachment_id() == -1) {
                 setResume("noVisaFile");
@@ -196,42 +196,46 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
             System.out.println("ioeeeeeee" + ex.getMessage());
         } catch (Exception ex) {
             System.out.println("eeeeeeee" + ex.getMessage());
-            // ex.printStackTrace();
+
         }
         return resultType;
     }
-    public String doVendorFormAttachmentDownload()throws Exception{
-       try {
-           resultType=null;
-            //this.setAttachmentLocation(httpServletRequest.getParameter("attachmentLocation"));
+
+    /* ***********************************************************************************
+     * 
+     * Method: doVendorFormAttachmentDownload() is to download The vendor form attachment 
+     * 
+     * ************************************************************************************
+     */
+    public String doVendorFormAttachmentDownload() throws Exception {
+        try {
+            System.out.println("Consultant Download action -->doVendorFormAttachmentDownload()");
+            resultType = null;
+
             this.setAcc_attachment_id(Integer.parseInt(httpServletRequest.getParameter("acc_attachment_id").toString()));
-            System.out.println("=================>Entered into the DownloadAction");
+
             try {
                 this.setVendorFormAttachmentLocation(dataSourceDataProvider.getInstance().getVendorFormAttachmentLocation(this.getAcc_attachment_id()));
             } catch (ServiceLocatorException se) {
-                System.out.println("in sub try"+se.getMessage());
             }
-                fileName = this.getVendorFormAttachmentLocation()
-                        .substring(this.getVendorFormAttachmentLocation().lastIndexOf(File.separator) + 1, getVendorFormAttachmentLocation().length());
-                httpServletResponse.setContentType("application/force-download");
-                System.out.println("=================>" + fileName);
-                //String=fileLocaiton
-                System.out.println("getAttachmentLocation()-->" + getVendorFormAttachmentLocation());
-                           if (!File.separator.equals(getVendorFormAttachmentLocation()) && !"null".equals(getVendorFormAttachmentLocation()) && getVendorFormAttachmentLocation() != null && getVendorFormAttachmentLocation().length() != 0) {
+            fileName = this.getVendorFormAttachmentLocation()
+                    .substring(this.getVendorFormAttachmentLocation().lastIndexOf(File.separator) + 1, getVendorFormAttachmentLocation().length());
+            httpServletResponse.setContentType("application/force-download");
+
+            if (!File.separator.equals(getVendorFormAttachmentLocation()) && !"null".equals(getVendorFormAttachmentLocation()) && getVendorFormAttachmentLocation() != null && getVendorFormAttachmentLocation().length() != 0) {
 
 
                 File file = new File(getVendorFormAttachmentLocation());
-                System.out.println(file);
+
                 inputStream = new FileInputStream(file);
                 outputStream = httpServletResponse.getOutputStream();
                 if (outputStream == null) {
-                    System.out.println("yes");
                 } else {
-                    System.out.println("        jjjjjjjjjjjj   no");
+
                     httpServletResponse.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
                     int noOfBytesRead = 0;
                     byte[] byteArray = null;
-                    System.out.println("Iam hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
                     while (true) {
                         byteArray = new byte[1024];
                         noOfBytesRead = inputStream.read(byteArray);
@@ -239,36 +243,34 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
                             break;
                         }
                         outputStream.write(byteArray, 0, noOfBytesRead);
-                        //System.out.println("while");
+
                     }
                     inputStream.close();
                     outputStream.close();
                 }
-               setResultMessage("record exists");
-                System.out.println(getConsultFlag());
+                setResultMessage("record exists");
+
                 setResume("Resume");
-                
-            }
-            else{
-                   System.out.println("in else");
+
+            } else {
+
                 setResume("noResume");
-                System.out.println("in reqqlllllllllllllll"+getConsult_id());
-               // httpServletRequest.getSession(false).setAttribute("resultMessage", "<font style='color:red;font-size:15px;'>No Attachment exists !!</font>");
-               resultType=INPUT;
-              }
+
+
+                resultType = INPUT;
+            }
         } catch (FileNotFoundException ex) {
-            System.out.println("finle not found");
-             setResume("noFile");
-           resultType=INPUT;
-            
+
+            setResume("noFile");
+            resultType = INPUT;
+
         } catch (IOException ex) {
-            System.out.println("ioeeeeeee"+ex.getMessage());
         } catch (Exception ex) {
-            System.out.println("eeeeeeee"+ex.getMessage());
             // ex.printStackTrace();
-        } 
+        }
         return resultType;
     }
+
     public String getConsult_AttachmentLocation() {
         return consult_AttachmentLocation;
     }
@@ -325,7 +327,6 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
         this.accountSearchID = accountSearchID;
     }
 
-   
     public int getRequirementId() {
         return requirementId;
     }
@@ -469,6 +470,4 @@ public class ConsultantDownloadAction implements Action, ServletRequestAware, Se
     public void setVendorcomments(String vendorcomments) {
         this.vendorcomments = vendorcomments;
     }
-
-   
 }

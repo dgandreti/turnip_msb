@@ -24,9 +24,7 @@
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/taskiframe.css"/>">
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
-
+    
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
@@ -38,31 +36,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/homeRedirectAjax.js"/>"></script>
 
-        <script>
-            //            var pager;
-            //            function onLoad(){
-            //                //alert("onload")
-            //                var paginationSize = 10; //parseInt(document.getElementById("paginationOption").value);
-            //                // alert(paginationSize);
-            //                pager = new Pager('homeRedirectTable', paginationSize);
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                // document.getElementById("paginationOption").value=10;
-            //                pager.showPage(1);
-            //            };
-            //            function pagerOption(){
-            //
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('homeRedirectTable', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
-        </script>
+       
 
         <script type="text/javascript">
             function sortables_init() {
@@ -173,11 +147,12 @@
 
                                                             <div class="pull-right col-sm-4">
                                                                 <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                <s:a href='%{#homeRedirectUrl}'><button class="add_searchButton form-control " tabindex="5" style="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a> 
+                                                                <s:a id="addHomeRedirectButton" href='%{#homeRedirectUrl}'><button class="add_searchButton form-control " tabindex="5" style="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a> 
                                                             </div>
                                                             <div class="pull-right col-sm-4">
                                                                 <label class="labelStylereq" style="color:#56a5ec;"></label>
                                                                 <span class=""><s:submit type="button"
+                                                                          id="searchHomeRedirectButton"
                                                                           cssClass="add_searchButton  form-control" tabindex="4"
                                                                           value="" cssStyle="margin:5px 0px;" onclick="getHomeRedirectSearchDetails();"><i class="fa fa-search"></i>&nbsp;Search</s:submit></span>
                                                                 </div>

@@ -172,61 +172,15 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     //Add by Aklakh
     private String consultantId;
     private String consult_add_date;
-    /* 
-     *
-     private String cnslt_email;
-     private String cnslt_fstname;
-     private String cnslt_gender;
-     private String cnslt_homePhone;
-    
-     private String cnslt_lstname;
-     private String cnslt_dob;
-     private String cnslt_mobileNo;
-     private String cnslt_available;
-     private String cnslt_midname;
-     private String cnslt_mStatus;
-     private int cnslt_lcountry;
-     private String addAddressFlag;
-     private String addConsult_Address;
-     private String addConsult_Address2;
-     private String addConsult_City;
-     private String addConsult_Country;
-     private int addConsult_State;
-     private String addConsult_Zip;
-     private String addConsult_Phone;
-     private String currentAddressFlag;
-     private String addConsult_CAddress;
-     private String addConsult_CAddress2;
-     private String addConsult_CCity;
-     private String addConsult_CCountry;
-     private int addConsult_CState;
-     private String addConsult_CZip;
-     private String addConsult_CPhone;
-     private int cnslt_industry;
-     private String cnslt_salary;
-     private int cnslt_wcountry;
-     private int cnslt_organization;
-     private String cnslt_experience;
-     private int cnslt_preferredState;
-     private String cnslt_jobTitle;
-     private String cnslt_workPhone;
-     private String cnslt_referredBy;
-     private String cnslt_description;
-     private String cnslt_comments;
-     */
     private List consultantListVTO;
     private int consult_pcountry;
-    // private String consult_skills;    
     private String consult_position;
-    // private int cnslt_pcountry;
     private String addconsult_checkAddress;
-    // private String cnslt_skills;
     private File file;
     private String fileContentType;
     private String fileFileName;
     private String filesPath;
     private List consultantList;
-    //for tech review
     //for tech review
     private String reviewStartDate;
     private String techSkill;
@@ -314,6 +268,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     private String venName;
     private String vendorcomments;
     private String checked;
+
     public String getGridPDFDownload() {
         return gridPDFDownload;
     }
@@ -330,152 +285,148 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
         this.PrefstateValues = PrefstateValues;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doAddConsultantForReq() method is used to
+     *
+     * *****************************************************************************
+     */
     public String doAddConsultantForReq() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: doAddConsultantForReq Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 if ("added".equalsIgnoreCase(getResultFlag())) {
                     addActionMessage("Consultant added Successfully");
                 }
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-                // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: doAddConsultantForReq Method End*********************");
         return resultMessage;
     }
 
     /**
-     * Method : Consultant add action
+     * *****************************************************************************
+     * Date :
      *
-     */
-    /**
-     * ****************************************************************************
-     * Date : May 12 2015
+     * Author :
      *
-     * Author : divya gandreti<dgandreti@miraclesoft.com>
+     * ForUse : getMyConsultantSearch() method is used to *
      *
-     * getMyConsultantSearch method can be used to show default requirement list
-     * in grid view
      * *****************************************************************************
      */
     public String getMyConsultantSearch() {
         resultMessage = LOGIN;
-
+        System.out.println("********************RecruitmentAction :: getMyConsultantSearch Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTeamMembersList(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
                 setConsult_WCountry(ServiceLocator.getLocationService().getCountryNames());
-
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-                // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 ConsultantListDetails = ServiceLocator.getRecruitmentService().getMyDefaultConsListDetails(this);
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
-
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-
-
                 resultMessage = ERROR;
             }
         }// Session validator if END
+        System.out.println("********************RecruitmentAction :: getMyConsultantSearch Method End*********************");
         return resultMessage;
     }
 
     /**
-     * ****************************************************************************
-     * Date : May 12 2015
+     * *****************************************************************************
+     * Date :
      *
-     * Author : divya gandreti<dgandreti@miraclesoft.com>
+     * Author :
      *
-     * getConsultant method can be used to search required persons requirement
-     * list in grid view
+     * ForUse : getConsultant() method is used to
+     *
      * *****************************************************************************
      */
     public String getConsultant() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getConsultant Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
             try {
-
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTeamMembersList(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
                 setConsult_WCountry(ServiceLocator.getLocationService().getCountryNames());
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-                // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 ConsultantListDetails = ServiceLocator.getRecruitmentService().getConsListDetails(this);
                 setConsultantFlag(getConsultantFlag());
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessagetUserLeavesServiceges(ex);
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-
-
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: getConsultant Method End*********************");
         return resultMessage;
     }
 
     /**
-     * Method : Consultant add action Use to open the add consultant jsp page
-     * created by Aklakh
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doAddConsultant() method is used to
+     *
+     * *****************************************************************************
      */
     public String doAddConsultant() {
-
+        System.out.println("********************RecruitmentAction :: doAddConsultant Method Start*********************");
         try {
             String oId = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString();
             int orgid = Integer.valueOf(oId);
-            //  setOrganization(DataSourceDataProvider.getInstance().getOrganizationByOrgId(orgid));
             setConsult_WCountry(ServiceLocator.getLocationService().getCountryNames());   //  getCountriesNames());
             setIndustry(ServiceLocator.getLookUpHandlerService().getIndustryTypesMap());
             setExperience(DataSourceDataProvider.getInstance().getYearsOfExp());
-
             SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-            System.out.println("Session-->addRequirements-->" + session);
             Map skillsmap = (Map) session.get("skillsmap");
             setSkillValuesMap(skillsmap);
-            // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
             resultMessage = SUCCESS;
         } catch (Exception ex) {
-            //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
-
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultMessage = ERROR;
         }
+        System.out.println("********************RecruitmentAction :: doAddConsultant Method End*********************");
         return resultMessage;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getRequirementDetails() method is used to get Requirement details of
-     * account
+     * Author :
      *
-     * @Author:Ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getRequirementDetails() method is used to
      *
-     * @Created Date:05/06/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getRequirementDetails() {
         resultType = LOGIN;
+        System.out.println("********************RecruitmentAction :: getRequirementDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -491,35 +442,32 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
         } catch (Exception ex) {
             resultType = ERROR;
         }
+        System.out.println("********************RecruitmentAction :: getRequirementDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getAllRequirementList() method is used to get Requirement details of
-     * account
+     * Author :
      *
-     * @Author:praveen kumar<pkatru@miraclesoft.com>
+     * ForUse : getAllRequirementList() method is used to
      *
-     * @Created Date:05/07/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getAllRequirementList() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getAllRequirementList Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setReqCreatedByMap(com.mss.msp.util.DataSourceDataProvider.getInstance().GetProjectManagersListByOrgId(this.getSessionOrgId()));
                 setAccount_name(DataSourceDataProvider.getInstance().getAccountNameById(getOrgid()));
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
                 setReqCategory(dataSourceDataProvider.getInstance().getRequiteCategory(1));
-                //setRequirementStatus("R");
                 requirementlistVTO = ServiceLocator.getRecruitmentService().getAllRequirementList(httpServletRequest, this);
                 if (requirementlistVTO.size() == 0) {
                     setRequirementlistVTO(null);
@@ -530,39 +478,32 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: getAllRequirementList Method End*********************");
         return resultMessage;
     }
 
     /**
      * *****************************************************************************
-     * Date : May 5 2015
+     * Date :
      *
-     * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
+     * Author :
      *
-     * doAddnewConsultant() method can be used to add the new consultant on the
-     * basic of organization id
+     * ForUse : addNewConsultant() method is used to
      *
      * *****************************************************************************
      */
     public String addNewConsultant() {
         resultType = LOGIN;
-        //filePath = "D:\\uploadedfiles";
         int addresult = 0;
-        //filePath="C:\\usr\\ProjectFiles\\MSP\\TASK_ATTACHMENTS";
-        //filePath = Properties.getProperty("Task.Attachment");
-
+        System.out.println("********************RecruitmentAction :: addNewConsultant Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-
-
                 if (getFileFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filesPath = Properties.getProperty("Task.Attachment");
                     File createPath = new File(filesPath);
                     Date dt = new Date();
                     /*The month is generated from here*/
-
                     String month = "";
                     if (dt.getMonth() == 0) {
                         month = "Jan";
@@ -590,33 +531,24 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                         month = "Dec";
                     }
                     short week = (short) (Math.round(dt.getDate() / 7));
-                    /*getrequestType is used to create a directory of the object type specified in the jsp page*/
                     createPath = new File(createPath.getAbsolutePath() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
-                    /*This creates a directory forcefully if the directory does not exsist*/
-
-                    //System.out.println("path::"+createPath);
                     createPath.mkdir();
                     /*here it takes the absolute path and the name of the file that is to be uploaded*/
                     File theFile = new File(createPath.getAbsolutePath());
-
                     setFilesPath(theFile.toString());
                     /*copies the file to the destination*/
                     File destFile = new File(theFile + File.separator + fileFileName);
                     FileUtils.copyFile(file, destFile);
                 }
-
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 if (getAddconsult_checkAddress().equalsIgnoreCase("true")) {
                     setAddress_flag("PC");
-
                 }
                 if (getAddconsult_checkAddress().equalsIgnoreCase("false")) {
                     setAddress_flag("P");
                 }
-
                 String oId = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString();
                 int orgid = Integer.valueOf(oId);
-                //   setOrganization(DataSourceDataProvider.getInstance().getOrganizationByOrgId(orgid));
                 setConsult_WCountry(ServiceLocator.getLocationService().getCountriesNamesMap());        // getGeneralService().getCountriesNames());
                 setIndustry(DataSourceDataProvider.getInstance().getIndustryName());
                 setExperience(DataSourceDataProvider.getInstance().getYearsOfExp());
@@ -624,34 +556,33 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 //TODO Display Success message on JSP
                 if (res > 0) {
                     setConsultFlag("success");
-                    System.out.println("in action success in adding consultant detailssssssssss");
-
                 } else {
                     setConsultFlag("failure");
-                    System.out.println("in action failed to adding consultant detailssssssssss");
-                    //httpServletRequest.getSession(false).setAttribute("taskdata", null);
-                    //resultType = SUCCESS;
                 }
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
             return ERROR;
         } catch (Exception ex) {
-            System.out.println("Exception in ADD task  action-->" + ex.getMessage());
             resultType = ERROR;
         }
-
+        System.out.println("********************RecruitmentAction :: addNewConsultant Method End*********************");
         return SUCCESS;
     }
 
     /**
-     * triveni method start
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getupdateConsultantDetails() method is used to
+     *
+     * *****************************************************************************
      */
     public String getupdateConsultantDetails() {
-        System.out.println("-----------------get Update action--------------");
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getupdateConsultantDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
             if (getConsultFlag().equalsIgnoreCase("consultant")) {
@@ -661,42 +592,42 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
             } else if (getConsultFlag().equalsIgnoreCase("customer")) {
                 setConsultFlag("customer");
             }
-
             try {
                 String oId = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString();
                 int orgid = Integer.valueOf(oId);
-
-                //  setOrganization(DataSourceDataProvider.getInstance().getOrganizationByOrgId(orgid));
                 setIndustry(ServiceLocator.getLookUpHandlerService().getIndustryTypesMap());
                 setCountry(ServiceLocator.getLocationService().getCountryNames());
                 setExperience(DataSourceDataProvider.getInstance().getYearsOfExp());
-
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-
-                //  setState(DataSourceDataProvider.getInstance().getAllStates());
                 consultantVTO = ServiceLocator.getRecruitmentService().getupdateConsultantDetails(this, skillsmap);
                 setPermanentState(DataSourceDataProvider.getInstance().getPermanentStates(consultantVTO.getConsult_Country()));
                 setCurrentState(DataSourceDataProvider.getInstance().getPermanentStates(consultantVTO.getConsult_CCountry()));
                 setPreState(DataSourceDataProvider.getInstance().getPermanentStates(consultantVTO.getConsult_preferredCountry()));
-
-                // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-                System.out.println("orgId->" + orgid + "industry-->" + consultantVTO.getConsult_industry() + "exp--->" + getConsult_experience());
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessagetUserLeavesServiceges(ex);
-                System.out.println("I am in error" + ex.toString());
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: getupdateConsultantDetails Method End*********************");
         return resultMessage;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getCurrentStatus() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getCurrentStatus() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getCurrentStatus Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setOrgid(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -705,6 +636,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
             } catch (Exception e) {
             }
         }
+        System.out.println("********************RecruitmentAction :: getCurrentStatus Method End*********************");
         return SUCCESS;
     }
 
@@ -716,10 +648,20 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
         this.state = state;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doupdateConsultantDetails() method is used to
+     *
+     * *****************************************************************************
+     */
     public String doupdateConsultantDetails() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: doupdateConsultantDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-
             if (getConsultFlag().equalsIgnoreCase("consultant")) {
             } else if (getConsultFlag().equalsIgnoreCase("vendor")) {
                 setConsultFlag("vendor");
@@ -728,29 +670,21 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
             }
             try {
                 int orgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
-                // String oId = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString();
-                //int orgid = Integer.valueOf(oId);
-
-
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 if (getConsult_checkAddress().equalsIgnoreCase("true")) {
                     setConsult_checkAddress("PC");
                 } else {
                     setConsult_checkAddress("P");
                 }
-
                 consultantVTO = ServiceLocator.getRecruitmentService().doupdateConsultantDetails(this, userSessionId, orgId);
-
                 addActionMessage("Updated successfully");
-
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessagetUserLeavesServiceges(ex);
-                //  System.out.println("I am in error" + ex.toString());
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: doupdateConsultantDetails Method End*********************");
         return resultMessage;
     }
 
@@ -760,13 +694,15 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
      *
      * Author : Divya<dgandreti@miraclesoft.com>
      *
-     * getDefaultConsultantListDetails() getting consultant list Default.
+     * ForUse : getDefaultConsultantListDetails() getting consultant list
+     * Default.
      *
      *
      * *****************************************************************************
      */
     public String getDefaultConsultantListDetails() {
         resultType = LOGIN;
+        System.out.println("********************RecruitmentAction :: getDefaultConsultantListDetails Method Start*********************");
         String consultantList = "";
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -779,14 +715,13 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(consultantList);
-
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************RecruitmentAction :: getDefaultConsultantListDetails Method End*********************");
         return null;
     }
 
@@ -796,13 +731,14 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
      *
      * Author : Divya<dgandreti@miraclesoft.com>
      *
-     * getConsultantListDetailsBySearch() getting consultant list by searching.
+     * ForUse : getConsultantListDetailsBySearch() getting consultant list by searching.
      *
      *
      * *****************************************************************************
      */
     public String getConsultantListDetailsBySearch() {
         resultType = LOGIN;
+        System.out.println("********************RecruitmentAction :: getConsultantListDetailsBySearch Method Start*********************");
         String consultantList = "";
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -815,37 +751,38 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(consultantList);
-
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************RecruitmentAction :: getConsultantListDetailsBySearch Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : addConsultAttachment() method is used to
+     *
+     * *****************************************************************************
+     */
     public String addConsultAttachment() {
         resultType = LOGIN;
-        //filePath = "D:\\uploadedfiles";
         int addresult = 0;
-        //filePath="C:\\usr\\ProjectFiles\\MSP\\TASK_ATTACHMENTS";
-        //filePath = Properties.getProperty("Task.Attachment");
-
+        System.out.println("********************RecruitmentAction :: addConsultAttachment Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-
-                //setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
-                //setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
                 if (getConsultAttachmentFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filePath = Properties.getProperty("Task.Attachment");
                     File createPath = new File(filePath);
                     Date dt = new Date();
                     /*The month is generated from here*/
-
                     String month = "";
                     if (dt.getMonth() == 0) {
                         month = "Jan";
@@ -876,66 +813,46 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                     /*getrequestType is used to create a directory of the object type specified in the jsp page*/
                     createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
                     /*This creates a directory forcefully if the directory does not exsist*/
-
-                    //System.out.println("path::"+createPath);
                     createPath.mkdir();
                     /*here it takes the absolute path and the name of the file that is to be uploaded*/
                     File theFile = new File(createPath.getAbsolutePath());
-
                     setFilePath(theFile.toString());
                     /*copies the file to the destination*/
                     File destFile = new File(theFile, consultAttachmentFileName);
-                    //setFilePath(destFile.toString());
                     FileUtils.copyFile(consultAttachment, destFile);
                 }
-//                File destFile = new File(filePath, taskAttachmentFileName);
-//                FileUtils.copyFile(taskAttachment, destFile);
-
-                //System.out.println("file is null so it adds only data in task_list table");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                //  System.out.println("Action called in TaskHandlerAction classsssssssssssssssssssssssssssssssssssssssss");
                 addresult = ServiceLocator.getRecruitmentService().addConsultAttachmentDetails(this);
-
                 if (addresult > 0) {
-                    System.out.println("in action success in adding task detailssssssssss");
-                    //httpServletRequest.getSession(false).setAttribute("taskdata", taskDetails);
-                    //resultType = SUCCESS;
                 } else {
-                    System.out.println("in action failed to adding task detailssssssssss");
-                    //httpServletRequest.getSession(false).setAttribute("taskdata", null);
-                    //resultType = SUCCESS;
                 }
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
             return ERROR;
         } catch (Exception ex) {
-            System.out.println("Exception in ADD task  action-->" + ex.getMessage());
             resultType = ERROR;
         }
-
+        System.out.println("********************RecruitmentAction :: addConsultAttachment Method End*********************");
         return SUCCESS;
     }
-    /*
-     * @getActivityDetails() method is for getting consultant activity details 
-     * 
-     * @Author:Kiran Arogya<adoddi@miraclesoft.com>
-     *
-     * @Created Date:05/02/2015
-     * 
-     */
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getActivityDetails() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getActivityDetails() {
         resultType = LOGIN;
+        System.out.println("********************RecruitmentAction :: getActivityDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                //int usrid=Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //System.out.println("--------------> Consult Id"+getConsultantId());
-                //System.out.println("--------------> Consult Id"+getConsult_id());
                 String activityDetails = ServiceLocator.getRecruitmentService().getActivityDetails(getConsult_id());
-                // System.out.println("" + activityDetails);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -943,156 +860,136 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(activityDetails);
             } else {
-//                System.out.println("----------------> else normal skill");
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
-
             resultType = ERROR;
         }
+        System.out.println("********************RecruitmentAction :: getActivityDetails Method End*********************");
         return null;
     }
 
-    /*
-     * @doAddConsultantActivityDetails() method is for adding consultant activity details 
-     * 
-     * @Author:Kiran Arogya<adoddi@miraclesoft.com>
+    /**
+     * *****************************************************************************
+     * Date :
      *
-     * @Created Date:05/02/2015
-     * 
+     * Author :
+     *
+     * ForUse : doAddConsultantActivityDetails() method is used to
+     *
+     * *****************************************************************************
      */
     public String doAddConsultantActivityDetails() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: doAddConsultantActivityDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setOrgid(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setActivityCratedBy(userid);
-                //setConsult_id(consult_id);
                 setActivityRelation("acc");
                 int update = ServiceLocator.getRecruitmentService().doAddConsultantActivityDetails(this);
-                // System.out.println("update is------>"+update);
-                //if(update>0){
-                /*consultantActivityDetails = ServiceLocator.getRecruitmentService().getConsultantActivityDetails(this);
-                 httpServletRequest.getSession(false).setAttribute("consultantActivityDetails", consultantActivityDetails);
-                 //}
-                 resultMessage = SUCCESS;*/
-
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
                 resultMessage = ERROR;
             }
-
         }
-        //return resultMessage;
+        System.out.println("********************RecruitmentAction :: doAddConsultantActivityDetails Method End*********************");
         return null;
     }
 
-    /*
-     * @dogetConsultActivitydetailsbyActivity() method is for gettingn consultant activity details by activity id
-     * 
-     * @Author:Kiran Arogya<adoddi@miraclesoft.com>
+    /**
+     * *****************************************************************************
+     * Date :
      *
-     * @Created Date:05/02/2015
-     * 
+     * Author :
+     *
+     * ForUse : dogetConsultActivitydetailsbyActivity() method is used to
+     *
+     * *****************************************************************************
      */
     public String dogetConsultActivitydetailsbyActivity() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: dogetConsultActivitydetailsbyActivity Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                //System.out.println("dogetConsultActivitydetailsbyActivity********"+getActivityId());
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setOrgid(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setActivityCratedBy(userid);
-                //setConsult_id(consult_id);
                 setActivityRelation("acc");
                 String activityString = ServiceLocator.getRecruitmentService().getConsultantActivityDetailsbyActivityId(this);
-                // System.out.println("activityString"+activityString);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(activityString);
-                //httpServletRequest.getSession(false).setAttribute("activityString", activityString);
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
                 resultMessage = ERROR;
             }
-
         }
+        System.out.println("********************RecruitmentAction :: dogetConsultActivitydetailsbyActivity Method End*********************");
         return null;
     }
 
-    /*
-     * @doEditConsultantActivityDetails() method for editing consultant activity details 
-     * 
-     * @Author:Kiran Arogya<adoddi@miraclesoft.com>
+    /**
+     * *****************************************************************************
+     * Date :
      *
-     * @Created Date:05/02/2015
-     * 
+     * Author :
+     *
+     * ForUse : doEditConsultantActivityDetails() method is used to
+     *
+     * *****************************************************************************
      */
     public String doEditConsultantActivityDetails() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: doEditConsultantActivityDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                System.out.println("doEditConsultantActivityDetails********1");
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setOrgid(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setActivityCratedBy(userid);
-                //setActivityId(2);
-                // System.out.println("Activity id---"+getActivityId());
                 setActivityRelation("acc");
                 int update = ServiceLocator.getRecruitmentService().doEditConsultantActivityDetails(this);
-//                consultantActivityDetails = ServiceLocator.getRecruitmentService().getConsultantActivityDetails(this);
-//                httpServletRequest.getSession(false).setAttribute("consultantActivityDetails", consultantActivityDetails);
-//                resultMessage = SUCCESS;
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
                 resultMessage = ERROR;
             }
-
         }
+        System.out.println("********************RecruitmentAction :: doEditConsultantActivityDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getLoginUserRequirementList() method is used to get Requirement details
-     * of account
+     * Author :
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getLoginUserRequirementList() method is used to
      *
-     * @Created Date:05/18/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getLoginUserRequirementList() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getLoginUserRequirementList Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-
-                System.out.println("by nag");
                 setTypeOfUser(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString()));
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setAccount_name(DataSourceDataProvider.getInstance().getAccountNameById(getOrgid()));
-
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-
-                //  setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-
                 requirementlistVTO = ServiceLocator.getRecruitmentService().getLoginUserRequirementList(httpServletRequest, this);
                 setReqCategory(dataSourceDataProvider.getInstance().getRequiteCategory(1));
-                System.out.println("requirementlistVTO" + requirementlistVTO);
                 if (requirementlistVTO.size() == 0) {
                     setRequirementlistVTO(null);
                 }
@@ -1102,6 +999,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: getLoginUserRequirementList Method End*********************");
         return resultMessage;
     }
     private Map reqCategory;
@@ -1115,18 +1013,18 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getConsultantStatus() getting status of requirement of account
+     * Author :
      *
-     * @Author:Aklakh Ahmad<mahmad@miraclesoft.com>
+     * ForUse : getConsultantStatus() method is used to
      *
-     * @Created Date:05/21/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getConsultantStatus() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getConsultantStatus Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setOrgid(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -1135,29 +1033,28 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
             } catch (Exception e) {
             }
         }
+        System.out.println("********************RecruitmentAction :: getConsultantStatus Method End*********************");
         return SUCCESS;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getLoginUserRequirementList() method is used to get Requirement details
-     * of account
+     * Author :
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : techReview() method is used to
      *
-     * @Created Date:05/18/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String techReview() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: techReview Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setReqName(com.mss.msp.util.DataSourceDataProvider.getInstance().getReqNameById(getRequirementId()));
                 setConsult_name(com.mss.msp.util.DataSourceDataProvider.getInstance().getConsultNameById(getConsult_id()));
                 setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getAccountSearchID()));
-                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + getAccountSearchID() + ">>>>>" + getAccountFlag());
                 consultantList = ServiceLocator.getRecruitmentService().getTechReviewSearchDetails(this);
                 if (consultantList.size() == 0) {
                     setConsultantList(null);
@@ -1168,6 +1065,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: techReview Method End*********************");
         return resultMessage;
     }
 
@@ -1177,31 +1075,26 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
      *
      * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * techReviewForward() getting consultant list Default.
+     * ForUse: techReviewForward() getting consultant list Default.
      *
      *
      * *****************************************************************************
      */
     public String techReviewForward() {
         resultType = LOGIN;
+        System.out.println("********************RecruitmentAction :: techReviewForward Method Start*********************");
         int result = 0, mailResult = 0, conMailResult = 0;
         try {
-            System.out.println("techReviewForward action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                //System.out.println("===============>rk");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                //(dataSourceDataProvider.getInstance().getAccountNameById(getSessionOrgId()));
                 setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getSessionOrgId()));
                 String accToken = com.mss.msp.util.DataUtility.getRandomHexadecimal(64);
                 String validKey = com.mss.msp.util.DataUtility.getRandomHexadecimal(6);
-                //System.out.println("accToken----->"+accToken);
                 result = ServiceLocator.getRecruitmentService().techReviewForward(this, accToken, validKey);
-
                 if (result > 0) {
                     dataSourceDataProvider.getInstance().getMailIdsOfConAndEmp(this);
                     dataSourceDataProvider.getInstance().getVendorEmpEmail(this);
-                    //System.out.println("MAIL IDS IN ACTION AFTER DSDP::>>>>" + getConEmail() + "  " + getEmpEmail());
                     if ("Online".equals(getInterviewType()) || "Psychometric".equals(getInterviewType())) {
                         setReqName(DataSourceDataProvider.getInstance().getReqNameById(getRequirementId()));
                         mailResult = mailManager.doAddTechReviewEmailLogger(this, validKey, getConEmail(), accToken, getReqName());
@@ -1214,46 +1107,41 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                         conMailResult = mailManager.techReviewConsultantEmailGenerator(this);
                     }
                     if (mailResult > 0 && conMailResult > 0) {
-                        //System.out.println("Email logger added ================================>%%%%%%%%%%%%%%%%%%%%%%%%");
                     }
                 }
-                // System.out.println("in recruitment action" + result);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
-
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************RecruitmentAction :: techReviewForward Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getTechReviewDetails() method is used to get Requirement details of
-     * account
+     * Author :
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getTechReviewDetails() method is used to
      *
-     * @Created Date:05/18/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getTechReviewDetails() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getTechReviewDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 consultantList = ServiceLocator.getRecruitmentService().getTechReviewDetails(this);
-                System.out.println("consultantList" + consultantList.toString());
                 if (consultantList.size() == 0) {
                     setConsultantList(null);
                 }
@@ -1263,28 +1151,27 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: getTechReviewDetails Method End*********************");
         return resultMessage;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getSearchTechReviewList() method is used to get Requirement details of
-     * account
+     * Author :
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getSearchTechReviewList() method is used to
      *
-     * @Created Date:05/18/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getSearchTechReviewList() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getSearchTechReviewList Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String result = ServiceLocator.getRecruitmentService().getSearchTechReviewList(this);
-                System.out.println("in recruitment action" + result);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -1296,28 +1183,27 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: getSearchTechReviewList Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getSearchTechReviewList() method is used to get Requirement details of
-     * account
+     * Author :
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getConsultDetailsOnOverlay() method is used to
      *
-     * @Created Date:05/18/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getConsultDetailsOnOverlay() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getConsultDetailsOnOverlay Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String result = ServiceLocator.getRecruitmentService().getConsultDetailsOnOverlay(this);
-                System.out.println("in recruitment action" + result);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -1329,29 +1215,28 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: getConsultDetailsOnOverlay Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getSearchTechReviewList() method is used to get Requirement details of
-     * account
+     * Author :
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : saveTechReviewResults() method is used to
      *
-     * @Created Date:05/18/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String saveTechReviewResults() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: saveTechReviewResults Method Start*********************");
         String resultString = "";
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int result = ServiceLocator.getRecruitmentService().saveTechReviewResults(this);
-                System.out.println("in recruitment action" + result);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 if (result >= 1) {
@@ -1369,31 +1254,32 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: saveTechReviewResults Method End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : June 1 2015
+     * Date :
      *
-     * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
+     * Author :
      *
-     * doAddnewConsultant() method can be used to add the new consultant on the
-     * basic of organization id
+     * ForUse : deleteConsultantAttachment() method is used to
      *
      * *****************************************************************************
      */
     public String deleteConsultantAttachment() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: deleteConsultantAttachment Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                System.out.println("Attachment Id============>" + getAcc_attachment_id());
                 setOrgid(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int deleteResult = ServiceLocator.getRecruitmentService().doDeleteConsultantAttachment(this);
             } catch (Exception e) {
             }
         }
+        System.out.println("********************RecruitmentAction :: deleteConsultantAttachment Method End*********************");
         return SUCCESS;
     }
 
@@ -1403,32 +1289,23 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
      *
      * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
      *
-     * UploadConsultantAttachments() method can be used to add the consultant
-     * updated resume
+     * ForUse : UploadConsultantAttachments() method can be used to add the
+     * consultant updated resume
      *
      * *****************************************************************************
      */
     public String UploadConsultantAttachments() throws Exception {
-        System.out.println("entered into updateAttachment  action");
         resultType = LOGIN;
         int addresult = 0;
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data Start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        System.out.println("File Name is:" + getFileFileName());
-        System.out.println("File ContentType is:" + getFileContentType());
-        System.out.println("Files Directory is:" + filePath + "-------->" + getFilePath());
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data End %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        System.out.println("User Id----------------------------->" + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID));
-
+        System.out.println("********************RecruitmentAction :: UploadConsultantAttachments Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 if (getFileFileName() == null) {
-                    System.out.println("file is null so it adds only data in  table");
                 } else {
                     filePath = Properties.getProperty("Task.Attachment");
                     File createPath = new File(filePath);
                     Date dt = new Date();
                     /*The month is generated from here*/
-
                     String month = "";
                     if (dt.getMonth() == 0) {
                         month = "Jan";
@@ -1456,84 +1333,68 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                         month = "Dec";
                     }
                     short week = (short) (Math.round(dt.getDate() / 7));
-
                     createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
                     createPath.mkdir();
-
                     File theFile = new File(createPath.getAbsolutePath());
-
-                    System.out.println("File Path::" + theFile);
-
                     setFilePath(theFile.toString());
                     /*copies the file to the destination*/
                     File destFile = new File(theFile, getFileFileName());
-                    System.out.println(">>DestFile>>" + destFile);
-                    //setFilePath(destFile.toString());
-                    System.out.println("THE FINAL PATH IT IS SET IN THE ACTION::>>>>>" + getFilePath());
                     FileUtils.copyFile(file, destFile);
                 }
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 addresult = ServiceLocator.getRecruitmentService().updateConsultAttachmentDetails(this);
-
             }
         } catch (IOException e) {
             e.printStackTrace();
             return ERROR;
         } catch (Exception ex) {
-            System.out.println("Exception in update attachment  action-->" + ex.getMessage());
             resultType = ERROR;
         }
-
+        System.out.println("********************RecruitmentAction :: UploadConsultantAttachments Method End*********************");
         return SUCCESS;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getLoginUserRequirementList() method is used to get Requirement details
-     * of account
+     * Author :
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : forwardTechReview() method is used to
      *
-     * @Created Date:05/18/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String forwardTechReview() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: forwardTechReview Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setReqName(com.mss.msp.util.DataSourceDataProvider.getInstance().getReqNameById(getRequirementId()));
                 setConsult_name(com.mss.msp.util.DataSourceDataProvider.getInstance().getConsultNameById(getConsult_id()));
                 setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getAccountSearchID()));
-
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
                 setPsychoSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory(0));
-                // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-                //consultantList = ServiceLocator.getRecruitmentService().getTechReviewSearchDetails(httpServletRequest, this);
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAction :: forwardTechReview Method End*********************");
         return resultMessage;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @ userMigration() method is used to migrate consultant into user
+     * Author :
      *
+     * ForUse : userMigration() method is used to
      *
-     * @Author:divya gandreti<dgandreti@miraclesoft.com>
-     *
-     * @Created Date:07/20/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String userMigration() {
         System.out.println("in mi");
@@ -1541,27 +1402,20 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
         int inserted = 0;
         int exists = 0;
         resultType = LOGIN;
+        System.out.println("********************RecruitmentAction :: userMigration Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setOrgid(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("BEFORE DSDP>>>>" + getConsult_id() + " " + getReq_Id());
                 exists = dataSourceDataProvider.getInstance().doCheckEmailExistsOrNot(getConsult_id(), getReq_Id());
-                System.out.println(">>>>result of dsdp method>>" + exists);
-
                 if (exists > 0) {
                     resultString = "2";
-                    //httpServletResponse.getWriter().write(resultString);
                 } else {
                     inserted = ServiceLocator.getRecruitmentService().userMigration(this);
                     if (inserted > 0) {
-                        System.out.println("in migration action");
                         resultString = "1";
-                        //httpServletResponse.getWriter().write(resultString);
                     } else {
                         resultString = "0";
-                        //httpServletResponse.getWriter().write(resultString);
-                        System.out.println("no");
                     }
                 }
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -1570,35 +1424,36 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
-
-
-
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************RecruitmentAction :: userMigration Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : addVendorFormAttachments() method is used to
+     *
+     * *****************************************************************************
+     */
     public String addVendorFormAttachments() {
         resultType = LOGIN;
-        //filePath = "D:\\uploadedfiles";
         int addresult = 0;
-        //filePath="C:\\usr\\ProjectFiles\\MSP\\TASK_ATTACHMENTS";
-        //filePath = Properties.getProperty("Task.Attachment");
-
+        System.out.println("********************RecruitmentAction :: addVendorFormAttachments Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-
-
                 if (getFileFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filesPath = Properties.getProperty("Forms.Attachment");
                     File createPath = new File(filesPath);
                     Date dt = new Date();
                     /*The month is generated from here*/
-
                     String month = "";
                     if (dt.getMonth() == 0) {
                         month = "Jan";
@@ -1626,74 +1481,59 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                         month = "Dec";
                     }
                     short week = (short) (Math.round(dt.getDate() / 7));
-                    /*getrequestType is used to create a directory of the object type specified in the jsp page*/
                     createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
-                    /*This creates a directory forcefully if the directory does not exsist*/
-
-                    //System.out.println("path::"+createPath);
                     createPath.mkdir();
                     /*here it takes the absolute path and the name of the file that is to be uploaded*/
                     File theFile = new File(createPath.getAbsolutePath());
-
                     setFilesPath(theFile.toString());
                     /*copies the file to the destination*/
                     File destFile = new File(theFile + File.separator + fileFileName);
                     FileUtils.copyFile(file, destFile);
                 }
-
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserType(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 typeOfAccount = dataSourceDataProvider.getInstance().getTypeOfAccount(getViewAccountID());
-
                 String oId = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString();
                 int orgid = Integer.valueOf(oId);
-
-
                 int res = ServiceLocator.getRecruitmentService().doAddVendorFormDetails(this, orgid, typeOfAccount);
-                //TODO Display Success message on JSP
                 if (res > 0) {
                     setConsultFlag("success");
-                    System.out.println("in action success in adding Attachment detailssssssssss");
-
                 } else {
                     setConsultFlag("failure");
-                    System.out.println("in action failed to adding Attachment detailssssssssss");
-                    //httpServletRequest.getSession(false).setAttribute("taskdata", null);
-                    //resultType = SUCCESS;
                 }
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
             return ERROR;
         } catch (Exception ex) {
-            System.out.println("Exception in ADD task  action-->" + ex.getMessage());
             resultType = ERROR;
         }
-
+        System.out.println("********************RecruitmentAction :: addVendorFormAttachments Method End*********************");
         return SUCCESS;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : updateVendorFormAttachments() method is used to
+     *
+     * *****************************************************************************
+     */
     public String updateVendorFormAttachments() {
         resultType = LOGIN;
-        //filePath = "D:\\uploadedfiles";
         int addresult = 0;
-        //filePath="C:\\usr\\ProjectFiles\\MSP\\TASK_ATTACHMENTS";
-        //filePath = Properties.getProperty("Task.Attachment");
-
+        System.out.println("********************RecruitmentAction :: updateVendorFormAttachments Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-
-
                 if (getFileFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filesPath = Properties.getProperty("Forms.Attachment");
                     File createPath = new File(filesPath);
                     Date dt = new Date();
                     /*The month is generated from here*/
-
                     String month = "";
                     if (dt.getMonth() == 0) {
                         month = "Jan";
@@ -1724,40 +1564,23 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                     /*getrequestType is used to create a directory of the object type specified in the jsp page*/
                     createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
                     /*This creates a directory forcefully if the directory does not exsist*/
-
-                    //System.out.println("path::"+createPath);
                     createPath.mkdir();
-                    /*here it takes the absolute path and the name of the file that is to be uploaded*/
                     File theFile = new File(createPath.getAbsolutePath());
-
                     setFilesPath(theFile.toString());
                     /*copies the file to the destination*/
                     File destFile = new File(theFile + File.separator + fileFileName);
                     FileUtils.copyFile(file, destFile);
                 }
-
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserType(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
-
-
                 String oId = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString();
-//                int orgid = Integer.valueOf(oId);
-
-                System.out.println("getAttachment_id--------->" + getAttachment_id_edit());
                 int res = ServiceLocator.getRecruitmentService().doUpdateVendorFormDetails(this, getAttachment_id_edit());
                 //TODO Display Success message on JSP
                 if (res > 0) {
                     setConsultFlag("success");
-                    System.out.println("in action success in adding Attachment detailssssssssss");
-
                 } else {
                     setConsultFlag("failure");
-                    System.out.println("in action failed to adding Attachment detailssssssssss");
-                    //httpServletRequest.getSession(false).setAttribute("taskdata", null);
-                    //resultType = SUCCESS;
                 }
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -1766,14 +1589,24 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
             System.out.println("Exception in ADD task  action-->" + ex.getMessage());
             resultType = ERROR;
         }
-
+        System.out.println("********************RecruitmentAction :: updateVendorFormAttachments Method End*********************");
         return SUCCESS;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getVendorRequirementsDashboard() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getVendorRequirementsDashboard() {
         resultMessage = LOGIN;
+        System.out.println("********************RecruitmentAction :: getVendorRequirementsDashboard Method Start*********************");
         try {
-            System.out.println("getVendorRequirementsDashboard");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setOrgid(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -1783,11 +1616,10 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultMessage = ERROR;
-
         }
+        System.out.println("********************RecruitmentAction :: getVendorRequirementsDashboard Method End*********************");
         return resultMessage;
     }
-
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
@@ -1929,343 +1761,6 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     public void setConsultantId(String consultantId) {
         this.consultantId = consultantId;
     }
-    /*
-     public String getCnslt_email() {
-     return cnslt_email;
-     }
-
-     public void setCnslt_email(String cnslt_email) {
-     this.cnslt_email = cnslt_email;
-     }
-
-     public String getCnslt_fstname() {
-     return cnslt_fstname;
-     }
-
-     public void setCnslt_fstname(String cnslt_fstname) {
-     this.cnslt_fstname = cnslt_fstname;
-     }
-
-     public String getCnslt_gender() {
-     return cnslt_gender;
-     }
-
-     public void setCnslt_gender(String cnslt_gender) {
-     this.cnslt_gender = cnslt_gender;
-     }
-
-     public String getCnslt_homePhone() {
-     return cnslt_homePhone;
-     }
-
-     public void setCnslt_homePhone(String cnslt_homePhone) {
-     this.cnslt_homePhone = cnslt_homePhone;
-     }
-
-     public String getCnslt_add_date() {
-     return cnslt_add_date;
-     }
-
-     public void setCnslt_add_date(String cnslt_add_date) {
-     this.cnslt_add_date = cnslt_add_date;
-     }
-
-     public String getCnslt_lstname() {
-     return cnslt_lstname;
-     }
-
-     public void setCnslt_lstname(String cnslt_lstname) {
-     this.cnslt_lstname = cnslt_lstname;
-     }
-
-     public String getCnslt_dob() {
-     return cnslt_dob;
-     }
-
-     public void setCnslt_dob(String cnslt_dob) {
-     this.cnslt_dob = cnslt_dob;
-     }
-
-     public String getCnslt_mobileNo() {
-     return cnslt_mobileNo;
-     }
-
-     public void setCnslt_mobileNo(String cnslt_mobileNo) {
-     this.cnslt_mobileNo = cnslt_mobileNo;
-     }
-
-     public String getCnslt_available() {
-     return cnslt_available;
-     }
-
-     public void setCnslt_available(String cnslt_available) {
-     this.cnslt_available = cnslt_available;
-     }
-
-     public String getCnslt_midname() {
-     return cnslt_midname;
-     }
-
-     public void setCnslt_midname(String cnslt_midname) {
-     this.cnslt_midname = cnslt_midname;
-     }
-
-     public String getCnslt_mStatus() {
-     return cnslt_mStatus;
-     }
-
-     public void setCnslt_mStatus(String cnslt_mStatus) {
-     this.cnslt_mStatus = cnslt_mStatus;
-     }
-
-     public int getCnslt_lcountry() {
-     return cnslt_lcountry;
-     }
-
-     public void setCnslt_lcountry(int cnslt_lcountry) {
-     this.cnslt_lcountry = cnslt_lcountry;
-     }
-
-     public String getAddAddressFlag() {
-     return addAddressFlag;
-     }
-
-     public void setAddAddressFlag(String addAddressFlag) {
-     this.addAddressFlag = addAddressFlag;
-     }
-
-     public String getAddConsult_Address() {
-     return addConsult_Address;
-     }
-
-     public void setAddConsult_Address(String addConsult_Address) {
-     this.addConsult_Address = addConsult_Address;
-     }
-
-     public String getAddConsult_Address2() {
-     return addConsult_Address2;
-     }
-
-     public void setAddConsult_Address2(String addConsult_Address2) {
-     this.addConsult_Address2 = addConsult_Address2;
-     }
-
-     public String getAddConsult_City() {
-     return addConsult_City;
-     }
-
-     public void setAddConsult_City(String addConsult_City) {
-     this.addConsult_City = addConsult_City;
-     }
-
-     public String getAddConsult_Country() {
-     return addConsult_Country;
-     }
-
-     public void setAddConsult_Country(String addConsult_Country) {
-     this.addConsult_Country = addConsult_Country;
-     }
-
-     public int getAddConsult_State() {
-     return addConsult_State;
-     }
-
-     public void setAddConsult_State(int addConsult_State) {
-     this.addConsult_State = addConsult_State;
-     }
-
-     public String getAddConsult_Zip() {
-     return addConsult_Zip;
-     }
-
-     public void setAddConsult_Zip(String addConsult_Zip) {
-     this.addConsult_Zip = addConsult_Zip;
-     }
-
-     public String getAddConsult_Phone() {
-     return addConsult_Phone;
-     }
-
-     public void setAddConsult_Phone(String addConsult_Phone) {
-     this.addConsult_Phone = addConsult_Phone;
-     }
-
-     public String getCurrentAddressFlag() {
-     return currentAddressFlag;
-     }
-
-     public void setCurrentAddressFlag(String currentAddressFlag) {
-     this.currentAddressFlag = currentAddressFlag;
-     }
-
-     public String getAddConsult_CAddress() {
-     return addConsult_CAddress;
-     }
-
-     public void setAddConsult_CAddress(String addConsult_CAddress) {
-     this.addConsult_CAddress = addConsult_CAddress;
-     }
-
-     public String getAddConsult_CAddress2() {
-     return addConsult_CAddress2;
-     }
-
-     public void setAddConsult_CAddress2(String addConsult_CAddress2) {
-     this.addConsult_CAddress2 = addConsult_CAddress2;
-     }
-
-     public String getAddConsult_CCity() {
-     return addConsult_CCity;
-     }
-
-     public void setAddConsult_CCity(String addConsult_CCity) {
-     this.addConsult_CCity = addConsult_CCity;
-     }
-
-     public String getAddConsult_CCountry() {
-     return addConsult_CCountry;
-     }
-
-     public void setAddConsult_CCountry(String addConsult_CCountry) {
-     this.addConsult_CCountry = addConsult_CCountry;
-     }
-
-     public int getAddConsult_CState() {
-     return addConsult_CState;
-     }
-
-     public void setAddConsult_CState(int addConsult_CState) {
-     this.addConsult_CState = addConsult_CState;
-     }
-
-     public String getAddConsult_CZip() {
-     return addConsult_CZip;
-     }
-
-     public void setAddConsult_CZip(String addConsult_CZip) {
-     this.addConsult_CZip = addConsult_CZip;
-     }
-
-     public String getAddConsult_CPhone() {
-     return addConsult_CPhone;
-     }
-
-     public void setAddConsult_CPhone(String addConsult_CPhone) {
-     this.addConsult_CPhone = addConsult_CPhone;
-     }
-
-     public int getCnslt_industry() {
-     return cnslt_industry;
-     }
-
-     public void setCnslt_industry(int cnslt_industry) {
-     this.cnslt_industry = cnslt_industry;
-     }
-
-     public String getCnslt_salary() {
-     return cnslt_salary;
-     }
-
-     public void setCnslt_salary(String cnslt_salary) {
-     this.cnslt_salary = cnslt_salary;
-     }
-
-     public int getCnslt_wcountry() {
-     return cnslt_wcountry;
-     }
-
-     public void setCnslt_wcountry(int cnslt_wcountry) {
-     this.cnslt_wcountry = cnslt_wcountry;
-     }
-
-     public int getCnslt_organization() {
-     return cnslt_organization;
-     }
-
-     public void setCnslt_organization(int cnslt_organization) {
-     this.cnslt_organization = cnslt_organization;
-     }
-
-     public String getCnslt_experience() {
-     return cnslt_experience;
-     }
-
-     public void setCnslt_experience(String cnslt_experience) {
-     this.cnslt_experience = cnslt_experience;
-     }
-
-     public int getCnslt_preferredState() {
-     return cnslt_preferredState;
-     }
-
-     public void setCnslt_preferredState(int cnslt_preferredState) {
-     this.cnslt_preferredState = cnslt_preferredState;
-     }
-
-     public String getCnslt_jobTitle() {
-     return cnslt_jobTitle;
-     }
-
-     public void setCnslt_jobTitle(String cnslt_jobTitle) {
-     this.cnslt_jobTitle = cnslt_jobTitle;
-     }
-
-     public String getCnslt_workPhone() {
-     return cnslt_workPhone;
-     }
-
-     public void setCnslt_workPhone(String cnslt_workPhone) {
-     this.cnslt_workPhone = cnslt_workPhone;
-     }
-
-     public String getCnslt_referredBy() {
-     return cnslt_referredBy;
-     }
-
-     public void setCnslt_referredBy(String cnslt_referredBy) {
-     this.cnslt_referredBy = cnslt_referredBy;
-     }
-
-     public int getCnslt_pcountry() {
-     return cnslt_pcountry;
-     }
-
-     public void setCnslt_pcountry(int cnslt_pcountry) {
-     this.cnslt_pcountry = cnslt_pcountry;
-     }
-
-     public String getCnslt_description() {
-     return cnslt_description;
-     }
-
-     public void setCnslt_description(String cnslt_description) {
-     this.cnslt_description = cnslt_description;
-     }
-
-     public String getCnslt_comments() {
-     return cnslt_comments;
-     }
-
-     public void setCnslt_comments(String cnslt_comments) {
-     this.cnslt_comments = cnslt_comments;
-     }
-
-     public String getAddconsult_checkAddress() {
-     return addconsult_checkAddress;
-     }
-
-     public void setAddconsult_checkAddress(String addconsult_checkAddress) {
-     this.addconsult_checkAddress = addconsult_checkAddress;
-     }
-
-     public String getCnslt_skills() {
-     return cnslt_skills;
-     }
-
-     public void setCnslt_skills(String cnslt_skills) {
-     this.cnslt_skills = cnslt_skills;
-     }
-     */
 
     public File getFile() {
         return file;
@@ -2713,13 +2208,6 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
         this.consult_pcountry = consult_pcountry;
     }
 
-//    public String getConsult_skills() {
-//        return consult_skills;
-//    }
-//
-//    public void setConsult_skills(String consult_skills) {
-//        this.consult_skills = consult_skills;
-//    }
     public String getConsult_position() {
         return consult_position;
     }
@@ -3763,7 +3251,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     public void setVendorcomments(String vendorcomments) {
         this.vendorcomments = vendorcomments;
     }
-    
+
     public String getChecked() {
         return checked;
     }
@@ -3771,5 +3259,4 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     public void setChecked(String checked) {
         this.checked = checked;
     }
-    
 }

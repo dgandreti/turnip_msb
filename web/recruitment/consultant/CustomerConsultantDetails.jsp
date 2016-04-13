@@ -98,14 +98,13 @@
                                         <div class="backgroundcolor" >
                                             <div class="panel-heading" id="" style="margin-top:6px">
                                                 <h4 class="panel-title">
-                                                    <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                     <font style="color: #fff">Consultant Details</font>
                                                     <s:if test="consultFlag=='vendor'">
                                                         <s:url var="myUrl" action="getMyConsultantSearch.action">
                                                             <s:param name="consultantFlag"><s:property value="%{consultantFlag}"/></s:param> 
 
                                                         </s:url>
-                                                        <span class="pull-right" ><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                        <span class="pull-right" ><s:a href='%{#myUrl}' id="vendorBackButton"><i class="fa fa-undo"></i></s:a></span>
                                                         </s:if>
                                                         <s:if test="consultFlag=='customer'">
 
@@ -136,13 +135,13 @@
                                                             </s:url>
                                                         </s:else>
 
-                                                        <span class="pull-right" ><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                        <span class="pull-right" ><s:a href='%{#myUrl}' id="techReviewBackButton"><i class="fa fa-undo"></i></s:a></span>
                                                         </s:if>
                                                         <s:if test="consultFlag =='consultant'">
                                                             <s:url var="myUrl" action="../../users/general/myprofile.action">
                                                                 <%--s:param name="consultantFlag"><s:property value="%{consultantFlag}"/></s:param--%> 
                                                             </s:url>
-                                                        <span class="pull-right" ><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                        <span class="pull-right" ><s:a href='%{#myUrl}' id="consultantBackButton" ><i class="fa fa-undo"></i></s:a></span>
                                                         </s:if>
                                                 </h4>
                                             </div>
@@ -275,15 +274,15 @@
                                                                 <div class="col-sm-6 col-md-6 col-lg-4"> 
                                                                     <label class="labelStyle" id="labelLevelStatusReq">Social Links &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>:
                                                                     <s:if test="consultantVTO.consult_linkedInId!=''" > 
-                                                                        <s:a  href="#" onclick="window.open('%{consultantVTO.consult_linkedInId}');"  ><img src="<s:url value="/includes/images/linkedinIcon.png"/>" style="width:18px; height: 18px" ></s:a>
+                                                                        <s:a  href="#" id="linkedInLinkId" onclick="window.open('%{consultantVTO.consult_linkedInId}');"  ><img src="<s:url value="/includes/images/linkedinIcon.png"/>" style="width:18px; height: 18px" ></s:a>
                                                                     </s:if>
 
                                                                     <s:if test="consultantVTO.consult_twitterId!=''" > 
-                                                                        <s:a href="#" onclick="window.open('%{consultantVTO.consult_twitterId}');"  ><img src="<s:url value="/includes/images/twitterIcon.png"/>" style="width:18px; height: 18px"></s:a>
+                                                                        <s:a href="#" id="twitterLinkId" onclick="window.open('%{consultantVTO.consult_twitterId}');"  ><img src="<s:url value="/includes/images/twitterIcon.png"/>" style="width:18px; height: 18px"></s:a>
                                                                     </s:if>
 
                                                                     <s:if test="consultantVTO.consult_facebookId.length()!=''" >
-                                                                        <s:a href="#" onclick="window.open('%{consultantVTO.consult_facebookId}');"   ><img src="<s:url value="/includes/images/facebookIcon.png"/>" style="width:18px; height: 18px" ></s:a>
+                                                                        <s:a href="#" id="facebookLinkId" onclick="window.open('%{consultantVTO.consult_facebookId}');"   ><img src="<s:url value="/includes/images/facebookIcon.png"/>" style="width:18px; height: 18px" ></s:a>
                                                                     </s:if>
 
                                                                     <%--<s:textfield cssClass="consultantAlingment" value="%{consultantVTO.consult_linkedInId}" readonly="true"></s:textfield> --%>

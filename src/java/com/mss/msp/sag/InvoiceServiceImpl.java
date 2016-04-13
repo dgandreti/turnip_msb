@@ -20,43 +20,53 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * *****************************************************************************
+ * Date :
  *
- * @author miracle
+ * Author :miracle
+ *
+ * ForUse : InvoiceServiceImpl() method is used to
+ *
+ *
+ * *****************************************************************************
  */
 public class InvoiceServiceImpl implements InvoiceService {
 
-    private Connection connection;
-    private Statement statement;
-    private CallableStatement callableStatement;
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString = "";
     private boolean isExceute;
 
     public List getInvoiceDetails(InvoiceAction invoiceAction, String typeOfUser) throws ServiceLocatorException {
-        ArrayList<InvoiceVTO> listVto = new ArrayList<InvoiceVTO>();
-        PreparedStatement preparedStatement = null;
+
+        Connection connection = null;
+        Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************InvoiceServiceImpl :: getInvoiceDetails Method Start*********************");
+        ArrayList<InvoiceVTO> listVto = new ArrayList<InvoiceVTO>();
+
+
         String sqlquery = "";
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-
-//            String sqlquery = "SELECT inv.invoiceid,inv.totalhrs,totalamt,invoicestatus,invoicemonth,account_name,invoiceyear,inv.usr_id,"
-//                    + "CONCAT(first_name,'.',last_name) NAMES,account_name AS custname FROM invoice inv "
-//                    + "LEFT OUTER JOIN  users u ON (inv.usr_id=u.usr_id) "
-//                    + "LEFT OUTER JOIN project_team pt ON(inv.usr_id=pt.usr_id) "
-//                    + "LEFT OUTER JOIN accounts acc ON (inv.custorg_id=acc.account_id) WHERE  pt.current_status='Active' AND u.org_id=" + invoiceAction.getSessionOrgId();
-
             if ("VC".equalsIgnoreCase(typeOfUser)) {
                 sqlquery = "SELECT inv.invoiceid,inv.totalhrs,totalamt,invoicestatus,invoicemonth,"
                         + "invoiceyear,inv.usr_id,CONCAT(first_name,'.',last_name) NAMES,account_name AS custname "
                         + "FROM invoice inv LEFT OUTER JOIN  users u ON (inv.usr_id=u.usr_id)"
-                        + "  LEFT OUTER JOIN accounts acc ON (inv.custorg_id=acc.account_id) WHERE inv.frm_orgid=" + invoiceAction.getSessionOrgId()+" and invoiceyear=" + invoiceAction.getInvoiceYear();
+                        + "  LEFT OUTER JOIN accounts acc ON (inv.custorg_id=acc.account_id) WHERE inv.frm_orgid=" + invoiceAction.getSessionOrgId() + " and invoiceyear=" + invoiceAction.getInvoiceYear();
             } else {
                 sqlquery = "   SELECT inv.invoiceid,inv.totalhrs,totalamt,invoicestatus,invoicemonth,"
                         + "invoiceyear,inv.usr_id,CONCAT(first_name,'.',last_name) NAMES,account_name AS custname "
                         + "FROM invoice inv LEFT OUTER JOIN  users u ON (inv.usr_id=u.usr_id) "
-                        + "LEFT OUTER JOIN accounts acc ON (inv.frm_orgid=acc.account_id) WHERE  inv.custorg_id=" + invoiceAction.getSessionOrgId()+" and invoiceyear=" + invoiceAction.getInvoiceYear();
+                        + "LEFT OUTER JOIN accounts acc ON (inv.frm_orgid=acc.account_id) WHERE  inv.custorg_id=" + invoiceAction.getSessionOrgId() + " and invoiceyear=" + invoiceAction.getInvoiceYear() + " and invoicestatus !='Created' ";
             }
             sqlquery += " order by NAMES limit 100 ";
-
+            System.out.println("getInvoiceDetails :: query string ------>" + sqlquery);
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sqlquery);
@@ -78,16 +88,13 @@ public class InvoiceServiceImpl implements InvoiceService {
         } finally {
 
             try {
-                // resultSet Object Checking if it's null then close and set null
+
                 if (resultSet != null) {
                     resultSet.close();
                     resultSet = null;
                 }
 
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
+
                 if (statement != null) {
                     statement.close();
                     statement = null;
@@ -104,16 +111,35 @@ public class InvoiceServiceImpl implements InvoiceService {
                 }
             }
         }
+        System.out.println("********************InvoiceServiceImpl :: getInvoiceDetails Method End*********************");
         return listVto;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : deleteInvoice() method is used to get state names of a
+     * particular country.
+     *
+     * *****************************************************************************
+     */
     public boolean deleteInvoice(int invoiceId) throws ServiceLocatorException {
-        boolean response = false;
+
+        Connection connection = null;
+        Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        boolean response = false;
         String sqlquery = "";
+        System.out.println("********************InvoiceServiceImpl :: deleteInvoice Method Start*********************");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             sqlquery = "delete from invoice where invoiceid=" + invoiceId;
+            System.out.println("deleteInvoice::sqlquery--------->" + sqlquery);
             statement = connection.createStatement();
             response = statement.execute(sqlquery);
 
@@ -123,11 +149,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         } finally {
 
             try {
-                // resultSet Object Checking if it's null then close and set null
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
+
+
                 if (statement != null) {
                     statement.close();
                     statement = null;
@@ -144,22 +167,35 @@ public class InvoiceServiceImpl implements InvoiceService {
                 }
             }
         }
+        System.out.println("********************InvoiceServiceImpl :: deleteInvoice Method End*********************");
         return response;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doSearchInvoiceDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public List doSearchInvoiceDetails(InvoiceAction invoiceAction, String typeOfUser) throws ServiceLocatorException {
-        ArrayList<InvoiceVTO> listVto = new ArrayList<InvoiceVTO>();
-        PreparedStatement preparedStatement = null;
+
+        Connection connection = null;
+        Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************InvoiceServiceImpl :: doSearchInvoiceDetails Method Start*********************");
+        ArrayList<InvoiceVTO> listVto = new ArrayList<InvoiceVTO>();
         String sqlquery = "";
         try {
             connection = ConnectionProvider.getInstance().getConnection();
 
-//            String sqlquery = "SELECT inv.invoiceid,inv.totalhrs,totalamt,invoicestatus,invoicemonth,account_name,invoiceyear,inv.usr_id,"
-//                    + "CONCAT(first_name,'.',last_name) NAMES,account_name AS custname FROM invoice inv "
-//                    + "LEFT OUTER JOIN  users u ON (inv.usr_id=u.usr_id) "
-//                    + "LEFT OUTER JOIN project_team pt ON(inv.usr_id=pt.usr_id) "
-//                    + "LEFT OUTER JOIN accounts acc ON (inv.custorg_id=acc.account_id) WHERE  pt.current_status='Active' AND u.org_id=" + invoiceAction.getSessionOrgId();
+
 
             if ("VC".equalsIgnoreCase(typeOfUser)) {
                 sqlquery = "SELECT inv.invoiceid,inv.totalhrs,totalamt,invoicestatus,invoicemonth,"
@@ -170,7 +206,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 sqlquery = "   SELECT inv.invoiceid,inv.totalhrs,totalamt,invoicestatus,invoicemonth,"
                         + "invoiceyear,inv.usr_id,CONCAT(first_name,'.',last_name) NAMES,account_name  "
                         + "FROM invoice inv LEFT OUTER JOIN  users u ON (inv.usr_id=u.usr_id) "
-                        + "LEFT OUTER JOIN accounts acc ON (inv.frm_orgid=acc.account_id) WHERE  inv.custorg_id=" + invoiceAction.getSessionOrgId();
+                        + "LEFT OUTER JOIN accounts acc ON (inv.frm_orgid=acc.account_id) WHERE  inv.custorg_id=" + invoiceAction.getSessionOrgId() + " and invoicestatus !='Created'";
             }
 
             if (invoiceAction.getInvoiceMonth() != 0) {
@@ -179,9 +215,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             if (invoiceAction.getInvoiceYear() != 0) {
                 sqlquery += " and invoiceyear=" + invoiceAction.getInvoiceYear();
             }
-            //if (invoiceAction.getInvoiceStatus() != null) {
 
-            //}
             if (invoiceAction.getInvVendor() != null && invoiceAction.getInvVendor() != "") {
                 sqlquery += " and account_name like '" + invoiceAction.getInvVendor() + "%'";
             }
@@ -192,9 +226,9 @@ public class InvoiceServiceImpl implements InvoiceService {
                 sqlquery += " and invoicestatus='" + invoiceAction.getInvoiceStatus() + "'";
             }
 
-          //  sqlquery += " and invoicestatus='" + invoiceAction.getInvoiceStatus() + "'";
+
             sqlquery += " order by NAMES limit 100 ";
-            System.out.println("sql query invoices" + sqlquery);
+            System.out.println("doSearchInvoiceDetails::sql query invoices-------->" + sqlquery);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sqlquery);
             while (resultSet.next()) {
@@ -206,7 +240,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 ivto.setInvoiceDate(DataUtility.getInstance().getMonthNameByNumber(resultSet.getInt("invoicemonth")) + ", " + resultSet.getString("invoiceyear"));
                 ivto.setTotalAmt(resultSet.getString("totalamt"));
                 ivto.setStatus(resultSet.getString("invoicestatus"));
-                 ivto.setUsr_id(resultSet.getInt("usr_id"));
+                ivto.setUsr_id(resultSet.getInt("usr_id"));
                 listVto.add(ivto);
             }
         } catch (SQLException ex) {
@@ -215,16 +249,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         } finally {
 
             try {
-                // resultSet Object Checking if it's null then close and set null
+
                 if (resultSet != null) {
                     resultSet.close();
                     resultSet = null;
                 }
 
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (statement != null) {
                     statement.close();
                     statement = null;
@@ -241,24 +271,35 @@ public class InvoiceServiceImpl implements InvoiceService {
                 }
             }
         }
+        System.out.println("********************InvoiceServiceImpl :: doSearchInvoiceDetails Method End*********************");
         return listVto;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : goInvoiceEditDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public InvoiceVTO goInvoiceEditDetails(InvoiceAction invoiceAction, String typeOfUser) throws ServiceLocatorException {
+
+        Connection connection = null;
+        Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************InvoiceServiceImpl :: goInvoiceEditDetails Method Start*********************");
+
         InvoiceVTO ivto = new InvoiceVTO();
 
         String sqlquery = " ";
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-//            sqlquery = "SELECT invoiceid,invoicemonth, invoiceyear, invoicestatus, frm_orgid, custorg_id, "
-//                    + "totalhrs, totalamt, netterms, paytype, cheortrnsno, paymentdate, balanceamt, "
-//                    + "description, custapprid, custapprdate , account_name, "
-//                    + "CONCAT(first_name,'.',last_name) NAMES FROM invoice i "
-//                    + "LEFT OUTER JOIN users u ON (i.usr_id=u.usr_id) LEFT OUTER JOIN "
-//                    + "accounts acc ON (i.custorg_id=account_id) WHERE invoiceid=" + invoiceAction.getInvoiceId();
-
-
             if ("VC".equalsIgnoreCase(typeOfUser)) {
                 sqlquery = "SELECT inv.invoiceid,inv.totalhrs,totalamt,invoicestatus,invoicemonth,"
                         + "invoiceyear,inv.usr_id,paidAmt,CONCAT(first_name,'.',last_name) NAMES,account_name,frm_orgid, custorg_id, "
@@ -274,6 +315,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                         + "FROM invoice inv LEFT OUTER JOIN  users u ON (inv.usr_id=u.usr_id) "
                         + "LEFT OUTER JOIN accounts acc ON (inv.frm_orgid=acc.account_id) WHERE  invoiceid=" + invoiceAction.getInvoiceId();
             }
+            System.out.println("goInvoiceEditDetails::sqlquery------->" + sqlquery);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sqlquery);
             while (resultSet.next()) {
@@ -307,7 +349,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         } finally {
 
             try {
-                // resultSet Object Checking if it's null then close and set null
+
                 if (resultSet != null) {
                     resultSet.close();
                     resultSet = null;
@@ -330,65 +372,59 @@ public class InvoiceServiceImpl implements InvoiceService {
                 }
             }
         }
+        System.out.println("********************InvoiceServiceImpl :: goInvoiceEditDetails Method End*********************");
         return ivto;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doEditInvoiceDetatils() method is used to
+     *
+     * *****************************************************************************
+     */
     public boolean doEditInvoiceDetatils(InvoiceVTO invoiceVTO, String typeOfUser, InvoiceAction invoiceAction) throws ServiceLocatorException {
-        boolean response = false;
+
+        Connection connection = null;
+        CallableStatement callableStatement = null;
+        Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************InvoiceServiceImpl :: doEditInvoiceDetatils Method Start*********************");
+        boolean response = false;
+
         String sqlquery = "";
 
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            //  sqlquery = "delete from invoice where ivoiceid=" + ;
-            statement = connection.createStatement();
-//            System.out.println("this is printg edit Invoice Impl status-->" + invoiceVTO.getStatus());
-//            System.out.println("this is printg edit Invoice Impl month-->" + invoiceVTO.getInvoicemonth());
-//            System.out.println("this is printg edit Invoice Impl year-->" + invoiceVTO.getInvoiceyear());
-//            System.out.println("this is printg edit Invoice Impl paytype-->" + invoiceVTO.getPayType());
-//            System.out.println("this is printg edit invoice impl cheortrans-->" + invoiceVTO.getCheOrTransno());
-//            System.out.println("this is printg edit invoice impl tothrs-->" + invoiceVTO.getTotalHrs());
-//            System.out.println("this is printg edit invoice impl totamt-->" + invoiceVTO.getTotalAmt());
-//            System.out.println("this is printg edit invoice impl terms-->" + invoiceVTO.getNetTerms());
-//            System.out.println("this is printg edit invoice impl bal-->" + invoiceVTO.getBalanceAmt());
-//            System.out.println("this is printg edit invoice impl paidamt-->" + invoiceVTO.getPaidAmt());
-//            System.out.println("this is printg edit invoice impl paybleDate-->" + invoiceVTO.getPaymentDate());
-//            System.out.println("this is printg edit invoice impl userSessionId-->" + invoiceAction.getUserSeessionId());
-//
 
+            statement = connection.createStatement();
             if ("VC".equalsIgnoreCase(typeOfUser)) {
-                System.out.println("this is VC query..");
+
                 sqlquery = "UPDATE invoice SET invoicemonth=" + invoiceVTO.getInvoicemonth() + ",invoiceyear=" + invoiceVTO.getInvoiceyear()
                         + ",invoicestatus='" + invoiceVTO.getStatus() + "',totalamt=" + invoiceVTO.getTotalAmt() + ",description='" + invoiceVTO.getDescription() + "',modified_by=" + invoiceAction.getUserSeessionId() + ",modified_date='" + com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime() + "' WHERE invoiceid=" + invoiceVTO.getInvoiceId();
             } else if ("approved".equalsIgnoreCase(invoiceVTO.getStatus())) {
-                System.out.println("this is approved query..");
+
                 sqlquery = "  UPDATE invoice SET invoicestatus = '" + invoiceVTO.getStatus()
                         + "', totalamt = " + invoiceVTO.getTotalAmt() + ", "
                         + "totalhrs = " + invoiceVTO.getTotalHrs() + ",  "
                         + " paymentdate = '" + com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDate1(invoiceVTO.getPaymentDate()) + "', "
                         + " description ='" + invoiceVTO.getDescription() + "' ,custapprid=" + invoiceAction.getUserSeessionId() + ", custapprdate='" + com.mss.msp.util.DateUtility.getInstance().getCurrentSQLDate() + "' WHERE invoiceid=" + invoiceVTO.getInvoiceId();
-                System.out.println("this is in approved-->" + sqlquery);
+
             } else if ("rejected".equalsIgnoreCase(invoiceVTO.getStatus())) {
-                System.out.println("this is rejected query..");
+
                 sqlquery = "  UPDATE invoice SET invoicestatus = '" + invoiceVTO.getStatus()
                         + "', totalamt = " + invoiceVTO.getTotalAmt() + ", "
                         + "totalhrs = " + invoiceVTO.getTotalHrs() + ",  "
                         + " description ='" + invoiceVTO.getDescription() + "' ,custapprid=" + invoiceAction.getUserSeessionId() + ", custapprdate='" + com.mss.msp.util.DateUtility.getInstance().getCurrentSQLDate() + "' WHERE invoiceid=" + invoiceVTO.getInvoiceId();
             } else if ("paid".equalsIgnoreCase(invoiceVTO.getStatus())) {
-                System.out.println("this is paid query..");
-//                sqlquery = "  UPDATE invoice SET invoicestatus = '" + invoiceVTO.getStatus()
-//                        + "', totalamt = " + invoiceVTO.getTotalAmt() + ", "
-//                        + "totalhrs = " + invoiceVTO.getTotalHrs() + ",  "
-//                        + " paymentdate = '" + com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDate1(invoiceVTO.getPaymentDate()) + "', "
-//                        + " description ='" + invoiceVTO.getDescription()
-//                        + "', modified_by=" + invoiceAction.getUserSeessionId()
-//                        + ",paidAmt = " + invoiceVTO.getPaidAmt()
-//                        + ",paytype = '" + invoiceVTO.getPayType() + "'"
-//                        + ",cheortrnsno =  '" + invoiceVTO.getCheOrTransno() + "'"
-//                        + ",balanceamt = " + invoiceVTO.getBalanceAmt()
-//                        + ",modified_date='" + com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime()
-//                        + "' WHERE invoiceid=" + invoiceVTO.getInvoiceId();
+
                 callableStatement = connection.prepareCall("{CALL InvoiceAmtBudgetAmtRel(?,?,?,?,?,?,?,?,?,?,?)}");
+                System.out.println("doEditInvoiceDetatils::procedure name:InvoiceAmtBudgetAmtRel");
                 callableStatement.setString(1, invoiceVTO.getStatus());
                 callableStatement.setString(2, invoiceVTO.getTotalAmt());
                 callableStatement.setString(3, invoiceVTO.getTotalHrs());
@@ -399,15 +435,14 @@ public class InvoiceServiceImpl implements InvoiceService {
                 callableStatement.setInt(8, invoiceAction.getUserSeessionId());
                 callableStatement.setInt(9, invoiceVTO.getInvoiceId());
                 callableStatement.setString(10, invoiceVTO.getDescription());
-                System.out.println("upto here fine-->");
+
                 callableStatement.registerOutParameter(11, Types.INTEGER);
-                //  System.out.println("hello here print after prepare call parameter ");
 
                 isExceute = callableStatement.execute();
                 callableStatement.getInt(11);
-                System.out.println("this is success process ...");
+
             } else {
-                System.out.println("this is modified query..");
+
                 sqlquery = "  UPDATE invoice SET invoicestatus = '" + invoiceVTO.getStatus() + "', totalamt = " + invoiceVTO.getTotalAmt() + ", "
                         + "totalhrs = " + invoiceVTO.getTotalHrs()
                         + ", description ='" + invoiceVTO.getDescription()
@@ -415,20 +450,20 @@ public class InvoiceServiceImpl implements InvoiceService {
                         + ",modified_date='" + com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime() + "' WHERE invoiceid=" + invoiceVTO.getInvoiceId();
             }
             if (!"paid".equalsIgnoreCase(invoiceVTO.getStatus())) {
-                System.out.println("this is update query -->" + sqlquery);
+
                 int res = statement.executeUpdate(sqlquery);
             }
-
+            System.out.println("doEditInvoiceDetatils::sqlquery------->" + sqlquery);
         } catch (SQLException ex) {
 
             ex.printStackTrace();
         } finally {
 
             try {
-                // resultSet Object Checking if it's null then close and set null
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
+
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
                 }
                 if (statement != null) {
                     statement.close();
@@ -446,6 +481,117 @@ public class InvoiceServiceImpl implements InvoiceService {
                 }
             }
         }
+        System.out.println("********************InvoiceServiceImpl :: doEditInvoiceDetatils Method End*********************");
         return response;
+    }
+
+    /**
+     * *****************************************************************************
+     * Date : 03/26/2016
+     *
+     * Author : Manikanta <meeralla@miraclesoft.com>
+     *
+     * ForUse : getOutstandingInvoiceList() method is used to get Outstanding
+     * Invoices List
+     *
+     *
+     * *****************************************************************************
+     */
+    public List getOutstandingInvoiceList(InvoiceAction invoiceAction, String typeOfUser) throws ServiceLocatorException {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************InvoiceServiceImpl :: getOutstandingInvoiceList Method Start*********************");
+
+        ArrayList<InvoiceVTO> listVto = new ArrayList<InvoiceVTO>();
+        String sqlquery = " ";
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+
+            sqlquery = "SELECT invoiceid,invoicestatus,invoicemonth,invoiceyear,i.usr_id,frm_orgid,custorg_id,totalamt,"
+                    + " paidAmt,balanceamt,account_name,CONCAT(first_name,'.',last_name) NAMES FROM invoice i "
+                    + " LEFT OUTER JOIN users u ON (i.usr_id=u.usr_id) LEFT OUTER JOIN "
+                    + " accounts acc ON (i.frm_orgid=account_id) "
+                    + " WHERE invoicestatus='Submitted' AND i.custorg_id=" + invoiceAction.getSessionOrgId();
+
+            if ("invoiceSearch".equals(invoiceAction.getSearchFlag())) {
+            } else {
+                sqlquery += " and invoiceyear=" + invoiceAction.getCurrentYear();
+            }
+
+
+            if (invoiceAction.getInvoiceMonth() != 0) {
+                sqlquery += " and invoicemonth=" + invoiceAction.getInvoiceMonth();
+            }
+            if (invoiceAction.getInvoiceYear() != 0) {
+                sqlquery += " and invoiceyear=" + invoiceAction.getInvoiceYear();
+            }
+
+            if (invoiceAction.getInvVendor() != null && invoiceAction.getInvVendor() != "") {
+                sqlquery += " and account_name like '" + invoiceAction.getInvVendor() + "%'";
+            }
+            if (invoiceAction.getInvoiceResource() != null && invoiceAction.getInvoiceResource() != "") {
+                sqlquery += " and (first_name like '%" + invoiceAction.getInvoiceResource() + "%' or last_name like '%" + invoiceAction.getInvoiceResource() + "%') ";
+            }
+
+
+
+            sqlquery += " order by NAMES limit 100 ";
+
+            System.out.println("getOutstandingInvoiceList::sqlquery----->" + sqlquery);
+
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sqlquery);
+            while (resultSet.next()) {
+                InvoiceVTO ivto = new InvoiceVTO();
+                ivto.setInvoiceId(resultSet.getInt("invoiceid"));
+                ivto.setUsr_id(resultSet.getInt("usr_id"));
+
+                ivto.setUserName(resultSet.getString("NAMES"));
+                ivto.setCustName(resultSet.getString("account_name"));
+                ivto.setInvoiceDate(DataUtility.getInstance().getMonthNameByNumber(resultSet.getInt("invoicemonth")));
+
+                ivto.setInvoiceyear(resultSet.getInt("invoiceyear"));
+                ivto.setTotalAmt(resultSet.getString("totalamt"));
+                ivto.setStatus(resultSet.getString("invoicestatus"));
+                ivto.setBalanceAmt(resultSet.getDouble("balanceamt"));
+                ivto.setPaidAmt(resultSet.getDouble("paidAmt"));
+                ivto.setGridDownload(sqlquery);
+                listVto.add(ivto);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+
+            try {
+
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+
+
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                try {
+                    throw new ServiceLocatorException(ex);
+                } catch (ServiceLocatorException ex1) {
+                    ex1.printStackTrace();
+                }
+            }
+        }
+        System.out.println("********************InvoiceServiceImpl :: getOutstandingInvoiceList Method End*********************");
+        return listVto;
     }
 }

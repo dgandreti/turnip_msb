@@ -1,5 +1,5 @@
 <%-- 
-    Document   : RegistrationForm
+    Document   : Registration Form
     Created on : Sep 22, 2015, 3:39:21 PM
     Author     : miracle
 --%>
@@ -14,7 +14,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Miracle ServicesBay :: Home Page</title>
+        <title>ServicesBay :: Registration Page</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/main.css"/>">
@@ -36,12 +36,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/account/formVerification.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
 
-        <!--[if lt IE 8]>
-                <style>
-                        .af-wrapper{display:none;}
-                        .ie-note{display:block;}
-                </style>
-        <![endif]-->
+      
     </head>
     <body onload="regStateChange(document.getElementById('org_country').id);regStateChange(document.getElementById('country').id);">
         <header id="header"><!--header-->
@@ -303,8 +298,8 @@
                     <div class="row">
                         <div class="pull-right_vendor">
 
-                            <s:reset value="Reset" cssClass="add_searchButton fa fa-eraser" style="width:75px;height:30px" type="button" onclick="clearRegistraionForm()"/>
-                            <s:submit value="Register" cssClass="add_searchButton fa fa-floppy-o" style="width:75px;height:30px" type="button" />
+                            <s:reset value="Reset" id="reset" cssClass="add_searchButton fa fa-eraser" style="width:75px;height:30px" type="button" onclick="clearRegistraionForm()"/>
+                            <s:submit value="Register" id="submit" cssClass="add_searchButton fa fa-floppy-o" style="width:75px;height:30px" type="button" />
 
                         </div>
                     </div>
@@ -326,8 +321,6 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script>
             $("#org_fax").mask("(999)-999-9999");
-          //  $("#zip").mask("99/99/9999");
-            
         </script>
     </body>
 </html>

@@ -26,8 +26,6 @@ public class ProjectsVTO implements Serializable {
     private String projectCreatedDate;
     private Integer projectModifiedBy;
     private String projectModifiedDate;
-//    private String projectTargetHrs;
-//    private String projectWorkedHrs;
     private String costCenterName;
     private Double projectTargetHrs;
     private Double projectWorkedHrs;

@@ -22,8 +22,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
+     
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
@@ -36,28 +35,7 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script>
             var pager;
-            //            function onLoad(){
-            //                //alert("onload")
-            //                var paginationSize = 10; //parseInt(document.getElementById("paginationOption").value);
-            //                // alert(paginationSize);
-            //                pager = new Pager('csrAccountResults', paginationSize);
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                //document.getElementById("paginationOption").value=10;
-            //                pager.showPage(1);
-            //            };
-            //            function pagerOption(){
-            //
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('csrAccountResults', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
+          
         </script>
         <script type="text/javascript">
             function sortables_init() {
@@ -107,12 +85,12 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
 
-                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                    
                                                         <font color="#ffffff">CSR Accounts</font>
                                                         <i id="updownArrowAccount" onclick="toggleContentAccount('csrDetailsForm')" class="fa fa-angle-up"></i> 
                                                         <s:url var="myUrl" action="csrList.action">
                                                         </s:url>
-                                                        <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                        <span class="pull-right"><s:a href='%{#myUrl}' id="csrDetailsBackButton" ><i class="fa fa-undo"></i></s:a></span>
                                                         </h4>
                                                     </div>
 
@@ -150,6 +128,7 @@
 
 
                                                         <span class=""><s:submit type="button"
+                                                                  id="csrAccountsSearchButton"
                                                                   cssClass="add_searchButton form-control"
                                                                   value="" cssStyle="margin:5px 0PX;" onclick="return accountSearch();"  tabindex="3" ><i class="fa fa-search"></i>&nbsp;Search</s:submit></span>
 
@@ -160,7 +139,7 @@
                                                     <div id="loadingCsrDetailsSearch" class="loadingImg">
                                                                                                 <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
                                                                                             </div>
-                                                    <%--<s:submit cssClass="css_button" value="show"/><br>--%>
+                                                 
                                                 <div class="col-sm-12">
 
                                                     <s:form>
@@ -181,7 +160,7 @@
                                                                             <s:hidden id="userId" name="userId" value="empId"/>
                                                                             <s:hidden id="orgId" name="orgId" value="orgId"/> 
                                                                             <td><s:property value="accountName"></s:property></td>
-                                                                            <%--<td><s:property value="email1"></s:property></td>--%>
+                                                                          
                                                                             <td><s:a href="#" cssClass="csrTerminateOverlay_popup_open" onclick="csrTerminateOverlay('%{cur_status}');csrStatusValue('%{orgId}','%{empId}')"><s:property value="cur_status"></s:property></s:a></td>
                                                                                 </tr>
                                                                     </s:iterator>
@@ -201,7 +180,7 @@
                                                                     CSR's per page
                                                                 </label>
                                                             </s:if>
-                                                            <!--                                                    <div align="right" id="pageNavPosition" style="margin-right: 0vw;"></div>-->
+                                                        
                                                         </s:form>
                                                     </div>
 
@@ -248,20 +227,18 @@
                                 
                                 <div class="col-sm-4 pull-right"> 
 
-                                    <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="contactSend" value="" onclick="changeCsrAccountStatus()"><i class="fa fa-check-circle-o"></i>&nbsp;Ok</s:submit> 
+                                    <s:submit type="button"  cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" id="contactSend" value="" onclick="changeCsrAccountStatus()"><i class="fa fa-check-circle-o"></i>&nbsp;Ok</s:submit> 
 
                                     </div>
                                     <div class="col-sm-4 pull-right">
-                                    <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton  form-control csrTerminateOverlay_popup_close" id="contactCancel" onclick="csrTerminateOverlay()" value=""><i class="fa fa-times"></i>&nbsp;Cancel</s:submit>  
+                                    <s:submit type="button"  cssStyle="margin:5px 0px;" cssClass="add_searchButton  form-control csrTerminateOverlay_popup_close" id="contactCancel" onclick="csrTerminateOverlay()" value=""><i class="fa fa-times"></i>&nbsp;Cancel</s:submit>  
                                     </div> 
                                 </div>
                                 <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                             </div>   
                         </div> 
 
-                    <%-- end overlay for csr termination --%>
-
-                    <!-- content end -->
+                  
                 </section><!--/form-->
             </div>
         </div>

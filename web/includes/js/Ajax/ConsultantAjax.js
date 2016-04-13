@@ -316,6 +316,8 @@ function addConsultantValidate(){
         skillCategoryArry.push($(this).val()); 
     });
     // alert("skillCategoryArry"+skillCategoryArry);
+   var available=document.getElementById("consult_available").value;
+  
    
     if($("#consult_preferredState :selected").length>5)
     {
@@ -343,6 +345,21 @@ function addConsultantValidate(){
         $("#consult_email").css("border","1px solid red");
         return false;
     }
+     if(available=='Y'){
+      
+       var consult_add_date=document.getElementById("consult_add_date").value;
+     
+       if(consult_add_date=="")
+           {
+             
+               $("addCnsltError").html(" <b><font color= #FF4D4D>Please select the available date</font></b>.");
+        //  $("#consult_preferredState").val(" <b><font color= #FF4D4D>Preferred State should not be selected more than 5</font></b>.");
+        $("#consult_add_date").css("border","1px solid red");
+           
+        return false; 
+           }
+           
+   }
     if(val_consult_fstname==""||val_consult_fstname==null){
         $("addCnsltError").html(" <b><font color=#FF4D4D>First name field is Required</font></b>.");
         $('html,body').scrollTop(0);
@@ -626,7 +643,7 @@ function addConsultantValidate(){
     $("addCnsltError").html("");
     $("#consult_email").css("border", "1px solid #ccc");
     $("#val_consult_email").css("border", "1px solid #3BB9FF");
-    //$("#consult_add_date").css("border", "1px solid #3BB9FF");
+    $("#consult_add_date").css("border", "1px solid #3BB9FF");
     $("#consult_available").css("border", "1px solid #3BB9FF");
     $("#consult_fstname").css("border", "1px solid #3BB9FF");
     $("#consult_lstname").css("border", "1px solid #3BB9FF");
@@ -1065,9 +1082,10 @@ function ConsultDetails_valid(){
     var consult_organization=$('#consult_organization').val();
     var consult_experience=$('#consult_experience').val();
     // var consult_preferredState=$('#consult_preferredState').val();
-    var consult_jobTitle=$('#consult_jobTitle').val();
+   var consult_jobTitle=$('#consult_jobTitle').val();
     // var consult_salary=$('#consult_salary').val();
     //var consult_wcountry=$('#consult_wcountry').val();
+     var available=document.getElementById("consult_available").value;
     var dobDate = dob.split('-');
     var dobChangedDate = new Date(dobDate[2], dobDate[0]-1 , dobDate[1]);
     var todayDate= new Date();
@@ -1077,6 +1095,17 @@ function ConsultDetails_valid(){
     var fstname=document.getElementById("consult_fstname").value;
     
     var userCatArry = [];  
+    if(available=='Y'){
+       var consult_favail=document.getElementById("consult_favail").value;
+     
+      if(consult_favail=="")
+         {
+                $("consult_error").html(" <b><font color='red'>Please select the available date</font></b>");
+        $("#consult_favail").css("border", "1px solid red");
+     
+        return false;
+        }
+     }
     if(skillCategoryArry=="" )
     {
         $("consult_error").html(" <b><font color='red'>skill  is Required</font></b>");
@@ -1827,20 +1856,37 @@ function pZipValidation(){
 }
 
 function availableValidation(){
-    var available=document.getElementById("consult_available").value;
-    if(available==""||available==null){
-        $("addCnsltError").html(" <b><font color=#FF4D4D>Availability field is Required</font></b>.");
-        $("#consult_available").css("border", "1px solid red");
-        return false;
-    }
-    else
-    {
-        $("#consult_available").css("border", "1px solid #3BB9FF");
-        $("addCnsltError").html("");
-        return true;
-    }
+
+       var conavailable= document.getElementById("consult_available").value;
+
+     if(conavailable=="Y"){
+       
+       document.getElementById("consult_add_date").disabled=false;
+   }
+   else{
+       document.getElementById("consult_add_date").disabled=true;
+   }
+   
 }
 
+function loadConsultantAvaliable(){
+    
+           var conavailable= document.getElementById("consult_available").value;
+            if(conavailable=="Y"){
+
+        var txt=document.getElementById("consult_favail1").value;
+
+        document.getElementById("consult_favail").value=document.getElementById("consult_favail1").value;
+         document.getElementById("consult_favail").disabled=false;
+     }
+   else{
+       document.getElementById("consult_favail").disabled=true;
+       document.getElementById("consult_favail").value="";
+   }
+   
+}
+    
+  
 function lcountryValidation(){
     var lcountry=document.getElementById("consult_lcountry").value;
     if(lcountry==""||lcountry==null){
@@ -2133,6 +2179,7 @@ function dobValidate(){
 function showAttachmentDetails(consult_id){
    
     // alert("in Ajax call ");
+      $("#loadingConsultantResumes").show();
  
     var url='../consultant/getConsultantAttachments.action?consult_id='+consult_id;
     var req=initRequest(url);
@@ -2141,7 +2188,7 @@ function showAttachmentDetails(consult_id){
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
             if (req.status == 200) {
-        
+           $("#loadingConsultantResumes").hide();
                 //alert("in response");
                 populateAttachmentTable(req.responseText);
             

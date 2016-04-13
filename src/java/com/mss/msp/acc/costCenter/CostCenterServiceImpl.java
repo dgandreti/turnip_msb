@@ -22,23 +22,35 @@ import java.util.StringTokenizer;
  * @author miracle
  */
 public class CostCenterServiceImpl implements CostCenterService {
-//divya 29th sep
-/**
+
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString = "";
+
+    /**
      * *****************************************************************************
      * Date : september 30, 2015, 04:13 PM EST
+     *
      * Author:Divya<dgandreti@miraclesoft.com>
-     * 
-     * 
+     *
+     * ForUse : costCenterSearch() method is used to
+     *
      * *****************************************************************************
      */
-     public List costCenterSearch(CostCenterAction costCenterAction) throws ServiceLocatorException {
+    public List costCenterSearch(CostCenterAction costCenterAction) throws ServiceLocatorException {
         ArrayList costSearchList = new ArrayList();
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
         String queryString = "";
         String queryString1 = "";
         StringTokenizer str;
+        Connection connection = null;
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        System.out.println("********************CostCenterServiceImpl :: costCenterSearch Method Start*********************");
         try {
             queryString = "SELECT ccid,cc.cccode,ccname,ccstatus,COUNT(project_id) AS projectsCount FROM costcenter cc LEFT OUTER JOIN acc_projects ap ON(cc.cccode=ap.cccode) WHERE orgid=" + costCenterAction.getSessionOrgId();// + " AND ccstatus LIKE 'Active'";
             if (!"".equalsIgnoreCase(costCenterAction.getCcCode()) && costCenterAction.getCcCode() != null) {
@@ -53,13 +65,10 @@ public class CostCenterServiceImpl implements CostCenterService {
                 queryString = queryString + " AND ccstatus like 'Active'";
             }
             queryString = queryString + " GROUP BY cccode";
-            System.out.println("queryString helloooo -->" + queryString);
+            System.out.println("costCenterSearch::queryString helloooo -->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
-//            queryString1 = "SELECT budgetamt FROM costcenter cc LEFT OUTER JOIN costcenterbudgets ccb ON "
-//                    + "(cc.cccode=ccb.cccode) WHERE orgid=" + costCenterAction.getSessionOrgId() + " AND ccbstatus"
-//                    + " LIKE 'Active' AND ccstatus LIKE 'Active'";
             while (resultSet.next()) {
                 CostCenterVTO costCenterVTO = new CostCenterVTO();
                 costCenterVTO.setCcId(resultSet.getInt("ccid"));
@@ -70,18 +79,13 @@ public class CostCenterServiceImpl implements CostCenterService {
                 String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getCostCenterBudget(resultSet.getString("cccode"));
                 str = new StringTokenizer(result, "^");
                 while (str.hasMoreElements()) {
-//                    excelColValue[k] = str.nextElement();
-                    System.out.println("");
                     costCenterVTO.setBudgetAmt(Double.parseDouble(str.nextElement().toString()));
                     costCenterVTO.setId(Integer.parseInt(str.nextElement().toString()));
                     costCenterVTO.setBudgetStatus(str.nextElement().toString());
-                    System.out.println("---in st------" + costCenterVTO.getBudgetStatus());
                 }
-
                 costSearchList.add(costCenterVTO);
             }
         } catch (Exception ex) {
-            System.out.println(ex.toString());
             ex.printStackTrace();
         } finally {
             try {
@@ -101,26 +105,32 @@ public class CostCenterServiceImpl implements CostCenterService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************CostCenterServiceImpl :: costCenterSearch Method End*********************");
         return costSearchList;
     }
-   /**
+
+    /**
      * *****************************************************************************
      * Date : september 30, 2015, 04:13 PM EST
+     *
      * Author:Divya<dgandreti@miraclesoft.com>
      *
+     * ForUse : costCenterInfoSearch() method is used to
      *
      * *****************************************************************************
      */
     public List costCenterInfoSearch(CostCenterAction costCenterAction) throws ServiceLocatorException {
         ArrayList costSearchList = new ArrayList();
+        String queryString = "";
+        double bal = 0.0;
         Connection connection = null;
+
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";double bal = 0.0;
         int year = costCenterAction.getDashBoardYear();
+        System.out.println("********************CostCenterServiceImpl :: costCenterInfoSearch Method Start*********************");
         try {
             queryString = "SELECT * FROM costcenterbudgets WHERE cccode like '" + costCenterAction.getCcCode() + "' AND(startdate LIKE '%" + year + "%' OR enddate LIKE '%" + year + "%')";
-            System.out.println("queryString helloooo -->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -139,7 +149,6 @@ public class CostCenterServiceImpl implements CostCenterService {
                 costSearchList.add(costCenterVTO);
             }
         } catch (Exception ex) {
-            System.out.println(ex.toString());
             ex.printStackTrace();
         } finally {
             try {
@@ -159,12 +168,15 @@ public class CostCenterServiceImpl implements CostCenterService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************CostCenterServiceImpl :: costCenterInfoSearch Method End*********************");
         return costSearchList;
     }
-     /**
+
+    /**
      * *****************************************************************************
      * Date : October 01, 2015, 04:13 PM IST
-     * Author:Manikanta<meeralla@miraclesoft.com>
+     * Author:Manikanta<meeralla@miraclesoft.com> ForUse :
+     * costCenterDashBoardDetails() method is used to
      *
      *
      * *****************************************************************************
@@ -172,16 +184,13 @@ public class CostCenterServiceImpl implements CostCenterService {
     public List costCenterDashBoardDetails(CostCenterAction costCenterAction) throws ServiceLocatorException {
         ArrayList costCenterDashBoardList = new ArrayList();
         Connection connection = null;
+
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-
+        System.out.println("********************CostCenterServiceImpl :: costCenterDashBoardDetails Method Start*********************");
         try {
             if ("SA".equalsIgnoreCase(costCenterAction.getTypeOfUser())) {
-//             queryString = "SELECT account_name,SUM(budgetamt) AS budgetAmount,SUM(spentamt) AS spentAmount,SUM(balance) AS balanceAmount"
-//                    + " FROM costcenterbudgets ccb JOIN costcenter cc ON(ccb.cccode=cc.cccode) JOIN accounts a ON(account_id=orgid)"
-//                    + " WHERE  ccstatus='Active' AND ccbstatus='Active' AND EXTRACT(YEAR FROM startdate) =" + costCenterAction.getDashBoardYear() + " "
-//                    + " GROUP BY account_id ORDER BY budgetAmount DESC LIMIT 0,10"; 
                 queryString = "SELECT account_name,SUM(budgetamt) AS budgetAmount,SUM(spentamt) AS spentAmount,SUM(balance) AS balanceAmount"
                         + " FROM costcenterbudgets ccb JOIN costcenter cc ON(ccb.cccode=cc.cccode) JOIN accounts a ON(account_id=orgid)"
                         + " WHERE  ccstatus='Active' AND ccbstatus='Active' AND ccb.YEAR=" + costCenterAction.getDashBoardYear() + " "
@@ -194,8 +203,7 @@ public class CostCenterServiceImpl implements CostCenterService {
                         + " AND orgid= " + costCenterAction.getSessionOrgId() + " "
                         + " GROUP BY ccb.QUARTER";
             }
-            //   queryString = "SELECT * FROM costcenterbudgets WHERE cccode like '"+costCenterAction.getCcCode()+"' AND(startdate LIKE '%" + year + "%' OR enddate LIKE '%" + year + "%')";
-            System.out.println("queryString costCenterDashBoardDetails() -->" + queryString);
+            System.out.println("costCenterDashBoardDetails::queryString costCenterDashBoardDetails() -->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -209,7 +217,6 @@ public class CostCenterServiceImpl implements CostCenterService {
                 costCenterVTO.setSpentAmt(resultSet.getDouble("spentAmount"));
                 costCenterVTO.setBudgetAmt(resultSet.getDouble("budgetAmount"));
                 costCenterVTO.setBalanceAmt(costCenterVTO.getBudgetAmt() - costCenterVTO.getSpentAmt());
-
                 if ("SA".equalsIgnoreCase(costCenterAction.getTypeOfUser())) {
                 } else {
                     accName = costCenterVTO.getAccountName();
@@ -219,7 +226,6 @@ public class CostCenterServiceImpl implements CostCenterService {
                 }
                 costCenterDashBoardList.add(costCenterVTO);
             }
-            
             if ("SA".equalsIgnoreCase(costCenterAction.getTypeOfUser())) {
             } else {
                 CostCenterVTO costCenterVTO = new CostCenterVTO();
@@ -229,11 +235,7 @@ public class CostCenterServiceImpl implements CostCenterService {
                 costCenterVTO.setBalanceAmt(balance);
                 costCenterDashBoardList.add(costCenterVTO);
             }
-
-
-
         } catch (Exception ex) {
-            System.out.println(ex.toString());
             ex.printStackTrace();
         } finally {
             try {
@@ -253,7 +255,7 @@ public class CostCenterServiceImpl implements CostCenterService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************CostCenterServiceImpl :: costCenterDashBoardDetails Method Start*********************");
         return costCenterDashBoardList;
     }
-
 }

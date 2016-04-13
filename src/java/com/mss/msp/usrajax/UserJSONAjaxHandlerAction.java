@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package com.mss.msp.usrajax;
+
 import com.mss.msp.security.SecurityServiceProvider;
 import com.mss.msp.util.DataSourceDataProvider;
 import com.mss.msp.util.DefaultDataProvider;
@@ -15,12 +16,14 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * @author miracle
  */
 public class UserJSONAjaxHandlerAction extends ActionSupport implements ServletRequestAware, ServletResponseAware {
-     /**
+
+    /**
      * Creating a reference variable for HttpServletRequest.
      */
     private HttpServletRequest httpServletRequest;
@@ -33,41 +36,44 @@ public class UserJSONAjaxHandlerAction extends ActionSupport implements ServletR
     private DataSourceDataProvider dataSourceDataProvider;
     private DefaultDataProvider defaultDataProvider;
     private String loginId;
-    private String message ;
-    public UserJSONAjaxHandlerAction(){
-        
+    private String message;
+
+    public UserJSONAjaxHandlerAction() {
     }
-    
-     @SuppressWarnings("deprecation")
-     public String doLoginIdChecheck() {
-       // System.err.println("::::NewForgot pwd service::::"+getLoginId());
-        int res=0;
-        
-            try {
-                res = DataSourceDataProvider.getInstance().checkLoginIdExistance(getLoginId());
-                
-                 if(res==0){
-                    message = "valid";
-                    setResponseString(SUCCESS);
-                }else{
-                    message = "EmailId already exists Please try with another LoginId";
-                    setResponseString(ERROR);
-                }
-                
-               
-              //   System.err.println("message---->"+message);
-               // httpServletResponse.setContentType("text");
-               // httpServletResponse.getWriter().write(resultString);
-            } catch (Exception ex) {
+
+    @SuppressWarnings("deprecation")
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doLoginIdChecheck() method is used for
+     *
+     * *****************************************************************************
+     */
+    public String doLoginIdChecheck() {
+        System.out.println("********************UserJSONAjaxHandlerAction :: doLoginIdChecheck Start*********************");
+        int res = 0;
+        try {
+            res = DataSourceDataProvider.getInstance().checkLoginIdExistance(getLoginId());
+            if (res == 0) {
+                message = "valid";
+                setResponseString(SUCCESS);
+            } else {
+                message = "EmailId already exists Please try with another LoginId";
                 setResponseString(ERROR);
-                message="Internal error!!!";
-                ex.printStackTrace();
-            } finally {
-                
             }
-      
+        } catch (Exception ex) {
+            setResponseString(ERROR);
+            message = "Internal error!!!";
+            ex.printStackTrace();
+        } finally {
+        }
+        System.out.println("********************UserJSONAjaxHandlerAction :: doLoginIdChecheck End*********************");
         return getResponseString();
     }
+
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
@@ -81,7 +87,6 @@ public class UserJSONAjaxHandlerAction extends ActionSupport implements ServletR
     public void setServletResponse(HttpServletResponse httpServletResponse) {
         this.httpServletResponse = httpServletResponse;
     }
- 
 
     /**
      * @return the loginId
@@ -124,5 +129,4 @@ public class UserJSONAjaxHandlerAction extends ActionSupport implements ServletR
     public void setLoginId(String loginId) {
         this.loginId = loginId;
     }
-    
 }

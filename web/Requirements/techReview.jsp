@@ -14,7 +14,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Tech Review Page</title>
+        <title>ServicesBay :: Tech&nbsp;Review&nbsp;Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -42,7 +42,6 @@
 
         <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>
 
-        <%-- <script language="JavaScript" src='<s:url value="/includes/js/Ajax/EmployeeProfile.js"/>'></script> --%>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/addLeaveOverlay.js"/>'></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.maskedinput.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/requirementAjax.js"/>"></script>
@@ -76,23 +75,11 @@
             $(document).ready(function(){
                 $('#skillCategoryValue').change(function(e){
                     var values = $('#skillCategoryValue').val()
-                    //                    var skillCategoryArry = [];    
-                    //                    $("#skillCategoryValue :selected").each(function(){
-                    //                        skillCategoryArry.push($(this).val()); 
-                    //                    });
-                    // alert(skillCategoryArry);
-                  
                     skillsQuestions();
                 });
                 $('#psychoskillCategoryValue').change(function(e){
                     var values = $('#psychoskillCategoryValue').val()
-                    //                    var skillCategoryArry = [];    
-                    //                    $("#skillCategoryValue :selected").each(function(){
-                    //                        skillCategoryArry.push($(this).val()); 
-                    //                    });
-                    // alert(skillCategoryArry);
-                 
-                    skillsQuestions();
+                     skillsQuestions();
                 });
             });
       
@@ -153,24 +140,24 @@
 
                                         <label class=""> </label> 
                                         <s:if test="accountFlag=='csr'" >
-                                            <s:a href='%{#csrMyUrl}'><s:property value="%{accountName}"/></s:a>
+                                            <s:a href='%{#csrMyUrl}' id="techAccountName"><s:property value="%{accountName}"/></s:a>
                                         </s:if>
                                         <s:else>
-                                            <s:a href='#'><s:property value="%{accountName}"/></s:a>
+                                            <s:a href='#' id="techAccountName"><s:property value="%{accountName}"/></s:a>
                                         </s:else>
                                         <s:if test="accountFlag=='csr'" >
-                                            <s:a href='%{#csrReqUrl}'> >> Requirements List</s:a>
+                                            <s:a href='%{#csrReqUrl}' id="techReqList"> >> Requirements&nbsp;List</s:a>
                                         </s:if>
                                         <s:else>
-                                            <s:a href='#'> >> Requirements List</s:a>        
+                                            <s:a href='#' id="techReqList"> >> Requirements&nbsp;List</s:a>        
                                         </s:else>
                                         <s:if test="accountFlag=='csr'" >
-                                            <s:a href='%{#csrReqEditUrl}'> >> <s:property value="%{jdId}"/></s:a>
+                                            <s:a href='%{#csrReqEditUrl}' id="techJdId"> >> <s:property value="%{jdId}"/></s:a>
                                         </s:if>
                                         <s:if test="accountFlag=='csr'" >
-                                            <s:a href='%{#csrTechReviewtUrl}'> >> Tech Review</s:a>
+                                            <s:a href='%{#csrTechReviewtUrl}' id="csrTechReview"> >> Tech&nbsp;Review</s:a>
                                         </s:if>
-                                        <span class="breadcrumActive"> >> Forward Review</span>
+                                            <span class="breadcrumActive"> >> Forward&nbsp;Review</span>
 
 
 
@@ -186,42 +173,30 @@
                                                         <s:param name="consult_id" ><s:property value="%{consult_id}" /></s:param> 
                                                         <s:param name="accountSearchID"><s:property value="%{accountSearchID}"/></s:param> 
                                                         <s:param name="jdId"><s:property value="%{jdId}"/></s:param> 
-                                                        <s:param name="accountFlag" ><s:property value="%{accountFlag}" /></s:param> 
+                                                        <s:param name="accountFlag" ><s:property value="%{accountFlag}" /></s:param>
+                                                         <s:param name="techReviewStatus" ><s:property value="%{techReviewStatus}" /></s:param> 
                                                     </s:url>
 
-                                                    <font color="#ffffff">Tech Review Details</font>
-                                                    <span class="pull-right"><s:a href='%{#revUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                    <font color="#ffffff">Tech&nbsp;Review&nbsp;Details</font>
+                                                    <span class="pull-right"><s:a href='%{#revUrl}' id="techBackButton"><i class="fa fa-undo"></i></s:a></span>
                                                     </h4>
                                                 </div>
                                             </div>
                                             <div id="loadingDashboardPage" class="loadingImg" style="display: none">
                                                 <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>
                                         </div>
-                                        <%--<s:form action="" id="#" theme="simple" enctype="multipart/form-data" >--%>
                                         <s:hidden name="requirementId" id="requirementId" value="%{requirementId}" />
                                         <s:hidden name="consult_id" id="consult_id" value="%{consult_id}" />
                                         <div class="">
 
-                                            <label class="">Consultant Name:<font style="color: #FF8A14;"><s:property value="%{consult_name}"/></font></label>
-                                            <label class="pull-right ">Requirement Name:<font style="color: #FF8A14;"><s:property value="%{reqName}"/></font></label>
+                                            <label class="">Consultant&nbsp;Name:<font style="color: #FF8A14;"><s:property value="%{consult_name}"/></font></label>
+                                            <label class="pull-right ">Requirement&nbsp;Name:<font style="color: #FF8A14;"><s:property value="%{reqName}"/></font></label>
                                         </div> 
-                                        <%--div class="inner-techReviewdiv-elements">
-                                            
-                                            
-                                                <span><e></e></span><br>
-                                        <%--  <label class="techReviewlabelStyle">Interview:</label><s:select cssClass="techReviewSelectStyle" name="interview" id="interview" list="#@java.util.LinkedHashMap@{'I':'Internal'}" headerKey="-1" value="1" onchange="return getEmpForTechReview();"/>--%>
-                                        <%--label class="">Interview Mode:</label><s:select cssClass="techReviewSelectStyle" name="interviewType" id="interviewType" list="#@java.util.LinkedHashMap@{'Face to Face':'Face to Face','Telephonic':'Telephonic','Skype':'Skype','Written':'Written','hr':'hr'}" headerKey="-1" value="1" onchange="setLocationForFaceToFace();"/>
-                                        <s:hidden name="empIdTechReview" id="empIdTechReview" />
-                                        <s:hidden name="empIdTechReview2" id="empIdTechReview2" />
-                                        <label class="">Techie1 Name:</label><s:textfield cssClass="techReviewInputStyle" id="eNameTechReview"  name="eNameTechReview" onkeyup="return getEmpForTechReview();" />
-                                        <label class="">Techie2 Name:</label><s:textfield cssClass="techReviewInputStyle" id="eNameTechReview2"  name="eNameTechReview" onkeyup="return getEmpForTechReview2();" />
-                                        <div class="inner-techReviewdiv-elements"><span id="validationMessage" /></div>   
-                                    </div--%>
                                         <div class="inner-reqdiv-elements">
                                             <span ><e></e></span>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <label class="labelStylereq" style="color: #56a5ec">Interview Mode</label>
+                                                    <label class="labelStylereq" style="color: #56a5ec">Interview&nbsp;Mode</label>
                                                     <s:select cssClass="SelectBoxStyles form-control" name="interviewType" id="interviewType" list="#@java.util.LinkedHashMap@{'Face to Face':'Face to Face','Telephonic':'Telephone','Skype':'Skype','Written':'Written','hr':'Hr','Online':'Online','Psychometric':'Psychometric','WebEx':'WebEx'}" headerKey="-1" value="1" onchange="setLocationForFaceToFace();"/>
                                                 </div>
                                                 <s:hidden name="empIdTechReview" id="empIdTechReview" />
@@ -247,7 +222,7 @@
                                                         <s:select cssClass="SelectBoxStyles form-control" id="techReviewMints"  name="techReviewMints"   maxLength="30" list="{}" cssStyle="padding: 4px"/>
                                                     </div>
                                                     <div class="col-sm-3 required" id="reviewQuestions" style="display: none">
-                                                        <label class="labelStylereq" style="color: #56a5ec">Total Questions</label>
+                                                        <label class="labelStylereq" style="color: #56a5ec">Total&nbsp;Questions</label>
                                                         <s:textfield cssClass="form-control" id="techReviewQuestions"  name="techReviewQuestions"  maxLength="30" onfocus="return removeErrorMsgForTechie();" readonly="true"/> <%--onblur="return questionsCountCheck();" --%>
                                                     </div>
 
@@ -255,20 +230,17 @@
 
                                                 <div class="required" style="display: none;padding:0;" id="techSkills">
                                                     <div class="col-sm-12 skill_online required" id="">
-                                                        <label class="labelStylereq" style="color: #56a5ec">Skill Set</label>  
+                                                        <label class="labelStylereq" style="color: #56a5ec">Skill&nbsp;Set</label>  
 
                                                         <s:hidden id="skillValuesMap" value="%{skillValuesMap}"/>
                                                         <s:select cssClass="commentsStyle" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()"  value=""  /> 
-                                                        <%-- <a href='#' ><img  src="<s:url value="/includes/images/icons/isymbol.png"/>"  class="questionsCountResults_popup_open" data-popup-ordinal="0" height="25" width="25" onclick="getQuestionsCount();questionOverlay();"></a>--%>
                                                     </div>
                                                 </div>
                                                 <div class="required" style="display: none" id="psychoTestSkills" >
                                                     <div class="col-sm-12 skill_online required" id="">
-                                                        <label class="labelStylereq skilllist" style="color: #56a5ec">Skill Set</label>  
+                                                        <label class="labelStylereq skilllist" style="color: #56a5ec">Skill&nbsp;Set</label>  
 
-                                                        <%--<s:hidden id="skillValuesMap" value="%{skillValuesMap}"/>--%>
                                                         <s:select cssClass="commentsStyle" name="psychoskillCategoryValue"  id="psychoskillCategoryValue" list="psychoSkillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()"  value=""  /> 
-                                                        <%-- <a href='#' ><img  src="<s:url value="/includes/images/icons/isymbol.png"/>"  class="questionsCountResults_popup_open" data-popup-ordinal="0" height="25" width="25" onclick="getQuestionsCount();questionOverlay();"></a>--%>
                                                     </div>
                                                 </div>
 
@@ -335,16 +307,9 @@
                                                     <s:hidden cssClass="form-control " id="skillQuestions9"  name="skillQuestions9"  value="" />
                                                 </div> 
 
-
-
-
-                                                <%-- <div class="col-lg-3">
-                                                <%-- <label class="labelStylereq" style="color: #56a5ec">Techie2 Name:</label>--%>
-                                                <%--<s:textfield cssClass="form-control" id="eNameTechReview2"  name="eNameTechReview" onkeyup="return getEmpForTechReview2();" autocomplete='off'/>--%>
                                                 <s:hidden id="eNameTechReview2"  name="eNameTechReview" value=" "/>
-                                                <%-- </div>--%>
                                                 <div class="col-sm-3 required" id="revewInterview">
-                                                    <label class="labelStylereq" style="color: #56a5ec">Interview Date</label>
+                                                    <label class="labelStylereq" style="color: #56a5ec">Interview&nbsp;Date</label>
                                                     <div class="calImage"><s:textfield cssClass="form-control " id="interviewDate" placeholder="Interview Date" name="interviewDate" onkeypress="return enterTechDateRepository(this);" onfocus="return removeErrorMsgForTechie();" ><i class="fa fa-calendar"></i></s:textfield>
                                                         </div></div>
                                                     <div class="col-sm-3" id="reviewZone">
@@ -356,13 +321,7 @@
                                             </div>
                                         </div>
                                         <div 
-                                            <%--div class="inner-techReviewdiv-elements">
-                                                <label class="">Interview Date:</label><s:textfield cssClass="techReviewInputStyle" id="interviewDate"  name="interviewDate" onkeyup="return enterDateRepository();"  />
-                                                <s:select cssClass="techReviewSelectStyleForZone" name="timeZone" id="timeZone" list="#@java.util.LinkedHashMap@{'IST':'IST','EST':'EST','CST':'CST','PST':'PST'}" headerKey="-1" value="1"/>
-                                                <span id="location">
-                                                    <label class="">Location:</label><s:textarea maxlength="200" name="interviewLocation" id="interviewLocation"  />
-                                                </span>
-                                            </div--%>
+                                           
                                             <div class="inner-reqdiv-elements">
                                                 <div class="row">
 
@@ -401,13 +360,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="panel-body" id="techAlertContent">
-                                                        <%--label class="techReviewlabelStyle">Alert Date:</label><s:textfield cssClass="techReviewInputStyle" id="reviewAlertDate"  name="reviewAlertDate" onkeyup="return enterDateRepository();" onchange="return dateValidationWithInterviewDate();" />
-                                                        <label style="color:#56a5ec;" class="techReviewlabelStyle">Alert message:</label>
-                                                        <s:textarea name="alerttextarea" id="alertMessageTechReview"  /--%>
+                                                       
                                                         <div class="inner-reqdiv-elements">
                                                             <div class="row">
                                                                 <div class="col-sm-4 required">
-                                                                    <label class="labelStylereq" style="color: #56a5ec">Alert Date</label>
+                                                                    <label class="labelStylereq" style="color: #56a5ec">Alert&nbsp;Date</label>
                                                                     <div class="calImage"><s:textfield cssClass="form-control" id="reviewAlertDate" placeholder="Date" name="reviewAlertDate" onkeyup="return enterDateRepository();" onchange="return dateValidationWithInterviewDate();" ><i class="fa fa-calendar"></i></s:textfield>
                                                                         </div>
                                                                     </div>
@@ -420,7 +377,7 @@
                                                         <s:select cssClass="SelectBoxStyles form-control" id="techReviewAlertMints"  name="techReviewAlertMints"   maxLength="30" list="{}" cssStyle="padding: 4px"/>
                                                     </div>         
                                                                     <div class="col-sm-6">
-                                                                        <label class="labelStylereq" style="color: #56a5ec">Alert message</label>
+                                                                        <label class="labelStylereq" style="color: #56a5ec">Alert&nbsp;message</label>
                                                                     <s:textarea cssClass="form-control" name="alerttextarea" id="alertMessageTechReview" placeholder="Alert message"  />
                                                                 </div>
                                                             </div>
@@ -435,7 +392,7 @@
 
 
                                             <div class="col-sm-12">
-                                                <div class="col-sm-2 pull-right">     <s:submit type="button" cssClass="add_searchButton form-control" cssStyle="margin:0px 0px;" value="" onclick="forwardReviewToCustomer();" theme="simple"><i class="fa fa-forward"></i>&nbsp;Forward</s:submit></div>
+                                                <div class="col-sm-2 pull-right">     <s:submit type="button" id="techForwardButton" cssClass="add_searchButton form-control" cssStyle="margin:0px 0px;" value="" onclick="forwardReviewToCustomer();" theme="simple"><i class="fa fa-forward"></i>&nbsp;Forward</s:submit></div>
                                                 </div>
                                             <%--</s:form>--%>
                                         </div>
@@ -448,18 +405,18 @@
                             <div id="questionsCounttechReviewBox" class="marginTasks">
                                 <div class="backgroundcolor">
                                     <table>
-                                        <tr><td><h4 style="font-family:cursive"><font class="titleColor">Questions Count</font></h4></td>
-                                        <span class="pull-right"> <h5 ><a href="" class="questionsCountResults_popup_close" onclick="questionOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                        <tr><td><h4 style="font-family:cursive"><font class="titleColor">Questions&nbsp;Count</font></h4></td>
+                                        <span class="pull-right"> <h5 ><a href="" id="questionOverlayCloseButton" class="questionsCountResults_popup_close" onclick="questionOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                     </table>
                                 </div>
                                 <div style="margin: 10px;margin-bottom: -10px"><center>
                                         <table id="questionsCountTable"  class="CSSTable_task  " border="2" cell-spacing="1" style="overflow-x:auto;overflow-y:hidden;">
                                             <tbody>
                                                 <tr>
-                                                    <th>Topic Name</th>
-                                                    <th>Low Level Questions</th>
-                                                    <th>Medium Level Questions</th>
-                                                    <th>High Level Questions</th>
+                                                    <th>Topic&nbsp;Name</th>
+                                                    <th>Low&nbsp;Level&nbsp;Questions</th>
+                                                    <th>Medium&nbsp;Level&nbsp;Questions</th>
+                                                    <th>High&nbsp;Level&nbsp;Questions</th>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -470,22 +427,7 @@
                                 </center>
                             </div>
                         </div>
-                        <%--            <div id="questionsCountResults_popup">
-                                        <div id="questionsCounttechReviewBox">
-                                            <div class="backgroundcolor">
-                                                <table>
-                                                    <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Questions Count&nbsp;&nbsp; </font></h4></td>
-                                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="questionsCountResults_popup_close"  ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="25" width="25"></a></h5></span>
-                                                </table>
-                                            </div>
-                                           
-                                          
-                                            <table id="questionsCountTable">
-                                            </table>
-
-                    <font style="color: #ffffff">..................... ..............................  ..........................................</font>
-                </div>
-            </div>--%>
+                       
 
                 </section>
             </div>

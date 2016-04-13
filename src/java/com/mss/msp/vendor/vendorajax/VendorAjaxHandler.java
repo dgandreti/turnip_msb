@@ -92,17 +92,17 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : MAY 04, 2015, 8:30 PM IST
      *
-     * @Author:praveen kumar<pkatru@miraclesoft.com>
+     * Author : Praveen kumar<pkatru@miraclesoft.com>
      *
-     * @Created Date:05/05/2015
-     * @for Use:getting states by country code
+     * ForUse : getVendorStates() method is used to get states by country code
      *
-     ************************************
+     * *****************************************************************************
      */
     public String getVendorStates() {
-
+        System.out.println("********************VendorAjaxHandler Action :: getVendorStates Method Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
@@ -119,20 +119,23 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }// Session validator if END
-
+        System.out.println("********************VendorAjaxHandler Action :: getVendorStates Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : MAY 04, 2015, 8:30 PM IST
      *
-     * @Author:praveen kumar<pkatru@miraclesoft.com>
+     * Author : Praveen kumar<pkatru@miraclesoft.com>
      *
-     * @Created Date:05/05/2015
+     * ForUse : getVendorSearchDetails() method is used to search and get vendor
+     * details.
      *
-     ***********************************
+     * *****************************************************************************
      */
     public String getVendorSearchDetails() {
+        System.out.println("********************VendorAjaxHandler Action :: getVendorSearchDetails Method Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
@@ -152,32 +155,29 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************VendorAjaxHandler Action :: getVendorSearchDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : May 5, 2015, 8:30 PM IST
      *
+     * Author : rama krishna<lankireddy@miraclesoft.com>
      *
-     * @Author:rama krishna<lankireddy@miraclesoft.com>
-     * @Created Date:05/05/2015
-     * @for Use :update vendor Details
+     * ForUse : updateVendorDetails() method is used to update vendor details.
      *
-     * *************************************
+     * *****************************************************************************
      */
     public String updateVendorDetails() {
+        System.out.println("********************VendorAjaxHandler Action :: updateVendorDetails Method Start*********************");
         resultType = LOGIN;
         String stateList = "";
         try {
-//            System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-
-
-
                 int result = ServiceLocator.getVendorAjaxHandlerService().updateVendorDetails(this);
-//                System.out.println("===============>in ajax  handler action" + stateList);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -185,34 +185,34 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: updateVendorDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 05/05/2015
      *
+     * Author : rama krishna<lankireddy@miraclesoft.com>
      *
-     * @Author:rama krishna<lankireddy@miraclesoft.com>
-     * @Created Date:05/05/2015
-     * @for Use :getting states through country in hibernate
+     * ForUse : getStatesStringByCountry() method is used to getting states
+     * through country in hibernate.
      *
-     * *************************************
+     * *****************************************************************************
      */
     public String getStatesStringByCountry() {
+        System.out.println("********************VendorAjaxHandler Action :: getStatesStringByCountry Method Start*********************");
         resultType = LOGIN;
         String stateList = "";
         try {
-            System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 stateList = ServiceLocator.getLocationService().getStatesStringOfCountry(httpServletRequest, getCountryId());
-//                System.out.println("===============>in ajax  handler action" + stateList);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -220,25 +220,33 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: getStatesStringByCountry Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getVendorContactDetails() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getVendorContacts() {
+        System.out.println("********************VendorAjaxHandler Action :: getVendorContactDetails Method Start*********************");
         resultType = LOGIN;
         String reponseString = "";
         try {
-            System.out.println("Ajax Handler action -->getContactDetails");
-            System.out.println("orgid" + getOrgId());
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 reponseString = ServiceLocator.getVendorAjaxHandlerService().getVendorContactDetails(getOrgId());
-                System.out.println("===============>in titles" + reponseString);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -246,26 +254,34 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: getVendorContactDetails Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : saveVendorContacts() method is used to
+     *
+     * *****************************************************************************
+     */
     public String saveVendorContacts() {
+        System.out.println("********************VendorAjaxHandler Action :: saveVendorContacts Method Start*********************");
         resultType = LOGIN;
         String reponseString = "";
         try {
-            System.out.println("Ajax Handler action -->getContactDetails");
-            System.out.println("orgid" + getVendorUserId());
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 reponseString = ServiceLocator.getVendorAjaxHandlerService().saveVendorContacts(getVendorUserId(), userSessionId);
-                //System.out.println("===============>in titles" + repoString);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -273,22 +289,31 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: saveVendorContacts Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getVendorContactSearchResults() method is used
+     *
+     * *****************************************************************************
+     */
     public String getVendorContactSearchResults() {
+        System.out.println("********************VendorAjaxHandler Action :: getVendorContactSearchResults Method Start*********************");
         resultType = LOGIN;
         String reponseString = "";
         try {
-            System.out.println("Ajax Handler action -->getContactDetails");
-            System.out.println("orgid" + getOrgId());
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 reponseString = ServiceLocator.getVendorAjaxHandlerService().getVendorContactSearchResults(this, getOrgId());
                 System.out.println("===============>in searchResults" + reponseString);
@@ -299,36 +324,35 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: getVendorContactSearchResults Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : May 06 2015
      *
-     * @Author:praveen kumar<pkatru@miraclesoft.com>
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Created Date:06/May/2015
+     * ForUse : getVendorsListByTireType() method is used
      *
-     ***********************************
+     * *****************************************************************************
      */
     public String getVendorsListByTireType() {
+        System.out.println("********************VendorAjaxHandler Action :: getVendorsListByTireType Method Start*********************");
         resultType = LOGIN;
         String stateList = "";
         try {
-            System.out.println("Ajax Handler action" + this.getTireId() + "  " + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID));
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
 
-                System.out.println("this is in handler getVendorsListByTireType");
                 stateList = ServiceLocator.getVendorAjaxHandlerService().getVendorsListByTireType(this);
-//                System.out.println("===============>in ajax  handler action" + stateList);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -336,41 +360,37 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: getVendorsListByTireType Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 06/May/2015
      *
-     * @Author:praveen kumar<pkatru@miraclesoft.com>
+     * Author :praveen kumar<pkatru@miraclesoft.com>
      *
-     * @Created Date:06/May/2015
+     * ForUse : SaveVendorsAssociationDetals() method is used
      *
-     ***********************************
+     * *****************************************************************************
      */
     public String SaveVendorsAssociationDetals() {
+        System.out.println("********************VendorAjaxHandler Action :: SaveVendorsAssociationDetals Method Start*********************");
         resultType = LOGIN;
         int stateList = 0;
         int result = 0, mailResult = 0;
         RequirementVTO requirementVTO = null;
         try {
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Entered in to the Action &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-
                 setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getOrgId()));
-
-                System.out.println("=============================================================================");
-                System.out.println("IN ACTION VENDOR LIST>>>>>>>>>>>>>>>>>>>>>>>>" + getVendorList() + " AND ACCNAME>>>" + getAccountName());
-                System.out.println("=============================================================================");
                 requirementVTO = dataSourceDataProvider.getInstance().setRequirementDetails(getReq_id());
                 stateList = ServiceLocator.getVendorAjaxHandlerService().SaveVendorsAssociationDetals(this);
 
@@ -380,18 +400,12 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
 
                     while (mailID.hasMoreElements()) {
                         setMailIds(mailID.nextElement().toString());
-                        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&>>>>" + getMailIds());
                         mailResult = mailManager.requirementReleaseMailGenerator(requirementVTO, getMailIds(), getUserSessionId(), getOrgId(), getAccountName());
                     }
 
                     if (mailResult > 0) {
-                        System.out.println("Email logger added ================================>%%%%%%%%%%%%%%%%%%%%%%%%");
                     }
                 }
-
-
-                System.out.println("Ajax Handler action in save   3");
-
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -403,26 +417,28 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: SaveVendorsAssociationDetals Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 06/05/2015
      *
-     * @Author:praveen kumar<pkatru@miraclesoft.com>
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Created Date:06/May/2015
+     * ForUse : getVendorAssociationDetails() method is used update vendor
+     * details.
      *
-     ***********************************
+     * *****************************************************************************
      */
     public String getVendorAssociationDetails() {
+        System.out.println("********************VendorAjaxHandler Action :: getVendorAssociationDetails Method Start*********************");
         resultType = LOGIN;
         String stateList = "";
         try {
-            System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 stateList = ServiceLocator.getVendorAjaxHandlerService().getVendorAssociationDetails(this);
-//                System.out.println("===============>in ajax  handler action" + stateList);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -430,35 +446,34 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: getVendorAssociationDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 06/05/2015
      *
-     * @Author:praveen kumar<pkatru@miraclesoft.com>
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Created Date:06/May/2015
+     * ForUse : searchVendorAssociationDetails() method is used search vendor
+     * details.
      *
-     ***********************************
+     * *****************************************************************************
      */
     public String searchVendorAssociationDetails() {
+        System.out.println("********************VendorAjaxHandler Action :: searchVendorAssociationDetails Method Start*********************");
         resultType = LOGIN;
         String stateList = "";
         try {
-            System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("===============>in ajax  handler action praven");
-
                 stateList = ServiceLocator.getVendorAjaxHandlerService().searchVendorAssociationDetails(this);
-                System.out.println("===============>in ajax  handler action" + stateList);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -466,35 +481,35 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(stateList);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: searchVendorAssociationDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 14/May/2015
      *
-     * @Author:Aklakh Ahmad<mahmad@miraclesoft.com>
+     * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
      *
-     * @Created Date:14/May/2015
+     * ForUse : editVendorAssociation() method is used retrieve vendor details
+     * based on vendorId.
      *
-     ***********************************
+     * *****************************************************************************
      */
     public String editVendorAssociation() {
+        System.out.println("********************VendorAjaxHandler Action :: editVendorAssociation Method Start*********************");
         resultType = LOGIN;
         String vendorList = "";
         try {
-            System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("===============>in ajax  handler action praven");
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 vendorList = ServiceLocator.getVendorAjaxHandlerService().editVendorAssociation(getVendorId(), getSessionOrgId());
-                System.out.println("===============>in ajax  handler action" + vendorList);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -502,35 +517,33 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(vendorList);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: editVendorAssociation Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/May/2015
      *
-     * @Author:Aklakh Ahmad<mahmad@miraclesoft.com>
+     * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
      *
-     * @Created Date:15/May/2015
+     * ForUse : getVendorNames() method is used
      *
-     ***********************************
+     * *****************************************************************************
      */
     public String getVendorNames() {
+        System.out.println("********************VendorAjaxHandler Action :: getVendorNames Method Start*********************");
         resultType = LOGIN;
         String vendorName = "";
         try {
-            System.out.println("Ajax Handler action>>>>>>>>>>>>>>In get vendor details " + getTireId() + "  " + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID));
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("===============>in ajax  handler action praven" + getTireId());
-
                 vendorName = ServiceLocator.getVendorAjaxHandlerService().getVendorNames(getTireId());
-                System.out.println("===============>in ajax  handler action" + vendorName);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -538,42 +551,39 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(vendorName);
 
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************VendorAjaxHandler Action :: getVendorNames Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/May/2015
      *
-     * @Author:Aklakh Ahmad<mahmad@miraclesoft.com>
+     * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
      *
-     * @Created Date:15/May/2015
+     * ForUse : updateVendorAssociationDetails() method is used
      *
-     ***********************************
+     * *****************************************************************************
      */
     public String updateVendorAssociationDetails() {
+        System.out.println("********************VendorAjaxHandler Action :: updateVendorAssociationDetails Method Start*********************");
         resultType = LOGIN;
         String result = "";
         int updateResult = 0;
         try {
-            System.out.println("Ajax Handler action---->" + getVendorId());
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("===============>in ajax  handler action ");
-
                 updateResult = ServiceLocator.getVendorAjaxHandlerService().updateVendorAssociationDetails(this);
-                System.out.println("Update Result====>" + updateResult);
                 if (updateResult > 0) {
                     result = "Success";
                 } else {
                     result = "error";
                 }
-                System.out.println("===============>in ajax  handler action" + updateResult);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -581,32 +591,33 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
 
-                //  resultType = SUCCESS;
             } else {
                 return null;
             }
         } catch (Exception e) {
             resultType = null;
         }
+        System.out.println("********************VendorAjaxHandler Action :: updateVendorAssociationDetails Method End*********************");
         return null;
     }
 
     /**
-     * ****************************************************************************
+     * *****************************************************************************
      * Date : June 02 2015
      *
      * Author : manikanta eeralla<meeralla@miraclesoft.com>
      *
+     * ForUse : getVendorDashboardList()
+     *
      * *****************************************************************************
      */
     public String getVendorDashboardList() {
+        System.out.println("********************VendorAjaxHandler Action :: getVendorDashboardList Method Start*********************");
         resultType = LOGIN;
         String result = "";
-        System.out.println("getVendorDashboardList---->AJAX");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("month------->" + getMonth());
                 result = ServiceLocator.getVendorAjaxHandlerService().getVendorDashboardList(getYear(), getMonth(), getSessionOrgId());
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
@@ -615,20 +626,30 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
 
-                //  resultType = SUCCESS;
             } else {
                 return null;
             }
         } catch (Exception e) {
             resultType = null;
         }
+        System.out.println("********************VendorAjaxHandler Action :: getVendorDashboardList Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getVendorReqDashBoardGrid()
+     *
+     * *****************************************************************************
+     */
     public String getVendorReqDashBoardGrid() {
+        System.out.println("********************VendorAjaxHandler Action :: getVendorReqDashBoardGrid Method Start*********************");
         resultType = LOGIN;
         String result = "";
-        System.out.println("getVendorDashboardList---->AJAX");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -641,13 +662,13 @@ public class VendorAjaxHandler extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(result);
 
-                //  resultType = SUCCESS;
             } else {
                 return null;
             }
         } catch (Exception e) {
             resultType = null;
         }
+        System.out.println("********************VendorAjaxHandler Action :: getVendorReqDashBoardGrid Method End*********************");
         return null;
     }
 

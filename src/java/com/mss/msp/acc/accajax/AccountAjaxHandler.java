@@ -1140,7 +1140,39 @@ public class AccountAjaxHandler extends ActionSupport implements ServletRequestA
 
         return null;
     }
+    public String checkLocationExist() {
+        resultType = LOGIN;
+        String responseString = "";
+        try {
+            System.out.println("Ajax Handler action -->checkLocationExist");
+            //System.out.println("orgid" + getOrgUserId());
+            if (servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+                // userSessionId = Integer.parseInt(servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
+                int locationCount = ServiceLocator.getAccountAjaxHandlerService().getLocationCount(getAccountSearchOrgId(),getLocationName());
+                System.out.println("locationCount"+locationCount);
+                if (locationCount == 1) {
+                    responseString = "Existed";
+                }
+                if (locationCount == 0) {
+                    responseString = "notExisted";
+                }
+                //System.out.println("===============>in titles" + repoString);
+                
+                 servletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                servletResponse.setHeader("Pragma", "no-cache");
+                servletResponse.setDateHeader("Expires", 0);servletResponse.setContentType("text");
+                servletResponse.setCharacterEncoding("UTF-8");
+                servletResponse.getWriter().write(responseString);
 
+                //  resultType = SUCCESS;
+            } else {
+                return resultType;
+            }
+        } catch (Exception e) {
+            resultType = ERROR;
+        }
+        return null;
+    }
     public String ajaxLoadContacts() {
         return SUCCESS;
     }

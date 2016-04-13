@@ -67,7 +67,6 @@ public class DateUtility {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        //System.out.println(  sdfOutput.format(  date  )   ) ;
         return sdfOutput.format(date);
     }
 
@@ -80,7 +79,6 @@ public class DateUtility {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        //System.out.println(  sdfOutput.format(  date  )   ) ;
         return sdfOutput.format(date);
     }
 
@@ -387,7 +385,6 @@ public class DateUtility {
 
                 if (_ind1 == 4 && (_ind2 == 7 || _ind2 == 6)) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    //  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     java.util.Date date = sdf.parse(dateAccessor);
                     dateTimestampObj = new java.sql.Timestamp(date.getTime());
                 }
@@ -399,7 +396,6 @@ public class DateUtility {
         } catch (ParseException pe) {
             System.out.println("ParseException in" + pe);
         }
-        //System.out.println("dateTimestampObj---->"+dateTimestampObj);
         return dateTimestampObj;
     }
 
@@ -418,21 +414,17 @@ public class DateUtility {
 
                 if (_ind1 == 4 && (_ind2 == 7 || _ind2 == 6)) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    //  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     date = sdf.parse(dateAccessor);
-                    //  dateTimestampObj = new java.sql.Timestamp(date.getTime());
                     dateActual = new java.sql.Date(date.getTime());
                 }
             } else {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 date = sdf.parse(usTimeStampToSqlTimeStamp(dateAccessor));
-                // dateTimestampObj = new java.sql.Timestamp(date.getTime());
                 dateActual = new java.sql.Date(date.getTime());
             }
         } catch (ParseException pe) {
             System.out.println("ParseException in" + pe);
         }
-        // System.out.println("dateTimestampObj---->"+dateActual);
         return dateActual;
     }
 
@@ -474,7 +466,6 @@ public class DateUtility {
     }
 
     public String convertDateToString(Date date) {
-        //SimpleDateFormat sdfInput = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfOutput = new SimpleDateFormat("dd-MMM-yyyy");
         return sdfOutput.format(date);
     }
@@ -487,14 +478,9 @@ public class DateUtility {
         int cur_year = cal.get(Calendar.YEAR);
         int cur_month = cal.get(Calendar.MONTH);
         int last_month = cur_month - 1;
-        //System.out.println("year-->"+cur_year+"------------"+cur_month+"-------"+last_month);
-        //System.out.println("first Date-->"+(last_month+1)+"+01+"+cur_year);
         cal.set(cur_year, last_month, 1); //------>
         cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        //System.out.println("Last date --->"+sdf.format(cal.getTime()));
-
         return sdf.format(cal.getTime());
     }
 
@@ -503,9 +489,6 @@ public class DateUtility {
         int cur_year = cal.get(Calendar.YEAR);
         int cur_month = cal.get(Calendar.MONTH);
         int last_month = cur_month - 1;
-        //System.out.println("year-->"+cur_year+"------------"+cur_month+"-------"+last_month);
-        //  String lastDate=(last_month+1)+"/01/"+cur_year;
-
         cal.set(cur_year, last_month, 1);
 
         cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
@@ -513,7 +496,6 @@ public class DateUtility {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
         String lastDate = sdf.format(cal.getTime());
-        //System.out.println("first Date-->"+lastDate);
         return lastDate;
 
     }
@@ -528,7 +510,6 @@ public class DateUtility {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        //System.out.println(  sdfOutput.format(  date  )   ) ;
         return sdfOutput.format(date);
     }
 
@@ -543,7 +524,6 @@ public class DateUtility {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         cal.add(Calendar.DATE, -7);
-        // System.out.println("Yesterday's date was "+dateFormat.format(cal.getTime()));
 
         return dateFormat.format(cal.getTime());
     }
@@ -556,14 +536,10 @@ public class DateUtility {
         Calendar cal = Calendar.getInstance();
         int cur_year = cal.get(Calendar.YEAR);
         int cur_month = cal.get(Calendar.MONTH);
-        //int last_month=cur_month-1;
-        //System.out.println("year-->"+cur_year+"------------"+cur_month+"-------"+last_month);
-        //System.out.println("first Date-->"+(last_month+1)+"+01+"+cur_year);
         cal.set(cur_year, cur_month, 1); //------>
         cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        //System.out.println("Last date --->"+sdf.format(cal.getTime()));
 
         return sdf.format(cal.getTime());
     }
@@ -572,9 +548,6 @@ public class DateUtility {
         Calendar cal = Calendar.getInstance();
         int cur_year = cal.get(Calendar.YEAR);
         int cur_month = cal.get(Calendar.MONTH);
-        //int last_month=cur_month-1;
-        //System.out.println("year-->"+cur_year+"------------"+cur_month+"-------"+last_month);
-        //  String lastDate=(last_month+1)+"/01/"+cur_year;
 
         cal.set(cur_year, cur_month, 1);
 
@@ -583,7 +556,6 @@ public class DateUtility {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
         String lastDate = sdf.format(cal.getTime());
-        //System.out.println("first Date-->"+lastDate);
         return lastDate;
 
     }
@@ -602,7 +574,6 @@ public class DateUtility {
         java.util.Date initDate = new SimpleDateFormat(initDateFormat).parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat(endDateFormat);
         String parsedDate = formatter.format(initDate);
-//        System.out.println("The date after formatting is: " + parsedDate);
         return parsedDate;
     }
 
@@ -615,7 +586,6 @@ public class DateUtility {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        //System.out.println(  sdfOutput.format(  date  )   ) ;
         return sdfOutput.format(date);
     }
 
@@ -628,7 +598,6 @@ public class DateUtility {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        //System.out.println(  sdfOutput.format(  date  )   ) ;
         return sdfOutput.format(date);
     }
 
@@ -641,7 +610,6 @@ public class DateUtility {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        //System.out.println(  sdfOutput.format(  date  )   ) ;
         return sdfOutput.format(date);
     }
 
@@ -658,7 +626,6 @@ public class DateUtility {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        //System.out.println(  sdfOutput.format(  date  )   ) ;
         return sdfOutput.format(date);
     }
 
@@ -671,7 +638,6 @@ public class DateUtility {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        //System.out.println(  sdfOutput.format(  date  )   ) ;
         return sdfOutput.format(date);
     }
 }

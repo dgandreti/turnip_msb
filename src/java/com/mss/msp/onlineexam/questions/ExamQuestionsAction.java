@@ -100,117 +100,144 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
     private String ans6;
     private ExamQuesVTO editQues;
     private String successMsg;
-     private String isPic;
+    private String isPic;
     private String newFilePath;
     private String oldPath;
     private int examTypeFlag;
-     private File quesImage;
+    private File quesImage;
     private String quesImageContentType;
     private String quesImageFileName;
-    
-  
+    private String sessionFirstName;
+    private String sessionLastName;
 
     public ExamQuestionsAction() {
     }
     private DataSourceDataProvider dataSourceDataProvider;
+    
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : getQuestionsList() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
 
     public String getQuestionsList() {
-        System.out.println("in getQuestionsList skills------------->");
+        System.out.println("********************ExamQuestionsAction :: getQuestionsList Method Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-                
-               // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 skills = ServiceLocator.getExamQuestionsHandlerservice().doQuestionsSearch(this);
-                System.out.println("skills--->" + skills);
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************ExamQuestionsAction :: getQuestionsList Method End*********************");
         return resultMessage;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : getQuestionsSearchList() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String getQuestionsSearchList() {
-        System.out.println("in getQuestionsList-search------------>");
+        System.out.println("********************ExamQuestionsAction :: getQuestionsSearchList Method Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-                
-              //  setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 skills = ServiceLocator.getExamQuestionsHandlerservice().doQuestionsSearchList(this);
-                System.out.println("result------>" + skills);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(result);
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************ExamQuestionsAction :: getQuestionsSearchList Method End*********************");
         return resultMessage;
     }
 
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : doEditExamQues() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String doEditExamQues() {
         resultType = LOGIN;
+        System.out.println("********************ExamQuestionsAction :: doEditExamQues Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-                
-               // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
 
                 if (getQuesId() >= 0) {
                     editQues = ServiceLocator.getExamQuestionsHandlerservice().doExamQuestionsEdit(this);
                 }
-                System.out.println(">>>>" + editQues.toString());
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ExamQuestionsAction :: doEditExamQues Method End*********************");
         return resultType;
     }
 
-     public String storeAddOrEditExamQues() {
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : storeAddOrEditExamQues() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
+    public String storeAddOrEditExamQues() {
         resultType = LOGIN;
+         System.out.println("********************ExamQuestionsAction :: storeAddOrEditExamQues Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("this is file " + getQuesImage());
-                System.out.println("this is file name " + getQuesImageFileName());
-                System.out.println("this is file content type " + getQuesImageContentType());
-                System.out.println("getIsPic()---->" + getIsPic());
                 if (getQuesImageFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filePath = Properties.getProperty("QUESTIONHOMEPATH");
-                    System.out.println("filePath--------->" + filePath);
                     File createPath = new File(filePath);
                     Date dt = new Date();
                     /*The month is generated from here*/
-
                     String month = "";
                     if (dt.getMonth() == 0) {
                         month = "Jan";
@@ -243,16 +270,10 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
                     createPath.mkdir();
                     File theFile = new File(createPath.getAbsolutePath() + File.separator + getQuesImageFileName());
                     setFilePath(theFile.toString());
-                    System.out.println("filePath New--------->" + filePath);
-
                 }
-                System.out.println("getOldPath---->" + getOldPath());
-
 
                 addEdit = ServiceLocator.getExamQuestionsHandlerservice().addOrEditExamQuestionsEdit(this);
 
-
-                System.out.println(">>>>success" + addEdit);
                 if (addEdit.equals("Success") && getQuesId() > 0) {
                     setSuccessMsg("Question Updated Successfully");
                 } else if (addEdit.equals("Success") && getQuesId() == 0) {
@@ -264,91 +285,111 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
-        System.out.println("resultType-->" + resultType);
+         System.out.println("********************ExamQuestionsAction :: storeAddOrEditExamQues Method End*********************");
         return resultType;
     }
-    
-      public String getImagePath() {
+
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : getImagePath() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
+    public String getImagePath() {
         resultMessage = LOGIN;
         String responseString = "";
+        System.out.println("********************ExamQuestionsAction :: getImagePath Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 responseString = ServiceLocator.getExamQuestionsHandlerservice().getImagePath(this);
-                //System.out.println("===============>in titles" + repoString);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(responseString);
-                // resultMessage = SUCCESS;
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************ExamQuestionsAction :: getImagePath Method End*********************");
         return null;
     }
-      
-       public String getSkillValuesOnChange() {
+
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : getSkillValuesOnChange() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
+    public String getSkillValuesOnChange() {
 
         resultMessage = LOGIN;
         String responseString = "";
+        System.out.println("********************ExamQuestionsAction :: getSkillValuesOnChange Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                Map SkillValuesMap=dataSourceDataProvider.getInstance().getReqSkillsCategory(examTypeFlag);
-                System.out.println("getSkillValuesMap---->" + SkillValuesMap);
-              
+                Map SkillValuesMap = dataSourceDataProvider.getInstance().getReqSkillsCategory(examTypeFlag);
                 StringBuffer buffer = new StringBuffer();
-
                 Iterator<Map.Entry<Integer, String>> entryIterator = SkillValuesMap.entrySet().iterator();
-
                 while (entryIterator.hasNext()) {
-
                     Map.Entry<Integer, String> entry = entryIterator.next();
-
                     buffer.append(entry.getKey());
                     buffer.append("|");
                     buffer.append(entry.getValue());
-
                     if (entryIterator.hasNext()) {
                         buffer.append("^");
                     }
                 }
-                System.out.println("buffer-->" + buffer);
-
-               
-                //System.out.println("===============>in titles" + repoString);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(buffer.toString());
-                // resultMessage = SUCCESS;
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************ExamQuestionsAction :: getSkillValuesOnChange Method End*********************");
         return null;
     }
 
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : getUploadQuestions() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String getUploadQuestions() {
         resultType = LOGIN;
+         System.out.println("********************ExamQuestionsAction :: getUploadQuestions Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
-                
-               // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 resultType = SUCCESS;
@@ -357,27 +398,37 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+         System.out.println("********************ExamQuestionsAction :: getUploadQuestions Method End*********************");
         return resultType;
     }
 
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : doOnlineExamQuestionsXlsUpload() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String doOnlineExamQuestionsXlsUpload() {
         resultType = LOGIN;
+        System.out.println("********************ExamQuestionsAction :: doOnlineExamQuestionsXlsUpload Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setUserOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("this is file " + getXlsfile());
-                System.out.println("this is file name " + getXlsfileFileName());
-                System.out.println("this is file content type " + getXlsfileContentType());
+                setSessionFirstName(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.FIRST_NAME).toString());
+                setSessionLastName(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.Last_NAME).toString());
 
                 if (getXlsfileFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filePath = Properties.getProperty("Task.Attachment");
                     File createPath = new File(filePath);
                     Date dt = new Date();
                     /*The month is generated from here*/
-
                     String month = "";
                     if (dt.getMonth() == 0) {
                         month = "Jan";
@@ -406,10 +457,9 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
                     }
                     short week = (short) (Math.round(dt.getDate() / 7));
                     /*getrequestType is used to create a directory of the object type specified in the jsp page*/
-                    createPath = new File(createPath.getAbsolutePath() + File.separator+ String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator+ String.valueOf(week));
+                    createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
                     /*This creates a directory forcefully if the directory does not exsist*/
 
-                    //System.out.println("path::"+createPath);
                     createPath.mkdir();
                     /*here it takes the absolute path and the name of the file that is to be uploaded*/
                     File theFile = new File(createPath.getAbsolutePath());
@@ -419,13 +469,8 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
                     File destFile = new File(theFile + File.separator + xlsfileFileName);
                     FileUtils.copyFile(xlsfile, destFile);
                 }
-                System.out.println("getSkillId--------->" + getSkillCategoryValue());
-                System.out.println("this is file path getFilePath--->" + getFilePath());
-                setPath(getFilePath() + File.separator+ xlsfileFileName);
-                System.out.println("-----------------" + getPath());
-                System.out.println("this is file path getFilePath--->" + getFilePath());
-                setFileWithPath(new File(getFilePath() + File.separator+ xlsfileFileName));
-                System.out.println("this is file path getFilePath--->" + getFileWithPath());
+                setPath(getFilePath() + File.separator + xlsfileFileName);
+                setFileWithPath(new File(getFilePath() + File.separator + xlsfileFileName));
                 String FileNameExist = ServiceLocator.getUserAjaxHandlerService().checkFileName(xlsfileFileName);
                 if ("Exist".equals(FileNameExist)) {
                     setFileExist("File Name Already Exists!!");
@@ -440,25 +485,18 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
                     Map rowMap = new HashMap();
                     String stringForBatch = "";
                     int columnCount = 0;
-
                     int count = sheet.getRows();
                     columnCount = sheet.getColumns();
-                    System.out.println("Rows in first sheet : " + sheet.getRows());
-                    System.out.println("Columns in first sheet : " + sheet.getColumns());
                     List<String[]> list = new ArrayList<String[]>();
                     ArrayList<String> list1 = new ArrayList<String>();
                     for (int column = 0; column < columnCount; column++) {
-                        System.out.println("sheet.getCell(column, 0).getContents()" + sheet.getCell(column, 0).getContents());
                         stringForBatch = stringForBatch + (sheet.getCell(column, 0).getContents()) + "|";
 
                     }
                     stringForBatch = StringUtils.chop(stringForBatch);
-                    System.out.println("stringForBatch---------->" + stringForBatch);
                     StringTokenizer st = new StringTokenizer(stringForBatch, "|");
-                    System.out.println("st----------->" + st.countTokens());
                     int k = 0;
                     k = st.countTokens();
-                    System.out.println("k------------>" + k);
                     int colCount = sheet.getColumns();
                     int rowsCount = sheet.getRows();
                     Cell cellValue = null;
@@ -467,28 +505,23 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
                     for (int row = 1; row < rowsCount; row++) {
                         String dataArray[] = new String[colCount];
                         for (int column = 0; column < colCount; column++) {
-                            System.out.print(sheet.getCell(column, row).getContents() + "\t\t");
 
                             cellValue = sheet.getCell(column, row);
                             if (!cellValue.getContents().contains("|") && !cellValue.getContents().contains("^")) {
                                 dataArray[column] = cellValue.getContents().trim() + "";
-                                System.out.println("  dataArray[column] ----------->" + dataArray[column]);
                             } else {
                                 dataArray[column] = "";
                             }
                         }
                         list.add(dataArray);
                     }
-                    System.out.println("list--------->" + list.size());
-
-
 
                     //Close and free allocated memory 
                     workbook.close();
                     String res = ServiceLocator.getExamQuestionsHandlerservice().getCellContentValues(list, this, k, "skills", stringForBatch);
+                    int sessionusrPrimaryrole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                    utility_logger = ServiceLocator.getExamQuestionsHandlerservice().logSearch(this, sessionusrPrimaryrole);
 
-
-                    // ServiceLocator.getUsersdataHandlerservicee().doXlsFileUpload(this, xlsfileFileName);
                     resultType = SUCCESS;
                 }
 
@@ -497,6 +530,7 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ExamQuestionsAction :: doOnlineExamQuestionsXlsUpload Method End*********************");
         return resultType;
     }
 
@@ -1034,5 +1068,20 @@ public class ExamQuestionsAction extends ActionSupport implements ServletRequest
     public void setQuesImageFileName(String quesImageFileName) {
         this.quesImageFileName = quesImageFileName;
     }
-    
+
+    public String getSessionFirstName() {
+        return sessionFirstName;
+    }
+
+    public void setSessionFirstName(String sessionFirstName) {
+        this.sessionFirstName = sessionFirstName;
+    }
+
+    public String getSessionLastName() {
+        return sessionLastName;
+    }
+
+    public void setSessionLastName(String sessionLastName) {
+        this.sessionLastName = sessionLastName;
+    }
 }

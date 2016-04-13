@@ -23,21 +23,34 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AccAuthServiceImpl implements AccAuthServices {
 
-    private Connection connection;
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString = "";
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getAccAuthrization() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public List getAccAuthrization(AccAuthAction accAuthAction) throws ServiceLocatorException {
-        ArrayList<AccauthVTO> searchklist = new ArrayList<AccauthVTO>();
-//        StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+        System.out.println("********************AccAuthServiceImpl :: getAccAuthrization Method Start*********************");
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-//        int i = 0;
-//        //System.err.println(days+"Diff in Dyas...");
+        ArrayList<AccauthVTO> searchklist = new ArrayList<AccauthVTO>();
         try {
             queryString = "SELECT `action_id`, `action_name`, `status`, `description` FROM `servicebay`.`ac_action` where status='" + accAuthAction.getStatus() + "' LIMIT 0,150  ";
-            System.out.println("queryString--->getAccAuthrization-->" + queryString);
+            System.out.println("getAccAuthrization::queryString----->" + queryString);
 
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -48,9 +61,9 @@ public class AccAuthServiceImpl implements AccAuthServices {
                 accauthVTO.setAction_name(resultSet.getString("action_name"));
                 accauthVTO.setStatus(resultSet.getString("status"));
                 accauthVTO.setDescription(resultSet.getString("description"));
-                //usersVTO.setPhone1(resultSet.getString("phone1"));
+
                 searchklist.add(accauthVTO);
-                System.out.println("in while" + searchklist.size());
+
             }
 
         } catch (Exception sqe) {
@@ -74,22 +87,20 @@ public class AccAuthServiceImpl implements AccAuthServices {
             }
 
         }
+        System.out.println("********************AccAuthServiceImpl :: getAccAuthrization Method End*********************");
         return searchklist;
     }
 
     public List searchAccAuthorization(AccAuthAction accAuthAction) throws ServiceLocatorException {
-        ArrayList<AccauthVTO> searchklist = new ArrayList<AccauthVTO>();
-//        StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+        System.out.println("********************AccAuthServiceImpl :: searchAccAuthorization Method Start*********************");
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-//        int i = 0;
-//        //System.err.println(days+"Diff in Dyas...");
+        ArrayList<AccauthVTO> searchklist = new ArrayList<AccauthVTO>();
         try {
             queryString = "SELECT `action_id`, `action_name`, `status`, `description` FROM `servicebay`.`ac_action` where  1=1  ";
-            System.out.println("queryString--->getAccAuthrization-->" + queryString);
+            System.out.println("getAccAuthrization::queryString------>" + queryString);
 
             if (accAuthAction.getStatus() != null) {
 
@@ -105,7 +116,7 @@ public class AccAuthServiceImpl implements AccAuthServices {
 
             }
             queryString = queryString + " LIMIT 0,150";
-
+            System.out.println("searchAccAuthorization::queryString-------->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -115,7 +126,7 @@ public class AccAuthServiceImpl implements AccAuthServices {
                 accauthVTO.setAction_name(resultSet.getString("action_name"));
                 accauthVTO.setStatus(resultSet.getString("status"));
                 accauthVTO.setDescription(resultSet.getString("description"));
-                //usersVTO.setPhone1(resultSet.getString("phone1"));
+
                 searchklist.add(accauthVTO);
                 System.out.println("in while" + searchklist.size());
             }
@@ -141,43 +152,35 @@ public class AccAuthServiceImpl implements AccAuthServices {
             }
 
         }
+        System.out.println("********************AccAuthServiceImpl :: searchAccAuthorization Method End*********************");
         return searchklist;
     }
 
-      public List searchActionResources(AccAuthAction accAuthAction) throws ServiceLocatorException {
-        ArrayList<AccauthVTO> searchklist = new ArrayList<AccauthVTO>();
-//        StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : searchActionResources() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
+    public List searchActionResources(AccAuthAction accAuthAction) throws ServiceLocatorException {
+        System.out.println("********************AccAuthServiceImpl :: searchActionResources Method Start*********************");
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-//        int i = 0;
-//        //System.err.println(days+"Diff in Dyas...");
+        ArrayList<AccauthVTO> searchklist = new ArrayList<AccauthVTO>();
         try {
-//            queryString = "SELECT a.id,a.action_id,a.STATUS,a.description,CASE a.org_id WHEN 0 THEN 'All'  ELSE account_name END AS account_name,role_name,type_of_relation,action_name,role_id FROM ac_action aa LEFT OUTER JOIN  ac_resources a ON(aa.action_id=a.action_id) LEFT OUTER JOIN accounts "
-//                    + " ON(a.org_id=accounts.account_id) LEFT OUTER JOIN roles ON(a.usr_role_id=roles.role_id)"
-//                    + " LEFT OUTER JOIN org_rel ON(a.org_id=org_rel.related_org_Id) "
-//                    + " WHERE a.action_id=" + accAuthAction.getAction_id() + " AND type_of_relation = 'C' AND a.STATUS='Active'";
-            queryString = "SELECT a.id,a.action_id,a.STATUS,a.description,CASE a.org_id WHEN 0 THEN 'All'  ELSE account_name END AS account_name,role_name,org_type,action_name,role_id,groupid FROM ac_action aa LEFT OUTER JOIN  ac_resources a ON(aa.action_id=a.action_id) LEFT OUTER JOIN accounts "
+            queryString = "SELECT a.id,block_flag,a.action_id,a.STATUS,a.description,CASE a.org_id WHEN 0 THEN 'All'  ELSE account_name END AS account_name,role_name,org_type,action_name,role_id,groupid FROM ac_action aa LEFT OUTER JOIN  ac_resources a ON(aa.action_id=a.action_id) LEFT OUTER JOIN accounts "
                     + " ON(a.org_id=accounts.account_id) LEFT OUTER JOIN roles ON(a.usr_role_id=roles.role_id)"
                     + " LEFT OUTER JOIN org_rel ON(a.org_id=org_rel.related_org_Id) "
                     + " WHERE a.action_id=" + accAuthAction.getAction_id() + "  AND a.STATUS='Active'";
-            System.out.println("queryString--->getAccAuthrization-->" + queryString);
+            System.out.println("searchActionResources::queryString-------->" + queryString);
 
-//            if (accAuthAction.getStatus() != null) {
-//
-//                if ("All".equals(accAuthAction.getStatus())) {
-//                    queryString = queryString + " and status like '%%'  ";
-//                } else {
-//                    queryString = queryString + " and status= '" + accAuthAction.getStatus() + "'  ";
-//                }
-//            }
-//            if (accAuthAction.getAction_name() != null || !"".equals(accAuthAction.getAction_name())) {
-//
-//                queryString = queryString + " and  action_name LIKE '%" + accAuthAction.getAction_name() + "%' ";
-//
-//            }
             queryString = queryString + " LIMIT 0,150";
 
             connection = ConnectionProvider.getInstance().getConnection();
@@ -188,7 +191,7 @@ public class AccAuthServiceImpl implements AccAuthServices {
                 accauthVTO.setId(resultSet.getInt("a.id"));
 
                 accauthVTO.setAction_id(resultSet.getInt("a.action_id"));
-                //accauthVTO.setAction_name(resultSet.getString("action_name"));
+
                 accauthVTO.setAccountName(resultSet.getString("account_name"));
                 accauthVTO.setRollName(resultSet.getString("role_name"));
                 accauthVTO.setRoleId(resultSet.getInt("role_id"));
@@ -198,8 +201,8 @@ public class AccAuthServiceImpl implements AccAuthServices {
                 accauthVTO.setStatus(resultSet.getString("a.status"));
                 accauthVTO.setDescription(resultSet.getString("a.description"));
                 accauthVTO.setUserGroupList(resultSet.getInt("groupid"));
-                
-                //usersVTO.setPhone1(resultSet.getString("phone1"));
+                accauthVTO.setBlockFlag(resultSet.getInt("block_flag"));
+
                 searchklist.add(accauthVTO);
                 System.out.println("in while" + searchklist.size());
             }
@@ -225,6 +228,7 @@ public class AccAuthServiceImpl implements AccAuthServices {
             }
 
         }
+        System.out.println("********************AccAuthServiceImpl :: searchActionResources Method End*********************");
         return searchklist;
 
     }

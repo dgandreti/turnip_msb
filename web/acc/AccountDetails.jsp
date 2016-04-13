@@ -51,7 +51,6 @@ Author     : Greg
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>
 
-        <%--script type="text/javascript" src="<s:url value="/includes/js/Ajax/EmployeeProfile.js"/>"></script--%>
 
 <!--        <script type="text/JavaScript" src="<s:url value="/includes/js/general/ProfilePage.js"/>"></script>-->
         <!-- this file for writing all profile function and  jquerys -->
@@ -64,24 +63,11 @@ Author     : Greg
         <script language="JavaScript" src='<s:url value="/includes/js/account/projectOverlays.js"/>'></script>
 
         <script type="text/javascript">
-            // Pagination Script
-            //            var pager;
-            //            function pagerOption(){
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                pager = new Pager('projectResults', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                pager.showPage(1);
-            //            };
-
-
-
-
             var myCalendar;
             //,"docdatepickerfrom1","docdatepicker1"
             function doOnLoadRequirement() {
-              
-                myCalendar = new dhtmlXCalendarObject(["reqStart","reqEnd"]);
+
+                myCalendar = new dhtmlXCalendarObject(["reqStart", "reqEnd"]);
                 myCalendar.setSkin('omega');
                 //myCalendar.setDateFormat("%m/%d/%Y %H:%i");
                 myCalendar.setDateFormat("%m-%d-%Y");
@@ -93,31 +79,27 @@ Author     : Greg
                 var dd = today.getDate();
                 var mm = today.getMonth(); //January is 0!
                 var yyyy = today.getFullYear();
-                if(dd<10) {
-                    dd='0'+dd
+                if (dd < 10) {
+                    dd = '0' + dd
                 }
-                if(mm<10) {
-                    mm='0'+mm
+                if (mm < 10) {
+                    mm = '0' + mm
                 }
 
-                var from = mm+'/'+'01'+'/'+yyyy;
+                var from = mm + '/' + '01' + '/' + yyyy;
 
-                mm=today.getMonth()+1;
-                if(mm<10) {
-                    mm='0'+mm
+                mm = today.getMonth() + 1;
+                if (mm < 10) {
+                    mm = '0' + mm
                 }
-                dd=today.getDate()+1;
-                var to = mm+'/'+dd+'/'+yyyy;
-                // document.getElementById("reqStart").value=from;
-                // document.getElementById("reqEnd").value=to;
-
+                dd = today.getDate() + 1;
+                var to = mm + '/' + dd + '/' + yyyy;
             }
 
 
 
             function enterDateRepository()
             {
-                // document.documentForm.docdatepickerfrom.value="";
                 document.getElementById('reqStart').value = "";
                 document.getElementById('reqEnd').value = "";
                 alert("Please select from the Calender !");
@@ -126,15 +108,15 @@ Author     : Greg
 
         </script>
         <script type="text/javascript">
-            function ajaxReplaceDiv(actionUrl,divId,data)
+            function ajaxReplaceDiv(actionUrl, divId, data)
             {
-                data= (typeof data === 'undefined') ? '{}' : data;
+                data = (typeof data === 'undefined') ? '{}' : data;
                 $.ajax({
                     type: "POST",
-                    url:CONTENXT_PATH+actionUrl,
-                    data:data,
+                    url: CONTENXT_PATH + actionUrl,
+                    data: data,
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                    success:function(data){
+                    success: function(data) {
                         $(divId).children().remove();
                         $(divId).html(data);
                     }
@@ -143,17 +125,17 @@ Author     : Greg
         </script>
         <script type="text/javascript">
             var vendorHidden = true;
-            function AccountTypeDropDown(){
-                if($('#account_type').val() === 'Vendor' && vendorHidden){
+            function AccountTypeDropDown() {
+                if ($('#account_type').val() === 'Vendor' && vendorHidden) {
                     $('#vendorType').show();
                     vendorHidden = false;
-                }else if($('#account_type').val() === ""){
-                    if(!vendorHidden){
+                } else if ($('#account_type').val() === "") {
+                    if (!vendorHidden) {
                         $('#No. of Employees: vendorType').hide();
                         vendorHidden = true;
                     }
-                }else{
-                    if(!vendorHidden){
+                } else {
+                    if (!vendorHidden) {
                         $('#vendorType').hide();
                         vendorHidden = true;
                     }
@@ -162,9 +144,9 @@ Author     : Greg
             }
         </script>
         <script>
-         
-            function attachmentsValidFromTo(){
-                myCalendar = new dhtmlXCalendarObject(["validFrom","validTo"]);
+
+            function attachmentsValidFromTo() {
+                myCalendar = new dhtmlXCalendarObject(["validFrom", "validTo"]);
                 myCalendar.setSkin('omega');
                 //myCalendar.setDateFormat("%m/%d/%Y %H:%i");
                 myCalendar.setDateFormat("%m-%d-%Y");
@@ -176,28 +158,34 @@ Author     : Greg
                 var dd = today.getDate();
                 var mm = today.getMonth(); //January is 0!
                 var yyyy = today.getFullYear();
-                if(dd<10) {
-                    dd='0'+dd
+                if (dd < 10) {
+                    dd = '0' + dd
                 }
-                if(mm<10) {
-                    mm='0'+mm
+                if (mm < 10) {
+                    mm = '0' + mm
                 }
 
-                var from = mm+'/'+'01'+'/'+yyyy;
+                var from = mm + '/' + '01' + '/' + yyyy;
 
-                mm=today.getMonth()+1;
-                if(mm<10) {
-                    mm='0'+mm
+                mm = today.getMonth() + 1;
+                if (mm < 10) {
+                    mm = '0' + mm
                 }
-                dd=today.getDate()+1;
-                var to = mm+'/'+dd+'/'+yyyy;
+                dd = today.getDate() + 1;
+                var to = mm + '/' + dd + '/' + yyyy;
             }
         </script>
 
 
 
     </head>
-    <body onload="doOnLoadRequirement(),AccountTypeDropDown();attachmentsValidFromTo();attachmentsValidFromToOverlay();editAttachmentvalidity(); getStates($('#locationCountry').val(),'#locationState');jumper();frameportion()">
+    <body onload="doOnLoadRequirement(), AccountTypeDropDown();
+            attachmentsValidFromTo();
+            attachmentsValidFromToOverlay();
+            editAttachmentvalidity();
+            getStates($('#locationCountry').val(), '#locationState');
+            jumper();
+            frameportion()">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -236,51 +224,66 @@ Author     : Greg
                                                                         <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param>
                                                                         <s:param name="accFlag">accDetails</s:param>
                                                                     </s:url>
-                                                                    <s:a href='%{#myUrl}'><s:property value="%{accountDetails.name}"/></s:a>
+                                                                    <s:a href='%{#myUrl}' id="accountName"><s:property value="%{accountDetails.name}"/></s:a>
                                                                     <% String typeOfUser = "";
                                                                         typeOfUser = session.getAttribute("typeOfUsr").toString();
 
                                                                         //   if ("SA".equalsIgnoreCase(typeOfUser)) {
                                                                     %>
                                                                     <s:if test="#session.primaryrole == 0 || #session.primaryrole == 1" >
-                                                                        <span style="float: right;"><a href="searchAccountsBy.action" ><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></a></span>
-                                                                    </s:if>       <%--        //                                                                }
+                                                                        <span style="float: right;"><a id="backButtonLink" href="searchAccountsBy.action" ><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></a></span>
+                                                                            </s:if>       <%--        //                                                                }
                                                                             --%> 
                                                                 </div>
                                                                 <!--<div  ><headingmess id="headingmessage"  class="acc_menu_heading pull-right" style="display:block">Account Details</headingmess>    </div>-->
                                                                 <!-- Nav tabs -->
                                                                 <ul class="active_details" >
                                                                     <li class="dropdown"  >
-                                                                        <a class=" active_details " onclick="lockScreen();frameportion()" data-toggle="dropdown"  href="#" title="Click Me For Menu"   style="background-color: #fff; width:40px;"><img src="<s:url value="/includes/images/toggleMenu.png"/>" height="40" width="38"></a>
+                                                                        <a class=" active_details " onclick="lockScreen();
+                                                                                frameportion()" data-toggle="dropdown"  href="#" title="Click Me For Menu"   style="background-color: #fff; width:40px;"><img src="<s:url value="/includes/images/toggleMenu.png"/>" height="40" width="38"></a>
                                                                     <headingmess id="headingmessage"  class="accDetails" >Account Details</headingmess>
                                                                     <ul class="active_details dropdown-menu  " style="position:absolute; z-index:10000;">
                                                                         <s:if test="%{userType!='vendor'}">
-                                                                            <li class="  "><a aria-expanded="false" href="#details" data-toggle="tab" id="accountdetailshead" onclick="headingMessage(this); unlockScreen();" style="background-color: #fff; width:40px;" ><img  src="<s:url value="/includes/images/icons/accountEdit.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Account Details</font></a>
+                                                                            <li class="  "><a aria-expanded="false" href="#details" data-toggle="tab" id="accountdetailshead" onclick="headingMessage(this);
+                                                                                    unlockScreen();" style="background-color: #fff; width:40px;" ><img  src="<s:url value="/includes/images/icons/accountEdit.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Account Details</font></a>
                                                                             </li>
                                                                         </s:if>
                                                                         <s:else>
-                                                                            <li class="  "><a aria-expanded="false" href="#details" data-toggle="tab" id="accountdetailshead" onclick="headingMessage(this); unlockScreen();frameportion()" style="background-color: #fff; width:40px;" ><img  src="<s:url value="/includes/images/icons/accountEdit.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Vendor Details</font></a>
+                                                                            <li class="  "><a aria-expanded="false" href="#details" data-toggle="tab" id="accountdetailshead" onclick="headingMessage(this);
+                                                                                    unlockScreen();
+                                                                                    frameportion()" style="background-color: #fff; width:40px;" ><img  src="<s:url value="/includes/images/icons/accountEdit.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Vendor Details</font></a>
                                                                             </li>
                                                                         </s:else>
 
                                                                         <s:if test="#session.primaryrole != 0 && #session.primaryrole != 2" >
                                                                             <s:if test="%{userType!='vendor'}">
-                                                                                <li class=""><a aria-expanded="false" href="#requirements" data-toggle="tab" id="requirementshead" onclick="getSearchRequirementsList(); headingMessage(this); unlockScreen();frameportion()" style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/requirement.png"/>" height="15" width="15"><font style="color: blue">Requirements</font></a>
+                                                                                <li class=""><a aria-expanded="false" href="#requirements" data-toggle="tab" id="requirementshead" onclick="getSearchRequirementsList();
+                                                                                        headingMessage(this);
+                                                                                        unlockScreen();
+                                                                                        frameportion()" style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/requirement.png"/>" height="15" width="15"><font style="color: blue">Requirements</font></a>
 
                                                                                 </li>
                                                                             </s:if>
                                                                         </s:if>
-                                                                        <li class=""><a aria-expanded="false" href="#contacts" data-toggle="tab" id="contactshead" onclick="headingMessage(this); unlockScreen();frameportion()" style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/contacts.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Contacts</font></a>
+                                                                        <li class=""><a aria-expanded="false" href="#contacts" data-toggle="tab" id="contactshead" onclick="headingMessage(this);
+                                                                                unlockScreen();
+                                                                                frameportion()" style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/contacts.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Contacts</font></a>
                                                                         </li>
-                                                                        <li class=""><a aria-expanded="false" href="#VendorForms" data-toggle="tab" id="vendorFormsHead" onclick="headingMessage(this); unlockScreen();frameportion()"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/attachment.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Attachments</font></a>
+                                                                        <li class=""><a aria-expanded="false" href="#VendorForms" data-toggle="tab" id="vendorFormsHead" onclick="headingMessage(this);
+                                                                                unlockScreen();
+                                                                                frameportion()"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/attachment.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Attachments</font></a>
                                                                         </li>
                                                                         <s:if test="%{userType!='vendor'}">
                                                                             <s:if test="#session.primaryrole == 0" >
-                                                                                <li class=""><a aria-expanded="false" href="#subvendors" data-toggle="tab" id="vendors" onclick="getVendors();headingMessage(this); unlockScreen();"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/vendor_Copy.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Vendors</font></a>
+                                                                                <li class=""><a aria-expanded="false" href="#subvendors" data-toggle="tab" id="vendors" onclick="getVendors();
+                                                                                        headingMessage(this);
+                                                                                        unlockScreen();"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/vendor_Copy.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Vendors</font></a>
                                                                                 </li>
                                                                             </s:if>
                                                                             <s:if test="#session.primaryrole == 1" >
-                                                                                <li class=""><a aria-expanded="false" href="#subvendors" data-toggle="tab" id="vendors" onclick="getVendors();headingMessage(this); unlockScreen();"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/vendor_Copy.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Vendors</font></a>
+                                                                                <li class=""><a aria-expanded="false" href="#subvendors" data-toggle="tab" id="vendors" onclick="getVendors();
+                                                                                        headingMessage(this);
+                                                                                        unlockScreen();"style="background-color: #fff; width:40px;"><img  src="<s:url value="/includes/images/icons/vendor_Copy.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Vendors</font></a>
                                                                                 </li>
                                                                             </s:if>
 
@@ -290,10 +293,12 @@ Author     : Greg
                                                                         </s:if>
                                                                         <%if ("SA".equalsIgnoreCase(typeOfUser)) {%>
                                                                         <s:if test="%{accountDetails.accountType != 5}">
-                                                                            <li class=""><a aria-expanded="false" href="#csrAccountsRef" data-toggle="tab" id="csrAccounts" onclick="headingMessage(this); unlockScreen();"style="background-color: #fff; width:40px;"><img src="<s:url value="/includes/images/icons/assignCsr.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Assign CSR</font></a>
+                                                                            <li class=""><a aria-expanded="false" href="#csrAccountsRef" data-toggle="tab" id="csrAccounts" onclick="headingMessage(this);
+                                                                                    unlockScreen();"style="background-color: #fff; width:40px;"><img src="<s:url value="/includes/images/icons/assignCsr.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Assign CSR</font></a>
                                                                             </li></s:if>
                                                                         <%                                                                        }%>
-                                                                        <li class=""><a aria-expanded="false" href="#locations" data-toggle="tab" id="location" onclick="headingMessage(this); unlockScreen();"style="background-color: #fff; width:40px;"><img src="<s:url value="/includes/images/icons/location.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Locations</font></a>
+                                                                        <li class=""><a aria-expanded="false" href="#locations" data-toggle="tab" id="location" onclick="headingMessage(this);
+                                                                                unlockScreen();"style="background-color: #fff; width:40px;"><img src="<s:url value="/includes/images/icons/location.png"/>" height="15" width="15"><font style="color: blue">&nbsp;Locations</font></a>
                                                                         </li>
 
                                                                     </ul>
@@ -309,11 +314,11 @@ Author     : Greg
                                                                         <div id="editMessage" style="display: none" ><font style="color:green ;font: bold; font-size: large">Account  updated successfully!</font></div>
                                                                             <s:form action="ajaxAccountUpdate" id="accountDetailsForm" theme="simple" >
                                                                                 <s:hidden name="viewAccountID" id="viewAccountID" value="%{accountSearchID}"></s:hidden>
-                                                                            <div class="panel-body" id="task-panel" >
-                                                                                <div class="row">
-                                                                                    <span><editAccountError></editAccountError></span>
-                                                                                    <div class="col-sm-4" >
-                                                                                        <div class=""> 
+                                                                                <div class="panel-body" id="task-panel" >
+                                                                                    <div class="row">
+                                                                                        <span><editAccountError></editAccountError></span>
+                                                                                        <div class="col-sm-4" >
+                                                                                            <div class=""> 
                                                                                             <s:url id="image" action="rImage" namespace="/renderImage">
                                                                                                 <s:param name="path" value="accountDetails.accLogo"></s:param>
                                                                                             </s:url>
@@ -449,7 +454,7 @@ Author     : Greg
                                                                                                         <s:file name="file" id="file" onchange="onChangeLogo()" style="width: 200px"/>
                                                                                                     </div>
                                                                                                     <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
-                                                                                                    <center><s:submit type="button" cssClass="fa fa-upload cssbutton" value="Upload" onclick="return logoUpload()" theme="simple"  /></center>
+                                                                                                    <center><s:submit id="logoUpload" type="button" cssClass="fa fa-upload cssbutton" value="Upload" onclick="return logoUpload()" theme="simple"  /></center>
                                                                                                     <font color="red" style="font-size: 12px">&nbsp;NOTE :  Please Upload Transparent Logo</font><br>
                                                                                                 </div>
                                                                                                 <font style="color: #ffffff">..................... ................... ...............</font>
@@ -484,7 +489,7 @@ Author     : Greg
                                                                                                          value="%{accountDetails.address2}"/>
                                                                                         </div>
                                                                                         <div class="col-sm-4">
-                                                                                            <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>City  </label>
+                                                                                            <label style="color:#56a5ec;" class="labelStyle2">City  </label>
                                                                                             <s:textfield id="account_city" maxLength="20"
                                                                                                          name="accountDetails.city"
                                                                                                          type="text"
@@ -514,7 +519,7 @@ Author     : Greg
 
                                                                                         <s:if test="accountDetails.country==NULL">
                                                                                             <div class="col-sm-4">
-                                                                                                <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>Country  </label>
+                                                                                                <label style="color:#56a5ec;" class="labelStyle2">Country  </label>
                                                                                                 <br><s:select   id="account_country"
                                                                                                             value="3"
                                                                                                             name="accountDetails.country"
@@ -529,7 +534,7 @@ Author     : Greg
                                                                                         </s:if>
                                                                                         <s:else>
                                                                                             <div class="col-sm-4">
-                                                                                                <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>Country  </label>
+                                                                                                <label style="color:#56a5ec;" class="labelStyle2">Country  </label>
                                                                                                 <br><s:select   id="account_country"
                                                                                                             value="accountDetails.country"
                                                                                                             name="accountDetails.country"
@@ -556,7 +561,7 @@ Author     : Greg
                                                                                             <span id="stateError" class="accDetailsError"></span>
                                                                                         </div>
                                                                                         <div class="col-sm-4">
-                                                                                            <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>Phone  </label>
+                                                                                            <label style="color:#56a5ec;" class="labelStyle2">Phone  </label>
                                                                                             <s:textfield  id="phone1" 
                                                                                                           cssClass="form-control"
                                                                                                           name="accountDetails.phone"
@@ -584,7 +589,7 @@ Author     : Greg
                                                                                     <h5><b>Basic Information</b></h5>
                                                                                     <div class="col-sm-12">
                                                                                         <div class="col-sm-4">
-                                                                                            <label style="color:#56a5ec;" class="labelStyle2"><%--<span style="color:red;">*</span>--%>Industry </label>
+                                                                                            <label style="color:#56a5ec;" class="labelStyle2">Industry </label>
                                                                                             <br><s:select   id="account_industry"
                                                                                                         name="accountDetails.industry"
                                                                                                         cssClass="SelectBoxStyles form-control"
@@ -630,16 +635,6 @@ Author     : Greg
                                                                                                          />
                                                                                         </div>
 
-
-                                                                                        <%-- <div class="col-lg-3">
-                                                                                             <label style="color:#56a5ec;" class="labelStyle2">Budget  </label>
-                                                                                             <s:textfield id="account_budget"
-                                                                                                          name="accountDetails.budget"
-                                                                                                          cssClass="form-control"
-                                                                                                          type="text"
-                                                                                                          value="%{accountDetails.budget}"/>
-                                                                                             <span id="budgetError" class="accDetailsError"></span>
-                                                                                         </div> --%>
                                                                                         <div class="col-sm-4">
                                                                                             <label style="color:#56a5ec;" class="labelStyle2">Tax ID  </label>
                                                                                             <s:textfield id="account_taxid" maxLength="20"
@@ -786,28 +781,28 @@ Author     : Greg
                                                                                         <%--    <a id="detailsFormSubmit" href="#save" class="active_details cssbutton_emps pull-right"><div class="details_button" >SAVE</div></a> --%>
                                                                                     </div>
                                                                                     <script>
-                                                                                        $('#detailsFormSubmit').on('click',function(){
-                                                                                            document.getElementById('editMessage').style.display="none";
-                                                                                            var skillCategoryArry = [];    
-                                                                                            $("#skillCategoryValue :selected").each(function(){
-                                                                                                skillCategoryArry.push($(this).text()); 
+                                                                                        $('#detailsFormSubmit').on('click', function() {
+                                                                                            document.getElementById('editMessage').style.display = "none";
+                                                                                            var skillCategoryArry = [];
+                                                                                            $("#skillCategoryValue :selected").each(function() {
+                                                                                                skillCategoryArry.push($(this).text());
                                                                                             });
                                                                                             // alert(skillCategoryArry);
-                                                                                            document.getElementById("skillValues").value=skillCategoryArry;
-                                                                                            var v=document.getElementById("skillValues").value;
-    
-                                                                                            var url="ajaxAccountUpdate";
-                                                                                            var validateAccount=true; //editAccountValidation();
-                                                                                            if(validateAccount){
-                                                                                                document.getElementById('loadingAccount').style.display="block";
+                                                                                            document.getElementById("skillValues").value = skillCategoryArry;
+                                                                                            var v = document.getElementById("skillValues").value;
+
+                                                                                            var url = "ajaxAccountUpdate";
+                                                                                            var validateAccount = true; //editAccountValidation();
+                                                                                            if (validateAccount) {
+                                                                                                document.getElementById('loadingAccount').style.display = "block";
                                                                                                 $.ajax({
                                                                                                     type: "POST",
                                                                                                     url: url,
                                                                                                     data: $("#accountDetailsForm").serialize(), // serializes the form's elements.
                                                                                                     success: function(data)
                                                                                                     {
-                                                                                                        document.getElementById('loadingAccount').style.display="none";
-                                                                                                        document.getElementById('editMessage').style.display="block";
+                                                                                                        document.getElementById('loadingAccount').style.display = "none";
+                                                                                                        document.getElementById('editMessage').style.display = "block";
                                                                                                         $("#editMessage").fadeOut(5000);
                                                                                                         // location.reload();
                                                                                                     }
@@ -822,6 +817,9 @@ Author     : Greg
                                                                             </div>
 
                                                                         </s:form>
+                                                                        <div id="loading_details" class="loadingImg" style="display: none">
+                                                                            <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"></span>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="tab-pane fade in " id="softwares">
                                                                         <div class="panel-body"  >
@@ -978,14 +976,14 @@ Author     : Greg
 
                                                                                             <div class="col-md-6 col-lg-6 pull-right contact_search" style="width:100px">
                                                                                                 <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                                <s:submit type="button" id=""
+                                                                                                <s:submit type="button" id="contactSearch" 
                                                                                                           cssClass="add_searchButton  form-control" tabindex="7"
                                                                                                           value="" onclick="getContactSearchResults()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                                                            </div>
-                                                                                            <div class="col-md-6 col-lg-6 pull-right contact_add">
-                                                                                                <label class="labelStylereq" style="color:#56a5ec;"></label> 
+                                                                                                </div>
+                                                                                                <div class="col-md-6 col-lg-6 pull-right contact_add">
+                                                                                                    <label class="labelStylereq" style="color:#56a5ec;"></label> 
                                                                                                 <%--<s:submit id="" cssClass="Contact_popup_open cssbutton_emps form-control"  onclick="removeDataAfterContactOverlay()"  onfocus="clearContactOverlay()" value="Add Contact" style="margin:5px"/>--%>
-                                                                                                <a href='setContacts.action?accountType=<s:property value="%{accountDetails.accountType}"/>&accountSearchID=<s:property value="%{accountSearchID}"/>'><button class="add_searchButton form-control" tabindex="6" style="margin: 5px 0px;"><i class="fa fa-user"></i>&nbsp;Add</button></a>
+                                                                                                <a id="addContactLink" href='setContacts.action?accountType=<s:property value="%{accountDetails.accountType}"/>&accountSearchID=<s:property value="%{accountSearchID}"/>'><button class="add_searchButton form-control" tabindex="6" style="margin: 5px 0px;"><i class="fa fa-user"></i>&nbsp;Add</button></a>
                                                                                             </div>
 
                                                                                         </div>
@@ -1007,12 +1005,10 @@ Author     : Greg
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <th>Name</th>
-                                                                                                    <%--<th>Title</th>--%>
                                                                                                     <th>E-mail</th>
                                                                                                     <th>Role</th>
                                                                                                     <th>Phone</th>
                                                                                                     <th>Status</th>
-                                                                                                    <%--<th>Assign Roles</th>--%>
                                                                                                     <th>Login</th>
                                                                                                 </tr>
                                                                                             </tbody>
@@ -1045,6 +1041,8 @@ Author     : Greg
                                                                                     <script type="text/javascript" >
                                                                                         $("#conPhone").mask("(999)-999-9999");
                                                                                         $("#homePhone").mask("(999)-999-9999");
+                                                                                        $("#phoneContacts").mask("(999)-999-9999");
+
                                                                                     </script>
                                                                                     <script type="text/javascript" >
                                                                                         $("#Officephone").mask("(999)-999-9999");
@@ -1056,8 +1054,8 @@ Author     : Greg
                                                                                         acPager.init();
                                                                                         acPager.showPageNav('acPager', 'contactPageNavPosition');
                                                                                         acPager.showPage(1);
-                                                                               
-                                                        
+
+
                                                                                     </script>
                                                                                 </div>
                                                                             </div>
@@ -1085,19 +1083,19 @@ Author     : Greg
                                                                                                          placeholder="Select Date" 
                                                                                                          onkeypress="return enterDateRepositoryAttachment();" autocomplete="off" onfocus="return removeFormErrorMsg();"
                                                                                                          ><i class="fa fa-calendar"></i></s:textfield>
-                                                                                            </div></div>
-                                                                                        <div class="col-sm-4">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec;">Valid&nbsp;To </label>
-                                                                                            <div class="calImage"><s:textfield cssClass="form-control  " id="validTo"
+                                                                                                </div></div>
+                                                                                            <div class="col-sm-4">
+                                                                                                <label class="labelStylereq" style="color:#56a5ec;">Valid&nbsp;To </label>
+                                                                                                <div class="calImage"><s:textfield cssClass="form-control  " id="validTo"
                                                                                                          type="dropdown" name="validTo" tabindex="3"
                                                                                                          placeholder="Select Date" 
                                                                                                          onkeypress="return enterDateRepositoryAttachment();" autocomplete="off" onfocus="return removeFormErrorMsg();"
                                                                                                          ><i class="fa fa-calendar"></i></s:textfield>
-                                                                                            </div></div>
+                                                                                                </div></div>
 
 
-                                                                                        <div class="col-sm-4">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec;">Document&nbsp;Type </label>
+                                                                                            <div class="col-sm-4">
+                                                                                                <label class="labelStylereq" style="color:#56a5ec;">Document&nbsp;Type </label>
                                                                                             <s:select id="vendorDocs"
                                                                                                       cssClass="SelectBoxStyles form-control" tabindex="4"
                                                                                                       name="vendorDocs"
@@ -1112,13 +1110,13 @@ Author     : Greg
                                                                                         <s:hidden id="vendorDocs" name="vendorDocs" value="%{vendorDocs}"/>
                                                                                         <div class="col-lg-2 pull-right">
                                                                                             <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                            <s:submit type="button" id=""
+                                                                                            <s:submit type="button" id="vendorFormSearch"
                                                                                                       cssClass="add_searchButton fa fa-search form-control" tabindex="6"
                                                                                                       value="Search" onclick="getVendorFormDetails();"  cssStyle="margin:5px 0px;"/>
                                                                                         </div>
                                                                                         <div class="col-lg-2 pull-right">
                                                                                             <label class="labelStylereq" style="color:#56a5ec;"></label> 
-                                                                                            <button class="add_searchButton form-control addAttachment_popup_open" tabindex="5"  onclick="return vendorFormOverlay();" style="margin: 5px 0px;"><i class="fa fa-user"></i>&nbsp;Add</button>
+                                                                                            <button id="vendorFormAdd" class="add_searchButton form-control addAttachment_popup_open" tabindex="5"  onclick="return vendorFormOverlay();" style="margin: 5px 0px;"><i class="fa fa-user"></i>&nbsp;Add</button>
                                                                                         </div>
 
 
@@ -1204,38 +1202,19 @@ Author     : Greg
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <%-- Vendor Association byRK code End--%>
+                                                                    <%-- Vendor Association  code End--%>
 
-                                                                    <%-- Requirement Tab start by Aklakh--%>        
+                                                                    <%-- Requirement Tab start --%>        
                                                                     <div class="tab-pane fade in " id="requirements" style="margin-top:30px">
                                                                         <div class="row">
                                                                             <div class="col-sm-12" id="requirementDiv">
                                                                                 <s:hidden name="vendor" id="vendor" value="%{vendor}" ></s:hidden>
                                                                                 <s:hidden name="accountFlag" id="accountFlag" value="%{accountFlag}" ></s:hidden>
-                                                                                <%--div class="row">
-                                                                                    <div class="col-sm-4">
-                                                                                        <label class="labelStylereq  field-margincontact" style="color:#56a5ec;">Req Title:</label>
-                                                                                    <s:textfield cssClass="textbox " name="jobTitle" id="jobTitle" placeholder="Job Title"/>
-                                                                                </div>
-                                                                                <div class="col-sm-4">
-                                                                                    <label class="labelStylereq field-margincontact" style="color:#56a5ec;">Skills:</label>
-                                                                                    <s:textfield cssClass="textbox  " name="requirementSkill" id="requirementSkill" placeholder="Skill"/>
-                                                                                </div>
-                                                                                <div class="col-sm-4">
-                                                                                    <s:if test="vendor=='yes'">
-                                                                                        <label class="labelStylereq field-margincontact" style="color:#56a5ec;">Status:</label>
-                                                                                        <s:select id="requirementStatus" name="requirementStatus" cssClass="selectBoxStyle " headerKey="-1" headerValue="requirementStatus" theme="simple" list="#@java.util.LinkedHashMap@{'R':'Released','C':'Closed'}" />
-                                                                                    </s:if>
-                                                                                    <s:else>
-                                                                                        <label class="labelStylereq field-margincontact" style="color:#56a5ec;">Status:</label>
-                                                                                        <s:select id="requirementStatus" name="requirementStatus" cssClass="selectBoxStyle " headerKey="-1" headerValue="requirementStatus" theme="simple" list="#@java.util.LinkedHashMap@{'O':'Created','R':'Released','C':'Closed'}" />
-                                                                                    </s:else>
-                                                                                </div>
-                                                                            </div--%>
-                                                                                <div class="inner-reqdiv-elements">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec">Job Title</label>
+
+                                                                                    <div class="inner-reqdiv-elements">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-4">
+                                                                                                <label class="labelStylereq" style="color:#56a5ec">Job Title</label>
                                                                                             <s:textfield cssClass="form-control " name="jobTitle" id="jobTitle" placeholder="Job Title"/>
                                                                                         </div>
                                                                                         <div class="col-sm-4">
@@ -1253,23 +1232,6 @@ Author     : Greg
                                                                                             </s:else>
                                                                                         </div>
 
-
-                                                                                        <%--div class="row"> 
-                                                                                            <div class="col-sm-4">
-
-                                                                                <label class="labelStylereq field-margincontact" style="color:#56a5ec;">StartDate:</label>  
-                                                                                <s:textfield cssClass="  calendarImage " name="reqStart" id="reqStart" placeholder="FromDate"  tabindex="1"  onkeypress="return enterDateRepositoryReq();" />
-                                                                            </div>
-                                                                            <div class="col-sm-4">
-                                                                                <label class="labelStylereq field-margincontact"  style="color:#56a5ec;">EndDate:</label>
-                                                                                <s:textfield cssClass="calendarImage    " name="reqEnd" placeholder="ToDate"  id="reqEnd" tabindex="2"  onkeypress="return enterDateRepositoryReq();"/>
-                                                                            </div>
-                                                                            <div>
-                                                                                <s:submit type="button" cssClass="cssbutton_emps field-marginRequirements" value="Search" onclick="return getSearchRequirementsList()"/>
-                                                                            </div>
-                                                                        </div--%>
-
-
                                                                                         <div class="col-sm-4">
                                                                                             <label class="labelStylereq" style="color:#56a5ec;">StartDate</label>
                                                                                             <s:textfield cssClass="form-control dateImage" name="reqStart" id="reqStart" placeholder="FromDate"  tabindex="1"  onkeypress="return enterDateRepositoryReq();" />
@@ -1279,17 +1241,23 @@ Author     : Greg
                                                                                             <s:textfield cssClass="form-control dateImage" name="reqEnd" placeholder="ToDate"  id="reqEnd" tabindex="2"  onkeypress="return enterDateRepositoryReq();"/>
                                                                                         </div>
                                                                                         <div class="col-sm-4">
+                                                                                            <label class="labelStylereq " style="color:#56a5ec;">Req.Category</label>
+                                                                                            <s:select id="reqCategory" tabindex="3" name="reqCategoryValue" cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="%{reqCategory}" />
+                                                                                        </div>
+                                                                                        <div class="col-sm-4"></div>
+                                                                                        <div class="col-sm-4"></div>
+                                                                                        <div class="col-sm-4">
                                                                                             <div class="contact_add pull-right">
                                                                                                 <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                                <s:submit type="button" cssClass="add_searchButton  form-control" value="" onclick="return getSearchRequirementsList()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                                                <s:submit type="button" id="reqListSearch" cssClass="add_searchButton  form-control" value="" onclick="return getSearchRequirementsList()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="col-sm-12" style="align:center">
-                                                                                <span><releaseMessage></releaseMessage></span>
-                                                                                <s:form>
+                                                                                <div class="col-sm-12" style="align:center">
+                                                                                    <span><releaseMessage></releaseMessage></span>
+                                                                                        <s:form>
 
 
                                                                                     <table id="reqTableInAccount" class="responsive CSSTable_task" border="5"cell-spacing="2">
@@ -1321,9 +1289,9 @@ Author     : Greg
                                                                                     <div align="right" id="reqPageNavPosition" style="margin-right: 0vw;display:none" class="pull-right"></div>
 
                                                                                     <script type="text/javascript">
-                                                                                        var reqPag = new Pager('reqTableInAccount', 10); 
-                                                                                        reqPag.init(); 
-                                                                                        reqPag.showPageNav('reqPag', 'reqPageNavPosition'); 
+                                                                                        var reqPag = new Pager('reqTableInAccount', 10);
+                                                                                        reqPag.init();
+                                                                                        reqPag.showPageNav('reqPag', 'reqPageNavPosition');
                                                                                         reqPag.showPage(1);
                                                                                     </script>
 
@@ -1332,19 +1300,19 @@ Author     : Greg
                                                                         </div>
                                                                     </div>
 
-                                                                    <%-- Requirement Tab end by Aklakh--%>  
+                                                                    <%-- Requirement Tab end --%>  
 
-                                                                    <%-- csr ACCOUNT Tab start by PRAVEEN--%>        
+                                                                    <%-- csr ACCOUNT Tab start --%>        
                                                                     <div class="tab-pane fade in " id="csrAccountsRef"style="margin-top: 20px" >
                                                                         <div class="row">
                                                                             <div class="col-sm-12" id="csrAssignDiv">
                                                                                 <s:hidden name="viewAccountID" id="viewAccountID" value="%{accountSearchID}"></s:hidden>
                                                                                 <s:hidden name="accountFlag" id="accountFlag" value="%{accountFlag}" ></s:hidden>
-                                                                                <div class="inner-reqdiv-elements">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec">CSR</label>
-                                                                                        <s:textfield cssClass="form-control " tabindex="1" name="Name" id="csrName" placeholder="CSR" maxLength="30"/>
+                                                                                    <div class="inner-reqdiv-elements">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-4">
+                                                                                                <label class="labelStylereq" style="color:#56a5ec">CSR</label>
+                                                                                            <s:textfield cssClass="form-control " tabindex="1" name="Name" id="csrName" placeholder="CSR" maxLength="30"/>
                                                                                         </div>
                                                                                         <div class="col-sm-4">
                                                                                             <label class="labelStylereq" style="color:#56a5ec">Email</label>
@@ -1366,19 +1334,19 @@ Author     : Greg
                                                                                             <s:url var="csrUrl" action="../acc/goAddintAccToCsr.action">
                                                                                                 <s:param name="orgUserId"><s:property value="accountSearchID"/></s:param>
                                                                                             </s:url>
-                                                                                            <s:a href='%{#csrUrl}' style="color: #0000FF;"><s:submit type="button" tabindex="6" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control"><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit></s:a>
-                                                                                        </div>
-                                                                                        <div class="col-sm-2 pull-right" >
-                                                                                            <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                                                                <s:submit type="button" value="" cssStyle="margin:5px 0px;" tabindex="5" cssClass="add_searchButton form-control" onclick="getCsrDetailsTable()"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                                            <s:a href='%{#csrUrl}' id="addAcctoCsr" style="color: #0000FF;"><s:submit type="button" tabindex="6" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control"><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit></s:a>
+                                                                                                </div>
+                                                                                                <div class="col-sm-2 pull-right" >
+                                                                                                    <label class="labelStylereq" style="color:#56a5ec"></label>
+                                                                                            <s:submit id="csrSearchButton" type="button" value="" cssStyle="margin:5px 0px;" tabindex="5" cssClass="add_searchButton form-control" onclick="getCsrDetailsTable()"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
+                                                                                    <br>
                                                                                 </div>
-                                                                                <br>
-                                                                            </div>
-                                                                            <div class="inner-reqdiv-elements">
-                                                                                <div class="col-sm-12" style="align:center">
-                                                                                    <span><releaseMessage></releaseMessage></span>
+                                                                                <div class="inner-reqdiv-elements">
+                                                                                    <div class="col-sm-12" style="align:center">
+                                                                                        <span><releaseMessage></releaseMessage></span>
 
                                                                                     <s:form>
                                                                                         <table id="csrDetailsTable" class="responsive CSSTable_task" border="5"cell-spacing="2">
@@ -1394,7 +1362,7 @@ Author     : Greg
                                                                                             </tbody>
                                                                                         </table>
                                                                                         <br/>
-                                                                                        <div id="loadingReq" class="loadingImg" style="display: none">
+                                                                                        <div id="loading_csrDetails" class="loadingImg" style="display: none">
                                                                                             <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>
                                                                                         </div>
                                                                                         <label class="page_option"> Display <select id="csrpaginationOption" tabindex="7" class="disPlayRecordsCss" onchange="csrpagerOption()" style="width: auto">
@@ -1408,9 +1376,9 @@ Author     : Greg
                                                                                         <div align="right" id="csrDetailsTablepageNavi" style="margin-right: 0vw;display: none" class="pull-right"></div>
 
                                                                                         <script type="text/javascript">
-                                                                                            var reqPager = new Pager('csrDetailsTable', 10); 
-                                                                                            reqPager.init(); 
-                                                                                            reqPager.showPageNav('reqPager', 'csrDetailsTablepageNavi'); 
+                                                                                            var reqPager = new Pager('csrDetailsTable', 10);
+                                                                                            reqPager.init();
+                                                                                            reqPager.showPageNav('reqPager', 'csrDetailsTablepageNavi');
                                                                                             reqPager.showPage(1);
                                                                                         </script>
 
@@ -1441,12 +1409,13 @@ Author     : Greg
                                                                                             <div class="row">
                                                                                                 <s:hidden id="accountAddress" value=""></s:hidden>
 
-                                                                                                <div class="col-sm-4 required">
-                                                                                                    <label class="labelStyleAddCon">Name</label>
-                                                                                                    <s:textfield id="locationName" cssClass="form-control" name="locationName" placeholder="Name" value=""  maxLength="80"/>
-                                                                                                </div>
-                                                                                                <div class="col-sm-4">
-                                                                                                    <label class="labelStyleAddCon">Address1</label>
+                                                                                                    <div class="col-sm-4 required">
+                                                                                                        <label class="labelStyleAddCon">Name</label>
+                                                                                                    <s:textfield id="locationName" cssClass="form-control" name="locationName" placeholder="Name" value=""  maxLength="80" onblur="checkLoactionNameExistOrNot()"/>
+                                                                                                    <s:hidden id="locationEditName" name="locationEditName"></s:hidden>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-4">
+                                                                                                        <label class="labelStyleAddCon">Address1</label>
                                                                                                     <s:textfield id="locationAddress1" cssClass="form-control" name="locationAddress1" placeholder="Address1" value=""  maxLength="100"/>
                                                                                                 </div>
                                                                                                 <div class="col-sm-4">
@@ -1493,16 +1462,16 @@ Author     : Greg
                                                                                                 </div>  </div>
                                                                                             <div class="row" style="margin-top: 5px" id="addLoc">
                                                                                                 <div class="col-lg-2 pull-right ">   
-                                                                                                    <s:submit id="" type="button" cssClass="fa fa-plus-square add_searchButton form-control"    value="Save" style="margin:5px" onclick="addorUpdateLocation('Add')"/>  
+                                                                                                    <s:submit id="saveLocation" type="button" cssClass="fa fa-plus-square add_searchButton form-control"    value="Save" style="margin:5px" onclick="addorUpdateLocation('Add')"/>  
                                                                                                 </div>
                                                                                                 <div class="col-lg-2 pull-right" >   
-                                                                                                    <s:submit id="" type="button" cssClass=" add_searchButton form-control fa fa-eraser"    value="Clear" style="margin:5px" onclick="clearLocationFields();"/>     
+                                                                                                    <s:submit id="clearLocation" type="button" cssClass=" add_searchButton form-control fa fa-eraser"    value="Clear" style="margin:5px" onclick="clearLocationFields();"/>     
                                                                                                 </div>
 
                                                                                             </div>
                                                                                             <div class="row" style="margin-top: 5px" id="updateLoc">
                                                                                                 <div class="col-lg-2 pull-right ">   
-                                                                                                    <s:submit id=""  type="button" cssClass=" add_searchButton form-control fa fa-refresh"    value="Update" style="margin:5px" onclick="addorUpdateLocation('Edit')"/>     
+                                                                                                    <s:submit id="addOrUpdateLocation"  type="button" cssClass=" add_searchButton form-control fa fa-refresh"    value="Update" style="margin:5px" onclick="addorUpdateLocation('Edit')"/>     
                                                                                                 </div>
 
 
@@ -1589,12 +1558,12 @@ Author     : Greg
 
                                                                                                 <div class="col-sm-6 col-md-5 col-lg-4 pull-right">
                                                                                                     <label class="labelStylereq contact_search" style="color:#56a5ec;"></label> 
-                                                                                                    <s:submit id="" type="button" tabindex="8" cssClass="addLocation_popup_open add_searchButton fa fa-location-arrow form-control bx-style"  onclick="addLocationOverlay();addorEditLocationOverlay('Add');clearLocationFields()"  value="Add Location" style="margin:5px;%"/>
+                                                                                                    <s:submit id="addLocationButton" type="button" tabindex="8" cssClass="addLocation_popup_open add_searchButton fa fa-location-arrow form-control bx-style"  onclick="addLocationOverlay();addorEditLocationOverlay('Add');clearLocationFields()"  value="Add Location" style="margin:5px;%"/>
 
                                                                                                 </div>
                                                                                                 <div class="col-sm-4  col-md-3 col-lg-3 pull-right">
                                                                                                     <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                                                    <s:submit type="button" id=""
+                                                                                                    <s:submit type="button" id="searchLocationButton" 
                                                                                                               cssClass="add_searchButton fa fa-search form-control bx_style" tabindex="7"
                                                                                                               value="Search" onclick="showLocations()" cssStyle="margin:5px 0px;"/>
 
@@ -1640,34 +1609,22 @@ Author     : Greg
                                                                                             Locations per page
 
                                                                                         </label>
-                                                                                        <!--                                                                                <div align="right" id="locationDetailsTablepageNavi" style="margin-right: 0vw;" class="pull-right"></div>-->
 
                                                                                         <script type="text/javascript">
-                                                                                            var reqPager = new Pager('LocationPageNav', 10); 
-                                                                                            reqPager.init(); 
-                                                                                            reqPager.showPageNav('reqPager', 'locationDetailsTablepageNavi'); 
+                                                                                            var reqPager = new Pager('LocationPageNav', 10);
+                                                                                            reqPager.init();
+                                                                                            reqPager.showPageNav('reqPager', 'locationDetailsTablepageNavi');
                                                                                             reqPager.showPage(1);
                                                                                         </script>
                                                                                         <div id="loadingLocation" class="loadingImg" style="display: none">
                                                                                             <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>
                                                                                         </div>
-                                                                                        <!--                                                                                <div id="locationDetailsTablepageNavi" align="right" style="margin-right:0vw;display: none" class="pull-right" ></div>-->
                                                                                         <div style="width:auto;height:auto" >
                                                                                             <div  id="editSpan" class="badge pull-right" style="display:none"></div>
                                                                                         </div>
 
                                                                                     </s:form>
 
-
-                                                                                    <!--                                                                            <script type="text/javascript">
-                                                                                    
-                                                                                                                                                                    var acPager = new Pager('LocationPageNav', 10);
-                                                                                                                                                                    acPager.init();
-                                                                                                                                                                    acPager.showPageNav('acPager', 'LocationPageNavPosition');
-                                                                                                                                                                    acPager.showPage(1);
-                                                                                    
-                                                                                    
-                                                                                                                                                                </script>-->
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1696,22 +1653,24 @@ Author     : Greg
                                                                                                 </div>
                                                                                                 <div class="">
                                                                                                     <s:submit id="addVendorTier" cssClass="cssbutton" onclick="addVendorTierType();"><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div id="editVendorTier_popup">
-                                                                                        <div id="EditVendorTierOverlay" >
-                                                                                            <div class="overlayOrButton_color">
-                                                                                                <table>
-                                                                                                    <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Edit Vendor Tier Details&nbsp;&nbsp; </font></h4></td>
+                                                                                        <div id="editVendorTier_popup">
+                                                                                            <div id="EditVendorTierOverlay" >
+                                                                                                <div class="overlayOrButton_color">
+                                                                                                    <table>
+                                                                                                        <tr><td><h4><font color="#ffffff">Edit Vendor Tier Details</font></h4></td>
+                                                                                                        
+                                                                                                       
+                                                                                                            <td> <span class=" pull-right"><h5><a href="" class="editVendorTier_popup_close" onclick="editVendorTierOverlayClose();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span></td>
                                                                                                     </tr>
-                                                                                                    <span class=" pull-right"><h5><a href="" class="editVendorTier_popup_close" onclick="editVendorTierOverlayClose();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                            <div id="VendorTierDiv">
-                                                                                                <span><e1></e1></span>
-                                                                                                <div class="innerAddConElements">
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                                <div id="VendorTierDiv">
+                                                                                                    <span><e1></e1></span>
+                                                                                                    <div class="innerAddConElements">
                                                                                                     <s:hidden id="tierId" name="tierId"/>
                                                                                                     <label class="labelStyleAddCon">Status</label><s:select id="vendorTierStatus" cssClass="SelectBoxStyles form-control" name="vendorTierStatus" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"  />
 
@@ -1722,24 +1681,16 @@ Author     : Greg
                                                                                                 <div class="innerAddConElements">
                                                                                                     <label class="labelStyleAddCon">Head Hunter</label><s:checkbox name="PF" id="PF" />
                                                                                                 </div>
-                                                                                                <div class="">
+                                                                                                <div class="pull-right">
                                                                                                     <s:submit type="button" cssStyle="margin:5px 0px;"  id="editVendorTierStatus"  cssClass="add_searchButton form-control" value="" onclick="editVendorTierDetails();" ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <%--div class="inner-reqdiv-elements">
-                                                                                        <label class="vendorTierlabelStyle" style="color:#56a5ec;">Type Of Tier:</label>
-                                                                                        <s:select id="vendorTierType" name="vendorTierType" cssClass="reqSelectStyle" headerKey="-1" headerValue="All" theme="simple" list="vendorTierMap" />
-                                                                                        <label class="" style="color:#56a5ec;">Status:</label>
-                                                                                        <s:select id="TierStatus" name="TierStatus" cssClass="reqSelectStyle" headerKey="-1" headerValue="All"  theme="simple" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" />
-                                                                                        <input type="button" value="Search" class="cssbutton" onclick="searchVendorTier();"/>
-                                                                                        <input type="button" class="addVendorTier_popup_open cssbutton" value="Add" onclick="addVendorTierOverlay();" onfocus="clearAddOverlay()"/>
-                                                                                    </div--%>
 
-                                                                                    <div class="row" id="vendorDiv">
-                                                                                        <div class="col-sm-4">
-                                                                                            <label class="labelStyle" style="color:#56a5ec">Type of Tier</label>
+                                                                                        <div class="row" id="vendorDiv">
+                                                                                            <div class="col-sm-4">
+                                                                                                <label class="labelStyle" style="color:#56a5ec">Type of Tier</label>
                                                                                             <s:select id="vendorTierType" name="vendorTierType" cssClass="SelectBoxStyles form-control" tabindex="1" headerKey="-1" headerValue="All" theme="simple" list="vendorTierMap" />
                                                                                         </div>
                                                                                         <div class="col-sm-4">
@@ -1751,17 +1702,17 @@ Author     : Greg
                                                                                                 <label class="labelStylereq" style="color:#56a5ec"></label>
                                                                                                 <s:form action="addVendorForCustomer" theme="simple">
                                                                                                     <s:hidden name="accountSearchID" id="accountSearchID"/>
-                                                                                                    <s:submit type="button" cssClass="add_searchButton form-control" tabindex="4" cssStyle="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit>
+                                                                                                    <s:submit id="addVendorButton" type="button" cssClass="add_searchButton form-control" tabindex="4" cssStyle="margin:5px 0px;"><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit>
                                                                                                 </s:form>
                                                                                             </div>
                                                                                             <div class="col-sm-4 col-md-5 pull-right contact_search">
                                                                                                 <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                                                                <s:submit type="button"  value="" cssClass="add_searchButton form-control" tabindex="3" onclick="searchVendorTier()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                                                                            </div>
+                                                                                                <s:submit id="searchVendorButton" type="button"  value="" cssClass="add_searchButton form-control" tabindex="3" onclick="searchVendorTier()" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                                                </div>
 
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <br>
+                                                                                        <br>
 
                                                                                     <s:form>
                                                                                         <div class="task_content" id="task_div" align="center" style="display: none" >
@@ -1810,185 +1761,6 @@ Author     : Greg
                                                                     </div>
 
 
-
-
-
-
-                                                                    <%--<div class="tab-pane fade in " id="activities">
-                                                                        <div class="panel-body"  >
-                                                                            <div class="row">
-                                                                                <div class="col-lg-12">
-                                                                                    <div class="row">
-                                                                                        <div id="projectsDiv"  >
-                                                                                            acts
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="tab-pane fade in " id="projects">
-                                                                        <div class="panel-body"  >
-                                                                            <div class="row">
-                                                                                <div class="col-lg-12">
-                                                                                    <div class="row">
-                                                                                        <div id="projectsDiv"  >
-                                                                                            Loading Projects
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- start of oppurtunities content -->
-                                                                    <div class="tab-pane fade in " id="opportunities">
-                                                                        <div class="panel-body"  >
-                                                                            <div class="row">
-                                                                                <div class="col-lg-12">
-                                                                                    <div class="row">
-                                                                                        <div id="projectsDiv"  >
-                                                                                            ops
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- End of opportunities content -->
-                                                                    <!-- start of requirements content -->
-                                                                    <div class="tab-pane fade in " id="requirements">
-
-                                                                <div class="panel-body"  >
-                                                                    <div class="row">
-                                                                        <div class="col-sm-12">
-                                                                            <div id="skillShow_popup">
-                                                                                <div id="skillShowBoxOverlay" >
-                                                                                    <div style="background-color: #3bb9ff ; padding: 0px">
-                                                                                        <table>
-                                                                                            <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Skill Details&nbsp;&nbsp; </font></h4></td>
-                                                                                            </tr>
-                                                                                            <span class=" pull-right"><h5><a href="" class="skillShow_popup_close" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <form action="#" theme="simple" >
-                                                                                            <div>
-                                                                                                <div class="inner-reqdiv-elements">
-                                                                                                    <table>
-                                                                                                        <span><error></error></span>
-                                                                                                        <s:textarea name="skillDetails"  label="skillDetails" id="skillDetails"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </form>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div id="addConsultant_popup">
-                                                                                <div id="skillShowBoxOverlay" >
-                                                                                    <div style="background-color: #3bb9ff ; padding: 0px">
-                                                                                        <table>
-                                                                                            <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Add Consultant Details&nbsp;&nbsp; </font></h4></td>
-                                                                                            </tr>
-                                                                                            <span class=" pull-right"><h5><a href="" class="addConsultant_popup_close" ><img src="<s:url value="/includes/images/close_button.jpg"/>" height="23" style="margin-right:10px" width="23"></a></h5></span>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <s:form action="" theme="simple" >
-                                                                                            <div id="mainAddConDiv">
-                                                                                                <span><e1></e1></span>
-                                                                                                <div class="innerAddConElements">
-                                                                                                    <s:hidden name="conId" id="conId" ></s:hidden>
-                                                                                                    <s:hidden name="reqId" id="reqId" ></s:hidden>
-                                                                                                    <label class="labelStyleAddCon">Email:</label><s:textfield name="email" id="conEmail" theme="simple" cssClass="addConInputStyle" onblur="getEmailExistance();"/>
-                                                                                                </div>
-                                                                                                <div class="innerAddConElements">
-                                                                                                    <label class="labelStyleAddCon">ProofType</label><s:select id="proofType" cssClass="reqSelectStyle" name="proofType" list="#@java.util.LinkedHashMap@{'PN':'PAN','PP':'Passport'}" onchange="setPPorPAN(this.value);" />
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <div class="innerAddConElements" id="ppId">
-                                                                                                        <label class="labelStyleAddCon">PassPortNo:</label><s:textfield name="ppno" id="ppno" theme="simple" cssClass="addConInputStyle"/>*
-                                                                                                    </div>
-                                                                                                    <div class="innerAddConElements" id="panId">
-                                                                                                        <label class="labelStyleAddCon">Pan no:</label><s:textfield name="pan" id="pan" theme="simple" cssClass="addConInputStyle"/>*
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="">
-                                                                                                    <s:submit id="addConSubmit" cssClass="cssbutton" value="Submit" onclick="return storeProofData()" />
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </s:form>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <s:form action="../Requirements/addRequirements" method="post" theme="simple" >
-                                                                                <br><br>
-                                                                                <s:hidden id="accountSearchID" name="accountSearchID" value="%{accountSearchID}"></s:hidden>
-                                                                                <s:hidden id="account_name" name="account_name" value="%{accountDetails.name}"></s:hidden>
-                                                                                    <div class="inner-reqdiv-elements">
-                                                                                        <label class="labelStylereq" style="color:#56a5ec;">Req ID:</label>
-                                                                                    <s:textfield cssClass="reqInputStyle" name="requirementId" id="requirementId" placeholder="Requirement Id"/>
-                                                                                    <label class="labelStylereq" style="color:#56a5ec;">Job Title:</label>
-                                                                                    <s:textfield cssClass="reqInputStyle" name="jobTitle" id="jobTitle" placeholder="Job Title"/>
-                                                                                    <label class="labelStylereq" style="color:#56a5ec;">Skills:</label>
-                                                                                    <s:textfield cssClass="reqInputStyle" name="requirementSkill" id="requirementSkill" placeholder="Skill"/>
-
-                                                                                </div>
-                                                                                <div class="inner-reqdiv-elements">
-                                                                                    <label class="labelStylereq" style="color:#56a5ec;">Status:</label>
-                                                                                    <s:select id="requirementStatus" name="requirementStatus" cssClass="reqSelectStyle" headerKey="-1" headerValue="--Select--" theme="simple" list="#@java.util.LinkedHashMap@{'O':'Open','F':'Forecast','I':'Inprogess','H':'Hold','W':'Withdrawn','S':'Won','L':'Lost'}" />
-                                                                                    <label class="labelStylereq" style="color:#56a5ec;">StartDate:</label>
-                                                                                    <s:textfield cssClass=" reqInputStyle dateImage" name="reqStart" id="reqStart" placeholder="FromDate"  tabindex="1"  onkeypress="return enterDateRepository();"/>
-                                                                                    <label class="labelStylereq" style="color:#56a5ec;">EndDate:</label>
-                                                                                    <s:textfield cssClass=" reqInputStyle dateImage" name="reqEnd" placeholder="ToDate"  id="reqEnd" tabindex="2"  onkeypress="return enterDateRepository();"/>
-
-                                                                                </div>
-                                                                                <div class="inner-reqdiv-elements pull-right">
-                                                                                    <s:submit value="AddRequirement" cssClass="cssbutton"></s:submit>
-                                                                                        <a href="#" ><input type="button" class="cssbutton " onclick="getReqDetailsBySearch()" value="Search"></a>
-
-                                                                                    </div>
-                                                                            </s:form>
-                                                                            <br>
-                                                                            <s:form>
-                                                                                <div class="task_content" id="task_div" align="center" style="display: none" >
-
-                                                                                    <div>
-                                                                                        <div>
-                                                                                            <table id="reqTable" class="responsive CSSTable_task" border="5"cell-spacing="2">
-                                                                                                <tbody>
-                                                                                                    <tr>
-                                                                                                        <th>Title</th>
-                                                                                                        <th>No.of Positions</th>
-                                                                                                        <th>Req Skill Set</th>
-                                                                                                        <th>Pre Skill Set</th>
-                                                                                                        <th>StartDate</th>
-                                                                                                        <th>Status</th>
-                                                                                                        <th>Add Consultant</th>
-
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                            <br/>
-                                                                                            <div align="right" id="reqpageNavPosition" style="margin-right: 0vw;"></div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </s:form>
-                                                                            <script type="text/javascript">
-                                                                                var pager = new Pager('reqTable', 10);
-                                                                                pager.init();
-                                                                                pager.showPageNav('pager', 'reqpageNavPosition');
-                                                                                pager.showPage(1);
-
-
-                                                                            </script>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="tab-pane fade in " id="projects">
-                                                                    </div>
-                                                                </div>
-                                                            </div>--%>
                                                                 </div>
                                                                 <!--  overlay start  -->
                                                                 <div id="recSkillOverlay_popup">
@@ -2033,12 +1805,12 @@ Author     : Greg
                                                                                             <s:textfield cssClass="form-control " id="attachmentTitle"
                                                                                                          name="attachmentTitle"
                                                                                                          placeholder="Title" 
-                                                                                                         value=""
+                                                                                                         value="" maxLength="200"
                                                                                                          />
                                                                                         </div>     
                                                                                         <div class="col-sm-6">
                                                                                             <label>Document&nbsp;Type </label>
-                                                                                            <s:select id="vendorDocs"
+                                                                                            <s:select id="vendorDocs_add"
                                                                                                       cssClass="SelectBoxStyles form-control"
                                                                                                       name="vendorDocs"
                                                                                                       list="#@java.util.LinkedHashMap@{'W9F':'W-9 Form','MIN':'Minority Certification','LIA':'Liability Insurance Certificate','MSA':'MSA Document'}"
@@ -2059,20 +1831,20 @@ Author     : Greg
                                                                                                          placeholder="select Date" 
                                                                                                          onkeypress="return enterDateRepositoryAttachment();" autocomplete="off" onfocus="return removeFormErrorMsg();"
                                                                                                          ><i class="fa fa-calendar"></i></s:textfield>
-                                                                                            </div></div>
+                                                                                                </div></div>
 
 
 
-                                                                                        <div class="col-sm-12">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec;">Comments </label>
+                                                                                            <div class="col-sm-12">
+                                                                                                <label class="labelStylereq" style="color:#56a5ec;">Comments </label>
                                                                                             <s:textarea cssClass="form-control"  maxLength="250" id="attachmentComments"
                                                                                                         name="attachmentComments"
                                                                                                         placeholder="Comments" 
                                                                                                         value="" onkeyup=" CheckRemainingAttachCharacters(this)" 
                                                                                                         />
-                                                                                           
+
                                                                                         </div>  
-                                                                                          <div class="charNum pull-right" id="charRemainAttach"></div>
+                                                                                        <div class="charNum pull-right" id="charRemainAttach"></div>
                                                                                     </div>   
 
                                                                                 </div>
@@ -2080,8 +1852,8 @@ Author     : Greg
                                                                                     <div class="row">
 
 
-                                                                                        <div class="col-sm-3 pull-right"><s:submit cssStyle="margin:5px 0px;" cssClass=" add_searchButton form-control col-sm-offset-10 btn cssbutton" value="" type="button" onclick="return addVendorFormDetails()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit></div>
-                                                                                    </div></div></div>
+                                                                                        <div class="col-sm-3 pull-right"><s:submit id="saveVendorForm" cssStyle="margin:5px 0px;" cssClass=" add_searchButton form-control col-sm-offset-10 btn cssbutton" value="" type="button" onclick="return addVendorFormDetails()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit></div>
+                                                                                        </div></div></div>
                                                                                     <s:token/>
                                                                                 </s:form>
 
@@ -2107,7 +1879,7 @@ Author     : Greg
                                                                                         <div class="col-lg-6 required">
                                                                                             <label class="labelStylereq" style="color:#56a5ec;">Title </label>
                                                                                             <s:textfield cssClass="form-control" id="editTitle" name="editTitle"
-                                                                                                         value=""
+                                                                                                         value="" maxLength="200"
 
                                                                                                          />
                                                                                         </div>
@@ -2116,37 +1888,34 @@ Author     : Greg
                                                                                             <label class="labelStylereq" style="color:#56a5ec;">Validity </label>
                                                                                             <div class="calImage"><s:textfield cssClass="form-control  " id="editValidity" name="editValidity"
                                                                                                          type="dropdown" 
+                                                                                                         onkeypress="return enterDateRepositoryAttachment();"
                                                                                                          onfocus="return removeFormErrorMsg();"
                                                                                                          autocomplete="off" 
                                                                                                          value=""
                                                                                                          ><i class="fa fa-calendar"></i></s:textfield>
-                                                                                            </div></div>
+                                                                                                </div></div>
 
-                                                                                        <!--                                                                                <div class="col-lg-4 required">
-                                                                                                                                                                            <label class="labelStylereq" style="color:#56a5ec;">Upload&nbsp;Form: </label>
-                                                                                        <%--<s:file cssClass="form-control"  id="file" name="file" onchange="return attachmentFileFormatValidation();" onfocus="return removeFormErrorMsg();"/>--%>
-                                                                                        <font style="color: blue"> Upload doc or pdf or docx </font>
-                                                                                    </div>-->
-                                                                                        <div class="col-lg-2"></div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-12 ">
-                                                                                            <label class="labelStylereq" style="color:#56a5ec;">Comments </label>
+
+                                                                                            <div class="col-lg-2"></div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-12 ">
+                                                                                                <label class="labelStylereq" style="color:#56a5ec;">Comments </label>
                                                                                             <s:textarea cssClass="form-control " id="editattachmentComments"
                                                                                                         name="editattachmentComments"
                                                                                                         placeholder="Comments" maxLength="250" 
                                                                                                         value=""  onkeyup=" CheckRemainingEditAttachCharacters(this)" 
                                                                                                         />
-                                                                                            
+
                                                                                         </div>  
-                                                                                             <div class="charNum pull-right" id="charRemainEditAttach"></div>
+                                                                                        <div class="charNum pull-right" id="charRemainEditAttach"></div>
                                                                                     </div>         
                                                                                 </div>
                                                                                 <div class="inner-reqdiv-elements">
                                                                                     <div class="row">
 
                                                                                         <div class="col-lg-10"></div>
-                                                                                        <div class="col-lg-3 pull-right"><s:submit cssStyle="margin:5px 0px;"  cssClass=" add_searchButton form-control col-sm-offset-10 btn cssbutton" value="" type="button"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit></div>
+                                                                                        <div class="col-lg-3 pull-right"><s:submit id="editVendorAttach" cssStyle="margin:5px 0px;"  cssClass=" add_searchButton form-control col-sm-offset-10 btn cssbutton" value="" type="button"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit></div>
                                                                                     </div></div></div></s:form>
 
                                                                             <font style="color: #ffffff">..................... ..............................  ..........................................</font>
@@ -2194,7 +1963,8 @@ Author     : Greg
                                                                         <div class="backgroundcolor">
                                                                             <table>
                                                                                 <tr><td><h4 style="font-family:cursive"><font class="titleColor" >&nbsp;&nbsp; contact Login Credentials&nbsp;&nbsp; </font></h4></td>
-                                                                                <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="contactLoginOverlay_popup_close" onclick="contactOverlayLogin();getContactSearchResults();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                                                                <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="contactLoginOverlay_popup_close" onclick="contactOverlayLogin();
+                                                                                        getContactSearchResults();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                                             </table>
                                                                         </div>
                                                                         <div>
@@ -2234,9 +2004,9 @@ Author     : Greg
                                                                                 <s:hidden name="accountSearchID" id="accountSearchID"/>
                                                                             </div>
 
-                                                                            <div class="pull-right " > 
+                                                                            <div class="col-sm-12" > 
 
-                                                                                <s:submit type="button" cssClass="cssbutton fa fa-floppy-o" id="contactSend" value="Save" onclick="csrStatusChange()"/> 
+                                                                                <s:submit type="button" cssClass="cssbutton fa fa-floppy-o" id="csrSaveButton" value="Save" onclick="csrStatusChange()"/> 
 
                                                                             </div>
 
@@ -2265,6 +2035,7 @@ Author     : Greg
                 $("#fax").mask("(999)-999-9999");
                 $("#locationPhone").mask("(999)-999-9999");
                 $("#locationFax").mask("(999)-999-9999");
+                $("#locationSearchPhone").mask("(999)-999-9999");
             </script>
             <%--------------MIDDLE -----------------------------------------%>
         </div>
@@ -2275,6 +2046,10 @@ Author     : Greg
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script>
+            $("#resume").show().delay(3000).fadeOut();
+
+        </script>
         <s:hidden id="testRealValue"/>
         <%--ACCOUNT DETAILS SPECIFIC--%>
         <script language="JavaScript" src="<s:url value="/includes/js/account/accountDetailsAJAX.js"/>" type="text/javascript"></script>
@@ -2286,114 +2061,76 @@ Author     : Greg
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/selectivity-full.min.js"/>"></script> 
         <script>
-            
+
             $('#skillCategoryValue').selectivity({
-                    
                 multiple: true,
                 placeholder: 'Type to search skills'
             });
-            
-            
+
+
         </script>
 
         <script type="text/javascript">
-            //alert("before flag");
-            // alert(document.getElementById("conFlag").value);
-            var flag=document.getElementById("accFlag").value;
+            var flag = document.getElementById("accFlag").value;
 
-            //alert(flag);
-            if(flag=="CsrSearch")
+            if (flag == "CsrSearch")
             {
-                //alert("in if");
-                // document.getElementById('details').className="";
-                document.getElementById("headingmessage").innerHTML='Csr Accounts<i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'csrAssignDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
-                document.getElementById('csrAccountsRef').className='tab-pane fade in active';
-                // var obj=document.getElementById('contacts');
-                //alert(obj);
-                //alert("before show contacts function");
+                document.getElementById("headingmessage").innerHTML = 'Csr Accounts<i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'csrAssignDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
+                document.getElementById('csrAccountsRef').className = 'tab-pane fade in active';
                 getCsrDetailsTable();
-                // alert("after show contacts function");
-
-
             }
-            if(flag=="conSearch")
+            if (flag == "conSearch")
             {
-                //alert("in if");
-                // document.getElementById('details').className="";
-                document.getElementById("headingmessage").innerHTML='Contacts<i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'contactDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                document.getElementById('contacts').className='tab-pane fade in active';
-                // var obj=document.getElementById('contacts');
-                //alert(obj);
-                //alert("before show contacts function");
+                document.getElementById("headingmessage").innerHTML = 'Contacts<i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'contactDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('contacts').className = 'tab-pane fade in active';
                 showContacts();
-                // alert("after show contacts function");
-
-
             }
-            if(flag=="accDetails")
+            if (flag == "accDetails")
             {
-                            
-                var nameFlag=document.getElementById("nameFlag").value;
-                //alert("in accDetails if");
-                // document.getElementById('details').className="";
-                if(nameFlag=='Vendor'){
-                    document.getElementById("headingmessage").innerHTML="Vendor Details";
-                }else{
-                    document.getElementById("headingmessage").innerHTML="Account Details";
+                var nameFlag = document.getElementById("nameFlag").value;
+                if (nameFlag == 'Vendor') {
+                    document.getElementById("headingmessage").innerHTML = "Vendor Details";
+                } else {
+                    document.getElementById("headingmessage").innerHTML = "Account Details";
                 }
-                //document.getElementById("headingmessage").innerHTML="Account Details";
-                document.getElementById('details').className='tab-pane fade in active';
+                document.getElementById('details').className = 'tab-pane fade in active';
             }
-            if(flag=="proSearch")
+            if (flag == "proSearch")
             {
-                //alert("in accDetails if");
-                // document.getElementById('details').className="";
-                document.getElementById("headingmessage").innerHTML="Projects";
-                document.getElementById('projects').className='tab-pane fade in active';
-                var orgId=document.getElementById("accountSearchID").value;
-                javascript: ajaxReplaceDiv('/getAccountProjects','#projects','accountID='+orgId);
+                document.getElementById("headingmessage").innerHTML = "Projects";
+                document.getElementById('projects').className = 'tab-pane fade in active';
+                var orgId = document.getElementById("accountSearchID").value;
+                javascript: ajaxReplaceDiv('/getAccountProjects', '#projects', 'accountID=' + orgId);
             }
-            if(flag=="reqSearch")
+            if (flag == "reqSearch")
             {
-                //alert("in accDetails if");
-                // document.getElementById('details').className="";
-                document.getElementById("headingmessage").innerHTML='Account Requirements<i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'requirementDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                document.getElementById('requirements').className='tab-pane fade in active';
-                //var orgId=document.getElementById("accountSearchID").value;
+                document.getElementById("headingmessage").innerHTML = 'Account Requirements<i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'requirementDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('requirements').className = 'tab-pane fade in active';
                 getSearchRequirementsList();
             }
-            if(flag=="assignTeamUpdate")
+            if (flag == "assignTeamUpdate")
             {
 
-                document.getElementById("headingmessage").innerHTML="Assign Team";
-                document.getElementById('team').className='tab-pane fade in active';
-                //var orgId=document.getElementById("accountSearchID").value;
-                //getRequirementDetails();
+                document.getElementById("headingmessage").innerHTML = "Assign Team";
+                document.getElementById('team').className = 'tab-pane fade in active';
             }
-            if(flag=="requirements")
+            if (flag == "requirements")
             {
-                //alert("requirements");
-                document.getElementById("headingmessage").innerHTML='Account Requirements<i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'requirementDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                document.getElementById('requirements').className='tab-pane fade in active';
-                //var orgId=document.getElementById("accountSearchID").value;
-                //getRequirementDetails();
+                document.getElementById("headingmessage").innerHTML = 'Account Requirements<i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'requirementDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('requirements').className = 'tab-pane fade in active';
             }
-            if(flag=="venSearch")
+            if (flag == "venSearch")
             {
-                //alert("venSearch");
-                document.getElementById("headingmessage").innerHTML="Vendor Tier's";document.getElementById("headingmessage").innerHTML='Vendor Tier'+"'"+'s <i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'vendorDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                document.getElementById('subvendors').className='tab-pane fade in active';
-                //var orgId=document.getElementById("accountSearchID").value;
-                           
+                document.getElementById("headingmessage").innerHTML = "Vendor Tier's";
+                document.getElementById("headingmessage").innerHTML = 'Vendor Tier' + "'" + 's <i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'vendorDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('subvendors').className = 'tab-pane fade in active';
                 getVendors();
             }
-            if(flag=="attachDetails")
+            if (flag == "attachDetails")
             {
-                //alert("venSearch");
-                document.getElementById("headingmessage").innerHTML="Vendor Forms";document.getElementById("headingmessage").innerHTML='Vendor Forms <i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'vendorDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
-                document.getElementById('VendorForms').className='tab-pane fade in active';
-                //var orgId=document.getElementById("accountSearchID").value;
-                           
+                document.getElementById("headingmessage").innerHTML = "Vendor Forms";
+                document.getElementById("headingmessage").innerHTML = 'Vendor Forms <i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'VendorFormstDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById('VendorForms').className = 'tab-pane fade in active';
                 showAttachments();
             }
         </script>
@@ -2401,109 +2138,107 @@ Author     : Greg
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
         <script type="text/javascript">
-            var recordPage=10;
-            function pagerOption(){
+            var recordPage = 10;
+            function pagerOption() {
                 initSessionTimer();
                 var paginationSize = document.getElementById("paginationOption_cnt").value;
-                if(isNaN(paginationSize))
-                // alert(paginationSize);
+                if (isNaN(paginationSize))
                 {
-                           
-                }
-                recordPage=paginationSize;
-                // alert(recordPage)
-                $('#contactPageNav').tablePaginate({navigateType:'navigator'},recordPage);
 
-            };
-            $('#contactPageNav').tablePaginate({navigateType:'navigator'},recordPage);
+                }
+                recordPage = paginationSize;
+                $('#contactPageNav').tablePaginate({navigateType: 'navigator'}, recordPage);
+
+            }
+            ;
+            $('#contactPageNav').tablePaginate({navigateType: 'navigator'}, recordPage);
         </script>
 
         <script type="text/javascript">
-            var recordPage=10;
-            function vpagerOption(){
+            var recordPage = 10;
+            function vpagerOption() {
                 var paginationSize = document.getElementById("vpaginationOption").value;
-                if(isNaN(paginationSize))
-                //   alert(paginationSize);
+                if (isNaN(paginationSize))
                 {
-                         
-                }
-                recordPage=paginationSize;
-               
-                $('#vendorFormPageNav').tablePaginate({navigateType:'navigator'},recordPage);
 
-            };
+                }
+                recordPage = paginationSize;
+                $('#vendorFormPageNav').tablePaginate({navigateType: 'navigator'}, recordPage);
+
+            }
+            ;
         </script>
 
         <script type="text/javascript">
-            var recordPage=10;
-            function Loc_pagerOption(){
+            var recordPage = 10;
+            function Loc_pagerOption() {
 
                 var paginationSize = document.getElementById("loc_paginationOption").value;
-                if(isNaN(paginationSize))
-                // alert(paginationSize);
-                    recordPage=paginationSize;
+                if (isNaN(paginationSize))
+                    recordPage = paginationSize;
                 alert(recordPage)
-                $('#LocationPageNav').tablePaginate({navigateType:'navigator'},recordPage);
+                $('#LocationPageNav').tablePaginate({navigateType: 'navigator'}, recordPage);
 
-            };
-      
+            }
+            ;
+
         </script>
 
 
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
         <script type="text/javascript">
-            var recordPage=10;
-            function accpagerOption(){
+            var recordPage = 10;
+            function accpagerOption() {
 
                 var paginationSize = document.getElementById("accpaginationOption").value;
-                if(isNaN(paginationSize))
+                if (isNaN(paginationSize))
                 {
-                       
-                }
-                recordPage=paginationSize;
-                // alert(recordPage)
-                $('#reqTableInAccount').tablePaginate({navigateType:'navigator'},recordPage);
 
-            };
-            $('#reqTableInAccount').tablePaginate({navigateType:'navigator'},recordPage);
+                }
+                recordPage = paginationSize;
+                $('#reqTableInAccount').tablePaginate({navigateType: 'navigator'}, recordPage);
+
+            }
+            ;
+            $('#reqTableInAccount').tablePaginate({navigateType: 'navigator'}, recordPage);
         </script>
 
         <script type="text/javascript">
-            var recordPage=10;
-            function vendor_pagerOption(){
+            var recordPage = 10;
+            function vendor_pagerOption() {
                 var paginationSize = document.getElementById("vendor_paginationOption").value;
-                if(isNaN(paginationSize))
-                //   alert(paginationSize);
+                if (isNaN(paginationSize))
                 {
-                         
-                }
-                recordPage=paginationSize;
-               
-                $('#vendorTierTable').tablePaginate({navigateType:'navigator'},recordPage);
 
-            };
+                }
+                recordPage = paginationSize;
+
+                $('#vendorTierTable').tablePaginate({navigateType: 'navigator'}, recordPage);
+
+            }
+            ;
         </script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
 
         <script type="text/javascript">
-            var recordPage=10;
-            function csrpagerOption(){
+            var recordPage = 10;
+            function csrpagerOption() {
 
                 var paginationSize = document.getElementById("csrpaginationOption").value;
-                if(isNaN(paginationSize))
+                if (isNaN(paginationSize))
                 {
-                       
-                }
-                recordPage=paginationSize;
-                // alert(recordPage)
-                $('#csrDetailsTable').tablePaginate({navigateType:'navigator'},recordPage);
 
-            };
-            $('#csrDetailsTable').tablePaginate({navigateType:'navigator'},recordPage);
-        
-        
-          
+                }
+                recordPage = paginationSize;
+                $('#csrDetailsTable').tablePaginate({navigateType: 'navigator'}, recordPage);
+
+            }
+            ;
+            $('#csrDetailsTable').tablePaginate({navigateType: 'navigator'}, recordPage);
+
+
+
         </script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/jQueryAjaxFileUpload.js"/>"></script>

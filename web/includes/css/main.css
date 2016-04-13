@@ -10,9 +10,32 @@ html, body {height: 97%;}
          height: 50px;
          clear:both;} 
 
+#InvoiceGenerationOverlay_popup{
+    width:41%;
+}
+
+.quest{
+    font-size: 15px !important;
+    color:#45b5de;
+    margin-left:2px;
+ 
+}
+
+.no_gutter{
+   padding:0;
+ 
+}
+
+#costCenterBudget_popup{  
+  width:50%;  
+}
+
+.opts{
+    margin-left:7px !important;
+}
 
 .budget{
-    background: url('../includes/images/budget.png')  no-repeat;
+    background: url('../../includes/images/budget.png')  no-repeat;
     background-size: 25px 26px;
     background-position: 77% 54%;
 }
@@ -1220,7 +1243,7 @@ h2.title {
 }
 
 .add-to{
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .add-to-cart i{
@@ -1840,7 +1863,7 @@ h2.title {
 
 
 
-.or{
+.or1{
     background: #3498db;
     border-radius: 40px;
     color: #FFFFFF;
@@ -3212,7 +3235,8 @@ select::-ms-expand {
     margin-right: 0;
     margin-top: 18px;
     padding: 7px 15px;
-    margin: 4px 12px;
+    margin: 4px 0px;
+    
 }
 
 .cssbutton_update{
@@ -3335,6 +3359,7 @@ select::-ms-expand {
     margin-top: 16px;
     padding: 3px;
     text-align: center;
+    margin:8px 6px;
 }
 .add_searchButton:hover{
     color:#fff;
@@ -3554,7 +3579,7 @@ div#SOWBox {
     display: block;
 }*/
 .dropdown-menu.columns-2 {
-    min-width: 200%;
+    min-width: 212%;
 }
 .dropdown-menu.columns-3 {
     min-width: 600px;
@@ -3663,12 +3688,12 @@ div#SOWBox {
 }
 
 /*Added for the icons for left  */
-#leftBullet
+.leftBullet
 {
     color: white;
     font-size: 14px;
 }
-#leftBullet:hover
+.leftBullet:hover
 {
     color: orange;
 
@@ -4052,7 +4077,9 @@ div#conWithdrawBox
     width:100px;
 }
 
-
+#techReviewResults_popup{
+    width:77%;
+}
 
 .contact_add{
     width:97px;
@@ -4152,7 +4179,17 @@ div#declineBox
 .overlayOrButton_color{
     /*background-color: #45b5de;*/
     background-color: #4491DF;
+    white-space: nowrap;
 }
+
+#CommcharNum{
+    color:green;
+}
+
+.overlayOrButton_color h4{
+    padding:0 38px 0 2px!important;
+}
+
 .fa-size{
     font-size:1.73333333em;
     line-height:.75em;
@@ -4332,3 +4369,13 @@ div#declineBox
     line-height:.75em;
     vertical-align:-15%
 }*/
+div#sendEmailOfPendingInvoiceOverlay
+{
+    display: none;
+    z-index: 3;
+    background: #f9f9f9;
+    color: #3711F5;
+    border-radius: 3px; 
+    border: 1px solid #708090;
+    overflow-x: hidden;
+}

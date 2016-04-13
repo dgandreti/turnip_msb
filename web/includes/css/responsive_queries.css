@@ -45,6 +45,23 @@ root {
     margin-top: 12px; 
 }
 
+ @media (width:320px){
+   .margin_overlay {
+    width:95%;    
+    }
+   div.contactEmail
+    {
+    margin-right:15px;
+    }
+    
+}
+
+@media (min-width:320px) and (max-width:430px){
+  #InvoiceGenerationOverlay_popup{
+    width:76% !important;    
+    }
+    
+}
 
 @media (max-width:499px){
     .align_left{
@@ -53,6 +70,25 @@ root {
     }
     
 }
+
+@media(width:768px)
+{
+    .tech_lab{
+        width:63px;
+    }
+}
+@media  (min-width: 768px) and (max-width:1200px){
+    .generate_btn{
+        width: 100px;
+    }
+}
+
+@media  (min-width: 380px) and (max-width:980px){
+    .task_btn{
+        margin-left: 12px;
+    }
+}
+
 @media  (min-width: 280px) and (max-width:577px){
     #footer{
         height: 26%;
@@ -68,6 +104,9 @@ root {
     
     #myCarousel{
         display: none;
+    }
+    .label_order{
+        width:71px;
     }
 }
 
@@ -263,7 +302,7 @@ root {
     }
 
     .btn_order{
-        margin:0;
+        margin:1;
     }
 
     .register_form{

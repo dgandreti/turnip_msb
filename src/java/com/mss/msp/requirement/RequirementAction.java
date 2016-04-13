@@ -25,10 +25,6 @@ import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
-/**
- *
- * @author miracle
- */
 public class RequirementAction extends ActionSupport implements ServletRequestAware, ServletResponseAware {
 
     private int primaryRole;
@@ -70,24 +66,18 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
     private String requirementId;
     private String requirementExp;
     private Map typesTiers;
-    //for requirement retrieval//
     private String requirementskDetails;
     private int accountSearchID;
-    //for requirement retrieval//
-    //for requirement search//
     private String requirementSkill;
     private String requirementStatus;
     private String reqStart;
     private String reqEnd;
     private String jobTitle;
     private int sessionOrgId;
-    //for requirement search//
     private Map recruitmentMap;
     private Map presalesMap;
     private String accountName;
-    //for consultance existance
     private String conEmail;
-    //for getting data of the cosultant in req_con_rel table
     private String conId;
     private String reqId;
     private String proofType;
@@ -96,9 +86,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
     private String proofValue;
     private String accountFlag;
     private String account_name;
-    //for vendor viewing
     private String vendor;
-    //06082015 vars created by rk 
     private String mailIds;
     private String reqName;
     private String reqStartDate;
@@ -115,7 +103,6 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
     private String reqFlag;
     private String billingContact;
     private String requirementDurationDescriptor;
-    //for dashBoard CSR
     private String dashYears;
     private String csrCustomer;
     private String accountId;
@@ -152,35 +139,36 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
     private String RequirementPreferredSkills;
     private MailManager mailManager = new MailManager();
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : addRequirements() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String addRequirements() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: addRequirements Method Start*********************");
+
         try {
 
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("$$$$$$$$$$$$$$$$$$$$ IN ACTION.......> " + getAccountSearchID());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                System.out.println("user id" + getUserSessionId());
                 setOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                // System.out.println("orgid is" + getOrgId());
                 setContacts(dataSourceDataProvider.getInstance().getSalesTeam(getOrgId()));
-                // System.out.println("contacts are" + getContacts());
                 setCountryMap(dataSourceDataProvider.getInstance().getCountryNames());
                 setExperienceMap(dataSourceDataProvider.getInstance().getYearsOfExp());
                 setRecruitmentMap(dataSourceDataProvider.getInstance().getRecruitmentDeptNames(getOrgId()));
                 setPresalesMap(dataSourceDataProvider.getInstance().getSalesTeam(getOrgId()));
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
-                Map skillsmap = (Map) session.get("skillsmap");
-                //  session.get("");
 
+                Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
                 setPreSkillValuesMap(skillsmap);
-                // setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-                // setPreSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-                /* 
-                 * in the belo liine 1 indeicates recruitment from lkusr_grp table and from there we are classifying  
-                 *groups for the users in an oraganization
-                 */
                 setReqCategory(dataSourceDataProvider.getInstance().getRequiteCategory(1));
                 setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getAccountSearchID()));
                 resultMessage = SUCCESS;
@@ -190,21 +178,30 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
             resultType = ERROR;
 
         }
+        System.out.println("********************RequirementAction :: addRequirements Method End*********************");
         return resultMessage;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doCopyRequirement() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String doCopyRequirement() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: doCopyRequirement Method Start*********************");
         try {
 
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("$$$$$$$$$$$$$$$$$$$$ IN ACTION.......> " + getAccountSearchID());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                System.out.println("user id" + getUserSessionId());
                 setOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                // System.out.println("orgid is" + getOrgId());
                 setContacts(dataSourceDataProvider.getInstance().getSalesTeam(getOrgId()));
-                // System.out.println("contacts are" + getContacts());
                 setCountryMap(dataSourceDataProvider.getInstance().getCountryNames());
                 setExperienceMap(dataSourceDataProvider.getInstance().getYearsOfExp());
                 setRecruitmentMap(dataSourceDataProvider.getInstance().getRecruitmentDeptNames(getOrgId()));
@@ -212,14 +209,10 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setAccountName(dataSourceDataProvider.getInstance().getAccountNameById(getAccountSearchID()));
                 setReqCategory(dataSourceDataProvider.getInstance().getRequiteCategory(1));
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
                 setPreSkillValuesMap(skillsmap);
                 requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(), skillsmap);
-                //  setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-                //  setPreSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-                //requirementVTO = ServiceLocator.getRequirementService().editrequirement(getRequirementId(), skillsmap);
                 resultMessage = SUCCESS;
             }
         } catch (Exception ex) {
@@ -227,19 +220,31 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
             resultType = ERROR;
 
         }
+        System.out.println("********************RequirementAction :: doCopyRequirement Method End*********************");
         return resultMessage;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : addRequirementDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String addRequirementDetails() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: addRequirementDetails Method Start*********************");
         int requirement;
         try {
-            System.out.println("hello Requirement");
+
+
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-
                 setOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("account Search id" + getAccountSearchID());
                 requirement = ServiceLocator.getRequirementService().addRequirementDetails(this, getOrgId());
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
@@ -256,12 +261,25 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
             resultType = ERROR;
 
         }
+        System.out.println("********************RequirementAction :: addRequirementDetails Method End*********************");
         return resultMessage;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : setrequirementedit() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String setrequirementedit() {
         String resultMessage;
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: setrequirementedit Method Start*********************");
 
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
@@ -272,21 +290,19 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setReqCategory(dataSourceDataProvider.getInstance().getRequiteCategory(1));
                 setCountryMap(dataSourceDataProvider.getInstance().getCountryNames());
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
+
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillValuesMap(skillsmap);
                 setPreSkillValuesMap(skillsmap);
-                //  setSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
-                //  setPreSkillValuesMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
+
                 if (typeOfUser.equals("VC") || typeOfUser.equals("SA")) {
-                    // System.out.println("------User Type is Vendor----->");    
-                    //System.out.println("requirement id----->"+getRequirementId());    
+
                     int orgId = ServiceLocator.getRequirementService().getOrgIdCustomer(getRequirementId());
-                    // System.out.println("orgId------->"+orgId);
+
                     setEmployeeNames(dataSourceDataProvider.getInstance().getRecruitmentDeptNames(orgId));
 
                 } else {
-                    //System.out.println("--------user type is Customer----->");        
+
                     setEmployeeNames(dataSourceDataProvider.getInstance().getRecruitmentDeptNames(org_id));
                 }
                 setExperienceMap(dataSourceDataProvider.getInstance().getYearsOfExp());
@@ -307,41 +323,53 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
 
                 resultMessage = ERROR;
             }
-        }// Session validator if END
+        }
+        System.out.println("********************RequirementAction :: setrequirementedit Method End*********************");
         return resultMessage;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : updateRequirements() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String updateRequirements() {
         String resultMessage;
         resultMessage = LOGIN;
         int updated = 0;
-        int mailResult=0;
+        int mailResult = 0;
+        System.out.println("********************RequirementAction :: updateRequirements Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                System.out.println("ddddd" + getRequirementId() + "     " + getRequirementFrom() + "   " + getRequirementAddress());
+
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                System.out.println("in update requirement");
+
                 int org_id = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
 
-                // setSales(dataSourceDataProvider.getInstance().getSalesTeam(org_id));
+
 
                 updated = ServiceLocator.getRequirementService().updateRequirement(userid, this);
-                System.out.println(getRequirementStatus()+"-----------status------------------------"+getStatus_check());
+
                 if (updated > 0) {
-                    if ((!"OR".equalsIgnoreCase(getStatus_check()))&&("OR".equalsIgnoreCase(getRequirementStatus()))) {
+                    if ((!"OR".equalsIgnoreCase(getStatus_check())) && ("OR".equalsIgnoreCase(getRequirementStatus()))) {
                         setMailIds(DataSourceDataProvider.getInstance().getMailIdsOfVendorAssociated(getRequirementId()));
                         StringTokenizer mailID = new StringTokenizer(getMailIds(), ",");
                         while (mailID.hasMoreElements()) {
                             setMailIds(mailID.nextElement().toString());
-                            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&>>>>" + getMailIds());
-                            mailResult = mailManager.requirementStatusChangeMailGenerator(this , getMailIds(), userid);
+
+                            mailResult = mailManager.requirementStatusChangeMailGenerator(this, getMailIds(), userid);
                         }
                         if (mailResult > 0) {
-                            System.out.println("Email logger added ================================>%%%%%%%%%%%%%%%%%%%%%%%%");
                         }
                     }
                 }
-                System.out.println("updated" + updated);
+
 
             } catch (Exception ex) {
 
@@ -350,27 +378,29 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
 
                 resultType = ERROR;
             }
-        }// Session validator if END
+        }
+        System.out.println("********************RequirementAction :: updateRequirements Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :05/06/2015
      *
-     * @getRequirementDetails() method is used to get Requirement details of
-     * account
+     * Author : Ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:Ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getRequirementDetails() method is used to get Requirement
+     * details of account
      *
-     * @Created Date:05/06/2015
      *
-     **************************************
+     * *****************************************************************************
      */
     public String getRequirementDetails() {
         resultType = LOGIN;
+        System.out.println("********************RequirementAction :: getRequirementDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-                System.out.println("############# IN REQUIREMENT ACTIONNNNNNNNNNNNNNNNNNNNNNNNNN");
+
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 requirementskDetails = ServiceLocator.getRequirementService().getRequirementDetails(this);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -385,23 +415,24 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
             System.out.println("Exception in req search action1-->" + ex.getMessage());
             resultType = ERROR;
         }
+        System.out.println("********************RequirementAction :: getRequirementDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :05/06/2015
      *
-     * @getRequirementDetails() method is used to get Requirement details of
-     * account
+     * Author : Ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:Ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getReqDetailsBySearch() method is used to
      *
-     * @Created Date:05/06/2015
      *
-     **************************************
+     * *****************************************************************************
      */
     public String getReqDetailsBySearch() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getReqDetailsBySearch Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
 
@@ -419,23 +450,24 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getReqDetailsBySearch Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :05/06/2015
      *
-     * @getRequirementDetails() method is used to get Requirement details of
-     * account
+     * Author : Ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:Ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getSkillDetaisls() method is used to
      *
-     * @Created Date:05/06/2015
      *
-     **************************************
+     * *****************************************************************************
      */
     public String getSkillDetaisls() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getSkillDetaisls Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -453,20 +485,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getSkillDetaisls Method End*********************");
         return null;
     }
-    /**
-     * *************************************
-     *
-     * @getRequirementDetails() method is used to get Requirement details of
-     * account
-     *
-     * @Author:Ramakrishna<lankireddy@miraclesoft.com>
-     *
-     * @Created Date:05/06/2015
-     *
-     **************************************
-     */
     private String fileContentType;
     private String fileFileName;
     private String filesPath;
@@ -522,18 +543,29 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
         this.propsedSkills = propsedSkills;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : storeProofData() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String storeProofData() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: storeProofData Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
 
                 if (getFileFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filesPath = Properties.getProperty("Task.Attachment");
                     File createPath = new File(filesPath);
                     Date dt = new Date();
-                    /*The month is generated from here*/
+
 
                     String month = "";
                     if (dt.getMonth() == 0) {
@@ -562,71 +594,60 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                         month = "Dec";
                     }
                     short week = (short) (Math.round(dt.getDate() / 7));
-                    /*getrequestType is used to create a directory of the object type specified in the jsp page*/
-                    createPath = new File(createPath.getAbsolutePath() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
-                    /*This creates a directory forcefully if the directory does not exsist*/
 
-                    //System.out.println("path::"+createPath);
+                    createPath = new File(createPath.getAbsolutePath() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
+
+
+
                     createPath.mkdir();
-                    /*here it takes the absolute path and the name of the file that is to be uploaded*/
+
                     File theFile = new File(createPath.getAbsolutePath());
 
                     setFilesPath(theFile.toString());
-                    /*copies the file to the destination*/
+
                     File destFile = new File(theFile + File.separator + fileFileName);
                     FileUtils.copyFile(file, destFile);
                 }
-
-                System.out.println("this is printing file path-->" + this.getFilesPath() + "...." + this.getFileFileName());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                /* if (getProofType().equalsIgnoreCase("PP")) {
-                 System.out.println("ProofType is>>>>>>>" + getProofType());
-                 setProofValue(getPpno());
-                 }
-                 if (getProofType().equalsIgnoreCase("PN")) {
-                 System.out.println("ProofType is>>>>>>>" + getProofType());
-                 setProofValue(getPan());
-                 }
-                 */
+
                 setProofValue("");
                 setProofValue("");
                 String proof = ServiceLocator.getRequirementService().storeProofData(httpServletRequest, this);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(proof);
+
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: storeProofData Method End*********************");
         return resultMessage;
     }
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 05/06/2015
      *
-     * @getRequirementDetails() method is used to get Requirement details of
-     * account
+     * Author : praveen <pkatru@miraclesoft.com>
      *
-     * @Author:praveen <pkatru@miraclesoft.com>
+     * ForUse : getSearchRequirementsList() method is used to
      *
-     * @Created Date:05/06/2015
      *
-     **************************************
+     * *****************************************************************************
      */
     private int reqCreatedBy;
 
     public String getSearchRequirementsList() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getSearchRequirementsList Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                System.out.println("Account Flag in search action>>>>>>test--->>>>>" + getAccountFlag() + "--accid-->" + getAccountSearchID());
+
                 setPrimaryRole(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
-                System.out.println("Session-->addRequirements-->" + session);
+
                 Map skillsmap = (Map) session.get("skillsmap");
                 String list = ServiceLocator.getRequirementService().getSearchRequirementsList(httpServletRequest, this, skillsmap);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -641,23 +662,27 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getSearchRequirementsList Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 05/12/2015
+     *
+     * Author : praveen <pkatru@miraclesoft.com>
+     *
+     * ForUse :
      *
      * @getRecruiterOverlay() method is used to get Requirement details of
      * account
      *
-     * @Author:praveen <pkatru@miraclesoft.com>
      *
-     * @Created Date:05/12/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getRecruiterOverlay() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getRecruiterOverlay Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 String list = ServiceLocator.getRequirementService().getRecruiterOverlay(this);
@@ -673,12 +698,26 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
-
+        System.out.println("********************RequirementAction :: getRecruiterOverlay Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse :
+     *
+     * @getSkillOverlay() method is used
+     *
+     *
+     * *****************************************************************************
+     */
     public String getSkillOverlay() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getSkillOverlay Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 String list = ServiceLocator.getRequirementService().getSkillOverlay(this);
@@ -694,12 +733,26 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
-
+        System.out.println("********************RequirementAction :: getSkillOverlay Method Start*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse :
+     *
+     * @getPreSkillOverlay() method is used
+     *
+     *
+     * *****************************************************************************
+     */
     public String getPreSkillOverlay() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getPreSkillOverlay Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 String list = ServiceLocator.getRequirementService().getPreSkillOverlay(this);
@@ -715,32 +768,31 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
-
+        System.out.println("********************RequirementAction :: getPreSkillOverlay Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 06/02/2015
      *
-     * @doReleaseRequirements() release reuirements for tier 1
+     * Author : praveen <pkatru@miraclesoft.com>
+     *
+     * ForUse :
+     *
+     * @doReleaseRequirements() release requirements for tier 1
      *
      *
-     * @Author:praveen <pkatru@miraclesoft.com>
-     *
-     * @Created Date:06/02/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String doReleaseRequirements() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: doReleaseRequirements Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setAccount_name(dataSourceDataProvider.getInstance().getAccountNameById(getSessionOrgId()));
-                System.out.println("In Action doReleaseRequirements-->TaxTerm--->" + getTaxTerm());
-                System.out.println("In Action doReleaseRequirements-->reqId-->" + getRequirementId());
-
                 int record = ServiceLocator.getRequirementService().doReleaseRequirements(this);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
@@ -754,23 +806,27 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: doReleaseRequirements Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/06/2015
+     *
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse :
      *
      * @getRequirementDashBoardDetails() method is used to get Requirement
      * details of account
      *
-     * @Author ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Created Date:15/06/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getRequirementDashBoardDetails() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getRequirementDashBoardDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -788,29 +844,32 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getRequirementDashBoardDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/06/2015
      *
-     * @getRequirementDashBoardDetails() method is used to get Requirement
-     * details of account
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse :
      *
-     * @Created Date:15/06/2015
+     * @getRequirementDashBoardDetailsOnOverlay() method is used to
      *
-     **************************************
+     *
+     * *****************************************************************************
      */
     public String getRequirementDashBoardDetailsOnOverlay() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getRequirementDashBoardDetailsOnOverlay Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 String csrReq = ServiceLocator.getRequirementService().getRequirementDashBoardDetailsOnOverlay(this);
-                //please change query after uncomment above line.
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -823,28 +882,30 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getRequirementDashBoardDetailsOnOverlay Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/06/2015
+     *
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse :
      *
      * @getVendorRequirementDashBoardDetails() method is used to get Requirement
      * details of account
      *
-     * @Author ramakrishna<lankireddy@miraclesoft.com>
-     *
-     * @Created Date:15/06/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getVendorRequirementDashBoardDetails() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getVendorRequirementDashBoardDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                String csrReq = null;//ServiceLocator.getRequirementService().getVendorRequirementDashBoardDetails(httpServletRequest, this);
-                //please change query after uncomment it and remove null;
+                String csrReq = null;
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -857,23 +918,26 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getVendorRequirementDashBoardDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/06/2015
+     *
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse :
      *
      * @getVendorRequirementsDashBoard() method is used to get Requirement
      * details of account
      *
-     * @Author ramakrishna<lankireddy@miraclesoft.com>
-     *
-     * @Created Date:15/06/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getVendorRequirementsDashBoard() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getVendorRequirementsDashBoard Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -890,26 +954,28 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getVendorRequirementsDashBoard Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/06/2015
      *
-     * @getRequirementDashBoardDetails() method is used to get Requirement
-     * details of account
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse :
      *
-     * @Created Date:15/06/2015
+     * @getVendorDashBoardDetailsOnOverlay() method is used
      *
-     **************************************
+     * *****************************************************************************
      */
     public String getVendorDashBoardDetailsOnOverlay() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getVendorDashBoardDetailsOnOverlay Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                System.out.println("IN ACTION getVendorDashBoardDetailsOnOverlay()");
+
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String csrReq = ServiceLocator.getRequirementService().getVendorDashBoardDetailsOnOverlay(this);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -924,49 +990,54 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getVendorDashBoardDetailsOnOverlay Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/06/2015
+     *
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse :
      *
      * @customerDashBoardDetails() update status in requirement table
      *
-     *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
-     *
-     * @Created Date:06/03/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String customerDashBoardDetails() throws ServiceLocatorException {
         String resulttype = LOGIN;
+        System.out.println("********************RequirementAction :: customerDashBoardDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-            System.out.println("ENTERED IN TO THE ACTION FOR CUSTOMER DASHBOARD******************************************************");
+
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             customerDashBoardList = (ServiceLocator.getRequirementService().getDefaultCustomerRequirementDashBoardDetails(this));
-            System.out.println(">>>>>>>>ACTION>>>>>>" + getCustomerDashBoardList().toString());
+
             setYear(Calendar.getInstance().get(Calendar.YEAR));
             resulttype = SUCCESS;
         }
+        System.out.println("********************RequirementAction :: customerDashBoardDetails Method End*********************");
         return resulttype;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/06/2015
+     *
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse :
      *
      * @getRequirementDashBoardDetails() method is used to get Requirement
      * details of account
      *
-     * @Author ramakrishna<lankireddy@miraclesoft.com>
-     *
-     * @Created Date:15/06/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getCustomerRequirementDashBoardDetails() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getCustomerRequirementDashBoardDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -984,23 +1055,26 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getCustomerRequirementDashBoardDetails Method End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/06/2015
+     *
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse :
      *
      * @getPreferedSkillDetails() method is used to get Requirement prefered
      * skill details of account
      *
-     * @Author:Ramakrishna<lankireddy@miraclesoft.com>
-     *
-     * @Created Date:05/06/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getPreferedSkillDetails() {
         resultMessage = LOGIN;
+        System.out.println("********************RequirementAction :: getPreferedSkillDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -1018,6 +1092,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RequirementAction :: getPreferedSkillDetails Method End*********************");
         return null;
     }
 
@@ -1027,10 +1102,16 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
     }
 
     /**
+     * *****************************************************************************
+     * Date : 15/06/2015
      *
-     * This method is used to set the Servlet Response
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse : This method is used to set the Servlet Response
      *
      * @param httpServletResponse
+     *
+     * *****************************************************************************
      */
     public void setServletResponse(HttpServletResponse httpServletResponse) {
         this.httpServletResponse = httpServletResponse;

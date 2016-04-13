@@ -16,7 +16,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay ::Home Redirect Page</title>
+        <title>ServicesBay ::AddOrEdit Home Redirect Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -83,7 +83,7 @@
                                                         <s:url var="revUrl" action="getHomeRedirectDetails.action">
                                                         </s:url>
                                                         <font color="#ffffff">Edit Home Redirection Details</font>
-                                                        <span class="pull-right"><s:a href='%{#revUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                        <span class="pull-right"><s:a id="editHomeRedirectBackButton" href='%{#revUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                         </h4>
                                                     </div>
                                                 </div>
@@ -134,11 +134,7 @@
                                                         </s:else>
 
                                                     </div>
-                                                    <%--<div class="col-lg-4 required">
-                                                    <label class="labelStylereq" style="color: #56a5ec">Type Of User:</label>
-                                                    <s:select cssClass="SelectBoxStyles form-control" name="typeOfUser" id="typeOfUser" list="#@java.util.LinkedHashMap@{'SA':'Site Admin','AC':'Customer','VC':'Vendor'}" value="%{homeVto.typeOfUSer}"/>
-
-                                            </div>--%>
+                                                 
                                                 </div>
                                             </div>
                                             <div class="inner-reqdiv-elements">
@@ -156,7 +152,7 @@
                                         </div>
                                         <div class="col-sm-10"></div>
                                         <div class="col-sm-2 pull-right">
-                                            <s:submit type="button" cssStyle="margin:5px 0px;" tabindex="4" cssClass="add_searchButton fa fa-floppy-o form-control" value="Save" onclick="storeAddOrEditHomeRedirectDetails();" theme="simple"  />
+                                            <s:submit type="button" id="editSumbitButton" cssStyle="margin:5px 0px;" tabindex="4" cssClass="add_searchButton fa fa-floppy-o form-control" value="Save" onclick="storeAddOrEditHomeRedirectDetails();" theme="simple"  />
                                         </div>
                                     </s:if>
                                     <s:if test="homeRedirectActionId==0">
@@ -165,7 +161,7 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
                                                         <font color="#ffffff">Add Home Redirection Details</font>
-                                                        <span class="pull-right"><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/users/general/getHomeRedirectDetails.action"><i class="fa fa-undo"></i></a></span>
+                                                        <span class="pull-right"><a id="addHomeRedirectBackButton" href="/<%=ApplicationConstants.CONTEXT_PATH%>/users/general/getHomeRedirectDetails.action"><i class="fa fa-undo"></i></a></span>
                                                     </h4>
                                                 </div>
                                             </div>
@@ -186,12 +182,9 @@
                                                     </div>
                                                     <div class="col-sm-4 required">
                                                         <label class="labelStylereq" style="color: #56a5ec">Role</label>
-                                                        <%--<s:if test="#session.typeOfUsr=='AC' or #session.typeOfUsr=='VC'">--%>
-                                                        <%--<s:select cssClass="SelectBoxStyles form-control" name="roleName" id="roleName" list="{}" onchange="getActionNames();"/>--%>
-                                                        <%--</s:if>--%>
-                                                        <%--<s:else>--%>
+                                                  
                                                         <s:select cssClass="SelectBoxStyles form-control" tabindex="3" name="roleName" id="roleName" list="{}" />
-                                                        <%--</s:else>--%>
+                                                      
                                                     </div>
                                                     <s:if test="homeRedirectActionId!=0">
                                                         <div class="col-sm-3">
@@ -216,10 +209,7 @@
                                                             <s:textfield cssClass="form-control" id="actionName" tabindex="5"  name="actionName" placeholder="Action" onblur="validateAction();" maxLength="100"/>
                                                         </s:else>
                                                     </div>
-                                                    <%--<div class="col-lg-4 required">
-                                                    <label class="labelStylereq" style="color: #56a5ec">Type Of User:</label>
-                                                    <s:select cssClass="SelectBoxStyles form-control" name="typeOfUser" id="typeOfUser" list="#@java.util.LinkedHashMap@{'SA':'Site Admin','AC':'Customer','VC':'Vendor'}" />
-                                                </div>--%>
+                                                   
                                                 </div>
                                             </div>
                                             <div class="inner-reqdiv-elements">
@@ -237,11 +227,11 @@
                                         </div>
 
                                         <div class="col-sm-2 pull-right">
-                                            <s:submit type="button" cssStyle="margin:5px 0px;" tabindex="7" cssClass="add_searchButton fa fa-plus-square form-control" value="Add" onclick="storeAddOrEditHomeRedirectDetails();" theme="simple"  />
+                                            <s:submit type="button" id="addSumbitButton" cssStyle="margin:5px 0px;" tabindex="7" cssClass="add_searchButton fa fa-plus-square form-control" value="Add" onclick="storeAddOrEditHomeRedirectDetails();" theme="simple"  />
                                         </div>
                                     </s:if>
 
-                                    <%--</s:form>--%>
+                                  
                                 </div>
                             </div>
                         </div>

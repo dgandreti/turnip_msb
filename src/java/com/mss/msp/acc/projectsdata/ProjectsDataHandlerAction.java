@@ -59,10 +59,11 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
     private int dashBoardYear;
     private Map projectsMap;
     private String remainingTargetHrs;
-     private String projectFlag;
+    private String projectFlag;
     private int mainProjectId;
-     private String mainProjectStartDate;
+    private String mainProjectStartDate;
     private String mainProjectTargetDate;
+    private String mainProjectStatus;
     /**
      * The project object is used for storing ProjectsVTO object for the
      * ProjectDetails.jsp for displaying project details and updating the
@@ -101,23 +102,25 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
     }
     ProjectsDataHandlerService projectsDataHandlerService = new ProjectsDataHandlerServiceImpl();
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectSearchDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getProjectSearchDetails() throws ParseException {
+        System.out.println("********************ProjectsDataHandlerAction :: getProjectSearchDetails Method Start*********************");
         resultType = LOGIN;
         String currentFormat = "MM-dd-yyyy";
         String newFormat = "yyyy-MM-dd";
-        System.out.println("::::::::::by nag:::: ProjectsDataHandlerAction ==> getProjectSearchDetails ::::::::::::::::::");
 
-        System.out.println("accountID from the page is " + accountID);
-
-        System.out.println("parent project id is " + getParentProjectID());
         roleValue = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLEVALUE).toString();
 
-//        if (!projectStartDate.equals("") && projectStartDate != null) {
-//            projectStartDate = formatDate(projectStartDate, currentFormat, newFormat);
-//        };
-//        if (!projectTargetDate.equals("") && projectTargetDate != null) {
-//            projectTargetDate = formatDate(projectTargetDate, currentFormat, newFormat);
-//        };
         try {
 
             if (httpServletRequest.getSession(false).getAttributeNames() != null) {
@@ -125,10 +128,9 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
                 searchDetails = ServiceLocator.getProjectDataHandlerService().getProjectSearchDetails(this, httpServletRequest);
                 setCostCenterNames(DataSourceDataProvider.getInstance().getCostCenterNames(getSessionOrgId()));
                 searchDetails = processProjectType(searchDetails);
-                System.out.println(searchDetails.size());
+
                 if (searchDetails.size() > 0) {
                     httpServletRequest.getSession(false).setAttribute("projectData", searchDetails);
-
                     resultType = SUCCESS;
                 } else {
                     httpServletRequest.getSession(false).setAttribute("projectData", null);
@@ -137,43 +139,62 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-            System.out.println(ex.toString());
+
             resultType = ERROR;
         }
+        System.out.println("********************ProjectsDataHandlerAction :: getProjectSearchDetails Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : checkProjectNames() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String checkProjectNames() throws ServiceLocatorException, UnsupportedEncodingException {
-        System.out.println(":::::::::::::: ProjectsDataHandlerAction ==> checkProjectNames ::::::::::::::::::");
-         accountID=(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-        if("main".equals(getProjectFlag()))
-        {
-        setMainProjectId(0);   
+
+        System.out.println("********************ProjectsDataHandlerAction :: checkProjectNames Method Start*********************");
+
+        accountID = (Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+        if ("main".equals(getProjectFlag())) {
+            setMainProjectId(0);
         }
         String projName = httpServletRequest.getAttribute("projectName").toString();
-        inputStream = new ByteArrayInputStream(ServiceLocator.getProjectDataHandlerService().checkProjectName(projName,getProjectFlag(),getMainProjectId(),accountID).toString().getBytes("ISO-8859-1"));
-        System.out.println(inputStream.toString().toUpperCase());
+        inputStream = new ByteArrayInputStream(ServiceLocator.getProjectDataHandlerService().checkProjectName(projName, getProjectFlag(), getMainProjectId(), accountID).toString().getBytes("ISO-8859-1"));
+        System.out.println("********************ProjectsDataHandlerAction :: checkProjectNames Method End*********************");
         return SUCCESS;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectsByAccID() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getProjectsByAccID() {
+        System.out.println("********************ProjectsDataHandlerAction :: getProjectsByAccID Method Start*********************");
         resultType = LOGIN;
-
-        System.out.println("::::::by nag:::::::: ProjectsDataHandlerAction ==> getProjectsByAccID ::::::::::::::::::");
-        System.out.println("accountID from the page is " + accountID);
         projectCreatedBy = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-        System.out.println(">>>>>>>>>>>>>>User Session id:::::" + projectCreatedBy);
         accountID = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
-        System.out.println("accountID was null getting accountID from the session. accountID is: " + accountID);
         roleValue = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLEVALUE).toString();
-        System.out.println(">>>>>>>>>>>>>>ROLE IN ACTION>>>>" + roleValue);
         setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
         try {
             if (httpServletRequest.getSession(false).getAttributeNames() != null) {
                 searchDetails = ServiceLocator.getProjectDataHandlerService().getProjectsByAccID(accountID, projectCreatedBy, roleValue);
                 searchDetails = processProjectType(searchDetails);
                 setCostCenterNames(DataSourceDataProvider.getInstance().getCostCenterNames(getSessionOrgId()));
-                System.out.println(searchDetails.size());
+
                 if (searchDetails.size() > 0) {
                     httpServletRequest.getSession(false).setAttribute("projectData", searchDetails);
                     resultType = SUCCESS;
@@ -186,15 +207,25 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ProjectsDataHandlerAction :: getProjectsByAccID Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : addProject() method is used to get state names of a particular
+     * country.
+     *
+     * *****************************************************************************
+     */
     public String addProject() {
-        System.out.println(":::::::::::::: ProjectsDataHandlerAction ==> addProject ::::::::::::::::::");
-
+        System.out.println("********************ProjectsDataHandlerAction :: addProject Method Start*********************");
         String currentFormat = "MM-dd-yyyy";
         String newFormat = "yyyy-MM-dd";
-
         resultType = LOGIN;
 
         try {
@@ -216,9 +247,9 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
                 project.setProjectCreatedDate(projectCreatedDate);
                 project.setCostCenterName(costCenterName);
                 project.setProjectTargetHrs(projectTargetHrs);
-                System.out.println("-------projectWorkedHrs------------" + projectWorkedHrs);
+
                 project.setProjectWorkedHrs(projectWorkedHrs);
-                System.out.println(project.toString());
+
                 projectsDataHandlerService.addProject(project);
                 projectsActionResponse = "\"" + projectName + "\" Project has been added.";
                 resultType = SUCCESS;
@@ -229,13 +260,24 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ProjectsDataHandlerAction :: addProject Method End*********************");
         return resultType;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : addSubProject() method is used to get state names of a
+     * particular country.
+     *
+     * *****************************************************************************
+     */
     public String addSubProject() {
-        System.out.println(":::::::::::::: ProjectsDataHandlerAction ==> addSubProject ::::::::::::::::::");
-
+        System.out.println("********************ProjectsDataHandlerAction :: addSubProject Method Start*********************");
         resultType = LOGIN;
 
         String currentFormat = "MM-dd-yyyy";
@@ -261,19 +303,16 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
                 project.setProjectCreatedDate(projectCreatedDate);
                 project.setCostCenterName(null);
                 project.setProjectTargetHrs(projectTargetHrs);
-                System.out.println("-------projectWorkedHrs------------" + projectWorkedHrs);
+
                 project.setProjectWorkedHrs(projectWorkedHrs);
 
-                //Setting accountID and projectID to access from chained actions
                 setAccountID(project.getAccountID());
                 setProjectID(project.getProjectID());
 
-                //Printing the object to verify the correct input
-                System.out.println("The object being added is: " + project.toString());
-
                 projectsDataHandlerService.addProject(project);
-                projectsActionResponse = "\"" + projectName + "\" Sub-Project has been added.";
-                System.out.println(projectsActionResponse);
+
+                resultMessage = "added";
+
                 resultType = SUCCESS;
 
             }
@@ -282,17 +321,28 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ProjectsDataHandlerAction :: addSubProject Method End*********************");
         return resultType;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getProjectDetails() {
-        System.out.println(":::::::::::::: ProjectsDataHandlerAction ==> getProjectDetails ::::::::::::::::::");
+        System.out.println("********************ProjectsDataHandlerAction :: getProjectDetails Method Start*********************");
 
         resultType = LOGIN;
         setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-        System.out.println("project Id is " + projectID);
-        System.out.println("accountID is " + accountID);
+
         if (projectID != null) {
             httpServletRequest.getSession(false).setAttribute("projectID", projectID);
             httpServletRequest.setAttribute("parentProjectID", projectID);
@@ -306,9 +356,6 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
             if (httpServletRequest.getSession(false).getAttributeNames() != null) {
                 String currentFormat = "yyyy-MM-dd";
                 String newFormat = "MM-dd-yyyy";
-
-                System.out.println("in first if");
-
                 project = ServiceLocator.getProjectDataHandlerService().getProjectsByProjectID(this);
                 setAccount_name(DataSourceDataProvider.getInstance().getAccountNameById(getAccountID()));
 
@@ -338,12 +385,23 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ProjectsDataHandlerAction :: getProjectDetails Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : updateProject() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String updateProject() {
-        System.out.println(":::::::::::::: ProjectsDataHandlerAction ==> updateProject ::::::::::::::::::");
-
+        System.out.println("********************ProjectsDataHandlerAction :: updateProject Method Start*********************");
         resultType = LOGIN;
 
         String currentFormat = "MM-dd-yyyy";
@@ -363,33 +421,33 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
                     p.setProjectReqSkillSet(project.getProjectReqSkillSet());
                 }
 
-                System.out.println("the start date before formatting is: " + project.getProjectStartDate());
+
                 p.setProjectStartDate(formatDate(project.getProjectStartDate(), currentFormat, newFormat).toString());
-                System.out.println("the target date before formatting is: " + project.getProjectTargetDate());
+
                 p.setProjectTargetDate(formatDate(project.getProjectTargetDate(), currentFormat, newFormat).toString());
 
                 if (project.getProject_status().equals("-1")) {
                     p.setProject_status(httpServletRequest.getSession(false).getAttribute("projectStatus").toString());
-                    System.out.println("projectStatus is " + p.getProject_status().toUpperCase());
+
                 } else {
                     p.setProject_status(project.getProject_status());
                 }
                 if (!p.getProject_description().equals(project.getProject_description())) {
                     p.setProject_description(project.getProject_description());
                 }
-               if (p.getProjectType().equals("Main Project")) {
+                if (p.getProjectType().equals("Main Project")) {
                     if (!project.getCostCenterName().equals("DF")) {
                         p.setCostCenterName(project.getCostCenterName());
                     }
                 }
                 if (p.getProjectType().equals("Main Project")) {
                     p.setProjectType("MP");
-                    System.out.println("The project type in p was Main Project and changed to MP");
+
                 }
                 if (p.getProjectType().equals("Sub-Project")) {
                     p.setCostCenterName(null);
                     p.setProjectType("SP");
-                    System.out.println("The project type in p was Sub-Project and changed to SP");
+
                 }
                 if (project.getProjectTargetHrs() != 0) {
                     p.setProjectTargetHrs(project.getProjectTargetHrs());
@@ -398,16 +456,13 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
                 httpServletRequest.getSession(false).setAttribute("projectID", project.getProjectID());
                 if (!project.getProjectName().isEmpty()
                         && !project.getProjectTargetDate().isEmpty()
-                        // && !project.getProjectReqSkillSet().isEmpty()
                         && !project.getProjectStartDate().isEmpty()
                         && !project.getProject_status().isEmpty()) {
-                    //  && !project.getProject_description().isEmpty()) {
-                    // Setting accountID and projectID so that it can be accessed from chanined methods
+
                     setAccountID(p.getAccountID());
                     setProjectID(p.getProjectID());
 
-                    //Printing the updated object to see if the output is correct
-                    System.out.println("The information updated are " + p.toString());
+
                     projectsDataHandlerService.updateProject(p, httpServletRequest);
                 }
                 resultMessage = "Successfully updated";
@@ -419,21 +474,32 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ProjectsDataHandlerAction :: updateProject Method End*********************");
         return resultType;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getSubProjects() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getSubProjects() {
-        System.out.println(":::::::::::::: ProjectsDataHandlerAction ==> getSubProjects ::::::::::::::::::");
-
+        System.out.println("********************ProjectsDataHandlerAction :: getSubProjects Method Start*********************");
         resultType = LOGIN;
         projectID = Integer.parseInt(httpServletRequest.getSession(false).getAttribute("projectID").toString());
         try {
             if (httpServletRequest.getSession(false).getAttributeNames() != null) {
-                System.out.println("In getSutProjects ==> first if");
+
                 searchDetails = ServiceLocator.getProjectDataHandlerService().getSubProjects(projectID);
                 searchDetails = processProjectType(searchDetails);
-                System.out.println(searchDetails.size());
+
                 if (searchDetails.size() > 0) {
                     httpServletRequest.getSession(false).setAttribute("subProjectsList", searchDetails);
                     resultType = SUCCESS;
@@ -446,16 +512,30 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ProjectsDataHandlerAction :: getSubProjects Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : List() method is used to get state names of a particular
+     * country.
+     *
+     * *****************************************************************************
+     */
     public List<ProjectsVTO> processProjectType(List<ProjectsVTO> projectList) {
+        System.out.println("********************ProjectsDataHandlerAction :: List Method Start*********************");
+
         for (int i = 0; i < projectList.size(); i++) {
             try {
                 String currentFormat = "yyyy-MM-dd";
                 String newFormat = "MM-dd-yyyy";
                 projectList.get(i).setProjectStartDate(formatDate(projectList.get(i).getProjectStartDate(), currentFormat, newFormat));
-                //Truncate the String so the HH:MM:SS isn't in it, some of them are set at 0000:00:00 which casues problems
+
                 projectList.get(i).setProjectTargetDate(formatDate(projectList.get(i).getProjectTargetDate().substring(0, 10), currentFormat, newFormat));
             } catch (ParseException p) {
             }
@@ -465,31 +545,38 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
                 projectList.get(i).setProjectType("Sub-Project");
             }
         }
+        System.out.println("********************ProjectsDataHandlerAction :: List Method End*********************");
         return projectList;
     }
-     /**
+
+    /**
      * *****************************************************************************
-     * Date : October 06, 2015, 04:13 PM IST
-     * Author:Manikanta<meeralla@miraclesoft.com>
+     * Date :October 06, 2015
+     *
+     * Author :Manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : getProjectsDashboard() method is used to
      *
      *
      * *****************************************************************************
      */
-     public String getProjectsDashboard() {
+    public String getProjectsDashboard() {
+        System.out.println("********************ProjectsDataHandlerAction :: getProjectsDashboard Method Start*********************");
         resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             try {
                 setDashBoardYear(Calendar.getInstance().get(Calendar.YEAR));
-                projectsMap = DataSourceDataProvider.getInstance().getProjectsMap(getSessionOrgId(),"MP",getDashBoardYear());
-                searchDetails=ServiceLocator.getProjectDataHandlerService().getProjectsDashboard(this);
+                projectsMap = DataSourceDataProvider.getInstance().getProjectsMap(getSessionOrgId(), "MP", getDashBoardYear());
+                searchDetails = ServiceLocator.getProjectDataHandlerService().getProjectsDashboard(this);
                 resultType = SUCCESS;
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
         }
+        System.out.println("********************ProjectsDataHandlerAction :: getProjectsDashboard Method End*********************");
         return resultType;
     }
 
@@ -685,12 +772,23 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
         this.projectsActionResponse = projectsActionResponse;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : formatDate() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public static String formatDate(String date, String initDateFormat, String endDateFormat) throws ParseException {
-
+        System.out.println("********************ProjectsDataHandlerAction :: formatDate Method Start*********************");
         Date initDate = new SimpleDateFormat(initDateFormat).parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat(endDateFormat);
         String parsedDate = formatter.format(initDate);
-        System.out.println("The date after formatting is: " + parsedDate);
+        System.out.println("********************ProjectsDataHandlerAction :: formatDate Method End*********************");
         return parsedDate;
     }
 
@@ -822,5 +920,12 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
     public void setMainProjectTargetDate(String mainProjectTargetDate) {
         this.mainProjectTargetDate = mainProjectTargetDate;
     }
-    
+
+    public String getMainProjectStatus() {
+        return mainProjectStatus;
+    }
+
+    public void setMainProjectStatus(String mainProjectStatus) {
+        this.mainProjectStatus = mainProjectStatus;
+    }
 }

@@ -103,7 +103,6 @@
             
             function searchProjects(){
                 initSessionTimer();
-                // alert("main")
                 var projectStartDateOverlay=document.getElementById("projectStartDate").value;
                 var projectTargetDateOverlay=document.getElementById("projectTargetDate").value;
                 var splitSDate = projectStartDateOverlay.split('-');
@@ -123,7 +122,6 @@
                     difference = -2;
                 }
                 if(difference>0){
-                  //  alert("-------------prj hihi name-------"+document.getElementById("projectName").value)
                     document.getElementById('loadingSearchProject').style.display = 'block';
                     $.ajax({url:"<%=request.getContextPath()%>/mainProjectsSearch.action"
                             +"?projectReqSkillSet=" + document.getElementById("projectReqSkillSet").value
@@ -134,12 +132,9 @@
                             +"&projectType="+"MP"
                         ,
                         success: function(data){
-                         //   alert("success")
                             $('#loadingSearchProject').hide();
-                           
                             window.setTimeout("pagerOption();", 1000);
                             window.setTimeout("doOnLoad();", 1000);
-                            // alert(document.getElementById("projectReqSkillSet").value+"--------------hii")
                             $(projectsPage).children().remove();
                             document.getElementById('projectsPage').innerHTML = data;
                              document.getElementById("loadingProjectSearch").style.display="none";
@@ -168,7 +163,6 @@
             function addProject(){
                 var projectNamePopup = document.getElementById("projectNamePopup").value;
                 var projectWorkedHrs = document.getElementById("projectWorkedHrs").value;
-                //alert(projectWorkedHrs)
                 var projectStartDateOverlay=document.getElementById("projectStartDateOverlay").value;
                 var projectTargetDateOverlay=document.getElementById("projectTargetDateOverlay").value;
                 var projectTargetHrs=document.getElementById("projectTargetHrs").value;
@@ -194,10 +188,6 @@
                             +"&projectWorkedHrs="+document.getElementById("projectWorkedHrs").value
                             +"&accountID=<s:property value="accountID"/>"
                         ,
-                        // success: function(data){
-                        //    $(document).children().remove();
-                        //  document.write(data);
-                        //},
                         success: function(data){
                             $("#addProjectValidation").html("<font color='green'><b>Project inserted successfully.</b></font>");
                             $("#projects").html(data);
@@ -255,7 +245,6 @@
 
             function resetOverlayForm(){
                 document.getElementById("overlayForm").reset();
-                // $("#projectNameError").html("Project name is valid.");
                 document.getElementById("projectNameError").style.display = "none";
             };
         </script>

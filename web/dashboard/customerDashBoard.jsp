@@ -1,5 +1,5 @@
 <%--
-    Document   : Vendor Dashboard
+    Document   : Requirements Dashboard Page
     Created on : July 01, 2015, 07:10:41 PM
 --%>
 
@@ -70,163 +70,163 @@
     </head>
     <body style="overflow-x: hidden" onload="getCustomerDashboardList(); customerDboard();">
         <div id="wrap">
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
-                    <s:include value="/includes/template/header.jsp"/>
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
+                        <s:include value="/includes/template/header.jsp"/>
+                    </div>
                 </div>
-            </div>
-        </header>
-                <div id="main">
-        <section id="generalForm"><!--form-->
-            <div  class="container">
-                <div class="row">
-                    <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <!-- content start -->
-                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
-                        <div class="features_items">
-                            <div class="col-sm-12 ">
-                                <div class="" id="profileBox" style="float: left; margin-top: 5px">
-                                    <div class="backgroundcolor" >
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                <font color="#ffffff">Requirements</font>
-                                                <i id="updownArrow" onclick="toggleContent('customerDashboardForm')" class="fa fa-minus"></i> 
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <span> <br/></span>
-                                    <!-- content start -->
-                                    <span id="customerDashValidation"> </span>
-                                    <div class="col-sm-12">
-                                        <s:form theme="simple" id="customerDashboardForm">
+            </header>
+            <div id="main">
+                <section id="generalForm"><!--form-->
+                    <div  class="container">
+                        <div class="row">
+                            <s:include value="/includes/menu/LeftMenu.jsp"/>
+                            <!-- content start -->
+                            <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
+                                <div class="features_items">
+                                    <div class="col-sm-12 ">
+                                        <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                                            <div class="backgroundcolor" >
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                        <font color="#ffffff">Requirements</font>
+                                                        <i id="updownArrow" onclick="toggleContent('customerDashboardForm')" class="fa fa-minus"></i> 
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <span> <br/></span>
+                                            <!-- content start -->
+                                            <span id="customerDashValidation"> </span>
+                                            <div class="col-sm-12">
+                                                <s:form theme="simple" id="customerDashboardForm">
 
-                                            <div class="inner-reqdiv-elements">
-                                                <div class="row">
-                                                    <div class="col-sm-2">
-                                                        <label class="" style="color:#56a5ec;">Year </label>
-                                                        <s:textfield cssClass="form-control" id="year"
-                                                                     name="year" placeholder="Year" 
-                                                                     onkeypress="return validationDashboardYear(event)"
-                                                                     tabindex="1"
-                                                                     />
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <label class="" style="color:#56a5ec;">Month </label>
-                                                        <s:select id="month" cssClass="form-control SelectBoxStyles" name="month" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December'}" tabindex="2" />
-                                                    </div>
-
-                                                    <div class="col-sm-2">
+                                                    <div class="inner-reqdiv-elements">
                                                         <div class="row">
-                                                            <div class="col-sm-11">
-                                                                <label class="" style="color:#56a5ec;"></label> 
-                                                                <%--<s:submit type="submit" cssClass="cssbutton_emps form-control"
-                                                                        value="Search" onclick="getVendorDashboardList();"/> --%>
-                                                                <a href="#" ><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" onclick="getCustomerDashboardList();" tabindex="3" ><i class="fa fa-search"></i>&nbsp;Search</button></a>
+                                                            <div class="col-sm-2">
+                                                                <label class="" style="color:#56a5ec;">Year </label>
+                                                                <s:textfield cssClass="form-control" id="year"
+                                                                             name="year" placeholder="Year" 
+                                                                             onkeypress="return validationDashboardYear(event)"
+                                                                             tabindex="1"
+                                                                             />
                                                             </div>
+                                                            <div class="col-sm-2">
+                                                                <label class="" style="color:#56a5ec;">Month </label>
+                                                                <s:select id="month" cssClass="form-control SelectBoxStyles" name="month" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December'}" tabindex="2" />
+                                                            </div>
+
+                                                            <div class="col-sm-2">
+                                                                <div class="row">
+                                                                    <div class="col-sm-11 pull-right">
+                                                                        <label class="" style="color:#56a5ec;"></label> 
+                                                                        <%--<s:submit type="submit" cssClass="cssbutton_emps form-control"
+                                                                                value="Search" onclick="getVendorDashboardList();"/> --%>
+                                                                        <a href="#" id="dashboardSearch"><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" onclick="getCustomerDashboardList();" tabindex="3" ><i class="fa fa-search"></i>&nbsp;Search</button></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>   
                                                         </div>
-                                                    </div>   
+                                                    </div>
+                                                </div>
+
+
+                                                <%--div class="row">
+                                                    <div class="col-sm-4"> <s:submit type="submit" cssClass="cssbutton_emps field-margin"
+                                                              value="Search" cssStyle="margin:0px"/></div>
+                                                    <div class="col-sm-4"></div>
+                                                </div--%>
+
+                                            </s:form>
+                                            <span> <br/></span>
+                                                <%--<s:submit cssClass="css_button" value="show"/><br>--%>
+                                            <div class="col-sm-12">
+
+                                                <s:form>
+                                                    <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
+                                                        <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
+                                                            <table id="customerDashboardResults" class="responsive CSSTable_task" border="5">
+                                                                <tbody>
+                                                                    <tr>
+                                                                    <%--<th>Req.Won</th>
+                                                                        <th>Req.Lost</th> --%>
+                                                                    <th>Month</th>
+                                                                    <th>Opened </th>
+                                                                    <th>Released</th>
+                                                                    <th>Open&nbsp;For&nbsp;Resume</th>
+                                                                    <th>Closed</th>
+                                                                    <th>Others</th>
+                                                                    <th>Total</th>
+                                                                </tr>
+                                                                <s:if test="customerDashBoardList.size == 0">
+                                                                    <tr>
+                                                                        <td colspan="7"><font style="color: red;font-size: 15px;text-align: center">No Records to display</font></td>
+                                                                    </tr>
+                                                                </s:if>
+
+                                                                <s:iterator  value="customerDashBoardList">
+                                                                    <tr>
+                                                                        <%-- <td><s:property value="noOfReqWon"></s:property></td>
+                                                                             <td><s:property value="noOfReqLose"></s:property></td>--%>
+                                                                        <td><s:property value="month"></s:property></td>
+                                                                        <td><s:property value="open"></s:property></td>
+                                                                        <td><s:property value="released"></s:property></td>
+                                                                        <td><s:property value="openForResume"></s:property></td>
+                                                                        <td><s:property value="closed"></s:property></td>
+                                                                        <td><s:property value="othersCount"></s:property></td>
+                                                                        <td><s:property value="total"></s:property></td>
+
+                                                                        </tr>
+                                                                </s:iterator>
+
+                                                            </tbody>
+                                                        </table>
+                                                        <br/>
+                                                        <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                                <option>5</option>
+                                                                <option>10</option>
+                                                                <option>12</option>
+                                                            </select>
+                                                            Months per page
+                                                        </label>
+                                                        <div align="right" class="pull-right" id="pageNavPosition" style="margin-right: 0vw;display: none"></div>
+                                                    </s:form>
+                                                    <script type="text/javascript">
+                                                        var dashPager = new Pager('customerDashboardResults', 10);
+                                                        dashPager.init();
+                                                        dashPager.showPageNav('dashPager', 'pageNavPosition');
+                                                        dashPager.showPage(1);
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
 
-                                        <%--div class="row">
-                                            <div class="col-sm-4"> <s:submit type="submit" cssClass="cssbutton_emps field-margin"
-                                                      value="Search" cssStyle="margin:0px"/></div>
-                                            <div class="col-sm-4"></div>
-                                        </div--%>
 
-                                    </s:form>
-                                    <span> <br/></span>
-                                        <%--<s:submit cssClass="css_button" value="show"/><br>--%>
-                                    <div class="col-sm-12">
+                                    <%--close of future_items--%>
 
-                                        <s:form>
-                                            <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
-                                            <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
-                                                <table id="customerDashboardResults" class="responsive CSSTable_task" border="5">
-                                                    <tbody>
-                                                        <tr>
-                                                            <%--<th>Req.Won</th>
-                                                                <th>Req.Lost</th> --%>
-                                                            <th>Month</th>
-                                                            <th>Opened </th>
-                                                            <th>Released</th>
-                                                            <th>Open&nbsp;For&nbsp;Resume</th>
-                                                            <th>Closed</th>
-                                                            <th>Others</th>
-                                                            <th>Total</th>
-                                                        </tr>
-                                                        <s:if test="customerDashBoardList.size == 0">
-                                                            <tr>
-                                                                <td colspan="7"><font style="color: red;font-size: 15px;text-align: center">No Records to display</font></td>
-                                                            </tr>
-                                                        </s:if>
 
-                                                        <s:iterator  value="customerDashBoardList">
-                                                            <tr>
-                                                                <%-- <td><s:property value="noOfReqWon"></s:property></td>
-                                                                     <td><s:property value="noOfReqLose"></s:property></td>--%>
-                                                                <td><s:property value="month"></s:property></td>
-                                                                <td><s:property value="open"></s:property></td>
-                                                                <td><s:property value="released"></s:property></td>
-                                                                <td><s:property value="openForResume"></s:property></td>
-                                                                <td><s:property value="closed"></s:property></td>
-                                                                <td><s:property value="othersCount"></s:property></td>
-                                                                <td><s:property value="total"></s:property></td>
 
-                                                                </tr>
-                                                        </s:iterator>
 
-                                                    </tbody>
-                                                </table>
-                                                <br/>
-                                                <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                        <option>5</option>
-                                                        <option>10</option>
-                                                        <option>12</option>
-                                                    </select>
-                                                    Months per page
-                                                </label>
-                                                <div align="right" class="pull-right" id="pageNavPosition" style="margin-right: 0vw;display: none"></div>
-                                            </s:form>
-                                            <script type="text/javascript">
-                                                var dashPager = new Pager('customerDashboardResults', 10);
-                                                dashPager.init();
-                                                dashPager.showPageNav('dashPager', 'pageNavPosition');
-                                                dashPager.showPage(1);
-                                            </script>
+                                    <div class="col-sm-12" >
+                                        <div class="col-lg-12 panel panel-default panel-heading">
+                                            <i class="fa fa-bar-chart-o fa-fw"></i>Bar Chart<div align="center"><span id="chartTitle"></span></div>
+                                            <div id="individualCustomerYearChart"></div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
 
-
-                            <%--close of future_items--%>
-
-
-
-
-                            <div class="col-sm-12" >
-                                <div class="col-lg-12 panel panel-default panel-heading">
-                                    <i class="fa fa-bar-chart-o fa-fw"></i>Bar Chart<div align="center"><span id="chartTitle"></span></div>
-                                    <div id="individualCustomerYearChart"></div>
-
-                                </div>
-                            </div>
                         </div>
-                    </div>
-
-
-                </div>
-            </div>        <!-- content end -->
-        </section><!--/form-->
+                    </div>        <!-- content end -->
+                </section><!--/form-->
+            </div>
         </div>
-        </div>
-                            
+
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">

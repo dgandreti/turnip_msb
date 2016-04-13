@@ -84,13 +84,17 @@ public class VendorAction extends ActionSupport implements ServletRequestAware, 
 
     /**
      * *****************************************************************************
-     * Date : May 5, 2015, 11:23 PM IST Author:praveen
-     * kumar<pkatru@miraclesoft.com>
+     * Date : MAY 05, 2015, 8:30 PM IST
      *
-     * ForUse : getting vendor details in grid
+     * Author : Praveen kumar<pkatru@miraclesoft.com>
+     *
+     * ForUse : getVendorDetails() method is used to get vendor details in
+     * default.
+     *
      * *****************************************************************************
      */
     public String getVendorDetails() {
+        System.out.println("********************VendorAction :: getVendorDetails Method Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
@@ -98,32 +102,35 @@ public class VendorAction extends ActionSupport implements ServletRequestAware, 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 this.setTeamMemberId(getUserSessionId());
                 setTeamMembersList(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
-                vendorListVto = ServiceLocator.getVendorService().getVendorDetails( this);
+                vendorListVto = ServiceLocator.getVendorService().getVendorDetails(this);
                 countryNames = com.mss.msp.util.DataSourceDataProvider.getInstance().getCountryNames();
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 resultMessage = ERROR;
             }
         }// Session validator if END
+        System.out.println("********************VendorAction :: getVendorDetails Method End*********************");
         return resultMessage;
     }
 
     /**
      * *****************************************************************************
-     * Date : May 5, 2015, 11:23 PM IST
-     * Author:Ramakrishna<lankireddy@miraclesoft.com>
+     * Date : MAY 05, 2015, 8:30 PM IST
      *
-     * ForUse : getting vendor details
+     * Author : rama krishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse : showVendorDetails() method is used to get details of particular
+     * vendor.
+     *
      * *****************************************************************************
      */
     public String showVendorDetails() {
+        System.out.println("********************VendorAction :: showVendorDetails Method Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$ ENTERED INTO ACTION $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
                     setAllVendorTeam(dataSourceDataProvider.getInstance().getAllVendorTeam());
-                    System.out.println("get all Vendors" + getAllVendorTeam());
                     setPrimaryAccount(dataSourceDataProvider.getInstance().getPrimaryAccount(getVendorId()));
                     setVendorTypeList(dataSourceDataProvider.getInstance().getVendorType());
                     setCountryList(ServiceLocator.getLocationService().getCountriesNamesMap());
@@ -133,46 +140,40 @@ public class VendorAction extends ActionSupport implements ServletRequestAware, 
                     vendorListVTO = (ServiceLocator.getVendorService().getVendorDetailsById(this));
                     setVendorcountry(vendorListVTO.getVendorCountry());
                     setStateList(ServiceLocator.getLocationService().getStatesMapOfCountry(httpServletRequest, getVendorcountry()));
-                    System.out.println("AFTER COMPLETING IMPL RETURNED TO ACTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|||||||");
                     resultMessage = SUCCESS;
                 }
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
-
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-
-
                 resultMessage = ERROR;
             }
         }// Session validator if END
+        System.out.println("********************VendorAction :: showVendorDetails Method End*********************");
         return resultMessage;
     }
 
     /**
      * *****************************************************************************
-     * Date : May 5, 2015, 11:23 PM IST
-     * Author:Ramakrishna<lankireddy@miraclesoft.com>
+     * Date : MAY 05, 2015, 8:30 PM IST
      *
-     * ForUse : updating vendor sales team details
+     * Author : rama krishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse : vendorSalesUpdate() method is used to updating details of
+     * particular vendor sales team.
+     *
      * *****************************************************************************
      */
     public String vendorSalesUpdate() throws Exception {
+        System.out.println("********************VendorAction :: vendorSalesUpdate Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("======================Entered in the Action==========================");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setVendorTypeList(dataSourceDataProvider.getInstance().getVendorType());
                 setCountryList(ServiceLocator.getLocationService().getCountriesNamesMap());
                 setIndustryList(dataSourceDataProvider.getInstance().getIndystryTypes());
-                //setVendorcountry(vendorListVTO.getVendorCountry());
-                //setStateList(ServiceLocator.getGeneralService().getStatesMapOfCountry(httpServletRequest, getVendorcountry()));
-                System.out.println("List>>>>>>>" + getVendorSalesTeam().toString());
                 String[] rightParams = (String[]) parameters.get("vendorSalesTeam");
-                System.out.println(">>>>>>>>>>>>>>>>>Length>>>>>>" + rightParams.length + " >>>>>>>vendorId>>" + getVendorId());
                 int updateResult = ServiceLocator.getVendorService().updateVendorSalesTeam(this, rightParams, getPrimaryAccount());
-
                 if (updateResult > 0) {
                     addActionMessage("team has been successfully updated!");
                 } else {
@@ -186,32 +187,28 @@ public class VendorAction extends ActionSupport implements ServletRequestAware, 
             System.out.println(ex.getMessage());
             resultType = ERROR;
         }
-
+        System.out.println("********************VendorAction :: vendorSalesUpdate Method End*********************");
         return resultType;
     }
-    
-     /**
-     * ****************************************************************************
-     * Date : June 02 2015
+
+    /**
+     * *****************************************************************************
+     * Date : June 02, 2015, 8:30 PM IST
      *
      * Author : manikanta eeralla<meeralla@miraclesoft.com>
+     *
+     * ForUse : showVendorDashboard() method
      *
      * *****************************************************************************
      */
     public String showVendorDashboard() {
+        System.out.println("********************VendorAction :: showVendorDashboard Method Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 int year;
-
                 year = Calendar.getInstance().get(Calendar.YEAR);
                 setYear(year);
-                //setSessionOrg_id(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                //setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                // this.setTeamMemberId(getUserSessionId());
-                // setTeamMembersList(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
-                // vendorListVto = ServiceLocator.getVendorService().getVendorDetails(httpServletRequest, this);
-                // countryNames = com.mss.msp.util.DataSourceDataProvider.getInstance().getCountryNames();
                 int orgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
                 vendorDashboardList = ServiceLocator.getVendorService().showVendorDashboard(orgId);
                 resultMessage = SUCCESS;
@@ -219,6 +216,7 @@ public class VendorAction extends ActionSupport implements ServletRequestAware, 
                 resultMessage = ERROR;
             }
         }// Session validator if END
+        System.out.println("********************VendorAction :: showVendorDashboard Method End*********************");
         return resultMessage;
     }
 
@@ -523,5 +521,4 @@ public class VendorAction extends ActionSupport implements ServletRequestAware, 
     public void setVendorDashboardList(List<VendorDashboardList> vendorDashboardList) {
         this.vendorDashboardList = vendorDashboardList;
     }
-    
 }

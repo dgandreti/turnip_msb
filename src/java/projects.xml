@@ -75,7 +75,7 @@
         </action>
         <action name="addSubProject" class="com.mss.msp.acc.projectsdata.ProjectsDataHandlerAction" method="addSubProject">
             <interceptor-ref name="crudStack" />
-            <result name="success" type="redirect" >projectDetails.action?projectID=${projectID}&amp;accountID=${accountID}</result>
+            <result name="success" type="redirect" >projectDetails.action?projectID=${projectID}&amp;accountID=${accountID}&amp;resultMessage=${resultMessage}</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>

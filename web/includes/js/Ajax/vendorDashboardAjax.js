@@ -3,16 +3,21 @@ google.load('visualization', '1.1', {
 });
 google.setOnLoadCallback(getVendorRequirementsDashBoard);
 function getVendorRequirementsDashBoard(){
+     $("#loadingReqDashboard").show();
     $("#reqCustomerYearChart").css('visibility', 'visible');
     var dashYears=$('#vdashYears').val();
     var csrCustomers=$('#vendorOrgId').val();
     //alert("HI "+csrCustomers+"  "+dashYears)
-    
+    if(document.getElementById("vendorAccountNamePopup").value=="")
+        {
+            csrCustomers="";
+        }
     var url='../dashboard/getVendorRequirementsDashBoard.action?dashYears='+dashYears+'&csrCustomer='+csrCustomers;
     var req=initRequest(url);
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             //alert(req.responseText)
+             $("#loadingReqDashboard").hide();
             populateVendorDashBoardTableForCsrRequirements(req.responseText);
         } 
     };
@@ -108,7 +113,7 @@ function csrVenOverlay(){
 }
 function csrVenDetails(accountId)
 {
-    var dashYears=$("#dashYears").val();
+    var dashYears=$("#vdashYears").val();
     //alert("HI  "+accountId+" "+dashYears)
     var url='../dashboard/getVendorDashBoardDetailsOnOverlay.action?dashYears='+dashYears+'&accountId='+accountId;
     var req=initRequest(url);
@@ -178,7 +183,11 @@ function showVendorChart(vendor,won,lost)
         //        width: 370,
         //        height:300,
         title: 'Vendor Requirements Yearly Analysis',
-        colors: ['#39FF07', '#FF0707']
+        colors: ['#39FF07', '#FF0707'],
+         legend: {
+            position: 'top', 
+            alignment: 'center'
+        }
     // animation: {
     //duration: 1000,
     //easing: 'linear'

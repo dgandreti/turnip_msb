@@ -38,28 +38,19 @@ import org.apache.commons.io.FileUtils;
  * @author miracle
  */
 public class PDFGenerator {
-   
+
     private static Font font = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
     private static Font bigFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLDITALIC);
     private static Font smallFont = new Font(Font.FontFamily.HELVETICA, 8, Font.ITALIC);
 
-    public static void getPOPDF(UserAjaxHandlerAction userAjaxHandlerAction, String pdfFileName,String customerName) {
+    public static void getPOPDF(UserAjaxHandlerAction userAjaxHandlerAction, String pdfFileName, String customerName) {
         try {
 
-            //  File f = new File(pdfFileName);
-
-            // tries to create new file in the system
-            //   f.createNewFile();
             OutputStream file = new FileOutputStream(new File(pdfFileName));
-//            Rectangle rect = new Rectangle(216, 720);
-//            rect.setBackgroundColor(BaseColor.BLUE);
             Document document = new Document();
             PdfWriter writer = PdfWriter.getInstance(document, file);
-            
-            
             document.open();
-            addImage(document, writer, userAjaxHandlerAction,customerName);
-            // FileUtils.copyFile(document, pdfFileName);
+            addImage(document, writer, userAjaxHandlerAction, customerName);
             document.close();
             file.close();
         } catch (Exception e) {
@@ -67,14 +58,8 @@ public class PDFGenerator {
         }
     }
 
-    // iText allows to add metadata to the PDF which can be viewed in your Adobe
-    // Reader
-    // under File -> Properties
-    private static void addImage(Document document, PdfWriter writer, UserAjaxHandlerAction userAjaxHandlerAction,String customerName) throws BadElementException, MalformedURLException, IOException, DocumentException {
+    private static void addImage(Document document, PdfWriter writer, UserAjaxHandlerAction userAjaxHandlerAction, String customerName) throws BadElementException, MalformedURLException, IOException, DocumentException {
 
-        // writer.setBoxSize("art", new Rectangle(36, 54, 559, 788));
-
-        //Rectangle pageSize = new Rectangle(216, 720);
         Image image = Image.getInstance(userAjaxHandlerAction.getAcclogo());
 
         image.setAlignment(Element.ALIGN_CENTER);
@@ -113,7 +98,6 @@ public class PDFGenerator {
         table.addCell(cell1);
         table.addCell(cell);
         table.addCell(cell2);
-        // table.getDefaultCell().setFixedHeight(16);
         document.add(table);
 
         Paragraph preface3 = new Paragraph();
@@ -127,17 +111,9 @@ public class PDFGenerator {
         combs.add(new Chunk("Dear "));
         combs.add(new Chunk(userAjaxHandlerAction.getAccountName() + ",", bigFont));
         document.add(combs);
-
-
         document.add(Chunk.NEWLINE);
 
-
-//        Paragraph preface1 = new Paragraph();
-//        preface1.add(new Paragraph("Approved Purchase Order for " + userAjaxHandlerAction.getUserName() + " (Candidate ID - " + userAjaxHandlerAction.getUserId() + ")"));
-//        document.add(preface1);
-        
-        
-         Paragraph preface1 = new Paragraph();
+        Paragraph preface1 = new Paragraph();
         preface1.add(new Chunk("Approved Purchase Order for "));
         preface1.add(new Chunk(userAjaxHandlerAction.getUserName(), bigFont));
         preface1.add(new Chunk(" (Candidate ID - " + userAjaxHandlerAction.getUserId() + ")"));
@@ -150,10 +126,10 @@ public class PDFGenerator {
         document.add(preface2);
         document.add(Chunk.NEWLINE);
 
-        createTable(document, userAjaxHandlerAction,customerName);
+        createTable(document, userAjaxHandlerAction, customerName);
     }
 
-    private static void createTable(Document document, UserAjaxHandlerAction userAjaxHandlerAction,String customerName)
+    private static void createTable(Document document, UserAjaxHandlerAction userAjaxHandlerAction, String customerName)
             throws BadElementException, DocumentException, MalformedURLException, IOException {
 
         PdfPTable table = new PdfPTable(2);
@@ -195,21 +171,20 @@ public class PDFGenerator {
         tablecell7.setBorderColor(BaseColor.CYAN);
         table.addCell(tablecell7);
 
-         PdfPCell tablecell8 = new PdfPCell(new Phrase(userAjaxHandlerAction.getPoEndDate() + "", font));
+        PdfPCell tablecell8 = new PdfPCell(new Phrase(userAjaxHandlerAction.getPoEndDate() + "", font));
         tablecell8.setHorizontalAlignment(Element.ALIGN_CENTER);
         tablecell8.setBorderColor(BaseColor.CYAN);
         table.addCell(tablecell8);
-        
+
         PdfPCell tablecell9 = new PdfPCell(new Phrase("Recruiter Mail ID", font));
         tablecell9.setHorizontalAlignment(Element.ALIGN_CENTER);
         tablecell9.setBorderColor(BaseColor.CYAN);
         table.addCell(tablecell9);
-        
+
         PdfPCell tablecell10 = new PdfPCell(new Phrase(userAjaxHandlerAction.getEmailId() + "", font));
         tablecell10.setHorizontalAlignment(Element.ALIGN_CENTER);
         tablecell10.setBorderColor(BaseColor.CYAN);
         table.addCell(tablecell10);
-        
 
 
         document.add(table);
@@ -241,22 +216,22 @@ public class PDFGenerator {
         rateDetailstable.addCell(c14);
 
         rateDetailstable.setHeaderRows(1);
-        
+
         PdfPCell c15 = new PdfPCell(new Phrase(userAjaxHandlerAction.getBaseRate() + "", font));
         c15.setHorizontalAlignment(Element.ALIGN_CENTER);
         c15.setBorderColor(BaseColor.CYAN);
         rateDetailstable.addCell(c15);
-        
+
         PdfPCell c16 = new PdfPCell(new Phrase(userAjaxHandlerAction.getOverTimeRate(), font));
         c16.setHorizontalAlignment(Element.ALIGN_CENTER);
         c16.setBorderColor(BaseColor.CYAN);
         rateDetailstable.addCell(c16);
-        
+
         PdfPCell c17 = new PdfPCell(new Phrase(userAjaxHandlerAction.getOverTimeLimit(), font));
         c17.setHorizontalAlignment(Element.ALIGN_CENTER);
         c17.setBorderColor(BaseColor.CYAN);
         rateDetailstable.addCell(c17);
-        
+
         document.add(rateDetailstable);
 
         document.add(Chunk.NEWLINE);
@@ -273,7 +248,6 @@ public class PDFGenerator {
 
 
         Image image = Image.getInstance(userAjaxHandlerAction.getAcclogo());
-        // image.scaleAbsolute(120f, 60f);
 
         image.setAlignment(Element.ALIGN_CENTER);
         PdfPTable table1 = new PdfPTable(3);

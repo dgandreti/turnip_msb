@@ -84,23 +84,25 @@ public class DownloadAction implements Action, ServletRequestAware, ServletRespo
 this.httpServletResponse = httpServletResponse; 
     }
     public String downloadAttachment() throws Exception{
+        
         resultType=null;
+         System.out.println("********************DownloadAction :: downloadAttachment Action Start*********************");
         try {
-            //this.setAttachmentLocation(httpServletRequest.getParameter("attachmentLocation"));
+         
             this.setAttachmentId(Integer.parseInt(httpServletRequest.getParameter("attachmentId").toString()));
-            System.out.println("=================>Entered into the DownloadAction");
+            
             try{
                 this.setAttachmentLocation(dataSourceDataProvider.getInstance().getAttachmentLocation(this.getAttachmentId()));
             }catch(ServiceLocatorException se)
             {
-                System.out.println(se.getMessage());
+                throw new ServiceLocatorException(se);
             }
-            System.out.println("=================>" + attachmentLocation);
+           
             fileName = this.getAttachmentLocation()
                     .substring(this.getAttachmentLocation().lastIndexOf( File.separator) + 1, getAttachmentLocation().length());
             httpServletResponse.setContentType("application/force-download");
-            System.out.println("=================>" + fileName);
-            System.out.println("getAttachmentLocation()-->" + getAttachmentLocation());
+         
+           
              if ( !"null".equals(getAttachmentLocation()) && getAttachmentLocation() != null && getAttachmentLocation().length() != 0) {
 
             File file = new File(getAttachmentLocation());
@@ -127,12 +129,13 @@ this.httpServletResponse = httpServletResponse;
                resultType = INPUT;
              }
         } catch (FileNotFoundException ex) {
-           System.out.println("File not Found");
+        
            setDownloadFlag("noFile");
            resultType = INPUT;
         } catch (IOException ex) {
             ex.printStackTrace();
         } 
+         System.out.println("********************DownloadAction :: downloadAttachment Action End*********************");
       return resultType;
     }
 

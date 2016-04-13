@@ -57,39 +57,45 @@ public class CostCenterAction extends ActionSupport implements ServletRequestAwa
 
     /**
      * *****************************************************************************
-     * Date : september 30, 2015, 04:13 PM EST
-     * Author:Divya<dgandreti@miraclesoft.com>
+     * Date :
      *
+     * Author :
+     *
+     * ForUse : costCenterSearch() method is used to
      *
      * *****************************************************************************
      */
     public String costCenterSearch() {
-        System.out.println(":::::::::::::: costCenterSearch ==> costCenterSearch ::::::::::::::::::");
         resultType = LOGIN;
+        System.out.println("********************CostCenterAction :: costCenterSearch Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setCostCenterSearchList(ServiceLocator.getCostCenterService().costCenterSearch(this));
-                System.out.println("---list----duc--------" + getCostCenterSearchList());
                 resultType = SUCCESS;
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
         }
+        System.out.println("********************CostCenterAction :: costCenterSearch Method End*********************");
         return resultType;
     }
 
     /**
      * *****************************************************************************
-     * Date : september 30, 2015, 04:13 PM EST
-     * Author:Divya<dgandreti@miraclesoft.com>
+     * Date :september 30, 2015, 04:13 PM EST
      *
+     * Author :Divya<dgandreti@miraclesoft.com>
+     *
+     * ForUse : costCenterInfoSearch() method is used to
      *
      * *****************************************************************************
      */
+    
     public String costCenterInfoSearch() {
         resultType = LOGIN;
+        System.out.println("********************CostCenterAction :: costCenterInfoSearch Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setDashBoardYear(Calendar.getInstance().get(Calendar.YEAR));
@@ -100,19 +106,23 @@ public class CostCenterAction extends ActionSupport implements ServletRequestAwa
                 resultType = ERROR;
             }
         }
+        System.out.println("********************CostCenterAction :: costCenterInfoSearch Method End*********************");
         return resultType;
     }
 
     /**
      * *****************************************************************************
-     * Date : October 01, 2015, 04:13 PM IST
-     * Author:Manikanta<meeralla@miraclesoft.com>
+     * Date :October 01, 2015, 04:13 PM IST
      *
+     * Author :Manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : costCenterDashBoardDetails() method is used to
      *
      * *****************************************************************************
      */
     public String costCenterDashBoardDetails() {
         resultType = LOGIN;
+        System.out.println("********************CostCenterAction :: costCenterInfoSearch Method End*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -125,6 +135,7 @@ public class CostCenterAction extends ActionSupport implements ServletRequestAwa
                 resultType = ERROR;
             }
         }
+        System.out.println("********************CostCenterAction :: costCenterInfoSearch Method End*********************");
         return resultType;
     }
 

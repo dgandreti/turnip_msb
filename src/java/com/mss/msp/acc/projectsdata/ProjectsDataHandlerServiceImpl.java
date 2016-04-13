@@ -9,10 +9,13 @@ import com.mss.msp.util.ConnectionProvider;
 import com.mss.msp.util.DateUtility;
 import com.mss.msp.util.HibernateServiceLocator;
 import com.mss.msp.util.ServiceLocatorException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -31,9 +34,27 @@ import org.hibernate.criterion.Restrictions;
  */
 public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerService {
 
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString = "";
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectSearchDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public List getProjectSearchDetails(ProjectsDataHandlerAction projectsDataHandlerAction, HttpServletRequest httpServletRequest) throws ServiceLocatorException {
-        System.out.println(":::::::::::::: ProjectsDataHandlerServiceImpl ==> getProjectSearchDetails ::::::::::::::::::");
-          DateUtility dateUtility = new DateUtility();
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectSearchDetails Method Start*********************");
+        DateUtility dateUtility = new DateUtility();
         List<ProjectsVTO> projectsList = new ArrayList<ProjectsVTO>();
         String sql;
 
@@ -42,53 +63,49 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
         Criteria query = session.createCriteria(com.mss.msp.acc.projectsdata.ProjectsVTO.class);
 
         query.add(Restrictions.eq("accountID", projectsDataHandlerAction.getAccountID()));
-
-        System.out.println("account id is " + projectsDataHandlerAction.getAccountID());
-
         if (projectsDataHandlerAction.getProjectReqSkillSet() != null && !projectsDataHandlerAction.getProjectReqSkillSet().equals("")) {
             sql = " proj_req_skillset like '%" + projectsDataHandlerAction.getProjectReqSkillSet().toString().trim() + "%'";
-            System.out.println("The Req skill set is: " + projectsDataHandlerAction.getProjectReqSkillSet());
+
             query.add(Restrictions.sqlRestriction(sql));
         }
         if (!projectsDataHandlerAction.getProjectName().equals("") && projectsDataHandlerAction.getProjectName() != null) {
             query.add(Restrictions.ilike("projectName", projectsDataHandlerAction.getProjectName().toString().trim(), MatchMode.ANYWHERE));
-            System.out.println("The project name is: " + projectsDataHandlerAction.getProjectName());
+
         }
         if (!"".equals(projectsDataHandlerAction.getProjectStartDate()) && projectsDataHandlerAction.getProjectStartDate() != null) {
             String startDate = dateUtility.getInstance().convertStringToMySQLDateInDash(projectsDataHandlerAction.getProjectStartDate());
-             sql = " proj_stdate >= '" + startDate.trim() + "'";
+            sql = " proj_stdate >= '" + startDate.trim() + "'";
             query.add(Restrictions.sqlRestriction(sql));
-            System.out.println("The projects Start date is: " + projectsDataHandlerAction.getProjectStartDate());
+
         }
         if (!"".equals(projectsDataHandlerAction.getProjectTargetDate()) && projectsDataHandlerAction.getProjectTargetDate() != null) {
             String targetDate = dateUtility.getInstance().convertStringToMySQLDateInDash(projectsDataHandlerAction.getProjectTargetDate());
             sql = " proj_stdate <= '" + targetDate.trim() + "'";
             query.add(Restrictions.sqlRestriction(sql));
-            System.out.println("the project target date is: " + projectsDataHandlerAction.getProjectTargetDate());
+
         }
         if (projectsDataHandlerAction.getParentProjectID() != null && !projectsDataHandlerAction.getParentProjectID().equals("")) {
             query.add(Restrictions.eq("parentProjectID", projectsDataHandlerAction.getParentProjectID()));
-            System.out.println("parent project id is " + projectsDataHandlerAction.getParentProjectID());
+
         }
 
         if (projectsDataHandlerAction.getProjectType() != null && projectsDataHandlerAction.getProjectType().equals("MP")) {
             query.add(Restrictions.eq("projectType", "MP"));
-            System.out.println("the project type is: MP");
+
         } else {
             query.add(Restrictions.eq("projectType", "SP"));
-            System.out.println("project type is SP");
+
         }
 
         if (projectsDataHandlerAction.getProjectType().equals("MP") && !projectsDataHandlerAction.getRoleValue().equalsIgnoreCase("Director")) {
-            System.err.println("session usr id --->"+httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
+
             query.add(Restrictions.eq("projectCreatedBy", Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString())));
         }
-        
-        System.err.println("query-->"+query.toString());
+
         projectsList = query.list();
 
         try {
-            // Closing hibernate session
+
             session.flush();
             session.close();
             session = null;
@@ -104,13 +121,23 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
                 }
             }
         }
-
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectSearchDetails Method End*********************");
         return projectsList;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectsByAccID() method is used to get state names of a
+     * particular country.
+     *
+     * *****************************************************************************
+     */
     public List getProjectsByAccID(Integer accID, Integer projectCreatedBy, String roleValue) throws ServiceLocatorException {
-        System.out.println(":::::::::::::: ProjectsDataHandlerServiceImpl ==> getProjectsByAccID ::::::::::::::::::");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>in impl userID:::::" + projectCreatedBy);
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectsByAccID Method Start*********************");
         List<ProjectsVTO> projectsList = new ArrayList<ProjectsVTO>();
 
         List<Org_RelVTO> childAccountsList = new ArrayList<Org_RelVTO>();
@@ -125,8 +152,6 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
             query.add(Restrictions.eq("projectCreatedBy", projectCreatedBy));
         }
 
-
-
         projectsList = query.list();
 
         try {
@@ -146,13 +171,22 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
                 }
             }
         }
-
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectsByAccID Method End*********************");
         return projectsList;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : addProject() method is used to
+     *
+     * *****************************************************************************
+     */
     public void addProject(ProjectsVTO projects) throws ServiceLocatorException {
-        System.out.println(":::::::::::::: ProjectsDataHandlerServiceImpl ==> addProject ::::::::::::::::::");
-
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: addProject Method Start*********************");
         Session session = HibernateServiceLocator.getInstance().getSession();
         //Creating a transaction for the session object.
         Transaction tran = session.beginTransaction();
@@ -163,12 +197,21 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
             System.out.println("Project Details Inserted Successfully");
         }
         session.close();
-
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: addProject Method End*********************");
     }
 
-    public String checkProjectName(String projectName,String projectFlag,int projectId,int accountID) throws ServiceLocatorException {
-        System.out.println(":::::::::::::: ProjectsDataHandlerServiceImpl ==> checkProjectName ::::::::::::::::::");
-
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : checkProjectName() method is used to
+     *
+     * *****************************************************************************
+     */
+    public String checkProjectName(String projectName, String projectFlag, int projectId, int accountID) throws ServiceLocatorException {
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: checkProjectName Method Start*********************");
         String nameFound = "false";
         List<String> projectNames = new ArrayList<String>();
 
@@ -176,7 +219,7 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
 
         Criteria query = session.createCriteria(com.mss.msp.acc.projectsdata.ProjectsVTO.class);
 
-        query.add(Restrictions.like("accountID", accountID));  
+        query.add(Restrictions.like("accountID", accountID));
         query.add(Restrictions.like("projectName", projectName));
 
         query.setProjection(Projections.property("projectName"));
@@ -189,10 +232,8 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
             nameFound = "false";
         }
 
-        System.out.println(projectNames.toString().toUpperCase());
-
         try {
-            // Closing hibernate session
+
             session.flush();
             session.close();
             session = null;
@@ -208,12 +249,22 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
                 }
             }
         }
-
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: checkProjectName Method End*********************");
         return nameFound;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectsByProjectID() method is used to
+     *
+     * *****************************************************************************
+     */
     public ProjectsVTO getProjectsByProjectID(ProjectsDataHandlerAction projectsDataHandlerAction) throws ServiceLocatorException {
-        System.out.println(":::::::::::::: ProjectsDataHandlerServiceImpl ==> getProjectsByProjectID ::::::::::::::::::");
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectsByProjectID Method Start*********************");
 
         ProjectsVTO projects = new ProjectsVTO();
 
@@ -222,12 +273,8 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
         Criteria query = session.createCriteria(com.mss.msp.acc.projectsdata.ProjectsVTO.class);
 
         query.add(Restrictions.like("accountID", projectsDataHandlerAction.getAccountID()));
-        System.out.println("accountID is " + projectsDataHandlerAction.getAccountID());
 
         query.add(Restrictions.like("projectID", projectsDataHandlerAction.getProjectID()));
-        System.out.println("projectID is " + projectsDataHandlerAction.getProjectID());
-
-
         projects = (ProjectsVTO) query.uniqueResult();
 
         if (projects.getProjectType().equals("SP")) {
@@ -238,7 +285,7 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
         }
 
         try {
-            // Closing hibernate session
+
             session.flush();
             session.close();
             session = null;
@@ -254,12 +301,22 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
                 }
             }
         }
-
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectsByProjectID Method End*********************");
         return projects;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectResourceCount() method is used to
+     *
+     * *****************************************************************************
+     */
     public Integer getProjectResourceCount(ProjectsDataHandlerAction projectsDataHandlerAction, HttpServletRequest httpServletRequest) throws ServiceLocatorException {
-        System.out.println(":::::::::::::: ProjectsDataHandlerServiceImpl ==> getProjectResourceCount ::::::::::::::::::");
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectResourceCount Method Start*********************");
 
         Integer counter;
 
@@ -272,37 +329,84 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
         query.add(Restrictions.like("projectID", projectsDataHandlerAction.getProjectID()));
 
         counter = query.list().size();
-
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectResourceCount Method End*********************");
         return counter;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : updateProject() method is used to
+     *
+     * *****************************************************************************
+     */
     public void updateProject(ProjectsVTO project, HttpServletRequest httpServletRequest) throws ServiceLocatorException {
-        System.out.println(":::::::::::::: ProjectsDataHandlerServiceImpl ==> updateProject ::::::::::::::::::");
-
-        System.out.println("The project object is: " + project.toString());
-
-        //Setting the projectID in the session to be passed onto getProjectDetails method
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: updateProject Method Start*********************");
+        Connection connection = null;
+        CallableStatement callableStatement = null;
         httpServletRequest.getSession(false).setAttribute("projectID", project.getProjectID());
+        boolean isExceute = false;
+        String result = "";
+        try {
+            System.out.println("project.getProjectType()-->" + project.getProjectType());
+            System.out.println("project.getProjectID()--->" + project.getProjectID());
+            connection = ConnectionProvider.getInstance().getConnection();
+            callableStatement = connection.prepareCall("{CALL spProjectDetailsUpdate(?,?,?,?,?,?,?,?,?,?,?)}");
+            System.out.println("updateProject :: procedure name : spProjectDetailsUpdate ");
+            callableStatement.setInt(1, project.getProjectID());
+            callableStatement.setString(2, project.getProjectType());
+            callableStatement.setString(3, project.getProjectName());
+            callableStatement.setString(4, project.getProjectStartDate());
+            callableStatement.setString(5, project.getProjectTargetDate());
+            callableStatement.setString(6, project.getProject_description());
+            callableStatement.setString(7, project.getProject_status());
+            callableStatement.setDouble(8, project.getProjectTargetHrs());
+            callableStatement.setString(9, project.getCostCenterName());
+            callableStatement.setString(10, project.getProjectReqSkillSet());
 
-        Session session = HibernateServiceLocator.getInstance().getSession();
+            callableStatement.registerOutParameter(11, Types.VARCHAR);
+            isExceute = callableStatement.execute();
+            result = callableStatement.getString(11);
 
-        //Creating a transaction for the session object.
-        Transaction tran = session.beginTransaction();
-
-        session.update(project);
-        tran.commit();
-
-        if (tran.wasCommitted()) {
-            System.out.println("Project Details Updated Successfully");
+            if ("1".equals(result)) {
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
         }
-        session.close();
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: updateProject Method End*********************");
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getSubProjects() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public List getSubProjects(Integer projectID) throws ServiceLocatorException {
-        System.out.println(":::::::::::::: ProjectsDataHandlerServiceImpl ==> getSubProjects ::::::::::::::::::");
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getSubProjects Method Start*********************");
 
-        System.out.println("In getSubProjects impl");
         List<ProjectsVTO> subProjectsList = new ArrayList<ProjectsVTO>();
 
         Session session = HibernateServiceLocator.getInstance().getSession();
@@ -314,7 +418,7 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
         subProjectsList = query.list();
 
         try {
-            // Closing hibernate session
+
             session.flush();
             session.close();
             session = null;
@@ -330,26 +434,37 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
                 }
             }
         }
-        System.out.println("In getSubProjects impl and returning the list");
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getSubProjects Method End*********************");
+
         return subProjectsList;
     }
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectsDashboard() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public List getProjectsDashboard(ProjectsDataHandlerAction projectsDataHandlerAction) throws ServiceLocatorException {
-        List<ProjectsVTO> projectDashBoardList = new ArrayList();
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectsDashboard Method Start*********************");
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
+        List<ProjectsVTO> projectDashBoardList = new ArrayList();
+
         try {
             queryString = "SELECT project_id,acc_id,proj_name,proj_type,targethrs,workedhrs FROM acc_projects"
                     + " WHERE  proj_type='MP' AND proj_status='Active' "
                     + " AND (EXTRACT(YEAR FROM proj_stdate) = " + projectsDataHandlerAction.getDashBoardYear() + "  OR EXTRACT(YEAR FROM proj_trdate) =" + projectsDataHandlerAction.getDashBoardYear() + " )"
                     + " AND acc_id= " + projectsDataHandlerAction.getSessionOrgId() + " ";
-            
-            //    + " GROUP BY account_id ORDER BY budgetAmount DESC LIMIT 0,10";
-            // queryString += " AND (EXTRACT(YEAR FROM startdate) = " + costCenterAjaxHandlerAction.getDashBoardYear() + "  OR EXTRACT(YEAR FROM enddate) =" + costCenterAjaxHandlerAction.getDashBoardYear() + " )";
-            //   queryString = "SELECT * FROM costcenterbudgets WHERE cccode like '"+costCenterAction.getCcCode()+"' AND(startdate LIKE '%" + year + "%' OR enddate LIKE '%" + year + "%')";
-            
-            System.out.println("queryString getProjectsDashboard() -->" + queryString);
+
+            System.out.println("getProjectsDashboard::queryString-------->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -382,6 +497,7 @@ public class ProjectsDataHandlerServiceImpl implements ProjectsDataHandlerServic
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************ProjectsDataHandlerServiceImpl :: getProjectsDashboard Method End*********************");
         return projectDashBoardList;
     }
 }

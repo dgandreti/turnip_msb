@@ -23,7 +23,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
  *
  * @author miracle
  */
-public class SOWAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
+public class SOWAction extends ActionSupport implements ServletRequestAware, ServletResponseAware {
 
     private HttpServletRequest httpServletRequest;
     private HttpServletResponse httpServletResponse;
@@ -60,7 +60,6 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
     private String reqType;
     private String sowFlagValue;
     private String SOWSelectValue;
-    // For SOW edit
     private int serviceId;
     private String netTerms;
     private String targetRate;
@@ -99,15 +98,27 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
     private String overTimeRate;
     private String overTimeLimit;
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getSowList() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getSowList() {
+        System.out.println("********************SOWAction :: getSowList Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("im in getSowList Action...............................");
+
                 userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
-//               
+
                 setSowVTO(ServiceLocator.getSOWService().getSowDetails(this));
                 resultType = SUCCESS;
             }
@@ -116,39 +127,65 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
             System.out.println("...............>error:" + ex.getMessage());
             resultType = ERROR;
         }
+        System.out.println("********************SOWAction :: getSowList Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getSOWSearchResults() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getSOWSearchResults() {
+        System.out.println("********************SOWAction :: getSOWSearchResults Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("im in getSowList Action...............................");
+
                 userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 setSowVTO(ServiceLocator.getSOWService().getSOWSearchResults(this));
-                System.out.println(">>>>LIST SIZE::::" + getSowVTO().size());
+
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************SOWAction :: getSOWSearchResults Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getSOWEditDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getSOWEditDetails() {
+        System.out.println("********************SOWAction :: getSOWEditDetails Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("im in getSowList Action...............................");
+
                 setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 ServiceLocator.getSOWService().getSOWEditDetails(this);
                 setSowVTO(ServiceLocator.getSOWService().getSOWAttachments(this));
-                // setSowVTO(ServiceLocator.getSOWService().getRecreatedList(this));
+
                 setSowHisStatus(DataSourceDataProvider.getInstance().getSOWStatus(this));
                 resultType = SUCCESS;
             }
@@ -156,18 +193,31 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************SOWAction :: getSOWEditDetails Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doAddUpdateSOWDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String doAddUpdateSOWDetails() {
+        System.out.println("********************SOWAction :: doAddUpdateSOWDetails Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("im in doAddUpdateSOWDetails Action...............................");
+
                 setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
-                System.out.println(">>>>>>>>>getRateSalary() " + getRateSalary());
+
                 procResults = ServiceLocator.getSOWService().doAddUpdateSOWDetails(this);
                 resultType = SUCCESS;
             }
@@ -175,39 +225,32 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************SOWAction :: doAddUpdateSOWDetails Method End*********************");
         return resultType;
     }
 
     /**
      * *****************************************************************************
-     * Date : June 1 2015
+     * Date :June 1 2015
      *
-     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     * Author :ramakrishna<lankireddy@miraclesoft.com>
      *
-     * addSOWAttachments() method can be used to add the SOW
+     * ForUse : addSOWAttachments() method can be used to add the SOW
      *
      * *****************************************************************************
      */
     public String addSOWAttachments() throws Exception {
-        System.out.println("entered into updateAttachment  action");
+        System.out.println("********************SOWAction :: addSOWAttachments Method Start*********************");
         resultType = LOGIN;
         int addresult = 0;
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data Start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        System.out.println("File Name is:" + getFileFileName());
-        System.out.println("File ContentType is:" + getFileContentType());
-        System.out.println("Files Directory is:" + filesPath + "-------->" + getFilesPath());
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data End %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        System.out.println("User Id----------------------------->" + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID));
-
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 if (getFileFileName() == null) {
-                    System.out.println("file is null so it adds only data in  table");
                 } else {
                     filesPath = Properties.getProperty("Sow.Attachment");
                     File createPath = new File(filesPath);
                     Date dt = new Date();
-                    /*The month is generated from here*/
+
 
                     String month = "";
                     if (dt.getMonth() == 0) {
@@ -242,14 +285,12 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
 
                     File theFile = new File(createPath.getAbsolutePath());
 
-                    System.out.println("File Path::" + theFile);
+
 
                     setFilesPath(theFile.toString());
-                    /*copies the file to the destination*/
+
                     File destFile = new File(theFile, getFileFileName());
-                    System.out.println(">>DestFile>>" + destFile);
-                    //setFilePath(destFile.toString());
-                    System.out.println("THE FINAL PATH IT IS SET IN THE ACTION::>>>>>" + getFilesPath());
+
                     FileUtils.copyFile(file, destFile);
                 }
                 setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -261,24 +302,36 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
                     setUploadRes("F");
                 }
 
-                System.out.println(">>>>>>>>>>>>" + getTabFlag() + ">>" + getUploadRes());
+
             }
         } catch (IOException e) {
             e.printStackTrace();
             return ERROR;
         } catch (Exception ex) {
-            System.out.println("Exception in update attachment  action-->" + ex.getMessage());
+
             resultType = ERROR;
         }
-
+        System.out.println("********************SOWAction :: addSOWAttachments Method End*********************");
         return SUCCESS;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getSOWAttachments() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getSOWAttachments() {
+        System.out.println("********************SOWAction :: getSOWAttachments Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("im in doAddUpdateSOWDetails Action...............................");
+
                 setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
@@ -290,22 +343,33 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************SOWAction :: getSOWAttachments Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doInsertSAGRecord() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String doInsertSAGRecord() {
+        System.out.println("********************SOWAction :: doInsertSAGRecord Method Start*********************");
         resultType = LOGIN;
         String result = "";
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("im in doInsertSAGRecord Action...............................");
+
                 setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 String res = ServiceLocator.getSOWService().doInsertSAGRecord(this);
-                System.out.println(">>>>>>>>RESLT IN ACTION>>" + res);
 
-                System.out.println(">>>>>>RESULT TO AJAX>>>" + res);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -317,19 +381,32 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************SOWAction :: doInsertSAGRecord Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : SOWSaveOrSubmit() method is used to get state names of a
+     * particular country.
+     *
+     * *****************************************************************************
+     */
     public String SOWSaveOrSubmit() {
+        System.out.println("********************SOWAction :: SOWSaveOrSubmit Method Start*********************");
         resultType = LOGIN;
         int update = 0;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("im in SOWSaveOrSubmit Action...............................");
+
                 setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
-                System.out.println(">>>>>>>>>getRateSalary() " + getRateSalary());
+
                 update = ServiceLocator.getSOWService().SOWSaveOrSubmit(this);
                 if (update > 0) {
                     resultMessage = "Updated Successfully!!";
@@ -347,39 +424,65 @@ public class SOWAction extends ActionSupport implements ServletRequestAware,Serv
             ex.printStackTrace();
             resultType = ERROR;
         }
+        System.out.println("********************SOWAction :: SOWSaveOrSubmit Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : sowRecreateEdit() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String sowRecreateEdit() {
+        System.out.println("********************SOWAction :: sowRecreateEdit Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("im in getSowList Action...............................");
+
                 setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 ServiceLocator.getSOWService().sowRecreateEdit(this);
-                // setSowVTO(ServiceLocator.getSOWService().getRecreatedList(this));
-                //setSowHisStatus(DataSourceDataProvider.getInstance().getSOWStatus(this));
+
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************SOWAction :: sowRecreateEdit Method End*********************");
         return resultType;
     }
-public String poDownloadButton() {
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : poDownloadButton() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
+    public String poDownloadButton() {
+        System.out.println("********************SOWAction :: poDownloadButton Method Start*********************");
         resultType = LOGIN;
         String update = "";
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("im in doInsertSAGRecord Action...............................");
+
                 setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 update = ServiceLocator.getSOWService().poDownloadButton(this);
-                System.out.println("-----------------------"+update);
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -392,12 +495,15 @@ public String poDownloadButton() {
             ex.printStackTrace();
             resultType = ERROR;
         }
+        System.out.println("********************SOWAction :: poDownloadButton Method End*********************");
         return null;
     }
+
     @Override
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
+
     /**
      *
      * This method is used to set the Servlet Response

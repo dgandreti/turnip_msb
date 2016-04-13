@@ -56,20 +56,26 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
     private DataSourceDataProvider dataSourceDataProvider;
     java.util.Date currentDate = new java.util.Date();
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectsTeam() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getProjectsTeam() {
-        System.out.println(":::::::::::::: ProjectTeamsDataHandlerAction ==> getProjectsTeam ::::::::::::::::::");
-
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getProjectsTeam Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttributeNames() != null) {
-                System.out.println("In getProjectsTeam ==> first if ::: the projectID is " + projectID);
                 projectsTeamList = ServiceLocator.getProjectTeamsDataHandlerService().getProjectsTeam(projectID);
-                System.out.println("The size of projectsTeamList is: " + projectsTeamList.size());
                 if (projectsTeamList.size() > 0) {
-                    System.out.println("The returned projectsTeamList is " + projectsTeamList.toString());
                     resultType = SUCCESS;
                 } else {
-                    System.out.println(" ::::: The projectsTeamList does not contain any output :::::::::::");
                     resultType = SUCCESS;
                 }
             }
@@ -77,23 +83,29 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getProjectsTeam Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getTeamReportsTo() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getTeamReportsTo() {
-        System.out.println(":::::::::::::: ProjectTeamsDataHandlerAction ==> getTeamReportsTo ::::::::::::::::::");
-
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getTeamReportsTo Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttributeNames() != null) {
-                System.out.println("In getTeamReportsTo ==> first if :::");
-                // teamReportsToList = dataSourceDataProvider.getReportToPersonByOrgId();
-                System.out.println("The size of projectsTeamList is: " + teamReportsToList.size());
                 if (teamReportsToList.size() > 0) {
-                    System.out.println("The returned projectsTeamList is " + teamReportsToList.toString());
                     resultType = SUCCESS;
                 } else {
-                    System.out.println(" ::::: The projectsTeamList does not contain any output :::::::::::");
                     resultType = SUCCESS;
                 }
             }
@@ -101,67 +113,103 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getTeamReportsTo Method End*********************");
         return Action.SUCCESS;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getTeamMemberDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getTeamMemberDetails() {
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getTeamMemberDetails Method Start*********************");
         resultType = LOGIN;
-        //String teamMembersResultString = "";
+
         try {
-            //  System.out.println("Ajax Handler action");
+
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 String teamMembersResultString = ServiceLocator.getProjectTeamsDataHandlerService().getTeamMemberDetails(this);
-                System.out.println("===============>in ProjectAction----->" + teamMembersResultString);
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(teamMembersResultString);
-                //resultType = SUCCESS;
+
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getTeamMemberDetails Method End*********************");
         return null;
     }
-//praveen <pkatru@miraclesoft.com>
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :praveen <pkatru@miraclesoft.com>
+     *
+     * ForUse : showResourceDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String showResourceDetails() {
+        System.out.println("********************ProjectTeamsDataHandlerAction :: showResourceDetails Method Start*********************");
         resultType = LOGIN;
         String resultString = "";
         try {
-            //  System.out.println("Ajax Handler action");
+
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 resultString = ServiceLocator.getProjectTeamsDataHandlerService().showResourceDetails(this);
-                //System.out.println("===============>in ProjectAction----->" + teamMembersResultString);
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
-                //resultType = SUCCESS;
+
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
-
+        System.out.println("********************ProjectTeamsDataHandlerAction :: showResourceDetails Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : EmpReleasefromProject() method is used to
+     *
+     * *****************************************************************************
+     */
     public String EmpReleasefromProject() {
+        System.out.println("********************ProjectTeamsDataHandlerAction :: EmpReleasefromProject Method Start*********************");
         resultType = LOGIN;
-        System.out.println("in exmp relesae prjct.............................div");
+
         String result;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int updateTeamStatus = ServiceLocator.getProjectTeamsDataHandlerService().EmpReleasefromProject(this);
-                System.out.println("===============>in ProjectAction----->" + updateTeamStatus);
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -174,38 +222,42 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
                     result = "0";
                     httpServletResponse.getWriter().write(result);
                 }
-                //resultType = SUCCESS;
+
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************ProjectTeamsDataHandlerAction :: EmpReleasefromProject Method End*********************");
         return null;
     }
-    
-    
+
     /**
      * *****************************************************************************
-     * Date : september 30, 2015, 04:13 PM EST
-     * Author:Manikanta<meeralla@miraclesoft.com>
+     * Date :september 30, 2015
+     *
+     * Author :Manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : getProjectDashboardList() method is used to
      *
      *
      * *****************************************************************************
      */
     public String getProjectDashboardList() {
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getProjectDashboardList Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 String resultString = null;
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("---------getProjectDashboardList()-------------");
+
                 setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
 
                 resultString = ServiceLocator.getProjectTeamsDataHandlerService().getProjectDashboardList(this);
 
 
-                System.out.println("--------------" + resultString);
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -216,23 +268,36 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
             }
         }
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getProjectDashboardList Method End*********************");
         return null;
     }
-    
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getProjectsForYear() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getProjectsForYear() {
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getProjectsForYear Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-               // String resultString = null;
+
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("---------getProjectDashboardList()-------------");
+
                 setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
 
-               String resultString = ServiceLocator.getProjectTeamsDataHandlerService().getProjectsForYear(this);
+                String resultString = ServiceLocator.getProjectTeamsDataHandlerService().getProjectsForYear(this);
 
 
-                System.out.println("--------------" + resultString);
-               httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
@@ -242,6 +307,7 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
             }
         }
+        System.out.println("********************ProjectTeamsDataHandlerAction :: getProjectsForYear Method End*********************");
         return null;
     }
 
@@ -460,5 +526,4 @@ public class ProjectTeamsDataHandlerAction extends ActionSupport implements Serv
     public void setProjectsFlag(String projectsFlag) {
         this.projectsFlag = projectsFlag;
     }
-    
 }

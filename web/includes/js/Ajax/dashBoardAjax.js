@@ -4,16 +4,20 @@ google.load('visualization', '1.1', {
 google.setOnLoadCallback();
 
 function getCustomerRequirementsDashBoard(){
+      $("#loadingReqDashboard").show();
     $("#reqCustomerYearChart").css('visibility', 'visible');
     var dashYears=$('#dashYears').val();
     var csrCustomers=$('#orgId').val();
     //alert("HI "+csrCustomers+"  "+dashYears)
-    
+      if(document.getElementById("accountNamePopup").value==""){
+        csrCustomers="";
+    }
     var url='../dashboard/getRequirementDashBoardDetails.action?dashYears='+dashYears+'&csrCustomer='+csrCustomers;
     var req=initRequest(url);
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             //alert(req.responseText)
+              $("#loadingReqDashboard").hide();
             populateDashBoardTableForCsrRequirements(req.responseText);
         } 
     };

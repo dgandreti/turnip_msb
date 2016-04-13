@@ -34,17 +34,31 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
     private String invVendor;
     private String invoiceStatus;
     private InvoiceVTO invoiceVTOClass;
+    private String searchFlag;
+    private int currentYear;
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getInvoice() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getInvoice() {
+        System.out.println("********************InvoiceAction :: getInvoice Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("hear updation is completed....");
+
                 userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                
+
                 setInvoiceYear(Calendar.getInstance().get(Calendar.YEAR));
-                
+
 
                 setInvoiceVto(ServiceLocator.getInvoiceService().getInvoiceDetails(this, (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString()));
                 resultType = SUCCESS;
@@ -53,18 +67,27 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************InvoiceAction :: getInvoice Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : deleteInvoice() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String deleteInvoice() {
+        System.out.println("********************InvoiceAction :: deleteInvoice Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("hear delete is completed...." + getInvoiceId());
-//                userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//                setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-//
-//              
+
                 boolean response = ServiceLocator.getInvoiceService().deleteInvoice(getInvoiceId());
                 resultType = SUCCESS;
             }
@@ -72,23 +95,30 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************InvoiceAction :: deleteInvoice Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doSearchInvoice() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String doSearchInvoice() {
+        System.out.println("********************InvoiceAction :: doSearchInvoice Method Start*********************");
+
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("hear Search is completed....");
-                //            userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
+
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-//                setInvoiceVto(ServiceLocator.getInvoiceService().getInvoiceDetails(this, (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString()));
-                System.out.println("invoiceMonth-->" + getInvoiceMonth());
-                System.out.println("invoiceYear-->" + getInvoiceYear());
-                System.out.println("usrId-->" + getUsrId());
-                System.out.println("invoiceResource-->" + getInvoiceResource());
-                System.out.println("invVendor-->" + getInvVendor());
-                System.out.println("invoiceStatus-->" + getInvoiceStatus());
+
                 setInvoiceVto(ServiceLocator.getInvoiceService().doSearchInvoiceDetails(this, (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString()));
                 setInvoiceYear(getInvoiceYear());
                 resultType = SUCCESS;
@@ -97,16 +127,28 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************InvoiceAction :: doSearchInvoice Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : goInvoiceEditDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String goInvoiceEditDetails() {
+        System.out.println("********************InvoiceAction :: goInvoiceEditDetails Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("hear Search is completed....");
-                // userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                setInvoiceVTOClass(ServiceLocator.getInvoiceService().goInvoiceEditDetails((this),(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString()));
+
+                setInvoiceVTOClass(ServiceLocator.getInvoiceService().goInvoiceEditDetails((this), (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString()));
 
                 resultType = SUCCESS;
             }
@@ -114,16 +156,29 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************InvoiceAction :: goInvoiceEditDetails Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doEditInvoiceDetatils() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String doEditInvoiceDetatils() {
+        System.out.println("********************InvoiceAction :: doEditInvoiceDetatils Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("hear Search is completed....");
+
                 userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                boolean responce=ServiceLocator.getInvoiceService().doEditInvoiceDetatils(getInvoiceVTOClass(),(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString(),this);
+                boolean responce = ServiceLocator.getInvoiceService().doEditInvoiceDetatils(getInvoiceVTOClass(), (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString(), this);
 
                 resultType = SUCCESS;
             }
@@ -131,6 +186,46 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************InvoiceAction :: doEditInvoiceDetatils Method End*********************");
+        return resultType;
+    }
+
+    /**
+     * *****************************************************************************
+     * Date : 03/26/2016
+     *
+     * Author : Manikanta <meeralla@miraclesoft.com>
+     *
+     * ForUse : getOutstandingInvoiceList() method is used to get Outstanding Invoices List
+     *
+     *
+     * *****************************************************************************
+     */
+    public String getOutstandingInvoiceList() {
+        System.out.println("********************InvoiceAction :: getOutstandingInvoiceList Method Start*********************");
+        resultType = LOGIN;
+        try {
+            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+                setUserSeessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+                setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+                if ("invoiceSearch".equals(getSearchFlag())) {
+                } else {
+                    setCurrentYear(Calendar.getInstance().get(Calendar.YEAR));
+                }
+                invoiceVto = ServiceLocator.getInvoiceService().getOutstandingInvoiceList(this, (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER)).toString());
+                if ("invoiceSearch".equals(getSearchFlag())) {
+                } else {
+                    setInvoiceYear(getCurrentYear());
+
+                }
+
+                resultType = SUCCESS;
+            }
+        } catch (Exception ex) {
+            httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
+            resultType = ERROR;
+        }
+        System.out.println("********************InvoiceAction :: getOutstandingInvoiceList Method End*********************");
         return resultType;
     }
 
@@ -225,5 +320,21 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
 
     public void setInvoiceVTOClass(InvoiceVTO invoiceVTOClass) {
         this.invoiceVTOClass = invoiceVTOClass;
+    }
+
+    public String getSearchFlag() {
+        return searchFlag;
+    }
+
+    public void setSearchFlag(String searchFlag) {
+        this.searchFlag = searchFlag;
+    }
+
+    public int getCurrentYear() {
+        return currentYear;
+    }
+
+    public void setCurrentYear(int currentYear) {
+        this.currentYear = currentYear;
     }
 }

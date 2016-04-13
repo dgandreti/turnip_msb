@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
@@ -22,6 +23,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
  */
 public class BudgetAction extends ActionSupport implements ServletRequestAware, ServletResponseAware {
 
+    private static Logger log = Logger.getLogger(BudgetAction.class);
     private HttpServletRequest httpServletRequest;
     private HttpServletResponse httpServletResponse;
     private int userSessionId;
@@ -32,7 +34,6 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
     private String typeOfUser;
     private String roleValue;
     private String resultMessage;
-    //for budget search
     private String project;
     private String quarterId;
     private String status;
@@ -50,7 +51,7 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
     /**
      * *************************************
      *
-     * @getProjectBudgetDetails() update status in requirement table
+     * @getProjectBudgetDetails() is for getting Project Budget Details
      *
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
@@ -62,20 +63,15 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
     public String getProjectBudgetDetails() throws ServiceLocatorException {
         String resulttype = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-            System.out.println("ENTERED IN TO THE ACTION FOR getProjectBudgetDetails******************************************************");
+            log.info("************Entered to The BudgetAction ACTION ::: getProjectBudgetDetails***********");
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             setRoleValue(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLEVALUE).toString());
-
-            //setRoleValue(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
             setProjectsMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getProjectList(getRoleValue(), getUserSessionId(), getSessionOrgId()));
-            System.out.println(">>>>>>>>>>>>>>>>>in budget action >>>" + getRoleValue());
-
-
             projectBudgetList = (ServiceLocator.getBudgetService().getProjectBudgetDetails(this));
-            System.out.println(">>>>>>>>ACTION>>>>>>" + getProjectBudgetList().toString());
             setYear(Calendar.getInstance().get(Calendar.YEAR));
             resulttype = SUCCESS;
+            log.info("************End of BudgetAction ACTION ::: getProjectBudgetDetails***********");
         }
         return resulttype;
     }
@@ -83,7 +79,8 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
     /**
      * *************************************
      *
-     * @getProjectBudgetSearchResults() update status in requirement table
+     * @getProjectBudgetSearchResults() is for getting Project Budget Search
+     * Results
      *
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
@@ -96,6 +93,7 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
+                log.info("************Entered to The BudgetAction ACTION ::: getProjectBudgetDetails***********");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setRoleValue(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLEVALUE).toString());
@@ -107,8 +105,12 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
                 resultMessage = null;
+                log.info("************End of BudgetAction ACTION ::: getProjectBudgetDetails***********");
             } catch (Exception ex) {
                 ex.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetAction:: getProjectBudgetSearchResults()" + ex.toString());
+                }
                 resultMessage = ERROR;
             }
         }
@@ -118,7 +120,7 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
     /**
      * *************************************
      *
-     * @getProjectBudgetSearchResults() update status in requirement table
+     * @getProjectBudgetSearchResults() is for save Project Budget Details
      *
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
@@ -132,18 +134,16 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
         String csrReq = "";
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
+                log.info("************Entered to The BudgetAction ACTION ::: saveProjectBudgetDetails***********");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                //setRoleValue(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLEVALUE).toString());
-                System.out.println(">>>>>>>>>>>>>>>FLAG IN ACTION>>>>>>>>>>>" + getFlag());
-
                 if (getFlag().equalsIgnoreCase("A") || getFlag().equalsIgnoreCase("R")) {
                     if (getFlag().equalsIgnoreCase("A")) {
                         setFlag("Approved");
                     } else {
                         setFlag("Rejected");
                     }
-                    csrReq = ServiceLocator.getBudgetService().setDirectorResultForBudget( this);
+                    csrReq = ServiceLocator.getBudgetService().setDirectorResultForBudget(this);
                 } else {
                     csrReq = ServiceLocator.getBudgetService().saveProjectBudgetDetails(this);
                 }
@@ -154,8 +154,12 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
                 resultMessage = null;
+                log.info("************End of BudgetAction ACTION ::: saveProjectBudgetDetails***********");
             } catch (Exception ex) {
                 ex.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetAction:: saveProjectBudgetDetails()" + ex.toString());
+                }
                 resultMessage = ERROR;
             }
         }
@@ -165,9 +169,8 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
     /**
      * *************************************
      *
-     * @getProjectBudgetDetailsToViewOnOverlay() update status in requirement
-     * table
-     *
+     * @getProjectBudgetDetailsToViewOnOverlay() is for get Project Budget
+     * Details To View On Overlay
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
      *
@@ -179,6 +182,7 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
+                log.info("************Entered into BudgetAction ACTION ::: getProjectBudgetDetailsToViewOnOverlay***********");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 String csrReq = ServiceLocator.getBudgetService().getProjectBudgetDetailsToViewOnOverlay(this);
@@ -189,8 +193,12 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
                 resultMessage = null;
+                log.info("************End of BudgetAction ACTION ::: getProjectBudgetDetailsToViewOnOverlay***********");
             } catch (Exception ex) {
                 ex.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetAction:: getProjectBudgetDetailsToViewOnOverlay()" + ex.toString());
+                }
                 resultMessage = ERROR;
             }
         }
@@ -200,9 +208,7 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
     /**
      * *************************************
      *
-     * @getProjectBudgetDetailsToViewOnOverlay() update status in requirement
-     * table
-     *
+     * @doBudgetRecordDelete() is for Delete Budget Record
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
      *
@@ -214,9 +220,10 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
+                log.info("************Entered into BudgetAction ACTION ::: doBudgetRecordDelete***********");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                String csrReq = ServiceLocator.getBudgetService().doBudgetRecordDelete( this);
+                String csrReq = ServiceLocator.getBudgetService().doBudgetRecordDelete(this);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -224,17 +231,22 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(csrReq);
                 resultMessage = null;
+                log.info("************End of BudgetAction ACTION ::: doBudgetRecordDelete***********");
             } catch (Exception ex) {
                 ex.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetAction:: doBudgetRecordDelete()" + ex.toString());
+                }
                 resultMessage = ERROR;
             }
         }
         return null;
     }
+
     /**
      * *************************************
      *
-     *  
+     * @getCostCenterNameByProjectId() is for getting CostCenter Name By ProjectId
      *
      * @Author:Divya Gandreti<dgandreti@miraclesoft.com>
      *
@@ -245,15 +257,20 @@ public class BudgetAction extends ActionSupport implements ServletRequestAware, 
     public String getCostCenterNameByProjectId() {
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
+                log.info("************Entered into BudgetAction ACTION ::: getCostCenterNameByProjectId***********");
                 String costCenterName = ServiceLocator.getBudgetService().getCostCentertDetailsByProjectId(this);
-                System.out.println("-------------cost yar----------"+getYear());
+                System.out.println("-------------cost yar----------" + getYear());
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(costCenterName);
+                log.info("************End of BudgetAction ACTION ::: getCostCenterNameByProjectId***********");
             } catch (Exception ex) {
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetAction:: getCostCenterNameByProjectId()" + ex.toString());
+                }
                 resultMessage = ERROR;
             }
         }

@@ -1,7 +1,7 @@
 <%--
-    Document   : AccountAdd
+    Document   : addOrEditQuestions
     Created on : Apr 12, 2015, 7:05:25 PM
-    Author     : Anton Franklin
+    Author     : Tirumala Teja
 --%>
 
 <%@page import="com.mss.msp.usersdata.UserVTO"%>
@@ -18,7 +18,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Add Account</title>
+        <title>ServicesBay :: AddOrEditQuestions</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -48,7 +48,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
         <script>
             function checkanswerType(){
-                // alert("hii")
+              
                 var answerType=document.getElementById('answerType').value;
                 var quesId=$("#quesId").val();
                 
@@ -67,11 +67,11 @@
                 
                 if(answerType=='S')
                 {
-                    // alert("single")
+                  
                     document.getElementById('answer1').style.display = "none";
                     document.getElementById('answer').style.display = "block"; 
                     if(quesId>0){
-                        //alert("quesId"+quesId)
+                     
                     
                         ans1.checked = false;
                         ans2.checked = false;
@@ -82,11 +82,11 @@
                     }
                     
                 }else{
-                    // alert("inside else")
+                  
                     document.getElementById('answer1').style.display = "block"; 
                     document.getElementById('answer').style.display = "none";
                     if(quesId>0){
-                        //  alert("quesId"+quesId)
+                      
                     
                         for(var i = 0; i < answer.length; i++){
                        
@@ -94,166 +94,166 @@
                         
                         }
                     }
+            }
+        }
+            
+        function checkValidationsForAddQues(){
+              
+                
+               
+               
+            var quesId=$("#quesId").val();
+            var question=$("#question").val();
+            var showImg=$("#showImg").val();
+            var oldPath=$("#oldPath").val();
+              
+                
+            var isPic=document.getElementById('isPic');
+            var option1=$("#option1").val();  
+            var option2=$("#option2").val();  
+            var answer=$("#answer").val(); 
+            var ans1=document.getElementById('ans1'); 
+            var ans2=document.getElementById('ans2'); 
+            var ans3=document.getElementById('ans3'); 
+            var ans4=document.getElementById('ans4'); 
+            var ans5=document.getElementById('ans5'); 
+            var ans6=document.getElementById('ans6'); 
+            var answer=document.getElementsByName('answer');
+                 
+            var ans_value;
+              
+            for(var i = 0; i < answer.length; i++){
+                if(answer[i].checked){
+                    ans_value = answer[i].value;
                 }
             }
-            
-            function checkValidationsForAddQues(){
-              
-                
                
-                //alert("hii");
-                var quesId=$("#quesId").val();
-                var question=$("#question").val();
-                var showImg=$("#showImg").val();
-                var oldPath=$("#oldPath").val();
-                // alert("oldPath"+oldPath)
-                
-                var isPic=document.getElementById('isPic');
-                var option1=$("#option1").val();  
-                var option2=$("#option2").val();  
-                var answer=$("#answer").val(); 
-                var ans1=document.getElementById('ans1'); 
-                var ans2=document.getElementById('ans2'); 
-                var ans3=document.getElementById('ans3'); 
-                var ans4=document.getElementById('ans4'); 
-                var ans5=document.getElementById('ans5'); 
-                var ans6=document.getElementById('ans6'); 
-                var answer=document.getElementsByName('answer');
-                 
-                var ans_value;
-              
-                for(var i = 0; i < answer.length; i++){
-                    if(answer[i].checked){
-                        ans_value = answer[i].value;
-                    }
-                }
-               
-                if(question=="")
-                {
-                    $("#formValidationMsg").html("<font color='red'>please enter Question</font>");
-                    $("#question").css('border','1px solid red');
-                    return false; 
-                } else
-                {
-                    $("formValidationMsg").html(" ");
-                    $("#question").css("border", "1px solid green");
+            if(question=="")
+            {
+                $("#formValidationMsg").html("<font color='red'>please enter Question</font>");
+                $("#question").css('border','1px solid red');
+                return false; 
+            } else
+            {
+                $("formValidationMsg").html(" ");
+                $("#question").css("border", "1px solid green");
                   
+            }
+                
+                
+            if(isPic.checked == true && (quesId == 0 || oldPath=="")){
+                
+                if (showImg == ""  ) {
+                    $("#formValidationMsg").html("<font color='red'>please upload Image related to the Question</font>");
+                    $("#showImg").css('border','1px solid red');
+                    return false;
+                } else {
+                    $("formValidationMsg").html(" ");
+                    $("#showImg").css("border", "1px solid green");
                 }
+            }
                 
-                
-                if(isPic.checked == true && (quesId == 0 || oldPath=="")){
-                    // alert("showImg"+showImg)
-                    if (showImg == ""  ) {
-                        $("#formValidationMsg").html("<font color='red'>please upload Image related to the Question</font>");
-                        $("#showImg").css('border','1px solid red');
-                        return false;
-                    } else {
-                        $("formValidationMsg").html(" ");
-                        $("#showImg").css("border", "1px solid green");
+            if(showImg!="" && isPic.checked == true)
+            {
+                var Extension = showImg.substring(
+                showImg.lastIndexOf('.') + 1).toLowerCase();
+                if (Extension == "gif" || Extension == "png" || Extension == "bmp"
+                    || Extension == "jpeg" || Extension == "jpg") {
+                    var fileSize = document.getElementById("showImg").files[0];
+                    var sizeInMb = (fileSize.size/1024)/1024;
+                     
+                    var sizeLimit= 2;
+                    if (sizeInMb > sizeLimit) {
+                        $("#formValidationMsg").html("<font color='red'>File size must be less than 2MB.</font>");
+                        return false
                     }
-                }
-                
-                if(showImg!="" && isPic.checked == true)
-                {
-                    var Extension = showImg.substring(
-                    showImg.lastIndexOf('.') + 1).toLowerCase();
-                    if (Extension == "gif" || Extension == "png" || Extension == "bmp"
-                        || Extension == "jpeg" || Extension == "jpg") {
-                        var fileSize = document.getElementById("showImg").files[0];
-                        var sizeInMb = (fileSize.size/1024)/1024;
-                        // alert(sizeInMb)
-                        var sizeLimit= 2;
-                        if (sizeInMb > sizeLimit) {
-                            $("#formValidationMsg").html("<font color='red'>File size must be less than 2MB.</font>");
-                            return false
-                        }
-                    } 
-                    else {
-                        $("#formValidationMsg").html("<font color='red'>please upload file types of GIF, PNG, JPG, JPEG and BMP.</font>");
-                        return false;
-                    }  
-                }
+                } 
+                else {
+                    $("#formValidationMsg").html("<font color='red'>please upload file types of GIF, PNG, JPG, JPEG and BMP.</font>");
+                    return false;
+                }  
+            }
    
-                if(option1=="")
-                {
-                    $("#formValidationMsg").html("<font color='red'>Option1 is mandaratory</font>");
-                    $("#option1").css('border','1px solid red');
-                    return false; 
-                }else
-                {
-                    $("formValidationMsg").html(" ");
-                    $("#option1").css("border", "1px solid green");
+            if(option1=="")
+            {
+                $("#formValidationMsg").html("<font color='red'>Option1 is mandaratory</font>");
+                $("#option1").css('border','1px solid red');
+                return false; 
+            }else
+            {
+                $("formValidationMsg").html(" ");
+                $("#option1").css("border", "1px solid green");
                    
-                }
-                if(option2=="")
-                {
-                    $("#formValidationMsg").html("<font color='red'>Option2 is mandaratory</font>");
-                    $("#option2").css('border','1px solid red');
-                    return false; 
-                }else
-                {
-                    $("formValidationMsg").html(" ");
-                    $("#option2").css("border", "1px solid green");
+            }
+            if(option2=="")
+            {
+                $("#formValidationMsg").html("<font color='red'>Option2 is mandaratory</font>");
+                $("#option2").css('border','1px solid red');
+                return false; 
+            }else
+            {
+                $("formValidationMsg").html(" ");
+                $("#option2").css("border", "1px solid green");
                    
-                }
+            }
                 
-                if((ans_value != undefined) || (ans1.checked == true)||(ans2.checked == true) || (ans3.checked == true) || (ans4.checked == true) || (ans5.checked == true) || (ans6.checked == true)){
+            if((ans_value != undefined) || (ans1.checked == true)||(ans2.checked == true) || (ans3.checked == true) || (ans4.checked == true) || (ans5.checked == true) || (ans6.checked == true)){
                    
-                    $("formValidationMsg").html(" ");
+                $("formValidationMsg").html(" ");
                   
-                }else{
-                    //alert("ans1.checked"+ans1.checked)
-                    $("#formValidationMsg").html("<font color='red'>please select atleast one answer</font>");
+            }else{
+                  
+                $("#formValidationMsg").html("<font color='red'>please select atleast one answer</font>");
                  
-                    return false; 
-                }
+                return false; 
+            }
                
                 
+        }
+            
+        function showBrowse(){
+            var isPic=document.getElementById('isPic');
+            if(isPic.checked == true){
+                browsePicture.style.display='block';
             }
-            
-            function showBrowse(){
-                var isPic=document.getElementById('isPic');
-                if(isPic.checked == true){
-                    browsePicture.style.display='block';
-                }
-                else
-                {
-                    browsePicture.style.display='none';
-                }
+            else
+            {
+                browsePicture.style.display='none';
             }
+        }
             
-            function readURL(input) {
-                // alert("hiii");
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+        function readURL(input) {
+              
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
             
-                    reader.onload = function (e) {
-                        $('#selectedImg').attr('src', e.target.result);
-                    }
-            
-                    reader.readAsDataURL(input.files[0]);
+                reader.onload = function (e) {
+                    $('#selectedImg').attr('src', e.target.result);
                 }
+            
+                reader.readAsDataURL(input.files[0]);
             }
+        }
     
-            $("#showImg").change(function(){
-                readURL(this);
-            });
-            function clearImage(){
-                document.getElementById('isPic').checked=false;
-                var isPic=document.getElementById('isPic')
-                if(isPic.checked == true){
+        $("#showImg").change(function(){
+            readURL(this);
+        });
+        function clearImage(){
+            document.getElementById('isPic').checked=false;
+            var isPic=document.getElementById('isPic')
+            if(isPic.checked == true){
                     
-                    document.getElementById('browsePicture').style.display='block';
-                }
-                else
-                {
+                document.getElementById('browsePicture').style.display='block';
+            }
+            else
+            {
                    
-                    document.getElementById('browsePicture').style.display='none';
-                }
-                document.getElementById('selectedImg').src="";
+                document.getElementById('browsePicture').style.display='none';
+            }
+            document.getElementById('selectedImg').src="";
                 
                
-            }
+        }
             
             
         </script>
@@ -295,14 +295,14 @@
                                                     <font color="#ffffff">Add&nbsp;Exam&nbsp;Questions</font>
 
                                                 </s:else>
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                               
                                                 <s:url var="myUrl" action="storeAddOrEditExamQues.action">
                                                     <s:param name="quesId"><s:property value="quesId"/></s:param> 
                                                 </s:url>
 
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                               
 
-                                                <span class="pull-right"><a href="../Ques/getQuestionsList.action"><i class="fa fa-undo"></i></a></span>
+                                                <span class="pull-right"><a id="addOrEdirQuestionBackButton" href="../Ques/getQuestionsList.action"><i class="fa fa-undo"></i></a></span>
                                             </h4>
                                         </div>
                                     </div>
@@ -365,8 +365,8 @@
                                                 <div class="row">
                                                     <div class="col-sm-12" id="questionTextArea">
                                                         <span>
-                                                                <label class="labelStyle2">Question</label>
-                                                                <s:textarea name="question" id="question" placeholder="Question" rows="8" value="%{editQues.question}" cssClass="form-control" tabindex="7" maxLength="5000" /> 
+                                                            <label class="labelStyle2">Question</label>
+                                                            <s:textarea name="question" id="question" placeholder="Question" rows="8" value="%{editQues.question}" cssClass="form-control" tabindex="7" maxLength="5000" /> 
                                                         </span>
                                                     </div>
                                                 </div>
@@ -379,34 +379,34 @@
                                                     </s:url>
                                                     <s:hidden name="oldPath" id="oldPath" value="%{editQues.question_path}"/>
                                                     <div class="col-lg-12 required" id="browsePicture" style="display:none;">
-                                                            <label class="labelStyle2">Image&nbsp;related&nbsp;to&nbsp;above&nbsp;Question</label>
-                                                            <span>
-                                                                <s:if test='editQues.question_path != null'>
-                                                                    &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-responsive" src='<s:property value="#image"/>' height="50%" width="50%"/></s:if>
-                                                                <s:file name="quesImage"  label="Upload File"  id="showImg" onchange="readURL(this)" tabindex="8" ></s:file>
+                                                        <label class="labelStyle2">Image&nbsp;related&nbsp;to&nbsp;above&nbsp;Question</label>
+                                                        <span>
+                                                            <s:if test='editQues.question_path != null'>
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;<img id="editImg" class="img-responsive" src='<s:property value="#image"/>' height="50%" width="50%"/></s:if>
+                                                            <s:file name="quesImage"  label="Upload File"  id="showImg" onchange="readURL(this)" tabindex="8" ></s:file>
                                                                 &nbsp;&nbsp;<img id="selectedImg" src="#" alt="selected image:" height="50%" width="50%"/>
                                                             </span>
+                                                        </div>
+
                                                     </div>
-
                                                 </div>
-                                            </div>
 
 
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-6 required">
-                                                        <span>
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-6 required">
+                                                            <span>
                                                                 <label class="labelStyle2">Option1</label>
-                                                                <s:textarea name="option1" id="option1" placeholder="Option1" rows="8" cssClass="form-control " value="%{editQues.option1}" tabindex="9" maxLength="5000" /> 
+                                                            <s:textarea name="option1" id="option1" placeholder="Option1" rows="8" cssClass="form-control " value="%{editQues.option1}" tabindex="9" maxLength="5000" /> 
                                                         </span>
                                                         <br />
                                                     </div>
                                                     <div class="col-sm-6 required">
                                                         <span>
-                                                           
-                                                                <label class="labelStyle2">Option2 </label>
-                                                                <s:textarea name="option2" id="option2" placeholder="Option2" rows="8" cssClass="form-control" value="%{editQues.option2}" tabindex="10" maxLength="5000"/> 
-                                                          
+
+                                                            <label class="labelStyle2">Option2 </label>
+                                                            <s:textarea name="option2" id="option2" placeholder="Option2" rows="8" cssClass="form-control" value="%{editQues.option2}" tabindex="10" maxLength="5000"/> 
+
                                                         </span>
                                                     </div>
 
@@ -453,41 +453,36 @@
                                                 </div>
                                             </div>
 
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <span>
+                                                        <div class="col-sm-12 required">
+                                                            <label class="labelStyle2"> Answers </label>
+                                                        </div>
+                                                        <div id="answer" style="disply:none">
+                                                            <s:radio cssClass="" name="answer" id="answer" value="%{editQues.answer}" list="{'Answer1','Answer2','Answer3','Answer4','Answer5','Answer6'}" cssStyle="width: 50px;" tabindex="15" />
+                                                        </div>
+
                                                     
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <span>
-                                                            <div class="col-sm-12 required">
-                                                                <label class="labelStyle2"> Answers </label>
-                                                            </div>
-                                                            <div id="answer" style="disply:none">
-                                                                <s:radio cssClass="" name="answer" id="answer" value="%{editQues.answer}" list="{'Answer1','Answer2','Answer3','Answer4','Answer5','Answer6'}" cssStyle="width: 50px;" tabindex="15" />
-                                                            </div>
-
-                                                            <%--  <div class="col-lg-3">
-                                                                  <br>
-                                                                  <label for="" class="checkbox">
-                                                                      <s:checkbox id="usrPrimary" name="usrPrimary"  value="%{primaryvalue}"/>IsPrimary
-                                                                  </label>
-                                                              </div> --%>
 
 
 
-                                                            <div id="answer1" class="form-group" style="display: none"> 
-                                                                <label class="checkbox-inline"> Answer1 <s:checkbox cssClass=""  name="ans1" id="ans1" value="%{editQues.ans1}" tabindex="16" /></label>
-                                                                <label class="checkbox-inline"> Answer2 <s:checkbox cssClass=""  name="ans2" id="ans2" value="%{editQues.ans2}" tabindex="17" /></label>
-                                                                <label class="checkbox-inline"> Answer3 <s:checkbox cssClass=""  name="ans3" id="ans3" value="%{editQues.ans3}" tabindex="18" /></label>
-                                                                <label class="checkbox-inline"> Answer4 <s:checkbox cssClass=""  name="ans4" id="ans4" value="%{editQues.ans4}" tabindex="19" /></label>
-                                                                <label class="checkbox-inline"> Answer5 <s:checkbox cssClass=""  name="ans5" id="ans5" value="%{editQues.ans5}" tabindex="20" /></label>
-                                                                <label class="checkbox-inline"> Answer6 <s:checkbox cssClass=""  name="ans6" id="ans6" value="%{editQues.ans6}" tabindex="21" /></label>
-                                                            </div>
+                                                        <div id="answer1" class="form-group" style="display: none"> 
+                                                            <label class="checkbox-inline"> Answer1 <s:checkbox cssClass=""  name="ans1" id="ans1" value="%{editQues.ans1}" tabindex="16" /></label>
+                                                            <label class="checkbox-inline"> Answer2 <s:checkbox cssClass=""  name="ans2" id="ans2" value="%{editQues.ans2}" tabindex="17" /></label>
+                                                            <label class="checkbox-inline"> Answer3 <s:checkbox cssClass=""  name="ans3" id="ans3" value="%{editQues.ans3}" tabindex="18" /></label>
+                                                            <label class="checkbox-inline"> Answer4 <s:checkbox cssClass=""  name="ans4" id="ans4" value="%{editQues.ans4}" tabindex="19" /></label>
+                                                            <label class="checkbox-inline"> Answer5 <s:checkbox cssClass=""  name="ans5" id="ans5" value="%{editQues.ans5}" tabindex="20" /></label>
+                                                            <label class="checkbox-inline"> Answer6 <s:checkbox cssClass=""  name="ans6" id="ans6" value="%{editQues.ans6}" tabindex="21" /></label>
+                                                        </div>
 
 
 
-                                                        </span> 
-                                                    </div>
+                                                    </span> 
                                                 </div>
-                                          
+                                            </div>
+
                                             <div class="col-sm-12">         
                                                 <div class="row">
                                                     <div class="col-sm-12 ">
@@ -503,38 +498,19 @@
 
 
                                             <div class="col-sm-12 ">
-                                                <!--<div class="col-lg-6"></div>-->
+                                              
                                                 <div class="col-sm-2 pull-right">
-                                                    <%--s:reset type="button" cssClass="cssbutton_emps field-margin" key="reset" value="Clear"/--%>
-                                                    <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" onclick="clearImage();" tabindex="23" />
+                                                 
+                                                    <s:reset  type="button" id="resetQuestion" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" onclick="clearImage();" tabindex="23" />
                                                 </div>
                                                 <div class="col-sm-2 pull-right">
-                                                    <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel" tabindex="24" />
+                                                    <s:reset  type="button" id="cancelQuestion"  cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel" tabindex="24" />
                                                 </div>
                                                 <div class="col-sm-2 pull-right">
-                                                    <s:submit type="button" id="addEditSubmit" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" onclick="return checkValidationsForAddQues();" tabindex="25" ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                    <s:submit  type="button" id="addEditSubmit" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" onclick="return checkValidationsForAddQues();" tabindex="25" ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <%-- <div class="row">
-
-                                                <div class="col-sm-4 ">
-                                                    <div class="col-sm-7 pull-left">
-                                                        <s:reset type="button" cssStyle="margin:5px -1vw;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" tabindex="23" onclick="clearImage()" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="col-sm-7">
-                                                        <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel" tabindex="24"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4 ">
-                                                    <div class="col-sm-7 pull-right">
-                                                        <s:submit type="button" id="addEditSubmit" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" onclick="return checkValidationsForAddQues();" tabindex="25" ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
-                                                    </div>
-                                                </div>
-                                            </div> 
-                                            --%>
                                             <div class="row">
                                                 <p id="errorMessage" align="center" class="accDetailsError" >
                                                     <s:property value="resultMessage"  />

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class BudgetServiceImpl implements BudgetService {
 
+    private static Logger log = Logger.getLogger(BudgetAction.class);
     Connection connection = null;
     CallableStatement callableStatement = null;
     PreparedStatement preparedStatement = null;
@@ -33,9 +35,7 @@ public class BudgetServiceImpl implements BudgetService {
     /**
      * *************************************
      *
-     * @getDefaultRequirementDashBoardDetails() update status in requirement
-     * table
-     *
+     * @getProjectBudgetDetails() is used to Pro get Project Budget Details
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
      *
@@ -44,12 +44,13 @@ public class BudgetServiceImpl implements BudgetService {
      **************************************
      */
     public List getProjectBudgetDetails(BudgetAction budgetAction) throws ServiceLocatorException {
-        String resultString = "";
         String queryString = "";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         ArrayList<BudgetVTO> projectBudgetList = new ArrayList<BudgetVTO>();
-
         try {
-            System.out.println("ENTERED IN TO THE IMPL FOR CUSTOMER DASHBOARD******************************************************");
+            log.info("************Entered to The BudgetServiceImpl ::: getProjectBudgetDetails***********");
             int year = Calendar.getInstance().get(Calendar.YEAR);
             connection = ConnectionProvider.getInstance().getConnection();
             if (budgetAction.getRoleValue().equalsIgnoreCase("Director")) {
@@ -57,17 +58,15 @@ public class BudgetServiceImpl implements BudgetService {
                         + "FROM prjbudget b "
                         + "LEFT OUTER JOIN acc_projects p ON(p.project_id=b.prjid) "
                         + "LEFT OUTER JOIN costcenter c ON(c.cccode=p.cccode) "
-                        + "WHERE 1=1 AND b.STATUS IN('Submitted','Approved','Rejected') AND b.YEAR = "+year+" AND p.acc_id=" + budgetAction.getSessionOrgId();
+                        + "WHERE 1=1 AND b.STATUS IN('Submitted','Approved','Rejected') AND b.YEAR = " + year + " AND p.acc_id=" + budgetAction.getSessionOrgId();
             } else {
                 queryString = "SELECT c.ccname,p.cccode,b.id,p.proj_name,p.proj_type,b.estbugetamt,b.balbudgetamt,b.STATUS,b.qutindetifier,b.YEAR,b.description "
                         + "FROM prjbudget b "
                         + "LEFT OUTER JOIN acc_projects p ON(p.project_id=b.prjid) "
                         + "LEFT OUTER JOIN costcenter c ON(c.cccode=p.cccode) "
-                        + "WHERE p.created_by=" + budgetAction.getUserSessionId() + "  AND b.YEAR = "+year+" AND p.acc_id=" + budgetAction.getSessionOrgId();
+                        + "WHERE p.created_by=" + budgetAction.getUserSessionId() + "  AND b.YEAR = " + year + " AND p.acc_id=" + budgetAction.getSessionOrgId();
             }
-
-
-            System.out.println("query...DashBoard....>" + queryString);
+            log.info("BudgetServiceImpl ::: getProjectBudgetDetails query......>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -85,9 +84,11 @@ public class BudgetServiceImpl implements BudgetService {
 
                 projectBudgetList.add(budgetVTO);
             }
-            System.out.println("result=========>" + resultString);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: getProjectBudgetDetails()" + ex.toString());
+            }
         } finally {
             try {
                 if (resultSet != null) {
@@ -98,17 +99,15 @@ public class BudgetServiceImpl implements BudgetService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
-                
                 if (connection != null) {
                     connection.close();
                     connection = null;
                 }
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetServiceImpl:: getProjectBudgetDetails()" + sqle.toString());
+                }
             }
         }
         return projectBudgetList;
@@ -126,10 +125,13 @@ public class BudgetServiceImpl implements BudgetService {
      *
      **************************************
      */
-    public String getProjectBudgetSearchResults( BudgetAction budgetAction) throws ServiceLocatorException {
+    public String getProjectBudgetSearchResults(BudgetAction budgetAction) throws ServiceLocatorException {
         String resultString = "";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-
+            log.info("************Entered to The BudgetServiceImpl ::: getProjectBudgetSearchResults***********");
             connection = ConnectionProvider.getInstance().getConnection();
             String queryString = "";
             if (budgetAction.getRoleValue().equalsIgnoreCase("Director")) {
@@ -146,7 +148,6 @@ public class BudgetServiceImpl implements BudgetService {
                         + "WHERE p.created_by=" + budgetAction.getUserSessionId() + " AND p.acc_id=" + budgetAction.getSessionOrgId();
             }
 
-
             if (budgetAction.getYear() != 0) {
                 queryString = queryString + " AND b.YEAR=" + budgetAction.getYear() + "  ";
             }
@@ -160,7 +161,7 @@ public class BudgetServiceImpl implements BudgetService {
                 queryString = queryString + " AND p.project_id='" + budgetAction.getProject() + "'  ";
             }
 
-            System.out.println("query...for..org id...." + queryString);
+            log.info("BudgetServiceImpl ::: getProjectBudgetSearchResults query......>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -176,12 +177,16 @@ public class BudgetServiceImpl implements BudgetService {
                         + resultSet.getString("ccname") + "|"
                         + resultSet.getString("proj_type") + "^";
             }
-
-            System.out.println("result=========>" + resultString);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: getProjectBudgetSearchResults()" + ex.toString());
+            }
         } catch (NullPointerException ex) {
             resultString = "";
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: getProjectBudgetSearchResults()" + ex.toString());
+            }
         } finally {
             try {
                 if (resultSet != null) {
@@ -192,16 +197,15 @@ public class BudgetServiceImpl implements BudgetService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
                 }
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetServiceImpl:: getProjectBudgetSearchResults()" + sqle.toString());
+                }
             }
         }
         return resultString;
@@ -210,7 +214,7 @@ public class BudgetServiceImpl implements BudgetService {
     /**
      * *************************************
      *
-     * @saveProjectBudgetDetails() update status in requirement table
+     * @saveProjectBudgetDetails() is for save Project Budget Details
      *
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
@@ -219,30 +223,21 @@ public class BudgetServiceImpl implements BudgetService {
      *
      **************************************
      */
-    public String saveProjectBudgetDetails( BudgetAction budgetAction) throws ServiceLocatorException {
+    public String saveProjectBudgetDetails(BudgetAction budgetAction) throws ServiceLocatorException {
         String resultString = "";
-        int result = 0;
         String status = "";
         String Result = "";
+        Connection connection = null;
+        CallableStatement callableStatement = null;
         boolean isExceute = false;
         try {
-            System.out.println(">>>>>>>>>>>>IN  IMPL>>>>>>>FLAG>>>>>>>" + budgetAction.getFlag());
+            log.info("************Entered to The BudgetServiceImpl ::: saveProjectBudgetDetails***********");
             connection = ConnectionProvider.getInstance().getConnection();
             if (budgetAction.getFlag().equalsIgnoreCase("S")) {
                 status = "Entered";
             } else {
                 status = "Submitted";
             }
-
-            System.out.println("****************** ENTERED INTO THE IMPL TRY BLOCK *******************");
-            System.out.println(">>>>>>>pid>>" + budgetAction.getProject());
-            System.out.println(">>>>>>>pid>>" + budgetAction.getEstimateBudget());
-            System.out.println(">>>>>>>pid>>" + budgetAction.getQuarterId());
-            System.out.println(">>>>>>>pid>>" + budgetAction.getYear());
-            System.out.println(">>>>>>>pid>>" + budgetAction.getComments());
-            System.out.println(">>>>>>>pid>>" + status);
-            System.out.println(">>>>>>>pid>>" + budgetAction.getAddEditFlag());
-
             callableStatement = connection.prepareCall("{CALL addProjectBudgetDetails(?,?,?,?,?,?,?,?,?)}");
             callableStatement.setInt(1, budgetAction.getUserSessionId());
             callableStatement.setInt(2, Integer.parseInt(budgetAction.getProject()));
@@ -252,40 +247,28 @@ public class BudgetServiceImpl implements BudgetService {
             callableStatement.setString(6, budgetAction.getComments());
             callableStatement.setString(7, status);
             callableStatement.setString(8, budgetAction.getAddEditFlag());
-
             callableStatement.registerOutParameter(9, Types.VARCHAR);
             isExceute = callableStatement.execute();
             Result = callableStatement.getString(9);
-
-
             if (Result.equalsIgnoreCase("Exist")) {
-                System.out.println("****************** in impl result after NotExist:::::::::" + Result);
+                log.info("******************BudgetServiceImpl ::: saveProjectBudgetDetails::::Procedure Result:::::" + Result);
             } else if (Result.equalsIgnoreCase("Updated")) {
-                System.out.println("****************** in impl result after updatesuccess:::::::::" + Result);
+                log.info("******************BudgetServiceImpl ::: saveProjectBudgetDetails::::Procedure Result::::" + Result);
             } else if (Result.equalsIgnoreCase("Added")) {
-                System.out.println("****************** in impl result after added:::::::::" + Result);
+                log.info("****************** BudgetServiceImpl ::: saveProjectBudgetDetails::::Procedure Result:::::" + Result);
             } else {
-                System.out.println("****************** in impl result after error:::::::::" + Result);
+                log.info("****************** BudgetServiceImpl ::: saveProjectBudgetDetails:::::Procedure Result::::" + Result);
             }
-
-
+            log.info("************End of The BudgetServiceImpl ::: saveProjectBudgetDetails***********");
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (NullPointerException ex) {
             resultString = "";
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -301,9 +284,8 @@ public class BudgetServiceImpl implements BudgetService {
     /**
      * *************************************
      *
-     * @getDefaultRequirementDashBoardDetails() update status in requirement
-     * table
-     *
+     * @getProjectBudgetDetailsToViewOnOverlay() is for get Project Budget
+     * Details Overlay
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
      *
@@ -313,13 +295,16 @@ public class BudgetServiceImpl implements BudgetService {
      */
     public String getProjectBudgetDetailsToViewOnOverlay(BudgetAction budgetAction) throws ServiceLocatorException {
         String resultString = "";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-
+            log.info("************Entered into BudgetServiceImpl ::: getProjectBudgetDetailsToViewOnOverlay***********");
             connection = ConnectionProvider.getInstance().getConnection();
             String queryString = "SELECT id,prjid,estbugetamt,balbudgetamt,description,STATUS,qutindetifier,YEAR,approve_rej_comments "
                     + "FROM prjbudget WHERE id=" + budgetAction.getBudgetId();
 
-            System.out.println("query...overlay..." + queryString);
+            log.info("****BudgetServiceImpl ::: getProjectBudgetDetailsToViewOnOverlay***Query**" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -333,12 +318,17 @@ public class BudgetServiceImpl implements BudgetService {
                         + resultSet.getString("description") + "|"
                         + resultSet.getString("approve_rej_comments") + "^";
             }
-
-            System.out.println("result=========>" + resultString);
+            log.info("************End of BudgetServiceImpl ::: getProjectBudgetDetailsToViewOnOverlay***********");
         } catch (SQLException ex) {
             ex.printStackTrace();
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: getProjectBudgetDetailsToViewOnOverlay()" + ex.toString());
+            }
         } catch (NullPointerException ex) {
             resultString = "";
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: getProjectBudgetDetailsToViewOnOverlay()" + ex.toString());
+            }
         } finally {
             try {
                 if (resultSet != null) {
@@ -349,20 +339,20 @@ public class BudgetServiceImpl implements BudgetService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
                 }
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetServiceImpl:: getProjectBudgetDetailsToViewOnOverlay()" + sqle.toString());
+                }
             }
         }
         return resultString;
     }
+
     /**
      * *************************************
      *
@@ -376,41 +366,40 @@ public class BudgetServiceImpl implements BudgetService {
      *
      **************************************
      */
-    public String doBudgetRecordDelete( BudgetAction budgetAction) throws ServiceLocatorException {
+    public String doBudgetRecordDelete(BudgetAction budgetAction) throws ServiceLocatorException {
         String resultString = "";
-        int res=0;
+        int res = 0;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-
+            log.info("************Entered into BudgetServiceImpl ::: doBudgetRecordDelete***********");
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "DELETE FROM prjbudget WHERE id="+ budgetAction.getBudgetId();
-
-            System.out.println("query...overlay..." + queryString);
+            String queryString = "DELETE FROM prjbudget WHERE id=" + budgetAction.getBudgetId();
+            log.info("************BudgetServiceImpl ::: doBudgetRecordDelete*****Query******" + queryString);
             statement = connection.createStatement();
             res = statement.executeUpdate(queryString);
-           if(res>0){
-               resultString="Success";
-           }else{
-               resultString="Fail";
-           }
-
-            System.out.println("result=========>" + resultString);
+            if (res > 0) {
+                resultString = "Success";
+            } else {
+                resultString = "Fail";
+            }
+            log.info("************End of BudgetServiceImpl ::: doBudgetRecordDelete***********");
         } catch (SQLException ex) {
             ex.printStackTrace();
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: doBudgetRecordDelete()" + ex.toString());
+            }
         } catch (NullPointerException ex) {
             resultString = "";
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: doBudgetRecordDelete()" + ex.toString());
+            }
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
                 if (statement != null) {
                     statement.close();
                     statement = null;
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -418,16 +407,18 @@ public class BudgetServiceImpl implements BudgetService {
                 }
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetServiceImpl:: doBudgetRecordDelete()" + sqle.toString());
+                }
             }
         }
         return resultString;
     }
+
     /**
      * *************************************
      *
-     * @getDefaultRequirementDashBoardDetails() update status in requirement
-     * table
-     *
+     * @setDirectorResultForBudget() is for set Director Result For Budget
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
      *
@@ -437,11 +428,15 @@ public class BudgetServiceImpl implements BudgetService {
      */
     public String setDirectorResultForBudget(BudgetAction budgetAction) throws ServiceLocatorException {
         String resultString = "";
+        String queryString1 = "";
+        String queryString = "";
         int res = 0;
+        Connection connection = null;
+        Statement statement = null;
         try {
-
+            log.info("************Entered to The BudgetServiceImpl ::: setDirectorResultForBudget***********");
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "UPDATE prjbudget SET "
+            queryString = "UPDATE prjbudget SET "
                     + "STATUS='" + budgetAction.getFlag() + "', "
                     + "balbudgetamt='" + budgetAction.getEstimateBudget() + "', "
                     + "estbugetamt='" + budgetAction.getEstimateBudget() + "', "
@@ -449,15 +444,12 @@ public class BudgetServiceImpl implements BudgetService {
                     + "WHERE prjid=" + budgetAction.getProject() + " "
                     + "AND qutindetifier='" + budgetAction.getQuarterId() + "' "
                     + "AND YEAR=" + budgetAction.getYear();
-
-            System.out.println(budgetAction.getFlag() + "query...director update..." + queryString);
             statement = connection.createStatement();
             res = statement.executeUpdate(queryString);
             if (res > 0) {
                 if ("Approved".equals(budgetAction.getFlag())) {
-                    String queryString1 = "UPDATE costcenterbudgets SET "
+                    queryString1 = "UPDATE costcenterbudgets SET "
                             + "spentamt= (spentamt) +(" + budgetAction.getEstimateBudget() + ") "
-                            //+ "balance= (balance) -(" + budgetAction.getEstimateBudget() + ") "
                             + "WHERE cccode='" + budgetAction.getCostCenterCode() + "' "
                             + "AND Quarter='" + budgetAction.getQuarterId() + "' "
                             + "AND YEAR=" + budgetAction.getYear();
@@ -468,25 +460,24 @@ public class BudgetServiceImpl implements BudgetService {
             } else {
                 resultString = "DirectorStatusFail";
             }
-
-            System.out.println("result=========>" + resultString);
+            log.info("************BudgetServiceImpl ::: setDirectorResultForBudget******Query1*****" + queryString1);
+            log.info("************BudgetServiceImpl ::: setDirectorResultForBudget******Query*****" + queryString);
+            log.info("************End of The BudgetServiceImpl ::: setDirectorResultForBudget***********");
         } catch (SQLException ex) {
             ex.printStackTrace();
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: setDirectorResultForBudget()" + ex.toString());
+            }
         } catch (NullPointerException ex) {
             resultString = "";
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: setDirectorResultForBudget()" + ex.toString());
+            }
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
                 if (statement != null) {
                     statement.close();
                     statement = null;
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -494,14 +485,19 @@ public class BudgetServiceImpl implements BudgetService {
                 }
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetServiceImpl:: setDirectorResultForBudget()" + sqle.toString());
+                }
             }
         }
         return resultString;
     }
+
     /**
      * *************************************
      *
-     *  
+     * @getCostCentertDetailsByProjectId() is for getting CostCentert Details By
+     * ProjectId
      *
      * @Author:Divya Gandreti<dgandreti@miraclesoft.com>
      *
@@ -510,10 +506,13 @@ public class BudgetServiceImpl implements BudgetService {
      **************************************
      */
     public String getCostCentertDetailsByProjectId(BudgetAction budgetAction) throws ServiceLocatorException {
-       String resultString = "";
-        //String queryString = "";
+        String resultString = "";
         String queryString1 = "";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
+            log.info("************Entered into The BudgetServiceImpl ::: getCostCentertDetailsByProjectId***********");
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             queryString1 = "SELECT ap.cccode,ccname,budgetamt,spentamt,balance,year,Quarter,status FROM costcenter cc LEFT OUTER JOIN acc_projects ap ON(cc.cccode=ap.cccode) LEFT OUTER JOIN costcenterbudgets cb ON(cc.cccode=cb.cccode) WHERE project_id =" + budgetAction.getProjectId() + " and cb.ccbstatus = 'Active'";
@@ -521,18 +520,20 @@ public class BudgetServiceImpl implements BudgetService {
             while (resultSet.next()) {
                 resultString += resultSet.getString("ccname") + "|" + resultSet.getDouble("budgetamt") + "|" + resultSet.getDouble("spentamt") + "|" + resultSet.getDouble("balance") + "|" + resultSet.getString("cccode") + "|" + resultSet.getString("year") + "|" + resultSet.getString("Quarter") + "|" + resultSet.getString("status") + "^";
             }
-            if ("".equals(resultString)||resultString==null) {
+            if ("".equals(resultString) || resultString == null) {
                 queryString1 = "SELECT ccname FROM costcenter cc LEFT OUTER JOIN acc_projects ap ON(cc.cccode=ap.cccode) WHERE project_id =" + budgetAction.getProjectId();
                 resultSet = statement.executeQuery(queryString1);
                 while (resultSet.next()) {
-                    resultString += resultSet.getString("ccname")+"|"+"CCN";
+                    resultString += resultSet.getString("ccname") + "|" + "CCN";
                 }
             }
-            System.out.println("queryString helloooo -->" + queryString1);
-
+            log.info("************BudgetServiceImpl ::: getCostCentertDetailsByProjectId******Query*****" + queryString1);
+            log.info("************End of The BudgetServiceImpl ::: getCostCentertDetailsByProjectId***********");
         } catch (Exception ex) {
-            System.out.println(ex.toString());
             ex.printStackTrace();
+            if (log.isDebugEnabled()) {
+                log.error("Exception is :: BudgetServiceImpl:: getCostCentertDetailsByProjectId()" + ex.toString());
+            }
         } finally {
             try {
                 if (statement != null) {
@@ -549,6 +550,9 @@ public class BudgetServiceImpl implements BudgetService {
                 }
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
+                if (log.isDebugEnabled()) {
+                    log.error("Exception is :: BudgetServiceImpl:: getCostCentertDetailsByProjectId()" + sqle.toString());
+                }
             }
         }
         return resultString;

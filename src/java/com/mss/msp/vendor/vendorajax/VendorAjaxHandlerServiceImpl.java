@@ -36,26 +36,30 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
     PreparedStatement preparedStatement = null;
     Statement statement = null;
     ResultSet resultSet = null;
+    String queryString = "";
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : MAY 04, 2015, 8:30 PM IST
      *
-     * @getVendorStates() get states by country code
+     * Author : Praveen kumar<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getVendorStates() method is used to get states by country code
      *
-     * @Created Date:04/may/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getVendorStates(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorStates Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
         String resultString = "";
         try {
 
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "SELECT id, NAME FROM lk_states WHERE countryId=" + vendorAjaxHandler.getCountryId();
+            queryString = "SELECT id, NAME FROM lk_states WHERE countryId=" + vendorAjaxHandler.getCountryId();
+            System.out.println("getVendorStates :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -74,10 +78,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -86,29 +86,30 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorStates Method End*********************");
         return resultString;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : MAY 04, 2015, 8:30 PM IST
      *
-     * @getVendorSearchDetails() getting search vendor details
+     * Author : Praveen kumar<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getVendorSearchDetails() method is used to search and get vendor
+     * details.
      *
-     * @Created Date:04/may/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getVendorSearchDetails(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorSearchDetails Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
         String resultString = "";
         try {
             Map map = DataSourceDataProvider.getInstance().getMyTeamMembers(vendorAjaxHandler.getSessionId());
-            //ConsultantListDetails.add(map);
-
-
             String key, retrunValue = "";
             int mapsize = map.size();
             if (map.size() > 0) {
@@ -127,7 +128,7 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
             }
 
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "SELECT account_id,ac.created_by,org_id,last_access_date,ac.STATUS,account_name,account_url,acc_type,type_of_relation,acc_industry_name,aa.acc_city,lks.NAME,abc.acc_phone "
+            queryString = "SELECT account_id,ac.created_by,org_id,last_access_date,ac.STATUS,account_name,account_url,acc_type,type_of_relation,acc_industry_name,aa.acc_city,lks.NAME,abc.acc_phone "
                     + "FROM accounts ac LEFT OUTER JOIN org_rel orl ON (ac.account_id=orl.related_org_id) "
                     + " LEFT OUTER JOIN acc_address aa ON (orl.related_org_id=aa.acc_id) "
                     + "LEFT OUTER JOIN acc_basic_info abc ON (orl.related_org_id=abc.acc_id) LEFT OUTER JOIN  lk_acc_industry_type it "
@@ -164,7 +165,7 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 queryString += " and ac.status = '" + vendorAjaxHandler.getVendorStatus() + "'";
             }
 
-            System.out.println("query....." + queryString);
+            System.out.println("getVendorSearchDetails :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -180,7 +181,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                         + resultSet.getString("last_access_date") + "|"
                         + resultSet.getString("acc_industry_name") + "^";
             }
-//            System.out.println("result=========>" + resultString);
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -193,10 +193,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -205,33 +201,30 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorSearchDetails Method End*********************");
         return resultString;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : May 5, 2015, 8:30 PM IST
      *
-     * @updateVendorDetails() method is used to update vendor details
+     * Author : rama krishna<lankireddy@miraclesoft.com>
      *
-     * @Author:RK Ankireddy
+     * ForUse : updateVendorDetails() method is used to update vendor details.
      *
-     * @Created Date:04/15/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public int updateVendorDetails(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
 
-//        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% IMPL EXECUTED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        StringBuffer stringBuffer = new StringBuffer();
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: updateVendorDetails Method Start*********************");
+        Connection connection = null;
         CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String queryString = "";
         int updateResult = 0;
         boolean isExceute = false;
         try {
             connection = ConnectionProvider.getInstance().getConnection();
+            System.out.println("updateVendorDetails :: procedure name : updateVendorDetails ");
             callableStatement = connection.prepareCall("{CALL updateVendorDetails(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             callableStatement.setString(1, vendorAjaxHandler.getVendorName());
 
@@ -267,9 +260,9 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
         } finally {
             try {
 
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -279,11 +272,22 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: updateVendorDetails Method End*********************");
         return updateResult;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getVendorContactDetails() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getVendorContactDetails(int orgId) throws ServiceLocatorException {
-
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorContactDetails Method Start*********************");
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -294,28 +298,18 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
         try {
 
             queryString = " SELECT usr_id,concat(first_name,'.',last_name) as name,email1,phone1,cur_status FROM users WHERE  cur_status='Active' AND type_of_user LIKE 'VC' AND org_id='" + orgId + "'";
-
-            System.out.println("queryString-->" + queryString);
+            System.out.println("getVendorContactDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
-            System.out.println("After Connection");
             resultSet = statement.executeQuery(queryString);
-            System.out.println("after statements ");
             while (resultSet.next()) {
-
-                System.out.println("In while qualification");
-
                 vendorListVTO.setUserId(resultSet.getInt("usr_id"));
                 vendorListVTO.setVendorName(resultSet.getString("name"));
                 vendorListVTO.setEmail1(resultSet.getString("email1"));
                 vendorListVTO.setPhone1(resultSet.getString("phone1"));
                 vendorListVTO.setStatus(resultSet.getString("cur_status"));
 
-                // eduList.add(usersVTO);
                 resultString += vendorListVTO.getUserId() + "|" + vendorListVTO.getVendorName() + "|" + vendorListVTO.getEmail1() + "|" + vendorListVTO.getPhone1() + '|' + vendorListVTO.getStatus() + '^';
-
-                System.out.println("---------------->" + resultString);
-
             }
         } catch (Exception sqe) {
             sqe.printStackTrace();
@@ -337,15 +331,25 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorContactDetails Method End*********************");
         return resultString;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : saveVendorContacts() method is used to
+     *
+     * *****************************************************************************
+     */
     public String saveVendorContacts(int userId, int userSessionId) throws ServiceLocatorException {
-
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: saveVendorContacts Method Start*********************");
         Connection connection = null;
-        Statement statement = null;
         CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+        Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
         String resultString = "";
@@ -357,6 +361,7 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
             resultString = "User contact is already Registered";
         } else {
             String query = "select first_name,last_name,email1,cur_status,created_by from users where usr_id=" + userId;
+            System.out.println("saveVendorContacts :: query string ------>" + query);
             try {
                 connection = ConnectionProvider.getInstance().getConnection();
                 statement = connection.createStatement();
@@ -379,35 +384,25 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     String plainPassword = SecurityServiceProvider.generateRandamSecurityKey(6, 6, 1, 1, 0);
                     String pwdSalt = SecurityServiceProvider.generateRandamSecurityKey(10, 10, 2, 3, 3);
                     String encPwd = SecurityServiceProvider.getEncrypt(plainPassword, pwdSalt);
+                    System.out.println("saveVendorContacts :: procedure name : addContacts ");
                     callableStatement = connection.prepareCall("{CALL addContacts(?,?,?,?,?,?,?)}");
-
-                    System.out.println("password" + plainPassword);
                     callableStatement.setString(1, status);
                     callableStatement.setInt(2, userId);
                     callableStatement.setString(3, email);
-                    System.out.println("status" + status);
-                    System.out.println("email" + email);
-
-                    //  System.out.println("here we print after date changing...........");
                     callableStatement.setString(4, pwdSalt);
                     callableStatement.setString(5, encPwd);
                     callableStatement.setInt(6, createdBy);
                     callableStatement.registerOutParameter(7, Types.INTEGER);
-                    //  System.out.println("hello here print after prepare call parameter ");
-
                     isExceute = callableStatement.execute();
                     updatedRows = callableStatement.getInt(7);
                     if (updatedRows > 0) {
 
                         doAddMailManagerStatusActivation(email, firstName, lastName, plainPassword, "serviceBayLoginCredentialsForVendorContact", userSessionId);
 
-                        System.out.println("password" + plainPassword);
                         resultString = "User Contact Registered Succesfully";
-                        System.out.println("statement okay");
                     }
 
                 } else {
-
                     resultString = "User Contact is not in Active";
                 }
 
@@ -424,43 +419,64 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                         connection.close();
                         connection = null;
                     }
+                    if (resultSet != null) {
+                        resultSet.close();
+                        resultSet = null;
+                    }
+                    if (statement != null) {
+                        statement.close();
+                        statement = null;
+                    }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: saveVendorContacts Method End*********************");
         return resultString;
 
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getUserCount() method is used
+     *
+     * *****************************************************************************
+     */
     public int getUserCount(int userId) {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getUserCount Method Start*********************");
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-
-
         int i = 0;
         try {
 
             queryString = "select usr_id from usr_reg where usr_id=" + userId;
-
-
-            System.out.println("queryString-->" + queryString);
+            System.out.println("getUserCount :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
-            System.out.println("After Connection");
             resultSet = statement.executeQuery(queryString);
-            System.out.println("after statements ");
             while (resultSet.next()) {
                 i++;
-                System.out.println("count" + i);
             }
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
             try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -469,11 +485,22 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 ex.printStackTrace();
             }
         }
-
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getUserCount Method End*********************");
         return i;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doAddMailManagerStatusActivation() method is used
+     *
+     * *****************************************************************************
+     */
     public void doAddMailManagerStatusActivation(String email1, String first_name, String last_name, String plainPassword, String subject, int createdBy) throws SQLException, ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: doAddMailManagerStatusActivation Method Start*********************");
         String toAdd = "", bodyContent = "", bcc = "", cc = "", SubjectStatusActivation = "";
 
         String FromAdd = Properties.getProperty("MSB.from");
@@ -526,12 +553,21 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
         bodyContent = htmlText.toString();
 
         new com.mss.msp.util.MailManager().doaddemailLog(FromAdd, toAdd, bcc, cc, SubjectStatusActivation, bodyContent, createdBy);
-        // System.out.println("logger is created after Status activating email method.... ");
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: doAddMailManagerStatusActivation Method End*********************");
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getVendorContactSearchResults() method is used
+     *
+     * *****************************************************************************
+     */
     public String getVendorContactSearchResults(VendorAjaxHandler vendorAjaxHandler, int orgId) throws ServiceLocatorException {
-
-
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorContactSearchResults Method Start*********************");
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -560,32 +596,33 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
             }
 
 
-            System.out.println("queryString-->" + queryString);
+            System.out.println("getVendorContactSearchResults :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
-            System.out.println("After Connection");
             resultSet = statement.executeQuery(queryString);
-            System.out.println("after statements ");
             while (resultSet.next()) {
-
-                System.out.println("In while qualification");
-
                 vendorListVTO.setUserId(resultSet.getInt("usr_id"));
                 vendorListVTO.setVendorName(resultSet.getString("name"));
                 vendorListVTO.setEmail1(resultSet.getString("email1"));
                 vendorListVTO.setPhone1(resultSet.getString("phone1"));
                 vendorListVTO.setStatus(resultSet.getString("cur_status"));
 
-                // eduList.add(usersVTO);
                 resultString += vendorListVTO.getUserId() + "|" + vendorListVTO.getVendorName() + "|" + vendorListVTO.getEmail1() + "|" + vendorListVTO.getPhone1() + '|' + vendorListVTO.getStatus() + '^';
 
-                System.out.println("---------------->" + resultString);
 
             }
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
             try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -594,18 +631,32 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 ex.printStackTrace();
             }
         }
-
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorContactSearchResults Method End*********************");
         return resultString;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getVendorsListByTireType() method is used
+     *
+     * *****************************************************************************
+     */
     public String getVendorsListByTireType(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
-
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorsListByTireType Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
         String resultString = "";
 
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "SELECT vendor_id,account_name FROM accounts JOIN customer_ven_rel c ON vendor_id=account_id JOIN lk_vendor_type lk ON vendor_tier_id=lk.id WHERE c.STATUS='Active' AND vendor_tier_id = " + vendorAjaxHandler.getTireType() + " AND customer_id= " + vendorAjaxHandler.getOrgId();
-            System.out.println("this is query.." + queryString);
+            queryString = "SELECT vendor_id,account_name FROM accounts JOIN customer_ven_rel c ON vendor_id=account_id JOIN lk_vendor_type lk ON vendor_tier_id=lk.id WHERE c.STATUS='Active' AND vendor_tier_id = " + vendorAjaxHandler.getTireType() + " AND customer_id= " + vendorAjaxHandler.getOrgId();
+            System.out.println("getVendorsListByTireType :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -624,10 +675,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -636,43 +683,63 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorsListByTireType Method End*********************");
         return resultString;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 06/May/2015
+     *
+     * Author : praveen kumar<pkatru@miraclesoft.com>
+     *
+     * ForUse : SaveVendorsAssociationDetals() method is used
+     *
+     * *****************************************************************************
+     */
     public int SaveVendorsAssociationDetals(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: SaveVendorsAssociationDetals Method Start*********************");
         int count = 0;
         try {
-            System.out.println("Ajax Handler impl action in save   1");
-
             StringTokenizer st2 = new StringTokenizer(vendorAjaxHandler.getVendorList(), ",");
             while (st2.hasMoreElements()) {
                 count += doInsertVendorAssociation(vendorAjaxHandler.getReq_id(), st2.nextElement().toString(), vendorAjaxHandler.getAccessTime(), vendorAjaxHandler.getUserSessionId());
             }
-            System.out.println("Ajax Handler impl action in save  2");
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: SaveVendorsAssociationDetals Method End*********************");
         return count;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doInsertVendorAssociation() method is used
+     *
+     * *****************************************************************************
+     */
     public int doInsertVendorAssociation(String req_id, String vendorId, String accessTime, int sessionId) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: doInsertVendorAssociation Method Start*********************");
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String queryString = "";
         int count = 0;
         try {
-            System.out.println("Ajax Handler impl action in save  3");
             if (isAssociationRecordAvailable(req_id, vendorId)) {
                 connection = ConnectionProvider.getInstance().getConnection();
-                String queryString = "insert into req_ven_rel(req_id,ven_id,status,req_access_time,created_by) values(?,?,'Active',?,?)";
+                queryString = "insert into req_ven_rel(req_id,ven_id,status,req_access_time,created_by) values(?,?,'Active',?,?)";
+                System.out.println("doInsertVendorAssociation :: query string ------>" + queryString);
                 preparedStatement = connection.prepareStatement(queryString);
                 preparedStatement.setString(1, req_id);
                 preparedStatement.setString(2, vendorId);
                 preparedStatement.setString(3, com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDateInDashWithTimeWithOutSeconds(accessTime));
                 preparedStatement.setInt(4, sessionId);
                 count = preparedStatement.executeUpdate();
-                System.out.println("Ajax Handler impl action in save   4");
-
             }
 
 
@@ -680,14 +747,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
             ex.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
-                }
                 if (preparedStatement != null) {
                     preparedStatement.close();
                     preparedStatement = null;
@@ -700,26 +759,32 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: doInsertVendorAssociation Method End*********************");
         return count;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 06/05/2015
      *
-     * @getVendorAssociationDetails() method is used to update vendor details
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getVendorAssociationDetails() method is used update vendor
+     * details.
      *
-     * @Created Date:04/01/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getVendorAssociationDetails(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorAssociationDetails Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
         String resultString = "";
         DateUtility dateUtility = new DateUtility();
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "SELECT req.id,req.req_id,req.ven_id,req.STATUS,req.req_access_time,"
+            queryString = "SELECT req.id,req.req_id,req.ven_id,req.STATUS,req.req_access_time,"
                     + "ar.acc_id,ar.req_name,crl.vendor_tier_id,lkvt.vendor_type,acc.account_name,"
                     + "ar.req_created_by AS createdUser "
                     + "FROM req_ven_rel req "
@@ -728,7 +793,7 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     + "JOIN accounts acc ON  (req.Ven_id=acc.account_id) "
                     + "JOIN lk_vendor_type lkvt ON(lkvt.id=crl.vendor_tier_id) "
                     + "WHERE req.STATUS='Active' AND crl.STATUS='Active' AND req.req_id=" + vendorAjaxHandler.getRequirementId() + " Limit 50";
-            System.out.println("this is getVendorAssociationDetails-->" + queryString);
+            System.out.println("getVendorAssociationDetails :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -750,10 +815,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -762,26 +823,32 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorAssociationDetails Method End*********************");
         return resultString;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 06/05/2015
      *
-     * @getVendorAssociationDetails() method is used to update vendor details
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : searchVendorAssociationDetails() method is used search vendor
+     * details.
      *
-     * @Created Date:04/01/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String searchVendorAssociationDetails(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: searchVendorAssociationDetails Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
         String resultString = "";
         DateUtility dateUtility = new DateUtility();
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "SELECT req.id,req.req_id,req.ven_id,req.STATUS,req.req_access_time,ar.acc_id,"
+            queryString = "SELECT req.id,req.req_id,req.ven_id,req.STATUS,req.req_access_time,ar.acc_id,"
                     + "ar.req_name,crl.vendor_tier_id,lkvt.vendor_type,acc.account_name,"
                     + "ar.req_created_by AS createdUser "
                     + "FROM req_ven_rel req "
@@ -796,12 +863,12 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
             if (!vendorAjaxHandler.getStatus().equalsIgnoreCase("DF")) {
                 queryString += " AND req.STATUS='" + vendorAjaxHandler.getStatus() + "'";
             }
-            System.out.println("query===========nag=====" + queryString);
+            System.out.println("searchVendorAssociationDetails :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
                 resultString += resultSet.getString("id") + "|" + resultSet.getString("vendor_type") + "|" + resultSet.getString("createdUser") + "|" + dateUtility.getInstance().convertToviewFormatInDashWithTime(resultSet.getString("req_access_time")) + "|" + resultSet.getString("status") + "|" + resultSet.getString("account_name") + "|" + resultSet.getString("req_name") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfSubmisions(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getAvgRateByOrg(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "|" + resultSet.getString("ven_id") + "^";
-              //  resultString += resultSet.getString("id") + "|" + resultSet.getString("vendor_type") + "|" + resultSet.getString("createdUser") + "|" + dateUtility.getInstance().convertToviewFormatInDashWithTime(resultSet.getString("req_access_time")) + "|" + resultSet.getString("status") + "|" + resultSet.getString("account_name") + "|" + resultSet.getString("req_name") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfSubmisions(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getAvgRateByOrg(resultSet.getInt("req_id"), resultSet.getInt("ven_id")) + "^";
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -815,10 +882,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -827,21 +890,35 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: searchVendorAssociationDetails Method End*********************");
         return resultString;
     }
 
-    // created by aklakh
+    /**
+     * *****************************************************************************
+     * Date : 14/May/2015
+     *
+     * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
+     *
+     * ForUse : editVendorAssociation() method is used retrieve vendor details
+     * based on vendorId.
+     *
+     * *****************************************************************************
+     */
     public String editVendorAssociation(int vendorId, int orgId) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: editVendorAssociation Method Start*********************");
         String vendorString = "";
-
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            // String queryString = "SELECT lkv.id ,ac.account_name ,org.STATUS FROM req_ven_rel req JOIN accounts ac ON(req.ven_id=ac.account_id) JOIN org_rel org ON(req.ven_id=org.related_org_Id) JOIN lk_vendor_type lkv ON(org.type_of_vendor=lkv.id) WHERE  req.id=" + vendorId;
-            String queryString = " SELECT lkv.id ,ac.account_name ,req.STATUS FROM req_ven_rel req JOIN"
+            queryString = " SELECT lkv.id ,ac.account_name ,req.STATUS FROM req_ven_rel req JOIN"
                     + " accounts ac ON(req.ven_id=ac.account_id) JOIN customer_ven_rel con"
                     + " ON(req.ven_id=con.vendor_Id) JOIN lk_vendor_type lkv ON(con.vendor_tier_id=lkv.id)"
                     + " WHERE  req.id=" + vendorId + " AND customer_id= " + orgId;
-            System.out.println("query================" + queryString);
+            System.out.println("editVendorAssociation :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -861,10 +938,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -873,17 +946,31 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: editVendorAssociation Method End*********************");
         return vendorString;
     }
-//created by Aklakh
 
+    /**
+     * *****************************************************************************
+     * Date : 15/May/2015
+     *
+     * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
+     *
+     * ForUse : getVendorNames() method is used
+     *
+     * *****************************************************************************
+     */
     public String getVendorNames(int tireId) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorNames Method Start*********************");
         String vendorString = "";
-
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "SELECT a.account_id, a.account_name  FROM accounts a JOIN org_rel o ON(o.related_org_id=a.account_id) WHERE o.type_of_vendor=" + tireId;
-            System.out.println("query================" + queryString);
+            queryString = "SELECT a.account_id, a.account_name  FROM accounts a JOIN org_rel o ON(o.related_org_id=a.account_id) WHERE o.type_of_vendor=" + tireId;
+            System.out.println("getVendorNames :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -903,6 +990,50 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     statement.close();
                     statement = null;
                 }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorNames Method End*********************");
+        return vendorString;
+    }
+
+    /**
+     * *****************************************************************************
+     * Date : 15/May/2015
+     *
+     * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
+     *
+     * ForUse : updateVendorAssociationDetails() method is used
+     *
+     * *****************************************************************************
+     */
+    public int updateVendorAssociationDetails(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: updateVendorAssociationDetails Method Start*********************");
+        String queryStringupdate = "";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        int isUpdated = 0;
+        int i = 0;
+        try {
+
+            queryStringupdate = " update req_ven_rel SET status=? WHERE id =" + vendorAjaxHandler.getVendorId();
+
+            System.out.println("updateVendorAssociationDetails :: query string ------>" + queryStringupdate);
+            connection = ConnectionProvider.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(queryStringupdate);
+
+            preparedStatement.setString(1, vendorAjaxHandler.getStatusEdit());
+            isUpdated = preparedStatement.executeUpdate();
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+
                 if (preparedStatement != null) {
                     preparedStatement.close();
                     preparedStatement = null;
@@ -915,78 +1046,32 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
-        return vendorString;
-    }
-
-    public int updateVendorAssociationDetails(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
-
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String queryStringupdate = "";
-
-        int isUpdated = 0;
-        int i = 0;
-        try {
-
-            System.out.println("------->" + vendorAjaxHandler.getVendorId());
-            queryStringupdate = " update req_ven_rel SET status=? WHERE id =" + vendorAjaxHandler.getVendorId();
-
-            System.out.println("get  update query" + queryStringupdate);
-            connection = ConnectionProvider.getInstance().getConnection();
-            preparedStatement = connection.prepareStatement(queryStringupdate);
-
-            preparedStatement.setString(1, vendorAjaxHandler.getStatusEdit());
-            isUpdated = preparedStatement.executeUpdate();
-            // System.out.println("edit skill update---------------------------->" + isUpdated);
-
-        } catch (Exception sqe) {
-            sqe.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
-                }
-                if (connection != null) {
-                    connection.close();
-                    connection = null;
-                }
-            } catch (SQLException sqle) {
-                sqle.printStackTrace();
-            }
-        }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: updateVendorAssociationDetails Method End*********************");
         return isUpdated;
 
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 15/May/2015
      *
-     * @Author:praveen kumar<pkatru@miraclesoft.com>
+     * Author : praveen kumar<pkatru@miraclesoft.com>
      *
-     * @Created Date:15/May/2015 for use of checking record is existing or not
-     * **********************************
+     * ForUse : isAssociationRecordAvailable() method is used for checking
+     * whether the record is existing or not.
+     *
+     * *****************************************************************************
      */
     public boolean isAssociationRecordAvailable(String req_id, String vendorId) {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: isAssociationRecordAvailable Method Start*********************");
         boolean status = false;
-
-        CallableStatement callableStatement = null;
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-
         try {
-
-            queryString = "SELECT COUNT(req_id) as record FROM req_ven_rel WHERE req_id=? AND ven_id=? and status='Active'";
             queryString = "SELECT COUNT(req_id) as record FROM req_ven_rel WHERE req_id=? AND ven_id=? ";
-            System.out.println("get  update query" + queryString);
+            System.out.println("isAssociationRecordAvailable :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setString(1, req_id);
@@ -999,8 +1084,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     status = true;
                 }
             }
-            // System.out.println("edit skill update---------------------------->" + isUpdated);
-
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -1009,9 +1092,9 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     resultSet.close();
                     resultSet = null;
                 }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -1021,22 +1104,26 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: isAssociationRecordAvailable Method End*********************");
         return status;
     }
 
     /**
-     * ****************************************************************************
+     * *****************************************************************************
      * Date : June 02 2015
      *
      * Author : manikanta eeralla<meeralla@miraclesoft.com>
      *
+     * ForUse : getVendorDashboardList()
+     *
      * *****************************************************************************
      */
     public String getVendorDashboardList(int year, int month, int sessionOrgId) throws ServiceLocatorException {
-
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorDashboardList Method Start*********************");
         String vendorString = "";
-
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
             connection = ConnectionProvider.getInstance().getConnection();
 
@@ -1061,12 +1148,10 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
             }
             queryString = queryString + " GROUP BY DATE_FORMAT(rcr.created_Date, '%m')";
 
-//          
-            System.out.println("query  getVendorDashboardList() ================" + queryString);
+            System.out.println("getVendorDashboardList :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                // vendorString += resultSet.getString("Won") + "|" + resultSet.getString("Lost") + "|" + resultSet.getString("Processing") + "|" + resultSet.getString("Selected") + "|" + resultSet.getString("Rejected") + "|" + resultSet.getString("MONTH") + "|" + resultSet.getString("requirements") + "^";
                 vendorString += resultSet.getString("MONTH") + "|" + resultSet.getString("requirements") + "|" + resultSet.getString("Processing") + "|" + resultSet.getString("Selected") + "|" + resultSet.getString("Rejected") + "|" + resultSet.getString("Servicing") + "|" + resultSet.getString("ShortListed") + "^";
             }
 
@@ -1083,10 +1168,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -1095,15 +1176,30 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorDashboardList Method End*********************");
         return vendorString;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getVendorReqDashBoardGrid()
+     *
+     * *****************************************************************************
+     */
     public String getVendorReqDashBoardGrid(VendorAjaxHandler vendorAjaxHandler) throws ServiceLocatorException {
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorReqDashBoardGrid Method Start*********************");
         String vendorString = "";
-
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            String queryString = "SELECT req_name,reqId,consultantId,c.usr_id AS consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME,c.phone1,c.email1,c.created_by ,status,c.org_id "
+            queryString = "SELECT req_name,reqId,consultantId,c.usr_id AS consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME,c.phone1,c.email1,c.created_by ,status,c.org_id "
                     + "FROM users c JOIN req_con_rel ON(consultantId=c.usr_id) JOIN acc_requirements ON(requirement_id=reqId) WHERE "
                     + "c.created_by = " + vendorAjaxHandler.getUserSessionId() + " AND c.type_of_user='IC' ";
 
@@ -1116,12 +1212,10 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
             }
             queryString = queryString + " LIMIT 100";
 
-//          
-            System.out.println("query================in ven req dash-->" + queryString);
+            System.out.println("getVendorReqDashBoardGrid :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                // vendorString += resultSet.getString("Won") + "|" + resultSet.getString("Lost") + "|" + resultSet.getString("Processing") + "|" + resultSet.getString("Selected") + "|" + resultSet.getString("Rejected") + "|" + resultSet.getString("MONTH") + "|" + resultSet.getString("requirements") + "^";
                 vendorString += resultSet.getString("req_name") + "|" + resultSet.getString("NAME") + "|" + resultSet.getString("status") + "^";
             }
 
@@ -1138,10 +1232,6 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -1150,6 +1240,7 @@ public class VendorAjaxHandlerServiceImpl implements VendorAjaxHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorAjaxHandlerServiceImpl :: getVendorReqDashBoardGrid Method End*********************");
         return vendorString;
     }
 }

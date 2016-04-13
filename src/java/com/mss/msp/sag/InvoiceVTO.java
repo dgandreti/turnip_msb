@@ -33,7 +33,16 @@ public class InvoiceVTO {
     private String custApprName;
     private String custApprDate;
     private double paidAmt;
-     private int usr_id;
+    private int usr_id;
+    private String gridDownload;
+
+    public String getGridDownload() {
+        return gridDownload;
+    }
+
+    public void setGridDownload(String gridDownload) {
+        this.gridDownload = gridDownload;
+    }
 
     public int getUsr_id() {
         return usr_id;
@@ -42,7 +51,7 @@ public class InvoiceVTO {
     public void setUsr_id(int usr_id) {
         this.usr_id = usr_id;
     }
-    
+
     public String getUserName() {
         return userName;
     }
@@ -226,5 +235,4 @@ public class InvoiceVTO {
     public void setPaidAmt(double paidAmt) {
         this.paidAmt = paidAmt;
     }
-    
 }

@@ -44,7 +44,7 @@ select.form-control.selectEmployeeList{
     width:10em;
 }
 div > select.selectstyle, div > input{
-    width: 9em;
+/*    width: 9em;*/
     font-size: 14px;
     /*font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans';*/
     border-radius: 4px;

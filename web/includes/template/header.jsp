@@ -23,10 +23,10 @@
 
         <ul class="nav nav-pills header_image"  style="margin-left:9px">
             <s:if test="#session.userId == null">
-                <li><a href="<%=request.getContextPath()%>/general/logout.action"><img src="<s:url value="/includes/images/logo30.png"/>" alt="loin" width="200" height="44"/></a></li>
+                <li><a id="headerLogoutLink" href="<%=request.getContextPath()%>/general/logout.action"><img src="<s:url value="/includes/images/logo30.png"/>" alt="loin" width="200" height="44"/></a></li>
                     </s:if>
                     <s:else>
-                <li><a href="#modal-one" ><img src="<s:url value="/includes/images/logo30.png"/>" alt="loin" width="200" height="44"/></a></li>
+                <li><a id="headerPopupLink" href="#modal-one" ><img src="<s:url value="/includes/images/logo30.png"/>" alt="loin" width="200" height="44"/></a></li>
                 <div class="ownmodal" id="modal-one" aria-hidden="true">
                     <div class="ownmodal-dialog">
                         <div class="ownmodal-header">
@@ -37,8 +37,8 @@
                             <p>If you click on OK then your session will be closed</p>
                         </div>
                         <div class="ownmodal-footer">
-                            <a href="<%=request.getContextPath()%>/general/logout.action" class="ownbtn" >OK</a>
-                            <a href="#ownclose" class="ownbtn">Cancel</a> 
+                            <a id="headerLogoutLink" href="<%=request.getContextPath()%>/general/logout.action" class="ownbtn" >OK</a>
+                            <a id="headerCancelLink" href="#ownclose" class="ownbtn">Cancel</a> 
                             <!--CHANGED TO "#close"-->
                         </div>
                     </div>
@@ -56,28 +56,20 @@
             <ul class="nav navbar-nav navbar-right pull-right register">
 
                 <s:if test="home!='No'&&home!='Logout'">
-                    <li class="sign-in sign_in"><a class="login_open" href="#" data-toggle="modal" data-target="#myLogin">Sign in</a></li>
+                    <li class="sign-in sign_in"><a id="headerSigninLink" class="login_open" href="#" data-toggle="modal" data-target="#myLogin">Sign in</a></li>
 
-                    <li><a href="<%=request.getContextPath()%>/general/register.action?home=No">Register</a></li>
+                    <li><a id="headerRegisterLink" href="<%=request.getContextPath()%>/general/register.action?home=No">Register</a></li>
                 </s:if>
                 <s:if test="home=='No'||home=='Logout'">
-                    <li><a href="<%=request.getContextPath()%>/general/login.action"><i class="fa fa-home fa-size"></i></a></i></li>
+                    <li><a id="headerHomeLink" href="<%=request.getContextPath()%>/general/login.action"><i class="fa fa-home fa-size"></i></a></i></li>
                 </s:if>
 
             </ul>
 
         </div>	
-        <%--  <div class="col-sm-6" id="col-sm-6">
-              <div class="social-icons pull-right">
-                  <ul class="nav navbar-nav">
-        <%--li><a href="#"><i class="fa"><img src="<s:url value="/includes/images/help.jpg"/>" alt="loin" width="20" height="20"/></a></i></li--%>
-        <%-- <li><a href="<%=request.getContextPath()%>/general/login.action"><i class="fa"><img class="fa" src="<s:url value="/includes/images/login.png"/>" alt="loin" height="20"/></a></i></li>
-    </ul>
-</div>
-</div>	--%>			
+        			
     </s:if>
     <s:else>
-        <%--  <s:hidden type="hidden" id="orgId"  name="orgId" value="%{#session.orgId}"  /> ---%>
         <div class="col-sm-6" id="col-sm-6" style="padding-bottom: 0px">
             <div class=" pull-right anchorstyle">
                 <%
@@ -85,15 +77,8 @@
                     String orgId = session.getAttribute(ApplicationConstants.ORG_ID).toString();
 
                 %>
-
-
                 <ul class="" style="margin-top: -10px ">
-
                     <li class="dropdown_profilemenu">
-
-
-                        <!--<ul class="nav navbar-nav">-->
-
                         <table>
                             <td> 
                                 <s:url id="image" action="rImage" namespace="/renderImage">
@@ -103,35 +88,26 @@
                             </td>
                             <td style="white-space: nowrap">
                                 <ul class="dropdown-menu pull-right multi-column columns-2" style="height:auto;" role="menu" aria-labelledby="dropdownMenu2">
-                                    <li style="position: absolute;top:-8px;left: 50%;"><div class="arrow"></div></li>
+                                    <li style="position: absolute;top:-8px;left: 52%;"><div class="arrow"></div></li>
                                     <div class="row ">
                                         <div class="col-sm-5">
                                             <ul class="multi-column-dropdown">
-                                                <li><a  href="<%=request.getContextPath()%>/general/changeMyPassword.action">Change&nbsp;Pwd&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                <li><a id="changePwdLink" href="<%=request.getContextPath()%>/general/changeMyPassword.action">Change&nbsp;Pwd&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                 </li>
-                                                <!--                                    <li><a  href="#">View Profile</a>
-                                                                                    </li>-->
                                                 <li class="divider"></li>
                                             </ul>
-                                            <!--<ul class="panel-body nav-stacked  dropdown-menu " style="position:absolute">-->
                                         </div>
                                         <div class="col-sm-5">
                                             <ul class="multi-column-dropdown">
-                                                <%-- <li><a  href="<%=request.getContextPath()%>/general/changeMyPassword.action">Change Password&nbsp;&nbsp;&nbsp;&nbsp</a> 
-                                                 </li> --%>
-                                                <li><a href="/<%=ApplicationConstants.CONTEXT_PATH%>/acc/accountcontactedit.action?contactId=<%=usrId%>&accountSearchID=<%=orgId%>&flag=customerlogin">View&nbsp;Profile</a>
+                                                <li><a id="viewProfileLink" href="/<%=ApplicationConstants.CONTEXT_PATH%>/acc/accountcontactedit.action?contactId=<%=usrId%>&accountSearchID=<%=orgId%>&flag=customerlogin">View&nbsp;Profile</a>
                                                 </li>
-
-                                                <!--<ul class="panel-body nav-stacked  dropdown-menu " style="position:absolute">-->
-
                                                 <li class="divider"></li>
-                                                <li><a style="text-align:left" href="<%=request.getContextPath()%>/general/logout.action"><i class="fa fa-power-off">&nbsp;&nbsp;Logout</i></a></li>
+                                                <li><a id="logoutLink" style="text-align:left" href="<%=request.getContextPath()%>/general/logout.action"><i class="fa fa-power-off">&nbsp;&nbsp;Logout</i></a></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </ul>
                                 <font style="color:#FAF6F6;font-size:12px;font-weight:400;font-family:Roboto,sans-serif">
-                                <%-- <s:text name="Welcome :"/> --%>
                                 </font>
                                 <a id="dropdownMenu2" class="dropdown-toggle" aria-expanded="flase" data-toggle="dropdown" href="#">
                                     <font style="color:#D6E3F2;font-size:12px;font-weight:600;font-family:Roboto,sans-serif">
@@ -139,34 +115,19 @@
                                     <span class=""><i class="fa fa-angle-down"></i></span>
                                     </font></a>
                                 <br>
-                                <%-- <%
-                                     String userType = session.getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
-                                     //out.println("userType"+userType);
-                                     if (userType.equalsIgnoreCase("E") || userType.equalsIgnoreCase("SA")) {
-                                 %>--%>
                                 <font style="color:#FAF6F6;font-size:12px;font-weight:400;font-family:Roboto,sans-serif">
-                                <%-- <s:text name="Role :"/> --%>
                                 </font>
                                 <font style="color:#D6E3F2;font-size:12px;font-weight:600;font-family:Roboto,sans-serif">
                                 [<s:property value="#session.primaryrolevalue" />]
                                 </font>
-                                <%-- <s:select headerKey="0" list="#session.rolesMap" value="#session.primaryrole" theme="simple" id="headSelectBoxStyle" onchange="performAction('/general/roleSubmit.action',this)" /> --%>
-
-                                <%--<%}%>--%>
                             </td>
                             <td>
-
                             </td>
                         </table>
-
-
-
-
                     </li>
                 </ul>
             </div>
-
         </div>
     </s:else>
 </div>
-<%--<div id="seperator"></div>--%>
+

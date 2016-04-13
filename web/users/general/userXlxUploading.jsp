@@ -17,7 +17,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Miracle Service Bay :: User Uploading Page</title>
+        <title>ServiceBay :: User Uploading Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -27,8 +27,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
+    
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
@@ -69,7 +68,7 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
 
-                                                        <font color="#ffffff">Users Loading</font>
+                                                        <font color="#ffffff">Users Uploading</font>
 
                                                     </h4>
                                                 </div>
@@ -80,7 +79,7 @@
                                                 <s:hidden name="fileExist" value="%{fileExist}"/>
                                                 <s:hidden name="contactAccountType" value="%{contactAccountType}"/>
                                                 <s:hidden name="accountSearchOrgId" value="%{accountSearchOrgId}"/>
-                                                <span><fileuplaoderror></fileuplaoderror></span>
+                                                <span id="fileUploading"><fileuplaoderror></fileuplaoderror></span>
                                                 <div class="col-sm-12">
                                                     <s:if test="fileExist!=''&&fileExist!=null">
                                                         <span id="resume"><font style='color:red;font-size:15px;'>File Name Already Exists!!</font></span>
@@ -90,13 +89,13 @@
                                                 <div class="col-sm-12"><br>
                                                     <div class="col-sm-2"></div>
                                                     <div class="col-sm-5"><br>
-                                                        <s:file name="xlsfile" cssClass="" style="width:200px" label="Xls File" id="file" tabindex="1"></s:file>
-                                                            <span style="color:#4E4E4E;font-size: 10px">Upload XLS file.</span>
+                                                        <s:file  name="xlsfile" cssClass="" style="width:200px" label="Xls File" id="file" tabindex="1"></s:file>
+                                                            <span style="color:#4E4E4E;font-size: 10px">Upload XLS file1.</span>
                                                         </div>
                                                         <div class="col-sm-5">
                                                         <s:hidden name="accountType" id="accountType" value="%{accountType}"/>
 
-                                                        <s:submit value="upload" type="button" cssClass="cssbutton fa fa-upload" style="margin-top:20px" name="submit" onclick="return checkExtention()" tabindex="2"></s:submit>
+                                                        <s:submit id="sumbitUserUpload" value="upload" type="button" cssClass="cssbutton fa fa-upload" style="margin-top:20px" name="submit" onclick="return checkExtention()" tabindex="2"></s:submit>
 
                                                         </div>
                                                     </div>
@@ -122,7 +121,7 @@
                                                     (000)-000-0000
                                                 </ol> 
                                                 To Download Sample File Format 
-                                                <s:a href="downloadSample.action?loadingFileType=Contacts">Click Here</s:a> 
+                                                <s:a id="downLoadSample" href="downloadSample.action?loadingFileType=Contacts">Click Here</s:a> 
                                                 </div>
 
                                             </div>
@@ -152,6 +151,9 @@
     <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
     <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     <!--/Footer-->
+    <script type="text/javascript">
+        $("#fileUploading").show().delay(5000).fadeOut();
+    </script>
     <script>
         setTimeout(function(){              
             $('#resume').remove();

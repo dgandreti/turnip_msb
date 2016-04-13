@@ -1,3 +1,45 @@
+ function validateForm1() {
+//                alert("validateForm1");
+                $("#succMessage").html(""); 
+                var account_name=document.getElementById("account_name").value;
+               var account_url=document.getElementById("account_url").value;
+               var account_type=document.getElementById("account_type").value;
+               var email_ext=document.getElementById("email_ext").value;
+                if(account_name=="")
+                {
+                   
+                  // alert(account_name);
+                   $("#resultMessage").html("<font color='red'>Enter account_name</font>");  
+                    $("#resultMessage").show().delay(5000).fadeOut();
+                    return false;
+                }
+                if(account_url=="")
+                {
+                   //  alert(account_url);
+                    $("#resultMessage").html("<font color='red'>Enter account_url</font>"); 
+                    $("#resultMessage").show().delay(5000).fadeOut();
+                    return false;
+                }
+                if(account_type=="")
+                {
+                   //alert(account_type);
+                    $("#resultMessage").html("<font color='red'>Select account_type</font>");  
+                    $("#resultMessage").show().delay(5000).fadeOut();
+                    return false;
+                }
+                //alert(email_ext)
+                if(email_ext=="")
+                {
+                   //  alert(email_ext);
+                    $("#resultMessage").html("<font color='red'>Enter email_ext</font>");   
+                    $("#resultMessage").show().delay(5000).fadeOut();
+                    return false;
+                } 
+                return true;
+              
+              
+            }
+
 function ResponseCheckCharacters(id){
     $(id).keyup(function(){
         el = $(this);

@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,58 +29,51 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UsrTimesheetServiceImpl implements UsrTimesheetService {
 
-    private Connection connection;
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString = "";
 
-    public List getTimesheetListDetails( UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
-        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
-        StringBuffer stringBuffer = new StringBuffer();
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
+     *
+     * ForUse : getTimesheetListDetails() method is used to get
+     *
+     * *****************************************************************************
+     */
+    public List getTimesheetListDetails(UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
+
+        System.out.println("********************UsrTimesheetServiceImpl :: getTimesheetListDetails Method Start*********************");
+        Connection connection = null;
+        String queryString = "";
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
         DateUtility dateUtility = new DateUtility();
         String startDate = "";
         String endDate = "";
-        String status = "";
-
-        //String queryString1 = "";
-        int i = 0;
         try {
-
-            System.out.println("sstatus----->" + usrTimeSheetAction.getTmstatus());
             queryString = "SELECT EmpId,TimesheetId,TotalHrs,ReportsTo,CurStatus,DateStart,DateEnd,SubmittedDate,ApprovedDate FROM vwtimesheetlist WHERE 1=1 ";
             if (usrTimeSheetAction.getStartDate() != null && usrTimeSheetAction.getStartDate().toString().isEmpty() == false) {
                 startDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getStartDate());
-
                 queryString = queryString + " and DateStart >= '" + startDate + "'";
             }
-
             if (usrTimeSheetAction.getEndDate() != null && usrTimeSheetAction.getEndDate().toString().isEmpty() == false) {
                 endDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getEndDate());
-
                 queryString = queryString + " and DateEnd <= '" + endDate + "'";
             }
-//            if (!"-1".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
-//                if("CA".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())){
-//                    //status = "created";
-//                    status = "1";
-//                }else if("SU".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())){
-//                    status = "2";
-//                }else if("AP".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())){
-//                    status = "3";
-//                }
-//                queryString = queryString + " and CurStatus = '" + status + "'";
-//            }
-
             queryString = queryString + " and EmpId=" + usrTimeSheetAction.getUserId() + " ORDER BY TimesheetId DESC LIMIT 20 ";
-
-            System.out.println("queryString helloooo -->" + queryString);
+            System.out.println("getTimesheetListDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
-            //String name="SELECT CONCAT(first_name,' ',last_name) AS NAME FROM users WHERE usr_id=resultSet.getInt("reports_to")";
             while (resultSet.next()) {
-                //queryString1= queryString1+ resultSet.getInt("reports_to");
                 TimesheetVTO timesheetVTO = new TimesheetVTO();
                 timesheetVTO.setTimesheetid(resultSet.getInt("TimesheetId"));
                 timesheetVTO.setUsr_id(resultSet.getInt("EmpId"));
@@ -89,19 +83,14 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 timesheetVTO.setReportsto1(dsdp.getFnameandLnamebyUserid(resultSet.getInt("ReportsTo")));
                 timesheetVTO.setSubmittedDate(dateUtility.convertDateToViewInDashformat(resultSet.getDate("SubmittedDate")));
                 timesheetVTO.setTotalBillHrs(resultSet.getDouble("TotalHrs"));
-                System.out.println("Approved Date ----->" + resultSet.getString("ApprovedDate"));
                 if ("1950-01-01".equals(resultSet.getString("ApprovedDate"))) {
-                    //System.out.println("Approved Date in if----->");
                     timesheetVTO.setApprovedDate("-");
                 } else {
-                    //System.out.println("Approved Date in else----->");   
                     timesheetVTO.setApprovedDate(dateUtility.convertDateToViewInDashformat(resultSet.getDate("ApprovedDate")));
                 }
                 timesheetList.add(timesheetVTO);
             }
-
         } catch (Exception ex) {
-            System.out.println(ex.toString());
             ex.printStackTrace();
         } finally {
             try {
@@ -121,37 +110,38 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************UsrTimesheetServiceImpl :: getTimesheetListDetails Method End*********************");
         return timesheetList;
     }
 
-    public List getAllTimeSheetList( UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
-        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
-        StringBuffer stringBuffer = new StringBuffer();
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
+     *
+     * ForUse : getAllTimeSheetList() method is used to
+     *
+     * *****************************************************************************
+     */
+    public List getAllTimeSheetList(UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: getAllTimeSheetList Method Start*********************");
+        Connection connection = null;
+        String queryString = "";
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
         DateUtility dateUtility = new DateUtility();
-        String startDate = "";
-        String endDate = "";
-        String status = "";
-
-        //String queryString1 = "";
         int i = 0;
         try {
-
-            //System.out.println("sstatus----->"+usrTimeSheetAction.getTmstatus());
             queryString = "SELECT EmpId,TimesheetId,TotalHrs,ReportsTo,CurStatus,DateStart,DateEnd,SubmittedDate,ApprovedDate FROM vwtimesheetlist WHERE 1=1 ";
             queryString = queryString + " and EmpId=" + usrTimeSheetAction.getUserId() + " ORDER BY TimesheetId DESC LIMIT 20 ";
-
-            //System.out.println("queryString helloooo -->" + queryString);
+            System.out.println("getAllTimeSheetList :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
-            //String name="SELECT CONCAT(first_name,' ',last_name) AS NAME FROM users WHERE usr_id=resultSet.getInt("reports_to")";
             while (resultSet.next()) {
-                //queryString1= queryString1+ resultSet.getInt("reports_to");
                 TimesheetVTO timesheetVTO = new TimesheetVTO();
                 timesheetVTO.setTimesheetid(resultSet.getInt("TimesheetId"));
                 timesheetVTO.setDateStart(dateUtility.convertDateToViewInDashformat(resultSet.getDate("DateStart")));
@@ -163,9 +153,7 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 timesheetVTO.setTotalBillHrs(resultSet.getDouble("TotalHrs"));
                 timesheetList.add(timesheetVTO);
             }
-
         } catch (Exception ex) {
-            System.out.println(ex.toString());
             ex.printStackTrace();
         } finally {
             try {
@@ -185,7 +173,7 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************UsrTimesheetServiceImpl :: getAllTimeSheetList Method End*********************");
         return timesheetList;
     }
 
@@ -193,24 +181,33 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
      *
      * @return @throws ServiceLocatorException
      */
-    public int deleteTimeSheet( UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
-
-        // System.out.println("in service impl"); int id, int empId, int timeSheetId
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
+     *
+     * ForUse : deleteTimeSheet() method is used to delete a particular
+     * timesheet.
+     *
+     * *****************************************************************************
+     */
+    public int deleteTimeSheet(UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: deleteTimeSheet Method Start*********************");
         int deletedRows = 0;
         Connection connection = null;
+        String queryString = "";
         Statement statement = null;
-        String queryString = "Delete from usrtimesheets  WHERE usr_id=" + usrTimeSheetAction.getUserId() + " AND TimeSheetId='" + usrTimeSheetAction.getTimesheetid() + "'";
-        String queryString1 = "Delete from usrtimesheetlines WHERE usr_id=" + usrTimeSheetAction.getUserId() + " AND timesheetid='" + usrTimeSheetAction.getTimesheetid() + "'";
-        System.out.println("Delete queryString" + queryString);
-        System.out.println("Delete queryString 1" + queryString1);
 
-        //String queryString1 = "Delete from usrtimesheetlines WHERE EmpId='"+empId+"' AND TimeSheetId='"+timeSheetId+"'";
+        queryString = "Delete from usrtimesheets  WHERE usr_id=" + usrTimeSheetAction.getUserId() + " AND TimeSheetId='" + usrTimeSheetAction.getTimesheetid() + "'";
+        String queryString1 = "Delete from usrtimesheetlines WHERE usr_id=" + usrTimeSheetAction.getUserId() + " AND timesheetid='" + usrTimeSheetAction.getTimesheetid() + "'";
         try {
             connection = ConnectionProvider.getInstance().getConnection();
+            System.out.println("deleteTimeSheet :: query string ------>" + queryString);
+            System.out.println("deleteTimeSheet :: query string 1------>" + queryString1);
             statement = connection.createStatement();
             deletedRows = statement.executeUpdate(queryString);
             deletedRows = statement.executeUpdate(queryString1);
-
         } catch (SQLException se) {
             throw new ServiceLocatorException(se);
         } finally {
@@ -227,42 +224,49 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 throw new ServiceLocatorException(se);
             }
         }
+        System.out.println("********************UsrTimesheetServiceImpl :: deleteTimeSheet Method End*********************");
         return deletedRows;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
+     *
+     * ForUse : getTimesheetStatusByTmsheetId() method is used to get status of
+     * timesheet.
+     *
+     * *****************************************************************************
+     */
     public String getTimesheetStatusByTmsheetId(int tmStatus) throws ServiceLocatorException {
-
-        //Map tasksStatusMap = new HashMap();
+        System.out.println("********************UsrTimesheetServiceImpl :: getTimesheetStatusByTmsheetId Method Start*********************");
+        String status = null;
         Connection connection = null;
+        String queryString = "";
         Statement statement = null;
         ResultSet resultSet = null;
-        String status = null;
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT  Description FROM lk_timeSheetStatusType WHERE id =" + tmStatus;
+        queryString = "SELECT  Description FROM lk_timeSheetStatusType WHERE id =" + tmStatus;
+        System.out.println("getTimesheetStatusByTmsheetId :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                // tasksStatusMap.put(resultSet.getInt("id"), resultSet.getString("task_status_name"));
                 status = resultSet.getString("Description");
             }
         } catch (SQLException ex) {
-            // System.out.println("getTaskStatusByOrgId method-->" + ex.getMessage());
             ex.printStackTrace();
         } finally {
-
             try {
-                // resultSet Object Checking if it's null then close and set null
                 if (resultSet != null) {
                     resultSet.close();
                     resultSet = null;
                 }
-
                 if (statement != null) {
                     statement.close();
                     statement = null;
                 }
-
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -271,59 +275,56 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 throw new ServiceLocatorException(ex);
             }
         }
-        //  System.out.println("tasksStatusMap-->" + tasksStatusMap);
+        System.out.println("********************UsrTimesheetServiceImpl :: getTimesheetStatusByTmsheetId Method End*********************");
         return status;
-
     }
 
-    public int AddTimesheet( UsrTimeSheetAction userTimeSheetAction) throws ServiceLocatorException {
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * ForUse : AddTimesheet() method is used to
+     *
+     * *****************************************************************************
+     */
+    public int AddTimesheet(UsrTimeSheetAction userTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: AddTimesheet Method Start*********************");
         int timeAdd = 0;
+        Connection connection = null;
+        String queryString = "";
+        CallableStatement callableStatement = null;
+
         DateUtility dateUtility = new DateUtility();
         String startDate = null;
         String endDate = null;
         String submittedDate = null;
-        CallableStatement callableStatement = null;
-        ResultSet resultSet = null;
-
         startDate = dateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getTimeSheetStartDate());
         endDate = dateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getTimeSheetEndDate());
         submittedDate = dateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getTimeSheetSubmittedDate());
-
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-//            System.out.println("before callble");
+            System.out.println("AddTimesheet :: procedure name : addTimesheet ");
             callableStatement = connection.prepareCall("{call addTimesheet(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                     + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                     + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                     + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
                     + ")}");
-//            System.out.println("after callble");
             callableStatement.setInt(1, userTimeSheetAction.getUserSessionId());
-
             callableStatement.setString(2, startDate);
             callableStatement.setString(3, endDate);
-
             callableStatement.setDouble(4, userTimeSheetAction.getProjectNameSun1());
-
             callableStatement.setDouble(5, userTimeSheetAction.getProjectNameMon1());
-
             callableStatement.setDouble(6, userTimeSheetAction.getProjectNameTue1());
-
             callableStatement.setDouble(7, userTimeSheetAction.getProjectNameWed1());
-
             callableStatement.setDouble(8, userTimeSheetAction.getProjectNameThu1());
-
             callableStatement.setDouble(9, userTimeSheetAction.getProjectNameFri1());
-
             callableStatement.setDouble(10, userTimeSheetAction.getProjectNameSat1());
 
-
             callableStatement.setDouble(11, userTimeSheetAction.getProjectNameSun2());
-
             callableStatement.setDouble(12, userTimeSheetAction.getProjectNameMon2());
-
             callableStatement.setDouble(13, userTimeSheetAction.getProjectNameTue2());
-
             callableStatement.setDouble(14, userTimeSheetAction.getProjectNameWed2());
             callableStatement.setDouble(15, userTimeSheetAction.getProjectNameThu2());
             callableStatement.setDouble(16, userTimeSheetAction.getProjectNameFri2());
@@ -337,9 +338,6 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             callableStatement.setDouble(23, userTimeSheetAction.getProjectNameFri3());
             callableStatement.setDouble(24, userTimeSheetAction.getProjectNameSat3());
 
-
-
-
             callableStatement.setDouble(25, userTimeSheetAction.getProjectNameSun4());
             callableStatement.setDouble(26, userTimeSheetAction.getProjectNameMon4());
             callableStatement.setDouble(27, userTimeSheetAction.getProjectNameTue4());
@@ -347,8 +345,6 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             callableStatement.setDouble(29, userTimeSheetAction.getProjectNameThu4());
             callableStatement.setDouble(30, userTimeSheetAction.getProjectNameFri4());
             callableStatement.setDouble(31, userTimeSheetAction.getProjectNameSat4());
-
-
 
             callableStatement.setDouble(32, userTimeSheetAction.getProjectNameSun5());
             callableStatement.setDouble(33, userTimeSheetAction.getProjectNameMon5());
@@ -358,9 +354,6 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             callableStatement.setDouble(37, userTimeSheetAction.getProjectNameFri5());
             callableStatement.setDouble(38, userTimeSheetAction.getProjectNameSat5());
 
-
-
-
             callableStatement.setDouble(39, userTimeSheetAction.getInternalSun());
             callableStatement.setDouble(40, userTimeSheetAction.getInternalMon());
             callableStatement.setDouble(41, userTimeSheetAction.getInternalTue());
@@ -368,7 +361,6 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             callableStatement.setDouble(43, userTimeSheetAction.getInternalThu());
             callableStatement.setDouble(44, userTimeSheetAction.getInternalFri());
             callableStatement.setDouble(45, userTimeSheetAction.getInternalSat());
-
 
             callableStatement.setDouble(46, userTimeSheetAction.getVacationSun());
             callableStatement.setDouble(47, userTimeSheetAction.getVacationMon());
@@ -378,7 +370,6 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             callableStatement.setDouble(51, userTimeSheetAction.getVacationFri());
             callableStatement.setDouble(52, userTimeSheetAction.getVacationSat());
 
-
             callableStatement.setDouble(53, userTimeSheetAction.getHolidaySun());
             callableStatement.setDouble(54, userTimeSheetAction.getHolidayMon());
             callableStatement.setDouble(55, userTimeSheetAction.getHolidayTue());
@@ -387,13 +378,6 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             callableStatement.setDouble(58, userTimeSheetAction.getHolidayFri());
             callableStatement.setDouble(59, userTimeSheetAction.getHolidaySat());
 
-//            callableStatement.setDouble(60,userTimeSheetAction.getComptimeSun());
-//            callableStatement.setDouble(61,userTimeSheetAction.getComptimeMon());
-//            callableStatement.setDouble(62,userTimeSheetAction.getComptimeTue());
-//            callableStatement.setDouble(63,userTimeSheetAction.getComptimeWed());
-//            callableStatement.setDouble(64,userTimeSheetAction.getComptimeThu());
-//            callableStatement.setDouble(65,userTimeSheetAction.getComptimeFri());
-//            callableStatement.setDouble(66,userTimeSheetAction.getComptimeSat());
             callableStatement.setString(60, dateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getWeeklyDates1()));
             callableStatement.setString(61, dateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getWeeklyDates2()));
             callableStatement.setString(62, dateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getWeeklyDates3()));
@@ -402,18 +386,13 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             callableStatement.setString(65, dateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getWeeklyDates6()));
             callableStatement.setString(66, dateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getWeeklyDates7()));
 
-
-
             callableStatement.setInt(67, userTimeSheetAction.getProject1key());
-            // System.out.println("project 1-->"+userTimeSheetAction.getProject1key());
             callableStatement.setInt(68, userTimeSheetAction.getProject2key());
             callableStatement.setInt(69, userTimeSheetAction.getProject3key());
             callableStatement.setInt(70, userTimeSheetAction.getProject4key());
             callableStatement.setInt(71, userTimeSheetAction.getProject5key());
 
             callableStatement.setInt(72, userTimeSheetAction.getReportsTo());
-            // callableStatement.setString(80,userTimeSheetAction.getTimeSheetNotes());
-            // callableStatement.setDouble(81,userTimeSheetAction.getTotalBillHrs());
             callableStatement.setString(73, dateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getTimeSheetSubmittedDate()));
             callableStatement.setDouble(74, userTimeSheetAction.getTotalBillHrs());
             callableStatement.setString(75, userTimeSheetAction.getTimeSheetNotes());
@@ -423,54 +402,66 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 callableStatement.setInt(76, 1);
             }
             callableStatement.registerOutParameter(77, java.sql.Types.INTEGER);
-
             callableStatement.execute();
             int timeSheetId = callableStatement.getInt(77);
-
             if (timeSheetId > 0) {
-                System.out.println("timesheeet added sucessfully");
                 timeAdd = 1;
             } else {
-                System.out.println("timesheeet not added");
                 timeAdd = 0;
             }
         } catch (Exception ex) {
             throw new ServiceLocatorException(ex);
+        } finally {
+            try {
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
         }
+        System.out.println("********************UsrTimesheetServiceImpl :: AddTimesheet Method End*********************");
         return timeAdd;
     }
 
-    public List getTimesheetList( UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
-        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
-        StringBuffer stringBuffer = new StringBuffer();
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
+     *
+     * ForUse : getTimesheetList() method is used to
+     *
+     * *****************************************************************************
+     */
+    public List getTimesheetList(UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: getTimesheetList Method Start*********************");
+        Connection connection = null;
+        String queryString = "";
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
         DateUtility dateUtility = new DateUtility();
         String startDate = "";
         String endDate = "";
         String status = "";
-
-        //String queryString1 = "";
-        int i = 0;
         try {
-
-            System.out.println("sstatus----->" + usrTimeSheetAction.getTmstatus());
             queryString = "SELECT EmpId,TimesheetId,TotalHrs,ReportsTo,CurStatus,DateStart,DateEnd,SubmittedDate,ApprovedDate FROM vwtimesheetlist WHERE 1=1 ";
             if (usrTimeSheetAction.getStartDate() != null && usrTimeSheetAction.getStartDate().toString().isEmpty() == false) {
                 startDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getStartDate());
-
                 queryString = queryString + " and DateStart >= '" + startDate + "'";
             }
-
             if (usrTimeSheetAction.getEndDate() != null && usrTimeSheetAction.getEndDate().toString().isEmpty() == false) {
                 endDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getEndDate());
-
                 queryString = queryString + " and DateEnd <= '" + endDate + "'";
             }
             if (!"-1".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
                 if ("CA".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
-                    //status = "created";
                     status = "1";
                 } else if ("SU".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
                     status = "2";
@@ -479,17 +470,13 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 }
                 queryString = queryString + " and CurStatus = '" + status + "'";
             }
-
-            queryString = queryString + " and EmpId=" + usrTimeSheetAction.getUserId() + " ORDER BY TimesheetId DESC LIMIT 20 ";
-
-            System.out.println("queryString helloooo -->" + queryString);
+            queryString = queryString + " and EmpId=" + usrTimeSheetAction.getUserId() + " ORDER BY DateStart DESC LIMIT 20 ";
+            System.out.println("getTimesheetList :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
-            //String name="SELECT CONCAT(first_name,' ',last_name) AS NAME FROM users WHERE usr_id=resultSet.getInt("reports_to")";
             while (resultSet.next()) {
-                //queryString1= queryString1+ resultSet.getInt("reports_to");
                 TimesheetVTO timesheetVTO = new TimesheetVTO();
                 timesheetVTO.setTimesheetid(resultSet.getInt("TimesheetId"));
                 timesheetVTO.setDateStart(dateUtility.convertDateToViewInDashformat(resultSet.getDate("DateStart")));
@@ -498,21 +485,15 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 timesheetVTO.setReportsto1(dsdp.getFnameandLnamebyUserid(resultSet.getInt("ReportsTo")));
                 timesheetVTO.setSubmittedDate(dateUtility.convertDateToViewInDashformat(resultSet.getDate("SubmittedDate")));
                 timesheetVTO.setTotalBillHrs(resultSet.getDouble("TotalHrs"));
-                System.out.println("approved Date--->" + resultSet.getDate("ApprovedDate"));
-                //if(resultSet.getDate("ApprovedDate")==01-01-1950)
                 if ("1950-01-01".equals(resultSet.getString("ApprovedDate"))) {
-                    //System.out.println("Approved Date in if----->");
                     timesheetVTO.setApprovedDate("-");
                 } else {
-                    //System.out.println("Approved Date in else----->");   
                     timesheetVTO.setApprovedDate(dateUtility.convertDateToViewInDashformat(resultSet.getDate("ApprovedDate")));
                 }
                 timesheetVTO.setUsr_id(resultSet.getInt("EmpId"));
                 timesheetList.add(timesheetVTO);
             }
-
         } catch (Exception ex) {
-            System.out.println(ex.toString());
             ex.printStackTrace();
         } finally {
             try {
@@ -532,30 +513,35 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************UsrTimesheetServiceImpl :: getTimesheetList Method End*********************");
         return timesheetList;
     }
 
-    public List getTeamTimeSheetList( UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
-        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
-        StringBuffer stringBuffer = new StringBuffer();
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
+     *
+     * ForUse : getTeamTimeSheetList() method is used to
+     *
+     * *****************************************************************************
+     */
+    public List getTeamTimeSheetList(UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: getTeamTimeSheetList Method Start*********************");
+        Connection connection = null;
+        String queryString = "";
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
         DateUtility dateUtility = new DateUtility();
         String startDate = "";
         String endDate = "";
         String status = "";
         String tmMember = "";
-
-        //String queryString1 = "";
-        int i = 0;
         try {
             int id = usrTimeSheetAction.getUserSessionId();
-            System.out.println("id is" + id);
-            // Map map = DataSourceDataProvider.getInstance().getMyTeamMembers(id);
             Map map = usrTimeSheetAction.getTeamMembersList();
-            System.out.println(map);
             String key, retrunValue = "";
             int mapsize = map.size();
             if (map.size() > 0) {
@@ -572,22 +558,17 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                     entry = null;
                 }
             }
-            System.out.println("sstatus----->" + usrTimeSheetAction.getTmstatus());
             queryString = "SELECT EmpId,EmpName,TimesheetId,TotalHrs,ReportsTo,CurStatus,DateStart,DateEnd,SubmittedDate,ApprovedDate FROM vwtimesheetlist WHERE 1=1 ";
             if (usrTimeSheetAction.getStartDate() != null && usrTimeSheetAction.getStartDate().toString().isEmpty() == false) {
                 startDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getStartDate());
-
                 queryString = queryString + " and DateStart >= '" + startDate + "'";
             }
-
             if (usrTimeSheetAction.getEndDate() != null && usrTimeSheetAction.getEndDate().toString().isEmpty() == false) {
                 endDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getEndDate());
-
                 queryString = queryString + " and DateEnd <= '" + endDate + "'";
             }
             if (!"-1".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
                 if ("CA".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
-                    //status = "created";
                     status = "1";
                 } else if ("SU".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
                     status = "2";
@@ -602,18 +583,13 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 System.out.println("in else");
                 tmMember = retrunValue;
             }
-
-            System.out.println("tm Member=======>" + tmMember);
             queryString = queryString + " and EmpId in (" + tmMember + ") ORDER BY TimesheetId DESC LIMIT 20 ";
-
-            System.out.println("queryString helloooo -->" + queryString);
+            System.out.println("getTeamTimeSheetList :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
-            //String name="SELECT CONCAT(first_name,' ',last_name) AS NAME FROM users WHERE usr_id=resultSet.getInt("reports_to")";
             while (resultSet.next()) {
-                //queryString1= queryString1+ resultSet.getInt("reports_to");
                 TimesheetVTO timesheetVTO = new TimesheetVTO();
                 timesheetVTO.setUsr_id(resultSet.getInt("EmpId"));
                 timesheetVTO.setTimesheetid(resultSet.getInt("TimesheetId"));
@@ -627,9 +603,7 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 timesheetVTO.setTotalBillHrs(resultSet.getDouble("TotalHrs"));
                 timesheetList.add(timesheetVTO);
             }
-
         } catch (Exception ex) {
-            System.out.println(ex.toString());
             ex.printStackTrace();
         } finally {
             try {
@@ -649,33 +623,32 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************UsrTimesheetServiceImpl :: getTeamTimeSheetList Method End*********************");
         return timesheetList;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 07/08/2015
      *
-     * @getUserTimeSheet() used to getUserTimeSheet on edit page
+     * Author : Divya Gandreti<dgandreti@miraclesoft.com>
      *
-     * @Author:Divya Gandreti<dgandreti@miraclesoft.com>
+     * ForUse : getUserTimeSheet() method is used to getUserTimeSheet on edit
+     * page.
      *
-     * @Created Date:07/08/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public TimesheetVTO getUserTimeSheet(UsrTimeSheetAction userTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: getUserTimeSheet Method Start*********************");
+        Connection connection = null;
         String queryString = "";
-        String resultString = "";
         Statement statement = null;
         ResultSet resultSet = null;
-        PreparedStatement preparedStatement = null;
         TimesheetVTO timeSheetVTO = new TimesheetVTO();
         int rowCount = 0;
         try {
             String queryString1 = "select comments,notes,DateStart,DateEnd,SubmittedDate,ApprovedDate,usr_id,timesheetid,Description From usrtimesheets us LEFT OUTER JOIN lk_timeSheetStatusType ts ON(us.reportsto1status=ts.Id) Where us.timesheetid=" + userTimeSheetAction.getTimesheetid() + " and us.usr_id=" + userTimeSheetAction.getUsr_id();
-            System.out.println("impl query++++++++++" + queryString1);
-
+            System.out.println("getUserTimeSheet :: query string ------>" + queryString1);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString1);
@@ -689,18 +662,14 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 timeSheetVTO.setTimeSheetStatus(resultSet.getString("Description"));
                 timeSheetVTO.setTimeSheetNotes(resultSet.getString("notes"));
                 timeSheetVTO.setComments(resultSet.getString("comments"));
-                System.out.println("iii" + timeSheetVTO.getTimeSheetStatus() + "yimesheetid" + timeSheetVTO.getTimesheetid());
-
             }
-
             queryString = "select subproject1hrs,subproject2hrs,subproject3hrs,subproject4hrs,subproject5hrs,"
                     + "internalhrs,vacationhrs,comptimehrs,holidayhrs,workdate,subproject1id,"
                     + "subproject2id,subproject3id,subproject4id,subproject5id"
                     + " FROM usrtimesheetlines  WHERE timesheetid=" + timeSheetVTO.getTimesheetid() + " AND usr_id=" + timeSheetVTO.getUsr_id();
-            System.out.println("impl query++++++++++" + queryString);
+            System.out.println("getUserTimeSheet :: query string 1 ------>" + queryString);
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                // timeSheetVTO.setEmpName(resultSet.getString());
                 if (rowCount == 0) {
                     timeSheetVTO.setProjectNameSun1(resultSet.getDouble(1));
                     timeSheetVTO.setProjectNameSun2(resultSet.getDouble(2));
@@ -784,7 +753,6 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                     timeSheetVTO.setHolidaySat(resultSet.getDouble(9));
                     timeSheetVTO.setWeeklyDates7(com.mss.msp.util.DateUtility.getInstance().convertDateToView(resultSet.getDate(10)));
                 }
-
                 rowCount++;
             }
         } catch (Exception sqe) {
@@ -795,9 +763,9 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                     resultSet.close();
                     resultSet = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -807,51 +775,51 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************UsrTimesheetServiceImpl :: getUserTimeSheet Method End*********************");
         return timeSheetVTO;
     }
 
-   /**
-     * *************************************
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
      *
-     * @approveRejectTimeSheet() used to Update the approve/reject status of timesheet
+     * Author : Divya Gandreti<dgandreti@miraclesoft.com>
      *
-     * @Author:Divya Gandreti<dgandreti@miraclesoft.com>
+     * ForUse : approveRejectTimeSheet() used to Update the approve/reject
+     * status of timesheet.
      *
-     * @Created Date:07/08/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public int approveRejectTimeSheet(UsrTimeSheetAction userTimeSheetAction) throws ServiceLocatorException {
-        Statement statement = null;
-        ResultSet resultSet = null;
-        PreparedStatement preparedStatement = null;
+        System.out.println("********************UsrTimesheetServiceImpl :: approveRejectTimeSheet Method Start*********************");
+        Connection connection = null;
+        String queryString = "";
         CallableStatement callableStatement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         int isUpdated = 0;
-        String approvedDate = com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDate(userTimeSheetAction.getTimeSheetApprovedDate());
+        Timestamp approvedDate = com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime();
         try {
-
             connection = ConnectionProvider.getInstance().getConnection();
-
             if (userTimeSheetAction.getTempVar() == 1) {
+                System.out.println("approveRejectTimeSheet :: procedure name : sp_ApproveTimesheet");
                 callableStatement = connection.prepareCall("{call sp_ApproveTimesheet(?,?,?,?,?,?)}");
-                callableStatement.setInt(1,3);
+                callableStatement.setInt(1, 3);
                 callableStatement.setString(2, userTimeSheetAction.getComments());
-                callableStatement.setInt(3,userTimeSheetAction.getUserSessionId());
-                callableStatement.setInt(4,userTimeSheetAction.getUsr_id());
-                callableStatement.setInt(5,userTimeSheetAction.getTimesheetid());
-                System.out.println(userTimeSheetAction.getUsr_id()+"----------0000000-------------------"+userTimeSheetAction.getTimesheetid());
+                callableStatement.setInt(3, userTimeSheetAction.getUserSessionId());
+                callableStatement.setInt(4, userTimeSheetAction.getUsr_id());
+                callableStatement.setInt(5, userTimeSheetAction.getTimesheetid());
                 callableStatement.registerOutParameter(6, java.sql.Types.INTEGER);
                 callableStatement.execute();
-                System.out.println("Execute=========>" + isUpdated);
                 isUpdated = callableStatement.getInt(6);
-                
             } else if (userTimeSheetAction.getTempVar() == 2) {
-                String queryString = "UPDATE usrtimeSheets SET reportsto1status=?,Comments=?,ApprovedDate=?,StatusChangedDate=?,reportsto1=? where usr_id='" + userTimeSheetAction.getUsr_id() + "' AND timeSheetid='" + userTimeSheetAction.getTimesheetid() + "'";
+                queryString = "UPDATE usrtimeSheets SET reportsto1status=?,Comments=?,ApprovedDate=?,StatusChangedDate=?,reportsto1=? where usr_id='" + userTimeSheetAction.getUsr_id() + "' AND timeSheetid='" + userTimeSheetAction.getTimesheetid() + "'";
+                System.out.println("approveRejectTimeSheet :: query string ------>" + queryString);
                 preparedStatement = connection.prepareStatement(queryString);
                 preparedStatement.setInt(1, 10);
                 preparedStatement.setString(2, userTimeSheetAction.getComments());
-                preparedStatement.setString(3, approvedDate);
-                preparedStatement.setTimestamp(4, com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime());
+                preparedStatement.setTimestamp(3, approvedDate);
+                preparedStatement.setTimestamp(4, approvedDate);
                 preparedStatement.setInt(5, userTimeSheetAction.getUserSessionId());
                 isUpdated = preparedStatement.executeUpdate();
             }
@@ -860,10 +828,6 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             sqe.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
                 if (callableStatement != null) {
                     callableStatement.close();
                     callableStatement = null;
@@ -880,29 +844,31 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************UsrTimesheetServiceImpl :: approveRejectTimeSheet Method End*********************");
         return isUpdated;
     }
 
-     /**
-     * *************************************
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
      *
-     * @editTimeSheet() used to Update the timesheet from edit page 
+     * Author : Divya Gandreti<dgandreti@miraclesoft.com>
      *
-     * @Author:Divya Gandreti<dgandreti@miraclesoft.com>
+     * ForUse : editTimeSheet() used to Update the timesheet from edit page
      *
-     * @Created Date:07/08/2015
      *
-     **************************************
+     * *****************************************************************************
      */
-    public int editTimeSheet( UsrTimeSheetAction userTimeSheetAction) throws ServiceLocatorException {
-        int isUpdated = 0;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        PreparedStatement preparedStatement = null;
+    public int editTimeSheet(UsrTimeSheetAction userTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: editTimeSheet Method Start*********************");
+        Connection connection = null;
+        String queryString = "";
         CallableStatement callableStatement = null;
+        int isUpdated = 0;
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             if (connection != null) {
+                System.out.println("checkTimeSheetExists :: procedure name : updateTimeSheets ");
                 callableStatement = connection.prepareCall("{call updateTimeSheets(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
                 callableStatement.setInt(1, userTimeSheetAction.getUserSessionId());
                 callableStatement.setInt(2, userTimeSheetAction.getTimesheetid());
@@ -988,28 +954,17 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 callableStatement.setInt(73, userTimeSheetAction.getProject5key());
                 callableStatement.setInt(74, userTimeSheetAction.getTempVar());
 
-
                 callableStatement.registerOutParameter(75, java.sql.Types.INTEGER);
                 callableStatement.execute();
-                System.out.println("Execute=========>" + isUpdated);
                 isUpdated = callableStatement.getInt(75);
-                if (isUpdated > 0) {
-                    System.out.println("****************** in impl result>0  after adding:::::::::" + isUpdated);
-                } else {
-                    System.out.println("****************** in impl result after adding:::::::::" + isUpdated);
-                }
             }
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -1019,11 +974,25 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************UsrTimesheetServiceImpl :: editTimeSheet Method End*********************");
         return isUpdated;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * ForUse : checkTimeSheetExists() method is used to check whether the
+     * timesheet is exist for that given date or not.
+     *
+     * *****************************************************************************
+     */
     public String checkTimeSheetExists(List li, int empID) {
+        System.out.println("********************UsrTimesheetServiceImpl :: checkTimeSheetExists Method Start*********************");
         Connection connection = null;
+        String queryString = "";
         Statement statement = null;
         ResultSet resultSet = null;
         String isTimeSheetExist = "";
@@ -1031,21 +1000,15 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             // convert the date to string
             String wstDate = DateUtility.getInstance().convertDateToMySql1(DateUtility.getInstance().convertStringToMySql((String) li.get(0)));
             String wenDate = DateUtility.getInstance().convertDateToMySql1(DateUtility.getInstance().convertStringToMySql((String) li.get(1)));
-
             Date weekStarDate = DateUtility.getInstance().convertStringToMySql((String) li.get(0));
             Date currDate = DateUtility.getInstance().convertStringToMySql((String) li.get(2));
-
             connection = ConnectionProvider.getInstance().getConnection();
-
             if (connection != null) {
                 statement = connection.createStatement();
-
                 // select the data from vwTimeSheetList of DataBase.
-                //if("e".equalsIgnoreCase(empType))
-                System.out.println("SELECT *  FROM vwtimesheetlist WHERE EmpId=" + empID + " AND DateStart='" + wstDate + "' AND DateEnd='" + wenDate + "'");
-                //resultSet =statement.executeQuery("SELECT *  FROM vwtimesheetlist WHERE EmpId="+empID+" AND DateStart='"+wstDate +"' AND DateEnd='"+wenDate+"'");
-                resultSet = statement.executeQuery("SELECT *  FROM vwtimesheetlist WHERE EmpId=" + empID + " AND DateStart='" + wstDate + "' AND DateEnd='" + wenDate + "'");
-
+                queryString = "SELECT *  FROM vwtimesheetlist WHERE EmpId=" + empID + " AND DateStart='" + wstDate + "' AND DateEnd='" + wenDate + "'";
+                resultSet = statement.executeQuery(queryString);
+                System.out.println("checkTimeSheetExists :: query string ------>" + queryString);
                 if (resultSet.next()) {
                     isTimeSheetExist = "exist";
                 } else if (currDate.before(weekStarDate)) {
@@ -1053,15 +1016,10 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 } else {
                     isTimeSheetExist = "allow";
                 }
-
             } //if
-
-
         } // try
         catch (Exception ex) {
             ex.printStackTrace();
-            //log.setLevel((Level)Level.ERROR);
-            //log.error("The Error @ checkTimeSheetExists()",ex);
         } // catch
         finally {
             try {
@@ -1077,32 +1035,36 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                     connection.close();
                     connection = null;
                 }
-
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
-
+        System.out.println("********************UsrTimesheetServiceImpl :: checkTimeSheetExists Method End*********************");
         return isTimeSheetExist;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * ForUse : getweekStartAndEndDays() method is used to
+     *
+     * *****************************************************************************
+     */
     public List getweekStartAndEndDays(Calendar cal) {
-
+        System.out.println("********************UsrTimesheetServiceImpl :: getweekStartAndEndDays Method Start*********************");
         /* used to store the totla weekdays. */
         List daysList = new ArrayList();
-
         /* Used for Storing the Week Start Date */
         String wstDate = null;
-
         /* Used for Storing the Week End Date */
         String wenDate = null;
-
         /* used for the current date */
         String curntDate = null;
-
         /* for stroring the weekdays */
         String[] weekDays = new String[7];
-
         /* to get the day of week */
         int w = cal.get(Calendar.DAY_OF_WEEK);
 
@@ -1129,49 +1091,36 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
             cal.add(Calendar.DATE, -6);
 
         }
-
         /* for generating the month/day sequence of the week */
         int zeroForMon = 0; // if month is single digit then Zero is append to left of that digit
         int zeroForDay = 0; // if day is single digit then Zero is append to left of that digit
         for (int index = 0; index < 7; index++) {
-
             /* for the purpose of concatinating 0 before the day and month */
             zeroForMon = (cal.get(Calendar.MONTH) + 1);
             zeroForDay = cal.get(Calendar.DAY_OF_MONTH);
-
             if (zeroForMon < 10 && zeroForDay < 10) {
                 weekDays[index] = "0" + (cal.get(Calendar.MONTH) + 1) + "/0" + cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.YEAR));
-
             } else if (zeroForMon > 9 && zeroForDay < 10) {
                 weekDays[index] = (cal.get(Calendar.MONTH) + 1) + "/0" + cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.YEAR));
-
             } else if (zeroForMon < 10 && zeroForDay > 9) {
                 weekDays[index] = "0" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.YEAR));
-
-
             } else {
                 weekDays[index] = (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.YEAR));
-
             }
             cal.add(Calendar.DAY_OF_MONTH, 1);
         }// End for loop
-
         wstDate = weekDays[0];  // storing the week startday
         wenDate = weekDays[6]; // storing the week endday
-
         /* current date */
         Calendar currDay = Calendar.getInstance();
         int calendarMonth = currDay.get(Calendar.MONTH) + 1;
         int calendarDay = currDay.get(Calendar.DAY_OF_MONTH);
-        System.out.println("calendarMonth----->" + calendarMonth);
-        System.out.println("calendarDay----->" + calendarDay);
         if (calendarMonth != 10 && calendarMonth != 11 && calendarMonth != 12) {
             if (calendarDay < 10) {
                 curntDate = "0" + (currDay.get(Calendar.MONTH) + 1) + "/0" + currDay.get(Calendar.DAY_OF_MONTH) + "/" + currDay.get(Calendar.YEAR);
             } else {
                 curntDate = "0" + (currDay.get(Calendar.MONTH) + 1) + "/" + currDay.get(Calendar.DAY_OF_MONTH) + "/" + currDay.get(Calendar.YEAR);
             }
-
         } else {
             if (calendarDay < 10) {
                 curntDate = (currDay.get(Calendar.MONTH) + 1) + "/0" + currDay.get(Calendar.DAY_OF_MONTH) + "/" + currDay.get(Calendar.YEAR);
@@ -1183,11 +1132,22 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
         daysList.add(wenDate);
         daysList.add(curntDate);
         daysList.add(weekDays);
-
+        System.out.println("********************UsrTimesheetServiceImpl :: getweekStartAndEndDays Method End*********************");
         return daysList;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Mani Kanta Eeralla<meeralla@miraclesoft.com>
+     *
+     * ForUse : getWeekDaysBean() method is used to
+     *
+     * *****************************************************************************
+     */
     public TimesheetVTO getWeekDaysBean(List li) {
+        System.out.println("********************UsrTimesheetServiceImpl :: getWeekDaysBean Method Start*********************");
         TimesheetVTO timeSheetVTO = new TimesheetVTO();
 
         /* Used for Storing the Week Start Date */
@@ -1210,31 +1170,34 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
         timeSheetVTO.setWeeklyDates6(weekDaysSequence[5]);
         timeSheetVTO.setWeeklyDates7(weekDaysSequence[6]);
 
-        /* to set the action Type */
-        // timeSheetVTO.setModeType("AddTimeSheet");
+        System.out.println("********************UsrTimesheetServiceImpl :: getWeekDaysBean Method End*********************");
         return timeSheetVTO; //  return the bean reference
     }
 
-    public List getTeamTimeSheetListDefault( UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
-        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
-        StringBuffer stringBuffer = new StringBuffer();
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getTeamTimeSheetListDefault() method is used to
+     *
+     * *****************************************************************************
+     */
+    public List getTeamTimeSheetListDefault(UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: getTeamTimeSheetListDefault Method Start*********************");
+        Connection connection = null;
+        String queryString = "";
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
         DateUtility dateUtility = new DateUtility();
         String startDate = "";
         String endDate = "";
-        String status = "";
         String tmMember = "";
-
-        //String queryString1 = "";
-        int i = 0;
         try {
             int id = usrTimeSheetAction.getUserSessionId();
-            System.out.println("id is" + id);
-            // Map map = DataSourceDataProvider.getInstance().getMyTeamMembers(id);
             Map map = usrTimeSheetAction.getTeamMembersList();
-            System.out.println("teamMembersMap--->" + map);
             String key, retrunValue = "";
             int mapsize = map.size();
             if (map.size() > 0) {
@@ -1251,48 +1214,25 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                     entry = null;
                 }
             }
-            System.out.println("teamMember id---->" + retrunValue);
-            System.out.println("sstatus----->" + usrTimeSheetAction.getTmstatus());
+            if ("".equals(retrunValue)) {
+                retrunValue = null;
+            }
             queryString = "SELECT EmpId,EmpName,TimesheetId,TotalHrs,ReportsTo,CurStatus,DateStart,DateEnd,SubmittedDate,ApprovedDate FROM vwtimesheetlist WHERE 1=1 ";
             if (usrTimeSheetAction.getStartDate() != null && usrTimeSheetAction.getStartDate().toString().isEmpty() == false) {
                 startDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getStartDate());
-
                 queryString = queryString + " and DateStart >= '" + startDate + "'";
             }
-
             if (usrTimeSheetAction.getEndDate() != null && usrTimeSheetAction.getEndDate().toString().isEmpty() == false) {
                 endDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getEndDate());
-
                 queryString = queryString + " and DateEnd <= '" + endDate + "'";
             }
-//            if (!"-1".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
-//                if("CA".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())){
-//                    //status = "created";
-//                    status = "1";
-//                }else if("SU".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())){
-//                    status = "2";
-//                }else if("AP".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())){
-//                    status = "3";
-//                }
-//                queryString = queryString + " and CurStatus = '" + status + "'";
-//            }if(!"-1".equalsIgnoreCase(usrTimeSheetAction.getTmmember())){
-//                tmMember = usrTimeSheetAction.getTmmember();
-//            }else{
-//                System.out.println("in else");
-//                tmMember = retrunValue;
-//            }
-
-            System.out.println("tm Member=======>" + tmMember);
             queryString = queryString + " and EmpId in (" + retrunValue + ") ORDER BY TimesheetId DESC LIMIT 20 ";
-
-            System.out.println("queryString helloooo -->" + queryString);
+            System.out.println("getTeamTimeSheetListDefault :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
-            //String name="SELECT CONCAT(first_name,' ',last_name) AS NAME FROM users WHERE usr_id=resultSet.getInt("reports_to")";
             while (resultSet.next()) {
-                //queryString1= queryString1+ resultSet.getInt("reports_to");
                 TimesheetVTO timesheetVTO = new TimesheetVTO();
                 timesheetVTO.setUsr_id(resultSet.getInt("EmpId"));
                 timesheetVTO.setTimesheetid(resultSet.getInt("TimesheetId"));
@@ -1306,7 +1246,6 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 timesheetVTO.setTotalBillHrs(resultSet.getDouble("TotalHrs"));
                 timesheetList.add(timesheetVTO);
             }
-
         } catch (Exception ex) {
             System.out.println(ex.toString());
             ex.printStackTrace();
@@ -1328,52 +1267,53 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************UsrTimesheetServiceImpl :: getTeamTimeSheetListDefault Method End*********************");
         return timesheetList;
     }
-    public List getAllTimeSheets( UsrTimeSheetAction userTimeSheetAction) throws ServiceLocatorException
-    {
-         ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : Divya Gandreti <dgandreti@miraclesoft.com>
+     *
+     * ForUse : getAllTimeSheets() method is used to
+     *
+     * *****************************************************************************
+     */
+    public List getAllTimeSheets(UsrTimeSheetAction userTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: getAllTimeSheets Method Start*********************");
+        Connection connection = null;
+        String queryString = "";
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
         DateUtility dateUtility = new DateUtility();
         String startDate = "";
         String endDate = "";
-        String status = "";
-         int i = 0;
         try {
-            int id = userTimeSheetAction.getUserSessionId();
-            System.out.println("id is" + id);
             queryString = "SELECT acc_Id,vendorName,customerName,orgId,EmpId,EmpName,TimesheetId,TotalHrs,ReportsTo,CurStatus,DateStart,DateEnd,SubmittedDate,"
                     + "ApprovedDate FROM vwopttimesheets WHERE 1=1 and memStatus like 'Active' ";
             if (userTimeSheetAction.getStartDate() != null && userTimeSheetAction.getStartDate().toString().isEmpty() == false) {
                 startDate = dateUtility.getInstance().convertStringToMySQLDateInDash(userTimeSheetAction.getStartDate());
-
                 queryString = queryString + " and DateStart >= '" + startDate + "'";
             }
-
             if (userTimeSheetAction.getEndDate() != null && userTimeSheetAction.getEndDate().toString().isEmpty() == false) {
                 endDate = dateUtility.getInstance().convertStringToMySQLDateInDash(userTimeSheetAction.getEndDate());
-
                 queryString = queryString + " and DateEnd <= '" + endDate + "'";
             }
-           if("7".equals(userTimeSheetAction.getPrimaryRole())){
-               queryString = queryString + " and acc_Id="+userTimeSheetAction.getSessionOrgId()
-                    + " ORDER BY SubmittedDate,EmpName DESC LIMIT 20";  
+            if ("7".equals(userTimeSheetAction.getPrimaryRole())) {
+                queryString = queryString + " and acc_Id=" + userTimeSheetAction.getSessionOrgId()
+                        + " ORDER BY SubmittedDate,EmpName DESC LIMIT 20";
+            } else {
+                queryString = queryString + " and orgId=" + userTimeSheetAction.getSessionOrgId()
+                        + " ORDER BY SubmittedDate,EmpName DESC LIMIT 20";
             }
-            else{
-            queryString = queryString + " and orgId="+userTimeSheetAction.getSessionOrgId()
-                    + " ORDER BY SubmittedDate,EmpName DESC LIMIT 20";
-            }
-            System.out.println("queryString helloooo -->" + queryString);
+            System.out.println("getAllTimeSheets :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
-            DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
-            //String name="SELECT CONCAT(first_name,' ',last_name) AS NAME FROM users WHERE usr_id=resultSet.getInt("reports_to")";
             while (resultSet.next()) {
-                //queryString1= queryString1+ resultSet.getInt("reports_to");
                 TimesheetVTO timesheetVTO = new TimesheetVTO();
                 timesheetVTO.setUsr_id(resultSet.getInt("EmpId"));
                 timesheetVTO.setTimesheetid(resultSet.getInt("TimesheetId"));
@@ -1381,16 +1321,13 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 timesheetVTO.setDateStart(dateUtility.convertDateToViewInDashformat(resultSet.getDate("DateStart")));
                 timesheetVTO.setDateEnd(dateUtility.convertDateToViewInDashformat(resultSet.getDate("DateEnd")));
                 timesheetVTO.setReportsto1status(getTimesheetStatusByTmsheetId(resultSet.getInt("CurStatus")));
-                //timesheetVTO.setReportsto1(dsdp.getFnameandLnamebyUserid(resultSet.getInt("ReportsTo")));
                 timesheetVTO.setSubmittedDate(dateUtility.convertDateToViewInDashformat(resultSet.getDate("SubmittedDate")));
                 timesheetVTO.setApprovedDate(dateUtility.convertDateToViewInDashformat(resultSet.getDate("ApprovedDate")));
-                //timesheetVTO.setCustomerName(dsdp.getAccountNameById(resultSet.getInt("accId")));
                 timesheetVTO.setCustomerName(resultSet.getString("customerName"));
                 timesheetVTO.setVendorName(resultSet.getString("vendorName"));
                 timesheetVTO.setTotalhrs(resultSet.getDouble("TotalHrs"));
                 timesheetList.add(timesheetVTO);
             }
-
         } catch (Exception ex) {
             System.out.println(ex.toString());
             ex.printStackTrace();
@@ -1412,36 +1349,44 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************UsrTimesheetServiceImpl :: getAllTimeSheets Method End*********************");
         return timesheetList;
-    } 
-     public List getAllTimeSheetsSearch(UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
-        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
+    }
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : Divya Gandreti <dgandreti@miraclesoft.com>
+     *
+     * ForUse : getAllTimeSheetsSearch() method is used to
+     *
+     * *****************************************************************************
+     */
+    public List getAllTimeSheetsSearch(UsrTimeSheetAction usrTimeSheetAction) throws ServiceLocatorException {
+        System.out.println("********************UsrTimesheetServiceImpl :: getAllTimeSheetsSearch Method Start*********************");
+        Connection connection = null;
+        String queryString = "";
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        ArrayList<TimesheetVTO> timesheetList = new ArrayList<TimesheetVTO>();
         DateUtility dateUtility = new DateUtility();
         String startDate = "";
         String endDate = "";
-        String status="";
+        String status = "";
         try {
-            System.out.println("-------------------------------------------"+usrTimeSheetAction.getTmmember());
             queryString = "SELECT acc_Id,vendorName,customerName,orgId,EmpId,EmpName,TimesheetId,TotalHrs,ReportsTo,CurStatus,"
                     + "DateStart,DateEnd,SubmittedDate,ApprovedDate FROM vwopttimesheets WHERE 1=1";
             if (usrTimeSheetAction.getStartDate() != null && usrTimeSheetAction.getStartDate().toString().isEmpty() == false) {
                 startDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getStartDate());
-
                 queryString = queryString + " and DateStart >= '" + startDate + "'";
             }
-
             if (usrTimeSheetAction.getEndDate() != null && usrTimeSheetAction.getEndDate().toString().isEmpty() == false) {
                 endDate = dateUtility.getInstance().convertStringToMySQLDateInDash(usrTimeSheetAction.getEndDate());
-
                 queryString = queryString + " and DateEnd <= '" + endDate + "'";
             }
             if (!"-1".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
                 if ("CA".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
-                    //status = "created";
                     status = "1";
                 } else if ("SU".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
                     status = "2";
@@ -1449,34 +1394,31 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                     status = "3";
                 } else if ("DA".equalsIgnoreCase(usrTimeSheetAction.getTmstatus())) {
                     status = "10";
-                } 
+                }
                 queryString = queryString + " and CurStatus = '" + status + "'";
             }
             if (!"".equalsIgnoreCase(usrTimeSheetAction.getTmmember())) {
-               queryString = queryString + "and EmpName like '%"+ usrTimeSheetAction.getTmmember()+"%'";
+                queryString = queryString + "and EmpName like '%" + usrTimeSheetAction.getTmmember() + "%'";
             }
             if (!"-1".equalsIgnoreCase(usrTimeSheetAction.getStatus())) {
-               queryString = queryString + "and memStatus = '"+ usrTimeSheetAction.getStatus()+"'";
-            }
-            else
-            {
+                queryString = queryString + "and memStatus = '" + usrTimeSheetAction.getStatus() + "'";
+            } else {
                 queryString = queryString + " and memStatus = 'Active' ";
             }
-            if("7".equals(usrTimeSheetAction.getPrimaryRole())){
+            if ("7".equals(usrTimeSheetAction.getPrimaryRole())) {
                 if (!"".equalsIgnoreCase(usrTimeSheetAction.getVendorName())) {
-               queryString = queryString + "and vendorName like '%"+ usrTimeSheetAction.getVendorName()+"%'";
+                    queryString = queryString + "and vendorName like '%" + usrTimeSheetAction.getVendorName() + "%'";
+                }
+                queryString = queryString + " and acc_Id=" + usrTimeSheetAction.getSessionOrgId()
+                        + " ORDER BY SubmittedDate,EmpName DESC LIMIT 20";
+            } else {
+                if (!"".equalsIgnoreCase(usrTimeSheetAction.getCustomerName())) {
+                    queryString = queryString + "and customerName like '%" + usrTimeSheetAction.getCustomerName() + "%'";
+                }
+                queryString = queryString + " and orgId=" + usrTimeSheetAction.getSessionOrgId()
+                        + " ORDER BY SubmittedDate,EmpName DESC LIMIT 20";
             }
-               queryString = queryString + " and acc_Id="+usrTimeSheetAction.getSessionOrgId()
-                    + " ORDER BY SubmittedDate,EmpName DESC LIMIT 20";  
-            }
-            else{
-                 if (!"".equalsIgnoreCase(usrTimeSheetAction.getCustomerName())) {
-               queryString = queryString + "and customerName like '%"+ usrTimeSheetAction.getCustomerName()+"%'"; 
-                } 
-            queryString = queryString + " and orgId="+usrTimeSheetAction.getSessionOrgId()
-                    + " ORDER BY SubmittedDate,EmpName DESC LIMIT 20";
-            }
-            System.out.println("queryString helloooo -->" + queryString);
+            System.out.println("getAllTimeSheetsSearch :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -1489,17 +1431,13 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 timesheetVTO.setDateStart(dateUtility.convertDateToViewInDashformat(resultSet.getDate("DateStart")));
                 timesheetVTO.setDateEnd(dateUtility.convertDateToViewInDashformat(resultSet.getDate("DateEnd")));
                 timesheetVTO.setReportsto1status(getTimesheetStatusByTmsheetId(resultSet.getInt("CurStatus")));
-                //timesheetVTO.setReportsto1(dsdp.getFnameandLnamebyUserid(resultSet.getInt("ReportsTo")));
                 timesheetVTO.setSubmittedDate(dateUtility.convertDateToViewInDashformat(resultSet.getDate("SubmittedDate")));
                 timesheetVTO.setApprovedDate(dateUtility.convertDateToViewInDashformat(resultSet.getDate("ApprovedDate")));
-                //timesheetVTO.setCustomerName(dsdp.getAccountNameById(resultSet.getInt("accId")));
                 timesheetVTO.setCustomerName(resultSet.getString("customerName"));
                 timesheetVTO.setVendorName(resultSet.getString("vendorName"));
                 timesheetVTO.setTotalhrs(resultSet.getDouble("TotalHrs"));
-               // timesheetVTO.getVendorName()
                 timesheetList.add(timesheetVTO);
             }
-
         } catch (Exception ex) {
             System.out.println(ex.toString());
             ex.printStackTrace();
@@ -1521,8 +1459,7 @@ public class UsrTimesheetServiceImpl implements UsrTimesheetService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************UsrTimesheetServiceImpl :: getAllTimeSheetsSearch Method End*********************");
         return timesheetList;
     }
-
 }

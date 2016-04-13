@@ -26,11 +26,10 @@ import org.apache.struts2.interceptor.ServletRequestAware;
  * @author miracle
  */
 public class OnlineExamAction extends ActionSupport implements ServletRequestAware{
-     private String resultType;
+    private String resultType;
     private HttpServletRequest httpServletRequest;
     private HttpServletResponse httpServletResponse; 
     private String token;
-//    eid,reqid,consultantid,acctoken,validationkey,createdby,createddate,comments,totalquestions,qualifiedmarks,examstatus,severity
     private int consultantId;
     private String examStaus;
     private int totalQuestions;
@@ -73,23 +72,26 @@ public class OnlineExamAction extends ActionSupport implements ServletRequestAwa
     private int skillResult8;
     private int skillResult9;
     private int skillResult10;
-    //private String totalAnswers;
     private int totalResult;
+    
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : onlineExam() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String onlineExam() {
         resultType = LOGIN;
+        System.out.println("********************OnlineExamAction :: onlineExam Method Start*********************");
         try {
-//           
-                System.out.println("hear updation is completed....");
-//              
-               
-                System.out.println("Token-->"+getToken());
-                
+  
                 ServiceLocator.getOnlineExamService().getTokenInfo(this);
                 setToken(getToken());
-                System.out.println("consultId-->"+getConsultantId());
-                System.out.println("createdDate-->"+getCreatedDate());
-                System.out.println("examStaus-->"+getExamStaus());
-                System.out.println("examStaus-->"+getExamTopics());
                 setExamTopics(getExamTopics());
                 if(getIsValid().equals("VALID")){
                     if(!isIsExpired()){
@@ -117,21 +119,28 @@ public class OnlineExamAction extends ActionSupport implements ServletRequestAwa
             setResultMessage("<font color='red' size='2px'>"+ex.getMessage()+"</font>");
             resultType = ERROR;
         }
+        System.out.println("********************OnlineExamAction :: getEmployeeAddress Method End*********************");
         return resultType;
     }
     
-    
+      /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : doValidateInfo() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
      public String doValidateInfo() {
         resultType = LOGIN;
+        System.out.println("********************OnlineExamAction :: doValidateInfo Method Start*********************");
         try {
-            
-                
                 ServiceLocator.getOnlineExamService().getValidationInfo(this);
-               
-              
                 setValidationKey(getValidationKey());
                 setExamTopics(getExamTopics());
-                //System.out.println("examTopics--->in validation"+getExamTopics());
                 if(getValidationKey().equals(getActualValidationToken())){
                     if(getEmail().equals(getActualConsultantEmailId())){
                         setRequirementTitle(DataSourceDataProvider.getInstance().getReqNameById(getRequirementId()));
@@ -151,28 +160,31 @@ public class OnlineExamAction extends ActionSupport implements ServletRequestAwa
                     resultType = INPUT;
                 }
                 
-                
-                
-                 //System.out.println("examStaus-->"+DateUtility.getInstance().convertStringTimeStamp(getCreatedDate()));
-                
-               // int compare = DateUtility.getInstance().getCurrentMySqlDateTime().compareTo(DateUtility.getInstance().convertStringTimeStamp(getCreatedDate()));
-                 //   System.out.println("Compare-->"+compare)   ;
-                
-
-                
-           
+          
         } catch (Exception ex) {
          
             setResultMessage("<font color='red' size='2px'>"+ex.getMessage()+"</font>");
             resultType = ERROR;
         }
+        System.out.println("********************OnlineExamAction :: doValidateInfo Method End*********************");
         return resultType;
     }
+     
+      /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : doStartOnlineExam() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
    public String doStartOnlineExam() {
        
         resultType = LOGIN;
-
-        
+        System.out.println("********************OnlineExamAction :: doStartOnlineExam Method Start*********************");
         try {
 
             setRequirementId(getRequirementId());
@@ -186,26 +198,18 @@ public class OnlineExamAction extends ActionSupport implements ServletRequestAwa
             setOrgId(getOrgId());
             setConTechReviewId(getConTechReviewId());
             setExamId(getExamId());
-            System.out.println("getTopics-->"+getExamTopics()+"reqId"+getRequirementId()+"conId"+getConsultantId()+"examSeverity"+getExamSeverity()+"examType"+getDurationTime());
             HttpSession session = getHttpServletRequest().getSession(true);
             session.setAttribute(ApplicationConstants.ONLINE_EXAM_CONSULTANTID,getConsultantId());
             session.setAttribute(ApplicationConstants.ONLINE_EXAM_REQUIREMENTID,getRequirementId());
             Map skillMap=DataSourceDataProvider.getInstance().getSkillsMap(getConTechReviewId());
-            
-            
             Map skillsQuestionsMap=DataSourceDataProvider.getInstance().getSkillsQuestionsMap(getValidationKey());
             session.setAttribute(ApplicationConstants.ONLINE_SKILLS_MAP,skillMap);
             session.setAttribute(ApplicationConstants.ONLINE_EXAM_CONSULTANT_NAME,DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getConsultantId()));
-            //System.out.println(consultantId+"-->"+requirementId); 
             int examKey=ServiceLocator.getOnlineExamService().getOnlineExamKey(this);
             session.setAttribute(ApplicationConstants.ONLINE_EXAM_CURRENT_KEY,examKey);
             Map questionMap= ServiceLocator.getOnlineExamService().getQuestions(skillsQuestionsMap, getTotalQuestions(), getExamSeverity(),getExamType(),getOrgId());
-            //System.out.println("question map length"+questionMap.size());
             session.setAttribute(ApplicationConstants.ONLINE_EXAM_QUESTION_MAP,questionMap);
-            
-            
             String ecertStatus=DataSourceDataProvider.getInstance().getExamStatus(getConTechReviewId());
-           
             if(!"Created".equals(ecertStatus) ){
             setResultMessage("<font color='red' size='2px' >Invalid Token</font>");
             resultType = ERROR;
@@ -214,22 +218,31 @@ public class OnlineExamAction extends ActionSupport implements ServletRequestAwa
               
                 resultType = SUCCESS;
             }
-            
-
 
         } catch (Exception ex) {
            
             setResultMessage("<font color='red' size='2px' style='margin-left:65%'>"+ex.getMessage()+"</font>");
             resultType = ERROR;
         }
+        System.out.println("********************OnlineExamAction :: doStartOnlineExam Method End*********************");
         return resultType;
     }
+   
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : doSubmitOnlineExam() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String doSubmitOnlineExam() {
-       
         resultType = LOGIN;
-
+        System.out.println("********************OnlineExamAction :: doSubmitOnlineExam Method Start*********************");
         try {
-
          int    consultantId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ONLINE_EXAM_CONSULTANTID).toString());
         int  examKey = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ONLINE_EXAM_CURRENT_KEY).toString());
         int  reqId =Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ONLINE_EXAM_REQUIREMENTID).toString());
@@ -237,30 +250,21 @@ public class OnlineExamAction extends ActionSupport implements ServletRequestAwa
         setValidationKey(getValidationKey());
         setConTechReviewId(getConTechReviewId());
         setExamId(getExamId());
-        //int skillId=Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ONLINE_EXAM_REQUIREMENTID).toString());
         Map questionmap=(Map)httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ONLINE_EXAM_QUESTION_MAP);   
-        System.out.println("map Size is--->"+questionmap.size());
             Iterator iterator = questionmap.entrySet().iterator();
             int i=0,attemptedQuestionsResult=0;
             QuestionVTO questionVTO=null;
                 while (iterator.hasNext()) {
                         Map.Entry mapEntry = (Map.Entry) iterator.next();
-                       // System.out.println("The key is: " + mapEntry.getKey() + ",value is :" + mapEntry.getValue());
-                        
                         questionVTO = (QuestionVTO)questionmap.get(mapEntry.getKey());
-                        
                         int ExamQuestionId = questionVTO.getId();
-                        System.out.println("examKey-->"+examKey);
-                        System.out.println("ExamQuestionId-->"+ExamQuestionId);
                         attemptedQuestionsResult = DataSourceDataProvider.getInstance().isAttempted(ExamQuestionId,examKey);
-                        System.out.println("attemptedQuestionsResult--->"+attemptedQuestionsResult);
                         if(attemptedQuestionsResult == 0){
                             ServiceLocator.getOnlineExamService().insertAnswer(ExamQuestionId,0,0,0,0,0,0,consultantId,examKey,questionVTO.getSkillId(),reqId,"U",getExamId());
                             i++;
                         }
                         ServiceLocator.getOnlineExamService().updateExamStatus(getConTechReviewId(),"Submitted");
                         ServiceLocator.getOnlineExamService().updateConsultantStatusTechReview(getConTechReviewId(), "Exam Completed",getExamId(),getTotalQuestions());
-                        
                 }
                 ServiceLocator.getOnlineExamService().getExamResult(getConTechReviewId(),this);   
          if(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ONLINE_EXAM_CONSULTANTID)!=null){
@@ -282,19 +286,16 @@ public class OnlineExamAction extends ActionSupport implements ServletRequestAwa
           if(httpServletRequest.getSession(false) != null){
                 httpServletRequest.getSession(false).invalidate();
               }
-           
-                
                 resultType = SUCCESS;
-              
-
 
         } catch (Exception ex) {
-           // httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             setResultMessage("<font color='red' size='2px'>"+ex.getMessage()+"</font>");
             resultType = ERROR;
         }
+        System.out.println("********************OnlineExamAction :: doSubmitOnlineExam Method End*********************");
         return resultType;
     } 
+    
     public String getToken() {
         return token;
     }

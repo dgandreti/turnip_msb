@@ -65,7 +65,7 @@ public class DataUtility {
 
     public String listToStringConverter(String usrcategoryList) throws ServiceLocatorException {
         StringBuffer sb = new StringBuffer();
-        System.err.println("usrcatlist-->" + usrcategoryList);
+        //System.err.println("usrcatlist-->" + usrcategoryList);
         usrcategoryList = usrcategoryList.replace("[", "");
         usrcategoryList = usrcategoryList.replace("]", "");
 
@@ -74,7 +74,7 @@ public class DataUtility {
             sb.append(usrcategoryList);
         } else {
             String[] atrarray = usrcategoryList.split(",");
-            System.err.println("string array length-->" + atrarray.length);
+            //System.err.println("string array length-->" + atrarray.length);
             for (int i = 0; i <= atrarray.length; i++) {
                 sb.append(atrarray[i]);
                 sb.append(",");
@@ -93,11 +93,10 @@ public class DataUtility {
 
         String[] stringlist = rolesvalues.split(",");
 
-        System.err.println("string length" + stringlist.length);
+        //System.err.println("string length" + stringlist.length);
 
         for (int i = 0; i < stringlist.length; i++) {
             int rollist = Integer.parseInt(stringlist[i]);
-            // roleLit.add(stringlist[i]); 
             roleLit.add(rollist);
         }
 
@@ -127,10 +126,9 @@ public class DataUtility {
         String[] str1 = new String[length];
         String strAppend = "";
 
-        System.out.println("length is--->" + length);
+        //System.out.println("length is--->" + length);
         for (int count = 0; count < str.length; count++) {
             str1[count] = str[count].substring(0, 1).toUpperCase() + str[count].substring(1).toLowerCase();
-            //System.out.println("count is--->"+str1[count]);
         }
         for (int count = 0; count < str1.length; count++) {
             if (count + 1 == str1.length) {
@@ -139,16 +137,13 @@ public class DataUtility {
                 strAppend = strAppend + str1[count] + " ";
             }
         }
-        System.out.println("String appended--->" + strAppend);
-        //strAccName=strAppend.trim();
+        //System.out.println("String appended--->" + strAppend);
         return strAppend;
 
     }
 
     public String getMonthNameByNumber(int month) {
         String monthName = "";
-        //enum monthNames{"jan","feb",mar,apr,may,jun,jul,aug,sep,oct,nov,dec};
-
         if (month == 1) {
             monthName = "Jan";
         }
@@ -223,8 +218,6 @@ public class DataUtility {
      * *************************************
      */
     public static String encrypted(String texto) {
-        
-
         return new String(Base64.encodeBase64(texto.getBytes()));
     }
     /**
@@ -241,7 +234,6 @@ public class DataUtility {
      * *************************************
      */
     public static String decrypted(String texto) {
-        //System.out.println("encrypted String is"+texto);
         return new String(Base64.decodeBase64(texto.getBytes()));
     }
 }

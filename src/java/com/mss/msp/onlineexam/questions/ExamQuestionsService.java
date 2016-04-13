@@ -21,6 +21,6 @@ public interface ExamQuestionsService {
       public List doQuestionsSearchList(ExamQuestionsAction examQuestionsAction) throws ServiceLocatorException;
            public String getImagePath(ExamQuestionsAction examQuestionsAction) throws ServiceLocatorException;
 
-  
+   public List logSearch(ExamQuestionsAction aThis, int sessionusrPrimaryrole) throws ServiceLocatorException;
   
 }

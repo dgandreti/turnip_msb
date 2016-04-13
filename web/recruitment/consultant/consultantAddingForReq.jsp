@@ -13,7 +13,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Consultant Adding For Requirement Page</title>
+        <title>ServicesBay :: Consultant Adding For Requirement</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
@@ -57,7 +57,7 @@
         </style>
 
     </head>
-    <body style="overflow-x: hidden"">
+    <body style="overflow-x: hidden">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -80,7 +80,6 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <font color="#ffffff">Add Consultant For Job </font> 
-                                                    <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                     <s:url var="myUrl" action="getLoginUserRequirementList.action">
                                                         <s:param name="accountFlag">MyRequirements</s:param> 
                                                         <s:param name="orgid"><s:property value="%{orgid}"/></s:param> 

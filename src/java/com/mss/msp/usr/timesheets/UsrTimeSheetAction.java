@@ -6,23 +6,17 @@ package com.mss.msp.usr.timesheets;
 
 import com.mss.msp.util.ApplicationConstants;
 import com.mss.msp.util.DataSourceDataProvider;
-import com.mss.msp.util.Properties;
 import com.mss.msp.util.ServiceLocator;
 import com.opensymphony.xwork2.ActionSupport;
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
-import com.mss.msp.util.DateUtility;
 import com.mss.msp.util.MailManager;
 import java.util.Calendar;
-import java.util.Iterator;
 
 /**
  *
@@ -144,23 +138,28 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
     private String memberName;
     private String customerName;
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
+     *
+     * ForUse : doTimesheetSearch() method is used to
+     *
+     * *****************************************************************************
+     */
     public String doTimesheetSearch() {
-
+        System.out.println("********************UsrTimeSheetAction :: doTimesheetSearch Method Start*********************");
         resultType = LOGIN;
-        // if(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.SESSION_USER_ID) != null){
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-            // userRoleId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.SESSION_ROLE_ID).toString());
             try {
                 setUserId(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //System.out.println("userId---->" + getUserId());
                 int userId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                // setReportingPerson(DataSourceDataProvider.getInstance().getReportingPersonByUserId(userId));
-                System.out.println("getreporting person:::" + getReportingPerson());
+                setReportingPerson(DataSourceDataProvider.getInstance().getReportingPersonsEmail(userId));
                 Calendar now = Calendar.getInstance();
                 now.add(Calendar.MONTH, 1);
                 String monthString = "";
                 String dateString = "";
-
                 int month = now.get(Calendar.MONTH) + 1;
                 int date = now.get(Calendar.DATE);
                 if (date < 10) {
@@ -174,7 +173,6 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                     monthString = "" + (now.get(Calendar.MONTH) + 1);
                 }
                 setEndDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));
-
                 //substract months from current date using Calendar.add method
                 now = Calendar.getInstance();
                 now.add(Calendar.MONTH, -1);
@@ -197,14 +195,8 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 }
 
                 setStartDate(startMonthString + "-" + startDateString + "-" + now.get(Calendar.YEAR));
-
-
                 List TimesheetListDetails = ServiceLocator.getUserTimesheetService().getTimesheetListDetails(this);
-                System.out.println("reporting person---->" + getReportingPerson());
-                System.out.println("Timesheet list ------ " + TimesheetListDetails.size());
-                System.out.println("Timesheet ------ " + TimesheetListDetails);
                 if (TimesheetListDetails.size() > 0) {
-
                     httpServletRequest.getSession(false).setAttribute("timesheetsData", TimesheetListDetails);
                     resultType = SUCCESS;
                 } else {
@@ -213,74 +205,64 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 }
                 resultType = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
         }//END-Authorization Checking
         //Close Session Checking
-
+        System.out.println("********************UsrTimeSheetAction :: doTimesheetSearch Method End*********************");
         return resultType;
     }
 
     /**
+     * *****************************************************************************
+     * Date : 07/08/2015
      *
-     * This method is used to search the Timesheets
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
      *
-     * @return String
+     * ForUse : doSearch() method is used to
+     *
+     * *****************************************************************************
      */
     public String doSearch() {
-
+        System.out.println("********************UsrTimeSheetAction :: doSearch Method Start*********************");
         resultType = LOGIN;
-        // if(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.SESSION_USER_ID) != null){
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-            // userRoleId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.SESSION_ROLE_ID).toString());
             try {
                 setUserId(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //System.out.println("userId---->" + getUserId());
                 int userId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//                setReportingPerson(DataSourceDataProvider.getInstance().getReportingPersonByUserId(userId));
-                //System.out.println("getreporting person:::"+getReportingPerson());
+                setReportingPerson(DataSourceDataProvider.getInstance().getReportingPersonsEmail(userId));
                 List TimesheetListDetails = ServiceLocator.getUserTimesheetService().getTimesheetList(this);
-                //System.out.println("reporting person---->" + getReportingPerson());
-                //System.out.println("Timesheet list ------ " + TimesheetListDetails.size());
-                //System.out.println("Timesheet ------ " + TimesheetListDetails);
-                //if (TimesheetListDetails.size() > 0) {
-
                 httpServletRequest.getSession(false).setAttribute("timesheetsData", TimesheetListDetails);
                 resultType = SUCCESS;
-                //} else {
-                //  httpServletRequest.getSession(false).setAttribute("timesheetsData", null);
-                //resultType = SUCCESS;
-                // }
-                // resultType = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
         }//END-Authorization Checking
         //Close Session Checking
-
+        System.out.println("********************UsrTimeSheetAction :: doSearch Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
+     *
+     * ForUse : deleteTimeSheet() method is used to
+     *
+     * *****************************************************************************
+     */
     public String deleteTimeSheet() {
+        System.out.println("********************UsrTimeSheetAction :: deleteTimeSheet Method Start*********************");
         resultType = LOGIN;
-        // System.out.println("in delete  action");
-        //if(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.SESSION_USER_ID) != null){
         if ((httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null)) {
             setUserId(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-            //System.out.println("getuserid" + getUserId() + "gettimesheetId" + getTimesheetid());
-            //resultType = "accessFailed";
-            // if(AuthorizationManager.getInstance().isAuthorizedUser("DELETE_TIMESHEET",userRoleId)){
             try {
-                //System.out.println("in action");
                 int deletedRows = ServiceLocator.getUserTimesheetService().deleteTimeSheet(this);
-                //System.out.println("in action after");
-
                 if (deletedRows > 1) {
-
                     resultType = SUCCESS;
                     resultMessage = "<font color=\"green\" size=\"1.5\">TimeSheet has been successfully Deleted!</font>";
                 } else {
@@ -288,59 +270,51 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                     resultMessage = "<font color=\"red\" size=\"1.5\">Sorry! Please Try again!</font>";
                 }
                 List TimesheetListDetails = ServiceLocator.getUserTimesheetService().getAllTimeSheetList(this);
-                // System.out.println("list=========>>>>"+TimesheetListDetails);
                 httpServletRequest.setAttribute(ApplicationConstants.RESULT_MSG, resultMessage);
-
-                // int userId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                ////   setReportingPerson(DataSourceDataProvider.getInstance().getReportingPersonByUserId(userId));
-                //System.out.println("getreporting person:::"+getReportingPerson());
-                //  List TimesheetListDetails = ServiceLocator.getUserTimesheetService().getTimesheetListDetails(httpServletRequest, this);
-                //System.out.println("reporting person---->" + getReportingPerson());
-                //   System.out.println("Timesheet list ------> " + TimesheetListDetails.size());
-                //System.out.println("Timesheet ------ " + TimesheetListDetails);
-                //if (TimesheetListDetails.size() > 0) {
-
                 httpServletRequest.getSession(false).setAttribute("timesheetsData", TimesheetListDetails);
                 resultType = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
             //}//END-Authorization Checking
         }//Close Session Checking
+        System.out.println("********************UsrTimeSheetAction :: deleteTimeSheet Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Mani Kanta Eeralla<meeralla@miraclesoft.com>
+     *
+     * ForUse : getAddTimeSheetAdd() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getAddTimeSheetAdd() {
+        System.out.println("********************UsrTimeSheetAction :: getAddTimeSheetAdd Method Start*********************");
         resultType = LOGIN;
         /* for checking Timesheet exists */
-        String isTimeSheetExist = "";
-        String timeSheetMessage = "";
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int userId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setEmpName(dataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId()));
-
-                System.out.println("prevois date" + getPreviousDate());
                 if (getPreviousDate() != null) {
                     String stortingDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(getPreviousDate());
                     String splitDate[] = stortingDate.split("/");
                     int mon = Integer.parseInt(splitDate[0]);
                     int day = Integer.parseInt(splitDate[1]);
                     int year = Integer.parseInt(splitDate[2]);
-
                     /* for setting the date for the spliting filed */
                     Calendar previouseCalender = Calendar.getInstance();
-
                     previouseCalender.set(Calendar.YEAR, year);
                     previouseCalender.set(Calendar.MONTH, mon - 1); // becoz the index is starting 0
                     previouseCalender.set(Calendar.DAY_OF_MONTH, day);
-
                     List prevoiusWeekDaysList = ServiceLocator.getUserTimesheetService().getweekStartAndEndDays(previouseCalender);
                     TimesheetVTO timeSheetVTO = ServiceLocator.getUserTimesheetService().getWeekDaysBean(prevoiusWeekDaysList);
-
                     setTimeSheetVTO(timeSheetVTO);
                 } else {
                     Calendar cal = Calendar.getInstance();
@@ -349,10 +323,7 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                      * {@Link com.mss.mirage.employee.timesheets.TimeSheetService#getweekStartAndEndDays(cal)}
                      */
                     List currentWeekDaysList = ServiceLocator.getUserTimesheetService().getweekStartAndEndDays(cal);
-//                System.out.println("previousWeekDaysList" + currentWeekDaysList.get(0));
-//                System.out.println("previousWeekDaysList" + currentWeekDaysList.get(1));
                     TimesheetVTO timeSheetVTO = ServiceLocator.getUserTimesheetService().getWeekDaysBean(currentWeekDaysList);
-
                     setTimeSheetVTO(timeSheetVTO);
                 }
 
@@ -362,62 +333,70 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsrTimeSheetAction :: getAddTimeSheetAdd Method End*********************");
         return resultType;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * ForUse : getTimeSheetBeforeAdd() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getTimeSheetBeforeAdd() {
+        System.out.println("********************UsrTimeSheetAction :: getTimeSheetBeforeAdd Method Start*********************");
         resultMessage = LOGIN;
-        String isTimeSheetExist = "";
-        System.out.println("#####Timesheet Action########");
         try {
-
-
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int userId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setEmpName(dataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId()));
-
                 int usrid = getUsr_id();
-                System.out.println("--------" + usrid + "---------------------------" + getTimesheetFlag());
                 if ("Team".equals(getTimesheetFlag()) || "Operations".equals(getTimesheetFlag())) {
                     projectDetails = dataSourceDataProvider.getInstance().getProjectMap(usrid);
-                    System.out.println("in if bcoxz flag value is TEAM");
                 } else {
                     projectDetails = dataSourceDataProvider.getInstance().getProjectMap(getUserSessionId());
-                    System.out.println("in if bcoxz flag value is MY");
                 }
-
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(projectDetails);
-
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
-
         }
+        System.out.println("********************UsrTimeSheetAction :: getTimeSheetBeforeAdd Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * ForUse : addTimesheet() method is used to
+     *
+     * *****************************************************************************
+     */
     public String addTimesheet() {
+        System.out.println("********************UsrTimeSheetAction :: addTimesheet Method Start*********************");
         resultType = LOGIN;
-        System.out.println("#####TimesheetAdd Action########");
         try {
             MailManager mailManager = new MailManager();
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                //   setReportsTo(dataSourceDataProvider.getInstance().getReportingPersonIDByUserId(getUserSessionId()));
-
                 int timesheetAdd = ServiceLocator.getUserTimesheetService().AddTimesheet(this);
-                System.out.println("timesheetAdd is" + timesheetAdd);
                 if (timesheetAdd > 0) {
                     if (getTempVar() == 1) {
-                        System.out.println("timesheet submitteing ");
                         String reportiingPersonsEmail = dataSourceDataProvider.getInstance().getReportingPersonsEmail(getUserSessionId());
                         String empName = DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId());
                         mailManager.timesheetAddEmail(this, empName, reportiingPersonsEmail);
@@ -434,27 +413,33 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UsrTimeSheetAction :: addTimesheet Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doTeamTimesheetSearch() method is used to
+     *
+     * *****************************************************************************
+     */
     public String doTeamTimesheetSearch() {
-
+        System.out.println("********************UsrTimeSheetAction :: doTeamTimesheetSearch Method Start*********************");
         resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserId(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                System.out.println("userid--->" + userid);
                 Map map = DataSourceDataProvider.getInstance().getMyTeamMembers(userid);
-                //String teamMembers=DataSourceDataProvider.getInstance().getTeamMembersListString(map);
-                System.out.println("timesheet Start date--->" + getStartDate());
-                System.out.println("Map details-->" + map);
                 setTeamMembersList(map);
                 Calendar now = Calendar.getInstance();
                 now.add(Calendar.MONTH, 1);
                 String monthString = "";
                 String dateString = "";
-
                 int month = now.get(Calendar.MONTH) + 1;
                 int date = now.get(Calendar.DATE);
                 if (date < 10) {
@@ -468,7 +453,6 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                     monthString = "" + (now.get(Calendar.MONTH) + 1);
                 }
                 setEndDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));
-
                 //substract months from current date using Calendar.add method
                 now = Calendar.getInstance();
                 now.add(Calendar.MONTH, -1);
@@ -503,39 +487,37 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 }
                 resultType = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
         }//END-Authorization Checking
         //Close Session Checking
-
+        System.out.println("********************UsrTimeSheetAction :: doTeamTimesheetSearch Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Kiran Arogya<adoddi@miraclesoft.com>
+     *
+     * ForUse : doTeamTMSearch() method is used to
+     *
+     * *****************************************************************************
+     */
     public String doTeamTMSearch() {
+        System.out.println("********************UsrTimeSheetAction :: doTeamTMSearch Method Start*********************");
         resultType = LOGIN;
-        // if(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.SESSION_USER_ID) != null){
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-            // userRoleId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.SESSION_ROLE_ID).toString());
             try {
                 setUserId(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 Map map = DataSourceDataProvider.getInstance().getMyTeamMembers(userid);
-                //System.out.println("Map details-->"+map);
                 setTeamMembersList(map);
 
-                System.out.println("status---->" + getTmstatus());
-                System.out.println("Member---->" + getTmmember());
-                //int userId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //setReportingPerson(DataSourceDataProvider.getInstance().getReportingPersonByUserId(userId));
-                //System.out.println("getreporting person:::"+getReportingPerson());
                 List teamTimesheetListDetails = ServiceLocator.getUserTimesheetService().getTeamTimeSheetList(this);
-                //System.out.println("reporting person---->" + getReportingPerson());
-                System.out.println("Timesheet list ------ " + teamTimesheetListDetails.size());
-                System.out.println("Timesheet ------ " + teamTimesheetListDetails);
                 if (teamTimesheetListDetails.size() > 0) {
-
                     httpServletRequest.getSession(false).setAttribute("teamTimesheetsData", teamTimesheetListDetails);
                     resultType = SUCCESS;
                 } else {
@@ -544,49 +526,66 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 }
                 resultType = SUCCESS;
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
         }//END-Authorization Checking
         //Close Session Checking
-
+        System.out.println("********************UsrTimeSheetAction :: doTeamTMSearch Method Start*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Divya Gandreti<dgandreti@miraclesoft.com>
+     *
+     * ForUse : getUserTimeSheets() method is used to getUserTimeSheet on edit
+     * page.
+     *
+     * *****************************************************************************
+     */
     public String getUserTimeSheets() {
+        System.out.println("********************UsrTimeSheetAction :: getUserTimeSheets Method Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                System.out.println("in geting details of timesheets");
-                //setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTimeSheetVTO(ServiceLocator.getUserTimesheetService().getUserTimeSheet(this));
                 int usrid = timeSheetVTO.getUsr_id();
-                System.out.println("ddddddddddddddddddd" + usrid);
                 setEmpName(dataSourceDataProvider.getInstance().getFnameandLnamebyUserid(usrid));
-                System.out.println("chec" + timeSheetVTO.getTimeSheetApprovedDate());
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
                 resultMessage = ERROR;
             }
         }// Session validator if END
+        System.out.println("********************UsrTimeSheetAction :: getUserTimeSheets Method End*********************");
         return resultMessage;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Divya Gandreti<dgandreti@miraclesoft.com>
+     *
+     * ForUse : editTimeSheets() used to Update the timesheet from edit page
+     *
+     *
+     * *****************************************************************************
+     */
     public String editTimeSheets() {
+        System.out.println("********************UsrTimeSheetAction :: editTimeSheets Method Start*********************");
         resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 MailManager mailManager = new MailManager();
-                System.out.println("in edit timesheets");
-                System.out.println("project id" + getTempVar());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int editTimeSheet = ServiceLocator.getUserTimesheetService().editTimeSheet(this);
                 if (editTimeSheet > 0) {
                     if (getTempVar() == 2) {
-                        // System.out.println("timesheet submitteing ");
                         String reportingPersonsEmail = dataSourceDataProvider.getInstance().getReportingPersonsEmail(getUserSessionId());
                         String empName = DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId());
                         mailManager.timesheetAddEmail(this, empName, reportingPersonsEmail);
@@ -602,10 +601,23 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 resultType = ERROR;
             }
         }
+        System.out.println("********************UsrTimeSheetAction :: editTimeSheets Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Divya Gandreti<dgandreti@miraclesoft.com>
+     *
+     * ForUse : newapprove() used to Update the approve/reject status of
+     * timesheet.
+     *
+     * *****************************************************************************
+     */
     public String newapprove() {
+        System.out.println("********************UsrTimeSheetAction :: newapprove Method Start*********************");
         resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
@@ -614,16 +626,11 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 int isUpdated = ServiceLocator.getUserTimesheetService().approveRejectTimeSheet(this);
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 Map map = DataSourceDataProvider.getInstance().getMyTeamMembers(userid);
-                System.out.println("Map details-->" + map);
                 setTeamMembersList(map);
-                System.out.println("approve" + isUpdated);
                 if (isUpdated > 0) {
                     resultMessage = "<font color=\"green\" size=\"2.5\">The TimeSheet Updated Successfully for WeekStartDate: " + getTimeSheetStartDate() + " And WeekEndDate:" + getTimeSheetEndDate() + "</font>";
                     String empName = DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUsr_id());
-                    //System.out.println("timeSheetStartDate"+getTimeSheetStartDate()+"-->timeSheetEndDate"+getTimeSheetEndDate()+"==empName=="+empName);
-
                     mailManager.timesheetApproveEmail(this, empName);
-
                 } else {
                     resultMessage = "<font color=\"red\" size=\"2.5\">Error occured while updating timesheet for WeekStartDate: " + getTimeSheetStartDate() + " And WeekEndDate:" + getTimeSheetEndDate() + "</font>";
                 }
@@ -633,24 +640,34 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 resultType = ERROR;
             }
         }
+        System.out.println("********************UsrTimeSheetAction :: newapprove Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 07/08/2015
+     *
+     * Author : Jagan Chukkala<jchukkala@miraclesoft.com>
+     *
+     * ForUse : getTimeSheetCheck() method is used to check whether the
+     * timesheet is exist for that given date or not.
+     *
+     * *****************************************************************************
+     */
     public String getTimeSheetCheck() {
+        System.out.println("********************UsrTimeSheetAction :: getTimeSheetCheck Method Start*********************");
         resultMessage = LOGIN;
         /* for checking Timesheet exists */
         String isTimeSheetExist = "";
         String isPreviousTimeSheetExist = "";
-        String timeSheetMessage = "";
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int userId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setEmpName(dataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId()));
                 /*added by kiran*/
-                System.out.println("weekRange is---->" + getPreviousDate());
                 if (getPreviousDate() != null) {
-                    System.out.println("hello getWeekRanges" + getPreviousDate());
                     String stortingDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(getPreviousDate());
                     String splitDate[] = stortingDate.split("/");
                     int mon = Integer.parseInt(splitDate[0]);
@@ -666,7 +683,6 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
 
                     List prevoiusWeekDaysList = ServiceLocator.getUserTimesheetService().getweekStartAndEndDays(previouseCalender);
                     isPreviousTimeSheetExist = ServiceLocator.getUserTimesheetService().checkTimeSheetExists(prevoiusWeekDaysList, userId);
-                    System.out.println("isTimeSheetExist::::::::previous" + isPreviousTimeSheetExist);
                     httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                     httpServletResponse.setHeader("Pragma", "no-cache");
                     httpServletResponse.setDateHeader("Expires", 0);
@@ -681,15 +697,11 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                      * {@Link com.mss.mirage.employee.timesheets.TimeSheetService#getweekStartAndEndDays(cal)}
                      */
                     List currentWeekDaysList = ServiceLocator.getUserTimesheetService().getweekStartAndEndDays(cal);
-                    System.out.println("previousWeekDaysList" + currentWeekDaysList.get(0));
-                    System.out.println("previousWeekDaysList" + currentWeekDaysList.get(1));
-
                     /**
                      * To check wethere the timesheet exists or not
                      * {@Link com.mss.mirage.employee.timesheets.TimeSheetService#checkTimeSheetExists(List,String)}
                      */
                     isTimeSheetExist = ServiceLocator.getUserTimesheetService().checkTimeSheetExists(currentWeekDaysList, userId);
-                    System.out.println("isTimeSheetExist::::::::" + isTimeSheetExist);
                     httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                     httpServletResponse.setHeader("Pragma", "no-cache");
                     httpServletResponse.setDateHeader("Expires", 0);
@@ -697,26 +709,27 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                     httpServletResponse.setCharacterEncoding("UTF-8");
                     httpServletResponse.getWriter().write(isTimeSheetExist);
                 }
-
-//                if (isTimeSheetExist.equals("exist")) {
-//                   // System.out.println("isTimeSheetExist::::::::The TimeSheet already Filled");
-//                    //timeSheetMessage = "<font color=\"red\" size=\"2.5\">The TimeSheet already filled for the current week </font>";
-//                    /*httpServletResponse.setContentType("text");
-//                    httpServletResponse.setCharacterEncoding("UTF-8");
-//                    httpServletResponse.getWriter().write(isTimeSheetExist);*/
-//                   // httpServletRequest.getSession(false).setAttribute("TMResultmessage", timeSheetMessage);
-//                    //resultMessage = SUCCESS;
-//                }/* added by kiran End */
-
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-            //resultType = ERROR;
+            ex.printStackTrace();
         }
+        System.out.println("********************UsrTimeSheetAction :: getTimeSheetCheck Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : Divya Gandreti <dgandreti@miraclesoft.com>
+     *
+     * ForUse : getAllTimeSheets() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getAllTimeSheets() {
+        System.out.println("********************UsrTimeSheetAction :: getAllTimeSheets Method Start*********************");
         resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
@@ -766,7 +779,6 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
 
                 List teamTimesheetListDetails = ServiceLocator.getUserTimesheetService().getAllTimeSheets(this);
                 if (teamTimesheetListDetails.size() > 0) {
-
                     httpServletRequest.getSession(false).setAttribute("teamTimesheetsData", teamTimesheetListDetails);
                     resultType = SUCCESS;
                 } else {
@@ -780,20 +792,29 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 resultType = ERROR;
             }
         }
+        System.out.println("********************UsrTimeSheetAction :: getAllTimeSheets Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : Divya Gandreti <dgandreti@miraclesoft.com>
+     *
+     * ForUse : getAllTimeSheetsSearch() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getAllTimeSheetsSearch() {
+        System.out.println("********************UsrTimeSheetAction :: getAllTimeSheetsSearch Method Start*********************");
         resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                System.out.println("Member---->" + getTmmember());
                 setUserId(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setPrimaryRole(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 List teamTimesheetListDetails = ServiceLocator.getUserTimesheetService().getAllTimeSheetsSearch(this);
-                System.out.println("Timesheet list ------ " + teamTimesheetListDetails.size());
-                System.out.println("Timesheet ------ " + teamTimesheetListDetails);
                 if (teamTimesheetListDetails.size() > 0) {
                     httpServletRequest.getSession(false).setAttribute("teamTimesheetsData", teamTimesheetListDetails);
                     resultType = SUCCESS;
@@ -808,6 +829,7 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 resultType = ERROR;
             }
         }
+        System.out.println("********************UsrTimeSheetAction :: getAllTimeSheetsSearch Method End*********************");
         return resultType;
     }
 

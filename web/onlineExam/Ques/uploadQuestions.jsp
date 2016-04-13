@@ -20,7 +20,7 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Change password Page</title>
+        <title>ServicesBay :: Upload Questions</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -99,7 +99,7 @@
                                         <s:form action="/users/general/getSkillDetails">
                                           
                                             <div class="col-sm-4">  
-                                                <s:submit  cssClass="cssbutton req_margin"  type="submit" value="UploadQuestions" cssStyle="margin-top:9vw;margin-right:34vw;"/>
+                                                <s:submit id="uploadQuestionsButton"  cssClass="cssbutton req_margin"  type="submit" value="UploadQuestions" cssStyle="margin-top:9vw;margin-right:34vw;"/>
                                                
                                             </div>
                                         </s:form>

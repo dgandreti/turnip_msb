@@ -34,6 +34,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -62,14 +63,24 @@ public class SecurityServiceProvider {
      }
      return _instance;
      }*/
+    private static Logger log = Logger.getLogger(SecurityServiceProvider.class);
     private static final String ALPHA_CAPS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String ALPHA = "abcdefghijklmnopqrstuvwxyz";
     private static final String NUM = "0123456789";
     private static final String SPL_CHARS = "!@#$%^&*_=+-/";
 
+    /**
+     * *****************************************************************************
+     *
+     * Author : 
+     *
+     * Method : generateRandamSecurityKey() is for generating Random Security Key
+     *
+     * *****************************************************************************
+     */
     public static String generateRandamSecurityKey(int minLen, int maxLen, int noOfCAPSAlpha,
             int noOfDigits, int noOfSplChars) {
-
+        log.info("************Entered into SecurityServiceProvider :: generateRandamSecurityKey*********");
         if (minLen > maxLen) {
             throw new IllegalArgumentException("Min. Length > Max. Length!");
         }
@@ -97,6 +108,7 @@ public class SecurityServiceProvider {
                 pswd[i] = ALPHA.charAt(rnd.nextInt(ALPHA.length()));
             }
         }
+        log.info("************End of SecurityServiceProvider :: generateRandamSecurityKey*********");
         return pswd.toString();
     }
 
@@ -106,8 +118,17 @@ public class SecurityServiceProvider {
         return index;
     }
 
+    /**
+     * *****************************************************************************
+     *
+     * Author : 
+     *
+     * Method : getEncrypt() is for getting encrypted password
+     *
+     * *****************************************************************************
+     */
     public static String getEncrypt(String plainText, String salt) {
-
+        log.info("************Entered into SecurityServiceProvider :: getEncrypt*********");
         //String salt = "Random";
         MessageDigest messageDigest = null;
         try {
@@ -118,31 +139,43 @@ public class SecurityServiceProvider {
         }
         String encryptedPassword = (new BigInteger(messageDigest.digest())).toString(16);
         //System.out.println("Encrypted Password: " + encryptedPassword);
+        log.info("************End of SecurityServiceProvider :: getEncrypt*********");
         return encryptedPassword;
 
-    } 
+    }
 
+    /**
+     * *****************************************************************************
+     *
+     * Author : 
+     *
+     * Method : doRedirect() is for getting home action for user
+     *
+     * *****************************************************************************
+     */
     public static String doRedirect(int orgId, String typeofuser, int primaryrole) throws ServiceLocatorException, SQLException {
+        log.info("************Entered into SecurityServiceProvider :: doRedirect*********");
         String actionName = "";
         String actionStatus = "";
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         connection = ConnectionProvider.getInstance().getConnection();
-      //  String queryString = "SELECT action_name FROM home_redirect_action where org_id=" + orgId + " and type_of_user='" + typeofuser + "' and primaryrole=" + primaryrole + " and status='Active'";
-         String queryString = "SELECT action_name, status FROM home_redirect_action where org_id=" + orgId + " and type_of_user='" + typeofuser + "' and primaryrole=" + primaryrole ;
-        System.out.println("queryString-->" + queryString);
+        //  String queryString = "SELECT action_name FROM home_redirect_action where org_id=" + orgId + " and type_of_user='" + typeofuser + "' and primaryrole=" + primaryrole + " and status='Active'";
+        String queryString = "SELECT action_name, status FROM home_redirect_action where org_id=" + orgId + " and type_of_user='" + typeofuser + "' and primaryrole=" + primaryrole;
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
                 actionName = resultSet.getString("action_name");
-                 actionStatus=resultSet.getString("status");
+                actionStatus = resultSet.getString("status");
             }
-            if(actionStatus.equals("In-Active")){
-                 return "../general/logout.action";
+            if (actionStatus.equals("In-Active")) {
+                return "../general/logout.action";
             }
-            System.out.println("actionName-->"+actionName);
+            log.info("************ SecurityServiceProvider :: doRedirect***Query******"+queryString);
+            log.info("************ SecurityServiceProvider :: doRedirect*****Action Name****"+actionName);
+            log.info("************End of SecurityServiceProvider :: doRedirect*********");
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -180,7 +213,7 @@ public class SecurityServiceProvider {
         boolean check = false;
         connection = ConnectionProvider.getInstance().getConnection();
         String queryString = "select role_id from site_access_rules where org_id=" + orgid + " and access_flag=1 and access_name like '" + access_name + "'";
-       // System.out.println("queryString-->" + queryString);
+        // System.out.println("queryString-->" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -189,9 +222,9 @@ public class SecurityServiceProvider {
                 if (resultSet.next()) {
                     if (roleMap.get(i).equals(resultSet.getString("role_id"))) {
                         check = true;
-                          break;
+                        break;
                     }
-                  
+
                 }
 
             }
@@ -217,17 +250,17 @@ public class SecurityServiceProvider {
         }
         return check;
     }
-/*    public static void main(String[] args) {
-        int noOfCAPSAlpha = 4;
-        int noOfDigits = 4;
-        int noOfSplChars = 4;
-        int minLen = 30;
-        int maxLen = 50;
+    /*    public static void main(String[] args) {
+     int noOfCAPSAlpha = 4;
+     int noOfDigits = 4;
+     int noOfSplChars = 4;
+     int minLen = 30;
+     int maxLen = 50;
  
        
-            String pswd = generateRandamSecurityKey(minLen, maxLen,
-                    noOfCAPSAlpha, noOfDigits, noOfSplChars);
-            System.out.println("Len = " + pswd.length() + ", " + new String(pswd));
+     String pswd = generateRandamSecurityKey(minLen, maxLen,
+     noOfCAPSAlpha, noOfDigits, noOfSplChars);
+     System.out.println("Len = " + pswd.length() + ", " + new String(pswd));
         
-    }*/
+     }*/
 }

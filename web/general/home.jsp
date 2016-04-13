@@ -82,7 +82,7 @@
             
                 var jssor_1_options = {
                     $AutoPlay: true,
-                    $SlideDuration: 2000,
+                    $SlideDuration: 3000,
                     $ArrowNavigatorOptions: {
                         $Class: $JssorArrowNavigator$
                     },
@@ -149,15 +149,18 @@
                                             <img data-u="thumb" src="<%=request.getContextPath()%>/includes/js/homeslider/img/slide2thumb1.png" />
                                         </div>
                                         <div data-p="172.50" style="display: none;">
-                                            <img src="<%=request.getContextPath()%>/includes/js/homeslider/img/multideviceslide1.png"/>
+                                            
+                                           <%-- <img src="<%=request.getContextPath()%>/includes/js/homeslider/img/responsive4.gif" /> --%>
+                                            <img src="<%=request.getContextPath()%>/includes/js/homeslider/img/TT.gif" style="margin-left:10%;margin-top:7%"/>
+                                            <img src="<%=request.getContextPath()%>/includes/js/homeslider/img/text.png" style="margin-left: 5%;margin-top:3%"/> 
                                             <img data-u="thumb" src="<%=request.getContextPath()%>/includes/js/homeslider/img/slide-Copy.png" />
                                         </div>
                                         <div data-p="172.50" style="display: none;">
-                                            <img src="<%=request.getContextPath()%>/includes/js/homeslider/img/customerslide2-min.png" style="margin-top:4%;margin-left: 2%"/>
+                                            <img src="<%=request.getContextPath()%>/includes/js/homeslider/img/customerView1.png"/>
                                             <img data-u="thumb" src="<%=request.getContextPath()%>/includes/js/homeslider/img/slide4_thumb.png" />
                                         </div>
                                         <div data-p="172.50" style="display: none;">
-                                            <img src="<%=request.getContextPath()%>/includes/js/homeslider/img/vendorslide1-min.png" style="margin-top:4%"/>
+                                            <img src="<%=request.getContextPath()%>/includes/js/homeslider/img/vendorView1.png"/>
                                             <img data-u="thumb" src="<%=request.getContextPath()%>/includes/js/homeslider/img/slide5_thumb.png" />
                                         </div>
 
@@ -205,18 +208,11 @@
                                                         <input type="email"  class="frgt_pwd" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Valid Email Address" id="forgotEmailId" name="forgotEnailId" required= "required"/></div>
                                                     &nbsp;<input style="margin:4px" type="button" class="passwordButton" value="Send E-mail" name="FPass" id="FPass" onclick="return forgotPassword();"/>
 
-
-                                                    <%--<button onclick="forgotPassword();">ResetPassword</button>--%>
-
-                                                    <%-- <div id="Loading" style="width: auto;display: none;"/> --%>
-
                                                 </s:form>
                                             </center>
                                             <br><br>
                                         </div>
                                     </div> 
-
-                                    <!--<button class="slide_close btn btn-default">Close</button>-->
                                 </div>
                                 <!-- Start Special Centered Box -->
                                 <div class="col-sm-4 col-sm-offset-1" id="col-sm-4">
@@ -604,27 +600,13 @@
                     document.getElementById('resultMessage').innerHTML = "";
                 });
             });
-            /*$("[data-toggle]").click(function() {
-		  
-                 var toggle_el = $(this).data("toggle");
-                 var duration = 500;
-                  var effect = 'slide';
-                  var options = { direction: 'right' };
-                  $("#menu_section").toggle();
-                  $(toggle_el).toggle();
-                  $('#menu_section_details').toggle();
-             });*/
+            
         </script>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/home/jquery.flexslider.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/home/custom.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
-
-
-
-
-
 
     </body>
 </html>

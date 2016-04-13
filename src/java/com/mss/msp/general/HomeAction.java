@@ -86,6 +86,7 @@ public class HomeAction extends ActionSupport implements ServletRequestAware,Ser
      *depending on the role.
      */
     public String execute() throws Exception {
+         System.out.println("********************HomeAction :: execute Action Start*********************");
         try{
             resultType = LOGIN;
             if(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null){
@@ -104,13 +105,13 @@ public class HomeAction extends ActionSupport implements ServletRequestAware,Ser
                 }else{
                     setDefaultAction(def_action);
                 }
-			System.err.println("ome redirectaction-->"+def_action);		
 				
-                
+				
+                 System.out.println("********************HomeAction :: execute Action End*********************");
                 resultType = SUCCESS;
             }//Closing Session checking
         } catch(Exception ex){
-            //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+          
             ex.printStackTrace();
             httpServletRequest.getSession(false).setAttribute("errorMessage",ex.toString());
             resultType =  ERROR;

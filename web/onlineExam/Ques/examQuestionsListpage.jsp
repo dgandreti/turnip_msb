@@ -11,7 +11,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Questions Search Page</title>
+        <title>ServicesBay :: Questions&nbsp;Search&nbsp;Page</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
@@ -19,18 +19,17 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
+      
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
-        <%--        <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>--%>
+    
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/CountriesAjax.js"/>"></script>
-        <%-- <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>--%>
+    
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script> 
         <script type="text/JavaScript" src="<s:url value="/includes/js/onlineexam/onlineexamAjax.js"/>"></script>
 
@@ -40,7 +39,7 @@
         <script type="text/javascript">
             var myCalendar;
             function sortables_init() {
-                // Find all tables with class sortable and make them sortable
+              
                 if (!document.getElementsByTagName) return;
                 tbls = document.getElementById("QuestionsList");
                 sortableTableRows = document.getElementById("QuestionsList").rows;
@@ -56,7 +55,7 @@
         </script>
         <script>
             $(document).ready(function(){
-//                alert("acc")
+
               
                 document.getElementById("loadingQuestionsSearch").style.display="none";
                 
@@ -118,7 +117,7 @@
                                             <div class="backgroundcolor" style="margin-bottom: -1vw;">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                     
                                                         <font color="#ffffff">Questions Search</font>
                                                         <i id="updownArrow" onclick="toggleContent('questionssearch')" class="fa fa-minus"></i> 
                                                     </h4>
@@ -182,7 +181,7 @@
                                                                        
                                                                             <label class="" style="color:#56a5ec;"></label> 
 
-                                                                            <s:submit type="button" cssClass="add_searchButton form-control pull-right" value="Search" style="margin:5px 0px;width:100px" tabindex="9" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                            <s:submit id="searchQuestionsForm" type="button" cssClass="add_searchButton form-control pull-right" value="Search" style="margin:5px 0px;width:100px" tabindex="9" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                                        
                                                                        
                                                                     </div> 
@@ -192,8 +191,8 @@
                                                                         
                                                                                 <label class="" style="color:#56a5ec;"></label> 
                                                                                 
-                                                                            <%--<s:a href='doAddOrEditExamQues.action'><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" tabindex="8" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>--%>
-                                                                            <a href='doAddOrEditExamQues.action' class="add_searchButton form-control pull-right" value="" style="margin:5px 0px; width:100px" tabindex="8" ><i class="fa fa-plus-square"></i>&nbsp;Add</a>
+                                                                       
+                                                                            <a id="addEditQuestions" href='doAddOrEditExamQues.action' class="add_searchButton form-control pull-right" value="" style="margin:5px 0px; width:100px" tabindex="8" ><i class="fa fa-plus-square"></i>&nbsp;Add</a>
                                                                    
                                                                         
                                                                     </div>
@@ -202,15 +201,13 @@
                                                                     
                                                                                 <label class="" style="color:#56a5ec;"></label> 
 
-                                                                            <%--<s:a href='getSkillDetails.action?uploadFlag=uploadFlag'><button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" tabindex="9" >Upload Questions</button></s:a>--%>
-                                                                          <a href='getSkillDetails.action?uploadFlag=uploadFlag' class=" fa fa-upload add_searchButton form-control pull-right" value="" style="margin:5px 0px;width:145px" tabindex="7" >UploadQuestions</a>
+                                                                            
+                                                                          <a id="uploadQuestions " href='getSkillDetails.action?uploadFlag=uploadFlag' class=" fa fa-upload add_searchButton form-control pull-right" value="" style="margin:5px 0px;width:145px" tabindex="7" >UploadQuestions</a>
                                                                         
                                                                        
                                                                     </div>
                                                         </div>
-                                                                <%-- <div class="col-lg-2">
-                                                                    <a href="getSkillDetails.action"  class="cssbutton req_margin"  />UploadQuestions</a>  
-            </div>--%>
+                                                               
 
 
 
@@ -227,24 +224,14 @@
                                                 </s:form>
                                             </div>
 
-                                            <%-- <div class="col-lg-12">
-                                                <div class="col-sm-4 "> </div>
-                                                <s:form action="/onlineExam/Ques/getSkillDetails">
-
-                                            <div class="col-sm-4 ">  
-                                                <s:submit  cssClass="cssbutton req_margin"  type="submit" value="UploadQuestions" cssStyle="margin-left: 13vw;"/>
-
-                                            </div></s:form>
-                                            <div class="col-sm-4 "> </div>
-
-                                        </div> --%>
+                                           
 
                                             
                                             <span> <br/></span>
                                             <div id="loadingQuestionsSearch" class="loadingImg">
                                                     <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
                                                 </div> 
-                                                <%--<s:submit cssClass="css_button" value="show"/><br>--%>
+                                              
                                             <div class="col-sm-12" >
 
                                                 <s:form>
@@ -331,7 +318,7 @@
                                     </div>
 
 
-                                    <%--close of future_items--%>
+                                 
 
                                 </div>
 

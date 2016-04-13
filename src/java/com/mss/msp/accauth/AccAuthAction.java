@@ -38,7 +38,6 @@ import org.apache.struts2.interceptor.ParameterAware;
  */
 public class AccAuthAction extends ActionSupport implements ServletRequestAware, ParameterAware {
 
-    // private int userId;
     /**
      *
      * /**
@@ -46,16 +45,12 @@ public class AccAuthAction extends ActionSupport implements ServletRequestAware,
      */
     private HttpServletRequest httpServletRequest;
     private HttpServletResponse httpServletResponse;
-    /**
-     * The resultMessage is used for storing resultMessage.
-     */
     private String resultMessage;
     private String resultType;
     private String queryString;
     private String successMessage;
     private Map parameters;
     List<AccauthVTO> accauthVTO = new ArrayList<AccauthVTO>();
-   // private String status;
     private int action_id;
     private String action_name;
     private String status;
@@ -70,11 +65,20 @@ public class AccAuthAction extends ActionSupport implements ServletRequestAware,
     private String actionName;
     private Map userGroupIdList;
     private int userGroupList;
+    private int blockFlag;
+
     /**
-     * Method : Account add action
+     * *****************************************************************************
+     * Date :
      *
+     * Author :
+     *
+     * ForUse : getAccAuthrization()is used to get Account add action
+     *
+     * *****************************************************************************
      */
     public String getAccAuthrization() {
+        System.out.println("********************AccAuthAction :: getAccAuthrization Method Start*********************");
         resultType = LOGIN;
 
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -84,25 +88,31 @@ public class AccAuthAction extends ActionSupport implements ServletRequestAware,
             try {
                 setStatus("Active");
                 accauthVTO = ServiceLocator.getAccAuthservice().getAccAuthrization(this);
-
-
                 resultType = SUCCESS;
-
-
-
-
-
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+
                 ex.printStackTrace();
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
 
-        }//Close Session Checking
+        }
+        System.out.println("********************AccAuthAction :: getAccAuthrization Method End*********************");
         return resultType;
     }
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : searchAccAuthorization()is used to
+     *
+     * *****************************************************************************
+     */
     public String searchAccAuthorization() {
+        System.out.println("********************AccAuthAction :: searchAccAuthorization Method Start*********************");
         resultType = LOGIN;
 
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -111,26 +121,32 @@ public class AccAuthAction extends ActionSupport implements ServletRequestAware,
 
             try {
                 accauthVTO = ServiceLocator.getAccAuthservice().searchAccAuthorization(this);
-
-
                 resultType = SUCCESS;
-
-
-
-
-
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+
                 ex.printStackTrace();
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
 
-        }//Close Session Checking
+        }
+        System.out.println("********************AccAuthAction :: searchAccAuthorization Method End*********************");
         return resultType;
     }
-    //getSearchAccAuthorisationResults
-     public String searchActionResources() {
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : searchActionResources() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
+    public String searchActionResources() {
+        System.out.println("********************AccAuthAction :: searchActionResources Method Start*********************");
         resultType = LOGIN;
 
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -139,25 +155,33 @@ public class AccAuthAction extends ActionSupport implements ServletRequestAware,
 
             try {
                 accauthVTO = ServiceLocator.getAccAuthservice().searchActionResources(this);
-
-
                 resultType = SUCCESS;
-
-
-
-
-
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+
                 ex.printStackTrace();
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
 
-        }//Close Session Checking
+        }
+        System.out.println("********************AccAuthAction :: searchActionResources Method End*********************");
         return resultType;
     }
-      public String actionResourcesForAddOrUpdate() {
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : actionResourcesForAddOrUpdate() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
+    public String actionResourcesForAddOrUpdate() {
+        System.out.println("********************AccAuthAction :: actionResourcesForAddOrUpdate Method Start*********************");
+
         resultType = LOGIN;
 
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -165,28 +189,20 @@ public class AccAuthAction extends ActionSupport implements ServletRequestAware,
             resultType = "accessFailed";
 
             try {
-              //  accauthVTO = ServiceLocator.getAccAuthservice().searchActionResources(this,httpServletRequest);
                 setUserGroupIdList(com.mss.msp.util.DataSourceDataProvider.getInstance().getInstance().getRequiteCategory());
                 setRolesMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getRolesForAccType(getAccType()));
-
                 resultType = SUCCESS;
-
-
-
-
-
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+
                 ex.printStackTrace();
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
                 resultType = ERROR;
             }
 
-        }//Close Session Checking
+        }
+        System.out.println("********************AccAuthAction :: actionResourcesForAddOrUpdate Method End*********************");
         return resultType;
     }
-    
-    
 
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
@@ -315,6 +331,12 @@ public class AccAuthAction extends ActionSupport implements ServletRequestAware,
     public void setUserGroupList(int userGroupList) {
         this.userGroupList = userGroupList;
     }
-    
-    
+
+    public int getBlockFlag() {
+        return blockFlag;
+    }
+
+    public void setBlockFlag(int blockFlag) {
+        this.blockFlag = blockFlag;
+    }
 }

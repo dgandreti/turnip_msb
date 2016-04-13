@@ -23,8 +23,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
+      
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
@@ -35,31 +34,7 @@
         <script language="JavaScript" src="<s:url value="/includes/js/account/accountDetailsAJAX.js"/>" type="text/javascript"></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
-        <script>
-            //            var pager;
-            //            function onLoad(){
-            //                //alert("onload")
-            //                var paginationSize = 10; // parseInt(document.getElementById("paginationOption").value);
-            //                // alert(paginationSize);
-            //                pager = new Pager('csrResults', paginationSize);
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                // document.getElementById("paginationOption").value=10;
-            //                pager.showPage(1);
-            //            };
-            //            function pagerOption(){
-            //
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('csrResults', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
-        </script>
+        
 
         <script type="text/javascript">
             function sortables_init() {
@@ -161,8 +136,9 @@
 
                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
                                                         <span class=""><s:submit type="button"
+                                                                  id="csrSearchButton"
                                                                   cssClass="add_searchButton form-control"
-                                                                  value="" cssStyle="margin:5px 0px;"
+                                                                  value="" cssStyle="margin:5px 0px;" 
                                                                   tabindex="4" ><i class="fa fa-search"></i>&nbsp;Search</s:submit></span>
 
 

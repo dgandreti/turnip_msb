@@ -26,10 +26,8 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/selectivity-full.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/media_queries.css"/>">
-        <%--<link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-<link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css"> --%>
+
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
-        <%--<script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script> --%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/fileUploadScript.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.form.js"/>"></script>
 
@@ -41,7 +39,6 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/AppConstants.js"/>"></script>
         <script language="JavaScript" src="<s:url value="/includes/js/account/accountDetailsAJAX.js"/>" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/profilediv.css"/>">
-        <%-- <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script> --%>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/EmployeeProfile.js"/>'></script>
 
 
@@ -96,17 +93,7 @@
                                                         <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param>
                                                         <s:param name="accFlag"><%= accFlag%></s:param>
                                                     </s:url>
-                                                    <%-- <s:if test="flag=='customerlogin'">
-                                                         Here HyperLink is not Required 
-                                                        <span class="breadcrum"><s:property value="%{account_name}"/></span>
-                                                    </s:if>
-                                                    <s:elseif test="flag=='vendorlogin'">
-                                                         Here HyperLink is not Required 
-                                                        <span class="breadcrum"><s:property value="%{account_name}"/></span>
-                                                    </s:elseif>
-                                                    <s:else> 
-                                                        <s:a href='%{#myUrl}' cssClass="breadcrum"><s:property value="%{account_name}"/></s:a> 
-                                                    </s:else>  --%>
+
                                                     <s:a href='%{#myUrl}' cssClass="breadcrum"><s:property value="%{account_name}"/></s:a> 
                                                     <s:url var="myUrl" action="../acc/viewAccount.action">
                                                         <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
@@ -122,7 +109,6 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
 
-                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                         <s:if test="flag=='customerlogin' || flag=='vendorlogin'">
                                                             <font color="#ffffff"> Profile</font>
                                                         </s:if>
@@ -136,7 +122,7 @@
                                                                 <s:param name="vendorId"><s:property value="accountSearchID"/></s:param> 
                                                                 <s:param name="venFlag"><%=venorFlag%></s:param>
                                                             </s:url>
-                                                            <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                            <span class="pull-right"><s:a href='%{#myUrl}' id="contactBackButton"><i class="fa fa-undo"></i></s:a></span>
                                                         </s:if> 
 
                                                         <s:elseif test="flag=='customerlogin' || flag=='vendorlogin'">
@@ -148,7 +134,7 @@
                                                                 <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
                                                                 <s:param name="accFlag"><%=flag%></s:param>
                                                             </s:url>
-                                                            <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                            <span class="pull-right"><s:a href='%{#myUrl}' id="contactBackButton"><i class="fa fa-undo"></i></s:a></span>
                                                         </s:else>
                                                     </h4>
                                                 </div>
@@ -195,7 +181,7 @@
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <label class="contactLabelStyle">Middle&nbsp;Name</label><s:textfield name="ContactMname" value="%{accountContactVTO.middleName}" id="ContactMname"  cssClass="form-control" placeholder="middle Name" maxLength="28"  onfocus="removeResultMessage()" pattern='[A-Za-z\\s]*' onkeypress="return middlename(event);" tabindex="2"/>   
-                                                                    <span id="mnameError" class=""></span>
+                                                                    
                                                                 </div>
                                                                 <div class="col-sm-3 required">
                                                                     <label class="contactLabelStyle">Last Name</label><s:textfield name="ContactLname" value="%{accountContactVTO.lastName}" id="ContactLname" maxLength="28"  cssClass="form-control" placeholder="last Name"  onkeyup="contactLastNameValidation()" tabindex="3"/>
@@ -207,8 +193,6 @@
                                                                     <label class="contactLabelStyle">Alternate&nbsp;Email</label><s:textfield cssClass="form-control" value="%{accountContactVTO.email2}" name="ContactEmail2" id="ContactEmail2" maxLength="58" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Must be valid email')" placeholder="Alternate Email" onblur="alternateMailValidation()" onkeyup="removeActionMessage()" tabindex="5"/>
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    <%--label class="contactLabelStyle">Designation:</label><s:select cssClass="SelectBoxStyles form-control" name="contactDesignation" id="designation" headerKey="0" value="%{accountContactVTO.contactDesignation}" headerValue="-Select-" list="%{accountContactVTO.titles}"/--%>
-                                                                    <%-- <label class="contactLabelStyle"><span style="color:red;">*</span>Designation:</label><s:textfield cssClass="  form-control" name="contactDesignation" id="designation" required="true"  value="%{accountContactVTO.contactDesignation}" onkeyup="contactDesignationValidation()"/>--%>
                                                                     <label class="addAcclabelStyle">Gender</label>
                                                                     <s:select cssClass="SelectBoxStyles form-control " id="gender" name="gender" list="#@java.util.LinkedHashMap@{'M':'Male','F':'Female'}" value="%{accountContactVTO.gender}" tabindex="6"/>
                                                                 </div>
@@ -257,9 +241,9 @@
                                                                 <s:if test="'customerlogin'!=flag && 'vendorlogin'!=flag">
                                                                     <div class="col-sm-3 ">
                                                                         <label class="contactLabelStyle">Status</label>
-                                                                        
-                                                                            <s:select id="status" value="%{accountContactVTO.status}" name="status"  cssClass="SelectBoxStyles form-control" accesskey="" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active','Registered':'Registered'}" tabindex="18"/>
-                                                                       
+
+                                                                        <s:select id="status" value="%{accountContactVTO.status}" name="status"  cssClass="SelectBoxStyles form-control" accesskey="" list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active','Registered':'Registered'}" tabindex="18"/>
+
                                                                     </div>
                                                                 </s:if>
                                                                 <div class="inner-reqdiv-elements">
@@ -305,98 +289,14 @@
 
                                                             </div>
                                                         </div>
-                                                        <%--<div class="col-lg-3">
 
-                                                        <%--<label class="labelStyle">Departments</label>
-                                                        <s:textfield cssClass="contactInputStyle" id="departments" name="department" value="%{accountContactVTO.department}"/>
-                                                        <label class="labelStyle">Titles</label>
-                                                        <s:textfield cssClass="contactInputStyle" name="titles" id="titlesId" value="%{accountContactVTO.title}"/>
-                                                        
-                                                        <%--  <div class="checkbox-inline  " >
-                                                              <label for="is_manager" class="checkbox  ">
-                                                                  <s:checkbox name="isManager" id="isManager" value="%{accountContactVTO.isManager}"/>is Manager</label>
-                                                          </div>
-                                                          <div class="checkbox-inline  " >
-                                                              <label for="team_leader" class="checkbox ">
-                                                                  <s:checkbox name="isTeamLead" id="isTeam" value="%{accountContactVTO.isTeamLead}"/>is TeamLead</label>
-                                                          </div>  
-
-                                                </div>--%>
 
                                                     </div>
                                             </div>
                                         </div>
                                         <s:hidden name="flagname" value="%{flag}"></s:hidden>
 
-                                        <%--div class="row">
-
-                                            <!-- Contact Information , start  -->
-                                            <div class="col-lg-6">
-
-                                                <div id="AddressBox"> 
-                                                    <div class="contactInfoDiv">
-                                                        <table >
-                                                            <tr id="trStyleContact"><td>&nbsp;&nbsp;Permanent Address &nbsp;&nbsp;</td></tr>
-                                                            <span id="spanUpdatep" class="pull-right"> </span>     
-
-                                                        </table>
-                                                    </div>
-                                                    <div id="margins" class="showUpdatep"><br>
-
-                                                        <center> <table>
-                                                                <br/>
-                                                                <span><errmsg></errmsg></span>
-                                                            <s:textfield cssClass="form-control" label="Address" value="%{accountContactVTO.conPAddress}"  id="conAddress" name="conAddress" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z\s]{3,}" onchange="try{setCustomValidity('')}catch(e){}"  onkeyup="paddresValidation()"  />
-                                                            <s:textfield cssClass="form-control" label="Address2" value="%{accountContactVTO.conPAddress2}" id="conAddress2" name="conAddress2"/>
-                                                            <s:textfield cssClass="form-control" label="City" value="%{accountContactVTO.conPCity}"  id="conCity" name="conCity" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z\s]{3,}" onchange="try{setCustomValidity('')}catch(e){}" onkeyup="contactPcityValidation()" />
-
-
-                                                            <s:textfield cssClass="form-control" label="Zip" value="%{accountContactVTO.conPZip}"  id="conZip" name="conZip" maxLength="5"  required="true" onkeyup="contactPZipValidation()" />
-                                                            <s:select cssClass="form-control SelectBoxStyles" label="Country" value="%{accountContactVTO.conPCountry}" name="conCountry" id="conCountry"  headerKey="" headerValue="Select Country" list="countryNames" onchange="ConPermanentStateChange()" tabindex="1"/>
-                                                            <s:select cssClass="form-control SelectBoxStyles"  label="State" name="conState" id="conState" headerKey="" value="%{accountContactVTO.conPState}" list="%{accountContactVTO.state1}"/>
-                                                        </table></center>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-
-                                            <div id="AddressBox">
-                                                <div class="contactInfoDiv" >
-                                                    <table >
-                                                        <tr id="trStyleContact" ><td>&nbsp;&nbsp;Current&nbsp;Address &nbsp;&nbsp;</td></tr>
-                                                        <span id="spanUpdatec" class="pull-right">    
-                                                    </table>
-                                                </div>
-                                                <div id="margins"  class="showUpdatec">
-
-                                                    <errmsgc></errmsgc>
-                                                    <center> <table>
-                                                            <s:if test="accountContactVTO.checkAddress==true">
-                                                                <s:checkbox label="Same as Permenant Address" name="checkAddress" value="true" id="checkAddress" onclick="FillContactAddress()"   ></s:checkbox><br/>
-                                                                <s:textfield cssClass="form-control" label="Address" value="%{accountContactVTO.conCAddress}" disabled="true" id="conCAddress" name="conCAddress" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}"  onchange="try{setCustomValidity('')}catch(e){}" onkeyup="CaddresValidation()" />
-
-                                                                <s:textfield cssClass="form-control" label="Address2" value="%{accountContactVTO.conCAddress2}" disabled="true" id="conCAddress2" name="conCAddress2" />
-                                                                <s:textfield cssClass="form-control" label="City" value="%{accountContactVTO.conCCity}" disabled="true" id="conCCity" name="conCCity" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}"  onchange="try{setCustomValidity('')}catch(e){}" onkeyup="ccityValidation()" />
-
-                                                                <s:textfield cssClass="form-control" label="Zip" value="%{accountContactVTO.conCZip}" disabled="true" id="conCZip" name="conCZip" maxLength="5" required="true" onkeyup="contactCZipValidation()"/>
-                                                                <s:select cssClass="form-control SelectBoxStyles" label="Country" value="%{accountContactVTO.conCCountry}" disabled="true" name="conCCountry" id="conCCountry" headerKey="" headerValue="Select Country" list="countryNames" onchange="ConCurrentStateChange()" tabindex="1"/>
-                                                                <s:select cssClass="form-control SelectBoxStyles" label="State" name="conCState" id="conCState" headerKey="" disabled="true" value="%{accountContactVTO.conCState}" headerValue="Select State" list="%{accountContactVTO.state2}"  />
-
-                                                            </s:if>  
-                                                            <s:else>
-                                                                <s:checkbox label="Same as Permenant Address" name="checkAddress"  id="checkAddress" onclick="FillContactAddress()"   ></s:checkbox><br/>
-                                                                <s:textfield cssClass="form-control" label="Address" value="%{accountContactVTO.conCAddress}" id="conCAddress" name="conCAddress" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}"  onchange="try{setCustomValidity('')}catch(e){}" onkeyup="CaddresValidation()" />
-                                                                <s:textfield cssClass="form-control" label="Address2" value="%{accountContactVTO.conCAddress2}" id="conCAddress2" name="conCAddress2" />
-                                                                <s:textfield cssClass="form-control" label="City" value="%{accountContactVTO.conCCity}" id="conCCity" name="conCCity" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}"  onchange="try{setCustomValidity('')}catch(e){}" onkeyup="ccityValidation()" />
-                                                                <s:textfield cssClass="form-control" label="Zip" value="%{accountContactVTO.conCZip}" id="conCZip" name="conCZip" maxLength="5" required="true" />
-                                                                <s:select cssClass="form-control SelectBoxStyles" label="Country" value="%{accountContactVTO.conCCountry}" name="conCCountry" id="conCCountry" headerKey="" headerValue="Select Country" list="countryNames" onchange="ConCurrentStateChange()" tabindex="1"/>
-                                                                <s:select cssClass="form-control SelectBoxStyles" label="State" name="conCState" id="conCState" headerKey="" value="%{accountContactVTO.conCState}" headerValue="Select State" list="%{accountContactVTO.state2}"  />
-                                                            </s:else> 
-                                                        </table></center>
-                                                </div>
-                                            </div>
-                                        </div>                
-                                    </div--%>    
+                                            
                                         <div class="col-lg-10"></div>
                                         <div class="col-sm-2 pull-right">
                                             <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-refresh form-control" value="Update" tabindex="26" /> 
@@ -449,7 +349,7 @@
                                         </div>
                                         <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
 
-                                        <center><button type="submit" class="cssbutton"  onclick="return ValidateFileUpload()" theme="simple"  ><i class="fa fa-plus-square">&nbsp;ADD</i></button> </center><br>
+                                        <center><button id="profileImageUpdateButton" type="submit" class="cssbutton"  onclick="return ValidateFileUpload()" theme="simple"  ><i class="fa fa-plus-square">&nbsp;ADD</i></button> </center><br>
                                     </div>
 
                                 </div>
@@ -491,6 +391,10 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+
+        <script>
+            $("#actionMessage").show().delay(5000).fadeOut();
+        </script>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>

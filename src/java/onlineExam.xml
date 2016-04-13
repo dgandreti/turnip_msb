@@ -80,7 +80,15 @@
             </result>
             
         </action>
-        
+        <action name="downloadLogFileForQues" class="com.mss.msp.usersdata.DownloadExcel" method="downloadExcelAttachment">
+            <!--<interceptor-ref name="authorizationcheckStack" />-->
+            <result name="input" type="redirectAction">
+                <param name="actionName">searchLoggerForQues</param>
+                <param name="downloadFlag">${downloadFlag}</param>
+                <param name="loggerFlag">${loggerFlag}</param>
+            </result>
+             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
+        </action>
         <action name="searchLoggerForQues" class="com.mss.msp.usersdata.UsersdataHandlerAction" method="searchLogger">
             <interceptor-ref name="crudStack" />
             <result name="success">loadingExamQues.jsp</result>

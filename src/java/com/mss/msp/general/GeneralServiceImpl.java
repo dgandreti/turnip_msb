@@ -36,6 +36,7 @@ public class GeneralServiceImpl implements GeneralService {
     PreparedStatement preparedStatement = null;
     Statement statement = null;
     ResultSet resultSet = null;
+    String queryString = "";
 
     /**
      * Creates a new instance of GeneralServiceIml
@@ -52,34 +53,42 @@ public class GeneralServiceImpl implements GeneralService {
         return mailId.substring(0, atOccurance).toLowerCase();
     }
 
+    /**
+     * *****************************************************************************
+     *
+     *
+     * doUpdateResetPassword() method to reset the password
+     *
+     *
+     * *****************************************************************************
+     */
     public int doUpdateResetPassword(String password, String email) throws ServiceLocatorException {
 
-        //System.out.println("::::doUpdateResetPassword Impll.. :::");
+        System.out.println("********************GeneralServiceImpl :: doUpdateResetPassword Method Start*********************");
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
+        String queryString = "";
 
         int isUpdated = 0;
         String hexa16digitSalt = SecurityServiceProvider.generateRandamSecurityKey(16, 16, 4, 4, 4);
-        //String queryString = "UPDATE tblCreTchComments SET ModifiedDate = ?, ModifiedBy = ?, Comments = ?, Status = ? WHERE id = ? AND CreId = ?";
+
         String encPwd = SecurityServiceProvider.getEncrypt(password.trim(), hexa16digitSalt);
-        //System.out.println("plain text-->"+password.trim());
-        String queryString = "UPDATE usr_reg SET password=?,salt=? WHERE login_id=?";
+
+        queryString = "UPDATE usr_reg SET password=?,salt=? WHERE login_id=?";
+        System.out.println("doUpdateResetPassword**************queryString---->" + queryString);
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
-
 
             preparedStatement.setString(1, encPwd);
             preparedStatement.setString(2, hexa16digitSalt);
             preparedStatement.setString(3, email);
 
-
             isUpdated = preparedStatement.executeUpdate();
 
-            // System.err.println("query result -->"+isUpdated);
         } catch (SQLException se) {
-            // System.err.println("11 ---se-->"+se.getMessage());
+
             throw new ServiceLocatorException(se);
         } finally {
             try {
@@ -92,35 +101,40 @@ public class GeneralServiceImpl implements GeneralService {
                     connection = null;
                 }
             } catch (SQLException se) {
-                //  System.out.println("se"+se.getMessage());
+
                 throw new ServiceLocatorException(se);
             }
         }
-
+        System.out.println("********************GeneralServiceImpl :: doUpdateResetPassword Method End*********************");
         return isUpdated;
     }
 
+    /**
+     * ****************************************************************
+     *
+     *
+     * doPasswordLinkStatusUpdate() method to reset the password
+     *
+     *
+     * ****************************************************************
+     */
     public int doPasswordLinkStatusUpdate(String email) throws ServiceLocatorException {
 
-        // System.out.println("::::doPasswordLinkStatusUpdate Impll.. :::");
+        System.out.println("********************GeneralServiceImpl :: doPasswordLinkStatusUpdate Method Start*********************");
+        int isUpdated = 0;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
-
-        int isUpdated = 0;
-
         String queryString = "UPDATE forgotpasswordlink SET status = ? WHERE email_id = ?";
+        System.out.println("doPasswordLinkStatusUpdate**************queryString---->" + queryString);
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
 
-
             preparedStatement.setString(1, "InActive");
             preparedStatement.setString(2, email.trim());
 
-
             isUpdated = preparedStatement.executeUpdate();
-            //System.out.println("For Got password linkUpdated successfully ");
+
         } catch (SQLException se) {
             throw new ServiceLocatorException(se);
         } finally {
@@ -134,16 +148,27 @@ public class GeneralServiceImpl implements GeneralService {
                     connection = null;
                 }
             } catch (SQLException se) {
-                // System.err.println("linkupdation flow exception --->"+se.getMessage());
+
                 throw new ServiceLocatorException(se);
 
             }
         }
-
+        System.out.println("********************GeneralServiceImpl :: doPasswordLinkStatusUpdate Method End*********************");
         return isUpdated;
     }
 
+    /**
+     * ****************************************************************
+     *
+     *
+     * forGotPwdLinkStatus() method to get the password link status
+     *
+     *
+     * ****************************************************************
+     */
     public String forGotPwdLinkStatus(String mailId, String ssid) throws ServiceLocatorException {
+
+        System.out.println("********************GeneralServiceImpl :: forGotPwdLinkStatus Method Start*********************");
 
         String curStatus = "";
         Connection connection = null;
@@ -151,7 +176,7 @@ public class GeneralServiceImpl implements GeneralService {
         ResultSet resultSet = null;
         connection = ConnectionProvider.getInstance().getConnection();
         String queryString = "SELECT status FROM forgotpasswordlink WHERE email_id like '" + mailId + "' and code ='" + ssid + "'";
-        //System.out.println("queryString-->"+queryString);
+        System.out.println("forGotPwdLinkStatus**************queryString---->" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -182,27 +207,37 @@ public class GeneralServiceImpl implements GeneralService {
                 throw new ServiceLocatorException(ex);
             }
         }
+        System.out.println("********************GeneralServiceImpl :: forGotPwdLinkStatus Method End*********************");
         return curStatus;
     }
 
+    /**
+     * ****************************************************************
+     *
+     *
+     * getPrimaryAction() method to get the primary action
+     *
+     *
+     * ****************************************************************
+     */
     public String getPrimaryAction(int orgId, int roleId) throws ServiceLocatorException {
         String action = "";
+        System.out.println("********************GeneralServiceImpl :: getPrimaryAction Method Start*********************");
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-        String resultString = "";
-        Connection connection = null;
         try {
-            
+
             queryString = " SELECT action_name from home_redirect_action where org_id=" + orgId + " and primaryrole=" + roleId;
-            System.err.println("queryString--->"+queryString);
+            System.out.println("getPrimaryAction**************queryString---->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
                 action = resultSet.getString("action_name");
             }
-            //httpServletRequest.getSession(false).setAttribute(ApplicationConstants.PRIMARYROLE, roleId);
+
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -223,7 +258,7 @@ public class GeneralServiceImpl implements GeneralService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************GeneralServiceImpl :: getPrimaryAction Method End*********************");
         return action;
     }
 
@@ -238,12 +273,14 @@ public class GeneralServiceImpl implements GeneralService {
      * *****************************************************************************
      */
     public Map getCountriesNames() {
+        System.out.println("********************GeneralServiceImpl :: getCountriesNames Method Start*********************");
         Map countries = new LinkedHashMap();
         Session session = null;
         try {
             session = HibernateServiceLocator.getInstance().getSession();
-            //countries = session.createQuery("select id,name from CountryVto");
+
             String hqlQuery = "select cv.id,cv.name from CountryVto cv";
+            System.out.println("getCountriesNames**************hqlQuery---->" + hqlQuery);
             Query query = session.createQuery(hqlQuery);
             List list = query.list();
             Iterator iterator = list.iterator();
@@ -254,7 +291,7 @@ public class GeneralServiceImpl implements GeneralService {
         } catch (ServiceLocatorException e) {
             e.printStackTrace();
         } finally {
-            // Closing hibernate session
+
             if (session != null) {
                 session.close();
 
@@ -269,7 +306,7 @@ public class GeneralServiceImpl implements GeneralService {
                 }
             }
         }
-
+        System.out.println("********************GeneralServiceImpl :: getCountriesNames Method End*********************");
         return countries;
     }
 
@@ -284,16 +321,16 @@ public class GeneralServiceImpl implements GeneralService {
      * *****************************************************************************
      */
     public Map getStatesMapOfCountry(HttpServletRequest httpServletRequest, int id) {
+        System.out.println("********************GeneralServiceImpl :: getStatesMapOfCountry Method Start*********************");
         Map states = new LinkedHashMap();
         String resultString = "";
         Session session = null;
 
         try {
             session = HibernateServiceLocator.getInstance().getSession();
-            //countries = session.createQuery("select id,name from CountryVto");
 
             String hqlQuery = "select id,name from State  WHERE countryId=:countryid";
-
+            System.out.println("getStatesMapOfCountry**************hqlQuery---->" + hqlQuery);
             Query query = session.createQuery(hqlQuery);
             query.setInteger("countryid", id);
             List list = query.list();
@@ -302,7 +339,6 @@ public class GeneralServiceImpl implements GeneralService {
             while (iterator.hasNext()) {
                 Object[] o = (Object[]) iterator.next();
 
-                //resultString += o[0] + "#" + o[1] + "^";
                 states.put(o[0], o[1]);
 
             }
@@ -310,7 +346,7 @@ public class GeneralServiceImpl implements GeneralService {
         } catch (ServiceLocatorException e) {
             System.out.println(e);
         } finally {
-            // Closing hibernate session
+
             if (session != null) {
                 session.close();
 
@@ -325,21 +361,29 @@ public class GeneralServiceImpl implements GeneralService {
                 }
             }
         }
-        //System.out.println("List of States are"+states);
+        System.out.println("********************GeneralServiceImpl :: getStatesMapOfCountry Method End*********************");
         return states;
     }
 
+    /**
+     * ****************************************************************
+     *
+     *
+     * getStatesStringOfCountry() method to get the states of country
+     *
+     *
+     * ****************************************************************
+     */
     public String getStatesStringOfCountry(HttpServletRequest httpServletRequest, int id) {
         Map states = new LinkedHashMap();
         String resultString = "";
         Session session = null;
-
+        System.out.println("********************GeneralServiceImpl :: getStatesStringOfCountry Method Start*********************");
         try {
             session = HibernateServiceLocator.getInstance().getSession();
-            //countries = session.createQuery("select id,name from CountryVto");
 
             String hqlQuery = "select id,name from State  WHERE countryId=:countryid";
-
+            System.out.println("getStatesStringOfCountry**************hqlQuery---->" + hqlQuery);
             Query query = session.createQuery(hqlQuery);
             query.setInteger("countryid", id);
             List list = query.list();
@@ -349,7 +393,6 @@ public class GeneralServiceImpl implements GeneralService {
                 Object[] o = (Object[]) iterator.next();
 
                 resultString += o[0] + "#" + o[1] + "^";
-                //states.put(o[0],o[1]);
 
             }
 
@@ -371,20 +414,30 @@ public class GeneralServiceImpl implements GeneralService {
                 }
             }
         }
-        //System.out.println("List of States are"+states);
+        System.out.println("********************GeneralServiceImpl :: getStatesStringOfCountry Method End*********************");
         return resultString;
     }
 
+    /**
+     * ****************************************************************
+     *
+     *
+     * getStatesOfCountry() method to get the states of country
+     *
+     *
+     * ****************************************************************
+     */
     public String getStatesOfCountry(HttpServletRequest httpServletRequest, int id) {
+        System.out.println("********************GeneralServiceImpl :: getStatesOfCountry Method Start*********************");
         Map states = new LinkedHashMap();
         String resultString = "";
         Session session = null;
 
         try {
             session = HibernateServiceLocator.getInstance().getSession();
-            //countries = session.createQuery("select id,name from CountryVto");
 
-             String hqlQuery = "select id,name from State s WHERE countryId=:countryid order by s.name asc";
+            String hqlQuery = "select id,name from State s WHERE countryId=:countryid order by s.name asc";
+            System.out.println("getStatesStringOfCountry**************hqlQuery---->" + hqlQuery);
 
             Query query = session.createQuery(hqlQuery);
             query.setInteger("countryid", id);
@@ -395,10 +448,7 @@ public class GeneralServiceImpl implements GeneralService {
                 Object[] o = (Object[]) iterator.next();
 
                 resultString += o[0] + "#" + o[1] + "^";
-                //resultString += resultSet.getInt("title_id") + "#" + resultSet.getString("title_name") + "^";
-//System.out.println(o[0]);
-//System.out.println(o[1]);
-//System.out.println("success");
+
             }
 
         } catch (ServiceLocatorException e) {
@@ -419,7 +469,7 @@ public class GeneralServiceImpl implements GeneralService {
                 }
             }
         }
-        //System.out.println("List of States are"+states);
+        System.out.println("********************GeneralServiceImpl :: getStatesOfCountry Method End*********************");
         return resultString;
     }
 
@@ -437,8 +487,12 @@ public class GeneralServiceImpl implements GeneralService {
      **************************************
      */
     public List getDefaultRequirementDashBoardDetails(GeneralAction generalAction) throws ServiceLocatorException {
+        System.out.println("********************GeneralServiceImpl :: getDefaultRequirementDashBoardDetails Method Start*********************");
         String resultString = "";
         ArrayList<CsrDashBoardVTO> csrDashBoardList = new ArrayList<CsrDashBoardVTO>();
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         String queryString = "";
         try {
             int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -468,7 +522,7 @@ public class GeneralServiceImpl implements GeneralService {
                         + "GROUP BY a.account_id";
             }
 
-            System.out.println("query...DashBoard....>" + queryString);
+            System.out.println("getDefaultRequirementDashBoardDetails**************queryString---->" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -481,7 +535,7 @@ public class GeneralServiceImpl implements GeneralService {
                 csrDashBoardVTO.setAccountId(resultSet.getString("account_id"));
                 csrDashBoardList.add(csrDashBoardVTO);
             }
-            System.out.println("result=========>" + resultString);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -494,10 +548,7 @@ public class GeneralServiceImpl implements GeneralService {
                     statement.close();
                     statement = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
-                }
+
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -506,13 +557,15 @@ public class GeneralServiceImpl implements GeneralService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************GeneralServiceImpl :: getDefaultRequirementDashBoardDetails Method End*********************");
         return csrDashBoardList;
     }
-     /**
+
+    /**
      * *************************************
      *
-     * @verifyCurrentPassword() This method is 
-     * used to verify the current password
+     * @verifyCurrentPassword() This method is used to verify the current
+     * password
      * @Author:Aklakh Ahmad<mahmad@miraclesoft.com>
      *
      * @Created Date:09/11/2015
@@ -521,18 +574,20 @@ public class GeneralServiceImpl implements GeneralService {
      */
     public int verifyCurrentPassword(GeneralAction generalAction) throws ServiceLocatorException {
 
+        System.out.println("********************GeneralServiceImpl :: verifyCurrentPassword Method Start*********************");
         int count = 0;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        connection = ConnectionProvider.getInstance().getConnection();
         String queryString = "";
+
         String curPwd = "";
         String pwdSalt = "";
 
         queryString = "SELECT usr_id, salt,PASSWORD  from usr_reg where  usr_id=" + generalAction.getUserSessionId();
-       // System.out.println("queryString-->" + queryString);
+        System.out.println("verifyCurrentPassword**************queryString---->" + queryString);
         try {
+            connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -540,14 +595,13 @@ public class GeneralServiceImpl implements GeneralService {
                 pwdSalt = resultSet.getString("salt");
             }
             String encPwd = SecurityServiceProvider.getEncrypt(generalAction.getCurrentPwd().trim(), pwdSalt.trim());
-           // System.out.println("password --->" + generalAction.getCurrentPwd());
-           // System.out.println("password is--->" + encPwd);
+
             if (curPwd.equals(encPwd)) {
                 count = 1;
             } else {
                 count = 0;
             }
-            System.out.println("Count-->" + count);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -572,20 +626,34 @@ public class GeneralServiceImpl implements GeneralService {
                 throw new ServiceLocatorException(ex);
             }
         }
+        System.out.println("********************GeneralServiceImpl :: verifyCurrentPassword Method End*********************");
         return count;
     }
-    public String UserRegistration(GeneralAction generalAction) throws ServiceLocatorException {
 
+    /**
+     * ****************************************************************
+     *
+     *
+     * UserRegistration() method to add the contact
+     *
+     *
+     * ****************************************************************
+     */
+    public String UserRegistration(GeneralAction generalAction) throws ServiceLocatorException {
+        System.out.println("********************GeneralServiceImpl :: UserRegistration Method Start*********************");
         String result = null;
         Connection connection = null;
-        Connection connection1 = null;
         CallableStatement callableStatement = null;
+
+        Connection connection1 = null;
+
         CallableStatement callableStatement1 = null;
         boolean isExceute = false;
         int updatedRows = 0;
         try {
             connection1 = ConnectionProvider.getInstance().getConnection();
             callableStatement1 = connection1.prepareCall("{CALL addAccounts(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            System.out.println("UserRegistration :: procedure name : addAccounts ");
             callableStatement1.setString(1, generalAction.getOrgName());
             callableStatement1.setString(2, generalAction.getOrg_web_address());
             callableStatement1.setString(3, generalAction.getOrg_address1());
@@ -606,12 +674,11 @@ public class GeneralServiceImpl implements GeneralService {
 
             callableStatement1.setString(16, null);
             callableStatement1.setString(17, "");//stock symbol
-                callableStatement1.setString(18,generalAction.getNoOfEmployees() );
+            callableStatement1.setString(18, generalAction.getNoOfEmployees());
             callableStatement1.setString(19, "");//description
             callableStatement1.setString(20, null);//revenue
             callableStatement1.setInt(21, 10001); //session orgId
             callableStatement1.setInt(22, 5); //Account Type check for null
-            System.out.println("-------" + generalAction.getOrg_web_address());
 
             callableStatement1.setString(23, generalAction.getEmail_ext());//email ext
             callableStatement1.registerOutParameter(24, Types.INTEGER);
@@ -620,6 +687,7 @@ public class GeneralServiceImpl implements GeneralService {
             if (status > 0) {
                 connection = ConnectionProvider.getInstance().getConnection();
                 callableStatement = connection.prepareCall("{CALL addAccContact(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+                System.out.println("UserRegistration :: procedure name : addAccContact ");
                 callableStatement.setString(1, generalAction.getFirst_name());
                 callableStatement.setString(2, generalAction.getMiddle_name());
                 callableStatement.setNull(3, Types.NULL);//file path
@@ -644,27 +712,24 @@ public class GeneralServiceImpl implements GeneralService {
                 callableStatement.setString(22, generalAction.getTitle());
                 callableStatement.setString(23, null);//Exp
                 callableStatement.setInt(24, -1);//Industry
-                callableStatement.setString(25,null);//SSn
-                callableStatement.setString(26,null);//education
-                callableStatement.setString(27,null);//skills
-                callableStatement.setString(28,File.separator);
+                callableStatement.setString(25, null);//SSn
+                callableStatement.setString(26, null);//education
+                callableStatement.setString(27, null);//skills
+                callableStatement.setString(28, File.separator);
                 callableStatement.registerOutParameter(29, Types.INTEGER);
                 callableStatement.registerOutParameter(30, Types.INTEGER);
-
-                System.out.println("hello here print after prepare call parameter ");
 
                 isExceute = callableStatement.execute();
                 updatedRows = callableStatement.getInt(29);
                 int usrId = callableStatement.getInt(30);
-                System.out.println("usrId-------->" + usrId);
 
                 if (updatedRows > 0) {
                     doAddMailManager(generalAction.getOffice_emailId(), generalAction.getFirst_name(), generalAction.getLast_name(), "serviceBayUserRegistration");
                     result = "Added successfully";
                 }
-                System.out.println("-----status " + status);
+
             }
-            System.out.println("is updatedRows " + updatedRows);
+
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -689,18 +754,28 @@ public class GeneralServiceImpl implements GeneralService {
                 sqle.printStackTrace();
             }
         }
-
+        System.out.println("********************GeneralServiceImpl :: UserRegistration Method End*********************");
         return result;
     }
 
-     public void doAddMailManager(String email1, String first_name, String last_name, String subject) throws SQLException, ServiceLocatorException {
+    /**
+     * ****************************************************************
+     *
+     *
+     * doAddMailManager() method to send the mail
+     *
+     *
+     * ****************************************************************
+     */
+    public void doAddMailManager(String email1, String first_name, String last_name, String subject) throws SQLException, ServiceLocatorException {
+        System.out.println("********************GeneralServiceImpl :: doAddMailManager Method Start*********************");
         String toAdd = "", bodyContent = "", bcc = "", cc = "", SubjectStatusActivation = "";
         String FromAdd = Properties.getProperty("MSB.from");
         String Empname = first_name;
         Empname = Empname.concat("." + last_name);
-        //  System.out.println("Empname" + Empname);
+
         toAdd = email1;
-        // System.out.println("Here we print the properties" + toAdd);
+
         SubjectStatusActivation = subject;
         StringBuilder htmlText = new StringBuilder();
         htmlText.append("<html>");
@@ -722,7 +797,7 @@ public class GeneralServiceImpl implements GeneralService {
         htmlText.append("<p>Hello " + Empname + ",</p><br/>");
         htmlText.append("<p>You have been recently Registered in Servicebay</p>");
         htmlText.append("Email :  " + toAdd + "<br/>");
-       
+
         htmlText.append("<p>If you did not have not registered, you can safely ignore this email.</p>");
         htmlText.append("</font>");
         htmlText.append("</td>");
@@ -743,8 +818,8 @@ public class GeneralServiceImpl implements GeneralService {
 
         bodyContent = htmlText.toString();
 
-        new com.mss.msp.util.MailManager().doaddemailLog(FromAdd, toAdd, bcc, cc, SubjectStatusActivation, bodyContent,0);
-        // System.out.println("logger is created after Status activating email method.... ");
+        new com.mss.msp.util.MailManager().doaddemailLog(FromAdd, toAdd, bcc, cc, SubjectStatusActivation, bodyContent, 0);
+        System.out.println("********************GeneralServiceImpl :: doAddMailManager Method End*********************");
     }
 
 }

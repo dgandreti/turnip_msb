@@ -17,7 +17,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Miracle Service Bay :: Employee Search Page</title>
+        <title>ServiceBay :: Account Uploading Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -27,8 +27,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
+        
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
@@ -69,11 +68,11 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
 
-                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                        <font color="#ffffff"><s:property value="accountType"></s:property>&nbsp;Account Loading</font>
+                                                     
+                                                        <font color="#ffffff">Accounts Uploading</font>
                                                         <s:url var="myUrl" action="../../acc/accountadd.action">
                                                         </s:url>
-                                                        <%-- <span> <s:a href='%{#myUrl}' cssClass="pull-right"><img src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>--%>
+                                                     
 
                                                     </h4>
                                                 </div>
@@ -102,7 +101,7 @@
                                                                     <span style="color:#4E4E4E;font-size: 10px">Upload XLS file.</span>
                                                                 </div>
                                                                 <div class="col-sm-4 pull-right">
-                                                                <%--<s:hidden name="accountType" id="accountType" value="%{accountType}"/>--%>
+                                                           
 
                                                                 <s:submit value="Upload" type="button" cssClass="cssbutton widget_1195417415 btn_upld fa fa-upload pull-left" name="submit" onclick="return checkExtention()" />
                                                             </div>
@@ -112,7 +111,7 @@
                                                     </s:form>       
 
 
-                                                    <%--<s:submit cssClass="css_button" value="show"/><br>--%>
+                                                  
                                                 </div>
                                                 <br>
                                                 <div class="col-sm-12">
@@ -132,7 +131,7 @@
                                                             (000)-000-0000
                                                         </ol> 
                                                         To Download Sample File Format 
-                                                        <s:a href="downloadSample.action">Click Here</s:a> 
+                                                        <s:a id="sampleDownloadButton" href="downloadSample.action">Click Here</s:a> 
                                                         </div>
                                                     </div>
 

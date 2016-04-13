@@ -47,6 +47,11 @@ import org.apache.commons.lang.StringUtils;
 public class AccountServiceImpl implements AccountService {
 
     private static Logger log = Logger.getLogger(AccountServiceImpl.class);
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
 
     public List<Account> AccountSearch() throws ServiceLocatorException {
         List<Account> accounts = new ArrayList<Account>();
@@ -54,10 +59,8 @@ public class AccountServiceImpl implements AccountService {
         //getting sessionFactory for the HibernateUtil class.
         Session session = HibernateServiceLocator.getInstance().getSession();
 
-
         //Create query
         Criteria query = session.createCriteria(com.mss.msp.acc.Account.class);
-
 
         //List the results
         accounts = query.list();
@@ -96,21 +99,24 @@ public class AccountServiceImpl implements AccountService {
         return accounts;
     }
 
-    //TODO Refactor to take in Account Object
+    /**
+     * *****************************************************************************
+     *
+     * Method : doAccountSearch() is for getting accounts
+     *
+     * *****************************************************************************
+     */
     public List<Account> doAccountSearch(String name, String url, String zip, String status,
             State state, Country country, Integer type, Integer industry, String lastAcccessDate, Integer orgId, Integer csr_Id)
             throws ServiceLocatorException {
+        System.out.println("********************AccountServiceImpl :: doAccountSearch Method Start*********************");
         DateUtility dateUtility = new DateUtility();
         List<Account> accounts = new ArrayList<Account>();
-        System.err.println("in accountsearch impl2" + csr_Id);
         //getting sessionFactory for the HibernateUtil class.
         Session session = HibernateServiceLocator.getInstance().getSession();
-        System.out.println("Adding criteria");
-
         //Create query
         Criteria criteria = null;// session.createCriteria(com.mss.msp.acc.Account.class); 
         //ToDo Add search paramters;
-        // by nag
         if (csr_Id > 0) {
             criteria = session.createCriteria(com.mss.msp.acc.CsrAccount.class);
             criteria.add(Restrictions.eq("csrId", csr_Id));
@@ -151,16 +157,15 @@ public class AccountServiceImpl implements AccountService {
         if (orgId != null && orgId.intValue() >= 0) {
             criteria.add(Restrictions.eq("org_rel_id", orgId));
         }
-         criteria.add(Restrictions.eq("isPrimary", 1));
+        criteria.add(Restrictions.eq("isPrimary", 1));
         //Only get one of each Account
         criteria.addOrder(Order.asc("name"));
         //criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         criteria.setMaxResults(100);
-        System.out.println("Listing results");
         //List the results
         accounts = criteria.list();
-        System.out.println("have results");
         closeSession(session);
+        System.out.println("********************AccountServiceImpl :: doAccountSearch Method End*********************");
         return accounts;
     }
 
@@ -259,9 +264,8 @@ public class AccountServiceImpl implements AccountService {
     public int updateAccSalesTeam(com.mss.msp.acc.details.AccountDetailsAction accountDetailsAction, String[] salesId, int primaryAccount) throws ServiceLocatorException {
         Statement statement = null;
 
-        ResultSet resultSet;
-
         Connection connection = null;
+
         String queryString;
         int insertedRows = 0;
         int updateRows = 0;
@@ -276,7 +280,6 @@ public class AccountServiceImpl implements AccountService {
             statement.close();
             statement = null;
             statement = connection.createStatement();
-
 
             /**
              * it loops the roles.length and inserts the data into database for
@@ -298,7 +301,6 @@ public class AccountServiceImpl implements AccountService {
                 }
                 insertedRows = statement.executeUpdate(queryString);
             }
-
 
         } catch (Exception e) {
             throw new ServiceLocatorException(e);
@@ -324,23 +326,13 @@ public class AccountServiceImpl implements AccountService {
         Connection connection = null;
         Connection connection1 = null;
         CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
         Statement statement = null;
         ResultSet resultSet = null;
         boolean isExceute = false;
         String resultString = "";
         int updatedRows = 0;
-//        String str = accountAction.getContactSkillValues();
-//        StringTokenizer stk = new StringTokenizer(str, ",");
-//        String skillsResultString = "";
-//        while (stk.hasMoreTokens()) {
-//            skillsResultString += com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(stk.nextToken()));
-//            System.out.println("Result String in while===========================>"+skillsResultString);
-//        }
-//        System.out.println("ResultString---------->" + skillsResultString);
-//        accountAction.setSkillSet(StringUtils.chop(skillsResultString));
-//        System.out.println("reqSkillsResultString---------->" + skillsResultString);
         try {
+            System.out.println("********************AccountServiceImpl :: addAccountContactDetails Method Start*********************");
             connection = ConnectionProvider.getInstance().getConnection();
             callableStatement = connection.prepareCall("{CALL addAccContact(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             callableStatement.setString(1, accountAction.getContactFname());
@@ -350,16 +342,10 @@ public class AccountServiceImpl implements AccountService {
             } else {
                 callableStatement.setString(3, accountAction.getFilePath());
             }
-            //System.out.println("here we print after date changing...........");
             callableStatement.setString(4, accountAction.getContactLname());
-
             callableStatement.setString(5, accountAction.getContactEmail());
             callableStatement.setString(6, accountAction.getOfficephone());
-            // callableStatement.setString(8, accountAjaxHandler.getAddress());
-            //  callableStatement.setString(8, accountAjaxHandler.getOfficeAddress());
-            // callableStatement.setString(8, accountAction.getStatus());
             callableStatement.setInt(7, accountAction.getAccountSearchOrgId());
-            System.out.println("OrgId--->" + accountAction.getAccountSearchOrgId());
             callableStatement.setString(8, accountAction.getConCPhone());
             callableStatement.setInt(9, accountAction.getId());
             callableStatement.setString(10, accountAction.getConAddress());
@@ -369,43 +355,26 @@ public class AccountServiceImpl implements AccountService {
             callableStatement.setInt(14, accountAction.getConCountry());
             callableStatement.setInt(15, accountAction.getConState());
             callableStatement.setString(16, accountAction.getConPhone());
-
-//            callableStatement.setInt(5, accountAction.getConCState());
-//            callableStatement.setString(18, accountAction.getConCAddress());
-//            callableStatement.setString(19, accountAction.getConCAddress2());
-//            callableStatement.setString(20, accountAction.getConCCity());
-//            callableStatement.setString(21, accountAction.getConCZip());
-//            callableStatement.setInt(22, accountAction.getConCCountry());
-//            callableStatement.setString(23, accountAction.getAddAddressFlag());
-//            
             callableStatement.setString(17, accountAction.getTypeOfAccount());
-            //  callableStatement.setInt(18, accountAction.getDepartments());
-            // callableStatement.setString(18, accountAction.getContactDesignation());
             callableStatement.setString(18, accountAction.getGender());
-            // callableStatement.setInt(20, accountAction.getAddTeamLead());
-            // callableStatement.setInt(21, accountAction.getAddManager());
             callableStatement.setInt(19, accountAction.getUserSessionId());
             callableStatement.setString(20, accountAction.getContactAEmail());
-             callableStatement.setInt(21, accountAction.getWorkingLocation());
-             // Add By Aklakh 
-             callableStatement.setString(22, accountAction.getContactTitle());
-             callableStatement.setInt(23, accountAction.getContactExperience());
-             callableStatement.setInt(24,accountAction.getContactIndustry());
-             callableStatement.setString(25, com.mss.msp.util.DataUtility.encrypted(accountAction.getContactSsnNo()));
-             callableStatement.setString(26, accountAction.getContactEducation());
-             callableStatement.setString(27,accountAction.getContactSkillValues());
-             callableStatement.setString(28,File.separator);
+            callableStatement.setInt(21, accountAction.getWorkingLocation());
+            callableStatement.setString(22, accountAction.getContactTitle());
+            callableStatement.setInt(23, accountAction.getContactExperience());
+            callableStatement.setInt(24, accountAction.getContactIndustry());
+            callableStatement.setString(25, com.mss.msp.util.DataUtility.encrypted(accountAction.getContactSsnNo()));
+            callableStatement.setString(26, accountAction.getContactEducation());
+            callableStatement.setString(27, accountAction.getContactSkillValues());
+            callableStatement.setString(28, File.separator);
             callableStatement.registerOutParameter(29, Types.INTEGER);
             callableStatement.registerOutParameter(30, Types.INTEGER);
-
-            System.out.println("hello here print after prepare call parameter ");
 
             isExceute = callableStatement.execute();
             updatedRows = callableStatement.getInt(29);
             int usrId = callableStatement.getInt(30);
-            System.out.println("usrId-------->" + usrId);
-            String imgPath = null;
 
+            String imgPath = null;
             connection1 = ConnectionProvider.getInstance().getConnection();
             statement = connection1.createStatement();
             String queryString = "select image_path from users where usr_id=" + usrId;
@@ -414,16 +383,14 @@ public class AccountServiceImpl implements AccountService {
 
                 imgPath = resultSet.getString("image_path");
             }
-            //File destFile = new File(accountAction.getFilePath() + File.separator + accountAction.getTaskAttachmentFileName());
             if (imgPath != null) {
                 File destFile = new File(imgPath);
-                System.out.println(">>>>>>>>>>>>>>>>>>IN Impl image PATH222222>>>>>>>>>>>>" + destFile);
                 FileUtils.copyFile(accountAction.getTaskAttachment(), destFile);
             }
             if (updatedRows > 0) {
                 resultString = "Added successfully";
             }
-            System.out.println("is updatedRows " + updatedRows);
+            System.out.println("********************AccountServiceImpl :: addAccountContactDetails Method End*********************");
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -440,6 +407,14 @@ public class AccountServiceImpl implements AccountService {
                     connection.close();
                     connection = null;
                 }
+                if (connection1 != null) {
+                    connection1.close();
+                    connection1 = null;
+                }
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
+                }
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
             }
@@ -452,12 +427,13 @@ public class AccountServiceImpl implements AccountService {
     public boolean addAccount(Account account, Integer userId, Integer orgId) {
         boolean success = false;
         Connection conn = null;
-        Statement stmt = null;
+
+        PreparedStatement ps = null;
         int status = 0;
         try {
             String accName = com.mss.msp.util.DataUtility.getInstance().formatName(account.getName());
             conn = ConnectionProvider.getInstance().getConnection();
-            PreparedStatement ps = conn.prepareStatement(
+            ps = conn.prepareStatement(
                     "CALL `servicebay`.`addAccounts`"
                     + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, @a_message);");
 
@@ -513,9 +489,9 @@ public class AccountServiceImpl implements AccountService {
 //            }
             ps.setString(18, account.getNoemp());
             ps.setString(19, account.getDescription());
-            Long rev = account.getRevenue();
-            if (rev != null) {
-                ps.setInt(20, rev.intValue());
+            String rev = account.getRevenue();
+            if (rev != null && !"".equals(rev)) {
+                ps.setString(20, rev);
             } else {
                 ps.setString(20, null);
             }
@@ -531,7 +507,6 @@ public class AccountServiceImpl implements AccountService {
 //            }
             status = ps.executeUpdate();
 
-
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -541,8 +516,9 @@ public class AccountServiceImpl implements AccountService {
         } finally {
             //finally block used to close resources
             try {
-                if (stmt != null) {
-                    conn.close();
+                if (ps != null) {
+                    ps.close();
+                    ps = null;
                 }
             } catch (SQLException se) {
                 se.printStackTrace();
@@ -550,6 +526,7 @@ public class AccountServiceImpl implements AccountService {
             try {
                 if (conn != null) {
                     conn.close();
+                    conn = null;
                 }
             } catch (SQLException se) {
                 se.printStackTrace();
@@ -565,28 +542,35 @@ public class AccountServiceImpl implements AccountService {
         return success;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : 04/may/2015
+     *
+     * Author : praveen<pkatru@miraclesoft.com>
+     *
+     * Method : ProfileImageUpdate() Method is for updating the user profile
+     * image
+     *
+     * *****************************************************************************
+     */
     public void updateImageForProfile(AccountAction accountAction, HttpServletRequest httpServletRequest) throws ServiceLocatorException {
         Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String resultString = "";
+
         PreparedStatement preparedStatement = null;
+        System.out.println("********************AccountServiceImpl :: updateImageForProfile Method Start*********************");
         String queryString = "update users set image_path=? where usr_id=?";
-        int updatedRows = 0;
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setString(1, accountAction.getFilePath());
             preparedStatement.setInt(2, accountAction.getContactId());
             preparedStatement.execute();
+            System.out.println("updateImageForProfile query string ------>" + queryString);
+            System.out.println("********************AccountServiceImpl :: updateImageForProfile Method End*********************");
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
                 if (preparedStatement != null) {
                     preparedStatement.close();
                     preparedStatement = null;
@@ -601,14 +585,21 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    /**
+     * *****************************************************************************
+     *
+     * Method : doAccountSearch() is for getting accounts
+     *
+     * *****************************************************************************
+     */
     public List<Account> doAccountSearch(Account account, Integer orgId, Integer csrId) {
         List<Account> accounts = new ArrayList<Account>();
         try {
-            System.err.println("in accountsearch impl1" + csrId);
-            //calling 1
+            System.out.println("********************AccountServiceImpl :: doAccountSearch Method Start*********************");
             accounts = this.doAccountSearch(account.getName(), account.getUrl(), account.getZip(),
                     account.getStatus(), account.getState(), account.getCountry(), account.getTypeId(),
                     account.getIndustryId(), account.getLastAccessDate(), orgId, csrId);
+            System.out.println("********************AccountServiceImpl :: doAccountSearch Method End*********************");
         } catch (ServiceLocatorException ex) {
             java.util.logging.Logger.getLogger(AccountServiceImpl.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -617,9 +608,9 @@ public class AccountServiceImpl implements AccountService {
 
     public String addTeamMemberToProject(AccountAction accountAction, HttpServletRequest httpServletRequest) throws ServiceLocatorException {
         Connection connection = null;
-        Statement statement = null;
+
         PreparedStatement preparedStatement = null;
-        ResultSet resultset = null;
+
         System.out.println("up to here okay....0");
         String querystring = "";
         String result = "";
@@ -645,9 +636,9 @@ public class AccountServiceImpl implements AccountService {
                 preparedStatement.setString(10, accountAction.getResourceType());
                 result = "Insert";
             } else {
-                System.out.println("query is in upodate");
+                System.out.println("query is in update");
                 querystring = "UPDATE Project_team SET current_status='" + accountAction.getTeamMemberStatus() + "',modified_date='" + com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime() + "',modified_by=" + accountAction.getUserSessionId() + ",reportsto1=" + accountAction.getReportsto1() + " WHERE usr_id=" + accountAction.getTeamMemberId() + " AND project_id=" + accountAction.getProjectID();
-                System.out.println("query is in upodate-->" + querystring);
+                System.out.println("query is in update-->" + querystring);
                 preparedStatement = connection.prepareStatement(querystring);
                 result = "Update";
             }
@@ -853,63 +844,38 @@ public class AccountServiceImpl implements AccountService {
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : June 15 2015
      *
-     * @updateAssignTeam()
+     * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
      *
-     * @Author:Aklakh Ahmad<mahmad@miraclesoft.com>
+     * updateAssignTeam() method is used to Update Project TeamMembers.
      *
-     * @Created Date: June 16 2015
-     *
-     * For USe:assigning project to particular team member
-     * *************************************
+     * *****************************************************************************
      */
     public int updateAssignTeam(AccountAction accountAction, String[] prjId) throws ServiceLocatorException {
-        Statement statement = null;
-
-        ResultSet resultSet;
 
         Connection connection = null;
+        Statement statement = null;
+
         String queryString;
         int insertedRows = 0;
-        int updateRows = 0;
         int deletedRows = 0;
         try {
-            System.out.println("%%%%%%%%%%%%%%%%%%Entered in to the IMPL%%%%%%%%%%%%%%%%%%%%%%");
-            System.out.println("Project>>>>>>>>>>>>>>>>>>>>" + accountAction.getProjectID());
-            System.out.println("User Id>>>>>>>>>>>>>>>>>>>>" + accountAction.getUserID());
+            System.out.println("********************AccountServiceImpl :: updateAssignTeam Method Start*********************");
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             queryString = "DELETE FROM prj_sub_prjteam WHERE project_id=" + accountAction.getProjectID() + "  AND usr_id=" + accountAction.getUserID();
-            System.out.println("Delete Query String------->" + queryString);
             deletedRows = statement.executeUpdate(queryString);
             statement.close();
             statement = null;
             statement = connection.createStatement();
-            System.out.println("After Delete");
-
-            /**
-             * it loops the roles.length and inserts the data into database for
-             * each addedVals
-             *
-             * @throws NullPointerException If a NullPointerException exists and
-             * its <code>{@link
-             *          java.lang.NullPointerException}</code>
-             */
-//            //System.out.println("assignedRoleIds.length-->" + assignedRoleIds.length);
-            System.out.println("Sesssion Id---->" + accountAction.getUserSessionId());
             for (int counter = 0; counter < prjId.length; counter++) {
-                System.out.println("IN IMPL>>>>>>>>>>>>>>>>" + prjId[counter]);
-
                 queryString = "Insert into prj_sub_prjteam(project_id,sub_project_id ,usr_id,current_status,created_by) values(" + accountAction.getProjectID() + "," + prjId[counter] + "," + accountAction.getUserID() + "," + "'Active'" + "," + accountAction.getUserSessionId() + ")";
-                System.out.println(queryString);
-
-
-
                 insertedRows = statement.executeUpdate(queryString);
             }
-
-
+            System.out.println("updateAssignTeam query string ------>" + queryString);
+            System.out.println("********************AccountServiceImpl :: updateAssignTeam Method End*********************");
         } catch (Exception e) {
             throw new ServiceLocatorException(e);
         } finally {
@@ -935,6 +901,7 @@ public class AccountServiceImpl implements AccountService {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultString = null;
+        PreparedStatement preparedStatement = null;
         String queryString = "";
         String status = "";
 
@@ -945,7 +912,7 @@ public class AccountServiceImpl implements AccountService {
 //            if(account.getName()!=null)
 //            {
             queryString = "SELECT account_name FROM accounts WHERE account_name=? OR account_url=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(queryString);
+            preparedStatement = connection.prepareStatement(queryString);
             System.out.println("accout Check Query---->" + queryString);
             preparedStatement.setString(1, account.getName());
             preparedStatement.setString(2, account.getUrl());
@@ -956,9 +923,7 @@ public class AccountServiceImpl implements AccountService {
 
             }
 
-
             System.out.println(status);
-
 
         } catch (SQLException se) {
             //Handle errors for JDBC
@@ -969,8 +934,9 @@ public class AccountServiceImpl implements AccountService {
         } finally {
             //finally block used to close resources
             try {
-                if (statement != null) {
-                    connection.close();
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
                 }
             } catch (SQLException se) {
                 se.printStackTrace();
@@ -978,67 +944,74 @@ public class AccountServiceImpl implements AccountService {
             try {
                 if (connection != null) {
                     connection.close();
+                    connection = null;
                 }
             } catch (SQLException se) {
                 se.printStackTrace();
             }
         }
-
         return status;
-
     }
 
+    /**
+     * *****************************************************************************
+     *
+     * Method : getProjectTeamDetails() Method is for getting project team
+     * details.
+     *
+     *
+     * *****************************************************************************
+     */
     public Account getProjectTeamDetails(HttpServletRequest httpServletRequest, AccountAction accountAction) throws ServiceLocatorException {
+
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultString = null;
+        ResultSet resultSet = null;
         String queryString = "";
         int i = 0;
         Account account = new Account();
         try {
-
-            if(accountAction.getProjectFlag() != null&&!"".equals(accountAction.getProjectFlag().trim())){
-                 System.out.println("Inside if");
-                 queryString = "SELECT  CONCAT(first_name,'.',last_name) AS FullName,`project_id`, project_team.`usr_id`, project_team.`designation`, `resource_type`, project_team.`current_status`,`reportsto1`,"
-                    + "`reportsto2`, `account_id`,consultant_skills,rate_salary FROM "
-                    + " `servicebay`.`project_team` LEFT OUTER JOIN usr_details ON "
-                    + " (project_team.usr_id=usr_details.usr_id) LEFT OUTER JOIN users ON (users.usr_id=project_team.usr_id) WHERE project_team.project_id =" + accountAction.getProjectID() ;
-            System.out.println(" sub project queryString  -->" + queryString);
-            }else{
-                 System.out.println("Inside else");
-                   queryString = "SELECT  CONCAT(first_name,'.',last_name) AS FullName,`project_id`, project_team.`usr_id`, project_team.`designation`, `resource_type`, project_team.`current_status`,`reportsto1`,"
-                    + "`reportsto2`, `account_id`,consultant_skills,rate_salary FROM "
-                    + " `servicebay`.`project_team` LEFT OUTER JOIN usr_details ON "
-                    + " (project_team.usr_id=usr_details.usr_id) LEFT OUTER JOIN users ON (users.usr_id=project_team.usr_id) WHERE project_team.project_id =" + accountAction.getProjectID() + "  AND project_team.usr_id=" + accountAction.getUserID();
-            System.out.println(" sub project queryString  -->" + queryString);
-             }
+            System.out.println("********************AccountServiceImpl :: getProjectTeamDetails Method Start*********************");
+            if (accountAction.getProjectFlag() != null && !"".equals(accountAction.getProjectFlag().trim())) {
+                queryString = "SELECT  CONCAT(first_name,'.',last_name) AS FullName,`project_id`, project_team.`usr_id`, project_team.`designation`, `resource_type`, project_team.`current_status`,`reportsto1`,"
+                        + "`reportsto2`, `account_id`,consultant_skills,rate_salary FROM "
+                        + " `servicebay`.`project_team` LEFT OUTER JOIN usr_details ON "
+                        + " (project_team.usr_id=usr_details.usr_id) LEFT OUTER JOIN users ON (users.usr_id=project_team.usr_id) WHERE project_team.project_id =" + accountAction.getProjectID();
+                System.out.println(" sub project queryString  -->" + queryString);
+            } else {
+                queryString = "SELECT  CONCAT(first_name,'.',last_name) AS FullName,`project_id`, project_team.`usr_id`, project_team.`designation`, `resource_type`, project_team.`current_status`,`reportsto1`,"
+                        + "`reportsto2`, `account_id`,consultant_skills,rate_salary FROM "
+                        + " `servicebay`.`project_team` LEFT OUTER JOIN usr_details ON "
+                        + " (project_team.usr_id=usr_details.usr_id) LEFT OUTER JOIN users ON (users.usr_id=project_team.usr_id) WHERE project_team.project_id =" + accountAction.getProjectID() + "  AND project_team.usr_id=" + accountAction.getUserID();
+            }
             connection = (Connection) ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
-            resultString = statement.executeQuery(queryString);
+            resultSet = statement.executeQuery(queryString);
             account.setProjectName(getProjectName(accountAction.getProjectID(), httpServletRequest));
-            while (resultString.next()) {
-                int prjId = resultString.getInt("project_id");
+            while (resultSet.next()) {
+                int prjId = resultSet.getInt("project_id");
                 account.setProjectName(getProjectName(prjId, httpServletRequest));
                 account.setProjectID(prjId);
-                account.setUserID(resultString.getInt("usr_id"));
-                account.setDesignation(resultString.getInt("designation"));
-                account.setTeamMemberStatus(resultString.getString("current_status"));
-                account.setReportsto1(resultString.getString("reportsto1"));
-                account.setReportsto2(resultString.getString("reportsto2"));
-                account.setResourceType(resultString.getString("resource_type"));
-                account.setConsSkills(resultString.getString("consultant_skills"));
-                account.setRateSalary(resultString.getString("rate_salary"));
-                account.setTeamMemberIdname(resultString.getString("FullName"));
+                account.setUserID(resultSet.getInt("usr_id"));
+                account.setDesignation(resultSet.getInt("designation"));
+                account.setTeamMemberStatus(resultSet.getString("current_status"));
+                account.setReportsto1(resultSet.getString("reportsto1"));
+                account.setReportsto2(resultSet.getString("reportsto2"));
+                account.setResourceType(resultSet.getString("resource_type"));
+                account.setConsSkills(resultSet.getString("consultant_skills"));
+                account.setRateSalary(resultSet.getString("rate_salary"));
+                account.setTeamMemberIdname(resultSet.getString("FullName"));
             }
-            // System.out.println(" sub project details----------->" + subProjectList);
+            System.out.println("getProjectTeamDetails query string ------>" + queryString);
+            System.out.println("********************AccountServiceImpl :: getProjectTeamDetails Method End*********************");
         } catch (Exception ex) {
             System.out.println(ex.toString());
             ex.printStackTrace();
         } finally {
             try {
-                if (resultString != null) {
-                    resultString.close();
-                    resultString = null;
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
                 }
                 if (statement != null) {
                     statement.close();
@@ -1052,8 +1025,6 @@ public class AccountServiceImpl implements AccountService {
                 sqle.printStackTrace();
             }
         }
-        //  System.out.println("sub project list------>" + subProjectList);
         return account;
-
     }
 }

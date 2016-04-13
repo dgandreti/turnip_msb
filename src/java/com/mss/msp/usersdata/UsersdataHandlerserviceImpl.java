@@ -36,6 +36,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.servlet.http.HttpServletRequest;
 import jxl.Cell;
 import jxl.CellView;
@@ -55,21 +56,40 @@ import jxl.write.WritableWorkbook;
  */
 public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
 
-    private Connection connection;
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString = "";
+    private static Logger reportsLog = Logger.getLogger(UsersdataHandlerserviceImpl.class.getName());
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getAllEmployeeDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public List getAllEmployeeDetails(HttpServletRequest httpServletRequest) throws ServiceLocatorException {
-        ArrayList<UserVTO> searchklist = new ArrayList<UserVTO>();
-        StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
+
+
+        ArrayList<UserVTO> searchklist = new ArrayList<UserVTO>();
+        StringBuffer stringBuffer = new StringBuffer();
         int i = 0;
-        //System.err.println(days+"Diff in Dyas...");
+        System.out.println("********************UsersdataHandlerserviceImpl :: getAllEmployeeDetails Method Start*********************");
         try {
             queryString = "SELECT usr_id,email1,CONCAT_WS(' ',first_name,last_name) AS name,cur_status,phone1 FROM users WHERE cur_status like 'Active' AND type_of_user !='R' AND org_id = " + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID);
-
+            System.out.println("getAllEmployeeDetails :: query string ------>" + queryString);
 
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -105,39 +125,45 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getAllEmployeeDetails Method End*********************");
         return searchklist;
 
     }
 
     /**
+     * *****************************************************************************
+     * Date :
      *
-     * This method is used to getting employee myprofile address
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * added by praveen<pkatru@miraclesoft.com>
+     * ForUse : getEmployeeAddress() method is used to getting employee
+     * myprofile address
+     *
+     *
+     * *****************************************************************************
      */
     public UserAddress getEmployeeAddress(HttpServletRequest httpServletRequest, String tableName) throws ServiceLocatorException {
-        // ArrayList<UserAddress> addressList = new ArrayList<UserAddress>();
-        PreparedStatement preparedStatement = null;
+
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
         String sqlquery = "";
         UserAddress userAddress = new UserAddress();
+        System.out.println("********************UsersdataHandlerserviceImpl :: getEmployeeAddress Method Start*********************");
         try {
             if ("usr_address".equalsIgnoreCase(tableName)) {
                 sqlquery = "select  address_flag,address,city,state,zip,country,phone,address2 from usr_address where usr_id=" + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) + " and status='Active'";
             } else if ("consultant_address".equalsIgnoreCase(tableName)) {
-                System.out.println("this seession login id from consultant-->" + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID));
                 sqlquery = "select  address_flag,address,city,state,zip,country,phone,address2 from consultant_address where usr_consultant_id=" + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) + " and status='Active'";
-                System.out.println("query-->" + sqlquery);
             }
-            // System.out.println(sqlquery + "  sql query from address");
+            System.out.println("getEmployeeAddress :: query string ------>" + sqlquery);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sqlquery);
 
-
             while (resultSet.next()) {
-
                 if ("PC".equalsIgnoreCase(resultSet.getString("address_flag"))) {
                     userAddress.setP_address(resultSet.getString("address"));
                     userAddress.setP_city(resultSet.getString("city"));
@@ -155,7 +181,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                     userAddress.setC_country(com.mss.msp.util.DataSourceDataProvider.getInstance().getCountry(resultSet.getInt("country")));
                     userAddress.setC_phone(resultSet.getString("phone"));
                     userAddress.setC_address2(resultSet.getString("address2"));
-
 
                 }
                 if ("C".equalsIgnoreCase(resultSet.getString("address_flag"))) {
@@ -178,10 +203,8 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                     userAddress.setP_address2(resultSet.getString("address2"));
                     userAddress.setAddress_flag("false");
 
-
                 }
             }
-            //         addressList.add(userAddress);
 
         } catch (Exception sqe) {
             sqe.printStackTrace();
@@ -203,22 +226,34 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getEmployeeAddress Method End*********************");
         return userAddress;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getEmployeeDetails() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public EmpDetails getEmployeeDetails(int userid) throws ServiceLocatorException {
 
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "SELECT u.first_name,u.last_name,u.dob,u.gender,u.marital_status,u.living_country,u.working_country,u.phone1,u.alias_name,u.image_path,u.office_phone,u.fax,u.email1,u.email2,emp_position,u.cur_status,a.account_name,a.account_id FROM users u LEFT OUTER JOIN accounts a ON ((SELECT org_id FROM users WHERE usr_id=" + userid + ")=a.account_id)  WHERE u.usr_id=" + userid;
+        String queryString = "";
 
+        System.out.println("********************UsersdataHandlerserviceImpl :: getEmployeeDetails Method Start*********************");
+        queryString = "SELECT u.first_name,u.last_name,u.dob,u.gender,u.marital_status,u.living_country,u.working_country,u.phone1,u.alias_name,u.image_path,u.office_phone,u.fax,u.email1,u.email2,emp_position,u.cur_status,a.account_name,a.account_id FROM users u LEFT OUTER JOIN accounts a ON ((SELECT org_id FROM users WHERE usr_id=" + userid + ")=a.account_id)  WHERE u.usr_id=" + userid;
+        System.out.println("getEmployeeDetails :: query string ------>" + queryString);
         Map titlesMap = new HashMap();
         EmpDetails empdetails = new EmpDetails();
         try {
-
-            //   System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -226,10 +261,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 empdetails.setOrgid(resultSet.getInt("account_id"));
                 empdetails.setFirst_name(resultSet.getString("first_name"));
                 empdetails.setLast_name(resultSet.getString("last_name"));
-                //   empdetails.setDob(com.mss.msp.util.DateUtility.getInstance().convertDateToView(resultSet.getDate("dob")));
-
-                //    System.out.println(empdetails.getDob() + " in result set we print");
-                // empdetails.setGender(resultSet.getString("gender"));
                 if ("M".equalsIgnoreCase(resultSet.getString("gender"))) {
                     empdetails.setGender("1");
                 } else {
@@ -237,9 +268,7 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 }
                 empdetails.setPhone1(resultSet.getString("phone1"));
                 empdetails.setAlias(resultSet.getString("alias_name"));
-                // System.out.println(empdetails.getAlias() + " here we print alias name");
                 empdetails.setLiving_country(resultSet.getString("living_country"));
-                // empdetails.setMarital_status(resultSet.getString("marital_status"));
                 if ("S".equalsIgnoreCase(resultSet.getString("marital_status"))) {
                     empdetails.setMarital_status("1");
                 } else {
@@ -255,7 +284,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 empdetails.setImage_path(resultSet.getString("image_path"));
                 empdetails.setAccount_name(resultSet.getString("account_name"));
 
-
             }
 
         } catch (Exception sqe) {
@@ -265,10 +293,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 if (resultSet != null) {
                     resultSet.close();
                     resultSet = null;
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
                 }
                 if (statement != null) {
                     statement.close();
@@ -282,35 +306,40 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getEmployeeDetails Method End*********************");
         return empdetails;
 
     }
 
     /**
+     * *****************************************************************************
+     * Date :
      *
-     * This method is used to update employee profile
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * added by praveen<pkatru@miraclesoft.com>
+     * ForUse : updateEmpDetails() method is used to update employee profile
+     *
+     *
+     * *****************************************************************************
      */
     public boolean updateEmpDetails(UsersdataHandlerAction usersdataHandlerAction, int userSessionId) throws ServiceLocatorException {
+
+        Connection connection = null;
         CallableStatement callableStatement = null;
         PreparedStatement preparedStatement = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
         boolean isExceute = false;
         int updatedRows = 0;
         String date;
-        //System.out.println("up to here okay");
         date = com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDate(usersdataHandlerAction.getDob());
-        //System.out.println(date + "... here we print date");
-
-
-        // System.out.println("in update emp details");
-
+        System.out.println("********************UsersdataHandlerserviceImpl :: updateEmpDetails Method Start*********************");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-
             String query = "select cur_status from users where usr_id=" + usersdataHandlerAction.getUserid();
+            System.out.println("updateEmpDetails :: query string ------>" + query);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             String status = "";
@@ -318,8 +347,8 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 status = resultSet.getString("cur_status");
             }
             if ("Active".equalsIgnoreCase(status)) {
-                String queryString = "update users set first_name=?,last_name=?,dob=?,alias_name=?,gender=?,working_country=?,phone1=?,marital_status=?,living_country=?,office_phone=?,fax=?,email1=?,email2=?,cur_status=?,emp_position=?,modified_by=?,modified_date=? where usr_id=?";
-
+                queryString = "update users set first_name=?,last_name=?,dob=?,alias_name=?,gender=?,working_country=?,phone1=?,marital_status=?,living_country=?,office_phone=?,fax=?,email1=?,email2=?,cur_status=?,emp_position=?,modified_by=?,modified_date=? where usr_id=?";
+                System.out.println("updateEmpDetails :: query string ------>" + queryString);
                 preparedStatement = connection.prepareStatement(queryString);
                 preparedStatement.setString(1, usersdataHandlerAction.getFirst_name());
                 preparedStatement.setString(2, usersdataHandlerAction.getLast_name());
@@ -339,21 +368,16 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 preparedStatement.setInt(16, userSessionId);
                 preparedStatement.setTimestamp(17, com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime());
                 preparedStatement.setInt(18, usersdataHandlerAction.getUserid());
-
                 preparedStatement.executeUpdate();
-                //  System.out.println("statement okay");
             } else {
-                //   System.out.println("in else update emp details" + userSessionId);
                 String plainPassword = SecurityServiceProvider.generateRandamSecurityKey(6, 6, 1, 1, 0);
                 String pwdSalt = SecurityServiceProvider.generateRandamSecurityKey(10, 10, 2, 3, 3);
                 String encPwd = SecurityServiceProvider.getEncrypt(plainPassword, pwdSalt);
                 callableStatement = connection.prepareCall("{CALL updateEmpProfile(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-
-                //  System.out.println("hello here print after prepare call");
+                System.out.println("updateEmpDetails :: procedure name : updateEmpProfile");
                 callableStatement.setString(1, usersdataHandlerAction.getFirst_name());
                 callableStatement.setString(2, usersdataHandlerAction.getLast_name());
                 callableStatement.setDate(3, com.mss.msp.util.DateUtility.getInstance().getMysqlDate(usersdataHandlerAction.getDob()));
-                //  System.out.println("here we print after date changing...........");
                 callableStatement.setString(4, usersdataHandlerAction.getAlias());
                 callableStatement.setString(5, usersdataHandlerAction.getGender());
                 callableStatement.setString(6, usersdataHandlerAction.getWorking_country());
@@ -367,14 +391,11 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 callableStatement.setString(14, usersdataHandlerAction.getCurrent_status());
                 callableStatement.setInt(15, 1);
                 callableStatement.setInt(16, usersdataHandlerAction.getUserid());
-                //  System.out.println("hello here print after prepare call------------> after setting");
                 callableStatement.setString(17, pwdSalt);
                 callableStatement.setString(18, encPwd);
                 callableStatement.setInt(19, userSessionId);
                 callableStatement.setString(20, usersdataHandlerAction.getEmp_position());
                 callableStatement.registerOutParameter(21, Types.INTEGER);
-                //  System.out.println("hello here print after prepare call parameter ");
-
                 isExceute = callableStatement.execute();
                 updatedRows = callableStatement.getInt(21);
                 //Send Email to the user
@@ -382,7 +403,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                     doAddMailManagerStatusActivation(usersdataHandlerAction.getEmail1(), usersdataHandlerAction.getFirst_name(), usersdataHandlerAction.getLast_name(), plainPassword, "serviceBayLoginCredentials", userSessionId);
                 }
                 // Insert query do add email logger MailManager usersdataHandlerAction.getEmail1() cc bc subject content
-                //  System.out.println("update okay");
             }
         } catch (Exception sqe) {
             sqe.printStackTrace();
@@ -397,28 +417,46 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                     connection.close();
                     connection = null;
                 }
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: updateEmpDetails Method End*********************");
         return true;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doAddMailManagerStatusActivation() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public void doAddMailManagerStatusActivation(String email1, String first_name, String last_name, String plainPassword, String subject, int createdBy) throws SQLException, ServiceLocatorException {
+
+
+        System.out.println("********************UsersdataHandlerserviceImpl :: doAddMailManagerStatusActivation Method Start*********************");
         String toAdd = "", bodyContent = "", bcc = "", cc = "", SubjectStatusActivation = "";
-        //java.util.Properties prop = new java.util.Properties();
-        // InputStream input = null;
-        // input = new FileInputStream("msb.properties");
-        // load a properties file
-        //  prop.load(input);
-        // toAdd = prop.getProperty("MSB.reg");
-        //String FromAdd = prop.getProperty("MSB.from");
         String FromAdd = Properties.getProperty("MSB.from");
         String Empname = first_name;
         Empname = Empname.concat("." + last_name);
-        //  System.out.println("Empname" + Empname);
         toAdd = email1;
-        // System.out.println("Here we print the properties" + toAdd);
         SubjectStatusActivation = subject;
         StringBuilder htmlText = new StringBuilder();
         htmlText.append("<html>");
@@ -463,42 +501,44 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
         bodyContent = htmlText.toString();
 
         new com.mss.msp.util.MailManager().doaddemailLog(FromAdd, toAdd, bcc, cc, SubjectStatusActivation, bodyContent, createdBy);
-        // System.out.println("logger is created after Status activating email method.... ");
+        System.out.println("********************UsersdataHandlerserviceImpl :: doAddMailManagerStatusActivation Method End*********************");
     }
-//modified by praveen
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : praveen
+     *
+     * ForUse : getAllRoles() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public Map getAllRoles(int userId, String type_of_relation) throws ServiceLocatorException {
-        Map orgRoles = new HashMap();
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
 
+        Map orgRoles = new HashMap();
+        System.out.println("********************UsersdataHandlerserviceImpl :: getAllRoles Method Start*********************");
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT  role_id ,role_name FROM roles  WHERE 1=1 and org_type='" + type_of_relation + "' ";
-        /* if ("SA".equalsIgnoreCase(type_of_user)) {
-         queryString += " and org_type='M'";
-         }
-         if ("AC".equalsIgnoreCase(type_of_user)) {
-         queryString += " and org_type='C'";
-         }
-         if ("VC".equalsIgnoreCase(type_of_user)) {
-         queryString += " and org_type='V'";
-         }*///System.out.println(query);
+        queryString = "SELECT  role_id ,role_name FROM roles  WHERE 1=1 and org_type='" + type_of_relation + "' ";
+        System.out.println("getAllRoles :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
                 orgRoles.put(resultSet.getInt("role_id"), resultSet.getString("role_name"));
-
             }
 
         } catch (SQLException ex) {
-            // System.out.println("getOrgAllRoles method-->" + ex.getMessage());
             ex.printStackTrace();
         } finally {
 
             try {
-                // resultSet Object Checking if it's null then close and set null
                 if (resultSet != null) {
                     resultSet.close();
                     resultSet = null;
@@ -517,19 +557,34 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 throw new ServiceLocatorException(ex);
             }
         }
-        //System.out.println("orgRolesMap-->" + orgRoles);
+        System.out.println("********************UsersdataHandlerserviceImpl :: getAllRoles Method End*********************");
         return orgRoles;
 
     }
-//modified by praveen
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : praveen
+     *
+     * ForUse : getAssignedRoles() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public Map getAssignedRoles(int userId) throws ServiceLocatorException {
-        Map rolesMap = new HashMap();
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        Map rolesMap = new HashMap();
+        System.out.println("********************UsersdataHandlerserviceImpl :: getAssignedRoles Method Start*********************");
         connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "select r.role_id as roleId,role_name from usr_roles ur left outer join roles r on(ur.role_id=r.role_id) where usr_id=" + userId;
+        queryString = "select r.role_id as roleId,role_name from usr_roles ur left outer join roles r on(ur.role_id=r.role_id) where usr_id=" + userId;
+        System.out.println("getAssignedRoles :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -560,29 +615,33 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 throw new ServiceLocatorException(ex);
             }
         }
-
+        System.out.println("********************UsersdataHandlerserviceImpl :: getAssignedRoles Method End*********************");
         return rolesMap;
-
     }
 
-//modified by praveen
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : praveen
+     *
+     * ForUse : getNotAssignedRoles() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public Map getNotAssignedRoles(int userId, String type_of_relation) throws ServiceLocatorException {
-        Map notAssignedRoles = new HashMap();
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        connection = ConnectionProvider.getInstance().getConnection();
-        String queryString = "SELECT  role_id ,role_name FROM roles  WHERE role_id NOT IN(SELECT role_id FROM usr_roles WHERE usr_id=" + userId + ") and org_type='" + type_of_relation + "' ";
+        String queryString = "";
 
-        /*  if ("SA".equalsIgnoreCase(type_of_user)) {
-         queryString += " and org_type='M'";
-         }
-         if ("AC".equalsIgnoreCase(type_of_user)) {
-         queryString += " and org_type='C'";
-         }
-         if ("VC".equalsIgnoreCase(type_of_user)) {
-         queryString += " and org_type='V'";
-         }*/
+        Map notAssignedRoles = new HashMap();
+        System.out.println("********************UsersdataHandlerserviceImpl :: getNotAssignedRoles Method Start*********************");
+        connection = ConnectionProvider.getInstance().getConnection();
+        queryString = "SELECT  role_id ,role_name FROM roles  WHERE role_id NOT IN(SELECT role_id FROM usr_roles WHERE usr_id=" + userId + ") and org_type='" + type_of_relation + "' ";
+        System.out.println("getNotAssignedRoles :: query string ------>" + queryString);
 
         try {
             statement = connection.createStatement();
@@ -614,37 +673,42 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 throw new ServiceLocatorException(ex);
             }
         }
-
+        System.out.println("********************UsersdataHandlerserviceImpl :: getNotAssignedRoles Method End*********************");
         return notAssignedRoles;
 
 
     }
 
     /**
+     * *****************************************************************************
+     * Date :
      *
-     * This method is used to getting department names return Map object added
-     * by praveen<pkatru@miraclesoft.com>
+     * Author : praveen<pkatru@miraclesoft.com>
+     *
+     * ForUse : getDepartment_Names() method is used to getting department names
+     * return Map object added
+     *
+     *
+     * *****************************************************************************
      */
     public Map getDepartment_Names(UsersdataHandlerAction aThis) {
-        Map mapDept_names = new HashMap();
-        //Connection connection = null;
 
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        String queryString = "";
 
+        Map mapDept_names = new HashMap();
+        System.out.println("********************UsersdataHandlerserviceImpl :: getDepartment_Names Method Start*********************");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-
             String sqlquery = "SELECT a.account_name, d.dept_id ,d.dept_name FROM departments  AS d LEFT OUTER JOIN accounts  AS a ON (d.org_id=a.account_id) WHERE d.org_id=(SELECT org_id FROM users WHERE usr_id=?)";
+            System.out.println("getDepartment_Names :: query string ------>" + sqlquery);
             preparedStatement = connection.prepareStatement(sqlquery);
-
             preparedStatement.setInt(1, aThis.getUserid());
-
             resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 mapDept_names.put(resultSet.getString("dept_id"), resultSet.getString("dept_name"));
-
             }
 
         } catch (SQLException ex) {
@@ -675,26 +739,33 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                     ex1.printStackTrace();
                 }
             }
+            System.out.println("********************UsersdataHandlerserviceImpl :: getDepartment_Names Method End*********************");
             return mapDept_names;
         }
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : insertRoles() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public int insertRoles(String[] assignedRoleIds, int employeeId, int primaryRoleId) throws ServiceLocatorException {
-        Statement statement = null;
 
-        /**
-         * The statement is useful to execute the above queryString
-         */
-        ResultSet resultSet;
-
-        /**
-         * The connection is object to useful to create the statement object
-         */
         Connection connection = null;
-        String queryString;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+
         int insertedRows = 0;
         int updateRows = 0;
         int deletedRows = 0;
+        System.out.println("********************UsersdataHandlerserviceImpl :: insertRoles Method Start*********************");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -702,6 +773,7 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
              * The queryString is created depends on the employeeId
              */
             queryString = "DELETE FROM usr_roles WHERE usr_id=" + employeeId;
+            System.out.println("insertRoles :: query string ------>" + queryString);
             deletedRows = statement.executeUpdate(queryString);
             statement.close();
             statement = null;
@@ -716,16 +788,15 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
              * its <code>{@link
              *          java.lang.NullPointerException}</code>
              */
-            //System.out.println("assignedRoleIds.length-->" + assignedRoleIds.length);
             for (int counter = 0; counter < assignedRoleIds.length; counter++) {
                 if (Integer.parseInt(assignedRoleIds[counter]) == primaryRoleId) {
                     queryString = "Insert into usr_roles(primary_flag,usr_id,role_id) values(1," + employeeId + ", " + assignedRoleIds[counter] + ")";
                 } else {
                     queryString = "Insert into usr_roles(primary_flag,usr_id,role_id) values(0," + employeeId + ", " + assignedRoleIds[counter] + ")";
                 }
+                System.out.println("insertRoles :: query string ------>" + queryString);
                 insertedRows = statement.executeUpdate(queryString);
             }
-
 
         } catch (Exception e) {
             throw new ServiceLocatorException(e);
@@ -744,23 +815,37 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 throw new ServiceLocatorException(se);
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: insertRoles Method End*********************");
         return insertedRows;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getCsrList() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public List<UserVTO> getCsrList(UsersdataHandlerAction usersdataHandlerAction, int userId) throws ServiceLocatorException {
-        List<UserVTO> userVTOList = new ArrayList<UserVTO>();
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************UsersdataHandlerserviceImpl :: getCsrList Method Start*********************");
+        List<UserVTO> userVTOList = new ArrayList<UserVTO>();
         DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
         connection = ConnectionProvider.getInstance().getConnection();
-
-        // String queryString = "SELECT  role_id ,role_name FROM roles  WHERE role_id NOT IN(SELECT role_id FROM usr_roles WHERE usr_id=" + userId + ")";
-
-        String queryString = "SELECT DISTINCT(u.usr_id),concat(u.first_name,'.',u.last_name) as name,u.email1,u.cur_status FROM users u "
+        queryString = "SELECT DISTINCT(u.usr_id),concat(u.first_name,'.',u.last_name) as name,u.email1,u.cur_status FROM users u "
                 + " LEFT OUTER JOIN csrorgrel csr  ON(u.usr_id=csr.csr_id) LEFT OUTER JOIN usr_roles ur "
                 + " ON(u.usr_id=ur.usr_id) LEFT OUTER JOIN roles r ON(ur.role_id=r.role_id)"
                 + " WHERE ur.role_id=1 AND primary_flag=1";
+        System.out.println("getCsrList :: query string ------>" + queryString);
 
         if (usersdataHandlerAction.getEmail1() != null) {
             queryString = queryString + " and u.email1 like '%" + usersdataHandlerAction.getEmail1() + "%'  ";
@@ -770,9 +855,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                     + "or u.last_name like '%" + usersdataHandlerAction.getEmpName() + "%')  ";
         }
 
-//        if (usersdataHandlerAction.getEmpName() != null) {
-//            queryString = queryString + " and u.first_name like '%" + usersdataHandlerAction.getEmpName() + "%'  ";
-//        }
         if (usersdataHandlerAction.getStatus() != null) {
             if ("All".equals(usersdataHandlerAction.getStatus())) {
                 queryString = queryString + " and u.cur_status like '%%'  ";
@@ -780,7 +862,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 queryString = queryString + " and u.cur_status= '" + usersdataHandlerAction.getStatus() + "'  ";
             }
         }
-
 
         try {
             statement = connection.createStatement();
@@ -794,7 +875,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 userVTO.setNoOfAccounts(dsdp.getCsrAccountCount(resultSet.getInt("u.usr_id")));
                 userVTOList.add(userVTO);
             }
-            System.out.println("In getCsrList------>" + queryString);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -821,20 +901,35 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
 
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getCsrList Method End*********************");
         return userVTOList;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getCsrAccounts() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public List<UserVTO> getCsrAccounts(UsersdataHandlerAction usersdataHandlerAction) throws ServiceLocatorException {
-        List<UserVTO> userVTOList = new ArrayList<UserVTO>();
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************UsersdataHandlerserviceImpl :: getCsrAccounts Method Start*********************");
+        List<UserVTO> userVTOList = new ArrayList<UserVTO>();
+
         connection = ConnectionProvider.getInstance().getConnection();
 
-        // String queryString = "SELECT  role_id ,role_name FROM roles  WHERE role_id NOT IN(SELECT role_id FROM usr_roles WHERE usr_id=" + userId + ")";
-
-
-        String queryString = "SELECT csr.csr_id,a.account_id,a.account_name,csr.status FROM accounts a LEFT OUTER JOIN csrorgrel csr ON(a.account_id=csr.org_id) WHERE csr.status='Active' AND csr.csr_id=" + usersdataHandlerAction.getUserId();
+        queryString = "SELECT csr.csr_id,a.account_id,a.account_name,csr.status FROM accounts a LEFT OUTER JOIN csrorgrel csr ON(a.account_id=csr.org_id) WHERE csr.status='Active' AND csr.csr_id=" + usersdataHandlerAction.getUserId();
+        System.out.println("getCsrAccounts :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -846,7 +941,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 userVTO.setCur_status(resultSet.getString("csr.status"));
                 userVTOList.add(userVTO);
             }
-            System.out.println("In getCsrList------>" + queryString);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -873,26 +967,41 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
 
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getCsrAccounts Method End*********************");
         return userVTOList;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getEmployeeCategorization() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public List<UserVTO> getEmployeeCategorization(UsersdataHandlerAction usersdataHandlerAction, int userOrgSessionId) throws ServiceLocatorException {
-        List<UserVTO> userVTOList = new ArrayList<UserVTO>();
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************UsersdataHandlerserviceImpl :: getEmployeeCategorization Method Start*********************");
+        List<UserVTO> userVTOList = new ArrayList<UserVTO>();
         DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
         connection = ConnectionProvider.getInstance().getConnection();
 
-
-        String queryString = " SELECT uc.sub_cat,lk.grpname,r.role_name,uc.id,u.usr_id,u.org_id,uc.cat_type,"
+        queryString = " SELECT uc.sub_cat,lk.grpname,r.role_name,uc.id,u.usr_id,u.org_id,uc.cat_type,"
                 + "CONCAT(u.first_name,'.',u.last_name) AS name,uc.status,uc.created_by,uc.is_primary "
                 + "FROM usr_grouping uc "
                 + "LEFT OUTER JOIN lkusr_group lk ON(lk.id=uc.cat_type)"
                 + " LEFT OUTER JOIN users u ON(uc.usr_id=u.usr_id) LEFT OUTER JOIN usr_roles ur ON(ur.usr_id=u.usr_id)"
                 + " LEFT OUTER JOIN roles r  ON(ur.role_id=r.role_id) "
                 + " WHERE uc.status='Active' AND u.org_id=" + userOrgSessionId + "";
-
+        System.out.println("getEmployeeCategorization :: query string ------>" + queryString);
 
         try {
             statement = connection.createStatement();
@@ -902,11 +1011,8 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 userVTO.setGroupingId(resultSet.getInt("uc.id"));
                 userVTO.setEmpId(resultSet.getInt("u.usr_id"));
                 userVTO.setCatogoryGroup(resultSet.getString("lk.grpname"));
-
-                // userVTO.setOrgId(resultSet.getInt("a.account_id"));
                 userVTO.setCatogoryTypeId(resultSet.getInt("uc.cat_type"));
                 userVTO.setSubCategory(resultSet.getString("uc.sub_cat"));
-
                 userVTO.setEmpName(resultSet.getString("name"));
                 userVTO.setRole(resultSet.getString("r.role_name"));
                 int primaryNumber = resultSet.getInt("uc.is_primary");
@@ -919,7 +1025,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 userVTO.setCreatedBy(dsdp.getUserNameByUserId(resultSet.getInt("uc.created_by")));
                 userVTOList.add(userVTO);
             }
-            System.out.println("In getCsrList------>" + queryString);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -946,18 +1051,34 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
 
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getEmployeeCategorization Method End*********************");
         return userVTOList;
     }
-    //praveen
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : praveen<pkatru@miraclesoft.com>
+     *
+     * ForUse : getUserGroupingData() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public void getUserGroupingData(UsersdataHandlerAction usersdataHandlerAction) throws ServiceLocatorException {
-        connection = ConnectionProvider.getInstance().getConnection();
+
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
 
-        String queryString = "SELECT CONCAT(first_name,'.',last_name) NAMES,sub_cat, ug.id,ug.usr_id,ug.cat_type,ug.is_primary,ug.STATUS,ug.description FROM usr_grouping ug JOIN users u ON (ug.usr_id=u.usr_id) WHERE ug.id=" + usersdataHandlerAction.getGroupingId();
-        System.out.println("this is getUserGroupingData  query-->" + queryString);
 
+        System.out.println("********************UsersdataHandlerserviceImpl :: getUserGroupingData Method Start*********************");
+        connection = ConnectionProvider.getInstance().getConnection();
+
+        queryString = "SELECT CONCAT(first_name,'.',last_name) NAMES,sub_cat, ug.id,ug.usr_id,ug.cat_type,ug.is_primary,ug.STATUS,ug.description FROM usr_grouping ug JOIN users u ON (ug.usr_id=u.usr_id) WHERE ug.id=" + usersdataHandlerAction.getGroupingId();
+        System.out.println("getUserGroupingData :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -978,15 +1099,12 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 while (stk.hasMoreTokens()) {
                     list.add(stk.nextToken());
                 }
-                // System.out.println("list----------->"+list);
-                //  List list = new ArrayList(idsMap.keySet());
 
                 usersdataHandlerAction.setCatValuesList(list);
                 usersdataHandlerAction.setUsrDescription(resultSet.getString("description"));
                 usersdataHandlerAction.setUsrStatus(resultSet.getString("status"));
                 usersdataHandlerAction.setCatValuesMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getRequiteCategory(resultSet.getInt("cat_type")));
-                System.out.println("this is printing --->" + resultSet.getString("sub_cat"));
-                System.out.println("here fine for result set");
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -1012,38 +1130,41 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 throw new ServiceLocatorException(ex);
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getUserGroupingData Method End*********************");
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 05/06/2015
      *
-     * @getHomeRedirectDetails() method is used to get Requirement details of
-     * account
+     * Author : Ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:Ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getHomeRedirectDetails() method is used to get Requirement
+     * details of account
      *
-     * @Created Date:05/06/2015
      *
-     **************************************
+     * *****************************************************************************
      */
     public List getHomeRedirectDetails(UsersdataHandlerAction usersdataHandlerAction) throws ServiceLocatorException {
-        List<HomeVTO> homeVTOList = new ArrayList<HomeVTO>();
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************UsersdataHandlerserviceImpl :: getHomeRedirectDetails Method Start*********************");
+        List<HomeVTO> homeVTOList = new ArrayList<HomeVTO>();
+
         connection = ConnectionProvider.getInstance().getConnection();
 
-        String queryString = "SELECT h.id,a.account_name,h.type_of_user,r.role_name,h.action_name,h.STATUS,h.description "
+        queryString = "SELECT h.id,a.account_name,h.type_of_user,r.role_name,h.action_name,h.STATUS,h.description "
                 + "FROM home_redirect_action h "
                 + "LEFT OUTER JOIN accounts a ON(a.account_id=h.org_id) "
                 + "LEFT OUTER JOIN roles r ON(r.role_id=h.primaryrole)";
+
+        System.out.println("getHomeRedirectDetails :: query string ------>" + queryString);
         if ("AC".equalsIgnoreCase(usersdataHandlerAction.getAccountType()) || "VC".equalsIgnoreCase(usersdataHandlerAction.getAccountType())) {
-            // if ("AC".equals(usersdataHandlerAction.getAccountType())) {
             queryString = queryString + " WHERE type_of_user = '" + usersdataHandlerAction.getAccountType() + "' AND h.org_id= " + usersdataHandlerAction.getSessionOrgId();
-//            } else if ("VC".equals(usersdataHandlerAction.getAccountType())) {
-//                queryString = queryString + " WHERE type_of_user = 'VC'";
-//            }
-            // queryString = queryString + " 
         }
         try {
             statement = connection.createStatement();
@@ -1071,13 +1192,11 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 } else {
                     homeVTO.setTypeOfUSer("");
                 }
-                //homeVTO.setTypeOfUSer(resultSet.getString("type_of_user"));
                 homeVTO.setActionName(resultSet.getString("action_name"));
                 homeVTO.setStatus(resultSet.getString("STATUS"));
                 homeVTO.setDescription(resultSet.getString("description"));
                 homeVTOList.add(homeVTO);
             }
-            System.out.println("In homeRedirect List query String------>" + queryString);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -1104,30 +1223,36 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
 
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getHomeRedirectDetails Method End*********************");
         return homeVTOList;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 05/06/2015
      *
-     * @getHomeRedirectDetails() method is used to get Requirement details of
-     * account
+     * Author : Ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:Ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getHomeRedirectDetailsForEdit() method is used to get
+     * Requirement details of account
      *
-     * @Created Date:05/06/2015
      *
-     **************************************
+     * *****************************************************************************
      */
-     public HomeVTO getHomeRedirectDetailsForEdit(UsersdataHandlerAction usersdataHandlerAction) throws ServiceLocatorException {
-        List<HomeVTO> homeVTOList = new ArrayList<HomeVTO>();
+    public HomeVTO getHomeRedirectDetailsForEdit(UsersdataHandlerAction usersdataHandlerAction) throws ServiceLocatorException {
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************UsersdataHandlerserviceImpl :: getHomeRedirectDetailsForEdit Method Start*********************");
+        List<HomeVTO> homeVTOList = new ArrayList<HomeVTO>();
+
         connection = ConnectionProvider.getInstance().getConnection();
         HomeVTO homeVTO = new HomeVTO();
 
-        String queryString = "SELECT h.id,a.account_name,h.type_of_user,r.role_name,h.action_name,h.STATUS,"
+        queryString = "SELECT h.id,a.account_name,h.type_of_user,r.role_name,h.action_name,h.STATUS,"
                 + "h.description,l.acc_type_name,h.org_id,h.primaryrole   "
                 + "FROM home_redirect_action h "
                 + "LEFT OUTER JOIN accounts a ON(a.account_id=h.org_id) "
@@ -1135,24 +1260,20 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 + "LEFT OUTER JOIN org_rel o ON(o.related_org_Id=h.org_id) "
                 + "LEFT OUTER JOIN lk_acc_type l ON(l.id=o.acc_type) "
                 + "WHERE h.id=" + usersdataHandlerAction.getHomeRedirectActionId();
-        System.out.println(">>>>>>>>>>>>>query for ---->" + queryString);
+        System.out.println("getHomeRedirectDetailsForEdit :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
                 homeVTO.setHomeId(resultSet.getInt("id"));
                 if (resultSet.getString("account_name") == null) {
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>account name is null");
                     homeVTO.setAccountName("");
                 } else {
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>account name in not null");
                     homeVTO.setAccountName(resultSet.getString("account_name"));
                 }
                 if (resultSet.getString("acc_type_name") == null) {
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>acc_type_name  is null");
                     homeVTO.setAccountType(resultSet.getString("type_of_user"));
                 } else {
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>acc_type_name  in not null");
                     if (resultSet.getString("acc_type_name").equalsIgnoreCase("Customer")) {
                         if ("SA".equalsIgnoreCase(resultSet.getString("type_of_user"))) {
                             homeVTO.setAccountType("M");
@@ -1170,16 +1291,13 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 } else {
                     homeVTO.setAccountId(resultSet.getString("org_id"));
                 }
-                System.out.println(">>>>>>>>>>>>>>>>>>>>>>PRIMARY ROLE?>>>>>>>>>>" + resultSet.getString("primaryrole"));
                 homeVTO.setRoleName(resultSet.getString("primaryrole"));
-                usersdataHandlerAction.setActionName(com.mss.msp.util.DataSourceDataProvider.getInstance().getActionNamesList(usersdataHandlerAction.getSessionOrgId(),resultSet.getInt("primaryrole"),usersdataHandlerAction.getAccountType()));
+                usersdataHandlerAction.setActionName(com.mss.msp.util.DataSourceDataProvider.getInstance().getActionNamesList(usersdataHandlerAction.getSessionOrgId(), resultSet.getInt("primaryrole"), usersdataHandlerAction.getAccountType()));
                 homeVTO.setTypeOfUSer(resultSet.getString("type_of_user"));
                 homeVTO.setActionName(resultSet.getString("action_name"));
                 homeVTO.setStatus(resultSet.getString("STATUS"));
                 homeVTO.setDescription(resultSet.getString("description"));
-                //homeVTOList.add(homeVTO);
             }
-            System.out.println("In homeRedirect List query String------>" + queryString);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -1206,26 +1324,29 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
 
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getHomeRedirectDetailsForEdit Method End*********************");
         return homeVTO;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doXlsFileUpload() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public void doXlsFileUpload(UsersdataHandlerAction usersdataHandlerAction, String xlsfileFileName) throws ServiceLocatorException {
-//        Connection connection = null;
-//        Statement statement = null;
-//        String queryString = null;
-        Logger reportsLog = Logger.getLogger(UsersdataHandlerserviceImpl.class.getName());
-        Handler fileHandler = null;
+
+        System.out.println("********************UsersdataHandlerserviceImpl :: doXlsFileUpload Method Start*********************");
 
         try {
-            fileHandler = new FileHandler(usersdataHandlerAction.getFilePath() + File.separator + xlsfileFileName + ".log");
-            reportsLog.addHandler(fileHandler);
-            fileHandler.setLevel(Level.ALL);
-            reportsLog.info("Importing Accounts");
-
             Workbook workbook = Workbook.getWorkbook(usersdataHandlerAction.getFileWithPath());
             Sheet sheet = workbook.getSheet(0);
             int count = sheet.getColumns();
-            System.out.println(" i am printing colums:" + count);
             Cell columns = null;
             List<String> list = new ArrayList<String>();
             Map columnsMap = new HashMap();
@@ -1237,29 +1358,43 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
             columnsMap.put(-1, "Others");
             usersdataHandlerAction.setColumnsMap(columnsMap);
             workbook.close();
-            //connection = ConnectionProvider.getInstance().getConnection();
-//            try {  
-//                statement = connection.createStatement();
-//                queryString = "insert into utility_logger(logger,uploaded_file,created_by) values("+xlsfileFileName+","+usersdataHandlerAction.getFilePath()+","+usersdataHandlerAction.getUserSessionId()+")";
-//                statement.executeUpdate(queryString);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(UsersdataHandlerserviceImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+
         } catch (IOException ex) {
             Logger.getLogger(UsersdataHandlerserviceImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (BiffException ex) {
             Logger.getLogger(UsersdataHandlerserviceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: doXlsFileUpload Method End*********************");
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getCellContentValues() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getCellContentValues(List list, UsersdataHandlerAction usersdataHandlerAction, int count, String type, String columsString) throws ServiceLocatorException {
+
+        Connection connection = null;
+        CallableStatement callableStatement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************UsersdataHandlerserviceImpl :: getCellContentValues Method Start*********************");
         String exist_str = "";
         String fail_str = "";
         String result = "";
         String res = "";
         String fileName = "";
         String finalPath = "";
-        CallableStatement callableStatement = null;
+        Handler fileHandler = null;
+        String status = "Success";
+        String comments = "";
         StringTokenizer st2 = new StringTokenizer(usersdataHandlerAction.getPath(), File.separator);
         while (st2.hasMoreTokens()) {
             fileName = st2.nextToken();
@@ -1274,6 +1409,9 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
         ListIterator<String[]> litr = null;
         litr = list.listIterator();
         int updatedRows;
+        int NumberOfRecords = 0;
+        int failCount = 0;
+        int existCount = 0;
         boolean isExceute = false;
         String arrayData[] = new String[count];
         String accRecord = "";
@@ -1283,17 +1421,15 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 accRecord += arrayData[i] + "|";
             }
             accRecord += "^";
+            NumberOfRecords = NumberOfRecords + 1;
         }
-        System.out.println("--------------------" + fileName);
         try {
             if ("Accounts".equalsIgnoreCase(type)) {
-                System.out.println("---------------> in imple" + usersdataHandlerAction.getFilePath());
                 connection = ConnectionProvider.getInstance().getConnection();
-                callableStatement = connection.prepareCall("{call loadExcel(?,?,?,?,?,?,?,?,?,?)}");
+                callableStatement = connection.prepareCall("{call loadExcel(?,?,?,?,?,?,?,?,?,?,?,?)}");
+                System.out.println("getCellContentValues :: procedure name : loadExcel");
                 callableStatement.setString(1, accRecord);
-                System.out.println("after 1 st call" + accRecord);
                 callableStatement.setString(2, "^");
-                System.out.println("----------");
                 callableStatement.setString(3, usersdataHandlerAction.getFilePath());
                 callableStatement.setString(4, fileName);
                 callableStatement.setInt(5, usersdataHandlerAction.getUserSessionId());
@@ -1302,61 +1438,63 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 callableStatement.registerOutParameter(8, Types.VARCHAR);
                 callableStatement.registerOutParameter(9, Types.VARCHAR);
                 callableStatement.registerOutParameter(10, Types.VARCHAR);
-                System.out.println("after out param--------------");
+                callableStatement.registerOutParameter(11, Types.INTEGER);
+                callableStatement.registerOutParameter(12, Types.INTEGER);
                 callableStatement.execute();
-                System.out.println("-----------exe-----------");
                 exist_str = callableStatement.getString(8);
                 fail_str = callableStatement.getString(9);
                 result = callableStatement.getString(10);
+                failCount = callableStatement.getInt(11);
+                existCount = callableStatement.getInt(12);
             } else if ("Contacts".equalsIgnoreCase(type)) {
 
-                System.out.println("---------------> in imple" + usersdataHandlerAction.getFilePath());
                 connection = ConnectionProvider.getInstance().getConnection();
-                callableStatement = connection.prepareCall("{call sp_addUserContacts(?,?,?,?,?,?,?,?,?)}");
+                callableStatement = connection.prepareCall("{call sp_addUserContacts(?,?,?,?,?,?,?,?,?,?,?)}");
+                System.out.println("getCellContentValues :: procedure name : sp_addUserContacts");
                 callableStatement.setString(1, accRecord);
-                System.out.println("after 1 st call" + accRecord);
                 callableStatement.setString(2, "^");
-                System.out.println("----------");
                 callableStatement.setString(3, usersdataHandlerAction.getFilePath());
                 callableStatement.setString(4, fileName);
                 callableStatement.setInt(5, usersdataHandlerAction.getUserSessionId());
                 callableStatement.setString(6, File.separator);
-//                callableStatement.setInt(7, usersdataHandlerAction.getAccountSearchOrgId());
                 callableStatement.registerOutParameter(7, Types.VARCHAR);
                 callableStatement.registerOutParameter(8, Types.VARCHAR);
                 callableStatement.registerOutParameter(9, Types.VARCHAR);
-                System.out.println("after out param--------------");
+                callableStatement.registerOutParameter(10, Types.INTEGER);
+                callableStatement.registerOutParameter(11, Types.INTEGER);
                 callableStatement.execute();
-                System.out.println("-----------exe-----------");
                 exist_str = callableStatement.getString(7);
                 fail_str = callableStatement.getString(8);
                 result = callableStatement.getString(9);
-                System.out.println("this is for users------------>");
+                failCount = callableStatement.getInt(10);
+                existCount = callableStatement.getInt(11);
             }
-            //  int id = callableStatement.getInt(10);
-            System.out.println("---------rs---------->" + result);
-            System.out.println("---------exist_count---------->" + exist_str);
-            System.out.println("---------exist_str---------->" + fail_str);
+
             usersdataHandlerAction.setSp_res(result);
             usersdataHandlerAction.setSp_exists(exist_str);
             usersdataHandlerAction.setSp_failure(fail_str);
-            //usersdataHandlerAction.setExcel_id(id);
             if (!"".equals(usersdataHandlerAction.getSp_exists()) || !"".equals(usersdataHandlerAction.getSp_failure())) {
-                //String ecel = resultantExcelFile(usersdataHandlerAction, fileName, exist_str, excelColValue, k);
                 List<String> record = new ArrayList<String>();
-
                 StringTokenizer str = null;
                 if (!"".equals(usersdataHandlerAction.getSp_failure())) {
                     if (!"".equals(usersdataHandlerAction.getSp_exists())) {
                         str = new StringTokenizer(fail_str + "^" + exist_str, "^");
+                        comments = "some failure records and some existed records";
+                        status = "Un-success";
                     } else {
                         str = new StringTokenizer(fail_str, "^");
+                        comments = "failure records";
+                        status = "Un-success";
                     }
                 } else if (!"".equals(usersdataHandlerAction.getSp_exists())) {
                     if (!"".equals(usersdataHandlerAction.getSp_failure())) {
                         str = new StringTokenizer(fail_str + "^" + exist_str, "^");
+                        comments = "some failure records and some existed records";
+                        status = "Un-success";
                     } else {
                         str = new StringTokenizer(exist_str, "^");
+                        comments = "existed records";
+                        status = "Un-success";
                     }
                 }
 
@@ -1368,16 +1506,12 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 List<String[]> flist = new ArrayList<String[]>();
                 count = record.size();
                 CellView cv = new CellView();
-                // cv.setAutosize(true);
                 int l = 1;
 
                 for (int ki = 0; ki < columnCount - 1; ki++) {
-                    // str = new StringTokenizer(record.get(k), "|", true);
                     int i = 0;
-                    //  String[] fStringList = new String[k+1];
                     String[] tokens1 = record.get(ki).split("\\|", -1);
                     String[] fStringList = new String[tokens1.length];
-                    // for (int i = 0; i < tokens1.length - 1; i++) {
                     for (String string : tokens1) {
 
                         fStringList[i] = string;
@@ -1389,9 +1523,22 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 }
                 doCreateFailedExcelFile(flist, usersdataHandlerAction.getPath(), excelColValue, columnCount, type);
             }
-//            else if (usersdataHandlerAction.getSp_failure() != "") {
-//                //String ecel = resultantExcelFile(usersdataHandlerAction, fileName, fail_str, excelColValue, k);
-//            }
+            fileHandler = new FileHandler(usersdataHandlerAction.getPath() + ".log");
+            reportsLog.addHandler(fileHandler);
+            fileHandler.setLevel(Level.ALL);
+            fileHandler.setFormatter(new SimpleFormatter());
+            int uploadedCount = 0;
+            uploadedCount = NumberOfRecords - (failCount + existCount);
+            reportsLog.info("-- =================== Accounts uploading logger ================================\n"
+                    + "Created date:" + com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime()
+                    + "\nCreated By: " + usersdataHandlerAction.getSessionFirstName() + " " + usersdataHandlerAction.getSessionLastName()
+                    + "\nOrganization :MSB.Inc\nPurpose : To upload " + type + "\nNumber of records :" + NumberOfRecords
+                    + "\nUploaded records :" + uploadedCount
+                    + "\nFailed records :" + failCount
+                    + "\nExisted records :" + existCount
+                    + "\nStatus : " + status + " \ncomments : " + comments
+                    + "\n-- ===============================================================================");
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1410,36 +1557,27 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 ex.printStackTrace();
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getCellContentValues Method End*********************");
         return res;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : resultantExcelFile() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String resultantExcelFile(UsersdataHandlerAction usersdataHandlerAction, String fileName, String failRecord) throws Exception {
+
         String result = "";
         int count;
-        System.out.println("---------------- i n  excel");
+        System.out.println("********************UsersdataHandlerserviceImpl :: resultantExcelFile Method Start*********************");
         int[] colNumbers = null;
-//                File fileobj = new File(usersdataHandlerAction.getFilePath());
-//		Workbook workbook = Workbook.getWorkbook(fileobj);		
-//		Sheet sheet = workbook.getSheet(0);
-//        int count1 = sheet.getColumns();
-//		int rowsCount = sheet.getRows();
-//				Cell rows = null;
-//                String dataArray[]=new String[colNumbers.length];
-//				for (int j=0;j<1;j++) 
-//				{	
-//					for(int i=0;i<count1;i++){
-//                    rows = sheet.getCell(colNumbers[i], j);
-//                    dataArray[i]=rows.getContents();
-//					//System.out.println("--->"+dataArray[i]);
-//					}
-//					
-//                }
-
-
-        //System.out.println("get abs path-->"+fileobj.getPath());
-
-        //System.out.println("get abs path-->"+fileobj.getParent());
-        //System.out.println("this is file name-->"+fileobj.getName());
 
         WritableWorkbook wworkbook;
         wworkbook = Workbook.createWorkbook(new File(usersdataHandlerAction.getFilePath() + File.separator + "resultantFile" + fileName));
@@ -1490,7 +1628,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
         label1 = new Label(19, 0, "Result", cellFormat);
         wsheet.addCell(label1);
         Label label;
-        System.out.println("--------------- in downoad xls-----------" + failRecord);
         List<String> record = new ArrayList<String>();
         StringTokenizer str = new StringTokenizer(failRecord, "^");
         while (str.hasMoreTokens()) {
@@ -1498,18 +1635,14 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
         }
         count = record.size();
         CellView cv = new CellView();
-        // cv.setAutosize(true);
         int l = 1;
         for (int k = 0; k < count; k++) {
-            // str = new StringTokenizer(record.get(k), "|", true);
             int i = 0;
             String[] tokens1 = record.get(k).split("\\|", -1);
-            // for (int i = 0; i < tokens1.length - 1; i++) {
             for (String string : tokens1) {
                 if (string.equalsIgnoreCase("")) {
                     string = null;
                 }
-                System.out.println(string);
                 label = new Label(i, l, string);
                 wsheet.setColumnView(i, 30);
                 wsheet.addCell(label);
@@ -1519,45 +1652,55 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
             l++;
         }
 
-        System.out.println("--------------" + record);
         wworkbook.write();
         wworkbook.close();
+        System.out.println("********************UsersdataHandlerserviceImpl :: resultantExcelFile Method End*********************");
         return result;
 
     }
 
-     public List defaultSearch(UsersdataHandlerAction usersdataHandlerAction,int sessionusrPrimaryrole) throws ServiceLocatorException {
-        String result = "";
-        ArrayList utilityList = new ArrayList();
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : defaultSearch() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
+    public List defaultSearch(UsersdataHandlerAction usersdataHandlerAction, int sessionusrPrimaryrole) throws ServiceLocatorException {
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************UsersdataHandlerserviceImpl :: defaultSearch Method Start*********************");
+        String result = "";
+        ArrayList utilityList = new ArrayList();
         String current_date = "";
         connection = ConnectionProvider.getInstance().getConnection();
-        System.out.println("-----------------" + current_date);
-
-        String queryString = "SELECT * FROM utility_logger WHERE 1=1";
-        System.out.println("--------------" + usersdataHandlerAction.getCreatedDate());
+        queryString = "SELECT * FROM utility_logger WHERE 1=1";
         if (usersdataHandlerAction.getCreatedDate() != null && usersdataHandlerAction.getCreatedDate().toString().isEmpty() == false) {
             current_date = com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDateInDash(usersdataHandlerAction.getCreatedDate());
-                    queryString = queryString + " AND created_date = '%" + current_date + "%'";
-        } 
-        System.out.println("--------------------" + usersdataHandlerAction.getStatus());
+            queryString = queryString + " AND created_date LIKE '%" + current_date + "%'";
+        }
         if (usersdataHandlerAction.getStatus() != null && !"DF".equalsIgnoreCase(usersdataHandlerAction.getStatus())) {
             queryString = queryString + " AND utility_status LIKE '" + usersdataHandlerAction.getStatus() + "'";
         }
-       if (sessionusrPrimaryrole==2 || sessionusrPrimaryrole==8) {
+        if (sessionusrPrimaryrole == 2 || sessionusrPrimaryrole == 8) {
             queryString = queryString + " AND created_by = " + usersdataHandlerAction.getUserSessionId();
         }
-        
-        
-        System.out.println(">>>>>>>>>>>>>query for ---->" + queryString);
+        queryString = queryString + " ORDER BY created_date DESC";
+
+        System.out.println("defaultSearch :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
                 UserVTO users = new UserVTO();
-                System.out.println("---------------" + resultSet.getString("resultant_file"));
                 users.setLogger(resultSet.getString("logger"));
                 users.setLog_id(resultSet.getInt("log_id"));
                 users.setUtility_status(resultSet.getString("utility_status"));
@@ -1567,7 +1710,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 users.setLoggerFlag(usersdataHandlerAction.getLoggerFlag());
                 utilityList.add(users);
             }
-            System.out.println("------>" + queryString);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -1594,15 +1736,34 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
 
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: defaultSearch Method End*********************");
         return utilityList;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getIndustryValue() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public int getIndustryValue(String industry) throws ServiceLocatorException {
-        int industryValue = 0;
+
+        Connection connection = null;
         CallableStatement callableStatement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+
+        int industryValue = 0;
+        System.out.println("********************UsersdataHandlerserviceImpl :: getIndustryValue Method Start*********************");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             callableStatement = connection.prepareCall("{call getIndustry(?,?)}");
+            System.out.println("getIndustryValue :: procedure name : getIndustry");
             callableStatement.setString(1, industry);
             callableStatement.registerOutParameter(2, Types.INTEGER);
             callableStatement.execute();
@@ -1625,15 +1786,34 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 ex.printStackTrace();
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getIndustryValue Method End*********************");
         return industryValue;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getCountryValue() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public int getCountryValue(String country) throws ServiceLocatorException {
-        int countryValue = 0;
+        Connection connection = null;
         CallableStatement callableStatement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+
+
+        int countryValue = 0;
+        System.out.println("********************UsersdataHandlerserviceImpl :: getCountryValue Method Start*********************");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             callableStatement = connection.prepareCall("{call getCountry(?,?)}");
+            System.out.println("getCountryValue :: procedure name : getCountry");
             callableStatement.setString(1, country);
             callableStatement.registerOutParameter(2, Types.INTEGER);
             callableStatement.execute();
@@ -1656,15 +1836,34 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 ex.printStackTrace();
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getCountryValue Method End*********************");
         return countryValue;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getStateValue() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public int getStateValue(String state, String country) throws ServiceLocatorException {
-        int stateValue = 0;
+
+        Connection connection = null;
         CallableStatement callableStatement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+
+        int stateValue = 0;
+        System.out.println("********************UsersdataHandlerserviceImpl :: getStateValue Method Start*********************");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             callableStatement = connection.prepareCall("{call getState(?,?,?)}");
+            System.out.println("getStateValue :: procedure name : getState");
             callableStatement.setString(1, state);
             callableStatement.setString(2, country);
             callableStatement.registerOutParameter(3, Types.INTEGER);
@@ -1688,11 +1887,23 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 ex.printStackTrace();
             }
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: getStateValue Method End*********************");
         return stateValue;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doCreateFailedExcelFile() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public void doCreateFailedExcelFile(List failedList, String path, int[] colNumbers, int countCol, String type) {
-        System.out.println("the path is hear create excel file " + path + "---" + countCol);
+        System.out.println("********************UsersdataHandlerserviceImpl :: doCreateFailedExcelFile Method Start*********************");
 
         try {
             File fileobj = new File(path);
@@ -1700,23 +1911,15 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
             Sheet sheet = workbook.getSheet(0);
             int count = sheet.getColumns();
             int rowsCount = sheet.getRows();
-            System.out.println("hear i am printkn count-->" + count);
             Cell rows = null;
             String dataArray[] = new String[count];
             for (int j = 0; j < 1; j++) {
                 for (int i = 0; i < count; i++) {
                     rows = sheet.getCell(i, j);
                     dataArray[i] = rows.getContents();
-                    //System.out.println("printing data--->"+dataArray[i]);
                 }
 
             }
-
-
-            //System.out.println("get abs path-->"+fileobj.getPath());
-
-            //System.out.println("get abs path-->"+fileobj.getParent());
-            //System.out.println("this is file name-->"+fileobj.getName());
 
             ListIterator<String[]> litr = null;
             litr = failedList.listIterator();
@@ -1729,7 +1932,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
             cellFont.setColour(Colour.PINK);
             WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
             cellFormat.setBackground(Colour.BLUE);
-            //System.out.println("this is i am println arraData length-->"+arrayData.length);
             for (int i = 0; i < count; i++) {
                 Label label = new Label(i, 0, dataArray[i], cellFormat);
                 wsheet.addCell(label);
@@ -1738,8 +1940,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
             while (litr.hasNext()) {
                 arrayData = litr.next();
                 for (int i = 0; i < count; i++) {
-                    //System.out.println("array data  is--->" + Arrays.toString(arrayData));
-                    //System.out.println("col numbers data is--->" +Arrays.toString(colNumbers));
                     if (arrayData[colNumbers[i]] != null && !"null".equalsIgnoreCase(arrayData[colNumbers[i]])) {
                         Label label = new Label(i, j, arrayData[colNumbers[i]]);
                         wsheet.addCell(label);
@@ -1756,5 +1956,6 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("********************UsersdataHandlerserviceImpl :: doCreateFailedExcelFile Method End*********************");
     }
 }

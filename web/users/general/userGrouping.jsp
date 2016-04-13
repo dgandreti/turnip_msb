@@ -80,10 +80,15 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                        <font color="#ffffff">User Grouping</font>
+                                         <s:if test="groupingId!=0">
+                                        <font color="#ffffff">Edit Employee Grouping</font>
+                                        </s:if>
+                                        <s:else>
+                                        <font color="#ffffff">Add Employee Grouping</font>    
+                                        </s:else>
                                         <s:url var="myUrl" action="getEmployeeCategorization.action">
                                         </s:url>
-                                        <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                        <span class="pull-right"><s:a id="userGroupBackButton" href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                         </h4>
                                     </div>
                                 </div> 
@@ -105,6 +110,9 @@
                                             <s:hidden name="userId" id="userId" value="%{userId}"/>
                                             <span id="validationMessage" />
                                         </div>
+                                        <div id="loadingUserGrouping" class="loadingImg" style="display: none">
+                                             <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>" ></span>
+                                             </div>    
                                         <div class="col-sm-3 required">
                                             <label class="labelStylereq" style="color:#56a5ec">Category Type</label>
                                             <s:select id="usrCatType" name="usrCatType" cssClass="SelectBoxStyles form-control " headerKey="-1" headerValue="--select--"  value="%{usrCatType}"  theme="simple" list="%{usrCategory}" onchange="getCategoryList()" onfocus="clearErrosMsgForGrouping()"/>
@@ -141,12 +149,12 @@
                             </div>
                             <div class="col-sm-9">
                                 <label class="labelStylereq" style="color:#56a5ec">Description</label>
-                                <s:textarea id="usrDescription" name="usrDescription" placeholder="Description" cssClass="form-control "  value="%{usrDescription}" onfocus="clearErrosMsgForGrouping()" onkeyup="CalculateLeangth()"  />
+                                <s:textarea id="usrDescription" name="usrDescription" placeholder="Description" cssClass="form-control "  value="%{usrDescription}" onfocus="clearErrosMsgForGrouping()" onkeyup="CalculateLeangth()" onblur="clearNoofChar()" />
                                 <span><deascOpt></deascOpt></span>
                             </div>
                             <div class="col-sm-10"></div>
                             <div class="col-sm-2">   
-                                <s:submit type="button"  cssStyle="margin:5px 0px;" value="" cssClass="add_searchButton form-control " onclick="doUserGroupingMethod()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                <s:submit type="button" id="saveUserGroupButton" cssStyle="margin:5px 0px;" value="" cssClass="add_searchButton form-control " onclick="doUserGroupingMethod()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                 </div>
                                 <div class="col-sm-1"> 
                                     <label class="labelStylereq" style="color:#56a5ec"></label>

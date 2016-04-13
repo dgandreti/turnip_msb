@@ -24,9 +24,8 @@ public interface TaskHandlerService {
 
     public List getTeamTasksDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException;
 
-    public TasksVTO getEditTaskDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException;
+    public TasksVTO getEditTaskDetails(TaskHandlerAction taskHandlerAction,int usrPriRole,String usrType) throws ServiceLocatorException;
 
-    // public int updateTaskDetails(TaskHandlerAction taskHandlerAction, HttpServletRequest httpServletRequest) throws ServiceLocatorException;
     public int addAttachmentDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException;
 
     public int updateTaskDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException;

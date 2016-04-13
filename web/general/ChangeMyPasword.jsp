@@ -56,14 +56,7 @@
             <div id="main">
                 <div class="wrap_pwd">
                     <section id="generalForm" class=""><!--form-->
-                        <%--<div class="header-middle"><!--header-middle-->
-                            <div class="container">
-                                
-                                <div class="row">
-                                    <s:include value="/includes/menu/generalTopMenu.jsp"/> 
-                                </div>
-                           </div>
-                        </div> --%>
+                       
                         <div class="container">
                             <div class="row">
                                 <s:include value="/includes/menu/LeftMenu.jsp"/> 
@@ -74,7 +67,6 @@
                                                 <div class="backgroundcolor" >
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">
-                                                            <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                             <font color="#ffffff">Change your password</font>
                                                         </h4>
                                                     </div>
@@ -84,10 +76,6 @@
                                                 <div class="password_box" ><!--login form-->
 
                                                     <form id="ResetPassword" action="resetMyPassword" onclick="return checkPasswordMatch();" >
-                                                        <%//if(request.getAttribute(ApplicationConstants.RESULT_MSG)!=null){
-                                                            //out.println(request.getAttribute(ApplicationConstants.RESULT_MSG));
-                                                            //}                                
-%>
                                                         <div class="required">
                                                             <div class="col-lg-5 col-sm-5 req_margin">
                                                                 <label id="labelLevelStatusReq">Current Password</label>                            
@@ -113,7 +101,7 @@
                                                              <div  class="">
                                                                 <div style="float:left" class="col-sm-8 req_margin ">  
 
-                                                                    <div align="right"><button type="submit" id="" value="Submit" tabindex="4" class="cssbutton req_margin align_left fa fa-check-circle-o">&nbsp;Submit</button>
+                                                                    <div align="right"><button type="submit" id="submit" value="Submit" tabindex="4" class="cssbutton req_margin align_left fa fa-check-circle-o">&nbsp;Submit</button>
                                                                     </div>
 
 
@@ -121,7 +109,7 @@
                                                                 </div>
                                                                 <div style="float:left" class="col-sm-3 req_margin "> 
 
-                                                                    <div align="right"><button type="reset" value="Cancel" tabindex="5" class="cssbutton req_margin align_left  fa fa-times" style="margin:5px 12px;" onclick="javascript:history.back();">&nbsp;Cancel</button>
+                                                                    <div align="right"><button id="reset" type="reset" value="Cancel" tabindex="5" class="cssbutton req_margin align_left  fa fa-times" onclick="javascript:history.back();">&nbsp;Cancel</button>
                                                                     </div>
 
 
@@ -152,6 +140,9 @@
                 </div>
             </div>
         </footer><!--/Footer-->
+        <script>
+        $("#resMessage").show().delay(5000).fadeOut();
+    </script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

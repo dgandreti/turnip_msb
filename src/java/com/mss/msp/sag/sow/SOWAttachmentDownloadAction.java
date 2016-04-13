@@ -98,38 +98,47 @@ public class SOWAttachmentDownloadAction implements Action, ServletRequestAware,
     public void setServletResponse(HttpServletResponse httpServletResponse) {
         this.httpServletResponse = httpServletResponse;
     }
-
+/**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : downloadSOWAttachment() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
     public String downloadSOWAttachment() throws Exception {
+         System.out.println("********************SOWAttachmentDownloadAction :: downloadSOWAttachment Method Start*********************");
         try {
             resultType = null;
             this.setAcc_attachment_id(Integer.parseInt(httpServletRequest.getParameter("acc_attachment_id").toString()));
-            System.out.println("=================>Entered into the DownloadAction");
+           
             try {
                 this.setConsult_AttachmentLocation(dataSourceDataProvider.getInstance().getConsult_AttachmentLocation(this.getAcc_attachment_id()));
             } catch (ServiceLocatorException se) {
-                System.out.println("in sub try" + se.getMessage());
+              
             }
             fileName = this.getConsult_AttachmentLocation()
                     .substring(this.getConsult_AttachmentLocation().lastIndexOf(File.separator) + 1, getConsult_AttachmentLocation().length());
             httpServletResponse.setContentType("application/force-download");
-            System.out.println("=================>" + fileName);
-            //String=fileLocaiton
-            System.out.println("getAttachmentLocation()-->" + getConsult_AttachmentLocation());
+           
             if (!File.separator.equals(getConsult_AttachmentLocation()) && !"null".equals(getConsult_AttachmentLocation()) && getConsult_AttachmentLocation() != null && getConsult_AttachmentLocation().length() != 0) {
 
 
                 File file = new File(getConsult_AttachmentLocation());
-                System.out.println(file);
+               
                 inputStream = new FileInputStream(file);
                 outputStream = httpServletResponse.getOutputStream();
                 if (outputStream == null) {
-                    System.out.println("yes");
+                   
                 } else {
-                    System.out.println("        jjjjjjjjjjjj   no");
+                   
                     httpServletResponse.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
                     int noOfBytesRead = 0;
                     byte[] byteArray = null;
-                    System.out.println("Iam hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                  
                     while (true) {
                         byteArray = new byte[1024];
                         noOfBytesRead = inputStream.read(byteArray);
@@ -137,7 +146,7 @@ public class SOWAttachmentDownloadAction implements Action, ServletRequestAware,
                             break;
                         }
                         outputStream.write(byteArray, 0, noOfBytesRead);
-                        //System.out.println("while");
+                        
                     }
                     inputStream.close();
                     outputStream.close();
@@ -147,23 +156,24 @@ public class SOWAttachmentDownloadAction implements Action, ServletRequestAware,
                 setTabFlag("AT");
 
             } else {
-                System.out.println("in else");
+               
                 setFileExists("noFile");
                 setTabFlag("AT");
                 resultType = INPUT;
             }
         } catch (FileNotFoundException ex) {
-            System.out.println("finle not found");
+           
             setFileExists("NotExisted");
             setTabFlag("AT");
             resultType = INPUT;
 
         } catch (IOException ex) {
-            System.out.println("ioeeeeeee" + ex.getMessage());
+           
         } catch (Exception ex) {
-            System.out.println("eeeeeeee" + ex.getMessage());
-            // ex.printStackTrace();
+           
+          
         }
+         System.out.println("********************SOWAttachmentDownloadAction :: downloadSOWAttachment Method End*********************");
         return resultType;
     }
 

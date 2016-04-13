@@ -68,24 +68,24 @@
                                             <!-- content start -->
                                             <div class="col-sm-12">
                                                 <s:form action="getCellContentValues" theme="simple" method="POST" enctype="multipart/form-data">
-                                                    <s:hidden name="filePath" value="%{filePath}"/>
+                                                    <s:hidden name="filePath" value="%{filePath}" />
                                                     <div class="col-sm-3">
                                                         <label class="labelStyle" id="labelLevelStatusReq">Account&nbsp;Name </label>
-                                                        <s:select cssClass="form-control SelectBoxStyles" name="columnValue" list="%{columnsMap}"></s:select>
-                                                        <s:hidden name="path" value="%{path}"/>
+                                                        <s:select id="columnValue" cssClass="form-control SelectBoxStyles" name="columnValue" list="%{columnsMap}"></s:select>
+                                                        <s:hidden name="path" value="%{path}" />
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <label class="labelStyle" id="labelLevelStatusReq">Account&nbsp;Url </label>
-                                                        <s:select cssClass="form-control SelectBoxStyles" name="accUrl" list="%{columnsMap}"></s:select>
+                                                        <s:select id="accUrl" cssClass="form-control SelectBoxStyles" name="accUrl" list="%{columnsMap}"></s:select>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <label class="labelStyle" id="labelLevelStatusReq">Account&nbsp;Type </label>
-                                                        <s:textfield cssClass="form-control" name="accType" value="%{accountType}" readonly="true"></s:textfield>
+                                                        <s:textfield cssClass="form-control" id="accType" name="accType" value="%{accountType}" readonly="true"></s:textfield>
                                                         </div>
 
                                                         <div class="col-sm-3">
                                                             <label class="labelStyle" id="labelLevelStatusReq">Mail&nbsp;Extention </label>
-                                                        <s:select cssClass="form-control SelectBoxStyles" name="mailExt" list="%{columnsMap}"></s:select>
+                                                        <s:select id="mailExt" cssClass="form-control SelectBoxStyles" name="mailExt" list="%{columnsMap}"></s:select>
                                                         </div>
                                                         <h4><b>Account Address</b></h4>
                                                         <div class="col-sm-12">
@@ -93,23 +93,23 @@
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2"> Address 1 </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="accAddress1" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="accAddress1" cssClass="form-control SelectBoxStyles" name="accAddress1" list="%{columnsMap}"></s:select>
                                                                     </span></div>
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2"> Address 2 </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="accAddress2" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="accAddress2" cssClass="form-control SelectBoxStyles" name="accAddress2" list="%{columnsMap}"></s:select>
                                                                     </span></div>
                                                                 <div class="col-sm-3">
                                                                     <span>
-                                                                        <label class="labelStyle2"><%--<span class="accDetailsError">*</span>--%> City </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="accCity" list="%{columnsMap}"></s:select>
+                                                                        <label class="labelStyle2"> City </label>
+                                                                    <s:select id="accCity" cssClass="form-control SelectBoxStyles" name="accCity" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2"> Zip </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="zip" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="zip" cssClass="form-control SelectBoxStyles" name="zip" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -117,25 +117,25 @@
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2">Country </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="accCountry" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="accCountry" cssClass="form-control SelectBoxStyles" name="accCountry" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2"> State </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="accState" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="accState" cssClass="form-control SelectBoxStyles" name="accState" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label  class="labelStyle2"> Phone </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="phone" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="phone" cssClass="form-control SelectBoxStyles" name="phone" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label  class="labelStyle2">Fax </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="accFax" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="accFax" cssClass="form-control SelectBoxStyles" name="accFax" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -147,25 +147,25 @@
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2"> Industry</label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="industry" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="industry" cssClass="form-control SelectBoxStyles" name="industry" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label  class="labelStyle2">Region </label>   
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="region" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="region" cssClass="form-control SelectBoxStyles" name="region" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label   class="labelStyle2">Territory </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="territory" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="territory" cssClass="form-control SelectBoxStyles" name="territory" list="%{columnsMap}"></s:select>
                                                                     </span></div>
 
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2"> No. of Employees </label>     
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="noOfEmp" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="noOfEmp" cssClass="form-control SelectBoxStyles" name="noOfEmp" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -173,28 +173,28 @@
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2">Tax ID </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="taxId" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="taxId" cssClass="form-control SelectBoxStyles" name="taxId" list="%{columnsMap}"></s:select>
                                                                     </span></div>
                                                                 <!--Linked to State and Country-->
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2">Stock Symbol </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="stockSymbol" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="stockSymbol" cssClass="form-control SelectBoxStyles" name="stockSymbol" list="%{columnsMap}"></s:select>
                                                                     </span></div>
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label class="labelStyle2">Revenue </label>     
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="revenue" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="revenue" cssClass="form-control SelectBoxStyles" name="revenue" list="%{columnsMap}"></s:select>
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span>
                                                                         <label  class="labelStyle2">Description </label>
-                                                                    <s:select cssClass="form-control SelectBoxStyles" name="description" list="%{columnsMap}"></s:select>
+                                                                    <s:select id="description" cssClass="form-control SelectBoxStyles" name="description" list="%{columnsMap}"></s:select>
                                                                 </span>
                                                             </div>
                                                             <div class="pull-right">
-                                                                <br><s:submit cssClass=" cssbutton " value="" type="button" onclick="return contentAdding()"><i class="fa fa-floppy-o"></i>&nbsp;Load</s:submit>
+                                                                <br><s:submit id="submitContentButton" cssClass="cssbutton" value="" type="button" onclick="return contentAdding()"><i class="fa fa-floppy-o"></i>&nbsp;Load</s:submit>
                                                             </div>
                                                             <s:token/>
                                                         </s:form>

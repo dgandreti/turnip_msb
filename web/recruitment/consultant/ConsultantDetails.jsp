@@ -44,7 +44,6 @@
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/selectivity-full.css"/>">
         <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>
-        <%--script language="JavaScript" src='<s:url value="/includes/js/Ajax/EmployeeProfile.js"/>'></script--%>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
@@ -63,7 +62,7 @@
             ; 
         </script>
     </head>
-    <body style="overflow-x: hidden" onload="onloadIdProofDetails();consultdoOnLoad(); defaultClick();">
+    <body style="overflow-x: hidden" onload="onloadIdProofDetails(); loadConsultantAvaliable(); consultdoOnLoad();   defaultClick();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -80,22 +79,13 @@
                             <s:include value="/includes/menu/LeftMenu.jsp"/> 
                             <!-- content start -->
                             <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
-                                <%--div id="profileBox" class="" style=""; margin-top: 5px">
-                                     <div class="features_items">
-                                        <div class="col-lg-14 ">
-                                            <div class="backgroundcolor" >
-
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                <font color="#ffffff">Consultant Details</font--%>
+                               
                                 <s:if test="consultFlag=='vendor'">
                                     <s:url var="myUrl" action="getMyConsultantSearch.action">
                                         <s:param name="consultantFlag"><s:property value="%{consultantFlag}"/></s:param> 
 
                                     </s:url>
-                                    <span class="pull-right" style="padding: 19px"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span>
+                                    <span class="pull-right" style="padding: 19px"><s:a href='%{#myUrl}' id="vendorBackButton"><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span>
                                     </s:if>
                                     <s:if test="consultFlag=='customer'">
 
@@ -126,56 +116,22 @@
                                         </s:url>
                                     </s:else>
 
-                                    <span class="pull-right" style="padding: 19px"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span>
+                                    <span class="pull-right" style="padding: 19px"><s:a href='%{#myUrl}' id="customerBackButton"><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span>
                                     </s:if>
                                     <s:if test="consultFlag =='consultant'">
                                         <s:url var="myUrl" action="../../users/general/myprofile.action">
                                             <%--s:param name="consultantFlag"><s:property value="%{consultantFlag}"/></s:param--%> 
                                         </s:url>
-                                    <span class="pull-right" style="padding: 19px"><s:a href='%{#myUrl}'><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span>
+                                    <span class="pull-right" style="padding: 19px"><s:a href='%{#myUrl}' id="consultantBackButton"><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span>
                                     </s:if>
-                                    <%--/h4>
-                                </div>
-
-                            </div>
-
-
-                                </div>
-                            </div--%>
+                                   
                                 <!-- Content end  -->
                                 <br>
                                 <!-- tab starting  -->
                                 <s:if test="%{consultFlag !='consultant'}">
-                                    <!--<div><headingmess id="headingmessage"  class="acc_menu_heading pull-right" style="display:block">Consultant Details</headingmess>    </div>--> 
                                 </s:if>
                                 <!-- Nav tabs -->
-                                <s:if test="%{consultFlag !='consultant'}">
-                                    <%--ul class="active_details" >
-                                        <li class="dropdown"  >
-
-                                        Nav tabs 
-                                        <ul class="panel-body nav-stacked  dropdown-menu " style="position:absolute">
-
-                                            <li class=""><a aria-expanded="false" onclick="cheadingMessage(this);" id="c_details"  href="#Consultant" data-toggle="tab"> Consultant Details </a>
-                                            </li>
-                                            <li class=""><a aria-expanded="false" onclick="cheadingMessage(this);" id="c_skill"  href="#consult_Skillslide" data-toggle="tab"> Skill </a>
-                                            </li>
-                                            <li class=""><a aria-expanded="false"  onclick="cheadingMessage(this);" id="c_security"  href="#consult_security-info" data-toggle="tab"> Confidential </a>
-                                            </li>
-                                            <li class=""><a aria-expanded="false" onclick="cheadingMessage(this);" id="c_activities"  href="#consult_activities" data-toggle="tab"> Activities </a>
-                                            </li>
-                                            <li id="attachLi" class=""><a aria-expanded="false" onclick="showAttachmentDetails('<%= request.getParameter("consult_id")%>');cheadingMessage(this);" id="c_attach" href="#consult_attach" data-toggle="tab"> Attachment </a>
-                                            </li>
-                                            <li class=""><a aria-expanded="false" onclick="cheadingMessage(this);" href="#consult_personal" id="c_personal" data-toggle="tab">Personal Details</a>
-                                            </li>
-                                            <li class=""><a aria-expanded="false"  onclick="cheadingMessage(this);" href="#consult_notes" id="c_notes" data-toggle="tab">Notes</a>
-                                            </li>
-                                            <li class=""><a aria-expanded="false"  onclick="cheadingMessage(this);" href="#consult_tech-review" id="c_tech-review" data-toggle="tab">Tech Review</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul--%>
-                                </s:if>
+                                
                                 <ul class="nav nav-tabs">
                                     <li class="" id="consultantLi"><a aria-expanded="false" onclick="cheadingMessage(this);" id="c_details"  href="#Consultant" data-toggle="tab"> Consultant Details </a>
                                     </li>
@@ -207,7 +163,6 @@
                                             </s:if> 
                                             <span><consult_error></consult_error></span>
                                             <form action="updateConsultantDetails" id="consultantForm" theme="simple">
-                                                <%--div><span><consult_error></consult_error></span></div--%>
                                                 <s:hidden id="consultFlag" name="consultFlag" value="%{consultFlag}"/>
                                                 <s:hidden value="%{ConsultantVTO.consult_id}" name="consult_id" />
 
@@ -229,13 +184,13 @@
                                                     <s:textfield cssClass="form-control" disabled="true" value="%{consultantVTO.consult_email}" required="true" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" id="consult_email" placeholder="Email Id" tabindex="1" onkeyup="consultvalid_email()"/>
                                                 </div>
                                                 <div class="col-sm-4" >
-                                                    <label class="labelStylereq" >Available Date</label>
-                                                  <div class="calImage">   <s:textfield cssClass="form-control" name="consult_favail" value="%{consultantVTO.consult_favail}" id="consult_favail"   placeholder="Date" onkeypress="return consultantDateRepository(this)" tabindex="2"><i class="fa fa-calendar"></i></s:textfield></div>
-                                                </div>
-                                            
-                                                <div class="col-sm-4" >
                                                     <label class="labelStylereq" >Available</label>
-                                                    <s:select cssClass="form-control SelectBoxStyles " value="%{consultantVTO.consult_available}" name="consult_available" id="consult_available" onkeyup="consultvalid_avail()"   headerKey="-1" headerValue="Select availabilty" list="#@java.util.LinkedHashMap@{'Y':'Yes','N':'No'}" tabindex="3"/>
+                                                    <s:select cssClass="form-control SelectBoxStyles " value="%{consultantVTO.consult_available}" name="consult_available" id="consult_available" onkeyup="consultvalid_avail()"   headerKey="-1" headerValue="Select availabilty" list="#@java.util.LinkedHashMap@{'Y':'Yes','N':'No'}" onchange="loadConsultantAvaliable();" tabindex="3"/>
+                                                </div>
+                                                  <div class="col-sm-4" >
+                                                      <s:hidden id="consult_favail1" name="consult_favail1" value="%{consultantVTO.consult_favail}"/>
+                                                    <label class="labelStylereq" >Available Date</label>
+                                                    <div class="calImage">   <s:textfield cssClass="form-control" name="consult_favail" value="%{consultantVTO.consult_favail}" id="consult_favail"  disabled="true" placeholder="Date" onkeypress="return consultantDateRepository(this)" tabindex="2"><i class="fa fa-calendar"></i></s:textfield></div>
                                                 </div>
                                                 <div class="col-sm-4 required">
                                                     <label class="labelStylereq" >First Name</label>    
@@ -302,7 +257,7 @@
 
                                                 <div class="col-sm-4" id="proofdownloadDiv" style="display: none">
                                                     <label class="labelStylereq" ></label>
-                                                    <s:label><figcaption>Download ID Proof<button type='button' tabindex="18"  onclick="doConsultAttachmentDownload(-1)"><img src='../../includes/images/download.png' height=25 width=25 ></button><img src='../../includes/images/deleteImage.png' height=20 width=20 onclick="removeConsultantAttachement();"></figcaption></s:label>
+                                                    <s:label><figcaption>Download ID Proof<button id="idProofDownload" type='button' tabindex="18"  onclick="doConsultAttachmentDownload(-1)"><img src='../../includes/images/download.png' height=25 width=25 ></button><img src='../../includes/images/deleteImage.png' height=20 width=20 onclick="removeConsultantAttachement();"></figcaption></s:label>
 
                                                     <s:if test='downloadFlag=="noVisa"'>
                                                         <span id="resume"><font style='color:red;font-size:15px;'>No Attachment exists !!</font></span>
@@ -313,7 +268,7 @@
                                                 </div>
                                                 <div class="col-sm-4" id="proofuploadDiv" style="display: none">
                                                     <label class="labelStylereq" ></label>
-                                                    <s:label><figcaption>Upload ID Proof<button type='button' tabindex="19" class="consultVisaAttachment_popup_open" onclick="openDialogforVisaAttachment()"><img src='../../includes/images/Browse.png' height=25 width=25  ></button></figcaption></s:label>
+                                                    <s:label><figcaption>Upload ID Proof<button id="idProofUpload" type='button' tabindex="19" class="consultVisaAttachment_popup_open" onclick="openDialogforVisaAttachment()"><img src='../../includes/images/Browse.png' height=25 width=25  ></button></figcaption></s:label>
                                                 </div>
                                                 <div class="row"></div>
                                                 <!-- Contact Information , start  -->
@@ -505,13 +460,10 @@
                                                     <div>
                                                         <div class="inner-addtaskdiv-elements">
                                                             <div id="message"></div>
-                                                            <%-- <s:hidden name="downloadFlag" id="downloadFlag" value="%{downloadFlag}"/>
-                                                             <s:hidden name="consultFlag" id="consultFlag" value="%{consultFlag}"/>--%>
                                                             <s:hidden id="consultantId" name="consultantId" value="%{consult_id}"/> 
                                                             <s:file name="file" id="file" onclick="return idProofFileValidation();"/>
                                                         </div>
                                                         <s:submit type="button"  cssClass="cssbutton pull-right fa fa-upload" style="margin:13px 16px" value="Upload" onclick="return teAttachemntUpload();" id="addButton"/>
-                                                        <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
 
                                                     </div>
 
@@ -664,13 +616,9 @@
 %>
                                             <tr>
 
-                                                <%--s:url var="myUrl" action="getConsultActivitybyActivity">
-                                                    <s:param name="activityId"><%=activity_id%></s:param>
-                                                </s:url--%>
+                                               
                                                 <td>
-                                                    <%--   <s:hidden name="activityId"  id="ActivityId" ><%= activity_id%></s:hidden> 
-                                                       <act id="testconsultAct"><%= activity_id%></act> --%>
-                                                    <%-- <s:a cssClass="ActivityEdit_popup_open" onclick="populateActivityOverlay('<%=activity_id%>')" id="ActivityId"><%=activity_id%></s:a> --%>
+                                                    
                                                     <a onclick="populateActivityOverlay('<%=activity_id%>')" href="#" class="ActivityEdit_popup_open">
                                                         <%=activity_id%>
                                                     </a>
@@ -779,14 +727,16 @@
                             <%-- activity tab ends --%>
                             <%-- attachment tab starts --%>
                             <div class="tab-pane fade " id="consult_attach" onclick="getConsultantAttachments.action"   >
-
+                                    <div id="loadingConsultantResumes" class="loadingImg">
+                                                <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                            </div>
                                 <div id="consultAttachment_popup">
                                     <div id="taskAttachOverlay">
 
                                         <div class="overlayOrButton_color">
                                             <table>
                                                 <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Add Resume&nbsp;&nbsp; </font></h4></td>
-                                                <span class=" pull-right"><h5><a href="" class="consultAttachment_popup_close" onclick="attachPopJs();showAttachmentDetails('<%= request.getParameter("consult_id")%>');msgclr()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
+                                                <span class=" pull-right"><h5><a id="consultAttachPopUpId" href="" class="consultAttachment_popup_close" onclick="attachPopJs();showAttachmentDetails('<%= request.getParameter("consult_id")%>');msgclr()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
                                             </table>
                                         </div>
                                         <div>
@@ -801,7 +751,7 @@
                                                         <s:file name="consultAttachment" id="consultAttachment"/>
                                                     </div>
                                                     <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
-                                                    <center><s:submit  type="button" cssClass="cssbutton fa fa-upload" value="Upload" theme="simple" onclick="return editResumeValidation(); msgclr()" /></center><br>
+                                                    <center><s:submit  id="consultAttachUpload" type="button" cssClass="cssbutton fa fa-upload" value="Upload" theme="simple" onclick="return editResumeValidation(); msgclr()" /></center><br>
                                                 </div> 
 
                                             </div>
@@ -978,7 +928,6 @@
             
         if(a.value=='Yes')
         {
-            //document.getElementById("consult_pcountry").disabled = false;
             $("#consult_preferredCountry").show();
             $(".pref_country").show();
             $("#consult_preferredCountry").val('-1');    
@@ -990,13 +939,8 @@
             $("#consult_preferredState").hide();
             $(".pref_state").hide();
             $("#PrefstateValues").val('');
-            /* document.getElementById("consult_pcountry").disabled = true;
-                 document.getElementById('consult_pcountry').value=-1;
-                 document.getElementById("consult_preferredState").disabled = true;
-                 document.getElementById('consult_preferredState').value=-1;*/
         }
     }
-    // alert($("#consult_relocation").val());
     if($("#consult_relocation").val()=='Yes')
     {
         $("#consult_pcountry").show();
@@ -1009,10 +953,6 @@
         $("#consult_preferredState").hide();
         $(".pref_state").hide();
         $("#PrefstateValues").val('');
-        /* document.getElementById("consult_pcountry").disabled = true;
-                 document.getElementById('consult_pcountry').value=-1;
-                 document.getElementById("consult_preferredState").disabled = true;
-                 document.getElementById('consult_preferredState').value=-1;*/
     }
     $('#consult_preferredState').selectivity({
             

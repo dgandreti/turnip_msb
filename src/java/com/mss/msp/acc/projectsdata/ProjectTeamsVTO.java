@@ -30,7 +30,7 @@ public class ProjectTeamsVTO implements Serializable {
     private String middleName;
     private String lastName;
     private String designation;
-
+     private String mainProjectStatus;
     public Integer getProjectID() {
         return projectID;
     }
@@ -174,10 +174,18 @@ public class ProjectTeamsVTO implements Serializable {
     public void setDesignation(String designation) {
         this.designation = designation;
     }
+
+    public String getMainProjectStatus() {
+        return mainProjectStatus;
+    }
+
+    public void setMainProjectStatus(String mainProjectStatus) {
+        this.mainProjectStatus = mainProjectStatus;
+    }
     
 
     @Override
     public String toString() {
-        return "ProjectTeamsVTO{" + "projectID=" + projectID + ", userID=" + userID + ", status=" + status + ", createdDate=" + createdDate + ", createdBy=" + createdBy + ", modifiedDate=" + modifiedDate + ", modifiedBy=" + modifiedBy + ", reportsTo1=" + reportsTo1 + ", reportsTo1Name=" + reportsTo1Name + ", reportsTo2=" + reportsTo2 + ", reportsTo2Name=" + reportsTo2Name + ", accountID=" + accountID + ", skillName=" + skillName + ", skillComments=" + skillComments + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + '}';
+        return "ProjectTeamsVTO{" + "projectID=" + projectID + ", userID=" + userID + ", status=" + status + ", createdDate=" + createdDate + ", createdBy=" + createdBy + ", modifiedDate=" + modifiedDate + ", modifiedBy=" + modifiedBy + ", reportsTo1=" + reportsTo1 + ", reportsTo1Name=" + reportsTo1Name + ", reportsTo2=" + reportsTo2 + ", reportsTo2Name=" + reportsTo2Name + ", accountID=" + accountID + ", skillName=" + skillName + ", skillComments=" + skillComments + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", mainProjectStatus=" + mainProjectStatus +'}';
     }
 }

@@ -28,8 +28,6 @@ import com.mss.msp.util.ServiceLocatorException;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import org.apache.tomcat.util.http.fileupload.FileUtils;
-//import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -118,26 +116,25 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
     private DataSourceDataProvider dataSourceDataProvider;
     private MailManager mailManager = new MailManager();
 
-    /**
-     * *************************************
+   
+     /**
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @tasksSearch() method is used to get task details of loggedIn user
+     * Author : RK Ankireddy
      *
-     * @Author:RK Ankireddy
+     * ForUse : tasksSearch() method is used to get task details of loggedIn user
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     * @Corresponded Action:doTaskSearch.action in users.xml
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String tasksSearch() {
         resultType = LOGIN;
-
+        System.out.println("********************TaskHandlerAction :: tasksSearch Method Start*********************");
         try {
-
-            // System.out.println("session value-->"+httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
+                int usrPriRole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                 String usrType=httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
                 Calendar now = Calendar.getInstance();
                 now.add(Calendar.MONTH, 1);
                 String monthString = "";
@@ -156,7 +153,6 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     monthString = "" + (now.get(Calendar.MONTH) + 1);
                 }
                 setEndDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));
-                System.out.println("get end date------------->" + getEndDate());
                 //substract months from current date using Calendar.add method
                 now = Calendar.getInstance();
                 now.add(Calendar.MONTH, -1);
@@ -179,124 +175,85 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 }
 
                 setStartDate(startMonthString + "-" + startDateString + "-" + now.get(Calendar.YEAR));
-                System.out.println("get start date------------->" + getStartDate());
 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
-                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
+                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap(usrPriRole,usrType,getUserSessionId()));
                 teamtaskDetails = ServiceLocator.getTaskHandlerService().getLoggedInEmpTasksDetails(this);
-                System.out.println(teamtaskDetails.size());
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
-            System.out.println("Exception in task search action-->" + ex.getMessage());
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************TaskHandlerAction :: getEmployeeAddress Method End*********************");
         return resultType;
     }
 
-    /* *************************************
+   
+     /**
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @showTaskSearchDetails() method is used to get task details based on
-     * search scenario
+     * Author : RK Ankireddy
      *
-     * @Author:RK Ankireddy
+     * ForUse : showTaskSearchDetails() method is used to get task details based on search scenario
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     * @Corresponded Action:showTaskSearchDetails.action in users.xml
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String showTaskSearchDetails() {
         resultType = LOGIN;
+         System.out.println("********************TaskHandlerAction :: showTaskSearchDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
+                int usrPriRole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                 String usrType=httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+                
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
-                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
+                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap(usrPriRole,usrType,getUserSessionId()));
                 teamtaskDetails = ServiceLocator.getTaskHandlerService().getEmployeeTasksDetails(this);
-//                Calendar now = Calendar.getInstance();
-//                now.add(Calendar.MONTH, 1);
-//                String monthString = "";
-//                String dateString = "";
-//
-//                int month = now.get(Calendar.MONTH) + 1;
-//                int date = now.get(Calendar.DATE);
-//                if (date < 10) {
-//                    dateString = "0" + now.get(Calendar.DATE);
-//                } else {
-//                    dateString = "" + now.get(Calendar.DATE);
-//                }
-//                if (month < 10) {
-//                    monthString = "0" + (now.get(Calendar.MONTH) + 1);
-//                } else {
-//                    monthString = "" + (now.get(Calendar.MONTH) + 1);
-//                }
+
                 setEndDate(getDocdatepicker());
-                System.out.println("get end date------------->" + getEndDate());
-                //substract months from current date using Calendar.add method
-//                now = Calendar.getInstance();
-//                now.add(Calendar.MONTH, -1);
-//
-//                String startMonthString = "";
-//                String startDateString = "";
-//
-//                int startMonth = now.get(Calendar.MONTH) + 1;
-//                int startDate = now.get(Calendar.DATE);
-//
-//                if (startDate < 10) {
-//                    startDateString = "0" + now.get(Calendar.DATE);
-//                } else {
-//                    startDateString = "" + now.get(Calendar.DATE);
-//                }
-//                if (startMonth < 10) {
-//                    startMonthString = "0" + (now.get(Calendar.MONTH) + 1);
-//                } else {
-//                    startMonthString = "" + (now.get(Calendar.MONTH) + 1);
-//                }
 
                 setStartDate(getDocdatepickerfrom());
-                System.out.println(teamtaskDetails.size());
                 if (teamtaskDetails.size() > 0) {
                     resultType = SUCCESS;
                 } else {
-                    System.out.println("in ifelse emp sarech");
                     resultType = SUCCESS;
                 }
             }
         } catch (Exception ex) {
-            System.out.println("Exception in task search action1-->" + ex.getMessage());
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+         System.out.println("********************TaskHandlerAction :: showTaskSearchDetails Method End*********************");
         return resultType;
     }
 
-    /**
-     * *************************************
+  
+       /**
+     * *****************************************************************************
+     * Date : 04/20/2015
      *
-     * @getTaskDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getTaskDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/20/2015
-     *
-     * @Corresponded Action:getTaskDetails.action in users.xml
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getTaskDetails() {
         resultType = LOGIN;
+         System.out.println("********************TaskHandlerAction :: getTaskDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
-                //setTasksRelatedToList(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
-                tasksVto = (ServiceLocator.getTaskHandlerService().getEditTaskDetails(this));
+                 int usrPriRole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                  String usrType=httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
+                tasksVto = (ServiceLocator.getTaskHandlerService().getEditTaskDetails(this,usrPriRole,usrType));
                 taskAttachments = (dataSourceDataProvider.getInstance().getAttachmentDetails(this));
                 resultType = SUCCESS;
             }
@@ -304,45 +261,37 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+         System.out.println("********************TaskHandlerAction :: getTaskDetails Method End*********************");
         return resultType;
     }
 
-    /**
-     * *************************************
+   
+    
+      /**
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @addNewTaskDetails() method is used to add new task details in task_list
-     * table
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:RK Ankireddy
+     * ForUse : addNewTaskDetails() method is used to add new task details in task_list table
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     * @Corresponded Action:addNewTask.action in users.xml
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String addNewTaskDetails() {
-        System.out.println("entered into the action");
+       
         resultType = LOGIN;
-        //filePath = "D:\\uploadedfiles";
         int addresult = 0;
-        //filePath="C:\\usr\\ProjectFiles\\MSP\\TASK_ATTACHMENTS";
-        //filePath = Properties.getProperty("Task.Attachment");
-
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data Start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        System.out.println("File Name is:" + taskAttachment);
-        System.out.println("File ContentType is:" + taskAttachmentContentType);
-        System.out.println("Files Directory is:" + filePath + "-------->" + getFilePath());
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data End %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+         System.out.println("********************TaskHandlerAction :: addNewTaskDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-
-                System.out.println(taskAttachmentFileName + " =====================> " + getTaskAttachmentFileName());
+                int usrPriRole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+                String usrType=httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
 
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
-                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
+                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap(usrPriRole,usrType,getUserSessionId()));
                 if (getTaskAttachmentFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filePath = Properties.getProperty("Task.Attachment");
                     File createPath = new File(filePath);
@@ -380,83 +329,64 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
                     /*This creates a directory forcefully if the directory does not exsist*/
 
-                    //System.out.println("path::"+createPath);
                     createPath.mkdir();
                     /*here it takes the absolute path and the name of the file that is to be uploaded*/
                     File theFile = new File(createPath.getAbsolutePath());
-
-                    //System.out.print("File Path::"+theFile);
 
                     //setFilePath(theFile.toString());
                     /*copies the file to the destination*/
                     File destFile = new File(theFile + File.separator + taskAttachmentFileName);
                     setFilePath(destFile.toString());
-                    //System.out.println(">>>>>>>>>>>>>>>>>>PATH>>>>>>>>>>>>"+destFile);
                     FileUtils.copyFile(taskAttachment, destFile);
                 }
 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-
                 setFullName(dataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId()));
                 setStatusName(dataSourceDataProvider.getInstance().getStatusById(getTaskStatus()));
                 setSecondaryMailId(dataSourceDataProvider.getInstance().getEmailId(getSecondaryId()));
                 setPrimaryMailId(dataSourceDataProvider.getInstance().getEmailId(getPrimaryAssign()));
 
-
-                System.out.println("Action called in TaskHandlerAction classsssssssssssssssssssssssssssssssssssssssss");
-                System.out.println("valuesssssss are::::::" + getTaskPriority() + "  " + getSecondaryId() + "  " + getPrimaryAssign() + " " + getTaskRelatedTo() + " " + getTaskType() + " " + getTaskStatus() + " " + getStartDate() + " " + getEndDate() + " " + getTaskName() + " " + getTask_comments() + "  ");
                 addresult = ServiceLocator.getTaskHandlerService().addTaskDetals(this);
-                System.out.println("result adding taskkkkkkkkkkkkkkkkkkkkkk:::: " + addresult);
 
                 if (addresult > 0) {
                     setLastTaskId(addresult);
                     int result = mailManager.generateTaskAddEmail(this);
                     if (result > 0) {
-                        System.out.println("Mail added success in email logger for add task==================================");
                     }
-                    System.out.println("in action success in adding task detailssssssssss");
-                    //httpServletRequest.getSession(false).setAttribute("taskdata", taskDetails);
-                    //resultType = SUCCESS;
                 } else {
-                    System.out.println("in action failed to adding task detailssssssssss");
-                    //httpServletRequest.getSession(false).setAttribute("taskdata", null);
-                    //resultType = SUCCESS;
+                   
                 }
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
             return ERROR;
         } catch (Exception ex) {
-            System.out.println("Exception in ADD task  action-->" + ex.getMessage());
             resultType = ERROR;
         }
-
+        System.out.println("********************TaskHandlerAction :: addNewTaskDetails Method End*********************");
         return SUCCESS;
     }
 
-    /**
-     * *************************************
+  
+      /**
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @getTeamTaskDetails() method is used to get task details in task_list
-     * table fro team
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:RK Ankireddy
+     * ForUse : getTeamTaskDetails() method is used to get task details in task_list table from team
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     * @Corresponded Action:doTeamTasksSearch.action in users.xml
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getTeamTaskDetails() {
         resultType = LOGIN;
-        System.out.println("in getTeamTaskDetails---------->");
-
+        System.out.println("********************TaskHandlerAction :: getTeamTaskDetails Method Start*********************");
         try {
 
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
+                int usrPriRole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                String usrType=httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
                 Calendar now = Calendar.getInstance();
                 now.add(Calendar.MONTH, 1);
                 String monthString = "";
@@ -475,8 +405,6 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     monthString = "" + (now.get(Calendar.MONTH) + 1);
                 }
                 setEndDate(monthString + "-" + dateString + "-" + now.get(Calendar.YEAR));
-                System.out.println("end date----------->" + getEndDate());
-
 
                 //substract months from current date using Calendar.add method
                 now = Calendar.getInstance();
@@ -500,22 +428,19 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 }
 
                 setStartDate(startMonthString + "-" + startDateString + "-" + now.get(Calendar.YEAR));
-                System.out.println("start date------------->" + getStartDate());
 
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTeamMemberNames(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
-                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
+                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap(usrPriRole,usrType,getUserSessionId()));
                 teamtaskDetails = ServiceLocator.getTaskHandlerService().getLoggedInTeamTasksDetails(this);
                 Iterator i = teamtaskDetails.iterator();
-                // teamMemberNames = (java.util.Map) i.next();
-                System.out.println(teamtaskDetails.size());
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
-            System.out.println("Exception in task search action-->" + ex.getMessage());
             resultType = ERROR;
         }
+        System.out.println("********************TaskHandlerAction :: getTeamTaskDetails Method End*********************");
         return resultType;
     }
 
@@ -524,77 +449,73 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         this.httpServletRequest = httpServletRequest;
     }
 
-    /**
-     * *************************************
+   
+      /**
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @showTeamTaskSearchDetails() method is used to get task details in
-     * task_list table based on search criteria
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:RK Ankireddy
+     * ForUse : showTeamTaskSearchDetails() method is used to get task details in task_list table based on search criteria
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     * @Corresponded Action:showTeamTaskSearchDetails.action in users.xml
-     *
-     **************************************
+     * *****************************************************************************
      */
+    
     public String showTeamTaskSearchDetails() {
         resultType = LOGIN;
+         System.out.println("********************TaskHandlerAction :: showTeamTaskSearchDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
+                int usrPriRole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                String usrType=httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
-                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
+                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap(usrPriRole,usrType,getUserSessionId()));
                 setTeamMemberNames(dataSourceDataProvider.getInstance().getMyTeamMembers(getUserSessionId()));
                 teamtaskDetails = ServiceLocator.getTaskHandlerService().getTeamTasksDetails(this);
                 
                  setEndDate(getDocdatepicker());
-                System.out.println("end date----------->"+getEndDate());
-                
 
                 //substract months from current date using Calendar.add method
                 
-                
                 setStartDate(getDocdatepickerfrom());
-                System.out.println(getTeamMember());
-                System.out.println(teamtaskDetails.size());
                 if (teamtaskDetails.size() > 0) {
                     resultType = SUCCESS;
                 } else {
-                    System.out.println("in ifelse emp sarech");
                     resultType = SUCCESS;
                 }
             }
         } catch (Exception ex) {
-            System.out.println("Exception in task search action1-->" + ex.getMessage());
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+         System.out.println("********************TaskHandlerAction :: showTeamTaskSearchDetails Method End*********************");
         return resultType;
     }
 
+    
+     /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : addAttachment() method is used to 
+     * 
+     *
+     * *****************************************************************************
+     */
+    
     public String addAttachment() {
-        System.out.println("entered into addAttachment  action");
         resultType = LOGIN;
-        //filePath = "D:\\uploadedfiles";
         int addresult = 0;
-        //filePath="C:\\usr\\ProjectFiles\\MSP\\TASK_ATTACHMENTS";
-        //filePath = Properties.getProperty("Task.Attachment");
+        System.out.println("********************TaskHandlerAction :: addAttachment Method Start*********************");
 
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data Start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        System.out.println("File Name is:" + taskAttachment);
-        System.out.println("File ContentType is:" + taskAttachmentContentType);
-        System.out.println("Files Directory is:" + filePath + "-------->" + getFilePath());
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data End %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
 
-                System.out.println(taskAttachmentFileName + " =====================> " + getTaskAttachmentFileName());
-
-                //setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
-                //setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
                 if (getTaskAttachmentFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filePath = Properties.getProperty("Task.Attachment");
                     File createPath = new File(filePath);
@@ -632,36 +553,24 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     createPath = new File(createPath.getAbsolutePath() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week));
                     /*This creates a directory forcefully if the directory does not exsist*/
 
-                    //System.out.println("path::"+createPath);
                     createPath.mkdir();
                     /*here it takes the absolute path and the name of the file that is to be uploaded*/
                     File theFile = new File(createPath.getAbsolutePath());
 
-                    //System.out.print("File Path::"+theFile);
 
                     setFilePath(theFile.toString() + "\\");
                     /*copies the file to the destination*/
                     File destFile = new File(theFile, taskAttachmentFileName);
                     FileUtils.copyFile(taskAttachment, destFile);
                 }
-//                File destFile = new File(filePath, taskAttachmentFileName);
-//                FileUtils.copyFile(taskAttachment, destFile);
 
-                //System.out.println("file is null so it adds only data in task_list table");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                System.out.println("Action called in TaskHandlerAction classsssssssssssssssssssssssssssssssssssssssss");
-                System.out.println("valuesssssss are::::::" + getTaskid() + "  " + getTaskAttachmentFileName() + "  " + getFilePath());
                 addresult = ServiceLocator.getTaskHandlerService().addAttachmentDetails(this);
-                System.out.println("result adding taskkkkkkkkkkkkkkkkkkkkkk:::: " + addresult);
 
                 if (addresult > 0) {
-                    System.out.println("in action success in adding task detailssssssssss");
-                    //httpServletRequest.getSession(false).setAttribute("taskdata", taskDetails);
-                    //resultType = SUCCESS;
+               
                 } else {
-                    System.out.println("in action failed to adding task detailssssssssss");
-                    //httpServletRequest.getSession(false).setAttribute("taskdata", null);
-                    //resultType = SUCCESS;
+                 
                 }
 
 
@@ -670,38 +579,33 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
             e.printStackTrace();
             return ERROR;
         } catch (Exception ex) {
-            System.out.println("Exception in ADD task  action-->" + ex.getMessage());
             resultType = ERROR;
         }
-
+        System.out.println("********************TaskHandlerAction :: addAttachment Method End*********************");
         return SUCCESS;
     }
 
-    /**
-     * *************************************
+    
+     /**
+     * *****************************************************************************
+     * Date : 04/21/2015
      *
-     * @updateTaskDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com> Ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>Ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : updateTaskDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/21/2015
-     *
-     * @Corresponded Action:getTaskDetails.action in users.xml
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String updateTaskDetails() {
         resultType = LOGIN;
+         System.out.println("********************TaskHandlerAction :: updateTaskDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println(this.getTaskid());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                System.out.println("==========>in action status::" + getTaskStatus());
                 int i = ServiceLocator.getTaskHandlerService().updateTaskDetails(this);
                 if (getTaskStatus() == 3) {
-                    String from = "sb@miraclesoft.com";
+                    String from = com.mss.msp.util.Properties.getProperty("MSB.from").toString();
                     setTaskCreatedByEmail(dataSourceDataProvider.getInstance().getEmailId(getTask_created_by()));
                     setSecondaryMailId(dataSourceDataProvider.getInstance().getEmailId(getSec_assign_to()));
                     setPrimaryMailId(dataSourceDataProvider.getInstance().getEmailId(getPrimaryAssign()));
@@ -709,7 +613,6 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     setStatusName(dataSourceDataProvider.getInstance().getStatusById(getTaskStatus()));
                     int result = mailManager.generateTaskCompleteEmail(this);
                     if (result > 0) {
-                        System.out.println("Email logger added ================================>%%%%%%%%%%%%%%%%%%%%%%%%");
                     }
                 }
                 resultType = SUCCESS;
@@ -718,31 +621,28 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+         System.out.println("********************TaskHandlerAction :: updateTaskDetails Method End*********************");
         return null;
     }
 
-    /**
-     * *************************************
+   
+      /**
+     * *****************************************************************************
+     * Date : 04/22/2015
      *
-     * @getNotesDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com> 
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getNotesDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/22/2015
-     *
-     * @Corresponded Action:getTaskDetails.action in users.xml
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getNotesDetails() {
         resultType = LOGIN;
+        System.out.println("********************TaskHandlerAction :: getNotesDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println(this.getTaskid());
                 String resultMsg = ServiceLocator.getTaskHandlerService().getNotesDetails(this);
-                System.out.println(resultMsg);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -754,31 +654,28 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         } catch (Exception ex) {
             resultType = ERROR;
         }
+        System.out.println("********************TaskHandlerAction :: getNotesDetails Method End*********************");
         return null;
     }
 
-    /**
-     * *************************************
+    
+     /**
+     * *****************************************************************************
+     * Date : 04/22/2015
      *
-     * @getNotesDetailsOverlay() method is used to get task details and appends
-     * on TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com> 
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getNotesDetailsOverlay() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/23/2015
-     *
-     * @Corresponded Action:getTaskDetails.action in users.xml
-     *
-     **************************************
-     * UpdateNotesDetails
+     * *****************************************************************************
      */
     public String getNotesDetailsOverlay() {
         resultType = LOGIN;
+         System.out.println("********************TaskHandlerAction :: getNotesDetailsOverlay Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println(this.getTaskid());
                 String resultMsg = ServiceLocator.getTaskHandlerService().getNotesDetailsOverlay(this);
-                System.out.println(resultMsg);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -790,118 +687,120 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         } catch (Exception ex) {
             resultType = ERROR;
         }
+         System.out.println("********************TaskHandlerAction :: getNotesDetailsOverlay Method End*********************");
         return null;
     }
 
-    /**
-     * *************************************
+   
+     /**
+     * *****************************************************************************
+     * Date : 04/23/2015
      *
-     * @UpdateNotesDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com> 
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : UpdateNotesDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/23/2015
-     *
-     * @Corresponded Action:getTaskDetails.action in users.xml
-     *
-     **************************************
-     * DoInsertNotesDetails
+     * *****************************************************************************
      */
     public String UpdateNotesDetails() {
         resultType = LOGIN;
+        System.out.println("********************TaskHandlerAction :: UpdateNotesDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println(this.getTaskid());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int resultMsg = ServiceLocator.getTaskHandlerService().UpdateNotesDetails(this);
-
                 return null;
             }
         } catch (Exception ex) {
             resultType = ERROR;
         }
+        System.out.println("********************TaskHandlerAction :: UpdateNotesDetails Method End*********************");
         return null;
     }
 
-    /**
-     * *************************************
+   
+     /**
+     * *****************************************************************************
+     * Date : 04/23/2015
      *
-     * @DoInsertNotesDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com> 
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : DoInsertNotesDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/23/2015
-     *
-     * @Corresponded Action:getTaskDetails.action in users.xml
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String DoInsertNotesDetails() {
         resultType = LOGIN;
+        System.out.println("********************TaskHandlerAction :: DoInsertNotesDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("hello comments....." + this.getNote_comments());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 int resultMsg = ServiceLocator.getTaskHandlerService().DoInsertNotesDetails(this);
-
                 return null;
             }
         } catch (Exception ex) {
             resultType = ERROR;
         }
+        System.out.println("********************TaskHandlerAction :: DoInsertNotesDetails Method End*********************");
         return null;
     }
 
+    
+      /**
+     * *****************************************************************************
+     * Date : 
+     *
+     * Author : 
+     *
+     * ForUse : addTask() method is used to add task
+     * 
+     *
+     * *****************************************************************************
+     */
     public String addTask() {
         resultType = LOGIN;
+         System.out.println("********************TaskHandlerAction :: addTask Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("================>Hi im in action for add task jsp");
-                //tasksStatusList=null;
-                //tasksRelatedToList=null;
-                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
+                int usrPriRole = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
+                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+                String usrType=httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
+                setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap(usrPriRole,usrType,getUserSessionId()));
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
                 populateProjectsDropDowns();    //Gets Users Main/Sub Projects
                 resultType = SUCCESS;
-                //return SUCCESS;
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
             resultType = ERROR;
         }
+         System.out.println("********************TaskHandlerAction :: addTask Method End*********************");
         return resultType;
     }
 
     private void populateProjectsDropDowns() {
-//        try {
-//            userMainProjects = ServiceLocator.getProjectDataHandlerService().getProjectsByUserAndType(userId, "MP");
-//            userSubProjects = ServiceLocator.getProjectDataHandlerService().getProjectsByUserAndType(userId, "SP");
-//        } catch (ServiceLocatorException ex) {
-//            Logger.getLogger(TaskHandlerAction.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
     }
 
-    /**
-     * *************************************
+    
+     /**
+     * *****************************************************************************
+     * Date : 04/29/2015
      *
-     * @getNotesDetailsBySearch() method is used to get notes details.
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getNotesDetailsBySearch() method is used to get notes details.
+     * 
      *
-     * @Created Date:04/29/2015
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getNotesDetailsBySearch() {
         resultType = LOGIN;
+         System.out.println("********************TaskHandlerAction :: getNotesDetailsBySearch Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 String resultMsg = ServiceLocator.getTaskHandlerService().getNotesDetailsBySearch(this);
-                System.out.println(resultMsg + "praveen kumar pjpjpjppjpjpjpj");
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -913,31 +812,28 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         } catch (Exception ex) {
             resultType = ERROR;
         }
+         System.out.println("********************TaskHandlerAction :: getNotesDetailsBySearch Method End*********************");
         return null;
     }
 
-    /**
-     * *************************************
+   
+     /**
+     * *****************************************************************************
+     * Date : 04/22/2015
      *
-     * @getNotesDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getCommentsOnOverlay() method is used to get task details and appends on TaskEdit screen.
+     * 
      *
-     * @Created Date:04/22/2015
-     *
-     * @Corresponded Action:getTaskDetails.action in users.xml
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getCommentsOnOverlay() {
         resultType = LOGIN;
+        System.out.println("********************TaskHandlerAction :: getCommentsOnOverlay Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println(this.getTaskid());
                 String resultMsg = ServiceLocator.getTaskHandlerService().getCommentsOnOverlay(this);
-                System.out.println(resultMsg);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -949,6 +845,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
         } catch (Exception ex) {
             resultType = ERROR;
         }
+        System.out.println("********************TaskHandlerAction :: getCommentsOnOverlay Method End*********************");
         return null;
     }
 

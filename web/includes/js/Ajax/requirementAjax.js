@@ -162,10 +162,10 @@ function addRequirement()
             if (req.readyState == 4 && req.status == 200) {
                 $('#loadingAddReq').hide();
                 if(req.responseText==0){
-                    $("editrequirementerror").html(" <b><font color='red'>Requirement is not Added</font></b>");
+                    $("reqAdded").html(" <b><font color='red'>Requirement is not Added</font></b>");
                 }else
                 {
-                    $("editrequirementerror").html(" <b><font color='green'>Requirement Added Successfully</font></b>");
+                    $("reqAdded").html(" <b><font color='green'>Requirement Added Successfully</font></b>");
                     requirementClearValidation();
                 }
             //setPrimaryAssigned(req.responseText);
@@ -399,11 +399,13 @@ function updaterequirements(){
                 if (req.status == 200) {
                     $('#loadingReq').hide();
                     $("editrequirementerror").html(" <b><font color='green'>Record updated successfully </font></b>");
+                    $("editrequirementerror").show().delay(5000).fadeOut();
                      document.getElementById("status_check").value=status;
                 }
                 else
                 {
                     $("editrequirementerror").html(" <b><font color='red'>Record not updated</font></b>");
+                    $("editrequirementerror").show().delay(5000).fadeOut();
                 }
             }
         };
@@ -833,7 +835,7 @@ function RequirementValidations(skillCategoryArry){
     }
     // alert("min rate---->"+targetrate +" max rate---->"+requirementMaxRate);
     var diff=requirementMaxRate-targetrate;
-    if(diff<0)
+    if(diff <= 0)
     {
         $("editrequirementerror").html("<b><font color='red'>Maximum rate should be Greater than Minimum rate</font></b>");
         $("#requirementMaxRate").css("border","1px solid red");
@@ -903,6 +905,7 @@ function RequirementValidations(skillCategoryArry){
     } 
     
     $("editrequirementerror").html("");
+    
     $("#RequirementName").css("border", "1px solid #3BB9FF");
     $("#RequirementFrom").css("border", "1px solid #3BB9FF");
     $("#RequirementTaxTerm").css("border", "1px solid #3BB9FF");
@@ -921,5 +924,41 @@ function RequirementValidations(skillCategoryArry){
  
     $("#RequirementResponse").css("border", "1px solid #3BB9FF");
      $("#skillCategoryValue").css("border", "1px solid #3BB9FF");
+     $("reqAdded").html("");
   return true;
     }
+    
+    function clearFormFields()
+{
+   // alert(type)
+    document.getElementById('RequirementName').value= "";
+    document.getElementById('RequirementFrom').value = "";
+    //document.getElementById('RequirementTaxTerm').value = type;
+    document.getElementById('RequirementContact1').selectedIndex = "0";
+    
+    
+    
+    document.getElementById('RequirementNoofResources').value = "";
+    document.getElementById('RequirementTargetRate').value = "";
+    document.getElementById('requirementMaxRate').value= ""; 
+    
+    document.getElementById('RequirementContact2').selectedIndex = "0"; 
+    document.getElementById('RequirementDuration').value ="";
+    document.getElementById('requirementDurationDescriptor').selectedIndex = "0";
+     document.getElementById('billingContact').selectedIndex = "0";
+     document.getElementById('RequirementLocation').selectedIndex = "0";
+    document.getElementById('RequirementYears').selectedIndex = "0";
+   
+    document.getElementById('reqCategoryValue').value = "1";
+    document.getElementById('requirementQualification').value= ""; 
+    document.getElementById('RequirementJobdesc').value = "";
+    document.getElementById('RequirementResponse').value = "";
+    
+   
+    
+     $("#skillCategoryValue").selectivity('clear');
+     $("#preSkillCategoryValue").selectivity('clear');
+    //    document.getElementById('RequirementDescription').value = "";
+    document.getElementById('RequirementComments').value= "";
+    
+}

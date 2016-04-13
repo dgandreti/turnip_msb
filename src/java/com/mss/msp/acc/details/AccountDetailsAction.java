@@ -25,8 +25,14 @@ import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.ParameterAware;
 
 /**
+ * *****************************************************************************
+ * Date :
  *
- * @author Greg
+ * Author :
+ *
+ * ForUse : AccountDetailsAction() class is used to
+ *
+ * *****************************************************************************
  */
 public class AccountDetailsAction extends ActionSupport implements ServletRequestAware, ServletResponseAware, ParameterAware {
 
@@ -73,17 +79,8 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
     private String conCCity;
     private String conCPhone;
     private int conCState;
-//    private File picture;
-//    private String pictureFileName;
-//    private String pictureFileContentType;
-    // private String message = "";
-    //private String filePath;
     private String addAddressFlag;
     private String currentAddressFlag;
-//    private File taskAttachment;
-//    private String taskAttachmentContentType;
-//    private String taskAttachmentFileName;
-//    private String filePath;
     private boolean checkAddress;
     private Map countryNames;
     private Map state;
@@ -131,17 +128,16 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
     private Map industryMap;
     private Map skillMap;
     private String skillSet;
+    private Map reqCategory;
 
     public AccountDetailsAction() {
     }
 
     public String view() {
-        System.out.println("===== ACCOUNT VIEW =====");
+        System.out.println("********************AccountDetailsAction :: view Method Start*********************");
         try {
+            setReqCategory(dataSourceDataProvider.getInstance().getRequiteCategory(1));
             String id = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
-         
-                    System.out.println("accountSearchID--->"+accountSearchID);
-                    System.out.println("accFlag-->"+accFlag);
             if (accountSearchID != null) {
                 id = accountSearchID;
             } else {
@@ -149,17 +145,11 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
             }
             if (com.mss.msp.util.DataSourceDataProvider.getInstance().isVendor(Integer.parseInt(getAccountSearchID()))) {
                 setUserType("vendor");
-                System.out.println("Yes , I m  a vendor");
             } else {
                 setUserType("other");
-                System.out.println("NO , I m not a vendor");
             }
             if (id != null) {
-                System.out.println("FETCHING INFO for FROM NEW METHOD" + id);
-
                 setPrimaryAccount(dataSourceDataProvider.getInstance().getPrimaryAccount(Integer.parseInt(getAccountSearchID())));
-                //setDepartments(dataSourceDataProvider.getInstance().getDepartmentNames(Integer.parseInt(getAccountSearchID())));
-                //setDesignations(dataSourceDataProvider.getInstance().getDesignation());
                 setVendorTierMap(dataSourceDataProvider.getInstance().getVendorTierTypes());
                 setAddVendorTierMap(dataSourceDataProvider.getInstance().getAddVendorTierTypes(id));
                 setAllAccTeam(dataSourceDataProvider.getInstance().getAllAccTeam(Integer.parseInt(getAccountSearchID())));
@@ -176,33 +166,11 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
                     while (stk2.hasMoreTokens()) {
                         list.add(getKeyFromValue(skillsmap, stk2.nextToken()));
                     }
-                    System.out.println("list for req skills----------->" + list);
                     accountDetails.setSkillValueList(list);
-                    System.out.println("accountDetails.setSkillValueList(list)----------->" + list);
                 }
-//                String str = accountDetails.getSkillValues();
-//               if(str!=null){
-//                   
-//               StringTokenizer stk = new StringTokenizer(str, ",");
-//               List list = new ArrayList();
-//
-//                while (stk.hasMoreTokens()) {
-//                    
-//                    list.add(stk.nextToken());
-//                }
-//               
-//               accountDetails.setSkillValueList(list);
-//               
-//                 System.out.println("accountDetails.setSkillValueList(list)----------->"+list);
-//               }
-                //accountDetails.setLkState(ServiceLocator.getLookUpHandlerService().getName("lk_states", "name", Integer.parseInt(accountDetails.getState())));
-                //accountDetails.setLkCountry(ServiceLocator.getLookUpHandlerService().getName("lk_country", "country", Integer.parseInt(accountDetails.getCountry())));
                 if (accountDetails.getIndustry() != null && !accountDetails.getIndustry().equals("")) {
                     accountDetails.setLkIndustry(ServiceLocator.getLookUpHandlerService().getName("lk_acc_industry_type", "acc_industry_name", Integer.parseInt(accountDetails.getIndustry())));
                 }
-//                if (accountDetails.getVendor() != null && !accountDetails.getVendor().equals("")) {
-//                    accountDetails.setLkVendor(ServiceLocator.getLookUpHandlerService().getName("lk_vendor_type", "vendor_type", accountDetails.getVendor()));
-//                }
                 if (accountDetails.getCountry() != null && !accountDetails.getCountry().equals("")) {
                     accountDetails.setStockSymbol(ServiceLocator.getLocationService().lookupCountryCurrency(Integer.parseInt(accountDetails.getCountry())));
                     states = ServiceLocator.getLocationService().getStatesMapOfCountry(null, Integer.parseInt(accountDetails.getCountry()));
@@ -211,16 +179,10 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
                     states = ServiceLocator.getLocationService().getStatesMapOfCountry(null, 3);
                 }
                 accountDetails.setLkAccountType(ServiceLocator.getLookUpHandlerService().getName("lk_acc_type", "acc_type_name", accountDetails.getAccountType()));
-                System.out.println("==========LOADED==========" + accountDetails);
-                //LOAD VALUES FOR ACCOUNTDETAILS DROPDOWN SELECTS
                 countries = ServiceLocator.getLocationService().getCountryNames();
-
-
                 System.err.println("states-->" + states);
                 industries = ServiceLocator.getLookUpHandlerService().getIndustryTypesMap();
                 accTypes = ServiceLocator.getLookUpHandlerService().getAccountTypesMap();
-                // vendTypes = ServiceLocator.getLookUpHandlerService().getVendorTypesMap();
-
                 //OTHER STUFF LOAD
                 setCountryNames(dataSourceDataProvider.getInstance().getCountryNames());
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -230,10 +192,10 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Problem viewing account : ==> (" + e.getMessage() + ");");
             resultMessage = "Problem viewing account : ==> (" + e.getMessage() + ");";
             resultType = ERROR;
         }
+        System.out.println("********************AccountDetailsAction :: view Method End*********************");
         return resultType;
     }
 
@@ -249,6 +211,7 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
     /**
      * *****************************************************************************
      * Date : May 5, 2015, 11:23 PM IST
+     *
      * Author:Ramakrishna<lankireddy@miraclesoft.com>
      *
      * ForUse : updating vendor sales team details
@@ -256,16 +219,12 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
      */
     public String updateAccTeam() throws Exception {
         resultType = LOGIN;
+        System.out.println("********************AccountDetailsAction :: updateAccTeam Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("======================Entered in the Action==========================");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                System.out.println(">>>>>>>UserId:::>" + getUserSessionId() + "   " + getAccountSearchID());
-//                System.out.println("List>>>>>>>" + getAvailAccTeamList().toString());
                 String[] rightParams = (String[]) parameters.get("accSalesTeam");
-                System.out.println(">>>>>>>>>>>>>>>>>Length>>>>>>" + rightParams.length + " >>>>>>>accountId>>" + getAccountSearchID());
                 int updateResult = ServiceLocator.getAccountService().updateAccSalesTeam(this, rightParams, getPrimaryAccount());
-
                 if (updateResult > 0) {
                     addActionMessage("team has been successfully updated!");
                 } else {
@@ -273,24 +232,21 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
                 }
                 httpServletRequest.setAttribute(ApplicationConstants.RESULT_MSG, resultMessage);
                 resultType = SUCCESS;
-
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
             resultType = ERROR;
         }
-
+        System.out.println("********************AccountDetailsAction :: updateAccTeam Method End*********************");
         return resultType;
     }
 
     public String getAccountContactDetailsForEdit() {
-
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+            System.out.println("********************AccountDetailsAction :: getAccountContactDetailsForEdit Method Start*********************");
             try {
                 setAccountContactVTO(ServiceLocator.getAccountDetailsService().editAccountContacts(getContactId()));
                 setCountryNames(dataSourceDataProvider.getInstance().getCountryNames());
-                //setDepartments(dataSourceDataProvider.getInstance().getDepartmentNames(Integer.parseInt(getAccountSearchID())));
                 setAccount_name(DataSourceDataProvider.getInstance().getAccountNameById(Integer.parseInt(getAccountSearchID())));
                 setWorkLocations(DataSourceDataProvider.getInstance().getWorkLocations(Integer.parseInt(getAccountSearchID())));
                 String role = DataSourceDataProvider.getInstance().getUsrPrimaryRole(this.getContactId());
@@ -300,86 +256,70 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
                 String type_of_relation = com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationType(this.getAccountSearchID());
                 setPrimaryRole(Integer.parseInt(part1));
                 setOrgRoles(ServiceLocator.getUsersdataHandlerservicee().getAllRoles(this.getContactId(), type_of_relation));
-
                 setIndustryMap(ServiceLocator.getLookUpHandlerService().getIndustryTypesMap());
                 setExperience(DataSourceDataProvider.getInstance().getYearsOfExp());
-
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillMap(skillsmap);
-                //setSkillMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
                 if ("update".equals(getResultFlag())) {
                     addActionMessage("Account Contact Details Updated Successfully");
                 }
-                //setState(DataSourceDataProvider.getInstance().getAllStates());
                 resultMessage = SUCCESS;
-
-
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
                 resultMessage = ERROR;
             }
-
         }
-
+        System.out.println("********************AccountDetailsAction :: getAccountContactDetailsForEdit Method End*********************");
         return resultMessage;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : updateAccountContactDetails() method is used to
+     *
+     * *****************************************************************************
+     */
     public String updateAccountContactDetails() {
         HttpSession session = getHttpServletRequest().getSession(true);
-
+        System.out.println("********************AccountDetailsAction :: updateAccountContactDetails Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             if (isCheckAddress()) {
                 addAddressFlag = "PC";
-                System.out.println("checkAddress" + addAddressFlag);
             } else {
                 addAddressFlag = "P";
-                System.out.println("checkAddress" + addAddressFlag);
-
             }
             if (isIsManager()) {
                 addManager = 1;
-                System.out.println("Is Manager" + addManager);
             } else {
                 addManager = 0;
-                System.out.println("Is Manager" + addManager);
             }
             if (isIsTeamLead()) {
                 addTeamLead = 1;
-                System.out.println("Is TeamLead" + addTeamLead);
             } else {
                 addTeamLead = 0;
-                System.out.println("Is TeamLead" + addTeamLead);
             }
-            System.out.println("checkAddress" + isCheckAddress());
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 Object sessionGender = session.getAttribute(ApplicationConstants.GENDER);
-                System.out.println("sessionGender-->" + sessionGender);
-                
                 int userCount = ServiceLocator.getAccountAjaxHandlerService().getUserCount(getContactId());
-                System.out.println("userCount-->" + userCount);
                 if (userCount == 0 && "Active".equals(getStatus())) {
-                    System.out.println("userCount-if->" + userCount);
                     ServiceLocator.getAccountAjaxHandlerService().saveUserContacts(getContactId(), getUserSessionId());
                 }
-                
                 String resultString = ServiceLocator.getAccountDetailsService().updateAccountContactDetails(this);
-                System.out.println("result " + resultString);
-                System.out.println("workLocation " + getWorkLocation());
                 if (resultString.equalsIgnoreCase("Updated")) {
-                    //dataSourceDataProvider.getInstance().updateAccountLastAccessedBy(Integer.parseInt(getAccountSearchID()), getUserSessionId(), "ContactUpdated");
                 }
                 if (!getGender().equals(sessionGender)) {
                     String femaleImage = Properties.getProperty("Profile.FEMALEIMAGE");
                     String maleImage = Properties.getProperty("Profile.GENERALIMAGE");
-                    System.out.println("gender" + getGender() + "-->Session gender-->" + sessionGender);
                     if ("M".equals(getGender())) {
-                        System.out.println("in if");
                         session.setAttribute(ApplicationConstants.GENDER, "M");
                         session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, maleImage);
                     } else {
-                        System.out.println("in else");
                         session.setAttribute(ApplicationConstants.GENDER, "F");
                         session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, femaleImage);
                     }
@@ -389,8 +329,8 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
                 e.printStackTrace();
                 resultMessage = ERROR;
             }
-            System.out.println("checkAddress--" + isCheckAddress());
         }
+        System.out.println("********************AccountDetailsAction :: updateAccountContactDetails Method End*********************");
         return resultMessage;
     }
 
@@ -1122,5 +1062,13 @@ public class AccountDetailsAction extends ActionSupport implements ServletReques
 
     public void setSkillSet(String skillSet) {
         this.skillSet = skillSet;
+    }
+
+    public Map getReqCategory() {
+        return reqCategory;
+    }
+
+    public void setReqCategory(Map reqCategory) {
+        this.reqCategory = reqCategory;
     }
 }

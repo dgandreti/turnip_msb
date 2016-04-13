@@ -85,7 +85,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             preparedStatement.setInt(3, q3.get(0));//LOOK UP
             preparedStatement.setString(4, account.getRegion());
             preparedStatement.setString(5, account.getNoemp());
-            preparedStatement.setInt(6, account.getRevenue().intValue());
+            preparedStatement.setString(6, account.getRevenue());
             preparedStatement.setInt(7, account.getBudget().intValue());
             preparedStatement.setString(8, account.getTax_id());
             preparedStatement.setString(9, account.getDescription());
@@ -265,8 +265,8 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         try {
 
 
-             queryString = "SELECT u.cur_status,u.usr_id,CONCAT(first_name,'.',last_name) AS NAME,u.email1,u.office_phone,r.role_name FROM users u,usr_roles ur ,roles r WHERE u.usr_id=ur.usr_id AND r.role_id=ur.role_id AND u.org_id=" + searchOrgId + " AND type_of_user='" + typeOfAccount + "' AND u.cur_status  LIKE 'Active' ORDER BY NAME LIMIT 100";
-           
+            queryString = "SELECT u.cur_status,u.usr_id,CONCAT(first_name,'.',last_name) AS NAME,u.email1,u.office_phone,r.role_name FROM users u,usr_roles ur ,roles r WHERE u.usr_id=ur.usr_id AND r.role_id=ur.role_id AND u.org_id=" + searchOrgId + " AND type_of_user='" + typeOfAccount + "' AND u.cur_status  LIKE 'Active' ORDER BY NAME LIMIT 100";
+
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -282,13 +282,13 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
 //                usersVTO.setEmail1(resultSet.getString("email1"));
 //                usersVTO.setWorkPhone(resultSet.getString("office_phone"));
 //                usersVTO.setStatus(resultSet.getString("cur_status"));
-                String offphone="";
-                if(resultSet.getString("office_phone")!=null){
-                    offphone=resultSet.getString("office_phone");
+                String offphone = "";
+                if (resultSet.getString("office_phone") != null) {
+                    offphone = resultSet.getString("office_phone");
                 }
-              resultString += resultSet.getInt("usr_id") + "|" + resultSet.getString("name")
+                resultString += resultSet.getInt("usr_id") + "|" + resultSet.getString("name")
                         + "|" + resultSet.getString("cur_status") + "|" + resultSet.getString("email1")
-                        + "|" + offphone+"|"+ resultSet.getString("role_name")+'^';
+                        + "|" + offphone + "|" + resultSet.getString("role_name") + '^';
 
 
                 System.out.println("---------------->" + resultString);
@@ -322,7 +322,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         Connection connection = null;
         Statement statement = null;
         CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+      
         ResultSet resultSet = null;
         String queryString = "";
         String resultString = "";
@@ -521,8 +521,8 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         UserVTO usersVTO = new UserVTO();
         try {
             // queryString = "SELECT usr_id,concat(first_name,'.',last_name) as name,email1,phone1,cur_status FROM users WHERE org_id=" + orgUserId + " AND type_of_user='" + accountAjaxHandler.getTypeOfAccount() + "' ";
-             queryString = "SELECT u.cur_status,u.usr_id,CONCAT(first_name,'.',last_name) AS NAME,u.email1,u.office_phone,r.role_name FROM users u,usr_roles ur ,roles r WHERE u.usr_id=ur.usr_id AND r.role_id=ur.role_id AND u.org_id=" + orgUserId + " AND u.type_of_user='" + accountAjaxHandler.getTypeOfAccount() + "' ";
-             if (!"".equals(accountAjaxHandler.getEmail())) {
+            queryString = "SELECT u.cur_status,u.usr_id,CONCAT(first_name,'.',last_name) AS NAME,u.email1,u.office_phone,r.role_name FROM users u,usr_roles ur ,roles r WHERE u.usr_id=ur.usr_id AND r.role_id=ur.role_id AND u.org_id=" + orgUserId + " AND u.type_of_user='" + accountAjaxHandler.getTypeOfAccount() + "' ";
+            if (!"".equals(accountAjaxHandler.getEmail())) {
                 queryString = queryString + " and  email1 like '%" + accountAjaxHandler.getEmail() + "%' ";
             }
             if (!"".equals(accountAjaxHandler.getFirstName())) {
@@ -557,9 +557,9 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
                 }
                 // usersVTO.setStatus(resultSet.getString("cur_status"));
                 usersVTO.setUsr_title(resultSet.getString("cur_status"));
-                 usersVTO.setRole(resultSet.getString("role_name"));
+                usersVTO.setRole(resultSet.getString("role_name"));
 
-               resultString += usersVTO.getUsr_id() + "|" + usersVTO.getEmpName() + "|" + usersVTO.getUsr_title() + "|" + usersVTO.getEmail1() + "|" + usersVTO.getPhone() +"|"+ usersVTO.getRole()+"|"+ '^';
+                resultString += usersVTO.getUsr_id() + "|" + usersVTO.getEmpName() + "|" + usersVTO.getUsr_title() + "|" + usersVTO.getEmail1() + "|" + usersVTO.getPhone() + "|" + usersVTO.getRole() + "|" + '^';
 
                 System.out.println("---------------->" + resultString);
 
@@ -593,6 +593,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
      **************************************
      */
     public String getDefaultVendorTiers(AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException {
+         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
@@ -622,6 +623,14 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             sqe.printStackTrace();
         } finally {
             try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -647,6 +656,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
      **************************************
      */
     public String addVendorTierToCustmer(AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException {
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
@@ -667,6 +677,10 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             sqe.printStackTrace();
         } finally {
             try {
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -692,6 +706,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
      **************************************
      */
     public String editVendorTierDetails(AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException {
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
@@ -741,6 +756,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
      **************************************
      */
     public String searchVendorTierDetails(AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException {
+       Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
@@ -855,10 +871,10 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
      */
     public String getVendorDetails(AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException {
         System.out.println("in account impl>>>>>>>>>>>>>" + accountAjaxHandler.getVendorId());
-
+        Connection connection = null;
         StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+      
+       
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "", resultString = "";
@@ -915,7 +931,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
      */
     public String saveVendorTierDetails(AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException {
         System.out.println("in account impl>>>>>>>>>>>>>" + accountAjaxHandler.getVendorId());
-
+        Connection connection = null;
         StringBuffer stringBuffer = new StringBuffer();
         CallableStatement callableStatement = null;
         PreparedStatement preparedStatement = null;
@@ -963,6 +979,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
     }
 
     public String getVendorTierOverlayDetails(AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException {
+        Connection connection = null;
         String resultString = "";
         Statement statement = null;
         ResultSet resultSet = null;
@@ -998,6 +1015,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
 
     public String getCsrDetailsTable(AccountAjaxHandler accountAjaxHandler, int orgUserId) throws ServiceLocatorException {
         String resultString = "";
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
@@ -1054,6 +1072,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
 
     public int doAddAccountToCsr(AccountAjaxHandler accountAjaxHandler, int orgUserId) throws ServiceLocatorException {
         String resultString = "";
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
@@ -1099,6 +1118,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
+        Connection connection = null;
         boolean result = true;
         System.out.println("in imple get vendor tier overlay dtails");
         try {
@@ -1142,7 +1162,8 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
     public int csrStatusChange(AccountAjaxHandler accountAjaxHandler, int orgUserId) throws ServiceLocatorException {
         String resultString = "";
         Statement statement = null;
-        ResultSet resultSet = null;
+       
+        Connection connection = null;
         String queryString = "";
         int result = 0;
         System.out.println("in imple get vendor tier overlay dtails");
@@ -1157,10 +1178,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             e.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
+               
                 if (statement != null) {
                     statement.close();
                     statement = null;
@@ -1204,6 +1222,10 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             System.out.println("exception " + e);
         } finally {
             try {
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
+                }
                 if (connection != null) {
                     connection.close();
                     connection = null;
@@ -1214,11 +1236,10 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         }
         return isTransfer;
     }
-    
-    public String getLocationDetails(int orgId,AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException
-    {  
-        
-        
+
+    public String getLocationDetails(int orgId, AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException {
+
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -1227,37 +1248,31 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         UserVTO usersVTO = new UserVTO();
         int i = 0;
         try {
-            String city=accountAjaxHandler.getAccCity();
-            String phone=accountAjaxHandler.getAccPhone();
-            String state=accountAjaxHandler.getAccState();
-            String country=accountAjaxHandler.getAccCountry();
-            String status =accountAjaxHandler.getLocationStatus();
-            System.out.println(" "+city+"--->"+phone+"---->"+state+"--->"+country+"--->"+status);
-             //queryString = "SELECT u.cur_status,u.usr_id,CONCAT(first_name,'.',last_name) AS NAME,u.email1,u.office_phone,r.role_name FROM users u,usr_roles ur ,roles r WHERE u.usr_id=ur.usr_id AND r.role_id=ur.role_id AND u.org_id=" + searchOrgId + " AND type_of_user='" + typeOfAccount + "' AND u.cur_status  LIKE 'Active' ORDER BY NAME LIMIT 100";
-            queryString ="SELECT acc_add_id,acc_id,acc_city,acc_state,acc_country,acc_add_phone,status,location_name FROM acc_address WHERE acc_id="+orgId+" and is_primary=0 " ;
-            if(!"".equals(accountAjaxHandler.getLocationName()))
-            {
-             queryString+=" AND  location_name LIKE '%"+accountAjaxHandler.getLocationName()+"%'";   
+            String city = accountAjaxHandler.getAccCity();
+            String phone = accountAjaxHandler.getAccPhone();
+            String state = accountAjaxHandler.getAccState();
+            String country = accountAjaxHandler.getAccCountry();
+            String status = accountAjaxHandler.getLocationStatus();
+            System.out.println(" " + city + "--->" + phone + "---->" + state + "--->" + country + "--->" + status);
+            //queryString = "SELECT u.cur_status,u.usr_id,CONCAT(first_name,'.',last_name) AS NAME,u.email1,u.office_phone,r.role_name FROM users u,usr_roles ur ,roles r WHERE u.usr_id=ur.usr_id AND r.role_id=ur.role_id AND u.org_id=" + searchOrgId + " AND type_of_user='" + typeOfAccount + "' AND u.cur_status  LIKE 'Active' ORDER BY NAME LIMIT 100";
+            queryString = "SELECT acc_add_id,acc_id,acc_city,acc_state,acc_country,acc_add_phone,status,location_name FROM acc_address WHERE acc_id=" + orgId + " and is_primary=0 ";
+            if (!"".equals(accountAjaxHandler.getLocationName())) {
+                queryString += " AND  location_name LIKE '%" + accountAjaxHandler.getLocationName() + "%'";
             }
-            if(!"".equals(accountAjaxHandler.getAccCity()))
-            {
-             queryString+=" AND  acc_city LIKE '%"+accountAjaxHandler.getAccCity()+"%'";   
+            if (!"".equals(accountAjaxHandler.getAccCity())) {
+                queryString += " AND  acc_city LIKE '%" + accountAjaxHandler.getAccCity() + "%'";
             }
-            if(!"-1".equals(accountAjaxHandler.getAccCountry()))
-            {
-             queryString+=" AND  acc_country="+accountAjaxHandler.getAccCountry()+"";   
+            if (!"-1".equals(accountAjaxHandler.getAccCountry())) {
+                queryString += " AND  acc_country=" + accountAjaxHandler.getAccCountry() + "";
             }
-            if(!"-1".equals(accountAjaxHandler.getAccState()) && !"".equals(accountAjaxHandler.getAccState()) )
-            {
-             queryString+=" AND  acc_state="+accountAjaxHandler.getAccState()+"";   
+            if (!"-1".equals(accountAjaxHandler.getAccState()) && !"".equals(accountAjaxHandler.getAccState())) {
+                queryString += " AND  acc_state=" + accountAjaxHandler.getAccState() + "";
             }
-            if(!"".equals(accountAjaxHandler.getAccPhone()))
-            {
-             queryString+=" AND  acc_add_phone LIKE '%"+accountAjaxHandler.getAccPhone()+"%'";   
+            if (!"".equals(accountAjaxHandler.getAccPhone())) {
+                queryString += " AND  acc_add_phone LIKE '%" + accountAjaxHandler.getAccPhone() + "%'";
             }
-            if(!"All".equals(accountAjaxHandler.getLocationStatus()))
-            {
-             queryString+=" AND  status = '"+accountAjaxHandler.getLocationStatus()+"'";   
+            if (!"All".equals(accountAjaxHandler.getLocationStatus())) {
+                queryString += " AND  status = '" + accountAjaxHandler.getLocationStatus() + "'";
             }
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
@@ -1270,12 +1285,12 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
                 System.out.println("In while qualification");
 
 
-                String offphone="";
-               
-              resultString += resultSet.getInt("acc_add_id") + "|" + resultSet.getInt("acc_id")
+                String offphone = "";
+
+                resultString += resultSet.getInt("acc_add_id") + "|" + resultSet.getInt("acc_id")
                         + "|" + resultSet.getString("acc_city") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getStateName(resultSet.getInt("acc_state"))
-                        + "|" +com.mss.msp.util.DataSourceDataProvider.getInstance().getCountry(resultSet.getInt("acc_country"))
-                        + "|" +resultSet.getString("acc_add_phone") + "|" +resultSet.getString("status")+ "|" +resultSet.getString("location_name")+'^';
+                        + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getCountry(resultSet.getInt("acc_country"))
+                        + "|" + resultSet.getString("acc_add_phone") + "|" + resultSet.getString("status") + "|" + resultSet.getString("location_name") + '^';
 
 
                 System.out.println("---------------->" + resultString);
@@ -1303,10 +1318,10 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         }
         return resultString;
     }
-    public String editLocationDetails(AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException
-    {  
-        
-        
+
+    public String editLocationDetails(AccountAjaxHandler accountAjaxHandler) throws ServiceLocatorException {
+
+
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -1315,16 +1330,16 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         UserVTO usersVTO = new UserVTO();
         int i = 0;
         try {
-            String city=accountAjaxHandler.getAccCity();
-            String phone=accountAjaxHandler.getAccPhone();
-            String state=accountAjaxHandler.getAccState();
-            String country=accountAjaxHandler.getAccCountry();
-            System.out.println(" "+city+"--->"+phone+"---->"+state+"--->"+country);
-            
-            queryString ="SELECT acc_address1,acc_address2,acc_city,acc_country,acc_state,acc_add_phone,acc_zip,acc_add_fax,STATUS,location_name FROM acc_address WHERE acc_add_id="+accountAjaxHandler.getLocationId() ;
-            
-           
-            
+            String city = accountAjaxHandler.getAccCity();
+            String phone = accountAjaxHandler.getAccPhone();
+            String state = accountAjaxHandler.getAccState();
+            String country = accountAjaxHandler.getAccCountry();
+            System.out.println(" " + city + "--->" + phone + "---->" + state + "--->" + country);
+
+            queryString = "SELECT acc_address1,acc_address2,acc_city,acc_country,acc_state,acc_add_phone,acc_zip,acc_add_fax,STATUS,location_name FROM acc_address WHERE acc_add_id=" + accountAjaxHandler.getLocationId();
+
+
+
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -1336,12 +1351,12 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
                 System.out.println("In while qualification");
 
 //             
-               
-               
-              resultString += resultSet.getString("acc_address1") + "|" + resultSet.getString("acc_address2")
-                        + "|" + resultSet.getString("acc_city") + "|" + resultSet.getInt("acc_country")+"|"+resultSet.getInt("acc_state")
-                        +"|"+resultSet.getString("acc_add_phone") + "|"+resultSet.getString("acc_zip") + "|"+resultSet.getString("acc_add_fax")
-                        + "|" +resultSet.getString("STATUS")+ "|" +resultSet.getString("location_name")+'^';
+
+
+                resultString += resultSet.getString("acc_address1") + "|" + resultSet.getString("acc_address2")
+                        + "|" + resultSet.getString("acc_city") + "|" + resultSet.getInt("acc_country") + "|" + resultSet.getInt("acc_state")
+                        + "|" + resultSet.getString("acc_add_phone") + "|" + resultSet.getString("acc_zip") + "|" + resultSet.getString("acc_add_fax")
+                        + "|" + resultSet.getString("STATUS") + "|" + resultSet.getString("location_name") + '^';
 
 
                 System.out.println("---------------->" + resultString);
@@ -1369,11 +1384,12 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         }
         return resultString;
     }
+
     public String addOrUpdateLocationDetails(AccountAjaxHandler aThis, int orgUserId) throws ServiceLocatorException {
-      Connection connection = null;
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         Statement statement = null;
-        ResultSet resultSet = null;
+      
         int result = 0;
         int result1 = 0;
         String resultMessage = "";
@@ -1384,10 +1400,10 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         //System.out.println("Desc-->" + accAuthAjaxHandlerAction.getDesc());
 
         try {
-             connection = ConnectionProvider.getInstance().getConnection();
+            connection = ConnectionProvider.getInstance().getConnection();
             if ("Add".equals(aThis.getLocationFlag())) {
-                System.out.println(aThis.getLocationAddress1()+" "+aThis.getLocationAddress2()+" "+aThis.getAccCity()+" "+aThis.getAccState()+" "+aThis.getAccCountry()+" "+aThis.getLocationZip()+" "+aThis.getUserSessionId()+" "+aThis.getLocationFax()+" "+aThis.getAccPhone());   
-               // queryString = "insert into ac_action (action_name,status,description) values('" + accAuthAjaxHandlerAction.getActionName() + "'," + "'Active','" + accAuthAjaxHandlerAction.getDesc() + "')";
+                System.out.println(aThis.getLocationAddress1() + " " + aThis.getLocationAddress2() + " " + aThis.getAccCity() + " " + aThis.getAccState() + " " + aThis.getAccCountry() + " " + aThis.getLocationZip() + " " + aThis.getUserSessionId() + " " + aThis.getLocationFax() + " " + aThis.getAccPhone());
+                // queryString = "insert into ac_action (action_name,status,description) values('" + accAuthAjaxHandlerAction.getActionName() + "'," + "'Active','" + accAuthAjaxHandlerAction.getDesc() + "')";
                 queryString = "insert into acc_address(acc_address1,acc_address2,acc_city,acc_state,acc_country,acc_zip,created_by,acc_add_fax,acc_add_phone,STATUS,acc_id,location_name) values(?,?,?,?,?,?,?,?,?,?,?,?)";
                 System.out.println("queryString-->" + queryString);
                 preparedStatement = connection.prepareStatement(queryString);
@@ -1396,41 +1412,41 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
                 preparedStatement.setString(3, aThis.getAccCity());
                 preparedStatement.setString(4, aThis.getAccState());
                 preparedStatement.setString(5, aThis.getAccCountry());
-                preparedStatement.setString(6, aThis.getLocationZip());            
+                preparedStatement.setString(6, aThis.getLocationZip());
                 preparedStatement.setInt(7, aThis.getUserSessionId());
 //                preparedStatement.setInt(8, 0);
-                preparedStatement.setString(8, aThis.getLocationFax()); 
-                preparedStatement.setString(9, aThis.getAccPhone()); 
+                preparedStatement.setString(8, aThis.getLocationFax());
+                preparedStatement.setString(9, aThis.getAccPhone());
                 preparedStatement.setString(10, "Active");
                 preparedStatement.setInt(11, aThis.getAccountSearchOrgId());
                 preparedStatement.setString(12, aThis.getLocationName());
                 result = preparedStatement.executeUpdate();
                 resultMessage = "Successfully inserted";
-                
+
             } else {
                 System.out.println("Edit");
-                System.out.println("location Id-->"+aThis.getLocationId());
-                System.out.println(aThis.getLocationAddress1()+" "+aThis.getLocationAddress2()+" "+aThis.getAccCity()+" "+aThis.getAccState()+" "+aThis.getAccCountry()+" "+aThis.getLocationZip()+" "+aThis.getUserSessionId()+" "+aThis.getLocationFax()+" "+aThis.getAccPhone());   
+                System.out.println("location Id-->" + aThis.getLocationId());
+                System.out.println(aThis.getLocationAddress1() + " " + aThis.getLocationAddress2() + " " + aThis.getAccCity() + " " + aThis.getAccState() + " " + aThis.getAccCountry() + " " + aThis.getLocationZip() + " " + aThis.getUserSessionId() + " " + aThis.getLocationFax() + " " + aThis.getAccPhone());
                 queryString = "update acc_address SET acc_address1=?,acc_address2=?,acc_city=?,acc_state=?,acc_country=?,"
-                              + "acc_zip=?,acc_add_fax=?,acc_add_phone=?,STATUS=?,modified_by=?,location_name=? WHERE acc_add_id ="+aThis.getLocationId();
+                        + "acc_zip=?,acc_add_fax=?,acc_add_phone=?,STATUS=?,modified_by=?,location_name=? WHERE acc_add_id =" + aThis.getLocationId();
 
-                
+
                 preparedStatement = connection.prepareStatement(queryString);
-                
+
                 preparedStatement.setString(1, aThis.getLocationAddress1());
                 preparedStatement.setString(2, aThis.getLocationAddress2());
                 preparedStatement.setString(3, aThis.getAccCity());
                 preparedStatement.setString(4, aThis.getAccState());
                 preparedStatement.setString(5, aThis.getAccCountry());
-                preparedStatement.setString(6, aThis.getLocationZip());  
+                preparedStatement.setString(6, aThis.getLocationZip());
                 preparedStatement.setString(7, aThis.getLocationFax());
-                preparedStatement.setString(8, aThis.getAccPhone()); 
-                preparedStatement.setString(9, aThis.getLocationStatus()); 
+                preparedStatement.setString(8, aThis.getAccPhone());
+                preparedStatement.setString(9, aThis.getLocationStatus());
                 preparedStatement.setInt(10, aThis.getUserSessionId());
                 preparedStatement.setString(11, aThis.getLocationName());
-                System.out.println("get Location update query" + queryString);   
+                System.out.println("get Location update query" + queryString);
                 result1 = preparedStatement.executeUpdate();
-                System.out.println("result-->"+result1);
+                System.out.println("result-->" + result1);
                 resultMessage = "Successfully Updated";
                 System.out.println(resultMessage);
             }
@@ -1439,11 +1455,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             throw new ServiceLocatorException(sqle);
         } finally {
             try {
-                if (resultSet != null) {
-
-                    resultSet.close();
-                    resultSet = null;
-                }
+               
                 if (preparedStatement != null) {
                     preparedStatement.close();
                     preparedStatement = null;
@@ -1460,6 +1472,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         }
         return resultMessage;
     }
+
     public String getAttachmentDetails(int searchOrgId, String typeOfAccount) {
 
 
@@ -1473,8 +1486,8 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         try {
             System.out.println("getAttachmentDetails in service Impl------------->");
 
-             //queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity,acc_attachment_id FROM acc_rec_attachment WHERE object_id="+searchOrgId;
-           queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity,acc_attachment_id,attachment_title,comments FROM acc_rec_attachment WHERE object_id="+searchOrgId;
+            //queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity,acc_attachment_id FROM acc_rec_attachment WHERE object_id="+searchOrgId;
+            queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity,acc_attachment_id,attachment_title,comments FROM acc_rec_attachment WHERE object_id=" + searchOrgId;
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -1489,9 +1502,9 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
 //              resultString += resultSet.getString("attachment_name") + "|"+resultSet.getString("object_type")+"|" +com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("opp_created_date"))
 //                        + "|" +com.mss.msp.util.DataSourceDataProvider.getInstance().getUserNameByUserId(resultSet.getInt("opp_created_by")) + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("validity"))+"|"+resultSet.getInt("acc_attachment_id")
 //                        + '^';
-                resultString += resultSet.getString("attachment_name") + "|"+resultSet.getString("object_type")+"|" +com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("opp_created_date"))
-                        + "|" +com.mss.msp.util.DataSourceDataProvider.getInstance().getUserNameByUserId(resultSet.getInt("opp_created_by")) + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("validity"))+"|"+resultSet.getInt("acc_attachment_id")
-                        +  "|" +resultSet.getString("attachment_title")+ "|" +resultSet.getString("comments")+'^';
+                resultString += resultSet.getString("attachment_name") + "|" + resultSet.getString("object_type") + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("opp_created_date"))
+                        + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getUserNameByUserId(resultSet.getInt("opp_created_by")) + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("validity")) + "|" + resultSet.getInt("acc_attachment_id")
+                        + "|" + resultSet.getString("attachment_title") + "|" + resultSet.getString("comments") + '^';
 
                 System.out.println("---------------->" + resultString);
 
@@ -1518,9 +1531,8 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         }
         return resultString;
     }
-     
-     
-       public String getVendorFormEditDetails(int searchOrgId,int acc_attachment_id) {
+
+    public String getVendorFormEditDetails(int searchOrgId, int acc_attachment_id) {
 
 
         Connection connection = null;
@@ -1533,7 +1545,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         try {
             System.out.println("getAttachmentDetails in service Impl------------->");
 
-             queryString = " SELECT attachment_name,validity FROM acc_rec_attachment WHERE object_id="+searchOrgId+" and acc_attachment_id="+acc_attachment_id;
+            queryString = " SELECT attachment_name,validity FROM acc_rec_attachment WHERE object_id=" + searchOrgId + " and acc_attachment_id=" + acc_attachment_id;
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -1545,7 +1557,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
                 System.out.println("In while qualification");
 
 
-              resultString += resultSet.getString("attachment_name") + "|"+resultSet.getString("validity")+ '^';
+                resultString += resultSet.getString("attachment_name") + "|" + resultSet.getString("validity") + '^';
 
 
                 System.out.println("---------------->" + resultString);
@@ -1573,8 +1585,8 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         }
         return resultString;
     }
-     
-        public String getAttachmentsSearchDetails(AccountAjaxHandler accountAjaxHandler,int searchOrgId) throws ServiceLocatorException {
+
+    public String getAttachmentsSearchDetails(AccountAjaxHandler accountAjaxHandler, int searchOrgId) throws ServiceLocatorException {
 
 
         Connection connection = null;
@@ -1587,21 +1599,21 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         try {
             System.out.println("getAttachmentDetails in service Impl------------->");
 
-             //queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity FROM acc_rec_attachment WHERE object_id="+searchOrgId;
-           queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity,acc_attachment_id,attachment_title,comments FROM acc_rec_attachment WHERE object_id="+searchOrgId;
+            //queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity FROM acc_rec_attachment WHERE object_id="+searchOrgId;
+            queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity,acc_attachment_id,attachment_title,comments FROM acc_rec_attachment WHERE object_id=" + searchOrgId;
             if (!"All".equals(accountAjaxHandler.getVendorDocs())) {
                 queryString = queryString + " and object_type='" + accountAjaxHandler.getVendorDocs() + " '";
             }
-              if (!"".equals(accountAjaxHandler.getValidFrom())) {
-                queryString = queryString + " and  validity >= '"+ accountAjaxHandler.getValidFrom() + "' ";
+            if (!"".equals(accountAjaxHandler.getValidFrom())) {
+                queryString = queryString + " and  validity >= '" + accountAjaxHandler.getValidFrom() + "' ";
             }
-               if (!"".equals(accountAjaxHandler.getValidTo())) {
+            if (!"".equals(accountAjaxHandler.getValidTo())) {
                 queryString = queryString + " and  validity <= '" + accountAjaxHandler.getValidTo() + "' ";
             }
             if (!"".equals(accountAjaxHandler.getAttachmentTitle())) {
                 queryString = queryString + " and  attachment_title LIKE '%" + accountAjaxHandler.getAttachmentTitle() + "%' ";
-            }    
-             
+            }
+
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -1616,9 +1628,9 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
 //              resultString += resultSet.getString("attachment_name") + "|"+resultSet.getString("object_type")+"|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("opp_created_date"))
 //                        + "|" +com.mss.msp.util.DataSourceDataProvider.getInstance().getUserNameByUserId(resultSet.getInt("opp_created_by")) + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("validity"))
 //                        + '^';
-                 resultString += resultSet.getString("attachment_name") + "|"+resultSet.getString("object_type")+"|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("opp_created_date"))
-                        + "|" +com.mss.msp.util.DataSourceDataProvider.getInstance().getUserNameByUserId(resultSet.getInt("opp_created_by")) + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("validity"))+"|"+resultSet.getInt("acc_attachment_id")
-                        + "|" +resultSet.getString("attachment_title")+ "|" +resultSet.getString("comments") +'^';
+                resultString += resultSet.getString("attachment_name") + "|" + resultSet.getString("object_type") + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("opp_created_date"))
+                        + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getUserNameByUserId(resultSet.getInt("opp_created_by")) + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("validity")) + "|" + resultSet.getInt("acc_attachment_id")
+                        + "|" + resultSet.getString("attachment_title") + "|" + resultSet.getString("comments") + '^';
 
                 System.out.println("---------------->" + resultString);
 
@@ -1644,5 +1656,52 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             }
         }
         return resultString;
+    }
+
+    public int getLocationCount(int orgId, String locationName) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+
+
+        int i = 0;
+        try {
+
+            queryString = "SELECT acc_id FROM acc_address WHERE location_name = '" + locationName + "' AND acc_id=" + orgId;
+
+
+            System.out.println("queryString-->" + queryString);
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            System.out.println("After Connection");
+            resultSet = statement.executeQuery(queryString);
+            System.out.println("after statements ");
+            while (resultSet.next()) {
+                i++;
+                System.out.println("count" + i);
+            }
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return i;
     }
 }

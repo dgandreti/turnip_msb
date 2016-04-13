@@ -19,18 +19,14 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
-        <%--        <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/CountriesAjax.js"/>"></script>
-        <%-- <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>--%>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/dashBoardAjax.js"/>'></script>
@@ -39,14 +35,11 @@
         <script>
             var pager;
             
-            //$(document).ready(function(){
             function customerDboard(){
-                //alert("hi")
                 var paginationSize = 5;
                 pager = new Pager('vendorReqDashboardResults', paginationSize);
                 pager.init();
                 pager.showPageNav('pager', 'pageNavPosition');
-                // document.getElementById("paginationOption").value=10;
                 
                 pager.showPage(1);
             };
@@ -64,19 +57,6 @@
                 }
             };
 
-            //            function pagerOption(){
-            //
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('customerDashboardResults', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
-            
         </script>
 
     </head>
@@ -102,7 +82,6 @@
                                             <div class="backgroundcolor" >
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                         <font color="#ffffff">Requirements</font>
                                                         <i id="updownArrow" onclick="toggleContent('venReqDashboardForm')" class="fa fa-minus"></i> 
                                                     </h4>
@@ -111,11 +90,10 @@
 
                                             <!-- content start -->
                                             <br>
-                                            <div  id="venReqDashboardForm">
+                                            <div  id="venReqDashboardForm row">
                                                 <div class="col-sm-4">
                                                     <label class="labelStylereq " tabindex="1" style="color:#56a5ec;">Job Title</label>
                                                     <s:textfield cssClass="form-control" name="jobTitle" id="jobTitle" placeholder="Job Title" tabindex="1" />
-                                                    <%--<s:select id="jobTitle" name="jobTitle" cssClass="reqSelectStyle" headerKey="-1" headerValue="jobTitle" theme="simple" list="{'Developer','Tester','Manager'}" />--%>
                                                 </div>  
 
                                                 <div class="col-sm-4">
@@ -124,44 +102,44 @@
                                                     <s:textfield cssClass="form-control" name="candidateName" id="candidateName" placeholder="Candidate Name" tabindex="2" maxLength="30"/>
 
                                                 </div>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-4 pull-right">
                                                     <label class="" style="color:#56a5ec;"></label> 
-                                                    <%--<s:submit type="submit" cssClass="cssbutton_emps form-control"
-                                                            value="Search" onclick="getVendorDashboardList();"/> --%>
-                                                    <a href="#" ><input type="button" class="cssbutton_action_search form-control" value="Search"  onclick="return getVendorReqDashBoardGrid();" tabindex="3"></a>
+                                                    <a href="#" id="dashBoardGridSearch"><input type="button" class="cssbutton_action_search form-control" value="Search"  onclick="return getVendorReqDashBoardGrid();" tabindex="3"></a>
                                                 </div>
                                             </div>
-                                            <div  class="col-sm-12" >              
-                                                <s:form>
-                                                    <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
-                                                    <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
-                                                        <table id="vendorReqDashboardResults" class="responsive CSSTable_task sortable" border="5">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <%--<th>Req.Won</th>
-                                                                        <th>Req.Lost</th> --%>
-                                                                    <th>Requirement</th>
-                                                                    <th>Consultant </th>
-                                                                    <th>Status</th>
-                                                                </tr>
 
-                                                            </tbody>
-                                                        </table>
-                                                        <br/>
-                                                        <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                                <option>5</option>
-                                                                <option>10</option>
-                                                                <option>15</option>
-                                                                <option>20</option>
-                                                            </select>
-                                                            Requirements per page
-                                                        </label>
-                                                        <div align="right" class="pull-right" id="pageNavPosition" style="margin-right: 0vw;display: none"></div>
-                                                    </div>
-                                                </s:form>
+                                            <div class="row"></div>
+                                            <div class="row">
+                                                <div  class="col-sm-12" >              
+                                                    <s:form>
+                                                        <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
+                                                            <div class="emp_Content" id="emp_div" align="center" style="display: none"    >
+                                                                <table id="vendorReqDashboardResults" class="responsive CSSTable_task sortable" border="5">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th>Requirement</th>
+                                                                            <th>Consultant </th>
+                                                                            <th>Status</th>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                                <br/>
+                                                                <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                                        <option>5</option>
+                                                                        <option>10</option>
+                                                                        <option>15</option>
+                                                                        <option>20</option>
+                                                                    </select>
+                                                                    Requirements per page
+                                                                </label>
+                                                                <div align="right" class="pull-right" id="pageNavPosition" style="margin-right: 0vw;display: none"></div>
+                                                            </div>
+                                                    </s:form>
+                                                </div>
                                             </div>
-
                                         </div>
+                                        <br>
                                         <div class="col-sm-12">
                                             <s:form theme="simple" >
 
@@ -173,7 +151,6 @@
                                                                     <div class="row">
                                                                         <div class="col-xs-3">
                                                                             <img src="<s:url value="/includes/images/icons/requirement.png"/>" height="70" width="70">
-                                                                            <!--<i class="fa fa-comments fa-5x"></i>-->
                                                                         </div>
                                                                         <div class="col-xs-9 ">
                                                                             <div class="huge"><label class="labelColor">Positions: </label><s:property value="noOfPosition"></s:property></div>
@@ -181,9 +158,9 @@
                                                                             <div><label class="labelColor">Avg. Rate: $</label><s:property value="targetRate"></s:property></div>
                                                                             <div><label class="labelColor">Customer: </label><s:property value="customerName"></s:property></div>
 
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
                                                                 <s:url id="addConsult" action="/recruitment/consultant/doAddConsultantForReq.action" namespace="/" encode="true">
                                                                     <s:param name="requirementId" value="%{id}" />
                                                                     <s:param name="jdId" value="%{jdId}"></s:param>
@@ -205,15 +182,10 @@
                                                 </div>
 
 
-                                                <%--div class="row">
-                                                    <div class="col-sm-4"> <s:submit type="submit" cssClass="cssbutton_emps field-margin"
-                                                              value="Search" cssStyle="margin:0px"/></div>
-                                                    <div class="col-sm-4"></div>
-                                                </div--%>
+
 
                                             </s:form>
                                             <span> <br/></span>
-                                                <%--<s:submit cssClass="css_button" value="show"/><br>--%>
 
                                         </div>
                                     </div>
@@ -247,7 +219,6 @@
                        
                 }
                 recordPage=paginationSize;
-                // alert(recordPage)
                 $('#vendorReqDashboardResults').tablePaginate({navigateType:'navigator'},recordPage);
 
             };

@@ -19,15 +19,12 @@ public interface RecruitmentAjaxHandlerService {
     public String getAttachmentDetails( RecruitmentAjaxHandlerAction aThis) throws ServiceLocatorException;
     // add by Aklakh
 
-  //  public String saveConsultantLoginDetails(int consulnt_id, int UserSessionId) throws ServiceLocatorException;
-
     public String getConsultantTechReviews(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction) throws ServiceLocatorException;
 
     public String techReviewCommentsOverlay(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction) throws ServiceLocatorException;
 
     public String getTechReviewResultOnOverlay(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction) throws ServiceLocatorException;
-//     public int getConsultantCount(int consultantId) throws ServiceLocatorException;
-    
+   
     public String questionsCount(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction,int orgId) throws ServiceLocatorException;
    
     public String questionsCountCheck(RecruitmentAjaxHandlerAction recruitmentAjaxHandlerAction,int orgId) throws ServiceLocatorException;

@@ -30,8 +30,17 @@ public class LocationServiceImpl implements LocationService {
 
     private static Logger log = Logger.getLogger(LocationServiceImpl.class);
 
+    /**
+     ***********************************************************
+     *
+     * @getStatesByCountry() to get the  states of country 
+     * 
+     *
+     ***********************************************************
+     */
     public List<State> getStatesByCountry(int countryId) {
-        System.out.println("looking for country id : " + countryId);
+        System.out.println("********************LocationServiceImpl :: getStatesByCountry Method Start*********************");
+       
         List<State> states = new ArrayList<State>();
         Session session = null;
 
@@ -48,11 +57,19 @@ public class LocationServiceImpl implements LocationService {
             closeSession(session);
         }
 
-
+         System.out.println("********************LocationServiceImpl :: getStatesByCountry Method End*********************");
         return states;
     }
-
+     /**
+     ***********************************************************************
+     *
+     * @getStatesByCountry() to get the  states of country by country name
+     * 
+     *
+     ***********************************************************************
+     */
     public List<State> getStatesByCountry(String name) {
+        System.out.println("********************LocationServiceImpl :: getStatesByCountry Method Start*********************");
         List<State> states = new ArrayList<State>();
         Session session = null;
 
@@ -60,6 +77,7 @@ public class LocationServiceImpl implements LocationService {
             session = HibernateServiceLocator.getInstance().getSession();
             Query query = session.createQuery(
                     "SELECT states FROM Country as c where c.name = :name");
+            System.out.println("getStatesByCountry() hibernate query-->" + query);
             query.setString("name", name);
             states = query.list();
         } catch (ServiceLocatorException e) {
@@ -68,12 +86,20 @@ public class LocationServiceImpl implements LocationService {
             closeSession(session);
         }
 
-
+        System.out.println("********************LocationServiceImpl :: getStatesByCountry Method End*********************");
         return states;
 
     }
-
+     /**
+     ***********************************************************************
+     *
+     * @getStatesNameByCountry() to get the  states of country by country id
+     * 
+     *
+     ***********************************************************************
+     */
     public List<String> getStatesNameByCountry(int countryId) {
+          System.out.println("********************LocationServiceImpl :: getStatesNameByCountry Method Start*********************");
         List<String> states = new ArrayList<String>();
         Session session = null;
 
@@ -81,7 +107,7 @@ public class LocationServiceImpl implements LocationService {
             session = HibernateServiceLocator.getInstance().getSession();
             Query query = session.createQuery("SELECT name FROM State WHERE countryId = :countryId");
             query.setInteger("countryId", countryId);
-
+            System.out.println("getStatesNameByCountry() hibernate query-->" + query);
             states = query.list();
 
         } catch (ServiceLocatorException e) {
@@ -90,16 +116,26 @@ public class LocationServiceImpl implements LocationService {
             closeSession(session);
         }
 
-
+         System.out.println("********************LocationServiceImpl :: getStatesNameByCountry Method End*********************");
         return states;
     }
-
+     /**
+     ***********************************************************************
+     *
+     * @getStatesNameByCountry() to get the  states of country by country id
+     * 
+     *
+     ***********************************************************************
+     */
     public List<String> getStatesNameByCountry(String name) {
+         System.out.println("********************LocationServiceImpl :: getStatesNameByCountry Method Start*********************");
         List<String> states = null;
         Session session = null;
         try {
             session = HibernateServiceLocator.getInstance().getSession();
             List<State> s = session.createQuery("select states From Country as c where c.name= :name").setString("name", name).list();
+            
+             System.out.println("getStatesNameByCountry() hibernate quesry--> select states From Country as c where c.name= :name");
             if (s != null) {
                 if (states == null) {
                     states = new ArrayList<String>();
@@ -115,11 +151,20 @@ public class LocationServiceImpl implements LocationService {
         } finally {
             closeSession(session);
         }
-
+        System.out.println("********************LocationServiceImpl :: getStatesNameByCountry Method End*********************");
         return states;
     }
 
+     /**
+     ***********************************************************************
+     *
+     * @lookupStateById() to get the  state  by state id
+     * 
+     *
+     ***********************************************************************
+     */
     public State lookupStateById(int id) {
+        System.out.println("********************LocationServiceImpl :: lookupStateById Method Start*********************");
         Session session = null;
         State returnState = null;
         try {
@@ -135,10 +180,20 @@ public class LocationServiceImpl implements LocationService {
         } finally {
             closeSession(session);
         }
+        System.out.println("********************LocationServiceImpl :: lookupStateById Method End*********************");
         return returnState;
     }
 
+     /**
+     ***************************************************
+     *
+     * @lookupStateById() to get the  countries  
+     * 
+     *
+     ***************************************************
+     */
     public List<Country> getCountries() {
+        System.out.println("********************LocationServiceImpl :: getCountries Method Start*********************");
         List<Country> countires = new ArrayList<Country>();
         Session session = null;
 
@@ -154,38 +209,53 @@ public class LocationServiceImpl implements LocationService {
             closeSession(session);
         }
 
-
+         System.out.println("********************LocationServiceImpl :: getCountries Method End*********************");
         return countires;
 
     }
-
+    /**
+     ***************************************************
+     *
+     * @getCountriesNames() to get the  countries  
+     * 
+     *
+     ***************************************************
+     */
     public List<String> getCountriesNames() {
+        System.out.println("********************LocationServiceImpl :: getCountriesNames Method Start*********************");
         List<String> countries = null;
         Session session = null;
 
         try {
             session = HibernateServiceLocator.getInstance().getSession();
             countries = session.createQuery("select name from Country").list();
-
+            System.out.println("getCountriesNames() hibernate query--> select name from Country");
         } catch (ServiceLocatorException e) {
             log.log(Level.ERROR, "Trying to get Countires names as strings with hibernate: " + e);
         } finally {
             closeSession(session);
         }
-
+          System.out.println("********************LocationServiceImpl :: getCountriesNames Method End*********************");
         return countries;
     }
 
+     /**
+     ***************************************************
+     *
+     * @getCountryNames() to get the  countries 
+     * 
+     *
+     ***************************************************
+     */
     public Map getCountryNames() {
         Map countries = new LinkedHashMap();
         Session session = null;
-
+         System.out.println("********************LocationServiceImpl :: getCountryNames Method Start*********************");
         try {
             session = HibernateServiceLocator.getInstance().getSession();
-            //countries = session.createQuery("select id,name from CountryVto");
-
+         
            String hqlQuery = "select cv.id,cv.name from Country cv ORDER BY cv.name ASC";
-
+           System.out.println("getCountryNames() hibernate query--> "+hqlQuery);
             Query query = session.createQuery(hqlQuery);
             List list = query.list();
             Iterator iterator = list.iterator();
@@ -193,22 +263,29 @@ public class LocationServiceImpl implements LocationService {
             while (iterator.hasNext()) {
                 Object[] o = (Object[]) iterator.next();
                 countries.put(o[0], o[1]);
-//System.out.println(o[0]);
-//System.out.println(o[1]);
-//System.out.println("success");
+
             }
 
         } catch (ServiceLocatorException e) {
-            System.out.println("Exception --" + e);
-            // log.log (Level.ERROR, "Trying to get Countires names as strings with hibernate: " + e);
+         
+            
         } finally {
             closeSession(session);
         }
-        System.out.println("List of countries" + countries);
+         System.out.println("********************LocationServiceImpl :: getCountryNames Method Start*********************");
+       
         return countries;
     }
-
+ /**
+     ***************************************************
+     *
+     * @lookupCountryById() to get the  country by id 
+     * 
+     *
+     ***************************************************
+     */
     public Country lookupCountryById(int id) {
+         System.out.println("********************LocationServiceImpl :: lookupCountryById Method Start*********************");
         Country country = new Country();
         Session session = null;
 
@@ -224,11 +301,19 @@ public class LocationServiceImpl implements LocationService {
             closeSession(session);
         }
 
-
+        System.out.println("********************LocationServiceImpl :: lookupCountryById Method End*********************");
         return country;
     }
-
+/**
+     **********************************************************
+     *
+     * @lookupCountryIdByName() to get the  country id by name 
+     * 
+     *
+     **********************************************************
+     */
     public Integer lookupCountryIdByName(String countryName) {
+        System.out.println("********************LocationServiceImpl :: lookupCountryIdByName Method Start*********************");
         Country country = null;
         Session session = null;
         try {
@@ -240,12 +325,20 @@ public class LocationServiceImpl implements LocationService {
         } finally {
             closeSession(session);
         }
-
+         System.out.println("********************LocationServiceImpl :: lookupCountryIdByName Method End*********************");
         return country.getId();
     }
-
+/**
+     **********************************************************
+     *
+     * @lookupStateIdByName() to get the  state id by name 
+     * 
+     *
+     **********************************************************
+     */
     public Integer lookupStateIdByName(String stateName) {
 
+         System.out.println("********************LocationServiceImpl :: lookupStateIdByName Method Start*********************");
         Session session = null;
         State state = null;
         try {
@@ -257,12 +350,20 @@ public class LocationServiceImpl implements LocationService {
         } finally {
             closeSession(session);
         }
-
+        System.out.println("********************LocationServiceImpl :: lookupStateIdByName Method End*********************");
         return state.getId();
     }
 
+    /**
+     ************************************************
+     *
+     * @lookupStateAbvByName() to get the state 
+     * 
+     *
+     ************************************************
+     */
     public String lookupStateAbvByName(String stateName) {
-        System.out.println("stateName in Serice: " + stateName);
+         System.out.println("********************LocationServiceImpl :: lookupStateAbvByName Method Start*********************");
         Session session = null;
         State state = new State();;
         try {
@@ -279,23 +380,32 @@ public class LocationServiceImpl implements LocationService {
         if (state != null) {
             abv = state.getAbbreviation();
         }
+        System.out.println("********************LocationServiceImpl :: lookupStateAbvByName Method End*********************");
         return abv;
     }
 
+    /**
+     *********************************************************
+     *
+     * @getStatesStringOfCountry() to get the state of country 
+     * 
+     *
+     *********************************************************
+     */
     public String getStatesStringOfCountry(HttpServletRequest httpServletRequest, int id) {
+          System.out.println("********************LocationServiceImpl :: getStatesStringOfCountry Method Start*********************");
         Map states = new LinkedHashMap();
         String resultString = "";
         Session session = null;
-        System.out.println("in location service impl .............1");
+       
 
         try {
             session = HibernateServiceLocator.getInstance().getSession();
-            //countries = session.createQuery("select id,name from CountryVto");
-            System.out.println("in location service impl .............2");
+           
             String hqlQuery = "select id,name from State s WHERE countryId=:countryid ORDER BY s.name ASC";
-
+              System.out.println("getStatesStringOfCountry() hibernate query--> "+hqlQuery);
             Query query = session.createQuery(hqlQuery);
-            System.out.println("in location service impl .............3");
+          
 
             query.setInteger("countryid", id);
             List list = query.list();
@@ -305,17 +415,18 @@ public class LocationServiceImpl implements LocationService {
                 Object[] o = (Object[]) iterator.next();
 
                 resultString += o[0] + "#" + o[1] + "^";
-                //states.put(o[0],o[1]);
+              
 
             }
-            System.out.println("in location service impl .............4");
+           
 
         } catch (ServiceLocatorException e) {
-            System.out.println(e);
+          
         } finally {
             closeSession(session);
         }
-        //System.out.println("List of States are"+states);
+        
+        System.out.println("********************LocationServiceImpl :: getStatesStringOfCountry Method Start*********************");
         return resultString;
     }
 
@@ -333,13 +444,12 @@ public class LocationServiceImpl implements LocationService {
         Map states = new LinkedHashMap();
         String resultString = "";
         Session session = null;
-
+         System.out.println("********************LocationServiceImpl :: getStatesMapOfCountry Method Start*********************");
         try {
             session = HibernateServiceLocator.getInstance().getSession();
-            //countries = session.createQuery("select id,name from CountryVto");
-
+          
             String hqlQuery = "select id,name from State s WHERE countryId=:countryid ORDER BY s.name ASC";
-
+             System.out.println("getStatesMapOfCountry() hibernate query--> "+hqlQuery);
             Query query = session.createQuery(hqlQuery);
             query.setInteger("countryid", id);
             List list = query.list();
@@ -348,7 +458,6 @@ public class LocationServiceImpl implements LocationService {
             while (iterator.hasNext()) {
                 Object[] o = (Object[]) iterator.next();
 
-                //resultString += o[0] + "#" + o[1] + "^";
                 states.put(o[0], o[1]);
 
             }
@@ -359,7 +468,8 @@ public class LocationServiceImpl implements LocationService {
             closeSession(session);
 
         }
-        //System.out.println("List of States are"+states);
+     
+        System.out.println("********************LocationServiceImpl :: getStatesMapOfCountry Method End*********************");
         return states;
     }
 
@@ -374,17 +484,18 @@ public class LocationServiceImpl implements LocationService {
      * *****************************************************************************
      */
     public Map getCountriesNamesMap() {
+         System.out.println("********************LocationServiceImpl :: getCountriesNamesMap Method Start*********************");
         Map countries = new LinkedHashMap();
         Session session = null;
         try {
             session = HibernateServiceLocator.getInstance().getSession();
-            System.out.println("im countries names map.........1");
-            //countries = session.createQuery("select id,name from CountryVto");
+          
             String hqlQuery = "select cv.id,cv.name from Country cv";
-            System.out.println("im countries names map.........2");
+             System.out.println("getCountriesNamesMap() hibernate quesry--> "+hqlQuery);
+          
 
             Query query = session.createQuery(hqlQuery);
-            System.out.println("im countries names map.........3");
+         
 
             List list = query.list();
             Iterator iterator = list.iterator();
@@ -392,44 +503,63 @@ public class LocationServiceImpl implements LocationService {
                 Object[] o = (Object[]) iterator.next();
                 countries.put(o[0], o[1]);
             }
-            System.out.println("im countries names map.........4");
+        
 
         } catch (ServiceLocatorException e) {
             e.printStackTrace();
         } finally {
             closeSession(session);
         }
-
+         System.out.println("********************LocationServiceImpl :: getCountriesNamesMap Method End*********************");
         return countries;
     }
 
+     /**
+     *********************************************************************
+     *
+     * @lookupCountryCurrency() to get the country currency by country id
+     * 
+     *
+     *********************************************************************
+     */
     public String lookupCountryCurrency(int countryId) {
+        System.out.println("********************LocationServiceImpl :: lookupCountryCurrency Method Start*********************");
         String cur = "";
         Session session = null;
         try {
             session = HibernateServiceLocator.getInstance().getSession();
             cur = (String) session.createQuery("select currency from Country where id = :id")
                     .setInteger("id", countryId).uniqueResult();
+              System.out.println("lookupCountryCurrency() hibernate query-->select currency from Country where id = :id ");
         } catch (ServiceLocatorException e) {
             log.log(Level.ERROR, "Trying to get Country Currency by Name as string with hibernate: " + e);
         } finally {
             session.close();
         }
-
+         System.out.println("********************LocationServiceImpl :: lookupCountryCurrency Method End*********************");
         return cur;
     }
 
     public Map<Integer, String> getStatesMapByCountryName(String countryName) {
         return null;
     }
-
+     /**
+     ***************************************************************
+     *
+     * @getStatesMapByCountryId() to get the states by country id
+     * 
+     *
+     ***************************************************************
+     */
     public Map<Integer, String> getStatesMapByCountryId(int countryId) {
+        System.out.println("********************LocationServiceImpl :: getStatesMapByCountryId Method Start*********************");
         Map<Integer, String> states = new LinkedHashMap<Integer, String>();
         Session session = null;
         try {
             session = HibernateServiceLocator.getInstance().getSession();
             Query query = session.createQuery(
                     "SELECT id, name FROM State as s join Country as c where c.name = :name and s.countryId = c.id");
+              System.out.println("getStatesMapByCountryId() hibernate query-->"+query);
             query.setInteger("id", countryId);
             List<Object[]> results = query.list();
             for (Object[] result : results) {
@@ -441,12 +571,12 @@ public class LocationServiceImpl implements LocationService {
         } finally {
             closeSession(session);
         }
-
+        System.out.println("********************LocationServiceImpl :: getStatesMapByCountryId Method End*********************");
         return states;
     }
 
     private void closeSession(Session session) {
-        // Closing hibernate session
+       
         if (session != null) {
             session.close();
 

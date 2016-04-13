@@ -19,34 +19,34 @@ import java.sql.Statement;
  */
 public class InvoiceAjaxServiceImpl implements InvoiceAjaxService {
 
-    private Connection connection;
-    private Statement statement;
-    private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString = "";
 
     public String generateInvoice(InvoiceAjaxAction invoiceAjaxAction) throws ServiceLocatorException {
 
-        boolean response = false;
-        ResultSet resultSet = null;
+        Connection connection = null;
         CallableStatement callableStatement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+
+        System.out.println("********************InvoiceAjaxServiceImpl :: generateInvoice Method Start*********************");
+        boolean response = false;
+
         String responseFromSP = "";
         String sqlquery = "";
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             sqlquery = "";
-
-            System.out.println("this is for checked " + invoiceAjaxAction.isCheked());
-            System.out.println("this is for month " + invoiceAjaxAction.getInvoiceMonth());
-            System.out.println("this is for year " + invoiceAjaxAction.getInvoiceYear());
-            System.out.println("this is for Resource Name " + invoiceAjaxAction.getInvoiceResource());
-            System.out.println("this is user session id " + invoiceAjaxAction.getUsrSessionId());
-            System.out.println("this is org session id " + invoiceAjaxAction.getOrgSessionId());
-
             if (!invoiceAjaxAction.isCheked()) {
                 callableStatement = connection.prepareCall("{CALL invoiceGeneration(?,?,?,?,?,?)}");
-//            response = statement.execute(sqlquery);
+                System.out.println("generateInvoice :: procedure name : invoiceGeneration ");
             } else {
                 callableStatement = connection.prepareCall("{CALL GenerateAllEmpInvoice(?,?,?,?,?,?)}");
+                System.out.println("generateInvoice :: procedure name : GenerateAllEmpInvoice ");
             }
             callableStatement.setInt(1, invoiceAjaxAction.getInvoiceMonth());
             callableStatement.setInt(2, invoiceAjaxAction.getInvoiceYear());
@@ -55,8 +55,7 @@ public class InvoiceAjaxServiceImpl implements InvoiceAjaxService {
             callableStatement.setInt(5, invoiceAjaxAction.getUsrSessionId());
             response = callableStatement.execute();
             responseFromSP = callableStatement.getString(6);
-            System.out.println("this is printing is executed -->" + response);
-            System.out.println("this is printing response from sp-->" + responseFromSP);
+
 
         } catch (SQLException ex) {
 
@@ -64,14 +63,11 @@ public class InvoiceAjaxServiceImpl implements InvoiceAjaxService {
         } finally {
 
             try {
-                // resultSet Object Checking if it's null then close and set null
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+
+
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
                 }
 
                 if (connection != null) {
@@ -86,37 +82,54 @@ public class InvoiceAjaxServiceImpl implements InvoiceAjaxService {
                 }
             }
         }
+        System.out.println("********************InvoiceAjaxServiceImpl :: generateInvoice Method End*********************");
 
         return responseFromSP;
     }
-    
-        public String getTotalHoursTooltip(InvoiceAjaxAction invAction) throws ServiceLocatorException {
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getTotalHoursTooltip() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
+    public String getTotalHoursTooltip(InvoiceAjaxAction invAction) throws ServiceLocatorException {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+
+
         String resultString = "";
         int usr_Id = 0;
         String details = "";
         int isRecordExists = 0;
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+        System.out.println("********************InvoiceAjaxServiceImpl :: getTotalHoursTooltip Method Start*********************");
         connection = ConnectionProvider.getInstance().getConnection();
-         System.out.println("invAction.getUsrId()"+invAction.getUsrId());
-        String queryString ="SELECT u.workdate,"
-                + "(subproject1hrs+subproject2hrs+subproject3hrs+subproject4hrs+subproject5hrs) AS total  FROM usrtimesheetlines u JOIN users us ON u.usr_id=us.usr_id WHERE MONTH(workdate)="+invAction.getInvoiceMonth()+" AND YEAR(workdate)="+invAction.getInvoiceYear()+" AND u.usr_id="+invAction.getUsrId()+" AND (subproject1hrs+subproject2hrs+subproject3hrs+subproject4hrs+subproject5hrs)>0 ";
- 
-        
+
+        queryString = "SELECT u.workdate,"
+                + "(subproject1hrs+subproject2hrs+subproject3hrs+subproject4hrs+subproject5hrs) AS total  FROM usrtimesheetlines u JOIN users us ON u.usr_id=us.usr_id WHERE MONTH(workdate)=" + invAction.getInvoiceMonth() + " AND YEAR(workdate)=" + invAction.getInvoiceYear() + " AND u.usr_id=" + invAction.getUsrId() + " AND (subproject1hrs+subproject2hrs+subproject3hrs+subproject4hrs+subproject5hrs)>0 ";
+        System.out.println("getTotalHoursTooltip::queryString--------->" + queryString);
+
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                details +=com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("workdate"))+"|"+resultSet.getString("total")+"^";
+                details += com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("workdate")) + "|" + resultSet.getString("total") + "^";
             }
-          
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
 
             try {
-                // resultSet Object Checking if it's null then close and set null
+
                 if (resultSet != null) {
                     resultSet.close();
                     resultSet = null;
@@ -135,44 +148,57 @@ public class InvoiceAjaxServiceImpl implements InvoiceAjaxService {
                 throw new ServiceLocatorException(ex);
             }
         }
-       
-     
-     return details;
-        
+
+        System.out.println("********************InvoiceAjaxServiceImpl :: getTotalHoursTooltip Method End*********************");
+
+        return details;
+
     }
-    
-     public String getRecreatedList(InvoiceAjaxAction invoiceAjaxAction)throws ServiceLocatorException{
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getRecreatedList() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
+    public String getRecreatedList(InvoiceAjaxAction invoiceAjaxAction) throws ServiceLocatorException {
+
+        Connection connection = null;
+        Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
+
         String resultString = "";
         String sqlquery = "";
-        String serviceTypeForView="";
-        
+        String serviceTypeForView = "";
+        System.out.println("********************InvoiceAjaxServiceImpl :: getRecreatedList Method Start*********************");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            System.out.println("this is for checked " + invoiceAjaxAction.getServiceId());
-            sqlquery = "select * from his_serviceagreements where his_serviceId= "+invoiceAjaxAction.getServiceId();
-            if(!"All".equalsIgnoreCase(invoiceAjaxAction.getHis_serviceType())){
-               sqlquery = sqlquery + " AND his_servicetype= '"+invoiceAjaxAction.getHis_serviceType()+"'"; 
+            sqlquery = "select * from his_serviceagreements where his_serviceId= " + invoiceAjaxAction.getServiceId();
+            if (!"All".equalsIgnoreCase(invoiceAjaxAction.getHis_serviceType())) {
+                sqlquery = sqlquery + " AND his_servicetype= '" + invoiceAjaxAction.getHis_serviceType() + "'";
             }
-            if(!"All".equalsIgnoreCase(invoiceAjaxAction.getHis_status())){
-               sqlquery = sqlquery + " AND his_curstatus= '"+invoiceAjaxAction.getHis_status()+"'"; 
+            if (!"All".equalsIgnoreCase(invoiceAjaxAction.getHis_status())) {
+                sqlquery = sqlquery + " AND his_curstatus= '" + invoiceAjaxAction.getHis_status() + "'";
             }
-            System.out.println("this is printing is executed -->" + sqlquery );
+            System.out.println("getRecreatedList::sqlquery------>" + sqlquery);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sqlquery);
             while (resultSet.next()) {
-                if("F".equalsIgnoreCase(resultSet.getString("his_servicetype"))){
-                serviceTypeForView="Finder Fee";   
+                if ("F".equalsIgnoreCase(resultSet.getString("his_servicetype"))) {
+                    serviceTypeForView = "Finder Fee";
                 }
-                if("S".equalsIgnoreCase(resultSet.getString("his_servicetype"))){
-                 serviceTypeForView="SOW";    
+                if ("S".equalsIgnoreCase(resultSet.getString("his_servicetype"))) {
+                    serviceTypeForView = "SOW";
                 }
-                resultString += resultSet.getString("his_servicetype") + "|" + resultSet.getString("his_serviceversion") + "|" + resultSet.getString("his_target_rate")+ "|" +resultSet.getString("his_target_rate_type") + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("his_createddate")) + "|" + resultSet.getString("his_curstatus") +  "|" + resultSet.getString("his_id")  +  "|" + serviceTypeForView + "^";
+                resultString += resultSet.getString("his_servicetype") + "|" + resultSet.getString("his_serviceversion") + "|" + resultSet.getString("his_target_rate") + "|" + resultSet.getString("his_target_rate_type") + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("his_createddate")) + "|" + resultSet.getString("his_curstatus") + "|" + resultSet.getString("his_id") + "|" + serviceTypeForView + "^";
 
             }
-          //  System.out.println("this is printing is executed -->" + response);
-            System.out.println("this is printing response from sp-->" + resultString);
-
         } catch (SQLException ex) {
 
             ex.printStackTrace();
@@ -201,8 +227,9 @@ public class InvoiceAjaxServiceImpl implements InvoiceAjaxService {
                 }
             }
         }
+        System.out.println("********************InvoiceAjaxServiceImpl :: getRecreatedList Method End*********************");
 
         return resultString;
-         
-     }
+
+    }
 }

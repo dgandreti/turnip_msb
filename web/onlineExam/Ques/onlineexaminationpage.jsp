@@ -46,8 +46,7 @@ and open the template in the editor.
                 document.getElementById("submitButton").disabled = true;
                 document.getElementById("previous").disabled = true;
                 document.getElementById("next").disabled = true;
-                // document.getElementById("loadMsg").disabled = false;
-                //document.getElementById("loadMsg").style.display = 'block';
+             
                 var totalQuestions = parseInt(document.getElementById("totalQuest").value);
                 for (var i=1;i<=totalQuestions;i++)
                 {
@@ -61,10 +60,9 @@ and open the template in the editor.
                 document.getElementById("submitButton").disabled = false;
                 document.getElementById("previous").disabled = false;
                 document.getElementById("next").disabled = false;
-                //document.getElementById("loadMsg").disabled = false;
-                //document.getElementById("loadMsg").style.display = 'block';
+              
                 var totalQuestions = parseInt(document.getElementById("totalQuest").value);
-                //totalQuest
+             
                 for (var i=1;i<=totalQuestions;i++)
                 {
                     document.getElementById("q"+i).disabled = false;
@@ -85,9 +83,9 @@ and open the template in the editor.
                 if(seconds>0)
                     totalSeconds=parseInt(totalSeconds+seconds);
                  
-                // t = parseInt(t*60);
+             
                 ActivateCountDown("CountDownPanel", totalSeconds);
-                // getQuestion(parseInt(0),parseInt(0),'N',0,0,0);
+               
                 getQuestion(parseInt(0),0,0,0,0,0,0,'I',0,0,0,0,examId);
             }
             function getNext() {
@@ -103,7 +101,7 @@ and open the template in the editor.
                 
                 var nextQid = parseInt(document.getElementById("questionId").value);
                  var examId = parseInt(document.getElementById("examId").value);
-                //alert(nextQid)
+             
                 var radios = document.getElementsByName('option');
                 var checkedValue = 0;
                 for (var i = 0, length = radios.length; i < length; i++) {
@@ -137,22 +135,19 @@ and open the template in the editor.
                         {
                             answer6=1;   
                         }  
-                        //alert(question1+"-->"+question2+"--->"+question3+"--->"+question4+"--->"+question5+"--->"+question6)    
-                        // only one radio can be logically checked, don't check the rest
+                      
                         isChecked = true;
                        
                     }
                 }
-                //alert(answer1+"-->"+answer2+"--->"+answer3+"--->"+answer4+"--->"+answer5+"--->"+answer6) 
+              
                 var remQues = document.getElementById("hideremainingQuestions").value;
                 getQuestion(nextQid,answer1,answer2,answer3,answer4,answer5,answer6,'N',1,remQues,subtopicId,0,examId);
                 enableButtons();
                 if(isChecked == true) {
                      
                     document.getElementById("flag"+nextQid).style.color="green";
-                    //  document.getElementById("flag"+nextQid).innerHTML = '<img alt="Checked" src="/Hubble/includes/images/ecertification/green.png" width="12px" height="12px" border="0" >';
-                    //document.getElementById("flagUnChecked"+nextQid).style.display = "none";
-                    //document.getElementById("flagChecked"+nextQid).style.display = "block";
+                 
                 }
             }
             
@@ -175,7 +170,7 @@ and open the template in the editor.
                 for (var i = 0, length = radios.length; i < length; i++) {
                     if (radios[i].checked) {
                         checkedValue = radios[i].value;
-                        // only one radio can be logically checked, don't check the rest
+                    
                         if(checkedValue==1)
                         {
                             answer1=1;   
@@ -210,10 +205,7 @@ and open the template in the editor.
                 enableButtons();
                 if(isChecked == true) {
                     document.getElementById("flag"+previoueQuestionNo).style.color="green";
-                    // document.getElementById("flag"+previoueQuestionNo).innerHTML = '<img alt="Checked" src="/Hubble/includes/images/ecertification/green.png" width="12px" height="12px" border="0" >';
-                    //document.getElementById(previoueQuestionNo).style.color="green";
-                    //document.getElementById("flagUnChecked"+nextQid).style.display = "none";
-                    //document.getElementById("flagChecked"+nextQid).style.display = "block";
+                  
                 }
             }
             function getSpecificQuestion(reqQuestion) {
@@ -268,10 +260,7 @@ and open the template in the editor.
                 enableButtons();
                 if(isChecked == true) {
                     document.getElementById("flag"+questionNo).style.color="green";
-                    // document.getElementById("flag"+questionNo).innerHTML = '<img alt="Checked" src="/Hubble/includes/images/ecertification/green.png" width="12px" height="12px" border="0" >';
-                    //document.getElementById(questionNo).style.color="green";
-                    //document.getElementById("flagUnChecked"+nextQid).style.display = "none";
-                    //document.getElementById("flagChecked"+nextQid).style.display = "block";
+                    
                 }
             }
             function getsubmitForm(){
@@ -282,8 +271,7 @@ and open the template in the editor.
                 var answer4=0;
                 var answer5=0;
                 var answer6=0;
-                //if(isTimeExpired == false) {
-                //var r=confirm("Do you want to submit?");
+             
                  swal({
     
            title: "Are You Sure to Submit Exam?",
@@ -345,7 +333,7 @@ and open the template in the editor.
                     var remQues = document.getElementById("hideremainingQuestions").value;
                     getQuestion(nextQid,answer1,answer2,answer3,answer4,answer5,answer6,'S',1,remQues,subtopicId,0,examId);
                     swal("Sucess", " Submitted Succefully ", "success");
-                  //document.forms["ecertificationForm"].submit();
+                
                 
                  }
         
@@ -358,10 +346,7 @@ and open the template in the editor.
       
         }
     });
-                // }else {
-                //  disableButtons();
-                // getQuestion(nextQid,checkedValue,'S',1,remQues,subtopicId);
-                //}
+              
             }
             function showDiv(idInfo,idInfo1,id) {
                 var sel = document.getElementById(idInfo+'Que').getElementsByTagName('div');
@@ -399,7 +384,7 @@ window.onhashchange=function(){window.location.hash="no-back-button";}
         <!-- header -->
         <div id="header_id">
             <div id="header_logo" style="">
-                <a href="#"><img src="<s:url value="/includes/images/logo.jpg"/>" alt="loin" width="200" height="33"/></a>
+                <a href="#" id="servicesBayExamLogo"><img src="<s:url value="/includes/images/logo30.jpg"/>" alt="loin" width="200" height="33"/></a>
             </div>
             <div id="header_name">
                 <p style="  ">
@@ -480,8 +465,8 @@ window.onhashchange=function(){window.location.hash="no-back-button";}
 
 
                             <br>
-                            <input type="button" value="Previous" Class="buttonBg" onclick="getPrevious()" id="previous"/>
-                            <input type="button" value="Next" Class="buttonBg" onclick="getNext()" id="next" /> &nbsp;&nbsp;
+                            <input id="previousQuestionButton" type="button" value="Previous" Class="buttonBg" onclick="getPrevious()" id="previous"/>
+                            <input id="nextQuestionButton" type="button" value="Next" Class="buttonBg" onclick="getNext()" id="next" /> &nbsp;&nbsp;
                         </div>
                         <!--   webinar topic ends-->
                         <div id="topicQue"  style="">

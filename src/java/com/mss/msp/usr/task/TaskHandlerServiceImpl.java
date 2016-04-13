@@ -30,35 +30,37 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TaskHandlerServiceImpl implements TaskHandlerService {
 
-    private Connection connection;
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString ="";
 
-    /**
-     * *************************************
+  
+     /**
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @getEmployeeTasksDetails() method is used to get task details and
-     * displays in TaskSearch Grid
+     * Author : RK Ankireddy
      *
-     * @Author:RK Ankireddy
+     * ForUse : getEmployeeTasksDetails() method is used to get task details and displays in TaskSearch Grid
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public List getEmployeeTasksDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-
+        String queryString = "";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         DateUtility dateUtility = new DateUtility();
         ArrayList<TasksVTO> tasklist = new ArrayList<TasksVTO>();
         StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String queryString = "";
         int i = 0;
         String startDate = "";
         String endDate = "";
-
-        //System.err.println(days+"Diff in Dyas...");
+        System.out.println("********************TaskHandlerServiceImpl :: getEmployeeTasksDetails Method Start*********************");
         try {
             queryString = "SELECT t.priority,t.task_id,t.task_name,t.task_created_date,t.task_comments,lts.task_status_name,email1,"
                     + "CONCAT(u.first_name,'.',u.last_name) AS created "
@@ -71,18 +73,14 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 endDate = dateUtility.convertStringToMySQLDateInDash(taskHandlerAction.getDocdatepicker());
                 queryString = queryString + " and  t.task_created_date between '" + startDate + "' and '" + endDate + "' ";
             }
-            if (!"".equals(taskHandlerAction.getTask_id())) {
-                queryString = queryString + " and t.task_id = " + taskHandlerAction.getTask_id() + " ";
-            }
             if (!"".equals(taskHandlerAction.getTask_name())) {
                 queryString = queryString + " and t.task_name like '%" + taskHandlerAction.getTask_name() + "%'  ";
             }
             if (!"-1".equalsIgnoreCase(taskHandlerAction.getTask_status())) {
                 queryString = queryString + " and t.task_status = '" + taskHandlerAction.getTask_status() + "'  ";
             }
+            System.out.println("getEmployeeTasksDetails :: query string ------>" + queryString);
 
-
-            System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -104,8 +102,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 tasklist.add(tasksVTO);
             }
 
-            System.out.println("queryString-->" + tasklist);
-
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -126,39 +122,38 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: getEmployeeTasksDetails Method End*********************");
         return tasklist;
     }
 
-    /**
-     * *************************************
+  
+     /**
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @getLoggedInEmpTasksDetails() method is used to get loggedIn user task
-     * details and displays in TaskSearch Grid
+     * Author : RK Ankireddy
      *
-     * @Author:RK Ankireddy
+     * ForUse : getLoggedInEmpTasksDetails() method is used to get loggedIn user task details and displays in TaskSearch Grid
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public List getLoggedInEmpTasksDetails( TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
 
+        String queryString = "";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         DateUtility dateUtility = new DateUtility();
         ArrayList<TasksVTO> tasklist = new ArrayList<TasksVTO>();
         StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String queryString = "";
         int i = 0;
-         String startDate = "";
+        String startDate = "";
         String endDate = "";
-        //System.err.println(days+"Diff in Dyas...");
+        System.out.println("********************TaskHandlerServiceImpl :: getLoggedInEmpTasksDetails Method Start*********************");
         try {
             endDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getEndDate());
              startDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getStartDate());
-            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "SELECT t.priority,t.task_id,t.task_name,t.task_created_date,t.task_comments,lts.task_status_name,"
                     + "CONCAT(u.first_name,'.',u.last_name) AS created "
                     + "FROM task_list t LEFT OUTER JOIN users u ON(t.task_created_by=u.usr_id) "
@@ -167,8 +162,7 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                     + "AND  t.task_created_date BETWEEN '" + startDate + "' AND '" + endDate + "' "
                     + "OR t.pri_assigned_to=" + taskHandlerAction.getUserSessionId() + " "
                     + "OR t.sec_assigned_to=" + taskHandlerAction.getUserSessionId();
-
-            System.out.println("queryString-->" + queryString);
+            System.out.println("getLoggedInEmpTasksDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -190,8 +184,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 tasklist.add(tasksVTO);
             }
 
-            System.out.println("queryString-->" + tasklist);
-
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -212,58 +204,40 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: getLoggedInEmpTasksDetails Method End*********************");
         return tasklist;
     }
 
-    /**
-     * *************************************
+  
+     /**
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @addTaskDetals() method is used to add new task details in task_list
-     * table
+     * Author : RK Ankireddy
      *
-     * @Author:RK Ankireddy
+     * ForUse : addTaskDetals() method is used to add new task details in task_list
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public int addTaskDetals(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% IMPL EXECUTED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        System.out.println(taskHandlerAction.getTaskAttachmentFileName() + "=================>" + taskHandlerAction.getFilePath());
-        StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
         String queryString = "";
+        Connection connection = null;
+        CallableStatement callableStatement = null;
+     
+        StringBuffer stringBuffer = new StringBuffer();
         int addResult = 0;
         boolean isExceute = false;
         DateUtility dateUtility = new DateUtility();
-
-        //System.err.println(days+"Diff in Dyas...");
         String startDate = "";
         String endDate = "";
+        System.out.println("********************TaskHandlerServiceImpl :: addTaskDetals Method Start*********************");
         try {
-            //startDate = dateUtility.getInstance().convertStringToMySQLDate(taskHandlerAction.getStartDate());
-            //endDate = dateUtility.getInstance().convertStringToMySQLDate(taskHandlerAction.getEndDate());
+            
             connection = ConnectionProvider.getInstance().getConnection();
-//            queryString = "insert into task_list"
-//                    + "(task_related_to,task_type,task_status,task_start_date,task_end_date,task_name,task_comments,task_created_by) "
-//                    + "values('"+taskHandlerAction.getTaskRelatedTo()+"','"+taskHandlerAction.getTaskType()+"','"
-//                    +taskHandlerAction.getTask_status()+"','"+taskHandlerAction.getStartDate()+"','"
-//                    +taskHandlerAction.getEndDate()+"','"+taskHandlerAction.getTask_name()+"','"
-//                    +taskHandlerAction.getTask_comments()+"',"+userId+")";                         
-//
-//            System.out.println("queryString-->" + queryString);
-//            connection = ConnectionProvider.getInstance().getConnection();
-//            statement = connection.createStatement();
-//            addResult=statement.executeUpdate(queryString);
-//            System.out.println("****************** in impl result after adding:::::::::"+addResult);
-            System.out.println("****************** ENTERED INTO THE TRY BLOCK *******************");
             callableStatement = connection.prepareCall("{CALL addTaskProc(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            System.out.println("addTaskDetals :: procedure name : addTaskProc");
             callableStatement.setInt(1, taskHandlerAction.getTaskRelatedTo());
-            System.out.println("after 1st valueeeeeeeeeeeeeee");
             callableStatement.setInt(2, taskHandlerAction.getTaskType());
             callableStatement.setInt(3, taskHandlerAction.getTaskStatus());
             callableStatement.setString(4, com.mss.msp.util.DateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getStartDate()));
@@ -273,7 +247,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
             callableStatement.setString(8, taskHandlerAction.getTaskAttachmentFileName());
             callableStatement.setString(9, taskHandlerAction.getFilePath());
             callableStatement.setInt(10, taskHandlerAction.getUserSessionId());
-
             callableStatement.setString(11, taskHandlerAction.getTaskPriority());
             callableStatement.setInt(12, taskHandlerAction.getPrimaryAssign());
             callableStatement.setInt(13, taskHandlerAction.getSecondaryId());
@@ -281,9 +254,7 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
             isExceute = callableStatement.execute();
             addResult = callableStatement.getInt(14);
             if (addResult > 0) {
-                System.out.println("****************** in impl result after adding:::::::::" + addResult);
             } else {
-                System.out.println("****************** in impl result after adding:::::::::" + addResult);
             }
 
         } catch (Exception sqe) {
@@ -291,9 +262,9 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
         } finally {
             try {
 
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -303,44 +274,40 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: addTaskDetals Method End*********************");
         return addResult;
     }
 
-    /**
-     * *************************************
+  
+     /**
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @getLoggedInTeamTasksDetails() method is used to get task details in
-     * task_list table for team percepective
+     * Author : RK Ankireddy
      *
-     * @Author:RK Ankireddy
+     * ForUse : getLoggedInTeamTasksDetails() method is used to get task details in task_list table for team perspective
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public List getLoggedInTeamTasksDetails( TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-
-
-        List tasklist = new ArrayList();
-         DateUtility dateUtility = new DateUtility();
+        String queryString = "";
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        List tasklist = new ArrayList();
+         DateUtility dateUtility = new DateUtility();
         Map newMap = new HashMap();
         int i = 0;
         String startDate = "";
         String endDate = "";
-        //System.err.println(days+"Diff in Dyas...");
+       System.out.println("********************TaskHandlerServiceImpl :: getLoggedInTeamTasksDetails Method Start*********************");
         try {
               endDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getEndDate());
                 startDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getStartDate());
             Map map = com.mss.msp.util.DataSourceDataProvider.getInstance().getMyTeamMembers(taskHandlerAction.getUserSessionId());
             String key, listId = "";
-            System.out.println(">>>>after dsdp method>>" + map.size());
-            System.out.println(">>>>before adding to tasklist>>" + tasklist.size());
             tasklist.add(newMap);
-            System.out.println(">>>>after adding map to tasklist>>" + tasklist.size());
-
             int mapsize = map.size();
             if (map.size() > 0) {
                 Iterator tempIterator = map.entrySet().iterator();
@@ -357,7 +324,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 }
 
             }
-            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "SELECT DATE_FORMAT(t.task_created_date, '%m-%d-%Y') AS DATE,t.priority,t.task_id,t.task_name,t.task_comments,t.task_created_date,"
                     + "CONCAT(up.first_name,'.',up.last_name) AS pri_assigned_to,"
                     + "CONCAT(us.first_name,'.',us.last_name) AS sec_assigned_to,lts.task_status_name,prj.proj_name "
@@ -371,8 +337,7 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                     + "AND  t.task_created_date BETWEEN '" + startDate + "' AND '" + endDate + "' "
                     + "ORDER BY t.task_name LIMIT 100";
 
-
-            System.out.println("queryString-default team tasks->" + queryString);
+            System.out.println("getLoggedInTeamTasksDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -399,8 +364,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 tasklist.add(tasksVTO);
             }
 
-            System.out.println("queryString-->" + tasklist);
-
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -421,39 +384,36 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: getLoggedInTeamTasksDetails Method End*********************");
         return tasklist;
     }
 
+  
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 04/15/2015
      *
-     * @getTeamTasksDetails() method is used to get task details in task_list
-     * based on search criteria
+     * Author : RK Ankireddy
      *
-     * @Author:RK Ankireddy
+     * ForUse : getTeamTasksDetails() method is used to get task details in task_list based on search criteria
+     * 
      *
-     * @Created Date:04/15/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public List getTeamTasksDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-
-
-        ArrayList tasklist = new ArrayList();
-        StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+         String queryString = "";
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        ArrayList tasklist = new ArrayList();
+        StringBuffer stringBuffer = new StringBuffer();
         int i = 0;
         DateUtility dateUtility = new DateUtility();
         String startDate = "";
         String endDate = "";
-        //System.err.println(days+"Diff in Dyas...");
+       System.out.println("********************TaskHandlerServiceImpl :: getTeamTasksDetails Method Start*********************");
 
         try {
-
             Map map = com.mss.msp.util.DataSourceDataProvider.getInstance().getMyTeamMembers(taskHandlerAction.getUserSessionId());
             String key, listId = "";
             tasklist.add(map);
@@ -492,9 +452,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
             if (!"".equals(taskHandlerAction.getTask_name())) {
                 queryString = queryString + " and t.task_name like '%" + taskHandlerAction.getTask_name() + "%'  ";
             }
-            if (!"".equals(taskHandlerAction.getTask_id())) {
-                queryString = queryString + " and t.task_id =" + taskHandlerAction.getTask_id() + " ";
-            }
             if (!"-1".equalsIgnoreCase(taskHandlerAction.getTask_status())) {
                 queryString = queryString + " and t.task_status = '" + taskHandlerAction.getTask_status() + "'  ";
             }
@@ -503,7 +460,7 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
             }
             queryString = queryString + "AND task_created_by IN(" + taskHandlerAction.getUserSessionId() + "" + listId + ")";
 
-            System.out.println("queryString-in team task search->" + queryString);
+            System.out.println("getTeamTasksDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -530,8 +487,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 tasklist.add(tasksVTO);
             }
 
-            System.out.println("queryString-->" + tasklist);
-
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -552,43 +507,41 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: getTeamTasksDetails Method End*********************");
         return tasklist;
     }
 
+   
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 04/21/2015
      *
-     * @getEditTaskDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getEditTaskDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/21/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
-    public TasksVTO getEditTaskDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-        TasksVTO tasksVTO = new TasksVTO();
+    public TasksVTO getEditTaskDetails(TaskHandlerAction taskHandlerAction,int usrRole,String usrType) throws ServiceLocatorException {
+         String queryString = "";
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
+        TasksVTO tasksVTO = new TasksVTO();
         Map map = new HashMap();
         Map map1 = new HashMap();
+        System.out.println("********************TaskHandlerServiceImpl :: getEditTaskDetails Method Start*********************");
         try {
             queryString = "SELECT task_prj_related_to,task_id,task_related_to,task_type,task_status,priority,task_start_date,task_end_date,task_name,task_comments,pri_assigned_to,sec_assigned_to,task_created_by FROM task_list WHERE task_id=?";
-            System.out.println("queryString-->" + queryString);
+            System.out.println("getEditTaskDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setInt(1, taskHandlerAction.getTaskid());
-            System.out.println("hello praveen...." + taskHandlerAction.getTaskid());
             resultSet = preparedStatement.executeQuery();
             DateUtility dateUtility = new DateUtility();
             while (resultSet.next()) {
                 tasksVTO.setTask_prj_related_to(resultSet.getInt("task_prj_related_to"));
-                System.out.println("pri_assigned_to-------------------------------------->" + resultSet.getInt("task_prj_related_to"));
                 tasksVTO.setTask_id(resultSet.getString("task_id"));
                 tasksVTO.setTask_related_to(resultSet.getString("task_related_to"));
                 tasksVTO.setTask_status(resultSet.getString("task_status"));
@@ -599,21 +552,17 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 tasksVTO.setTask_title(resultSet.getString("task_name"));
                 tasksVTO.setTask_comments(resultSet.getString("task_comments"));
                 tasksVTO.setPri_assigned_to(resultSet.getString("pri_assigned_to"));
-                System.out.println("pri_assigned_to-------------------------------------->" + resultSet.getString("pri_assigned_to"));
                 tasksVTO.setSec_reportsId(resultSet.getInt("sec_assigned_to"));
                 tasksVTO.setSec_assigned_to(com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyUserid(resultSet.getInt("sec_assigned_to")));
                 tasksVTO.setTask_created_by(resultSet.getString("task_created_by"));
-
             }
             tasksVTO.setTypeMaps(com.mss.msp.util.DataSourceDataProvider.getInstance().getTaskTypeById(taskHandlerAction));
             if (tasksVTO.getTask_related_to().equals("2")) {
-                //tasksVTO.setTeamMembers(com.mss.msp.util.DataSourceDataProvider.getInstance().getCSRTeam(taskHandlerAction));
                 taskHandlerAction.setTeamMemberNames(com.mss.msp.util.DataSourceDataProvider.getInstance().getCSRTeam(taskHandlerAction));
             } else {
                 taskHandlerAction.setTeamMemberNames(com.mss.msp.util.DataSourceDataProvider.getInstance().getMyTeamMembers(taskHandlerAction.getUserSessionId()));
             }
-            //tasksVTO.setPrimaryMaps(com.mss.msp.util.DataSourceDataProvider.getInstance().getPrimaryAssignTo(taskHandlerAction.getTaskid()));
-            taskHandlerAction.setTasksRelatedToList(com.mss.msp.util.DataSourceDataProvider.getInstance().getTaskrelatedToMap());
+            taskHandlerAction.setTasksRelatedToList(com.mss.msp.util.DataSourceDataProvider.getInstance().getTaskrelatedToMap(usrRole,usrType,taskHandlerAction.getUserSessionId()));
 
         } catch (Exception sqe) {
             sqe.printStackTrace();
@@ -635,48 +584,38 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: getEditTaskDetails Method End*********************");
         return tasksVTO;
 
     }
 
-    /**
-     * *************************************
+   
+     /**
+     * *****************************************************************************
+     * Date : 04/21/2015
      *
-     * @updateTaskDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : Ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:r amakrishna<lankireddy@miraclesoft.com>
+     * ForUse : updateTaskDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/21/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public int updateTaskDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
         String queryString = "";
-        //System.err.println(days+"Diff in Dyas...");
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+      
         int i = 0;
         DateUtility dateUtility = new DateUtility();
         String startDate = "";
         String endDate = "";
         startDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getStartDate());
         endDate = dateUtility.getInstance().convertStringToMySQLDate1(taskHandlerAction.getEndDate());
-        System.out.println("startDate=====================>" + startDate);
-        System.out.println("endDate=====================>" + endDate);
-
+         System.out.println("********************TaskHandlerServiceImpl :: updateTaskDetails Method Start*********************");
         try {
-            System.out.println("=====================>in impl try");
-            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "update task_list set task_related_to=?,task_status=?,task_name=?,task_prj_related_to=?,task_comments=?,priority=?,pri_assigned_to=?,sec_assigned_to=?,task_start_date=?,task_end_date=?,task_modified_by=?,task_modified_date=? where task_id=?";
-            System.out.println("=====================>Priority::::" + taskHandlerAction.getPriority());
-            System.out.println("queryString-->" + queryString);
-            System.out.println("primary string---->" + taskHandlerAction.getPri_assign_to() + ",,,,,,,,,,,,," + taskHandlerAction.getSec_assign_to());
+            System.out.println("updateTaskDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setInt(1, taskHandlerAction.getTaskRelatedTo());
@@ -693,18 +632,14 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
             preparedStatement.setTimestamp(12, com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime());
             preparedStatement.setInt(13, taskHandlerAction.getTaskid());
             i = preparedStatement.executeUpdate();
-            System.out.println("here we completed execution.....");
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+               
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -714,72 +649,51 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+         System.out.println("********************TaskHandlerServiceImpl :: updateTaskDetails Method End*********************");
         return i;
     }
 
+   
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 04/21/2015
      *
-     * @addAttachmentDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : Ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : addAttachmentDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/21/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public int addAttachmentDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% IMPL EXECUTED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        System.out.println(taskHandlerAction.getTaskAttachmentFileName() + "=================>" + taskHandlerAction.getFilePath());
-        StringBuffer stringBuffer = new StringBuffer();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+         String queryString = "";
+        Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
-        String queryString = "";
+        StringBuffer stringBuffer = new StringBuffer();
         int addResult = 0;
         boolean isExceute = false;
+        System.out.println("********************TaskHandlerServiceImpl :: addAttachmentDetails Method Start*********************");
         try {
-            System.out.println("****************** ENTERED INTO THE TRY BLOCK *******************");
 
             connection = ConnectionProvider.getInstance().getConnection();
-            System.out.println("values in impl are:::::::::::" + taskHandlerAction.getTaskid() + " " + taskHandlerAction.getTaskAttachmentFileName() + " " + taskHandlerAction.getFilePath());
             String fpath = taskHandlerAction.getFilePath();
             StringTokenizer st = new StringTokenizer(fpath);
             StringTokenizer st2 = new StringTokenizer(fpath, "\\");
             String finalPath = "";
             while (st2.hasMoreElements()) {
-                //System.out.println(".............>>>>>>>>>>>"+st2.nextElement());
                 finalPath = finalPath + st2.nextElement() + "\\" + "\\";
             }
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + finalPath);
             taskHandlerAction.setFilePath(finalPath);
 
             queryString = "INSERT INTO task_attachments(task_id,attachment_name,attachment_path,STATUS,created_by) VALUES(" + taskHandlerAction.getTaskid() + ",'" + taskHandlerAction.getTaskAttachmentFileName() + "','" + taskHandlerAction.getFilePath() + "" + taskHandlerAction.getTaskAttachmentFileName() + "','Active'," + taskHandlerAction.getUserSessionId() + ")";
-//            System.out.println("values in impl are:::::::::::"+taskHandlerAction.getTaskid()+" "+taskHandlerAction.getTaskAttachmentFileName()+" "+taskHandlerAction.getFilePath());
-//            callableStatement = connection.prepareCall("{CALL addAttachment(?,?,?,?.?)}");
-//            callableStatement.setInt(1, taskHandlerAction.getTaskid());
-//            System.out.println("after 1st valueeeeeeeeeeeeeee");
-//            callableStatement.setString(2, taskHandlerAction.getTaskAttachmentFileName());
-//            callableStatement.setString(3, taskHandlerAction.getFilePath());
-//            callableStatement.setInt(4, taskHandlerAction.getUserSessionId());
-//            callableStatement.registerOutParameter(5, Types.INTEGER);
-//            isExceute = callableStatement.execute();
-//            addResult = callableStatement.getInt(5);
-            System.out.println("queryString-->" + queryString);
+
+           System.out.println("addAttachmentDetails :: query string ------>" + queryString);
 
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             addResult = statement.executeUpdate(queryString);
-            System.out.println("****************** in impl result after adding:::::::::" + addResult);
             if (addResult > 0) {
-                System.out.println("****************** in impl result after adding:::::::::" + addResult);
             } else {
-                System.out.println("****************** in impl result after adding:::::::::" + addResult);
             }
 
         } catch (Exception sqe) {
@@ -799,38 +713,35 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: addAttachmentDetails Method End*********************");
         return addResult;
     }
 
+   
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 04/22/2015
      *
-     * @getNotesDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getNotesDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/22/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getNotesDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
         DateUtility dateUtility = new DateUtility();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String queryString = "";
         String resultMsg = "";
-        //System.err.println(days+"Diff in Dyas...");
         int i = 0;
+          String queryString = "";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        System.out.println("********************TaskHandlerServiceImpl :: getNotesDetails Method Start*********************");
         try {
-            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "SELECT n.id, n.reference_id,n.notes_title,n.notes_comments,n.created_date ,concat(u.first_name,'.',u.last_name) as Names FROM notes n JOIN users u ON(n.created_by=u.usr_id)  WHERE n.reference_type='T' AND n.reference_id=?";
 
-            System.out.println("queryString-->" + queryString + taskHandlerAction.getTaskid());
+            System.out.println("getNotesDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setInt(1, taskHandlerAction.getTaskid());
@@ -838,7 +749,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
             while (resultSet.next()) {
                 resultMsg += resultSet.getString("id") + "|" + resultSet.getString("reference_id") + "|" + resultSet.getString("notes_title") + "|" + resultSet.getString("notes_comments") + "|" + dateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("created_date")) + "^";
             }
-            System.out.println(resultMsg);
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -847,9 +757,9 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                     resultSet.close();
                     resultSet = null;
                 }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -859,38 +769,35 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: getNotesDetails Method End*********************");
         return resultMsg;
     }
 
+   
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 04/22/2015
      *
-     * @getNotesDetailsOverlay() method is used to get task details and appends
-     * on TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getNotesDetailsOverlay() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/22/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getNotesDetailsOverlay(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
 
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String queryString = "";
         String resultMsg = "";
-        //System.err.println(days+"Diff in Dyas...");
         int i = 0;
+        System.out.println("********************TaskHandlerServiceImpl :: getNotesDetailsOverlay Method Start*********************");
+           String queryString = "";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "SELECT n.id, n.reference_id,n.notes_title,n.notes_comments,n.created_date ,concat(u.first_name,'.',u.last_name) as Names FROM notes n JOIN users u ON(n.created_by=u.usr_id)  WHERE n.reference_type='T' AND n.reference_id=? and n.id=?";
 
-            System.out.println("queryString-->" + queryString + taskHandlerAction.getTaskid());
+            System.out.println("getNotesDetailsOverlay :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setInt(1, taskHandlerAction.getTaskid());
@@ -899,7 +806,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
             while (resultSet.next()) {
                 resultMsg += resultSet.getString("id") + "|" + resultSet.getString("reference_id") + "|" + resultSet.getString("notes_title") + "|" + resultSet.getString("notes_comments");
             }
-            System.out.println(resultMsg);
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -908,9 +814,9 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                     resultSet.close();
                     resultSet = null;
                 }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -920,41 +826,36 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: getNotesDetailsOverlay Method End*********************");
         return resultMsg;
     }
 
-    /**
-     * *************************************
+   
+     /**
+     * *****************************************************************************
+     * Date : 04/23/2015
      *
-     * @UpdateNotesDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : UpdateNotesDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/23/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public int UpdateNotesDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-
-        CallableStatement callableStatement = null;
+           String queryString = "";
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String queryString = "";
+       
         int resultInt = 0;
-        //System.err.println(days+"Diff in Dyas...");
         int i = 0;
+         System.out.println("********************TaskHandlerServiceImpl :: UpdateNotesDetails Method Start*********************");
         try {
-            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "UPDATE notes SET notes_title=?,notes_comments=?,modified_by=?,modified_date=? WHERE id=? AND reference_id=?";
-            System.out.println(queryString);
+            System.out.println("UpdateNotesDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setString(1, taskHandlerAction.getNote_name());
-            System.out.println("note ...name" + taskHandlerAction.getNote_name());
             preparedStatement.setString(2, taskHandlerAction.getNote_comments());
             preparedStatement.setInt(3, taskHandlerAction.getUserSessionId());
             preparedStatement.setTimestamp(4, com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime());
@@ -965,13 +866,10 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
             sqe.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+                
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -981,59 +879,49 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+         System.out.println("********************TaskHandlerServiceImpl :: UpdateNotesDetails Method End*********************");
         return resultInt;
     }
 
+   
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 04/23/2015
      *
-     * @DoInsertNotesDetails() method is used to get task details and appends on
-     * TaskEdit screen
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : DoInsertNotesDetails() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/23/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public int DoInsertNotesDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-
-        CallableStatement callableStatement = null;
+           String queryString = "";
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String queryString = "";
+      
         int resultInt = 0;
-        //System.err.println(days+"Diff in Dyas...");
         int i = 0;
+        System.out.println("********************TaskHandlerServiceImpl :: DoInsertNotesDetails Method Start*********************");
         try {
-            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "insert into notes(reference_type,reference_id,notes_title,notes_comments,created_by) values(?,?,?,?,?)";
-            System.out.println(queryString);
+            System.out.println("DoInsertNotesDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setString(1, "T");
-            System.out.println("note ...comments........" + taskHandlerAction.getNote_comments());
             preparedStatement.setInt(2, taskHandlerAction.getTaskid());
-
             preparedStatement.setString(3, taskHandlerAction.getNote_name());
             preparedStatement.setString(4, taskHandlerAction.getNote_comments());
-
             preparedStatement.setInt(5, taskHandlerAction.getUserSessionId());
             resultInt = preparedStatement.executeUpdate();
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
-                }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+               
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -1043,42 +931,37 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: DoInsertNotesDetails Method End*********************");
         return resultInt;
     }
 
+
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 04/23/2015
      *
-     * @getNotesDetailsBySearch() getting search notes details
+     * Author : praveen<pkatru@miraclesoft.com>
      *
-     * @Author:praveen<pkatru@miraclesoft.com>
+     * ForUse : getNotesDetailsBySearch() method is used to getting search notes details
+     * 
      *
-     * @Created Date:04/23/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getNotesDetailsBySearch(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+      
+        String resultString = "";
+        System.out.println("********************TaskHandlerServiceImpl :: getNotesDetailsBySearch Method Start*********************");
+           String queryString = "";
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
-        String resultString = "";
         try {
-            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
-            System.out.println("this is notes id" + taskHandlerAction.getNotes_id());
-            System.out.println("this is notes name" + taskHandlerAction.getNotesName());
-            //queryString = "select id,reference_id,notes_title,notes_comments,created_date from notes where reference_type='T' ";
             queryString = "select id,reference_id,notes_title,notes_comments,created_date from notes where reference_type='T' AND reference_id="+taskHandlerAction.getTaskid();
-//            if (taskHandlerAction.getNotes_id() > 0) {
-//                queryString += " and reference_id=" + taskHandlerAction.getNotes_id();
-//            }
+
             if (!taskHandlerAction.getNotesName().equals("")) {
                 queryString += " and notes_title LIKE '%" + taskHandlerAction.getNotesName() + "%'";
             }
-            System.out.println(queryString);
+            System.out.println("getNotesDetailsBySearch :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -1105,37 +988,33 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************TaskHandlerServiceImpl :: getNotesDetailsBySearch Method End*********************");
         return resultString;
     }
-/**
-     * *************************************
+
+      /**
+     * *****************************************************************************
+     * Date : 04/22/2015
      *
-     * @getNotesDetailsOverlay() method is used to get task details and appends
-     * on TaskEdit screen
+     * Author : Ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getCommentsOnOverlay() method is used to get task details and appends on TaskEdit screen
+     * 
      *
-     * @Created Date:04/22/2015
-     *
-     *
-     **************************************
-     *
+     * *****************************************************************************
      */
     public String getCommentsOnOverlay(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException {
-
-        CallableStatement callableStatement = null;
+          String queryString = "";
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Statement statement = null;
         ResultSet resultSet = null;
-        String queryString = "";
         String resultMsg = "";
-        //System.err.println(days+"Diff in Dyas...");
         int i = 0;
+         System.out.println("********************TaskHandlerServiceImpl :: getCommentsOnOverlay Method Start*********************");
         try {
-            //queryString = "SELECT t.task_id,t.task_name,t.task_created_date,t.task_comments,t.task_status,u.usr_id FROM task_list t LEFT OUTER JOIN users u  ON(t.task_created_by=u.usr_id) WHERE 1=1 and task_status LIKE 'Active' ";
             queryString = "SELECT task_comments FROM task_list WHERE task_id=?";
 
-            System.out.println("queryString-->" + queryString + taskHandlerAction.getTaskid());
+           System.out.println("getCommentsOnOverlay :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setInt(1, taskHandlerAction.getTaskid());
@@ -1143,7 +1022,6 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
             while (resultSet.next()) {
                 resultMsg = resultSet.getString("task_comments");
             }
-            System.out.println(resultMsg);
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -1152,9 +1030,9 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                     resultSet.close();
                     resultSet = null;
                 }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -1164,6 +1042,7 @@ public class TaskHandlerServiceImpl implements TaskHandlerService {
                 sqle.printStackTrace();
             }
         }
+         System.out.println("********************TaskHandlerServiceImpl :: getCommentsOnOverlay Method End*********************");
         return resultMsg;
     }
 }

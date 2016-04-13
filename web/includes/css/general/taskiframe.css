@@ -587,11 +587,16 @@ div#techReviewOverlay{
 .techReviewPopupStyle{
     margin-bottom: 10px;
     margin-top: 10px;
-    padding: 10px;
+   
 }
 .popuplabel{
     width: 70px;
 }
+
+.popuplabel1{
+    width: 144px;
+}
+
 .ratingInputStyle{
     width: 40px;
     margin-right: 20px;
@@ -671,7 +676,7 @@ div#techReviewBoxResults {
 
     display: none;
     z-index: 3;
-
+    padding:0;
     background: #f9f9f9;
     color: #3711F5;
     border-radius: 3px; 

@@ -20,7 +20,7 @@ public class AccauthVTO {
     private int id;
     private String accType;
     private int userGroupList;
-
+    private int blockFlag;
     public int getUserGroupList() {
         return userGroupList;
     }
@@ -100,4 +100,14 @@ public class AccauthVTO {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
+
+    public int getBlockFlag() {
+        return blockFlag;
+    }
+
+    public void setBlockFlag(int blockFlag) {
+        this.blockFlag = blockFlag;
+    }
+    
+    
 }

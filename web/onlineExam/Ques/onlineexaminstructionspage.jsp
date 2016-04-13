@@ -36,7 +36,7 @@ and open the template in the editor.
         <!-- Wrapper -->
         <div id="header_id">
             <div id="header_logo" style="">
-                <a href="#"><img src="<s:url value="/includes/images/logo.jpg"/>" alt="loin" width="200" height="33"/></a>
+                <a href="#" id="serviceBayLogoInstruction"><img src="<s:url value="/includes/images/logo30.jpg"/>" alt="loin" width="200" height="33"/></a>
             </div>
         </div>
         <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" >
@@ -97,7 +97,7 @@ and open the template in the editor.
 
 
                             <!-- <button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" onclick="getCustomerDashboardList();"> -->
-                            <s:submit type="submit" value="Start" cssClass="add_searchButton form-control" id="start_button"/>
+                            <s:submit id="examStartButton" type="submit" value="Start" cssClass="add_searchButton form-control" id="start_button"/>
                             <!-- speakers content ends-->
 
                         </div>

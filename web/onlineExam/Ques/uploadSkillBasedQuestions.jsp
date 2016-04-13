@@ -82,7 +82,7 @@
                                                 <s:if test="uploadFlag=='uploadFlag'">
                                                     <s:url var="myUrl" action="getQuestionsList.action">
                                                     </s:url>
-                                                    <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                    <span class="pull-right"><s:a id="questionsBackButton" href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
                                                     </s:if>
 
                                             </h4>
@@ -125,7 +125,7 @@
                                                         <div class="col-sm-3">
                                                         <s:hidden name="accountType" id="accountType" value="%{accountType}"/>
 
-                                                        <s:submit type="button" tabindex="4" cssClass="cssbutton_emps"  name="submit" onclick="return checkExtention()" ><i class="fa fa-upload">&nbsp;Upload</i></s:submit>
+                                                        <s:submit type="button" id="uploadSkillBasesQuestions" tabindex="4" cssClass="cssbutton_emps"  name="submit" onclick="return checkExtention()" ><i class="fa fa-upload">&nbsp;Upload</i></s:submit>
 
                                                     </div>
                                                 </div>
@@ -159,7 +159,7 @@
 
                                         </ol> 
                                         To Download Sample File Format 
-                                        <s:a href="downloadSampleExamQuesFile.action?loadingFileType=skills">Click Here</s:a> 
+                                        <s:a id="sampleDownlaodQuestion" href="downloadSampleExamQuesFile.action?loadingFileType=skills">Click Here</s:a> 
                                         </div>
                                     </div>
 

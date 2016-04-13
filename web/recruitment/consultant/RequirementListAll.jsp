@@ -13,7 +13,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Requirement List For All</title>
+        <title>ServicesBay :: Requirement List Page</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/home/home.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -39,10 +39,6 @@ Author     : Praveen<pkatru@miraclesoft.com>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/EmployeeProfile.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/requirement.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
-
-        <%--script type="text/javascript" src="<s:url value="/includes/js/Ajax/vendorAjax.js"/>"></script--%>
-
-
 
 
         <script type="text/javascript">
@@ -71,8 +67,6 @@ Author     : Praveen<pkatru@miraclesoft.com>
     
                 alert(v);
                 return true;
-                //  alert(skillCategoryArry);
-                //  document.getElementById("consultantForm").submit(); 
             }
             
         </script>
@@ -252,7 +246,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                     <div class="pull-right btn_alignment">
 
                                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                        <s:submit type="button" cssClass="add_searchButton form-control contact_search" tabindex="12"
+                                                                        <s:submit type="button" cssClass="add_searchButton form-control contact_search" tabindex="12" id="requirementsListSearch" 
                                                                                   value="Search" onclick="return getSearchRequirementsList()" cssStyle="margin:5px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
 
                                                                         </div>
@@ -264,7 +258,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                                 <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
                                                                             </s:url>
                                                                             <label class="labelStylereq" style="color:#56a5ec;"></label>
-                                                                            <s:a  href='%{#myUrl}' cssClass="add_searchButton form-control contact_search" tabindex="13" style="margin:5px"><i class="fa fa-plus-square"></i>&nbsp;Add</s:a> 
+                                                                            <s:a  href='%{#myUrl}' id="requirementAdd" cssClass="add_searchButton form-control contact_search" tabindex="13" style="margin:5px"><i class="fa fa-plus-square"></i>&nbsp;Add</s:a> 
                                                                         </s:if>
 
 
@@ -356,7 +350,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                 </s:else>
                                                                 <tr>
                                                                     <s:hidden name="rec_exits" id="rec_exits" value="yes"/>
-                                                                    <td><s:a href='%{#myUrl}'><s:property value="%{jdId}"></s:property></s:a></td>
+                                                                    <td><s:a href='%{#myUrl}' id="<s:property value='jdId'>"><s:property value="%{jdId}"></s:property></s:a></td>
                                                                     <td><s:property value="title"/></td>
                                                                     <s:if test="#session.primaryrole == 13">
                                                                         <td>  <s:property value="createdByName"/></td>
@@ -375,16 +369,6 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                     <s:else>
                                                                         <td><s:a href="#" cssClass="recSkillOverlay_popup_open" onclick="reqSkillOverlay('%{reqSkillSet}')"><s:property  value="%{reqSkillSet}"/></s:a></td>
                                                                     </s:else>
-                                                                    <%--s:if test="preSkillSet.length()>9">   
-                                                                        <td><s:a href="#" cssClass="preSkillOverlay_popup_open" onclick="preSkillOverlay('%{preSkillSet}')"><s:property  value="%{preSkillSet.substring(0,10)}"/></s:a></td>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                        <td><s:a href="#" cssClass="preSkillOverlay_popup_open" onclick="preSkillOverlay('%{preSkillSet}')"><s:property  value="%{preSkillSet}"/></s:a></td>
-                                                                    </s:else--%>
-                                                                    <%-- <s:if test="vendor!='yes'">
-                                                                         <td><s:a href="#" cssClass="recruiterOverlay_popup_open" onclick="showOverlayRecruiter(%{req_contact1})"><s:property value="reqContactName1"></s:property></s:a></td>
-                                                                         <td><s:a href="#" cssClass="recruiterOverlay_popup_open" onclick="showOverlayRecruiter(%{req_contact2})"><s:property value="reqContactName2"></s:property></s:a></td>
-                                                                     </s:if> --%>
                                                                     <td><s:property value="postedDate"/></td> 
                                                                     <td><s:property value="status"></s:property></td>
                                                                     <s:if test="vendor=='yes'">
@@ -392,12 +376,6 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                                                     </s:if>
                                                                     <s:else>
                                                                         <td><s:property value="noOfSubmissions"/></td>
-                                                                        <%--    <s:if test="status=='Closed'">
-                                                                                <td><center><img src="<s:url value="/includes/images/release.png"/>" height="20" width="20" style="opacity: 0.3"></center></td>                                                                                
-                                                                            </s:if>
-                                                                            <s:elseif test="status=='Released'">
-                                                                        <td><center><img src="<s:url value="/includes/images/release.png"/>" height="20" width="20" style="opacity: 0.3"></center></td>                                                                                
-                                                                        </s:elseif> --%>
                                                                         <s:if test="status=='Opened'">
                                                                             <s:if test="#session.primaryrole == 3">
                                                                                 <td><center><s:a href="#" onclick="doReleaseRequirement(%{id},%{orgid},'%{taxTerm}')"><i class="fa fa-arrow-circle-o-right fa-size"></i></s:a></center></td>
@@ -558,7 +536,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
 
 
 
-                                                <s:a href='%{#myUrl}'>   Add Requirement  </s:a>
+                                                <s:a href='%{#myUrl}' id="reqAddPopup">   Add Requirement  </s:a>
                                                 </div>
 
                                             </div>

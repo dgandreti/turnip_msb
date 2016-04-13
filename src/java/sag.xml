@@ -51,7 +51,15 @@
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
             <result name="accessFailed">../exception/AccessFailed.jsp</result>
-        </action> 
+        </action>
+        <action name="getOutstandingInvoiceList" class="com.mss.msp.sag.InvoiceAction" method="getOutstandingInvoiceList">
+            <!--<interceptor-ref name="crudStack" />-->
+            <interceptor-ref name="authorizationcheckStack" />
+            <result name="success">outstandinginvoiceSearch.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>  
     </package>
     <package name="sow" namespace="/sag/sow" extends="default">
         <action name="getSowList" class="com.mss.msp.sag.sow.SOWAction" method="getSowList">

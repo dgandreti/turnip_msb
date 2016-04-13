@@ -46,10 +46,15 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/timesheet.js"/>"></script>
     </head>
     <s:if test="timeSheetVTO.timeSheetStatus=='Entered'">
-        <body onload ="getProjets();onloadTotal();getProjectsEdit();onloadeditMis();">
+        <body onload ="getProjets();
+                onloadTotal();
+                getProjectsEdit();
+                onloadeditMis();">
         </s:if>
         <s:else>     
-        <body onload="getProjectsEdit();onloadTotal();onloadeditMis();">
+        <body onload="getProjectsEdit();
+                onloadTotal();
+                onloadeditMis();">
         </s:else>
         <div id="wrap">
             <header id="header"><!--header-->
@@ -73,7 +78,7 @@
                                                 <table>
                                                     <tr><td><h4 style=""><font color="#ffffff">&nbsp;Present Projects</font></h4></td>
                                                     </tr>
-                                                    <span class=" pull-right"><h5><a href="" class="projects_popup_close" onclick="addTimeSheetOverlayClose()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                                    <span class=" pull-right"><h5><a href="" id="projectPopUpCloseButton" class="projects_popup_close" onclick="addTimeSheetOverlayClose()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                 </table>
                                             </div>
 
@@ -100,7 +105,7 @@
                                                 </div> 
                                                 <div class="col-md-5 pull-right">
 
-                                                    <a href="../timesheets/addTimeSheet.action" ><button  style="margin: 5px 0px;" type="button" class="add_searchButton form-control" value="" onclick="return projectsData()">&nbsp;Go&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button></a>
+                                                    <a id="addProjectGoButton" href="../timesheets/addTimeSheet.action" ><button  style="margin: 5px 0px;" type="button" class="add_searchButton form-control" value="" onclick="return projectsData()">&nbsp;Go&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button></a>
                                                 </div>
                                             </form>
 
@@ -112,7 +117,7 @@
                                                 <table>
                                                     <tr><td><h4 style=""><font color="#ffffff">&nbsp;Miscellaneous</font></h4></td>
                                                     </tr>
-                                                    <span class=" pull-right"><h5><a href="" class="timesheetMisc_popup_close" onclick="addTimeSheetOverlayClose()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                                    <span class=" pull-right"><h5><a href="" id="miscellineousOverlayCloseButton" class="timesheetMisc_popup_close" onclick="addTimeSheetOverlayClose()"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                 </table>
                                             </div>
 
@@ -126,7 +131,7 @@
                                                 </div>
                                                 <div class="col-lg-6"></div>
                                                 <div class="col-md-5 pull-right">
-                                                    <button type="button" style="margin: 5px 0px;" class="add_searchButton form-control" value="Go" onclick="return miscellaneousData()">&nbsp;Go&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button> 
+                                                    <button type="button" style="margin: 5px 0px;" id="miscellaneousOverlayGoButton" class="add_searchButton form-control" value="Go" onclick="return miscellaneousData()">&nbsp;Go&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button> 
                                                 </div>
                                             </form>
                                         </div>
@@ -141,8 +146,15 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
                                                         <font color="#ffffff"> Edit TimeSheets </font> 
-                                                        <span class="pull-right"><a href="#" onclick="history.back();return false;"><i class="fa fa-undo"></i></a></span>
-
+                                                        <s:if test="timesheetFlag=='My'">
+                                                            <span class="pull-right"><a href="#" id="timesheetSearchActionBackButton" onclick="window.location = 'timesheetSearch.action'"><i class="fa fa-undo"></i></a></span>
+                                                                </s:if>
+                                                                <s:elseif test="timesheetFlag=='Operations'">
+                                                            <span class="pull-right"><a href="#" id="allTimesheetsActionBackButton" onclick="window.location = 'getAllTimeSheets.action'"><i class="fa fa-undo"></i></a></span>   
+                                                                </s:elseif>
+                                                                <s:else>
+                                                            <span class="pull-right"><a href="#" id="teamTimesheetsActionBackButton" onclick="window.location = 'teamTimesheet.action'"><i class="fa fa-undo"></i></a></span>    
+                                                                </s:else>
                                                     </h4>
                                                 </div>
 
@@ -171,8 +183,8 @@
 
                                                             <s:if test="timeSheetVTO.timeSheetStatus=='Entered'||timeSheetVTO.timeSheetStatus=='Disapproved'">
                                                                 <div class="inner-addtaskdiv-elements1" style="padding:0">
-                                                                    <span style="display: none" id="projectButton" > <a href="#" ><input type="button" class="timesheetbutton projects_popup_open pull-left " style="margin-left:-2px;margin-right: 3px;" value="Projects" onclick="ProjectsOverlayOpen1()"></a></span>
-                                                                    <a href="#" ><input type="button" class="timesheetbutton timesheetMisc_popup_open pull-left" value="Miscellaneous" onclick="MiscellaneousOverlayOpen()"></a>
+                                                                    <span style="display: none" id="projectButton" > <a href="#" id="timesheetProjectPopupOpenButton" ><input type="button" class="timesheetbutton projects_popup_open pull-left " style="margin-left:-2px;margin-right: 3px;" value="Projects" onclick="ProjectsOverlayOpen1()"></a></span>
+                                                                    <a href="#" id="timesheetMiscPopupOpenButton" ><input type="button"  class="timesheetbutton timesheetMisc_popup_open pull-left" value="Miscellaneous" onclick="MiscellaneousOverlayOpen()"></a>
                                                                 </div>
                                                                 <br/>
                                                                 <br/>
@@ -223,37 +235,6 @@
                                                                         <td><label class="labelStyle-i ReqinputStyleTimeSheet" style="padding-left: 8px;" id="labelLevelStatusReq">Total</label></td>
                                                                     </tr>
 
-                                                                    <%--
-                                                  Map projectsMap = (Map) session.getAttribute("ProjectsMap");
-                                                  System.out.println("projectsMap length"+projectsMap.size());
-                                                  int l=projectsMap.size();
-                                                  int i=1;
-                                                  Iterator iterator = projectsMap.entrySet().iterator();
-                                                  while (iterator.hasNext()) {
-                                                  Map.Entry mapEntry = (Map.Entry) iterator.next();
-                                                  
-                                                %-->
-                                                
-                                                                    <%--   
-                                                <tr>
-                                                    
-                                                                         <td><table><label class="labelStyle ReqinputStyleTime" id="labelLevelStatusReq" style="margin-bottom: 10px;"><%=mapEntry.getValue()%><br></label></table></td>
-                                                                         <td><s:textfield name="projectNameSun" id="projectNameSun<%=i%>" cssClass="form-control SmallTextBox_Time" onchange="return projectSun();"/></td>
-                                                                         <td><s:textfield name="projectNameMon" id="projectNameMon<%=i%>" cssClass="form-control SmallTextBox_Time" onchange="return projectMon();"/></td>
-                                                                         <td><s:textfield name="projectNameTue" id="projectNameTue<%=i%>" cssClass="form-control SmallTextBox_Time" onchange="return projectTue();"/></td>
-                                                                         <td><s:textfield name="projectNameWed" id="projectNameWed<%=i%>" cssClass="form-control SmallTextBox_Time" onchange="return projectWed();"/></td>
-                                                                         <td><s:textfield name="projectNameThu" id="projectNameThu<%=i%>" cssClass="form-control SmallTextBox_Time" onchange="return projectThu();"/></td>
-                                                                         <td><s:textfield name="projectNameFri" id="projectNameFri<%=i%>" cssClass="form-control SmallTextBox_Time" onchange="return projectFri();"/></td>
-                                                                         <td><s:textfield name="projectNameSat" id="projectNameSat<%=i%>" cssClass="form-control SmallTextBox_Time" onchange="return projectSat();"/></td>
-                                                                         <td><s:textfield name="projectNameAll" id="projectNameAll<%=i%>" cssClass="form-control SmallTextBox_Time" readonly="true"/></td>
-                                                                         
-                                                </tr>      <%
-
-                                                                                i++;    
-                                                                           out.println("div"+i); 
-                                                                         }                                                                                                                                                 
-                                                        %>
-                                                                    --%>
                                                                     <tr style="display:none" id ="projectid1">
                                                                         <td><s:textfield name="project1" id="project1" cssClass="noBorder textLabel " value="" disabled="true" /></td>
                                                                         <s:hidden name="project1key" id="project1key" value="%{timeSheetVTO.project1key}"/>
@@ -350,17 +331,7 @@
                                                                         <td><s:textfield value="%{timeSheetVTO.holidaySat}" name="holidaySat" id="holidaySat" cssClass="form-control SmallTextBox_Time" onchange="return holidaySaturday();" onkeypress="return acceptNumbers(event);" tabindex="1" maxLength="4"/></td>
                                                                         <td><s:textfield value="0.0" name="holidayAll" id="holidayAll" cssClass="form-control SmallTextBox_Time" readonly="true" tabindex="-1"/></td>
                                                                     </tr> 
-                                                                    <%-- <tr>
-                                                                          <td><label class="labelStyle ReqinputStyleTime" id="labelLevelStatusReq" style="margin-bottom: 10px;">CompTime</label></td>
-                                                                          <td><s:textfield value="%{timeSheetVTO.comptimeSun}" name="comptimeSun" id="comptimeSun" cssClass="form-control SmallTextBox_Time" onchange="return comptimeSunday();" onkeypress="return acceptNumbers(event);"/></td>
-                                                                          <td><s:textfield value="%{timeSheetVTO.comptimeMon}" name="comptimeMon" id="comptimeMon" cssClass="form-control SmallTextBox_Time" onchange="return comptimeMonday();" onkeypress="return acceptNumbers(event);"/></td>
-                                                                          <td><s:textfield value="%{timeSheetVTO.comptimeTue}" name="comptimeTue" id="comptimeTue" cssClass="form-control SmallTextBox_Time" onchange="return comptimeTuesday();" onkeypress="return acceptNumbers(event);"/></td>
-                                                                          <td><s:textfield value="%{timeSheetVTO.comptimeWed}" name="comptimeWed" id="comptimeWed" cssClass="form-control SmallTextBox_Time" onchange="return comptimeWednesday();" onkeypress="return acceptNumbers(event);"/></td>
-                                                                          <td><s:textfield value="%{timeSheetVTO.comptimeThu}" name="comptimeThu" id="comptimeThu" cssClass="form-control SmallTextBox_Time" onchange="return comptimeThursday();" onkeypress="return acceptNumbers(event);"/></td>
-                                                                          <td><s:textfield value="%{timeSheetVTO.comptimeFri}" name="comptimeFri" id="comptimeFri" cssClass="form-control SmallTextBox_Time" onchange="return comptimeFriday();" onkeypress="return acceptNumbers(event);"/></td>
-                                                                          <td><s:textfield value="%{timeSheetVTO.comptimeSat}" name="comptimeSat" id="comptimeSat" cssClass="form-control SmallTextBox_Time" onchange="return comptimeSaturday();" onkeypress="return acceptNumbers(event);"/></td>
-                                                                          <td><s:textfield value="0.0" name="comptimeAll" id="comptimeAll" cssClass="form-control SmallTextBox_Time" readonly="true"/></td>
-                                                                     </tr> --%>
+
                                                                     <tr>
                                                                         <td><label class="labelStyle-i ReqinputStyleTime add-to" id="labelLevelStatusReq" >Total</label></td>
                                                                         <td><s:textfield value="0.0" name="totalSun" id="totalSun" cssClass="form-control SmallTextBox_Time" readonly="true" tabindex="-1"/></td>
@@ -376,33 +347,36 @@
 
                                                             </div>  
 
-                                                            <div class="inner-addtaskdiv-elements row">    
+                                                            <div class="row">    
 
-                                                                <div class="col-sm-12">
-                                                                <div class="col-sm-4 ">
-                                                                    <div class="pull-left"> <label class="labelStyle-i add-to" id="labelLevelStatusReq">Total Billable Hrs</label></div>
-                                                                    <div class="pull-left">    <s:textfield name="totalBillHrs" value="0.0" id="totalBillHrs" cssClass="form-control SmallTextBox_Time" readonly="true" tabindex="-1"/></div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="pull-left"> <label class="labelStyle-i add-to" id="labelLevelStatusReq">Total Holiday Hrs</label></div>
-                                                                    <div class="pull-left">    <s:textfield name="totalHolidayHrs" value="0.0" id="totalHolidayHrs" cssClass="form-control SmallTextBox_Time" readonly="true" tabindex="-1"/></div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="pull-left "> <label class="" id="">Total Vacation Hrs</label></div>
-                                                                    <div class="pull-left"> <s:textfield name="totalVacationHrs" value="0.0" id="totalVacationHrs" cssClass="form-control SmallTextBox_Time"  style="margin-left: 12px;"  readonly="true" tabindex="-1"/></div>
-                                                                </div>
-                                                                <%--  <label class="labelStyle" id="labelLevelStatusReq" style="margin-bottom: 10px;">Total Comptime Hrs</label>--%>
+                                                                <div class="col-sm-5 col-lg-4 col-md-5">
+                                                                    <div class="row"> 
+                                                                        <div class="col-sm-12 pull-left "> 
+                                                                            <label class="labelStyle-i add-to contact_search" id="labelLevelStatusReq" style="float: left">Total Billable Hrs</label>
+                                                                            <s:textfield name="totalBillHrs" value="0.0" id="totalBillHrs" style="float: left"  cssClass="form-control SmallTextBox_Time" readonly="true" tabindex="-1"/>
+                                                                        </div>
 
-                                                            </div>
 
-                                                            </div>
-                                                               
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div class=" form-group">
-                                                                        <label class="labelStyle" id="labelLevelStatusReq">Notes</label> <s:textarea name="timeSheetNotes" id="timeSheetNotes" cssClass="titleStyle" value="%{timeSheetVTO.timeSheetNotes}" placeholder="Enter Here" rows="3" onkeydown=" timeSheetsNotes(this)" onblur="removeErrorMessages()" tabindex="1"/>
+                                                                        <div class="col-sm-12 pull-left "> 
+                                                                            <label class="labelStyle-i add-to contact_search" id="labelLevelStatusReq" style="float: left">Total Holiday Hrs</label>
+                                                                            <s:textfield name="totalHolidayHrs" value="0.0" id="totalHolidayHrs" style="float: left" cssClass="form-control SmallTextBox_Time" readonly="true" tabindex="-1"/>
+                                                                        </div>
+                                                                        <div class="col-sm-12 pull-left "> 
+                                                                            <label class="contact_search add-to contact_search" id="labelLevelStatusReq" style="float: left">Total Vacation Hrs</label>
+                                                                            <s:textfield name="totalVacationHrs" value="0.0" id="totalVacationHrs" style="float: left" cssClass="form-control SmallTextBox_Time"  readonly="true" tabindex="-1"/>
+                                                                        </div>
+
+                                                                    </div>                                                         </div>
+
+
+
+                                                                <div class="col-md-7 col-sm-7 col-lg-8">
+                                                                    <div class="col-sm-12">
+                                                                        <div class=" form-group">
+                                                                            <label class="labelStyle" id="labelLevelStatusReq">Notes</label> <s:textarea name="timeSheetNotes" id="timeSheetNotes" cssClass="titleStyle" value="%{timeSheetVTO.timeSheetNotes}" placeholder="Enter Here" rows="3" onkeydown=" timeSheetsNotes(this)" onblur="removeErrorMessages()" tabindex="1"/>
+                                                                        </div>
+                                                                        <div class="charNum" id="notes"></div>
                                                                     </div>
-                                                                    <div class="charNum" id="notes"></div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-12">
@@ -429,7 +403,7 @@
                                                                         <s:label><font color="red">*NOTE: After submitting this timesheet you can't edit.</font></s:label>
                                                                             <div class="col-lg-8"></div>
                                                                             <div class="col-sm-2 pull-right">
-                                                                            <s:submit type="button" cssStyle="margin:5px 0px;" tabindex="3" cssClass="add_searchButton fa fa-floppy-o form-control " id="enter" value="Save" theme="simple" onclick="setTemVar1()"/>
+                                                                            <s:submit  type="button" cssStyle="margin:5px 0px;" tabindex="3" cssClass="add_searchButton fa fa-floppy-o form-control " id="enter" value="Save" theme="simple" onclick="setTemVar1()"/>
 
                                                                         </div>
                                                                         <div class="col-sm-2 pull-right">

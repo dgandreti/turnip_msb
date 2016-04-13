@@ -1,17 +1,20 @@
 
 function checkCommentsChars(id){
+    var elem = document.getElementById("JobcharNum");
     $(id).keyup(function(){
         el = $(this);
         if(el.val().length >= 250){
             el.val( el.val().substr(0, 250) );
         } else {
+            elem.style.color="green";
             $("#JobcharNum").text(250-el.val().length+' Characters remaining . ');
         }
         if(el.val().length==250)
         {
-            $("#JobcharNum").text(' Cannot enter  more than 250 Characters .');    
+            elem.style.color="red";
+            $("#JobcharNum").text(' Cannot enter  more than 250 Characters .');
         }
-        
+
     })
     return false;
 };
@@ -1772,6 +1775,7 @@ function getSearchRequirementsList()
     var vendor=$("#vendor").val();
     var accountFlag="csr";   
     var accountSearchID=$("#accountSearchID").val();
+    var reqCategory=$("#reqCategory").val();
     //alert(accountFlag)
     if(reqStart!="")
     {
@@ -1796,7 +1800,7 @@ function getSearchRequirementsList()
         return false;
     }
 
-    var url='getSearchRequirementsList.action?jobTitle='+jobTitle+'&requirementSkill='+requirementSkill+'&requirementStatus='+requirementStatus+'&reqStart='+reqStart+'&reqEnd='+reqEnd+'&accountFlag='+accountFlag+'&vendor='+vendor+'&accountSearchID='+accountSearchID;
+    var url='getSearchRequirementsList.action?jobTitle='+jobTitle+'&requirementSkill='+requirementSkill+'&requirementStatus='+requirementStatus+'&reqStart='+reqStart+'&reqEnd='+reqEnd+'&accountFlag='+accountFlag+'&vendor='+vendor+'&accountSearchID='+accountSearchID+'&reqCategoryValue='+reqCategory;
     //alert(url);
     
     var req=initRequest(url);
@@ -2328,11 +2332,11 @@ function saveVendorTierDetails(){
     //alert(pf)
     if(vendorId==0){
         flag=false;
-        $("e").html(" <b><font color='red'>Vendor name should not be empty</font></b>");
+        $("e").html(" <b><font color='red'>Vendor name should not be empty</font></b>").show().delay(5000).fadeOut();
     }
-    if(pf==0 && vendorTier==0 ){
+    else if(pf==0 && vendorTier==0 ){
         flag=false;
-        $("e").html(" <b><font color='red'>Vendor should belongs to either Tier or Head Hunter</font></b>");
+        $("e").html(" <b><font color='red'>Vendor should belongs to either Tier or Head Hunter</font></b>").show().delay(5000).fadeOut();
     }
     if(flag==true){
         var url=CONTENXT_PATH+'/acc/saveVendorTierDetails.action?vendorId='+vendorId+'&VendorTierId='+vendorTier+'&accountSearchID='+accountSearchID+'&pf='+pf+'&vendorComments='+vendorComments;

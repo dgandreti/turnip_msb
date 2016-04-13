@@ -55,18 +55,7 @@
         <script>
             var pager;
             
-            //            function pagerOption(){
-            //                //alert("HI")
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                //alert(paginationSize);
-            //
-            //                pager = new Pager('sowResults', parseInt(paginationSize));
-            //            pager.init();
-            //            pager.showPageNav('pager', 'pageNavPosition');
-            //            pager.showPage(1);
-            //
-            //        };
+           
         </script>
     </head>
     <body onload="hoursValidations();onloadDates();POdownloadButton();">
@@ -184,7 +173,7 @@
                                                                 <s:url var="myUrl" action="getSowList.action">
                                                                     <%--<s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> --%>
                                                                 </s:url>
-                                                                <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                                <span class="pull-right"><s:a href='%{#myUrl}' id="sowListBackButton"><i class="fa fa-undo"></i></s:a></span>
                                                                 <%--<span class="pull-right"><s:a href='%{#contechReqEditUrl}'><img  src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>--%>
                                                             </h4>
                                                         </div>
@@ -493,32 +482,33 @@
                                                                     <label class="labelStylereq" style="color:#56a5ec"></label>
                                                                     <s:if test="status == 'Created'||status== 'Rejected'">
                                                                         <s:if test="(serviceType == 'PE' && #session.typeOfUsr == 'AC')||(serviceType == 'CO' && #session.typeOfUsr == 'VC')">   
-                                                                            <div class="col-sm-2"> 
-                                                                                <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Created&SOWFlag=1"'><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                                             <div class="col-sm-2 pull-right">
+                                                                                <s:submit id="denyButton" cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Denied&SOWFlag=1"'><i class="fa fa-terminal"></i>&nbsp;Deny</s:submit>
+                                                                            </div>
+                                                                            <div class="col-sm-2 pull-right">
+                                                                                <s:submit  id="submitButton" cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Submitted&SOWFlag=1"'><i class="fa fa-check-circle-o "></i>&nbsp;Submit</s:submit>
+                                                                            </div>
+                                                                            
+                                                                              <div class="col-sm-2 pull-right"> 
+                                                                                <s:submit  id="saveButton" cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Created&SOWFlag=1"'><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                                                             </div> 
-                                                                            <div class="col-sm-2">
-                                                                                <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Submitted&SOWFlag=1"'><i class="fa fa-check-circle-o "></i>&nbsp;Submit</s:submit>
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                                <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Denied&SOWFlag=1"'><i class="fa fa-terminal"></i>&nbsp;Deny</s:submit>
-                                                                            </div>
                                                                         </s:if>
                                                                     </s:if>
                                                                     <s:elseif test="status == 'Submitted'">
                                                                         <s:if test="(serviceType == 'PE' && #session.typeOfUsr == 'VC')||(serviceType == 'CO' && #session.typeOfUsr == 'AC')">  
                                                                             <div class="col-sm-2"> 
                                                                                 <s:if test="(serviceType == 'PE' && #session.typeOfUsr == 'VC')">
-                                                                                    <s:submit  cssClass="add_searchButton form-control SOWApproveOverlay_popup_open" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Approved&SOWFlag=1"'><i class="fa fa-check-circle"></i>&nbsp;Approve</s:submit>
+                                                                                    <s:submit id="approveButton" cssClass="add_searchButton form-control SOWApproveOverlay_popup_open" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Approved&SOWFlag=1"'><i class="fa fa-check-circle"></i>&nbsp;Approve</s:submit>
                                                                                 </s:if>
                                                                                 <s:else>
-                                                                                    <s:submit  cssClass="add_searchButton form-control SOWApproveOverlay_popup_open" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='SOWApproveOverlay();'><i class="fa fa-check-circle"></i>&nbsp;Approve</s:submit>
+                                                                                    <s:submit id="approveButton" cssClass="add_searchButton form-control SOWApproveOverlay_popup_open" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='SOWApproveOverlay();'><i class="fa fa-check-circle"></i>&nbsp;Approve</s:submit>
                                                                                 </s:else>
                                                                             </div> 
                                                                             <div class="col-sm-2">
-                                                                                <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Rejected&SOWFlag=1"'><i class="fa fa-times-circle"></i>&nbsp;Reject</s:submit>
+                                                                                <s:submit id="rejectButton" cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Rejected&SOWFlag=1"'><i class="fa fa-times-circle"></i>&nbsp;Reject</s:submit>
                                                                             </div>
                                                                             <div class="col-sm-2">
-                                                                                <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Denied&SOWFlag=1"'><i class="fa fa-terminal"></i>&nbsp;Deny</s:submit>
+                                                                                <s:submit  id="denyButton1" cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Denied&SOWFlag=1"'><i class="fa fa-terminal"></i>&nbsp;Deny</s:submit>
                                                                             </div>
                                                                         </s:if> 
 
@@ -526,18 +516,18 @@
                                                                     <s:elseif test="status == 'Approved'">
                                                                         <s:if test="serviceType == 'PE'&& #session.typeOfUsr == 'AC'"> 
                                                                             <div class="col-sm-4"></div>
-                                                                            <div class="col-sm-2">   
-                                                                                <s:submit  cssClass="add_searchButton form-control fa fa-money" type="button" value="Paid" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Paid&SOWFlag=1"'/>
+                                                                            <div class="col-sm-2 pull-right">   
+                                                                                <s:submit id="paidButton" cssClass="add_searchButton form-control fa fa-money" type="button" value="Paid" cssStyle="margin:5px 10px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Paid&SOWFlag=1"'/>
                                                                             </div>
                                                                         </s:if>
                                                                         <s:elseif test="serviceType == 'CO'"><!--&& #session.typeOfUsr == 'VC'-->
                                                                             <div class="col-sm-10"></div>
-                                                                            <div class="col-sm-2"> 
+                                                                           <div class="col-sm-2 pull-right"> 
                                                                                 <s:if test="sowHisStatus != 'Recreated'&&sowHisStatus != 'Submitted'">   
-                                                                                    <s:submit  cssClass="add_searchButton form-control SOW_popup_open fa fa-history" type="button" value="Recreate" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Recreated&SOWFlag=1"'/> 
+                                                                                    <s:submit  id="recreateButton" cssClass="add_searchButton form-control SOW_popup_open fa fa-history" type="button" value="Recreate" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Recreated&SOWFlag=1"'/> 
                                                                                 </s:if>
                                                                                 <s:else>
-                                                                                    <s:submit  cssClass="add_searchButton form-control pull-right SOW_popup_open fa fa-history" type="button" value="Recreate" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Recreated&SOWFlag=1"' disabled=""/>   
+                                                                                    <s:submit  id="recreateButton" cssClass="add_searchButton form-control pull-right SOW_popup_open fa fa-history" type="button" value="Recreate" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Recreated&SOWFlag=1"' disabled=""/>   
                                                                                 </s:else>
                                                                             </div>
                                                                         </s:elseif>
@@ -631,9 +621,9 @@
                                                                 <s:file name="file" id="file"/>
                                                             </div>
                                                             <div class="col-sm-6"></div>
-                                                            <div class="col-sm-6">
+                                                            <div class="col-sm-6 pull-right">
                                                                 <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
-                                                                <center><s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control " value="" theme="simple"  ><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit></center><br>
+                                                                <center><s:submit id="addSowAttachButton" type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control " value="" theme="simple"  ><i class="fa fa-plus-square"></i>&nbsp;Add</s:submit></center><br>
                                                             </div>
                                                         </div>
                                                     </s:form>
@@ -649,7 +639,7 @@
                                                                 <i id="updownArrowAccount" onclick="toggleContentAccount('sowEditForm')" class="fa fa-angle-up"></i> 
                                                                 <s:url var="myUrl" action="getSowList.action">
                                                                 </s:url>
-                                                                <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                                <span class="pull-right"><s:a href='%{#myUrl}' id="recreateBackButton"><i class="fa fa-undo"></i></s:a></span>
                                                             </h4>
                                                         </div>
                                                     </div>
@@ -669,9 +659,9 @@
 
                                                                 </div>
                                                                 <div class="col-sm-4"></div>
-                                                                <div class="col-sm-2">
+                                                                <div class="col-sm-2 pull-right">
                                                                     <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                                    <s:submit  cssClass="add_searchButton form-control" type="button" value="" onclick="getRecreatedList()" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                    <s:submit id="recreateSearch" cssClass="add_searchButton form-control" type="button" value="" onclick="getRecreatedList()" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -707,25 +697,7 @@
                                                             </label>
                                                             <div align="right" id="pageNavPosition" style="margin: -31px -1px 9px 5px;display: none"></div>
 
-                                                            <script type="text/javascript">
-                                                                //                                                        paginationSize = document.getElementById("paginationOption").value; 
-                                                                //                                                        var pager = new Pager('sowResults', 1); 
-                                                                //                                                        pager.init(); 
-                                                                //                                                        pager.showPageNav('pager', 'pageNavPosition'); 
-                                                                //                                                        pager.showPage(1);
-                                                                //                                                        function recreatedPagerOption(){
-                                                                //
-                                                                //                                                            paginationSize = document.getElementById("paginationOption").value;
-                                                                //                                                            if(isNaN(paginationSize))
-                                                                //                                                                alert(paginationSize);
-                                                                //
-                                                                //                                                            pager = new Pager('sowResults', parseInt(paginationSize));
-                                                                //                                                            pager.init();
-                                                                //                                                            pager.showPageNav('pager', 'pageNavPosition');
-                                                                //                                                            pager.showPage(1);
-                                                                //
-                                                                //                                                        };
-                                                            </script>
+                                                           
                                                         </s:form>
 
                                                     </div>
@@ -748,15 +720,15 @@
 
                                                                 <s:url var="myUrl" action="getSowList.action">
                                                                 </s:url>
-                                                                <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                                <span class="pull-right"><s:a href='%{#myUrl}' id="attachBackButton"><i class="fa fa-undo"></i></s:a></span>
                                                             </h4>
                                                         </div>
                                                     </div>
                                                     <s:form>
                                                         <div class="row">
                                                             <div class="col-sm-10"></div>
-                                                            <div class="col-sm-2 ">
-                                                                <a href="#" class="sowAttachment_popup_open" onclick="addSOWAttachmentOverLay();"><button class="add_searchButton form-control" style="margin: 5px 0px"><i class="fa fa-plus-square"></i>&nbsp;Add</button></button></a>
+                                                            <div class="col-sm-2 pull-right">
+                                                                <a href="#" id="attachmentsLink" class="sowAttachment_popup_open" onclick="addSOWAttachmentOverLay();"><button class="add_searchButton form-control" style="margin: 5px 0px"><i class="fa fa-plus-square"></i>&nbsp;Add</button></button></a>
                                                             </div>
                                                         </div>
                                                         <br>
@@ -823,25 +795,7 @@
                                                                     <div align="right" id="PageNavPosition" style="margin: -31px -1px 9px 5px;display: none"></div>
                                                                 </div>
 
-                                                                <script type="text/javascript">
-                                                                    //                                                        paginationSize = document.getElementById("attachPaginationOption").value; 
-                                                                    //                                                        var pager = new Pager('sowAttachment', parseInt(paginationSize)); 
-                                                                    //                                                        pager.init(); 
-                                                                    //                                                        pager.showPageNav('pager', 'PageNavPosition'); 
-                                                                    //                                                        pager.showPage(1);
-                                                                    //                                                        function attachPagerOption(){
-                                                                    //
-                                                                    //                                                            paginationSize = document.getElementById("attachPaginationOption").value;
-                                                                    //                                                            if(isNaN(paginationSize))
-                                                                    //                                                                alert(paginationSize);
-                                                                    //
-                                                                    //                                                            pager = new Pager('sowAttachment', parseInt(paginationSize));
-                                                                    //                                                            pager.init();
-                                                                    //                                                            pager.showPageNav('pager', 'PageNavPosition');
-                                                                    //                                                            pager.showPage(1);
-                                                                    //
-                                                                    //                                                        };
-                                                                </script>
+                                                               
                                                             </div>
                                                             <div class="col-lg-12"></div>
                                                         </div>

@@ -98,7 +98,17 @@ function checkEmailIdExistance(){
     $("resultMessage").html(" ");
     $("resetMessage").html(" ");
     var emailId=document.getElementById("email").value;
+   // var pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}";
     //  alert(document.getElementById('email').value);
+    if(emailId==""){
+        $("resetMessage").html("<font color='red'>Email field is required</font>");
+        return false;
+    }
+//    if(pattern!=emailId){
+//        $("resetMessage").html("<font color='red'>Please enter a valid Email</font>");
+//        document.getElementById("email").value="";
+//        return false;
+//    }
     var url=CONTENXT_PATH+'/general/resetEmailVerify.action?emailId='+emailId;
     // alert(url);
     var req=initRequest(url);
@@ -216,6 +226,7 @@ function checkPasswordMatch() {
         //      alert(curPassword+"   "+newPassword);
         if(curPassword != ""){
             $("resetMessage").html("<font  color='red'> Current password and new password should be different.</font>");
+            $("resetMessage").show().delay(5000).fadeOut();
         }
         return false;
     } else{
@@ -257,8 +268,10 @@ function verifyPasswordResponce(response){
     }
     else{
         $("resetMessage").html("<font  color='red'> Sorry, Current password is wrong, try again.</font>");
+          $("resetMessage").show().delay(5000).fadeOut();
         // curPwd.value='';
         document.getElementById("curPwd").value='';
+          $("resetMessage").show().delay(2000).fadeOut();
         return false;
     }
 }

@@ -23,7 +23,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/accountDetails/projects.css"/>">
         <%-- aklakh js single file start --%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
-     
+
         <%-- aklakh js single file end --%>
         <%-- aklakh css single file start --%>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
@@ -44,9 +44,6 @@
 
     <sx:head />
     <script>
-
-
-
         //           Pagination Script
         var pager;
         function pagerOption(){
@@ -62,7 +59,7 @@
         var myCalendar1;
         var myCalendar2;
         var myCalendar3;
-       function doOnLoad() {
+        function doOnLoad() {
             myCalendar1 = new dhtmlXCalendarObject(["projectStartDate","projectTargetDate"]);
             myCalendar2 = new dhtmlXCalendarObject(["projectStartDateOverlay","projectTargetDateOverlay"]);
             myCalendar3 = new dhtmlXCalendarObject(["projectStartDateSearch","projectTargetDateSearch"]);
@@ -84,50 +81,40 @@
             var year = today.getFullYear();
            
             if(dd < 10)
-                {
-               dd = "0"+dd;     
-                }
+            {
+                dd = "0"+dd;     
+            }
             if(mm < 10)
-                {
-               mm = "0"+mm;     
-                }   
-                 var day = mm+"-"+dd+"-"+year;
+            {
+                mm = "0"+mm;     
+            }   
+            var day = mm+"-"+dd+"-"+year;
            
            
-             var splitTaskStartDate = endDate.split('-');
-    var taskAddStartDate = new Date(splitTaskStartDate[2], splitTaskStartDate[0]-1 , splitTaskStartDate[1]); //Y M D 
-    var splitTaskEndDate = day.split('-');
-    var taskAddtargetDate = new Date(splitTaskEndDate[2], splitTaskEndDate[0]-1, splitTaskEndDate[1]); //Y M D
-    var taskStartDate = Date.parse(taskAddStartDate);
-    var taskTargetDate= Date.parse(taskAddtargetDate);
-    var  difference=(taskTargetDate - taskStartDate) / (86400000 * 7);
-   // alert(difference)
-    if(difference>0)
-    {
+            var splitTaskStartDate = endDate.split('-');
+            var taskAddStartDate = new Date(splitTaskStartDate[2], splitTaskStartDate[0]-1 , splitTaskStartDate[1]); //Y M D 
+            var splitTaskEndDate = day.split('-');
+            var taskAddtargetDate = new Date(splitTaskEndDate[2], splitTaskEndDate[0]-1, splitTaskEndDate[1]); //Y M D
+            var taskStartDate = Date.parse(taskAddStartDate);
+            var taskTargetDate= Date.parse(taskAddtargetDate);
+            var  difference=(taskTargetDate - taskStartDate) / (86400000 * 7);
+            if(difference>0)
+            {
              
-         //alert("hi")
-       document.getElementById("addSubPro").style.display="none";
-        document.getElementById("addTeamMemberButton").style.display="none";
-       
-        //         $("#startDate").show().delay(5000).fadeOut();
-        //          $("#endDate").show().delay(5000).fadeOut();
-        
-    }  
-   if(status!="Active" )
-       {
-          // alert(status)
-           document.getElementById("addSubPro").style.display="none";
-             document.getElementById("addTeamMemberButton").style.display="none";
+                document.getElementById("addSubPro").style.display="none";
+                document.getElementById("addTeamMemberButton").style.display="none";
+            }  
+            if(status!="Active" )
+            {
+                document.getElementById("addSubPro").style.display="none";
+                document.getElementById("addTeamMemberButton").style.display="none";
              
-       }
+            }
             myCalendar2.setSensitiveRange(startDate, null);
             
             var mainPrjectStartDate = document.getElementById('mainPrjectStartDate').value;
                
             var mainPrjectTargetDate = document.getElementById('mainPrjectTargetDate').value;
-           //alert(mainPrjectStartDate)
-          
-               //alert(mainPrjectTargetDate)
             myCalendar1.setSensitiveRange(mainPrjectStartDate, null);
           
             document.getElementById("projectStartDate").value=overlayDate;
@@ -168,22 +155,17 @@
                         <div class="col-sm-12 col-md-9 col-lg-10 right_content" style="background-color:#fff">
                             <div class="features_items">
                                 <div class="col-sm-12">
-                                    <div class="row" id="profileBox" style="float: left; margin-top: 5px">
+                                    <div class="row" id="profileBox" style="margin-left: auto;margin-right: auto; margin-top: 5px">
                                         <br>
                                         <% String accFlag = "accDetails";%> 
                                         <div class=""  style="float: left; margin-top:-12px; margin-bottom: 20px">
                                             Account&nbsp;Name:                                          
-                                            <%-- <s:url var="myUrl" action="/acc/viewAccount.action">
-                                                 <s:param name="accountSearchID"><s:property value="accountID"/></s:param>
-                                                 <s:param name="accFlag"><%= accFlag%></s:param>
-                                             </s:url>--%>
                                             <span style="color:  #FF8A14;"><s:property value="%{account_name}"/></span>
                                         </div>   <br>
                                         <div class="backgroundcolor" >
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
 
-                                                    <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                     <s:if test="project.projectType=='Main Project'">
                                                         <font color="#ffffff">Project Details</font>
                                                     </s:if>
@@ -207,17 +189,17 @@
                                                             <s:param name="accountID"><s:property value="accountID"/></s:param>
                                                         </s:url>
                                                     </s:else>
-                                                    <span onclick="javascript: $.getScript('/includes/js/general/GridNavigation.js' );"/> <s:a href='%{#myUrl}' cssClass="pull-right"><i class="fa fa-undo"></i></s:a></span>
-                                                    </h4>
-                                                </div>
-
+                                                    <span onclick="javascript: $.getScript('/includes/js/general/GridNavigation.js' );"/> <s:a href='%{#myUrl}' id="backToList" cssClass="pull-right"><i class="fa fa-undo"></i></s:a></span>
+                                                </h4>
                                             </div>
-                                            <!-- content start -->
-                                            <div>
+
+                                        </div>
+                                        <!-- content start -->
+                                        <div>
                                             <s:form action="updateProject" method="post" theme="simple" value="project">
                                                 <s:if test="%{resultMessage== 'Successfully updated'}">
                                                     <span><updateProject>
-                                                            <div style="margin: 5px 15px"><font color="green"> Project Updated successfully !</font></div></updateProject></span>
+                                                            <div style="margin: 5px 15px" id="validation"><font color="green"> Project Updated successfully !</font></div></updateProject></span>
                                                             </s:if>
                                                             <s:else>
                                                     <span><updateProject></updateProject></span> 
@@ -235,6 +217,7 @@
                                                     <s:hidden id="accountID" value="%{project.accountID}"/>
                                                     <s:hidden id="projectType" value="%{project.projectType}"/>                                                    </div>
                                                     <s:hidden id="mainProjectId" value="%{project.parentProjectID}"/> 
+                                                     <s:hidden id="mainProjectStatus" value="%{mainProjectStatus}" /> 
 
 
                                                 <div class="col-sm-3 required">
@@ -267,22 +250,22 @@
                                                     <div class="col-sm-3 required">
                                                         <label >Start Date </label>
                                                         <div class="calImage"><s:textfield cssClass="form-control" name="project.projectStartDate" value="%{project.projectStartDate}" id="projectStartDate" placeholder="%{project.projectStartDate}"  onkeypress=" return projectDateRepository();" onclick="dateValidate();" autocomplete="off"><i class="fa fa-calendar"></i></s:textfield>
-                                                            </div></div>  
-                                                        <div class="col-sm-3 required">
-                                                            <label >Target Date </label>
-                                                            <div class="calImage"><s:textfield cssClass="form-control" name="project.projectTargetDate" value="%{project.projectTargetDate}" id="projectTargetDate" placeholder="%{project.projectTargetDate}"  onkeypress=" return projectDateRepository();" onclick="dateValidate();" autocomplete="off"><i class="fa fa-calendar"></i></s:textfield>
-                                                            </div></div>
-                                                        <div class="col-sm-3  required">
-                                                            <label>Target hours</label>
-                                                            <div class="form-group input-group">
+                                                        </div></div>  
+                                                    <div class="col-sm-3 required">
+                                                        <label >Target Date </label>
+                                                        <div class="calImage"><s:textfield cssClass="form-control" name="project.projectTargetDate" value="%{project.projectTargetDate}" id="projectTargetDate" placeholder="%{project.projectTargetDate}"  onkeypress=" return projectDateRepository();" onclick="dateValidate();" autocomplete="off"><i class="fa fa-calendar"></i></s:textfield>
+                                                        </div></div>
+                                                    <div class="col-sm-3  required">
+                                                        <label>Target hours</label>
+                                                        <div class="form-group input-group">
                                                             <s:textfield cssClass="form-control "  id="editProjectTargetHrs"  value="%{project.projectTargetHrs}" name="project.projectTargetHrs"  onkeypress="return noOfHoursValidate(event, this.id)"  onblur="calculateSubProjectTargetHrs()"/>
                                                             <span class="input-group-addon" style="padding-top: 5px">Hrs</span>
                                                         </div>
                                                         <s:hidden name ="remainingSubpjctTotalHrs" id="remainingSubpjctTotalHrs" value="%{remainingTargetHrs}"/>
                                                         <s:hidden name ="targetHours" id="targetHours" value="%{project.projectTargetHrs}"/>
-                                                                  <s:hidden name ="mainPrjectStartDate" id="mainPrjectStartDate" value="%{mainProjectStartDate}"/>
+                                                        <s:hidden name ="mainPrjectStartDate" id="mainPrjectStartDate" value="%{mainProjectStartDate}"/>
                                                         <s:hidden name ="mainProjectTargetDate" id="mainProjectTargetDate" value="%{mainProjectTargetDate}"/>
-                                              
+
                                                     </div> 
                                                 </div>
                                                 <div class="inner-addtaskdiv-elements" style="margin-left: -15px">
@@ -316,7 +299,7 @@
                                                 <div class="charNum" id="Projects"></div>
                                                 <div class="inner-addtaskdiv-elements">
                                                     <div style="text-align: right">
-                                                        <s:submit type="button" cssClass="cssbutton fa fa-refresh" value="Update Project" style="height:30px" theme="simple" onclick="return updateProjectValidation();"/>
+                                                        <s:submit id="updateProjectButton" type="button" cssClass="cssbutton fa fa-refresh" value="Update Project" style="height:30px" theme="simple" onclick="return updateProjectValidation();"/>
                                                     </div>
                                                 </div>
                                             </s:form>
@@ -326,15 +309,20 @@
                                             <ul class="nav nav-tabs">
                                                 <s:if test="project.projectType=='Main Project'">
                                                     <li class="active">
-                                                        <a data-toggle="tab" href="#subProjects" onclick="pagerOption()">Sub Projects</a>
+                                                        <a data-toggle="tab" id="subProjectsLi" href="#subProjects" onclick="pagerOption()">Sub Projects</a>
                                                     </li>
                                                     <li>
-                                                        <a data-toggle="tab" href="#projectTeam" onclick="PagerOption1();javascript: $.getScript('/includes/js/general/GridNavigation.js' );">Project Team</a>
+                                                        <a data-toggle="tab" id="teamMembersLi" href="#projectTeam" onclick="PagerOption1();javascript: $.getScript('/includes/js/general/GridNavigation.js' );">Project Team</a>
 
                                                     </li>
                                                 </s:if>
                                             </ul>
                                             <div class="tab-content">
+                                                <br>
+                                                <s:if test="%{resultMessage=='added'}">
+
+                                                    <span id="validation" style="margin-left: 14px "> <font color="green"> Sub-Project Added successfully !</font></span>
+                                                    </s:if>
                                                 <div id="subProjects" class="tab-pane fade in active" >
 
                                                 </div>
@@ -362,9 +350,13 @@
             </div>
         </div>
     </footer><!--/Footer-->
+    <script>
+        $("#validation").show().delay(5000).fadeOut();
+    </script>
 
     <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
     <s:if test="project.projectType=='Main Project'">
+
         <script>
             ajaxReplaceDiv('/getSubProjects?parentProjectName=<s:property value="project.projectName" />','#subProjects','parentProjectID=<s:property value="project.projectID" />');
             ajaxReplaceDiv('/getProjectsTeamMembers','#projectTeam','projectID=<s:property value="project.projectID" />');

@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface UsersdataHandlerservice {
 
-  //  public List getEmployeeSearchDetails(UsersdataHandlerAction usersdataHandlerAction, HttpServletRequest httpServletRequest) throws ServiceLocatorException;
-
     public List getAllEmployeeDetails(HttpServletRequest httpServletRequest) throws ServiceLocatorException;
     //added by praveen<pkatru@miraclesoft.com>
 
@@ -27,12 +25,6 @@ public interface UsersdataHandlerservice {
 
     public boolean updateEmpDetails(UsersdataHandlerAction usersdataHandlerAction,  int userSessionId) throws ServiceLocatorException;
 
-    /* public Map getAllRoles(HttpServletRequest httpServletRequest, int userId) throws ServiceLocatorException;
-
-     public Map getAssignedRoles(HttpServletRequest httpServletRequest, int userId) throws ServiceLocatorException;
-
-     public Map getNotAssignedRoles(HttpServletRequest httpServletRequest, int userId) throws ServiceLocatorException;
-     */
     public Map getAllRoles(int userId, String type_of_relation) throws ServiceLocatorException;
 
     public Map getAssignedRoles(int userId) throws ServiceLocatorException;

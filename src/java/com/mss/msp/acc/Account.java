@@ -35,7 +35,7 @@ public class Account {
     private String industry;
     private Integer industryId;
     private String tax_id;
-    private Long revenue;
+    private String revenue;
     private Double budget;
     private String phone;
     private String fax;
@@ -187,11 +187,11 @@ public class Account {
         this.tax_id = tax_id;
     }
 
-    public Long getRevenue() {
+    public String getRevenue() {
         return this.revenue;
     }
 
-    public void setRevenue(Long revenue) {
+    public void setRevenue(String revenue) {
         this.revenue = revenue;
     }
 

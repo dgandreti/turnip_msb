@@ -11,7 +11,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Projects Dashboard Page</title>
+        <title>ServicesBay :: Projects&nbsp;Dashboard&nbsp;Page</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
@@ -19,9 +19,6 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
-
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         
@@ -30,7 +27,6 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/CountriesAjax.js"/>"></script>
-        <%-- <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>--%>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
@@ -59,7 +55,6 @@
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Projects</font>
                                             </h4>
                                         </div>
@@ -83,17 +78,6 @@
                                                     </div>
                                                     <s:hidden id="mainprojectsList" value="%{projectsMap}"/>
                                                     <s:hidden id="subprojectsMap"/>
-                                                    
-                                                    <%-- <div class="col-lg-3">
-                                                         <label class="" style="color:#56a5ec;">Projects: </label>
-                                                         <s:select cssClass="form-control SelectBoxStyles" 
-                                                                   id="projects" 
-                                                                   name="projects" 
-                                                                   list="projectsMap" headerKey="-1" headerValue="All"
-                                                                   onchange="settingProjectValue();"
-                                                                   />
-                                                     </div> --%>
-
                                                     <input type="hidden" onclick=""/>
 
                                                 </div>

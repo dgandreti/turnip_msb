@@ -56,12 +56,11 @@
             var pager;
             function costCenterPagination(){
                         
-                var paginationSize = 10; //parseInt(document.getElementById("paginationOption").value);
+                var paginationSize = 10;
                         
                 pager = new Pager('costCenterResults', paginationSize);
                 pager.init();
                 pager.showPageNav('pager', 'pageNavPosition');
-                //document.getElementById("paginationOption").value=10;
                 pager.showPage(1);
             }; 
             function sortables_init() {
@@ -77,20 +76,6 @@
                     }
                 }
             };
-            
-            
-            //            function pagerOption(){
-            //                        
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //                        
-            //                pager = new Pager('costCenterResults', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                pager.showPage(1);
-            //                        
-            //            };
         </script>
 
     </head>
@@ -118,7 +103,6 @@
                                                 <h4 class="panel-title">
                                                     <font color="#ffffff">Cost Center</font>
                                                     <i id="updownArrow" onclick="toggleContent('costCenterSearch')" class="fa fa-minus"></i> 
-                                                    <%--<span class="pull-right"><s:a href='%{#contechReqEditUrl}'><img  src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>--%>
                                                 </h4>
                                             </div>
                                         </div>
@@ -144,11 +128,11 @@
                                                     <div class="col-sm-4 pull-right">
                                                         <div class="col-sm-6 ">
                                                             <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                            <s:a href='#' onclick="costCenterAdd_overlay()" cssClass="costCenter_popup_open add_searchButton form-control"  cssStyle="margin:5px 0px 0px"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>  
+                                                            <s:a href='#' id="costCenterAddLink" onclick="costCenterAdd_overlay()" cssClass="costCenter_popup_open add_searchButton form-control"  cssStyle="margin:5px 0px 0px"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>  
                                                         </div>
                                                         <div class="col-sm-6 ">
                                                             <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                            <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit> 
+                                                            <s:submit id="costCenterSearchButton" cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit> 
                                                         </div>
                                                     </div>
                                                 </div>
@@ -168,7 +152,6 @@
                                                             <tbody>
 
                                                                 <tr>
-                                                                    <!--<th>CcId</th>-->
                                                                     <th>CcCode</th>
                                                                     <th>CcName</th>
                                                                     <th class="unsortable">Status</th>
@@ -186,9 +169,6 @@
                                                                 <tr>
                                                                     <td>
                                                                         <s:a href="#" cssClass="costCenter_popup_open" onclick="costCenter_overlay('%{ccId}','%{ccName}',%{projCount});"><s:property value="ccCode"></s:property></s:a></td>
-                                                                    <!--<td>
-                                                                    <%--<s:property value="ccName"></s:property>--%>
-                                                                    </td>-->
                                                                     <td><s:property value="ccName"></s:property></td>
                                                                     <td><s:property value="ccStatus"></s:property></td>
                                                                     <td>
@@ -214,21 +194,9 @@
                                                                             </s:else>    
                                                                         </s:if>
                                                                         <s:else>
-                                                                            <%-- <s:if test="#session.primaryrolevalue!='Director'&&(budgetStatus=='Entered'||budgetStatus=='Rejected')"> 
-                                                                                 <s:a href="#" cssClass="costCenterBudget_popup_open" onclick="costCenterBudget_overlay('%{ccCode}','%{id}','%{ccName}');">
-                                                                                     $<s:property value="budgetAmt"></s:property>
-                                                                                 </s:a>   
-                                                                             </s:if>  
-                                                                             <s:if test="#session.primaryrolevalue=='Director'&&budgetStatus=='Submitted'"> 
-                                                                                 <s:a href="#" cssClass="costCenterBudget_popup_open" onclick="costCenterBudget_overlay('%{ccCode}','%{id}','%{ccName}');">
-                                                                                     $<s:property value="budgetAmt"></s:property>
-                                                                                 </s:a>   
-                                                                             </s:if> 
-                                                                             <s:else>--%>
                                                                             <s:a href="#" cssClass="costCenterBudget_popup_open" onclick="costCenterBudget_overlay('%{ccCode}','%{id}','%{ccName}');">
                                                                                 $<s:property value="budgetAmt"></s:property>
                                                                             </s:a>    
-                                                                            <%--</s:else>--%>        
                                                                         </s:else>
                                                                     </td>
                                                                     <td>
@@ -250,7 +218,7 @@
                                                                     <option>25</option>
                                                                     <option>50</option>
                                                                 </select>
-                                                                cost center per page
+                                                                cost centers per page
                                                             </label>
                                                         </s:if>
                                                         <div align="right" id="pageNavPosition" style="margin: -31px -1px 9px 5px;display: none"></div>
@@ -264,7 +232,6 @@
                                                 </div>
                                             </div>
                                         </s:form>
-                                        <%--</s:form>--%>
                                     </div>
                                 </div>
                             </div>
@@ -275,7 +242,7 @@
                             <div class="backgroundcolor">
                                 <table>
                                     <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Cost Center&nbsp;&nbsp; </font></h4></td>
-                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="costCenter_popup_close" onclick="costCenter_overlay();removeCostCenterResults();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" id="costCenterOverlayCloseLink" class="costCenter_popup_close" onclick="costCenter_overlay();removeCostCenterResults();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                 </table>
                             </div>
                             <div>
@@ -299,7 +266,7 @@
 
                                             </div>
                                             <div class="col-lg-12" id="ccstatus" style="display: none">
-                                                 <label>Status</label>
+                                                <label>Status</label>
                                                 <s:select id="status" 
                                                           cssClass="SelectBoxStyles form-control" 
                                                           name="status" 
@@ -309,25 +276,13 @@
                                         </div>
                                     </center>
                                     <br/>
-                                    <%-- <s:if test="ccFlag='add'">--%>
                                     <div class="col-lg-12">
                                         <div id="ccadd" style="display: none">
-                                           <%-- <s:submit cssClass="cssbutton migrationButton"
-                                                      id="add" 
-                                                      onclick="return addCostCenter();"
-                                                      value="Save" /--%>
                                             <s:submit type="button" id="add"  cssClass="cssbutton migrationButton " onclick="return addCostCenter();"  ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                         </div><div id="ccedit" style="display: none">
-                                            <%-- </s:if>
-                                             <s:else> --%>
-                                            <%--<s:submit cssClass="cssbutton migrationButton" 
-                                                      id="update" 
-                                                      onclick="return editCostCenter();"
-                                                      value="Update" /--%>  
-                                             <s:submit type="button"  cssClass="cssbutton migrationButton" id="update" onclick="return editCostCenter();" ><i class="fa fa-refresh"></i>&nbsp;Update</s:submit>  
+                                            <s:submit type="button"  cssClass="cssbutton migrationButton" id="update" onclick="return editCostCenter();" ><i class="fa fa-refresh"></i>&nbsp;Update</s:submit>  
                                         </div>
                                     </div>
-                                    <%--</s:else>--%>
                                 </s:form>             
                             </div>
                             <font style="color: #ffffff">..................... ..............................  ..........................................</font>
@@ -335,15 +290,15 @@
                     </div>
 
                     <%--overlay for budget starts--%> 
-                    <div id="costCenterBudget_popup" style="width:75%">
+                    <div id="costCenterBudget_popup">
                         <div id="attachmentBox">
                             <div class="backgroundcolor">
                                 <table>
                                     <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Budget&nbsp;&nbsp; </font></h4></td>
-                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="costCenterBudget_popup_close" onclick="budget_overlay();removeCostCenterResults();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" id="costCenterBudgetOverlayCloseLink" class="costCenterBudget_popup_close" onclick="budget_overlay();removeCostCenterResults();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                 </table>
                             </div>
-                            <div>
+                            <div class="techReviewPopupStyle">
 
                                 <s:form>
                                     <span><costCenter></costCenter></span>
@@ -480,9 +435,9 @@
                                                 </div>
 
                                             </div>
-                                            <div class=" " id="buttonId" style="display:none">
-                                                  <div class="pull-right">
-                                                    <s:submit type="button" cssClass="cssbutton migrationButton fa fa-check-square-o"
+                                            <div class="col-lg-6 " id="buttonId" style="display:none">
+                                                <div class="pull-right">
+                                                    <s:submit type="button" cssClass="cssbutton migrationButton fa fa-check-square-o opts"
                                                               cssStyle="margin-top:15px;" tabindex="12"
                                                               id="ccbudget" 
                                                               onclick="return addCostCenterBudget('SB');"
@@ -513,29 +468,29 @@
                                             <div id="enter" style="display:none">
                                                 <s:if test="#session.primaryrolevalue!='Director'">
                                                     <div class="pull-right">
-                                                            <s:submit type="button" cssClass="cssbutton fa fa-check-square-o"
-                                                                      cssStyle="margin :20px 14px;"
-                                                                      id="ccbudget" 
-                                                                      onclick="return addCostCenterBudget('SB');"
-                                                                      value="Save&Submit" />
-                                                        </div> 
+                                                        <s:submit type="button" cssClass="cssbutton fa fa-check-square-o opts"
+                                                                  cssStyle="margin :20px 14px;"
+                                                                  id="ccbudget" 
+                                                                  onclick="return addCostCenterBudget('SB');"
+                                                                  value="Save&Submit" />
+                                                    </div> 
                                                     <div class="pull-right">
-                                                       
-                                                            <s:submit type="button" cssClass="cssbutton fa fa-floppy-o"
-                                                                      cssStyle="margin :20px 18px;"
-                                                                      id="ccbudget" 
-                                                                      onclick="return addCostCenterBudget('S');"
-                                                                      value="Save" />
-                                                        </div>  
-                                                        
+
+                                                        <s:submit type="button" cssClass="cssbutton fa fa-floppy-o opts"
+                                                                  cssStyle="margin :20px 18px;"
+                                                                  id="ccbudget" 
+                                                                  onclick="return addCostCenterBudget('S');"
+                                                                  value="Save" />
                                                     </div>  
-                                                </s:if>
-                                            </div>
 
-
+                                                </div>  
+                                            </s:if>
                                         </div>
-                                        <div class="row row2">
-                                            <div class="inner-techReviewdiv-elements" id="approveComm" style="display:none">
+
+
+
+                                        <div class="col-lg-12">
+                                            <div class="" id="approveComm" style="display:none">
                                                 <s:if test="#session.primaryrolevalue=='Director'">
 
                                                     <s:textarea id="approveComments"
@@ -550,8 +505,8 @@
                                             </div>
                                         </div>
                                         <div class="charNum" id="charNumProjects"></div>
-                                        <div class="row row2">
-                                            <div class="inner-techReviewdiv-elements" id="rejComm" style="display: none">
+                                        <div class="col-lg-12">
+                                            <div  id="rejComm" style="display: none">
                                                 <s:if test="#session.primaryrolevalue=='Director'">
                                                     <s:textarea id="rejectionComments"
                                                                 name="rejectionComments"
@@ -565,70 +520,66 @@
                                             </div>
                                         </div>
                                         <div class="charNum" id="charNumSkill"></div>
-                                        <div class="row row2">
-                                            <div class="col-lg-6"></div>
-                                            <div class="col-lg-6">
-                                                <div id="submit" style="display: none">
-                                                    <s:if test="#session.primaryrolevalue=='Director'">
-                                                        <div class="col-lg-6">
-                                                            <s:submit cssClass="cssbutton migrationButton"
-                                                                      cssStyle="margin-top:15px;"
-                                                                      id="ccbudget" 
-                                                                      onclick="return addCostCenterBudget('A');"
-                                                                      value="Approve" />
-                                                        </div>  <div class="col-lg-6">
-                                                            <s:submit cssClass="cssbutton migrationButton"
-                                                                      cssStyle="margin-top:15px;"
-                                                                      id="ccbudget" 
-                                                                      onclick="return addCostCenterBudget('R');"
-                                                                      value="Reject" />
-                                                        </div>
-                                                    </s:if>
-                                                </div>  
-                                            </div>
+
+
+                                        <div class="col-lg-6  col-md-7 col-sm-9 pull-right">
+                                            <div id="submit" style="display: none">
+                                                <s:if test="#session.primaryrolevalue=='Director'">
+                                                    <div class="pull-right col-sm-7 col-md-6">
+                                                        <s:submit cssClass="cssbutton migrationButton fa fa-check" type="button"
+                                                                  cssStyle="margin-top:15px;"
+                                                                  id="ccbudget" 
+                                                                  onclick="return addCostCenterBudget('A');"
+                                                                  value="Approve" />
+                                                    </div>  <div class="pull-right">
+                                                        <s:submit cssClass="cssbutton migrationButton fa fa-times" type="button"
+                                                                  cssStyle="margin-top:15px;"
+                                                                  id="ccbudget" 
+                                                                  onclick="return addCostCenterBudget('R');"
+                                                                  value="Reject" />
+                                                    </div> 
+                                                </s:if>
+                                            </div>  
                                         </div>
+
                                     </center>
-                                    <br/>
-                                    <%-- <s:if test="ccFlag='add'">--%>
 
-                                    <%--</s:else>--%>
-                                    <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                                 </s:form>   
-
                             </div>
-                            
+                        </div>
+
+                    </div>
+            </div>
+            <%--overlay for budget ends--%> 
+            <%---projects names overlay starts----%>
+            <div>
+                <div id="costCenterProjects_popup" class="overlay">
+                    <div id="resourceOverlay" >
+
+                        <div class="overlayOrButton_color">
+                            <table>
+                                <tr><td style=""><h4>
+                                            <font color="#ffffff">&nbsp;Projects&nbsp; </font>
+
+                                        </h4></td>
+                                <span class=" pull-right"><h5><a href="" id="costCenterProjectsOverlayCloseLink" class="costCenterProjects_popup_close" onclick="costCenterProjectsOverlayClose();pagerOption();"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
+                            </table>
+                        </div>
+                        <div style="margin: 10px">
+                            <table id="resourceTable" class="CSSTable_task  responsive" border="2"cell-spacing="1" style="overflow-x:auto;overflow-y:hidden;" >
+                                <tr>
+                                    <th>&nbsp;S.No.&nbsp;</th>
+                                    <th>&nbsp;Project&nbsp;Name&nbsp;</th>
+                                </tr>
+                            </table > 
+                            <div id="edu_pageNavPosition" align="right" style="margin-right:0vw"></div>
+                            <div   style="width:auto;height:auto" >
+                                <div  id="editSpan" class="badge pull-right" style="display:none"></div>                                                       
+                            </div>  
                         </div>
                     </div>
-                    <%--overlay for budget ends--%> 
-                    <%---projects names overlay starts----%>
-                    <div>
-                        <div id="costCenterProjects_popup" class="overlay">
-                            <div id="resourceOverlay" >
-
-                                <div class="overlayOrButton_color">
-                                    <table>
-                                        <tr><td style=""><h4>
-                                                    <font color="#ffffff">&nbsp;Projects&nbsp; </font>
-
-                                                </h4></td>
-                                        <span class=" pull-right"><h5><a href="" class="costCenterProjects_popup_close" onclick="costCenterProjectsOverlayClose()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
-                                    </table>
-                                </div>
-                                <div style="margin: 10px">
-                                    <table id="resourceTable" class="CSSTable_task  responsive" border="2"cell-spacing="1" style="overflow-x:auto;overflow-y:hidden;" >
-                                        <tr>
-                                            <th>&nbsp;S.No.&nbsp;</th>
-                                            <th>&nbsp;Project&nbsp;Name&nbsp;</th>
-                                        </tr>
-                                    </table > 
-                                    <div id="edu_pageNavPosition" align="right" style="margin-right:0vw"></div>
-                                    <div   style="width:auto;height:auto" >
-                                        <div  id="editSpan" class="badge pull-right" style="display:none"></div>                                                       
-                                    </div>  
-                                </div>
-                            </div>
-                        </div>
-                        <%--projects names overlay ends----%>
+                </div>
+                <%--projects names overlay ends----%>
                 </section>
             </div>
             <%-- ------------MIDDLE -----------------------------------------%>
@@ -656,7 +607,6 @@
                        
                 }
                 recordPage=paginationSize;
-                // alert(recordPage)
                 $('#costCenterResults').tablePaginate({navigateType:'navigator'},recordPage);
 
             };

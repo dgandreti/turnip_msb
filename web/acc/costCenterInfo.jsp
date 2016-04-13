@@ -41,12 +41,11 @@
             var pager;
             function costCenterPagination(){
                         
-                var paginationSize = 10; //parseInt(document.getElementById("paginationOption").value);
+                var paginationSize = 10; 
                         
                 pager = new Pager('costCenterInfoTable', paginationSize);
                 pager.init();
                 pager.showPageNav('pager', 'pageNavPosition');
-                //document.getElementById("paginationOption").value=10;
                 pager.showPage(1);
             };
             function pagerOption(){
@@ -66,134 +65,133 @@
     </head>
     <body>
         <div id="wrap">
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
-                    <s:include value="/includes/template/header.jsp"/>
+            <header id="header"><!--header-->
+                <div class="header_top"><!--header_top-->
+                    <div class="container">
+                        <s:include value="/includes/template/header.jsp"/>
+                    </div>
                 </div>
-            </div>
 
-        </header>
-        <%-- ------------MIDDLE -----------------------------------------%>
-        <div id="main">
-        <section id="generalForm"><!--form-->
-            <div class="container">
-                <div class="row">
-                    <s:include value="/includes/menu/LeftMenu.jsp"/>
-                    <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
-                        <div class="features_items">
-                            <div class="" id="profileBox" style="float: left; margin-top: 5px">
-                                <div class="backgroundcolor" >
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <font color="#ffffff">Cost Center Budget Reviews</font>
-                                            <i id="updownArrowLeft" onclick="toggleContentLeft('costCenterInfo')" class="fa fa-angle-up"></i> 
-                                            <s:url var="backUrl" action="costCenterSearch.action">
-                                            </s:url>    
-                                            <span class="pull-right"><s:a href='%{#backUrl}'><i class="fa fa-undo"></i></s:a></span>
-                                        </h4>
+            </header>
+            <%-- ------------MIDDLE -----------------------------------------%>
+            <div id="main">
+                <section id="generalForm"><!--form-->
+                    <div class="container">
+                        <div class="row">
+                            <s:include value="/includes/menu/LeftMenu.jsp"/>
+                            <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
+                                <div class="features_items">
+                                    <div class="" id="profileBox" style="float: left; margin-top: 5px">
+                                        <div class="backgroundcolor" >
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <font color="#ffffff">Cost Center Budget Reviews</font>
+                                                    <i id="updownArrowLeft" onclick="toggleContentLeft('costCenterInfo')" class="fa fa-angle-up"></i> 
+                                                    <s:url var="backUrl" action="costCenterSearch.action">
+                                                    </s:url>    
+                                                    <span class="pull-right"><s:a href='%{#backUrl}' id="backToList"><i class="fa fa-undo"></i></s:a></span>
+                                                </h4>
+                                            </div>
+                                        </div>
+
+                                        <s:form action="" theme="simple" id="costCenterInfo">
+                                            <div class="inner-reqdiv-elements">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <s:hidden name="ccCode" id="ccCode" value="%{ccCode}"/>
+                                                        <label>Cost Center Code : </label><font style="color: #FF8A14;"><s:property value="ccCode"></s:property></font>
+                                                    </div>
+                                                    <div class ="col-sm-6">
+                                                        <div class="pull-right">
+                                                            <label>Cost Center Name : </label><font style="color: #FF8A14;"><s:property value="ccName"/></font>
+                                                        </div>
+                                                    </div></div>
+                                                <span id="info"></span>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="labelStylereq" style="color:#56a5ec">Year</label>
+                                                        <s:textfield cssClass="form-control" id="year"  name="year" value="%{dashBoardYear}" onkeypress="return validationCostCenterYear(event,this.id)"/>
+                                                    </div>
+                                                    <div class="col-sm-2 ">
+                                                        <div class="row">
+                                                            <div class="col-sm-11 pull-right">
+                                                                <label class="labelStylereq" style="color:#56a5ec"></label>
+                                                                <s:submit  id="costCenterSearchButton" cssClass="add_searchButton form-control" type="button" value="" onclick="return costCenterInfoSearch()" cssStyle="margin:5px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                            </div></div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </s:form>
+                                        <br>
+                                        <s:form>
+                                            <span><font style="color: green"><s:property value=""></s:property></font></span>
+                                            <div class="task_content" id="task_div" align="center" style="display: none" >
+
+                                                <div>
+                                                    <div>
+                                                        <table id="costCenterInfoTable" class="responsive CSSTable_task" border="5"cell-spacing="2">
+                                                            <tbody>
+
+                                                                <tr>
+                                                                    <th>Start&nbsp;Date</th>
+                                                                    <th>End&nbsp;Date</th>
+                                                                    <th>Estimated&nbsp;Amt</th>
+                                                                    <th>Consumed&nbsp;Amt</th>
+                                                                    <th>Balance&nbsp;Amt</th>
+                                                                    <th>Budget&nbsp;Status</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                                <s:if test="costCenterSearchList.size == 0">
+                                                                    <tr>
+                                                                        <td colspan="9"><center><font style="color: red;font-size: 15px;">No Records to display</font></center></td>
+                                                                </tr>
+                                                            </s:if>
+
+                                                            <s:iterator value="costCenterSearchList">
+                                                                <tr>
+                                                                    <td><s:property value="startDate"></s:property></td>
+                                                                    <td><s:property value="endDate"></s:property></td>
+                                                                    <td><s:property value="budgetAmt"></s:property></td>
+                                                                    <td><s:property value="spentAmt"></s:property></td>
+                                                                    <td><s:property value="balanceAmt"></s:property></i></td>
+                                                                    <td><s:property value="budgetStatus"></s:property></i></td>
+                                                                    <td><s:property value="status"></s:property></i></td>
+                                                                </tr>
+                                                            </s:iterator>
+                                                            </tbody>
+                                                        </table>
+                                                        <br/>
+                                                        <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
+                                                                <option>10</option>
+                                                                <option>15</option>
+                                                                <option>25</option>
+                                                                <option>50</option>
+                                                            </select>
+                                                            Budgets per page
+                                                        </label>
+                                                        <div align="right" id="pageNavPosition" style="margin: -31px -1px 9px 5px;display: none"></div>
+                                                    </div>
+                                                    <script type="text/javascript">
+                                                        var pager = new Pager('costCenterInfoTable', 10); 
+                                                        pager.init(); 
+                                                        pager.showPageNav('pager', 'pageNavPosition'); 
+                                                        pager.showPage(1);
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </s:form>
                                     </div>
                                 </div>
-
-                                <s:form action="" theme="simple" id="costCenterInfo">
-                                    <div class="inner-reqdiv-elements">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <s:hidden name="ccCode" id="ccCode" value="%{ccCode}"/>
-                                                <label>Cost Center Code : </label><font style="color: #FF8A14;"><s:property value="ccCode"></s:property></font>
-                                            </div>
-                                            <div class ="col-sm-6">
-                                                <div class="pull-right">
-                                                    <label>Cost Center Name : </label><font style="color: #FF8A14;"><s:property value="ccName"/></font>
-                                                </div>
-                                            </div></div>
-                                        <span id="info"></span>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <label class="labelStylereq" style="color:#56a5ec">Year</label>
-                                                <s:textfield cssClass="form-control" id="year"  name="year" value="%{dashBoardYear}" onkeypress="return validationCostCenterYear(event,this.id)"/>
-                                            </div>
-                                            <div class="col-sm-2 ">
-                                                <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                <s:submit  cssClass="add_searchButton form-control" type="button" value="" onclick="return costCenterInfoSearch()" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </s:form>
-                                <br>
-                                <s:form>
-                                    <span><font style="color: green"><s:property value=""></s:property></font></span>
-                                    <div class="task_content" id="task_div" align="center" style="display: none" >
-
-                                        <div>
-                                            <div>
-                                                <table id="costCenterInfoTable" class="responsive CSSTable_task" border="5"cell-spacing="2">
-                                                    <tbody>
-
-                                                        <tr>
-                                                            <!--<th>CcId</th>-->
-                                                            <th>Start&nbsp;Date</th>
-                                                            <th>End&nbsp;Date</th>
-                                                            <th>Estimated&nbsp;Amt</th>
-                                                            <th>Consumed&nbsp;Amt</th>
-                                                            <th>Balance&nbsp;Amt</th>
-                                                            <th>Budget&nbsp;Status</th>
-                                                            <th>Status</th>
-                                                        </tr>
-                                                        <s:if test="costCenterSearchList.size == 0">
-                                                            <tr>
-                                                                <td colspan="9"><center><font style="color: red;font-size: 15px;">No Records to display</font></center></td>
-                                                        </tr>
-                                                    </s:if>
-
-                                                    <s:iterator value="costCenterSearchList">
-                                                        <tr>
-                                                            <td>
-                                                                <s:property value="startDate"></s:property>  
-                                                            </td>
-                                                            <%--<s:property value="ccName"></s:property>--%>
-                                                            <td><s:property value="endDate"></s:property></td>
-                                                            <td><s:property value="budgetAmt"></s:property></td>
-                                                            <td><s:property value="spentAmt"></s:property></td>
-                                                            <td><s:property value="balanceAmt"></s:property></i></td>
-                                                            <td><s:property value="budgetStatus"></s:property></i></td>
-                                                            <td><s:property value="status"></s:property></i></td>
-                                                        </tr>
-                                                    </s:iterator>
-                                                    </tbody>
-                                                </table>
-                                                <br/>
-                                                <label class="page_option"> Display <select id="paginationOption" class="disPlayRecordsCss" onchange="pagerOption()" style="width: auto">
-                                                        <option>10</option>
-                                                        <option>15</option>
-                                                        <option>25</option>
-                                                        <option>50</option>
-                                                    </select>
-                                                    Budgets per page
-                                                </label>
-                                                <div align="right" id="pageNavPosition" style="margin: -31px -1px 9px 5px;display: none"></div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                var pager = new Pager('costCenterInfoTable', 10); 
-                                                pager.init(); 
-                                                pager.showPageNav('pager', 'pageNavPosition'); 
-                                                pager.showPage(1);
-                                            </script>
-                                        </div>
-                                    </div>
-                                </s:form>
-                                <%--</s:form>--%>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-        </section>
+                </section>
+            </div>
+            <%-- ------------MIDDLE -----------------------------------------%>
         </div>
-        <%-- ------------MIDDLE -----------------------------------------%>
-    </div>
         <footer id="footer"><!--Footer-->
             <div class="footer-bottom" id="footer_bottom">
                 <div class="container">
@@ -215,7 +213,6 @@
                        
                 }
                 recordPage=paginationSize;
-                // alert(recordPage)
                 $('#costCenterInfoTable').tablePaginate({navigateType:'navigator'},recordPage);
 
             };

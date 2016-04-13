@@ -53,108 +53,167 @@ public class AccAuthAjaxHandlerAction extends ActionSupport implements ServletRe
     private int userSessionId;
     private String typeOfUser;
     private int userGroupId;
+    private String actionResourceStatus;
+    private String actionHiddenName;
+    private int actionHiddenRole;
 
     public AccAuthAjaxHandlerAction() {
     }
 
     /**
      * *****************************************************************************
-     * Date : july 20 2015 Author : manikanta<meeralla@miraclesoft.com>
-     * insertOrUpdateAccAuth()
+     * Date : July 20 2015
+     *
+     * Author : Manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : insertOrUpdateAccAuth() method is used to
+     *
+     *
      * *****************************************************************************
      */
     public String insertOrUpdateAccAuth() throws IOException, ServiceLocatorException {
+        System.out.println("********************AccAuthAjaxHandlerAction :: insertOrUpdateAccAuth Method Start*********************");
         try {
-            System.out.println("In Action--> insertOrUpdateAccAuth()");
-            //System.out.println("csruserid"+getUserid());
-            //System.out.println("csrOrgid"+getOrgId());
 
-            //setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-            //sessionOrgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
             responseString = ServiceLocator.getAccAuthAjaxservice().insertOrUpdateAccAuth(this);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
-            System.err.println(ioe);
         }
+        System.out.println("********************AccAuthAjaxHandlerAction :: insertOrUpdateAccAuth Method End*********************");
+
         return null;
     }
+     /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getRolesForAccType() method is used to get state names of a particular
+     * country.
+     *
+     * *****************************************************************************
+     */
 
     public String getRolesForAccType() throws IOException, ServiceLocatorException {
-        try {
-            System.out.println("In Action--> insertOrUpdateAccAuth()");
-            //System.out.println("csruserid"+getUserid());
-            //System.out.println("csrOrgid"+getOrgId());
+        System.out.println("********************AccAuthAjaxHandlerAction :: getRolesForAccType Method Start*********************");
 
-            //setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-            //sessionOrgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
+        try {
+
             responseString = ServiceLocator.getAccAuthAjaxservice().getRolesForAccType(this);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
-            System.err.println(ioe);
         }
+        System.out.println("********************AccAuthAjaxHandlerAction :: getRolesForAccType Method End*********************");
+
         return null;
     }
-     public String getAccountNames() throws IOException, ServiceLocatorException {
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getAccountNames() method is used to get state names of a particular
+     * country.
+     *
+     * *****************************************************************************
+     */
+    public String getAccountNames() throws IOException, ServiceLocatorException {
+        System.out.println("********************AccAuthAjaxHandlerAction :: getAccountNames Method Start*********************");
+
         try {
-            System.out.println("In Action--> getAccountNames()");
-            //System.out.println("csruserid"+getUserid());
-            //System.out.println("csrOrgid"+getOrgId());
-            //setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-            //sessionOrgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
+
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
             responseString = ServiceLocator.getAccAuthAjaxservice().getAccountNames(this);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
-            System.err.println(ioe);
         }
+        System.out.println("********************AccAuthAjaxHandlerAction :: getAccountNames Method End*********************");
+
         return null;
     }
-     public String getActionResorucesSearchResults() throws IOException, ServiceLocatorException {
-        try {
-            System.out.println("In Action--> getActionResorucesSearchResults()");
-            //System.out.println("csruserid"+getUserid());
-            //System.out.println("csrOrgid"+getOrgId());
 
-            //setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-            //sessionOrgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
+     /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getActionResorucesSearchResults() method is used to get state names of a particular
+     * country.
+     *
+     * *****************************************************************************
+     */
+    public String getActionResorucesSearchResults() throws IOException, ServiceLocatorException {
+        System.out.println("********************AccAuthAjaxHandlerAction :: getActionResorucesSearchResults Method Start*********************");
+
+        try {
+
             responseString = ServiceLocator.getAccAuthAjaxservice().getActionResorucesSearchResults(this);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
-            System.err.println(ioe);
         }
+        System.out.println("********************AccAuthAjaxHandlerAction :: getActionResorucesSearchResults Method End*********************");
+
         return null;
     }
-     
-     public String insertOrUpdateActionResources() throws IOException, ServiceLocatorException {
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : insertOrUpdateActionResources() method is used to get state names of a particular
+     * country.
+     *
+     * *****************************************************************************
+     */
+    public String insertOrUpdateActionResources() throws IOException, ServiceLocatorException {
+        System.out.println("********************AccAuthAjaxHandlerAction :: insertOrUpdateActionResources Method Start*********************");
+
         try {
-            System.out.println("In Action--> insertOrUpdateActionResources()");
+
             responseString = ServiceLocator.getAccAuthAjaxservice().insertOrUpdateActionResources(this);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
-            System.err.println(ioe);
         }
+        System.out.println("********************AccAuthAjaxHandlerAction :: insertOrUpdateActionResources Method End*********************");
+
         return null;
     }
-     public String actionResourceTermination() throws IOException, ServiceLocatorException {
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : actionResourceTermination() method is used to get state names of a particular
+     * country.
+     *
+     * *****************************************************************************
+     */
+    public String actionResourceTermination() throws IOException, ServiceLocatorException {
+        System.out.println("********************AccAuthAjaxHandlerAction :: actionResourceTermination Method Start*********************");
         try {
-            System.out.println("In Action--> actionResourceTermination()");
+
             responseString = ServiceLocator.getAccAuthAjaxservice().actionResourceTermination(this);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
-            System.err.println(ioe);
         }
+        System.out.println("********************AccAuthAjaxHandlerAction :: actionResourceTermination Method End*********************");
+
         return null;
     }
-     
-    
-    
 
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
@@ -289,6 +348,28 @@ public class AccAuthAjaxHandlerAction extends ActionSupport implements ServletRe
     public void setUserGroupId(int userGroupId) {
         this.userGroupId = userGroupId;
     }
-    
-    
+
+    public String getActionResourceStatus() {
+        return actionResourceStatus;
+    }
+
+    public void setActionResourceStatus(String actionResourceStatus) {
+        this.actionResourceStatus = actionResourceStatus;
+    }
+
+    public String getActionHiddenName() {
+        return actionHiddenName;
+    }
+
+    public void setActionHiddenName(String actionHiddenName) {
+        this.actionHiddenName = actionHiddenName;
+    }
+
+    public int getActionHiddenRole() {
+        return actionHiddenRole;
+    }
+
+    public void setActionHiddenRole(int actionHiddenRole) {
+        this.actionHiddenRole = actionHiddenRole;
+    }
 }

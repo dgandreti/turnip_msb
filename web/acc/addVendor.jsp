@@ -75,7 +75,7 @@
                                             <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
                                             <s:param name="accFlag">venSearch</s:param>
                                         </s:url>
-                                        <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                        <span class="pull-right"><s:a href='%{#myUrl}' id="backToList"><i class="fa fa-undo"></i></s:a></span>
                                       </h4>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                                     
                                     <div class="col-sm-2 pull-right">
                                        
-                                        <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" onclick="saveVendorTierDetails();" theme="simple"  ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                        <s:submit id="addVendorSave" type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" onclick="saveVendorTierDetails();" theme="simple"  ><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                     </div>
                                 </div>
                             </div>

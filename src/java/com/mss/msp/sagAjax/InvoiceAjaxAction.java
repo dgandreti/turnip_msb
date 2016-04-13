@@ -5,6 +5,8 @@
 package com.mss.msp.sagAjax;
 
 import com.mss.msp.util.ApplicationConstants;
+import com.mss.msp.util.DataSourceDataProvider;
+import com.mss.msp.util.MailManager;
 import com.mss.msp.util.ServiceLocator;
 import com.opensymphony.xwork2.ActionSupport;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +32,10 @@ public class InvoiceAjaxAction extends ActionSupport implements ServletRequestAw
     private int serviceId;
     private String his_status;
     private String his_serviceType;
-      private int usrId;
+    private int usrId;
+    private String invEmailSubject;
+    private String invEmailBodyContent;
+    private int invCreatedBy;
 
     @Override
     public void setServletRequest(HttpServletRequest httpServletRequest) {
@@ -40,13 +45,15 @@ public class InvoiceAjaxAction extends ActionSupport implements ServletRequestAw
     public void setServletResponse(HttpServletResponse httpServletResponse) {
         this.httpServletResponse = httpServletResponse;
     }
-    
-     public String getTotalHoursTooltip() {
+
+    public String getTotalHoursTooltip() {
         resultType = LOGIN;
+        System.out.println("********************InvoiceAjaxAction :: getTotalHoursTooltip Method Start*********************");
+
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                
-                // userSeessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
+
+
                 String details = ServiceLocator.getInvoiceAjaxService().getTotalHoursTooltip(this);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
@@ -54,25 +61,39 @@ public class InvoiceAjaxAction extends ActionSupport implements ServletRequestAw
                 httpServletResponse.setContentType("text/html");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(details);
-//                resultMessage = null;
+
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************InvoiceAjaxAction :: getTotalHoursTooltip Method End*********************");
         return null;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : generateInvoice() method is used
+     *
+     *
+     * *****************************************************************************
+     */
     public String generateInvoice() {
+        System.out.println("********************InvoiceAjaxAction :: generateInvoice Method Start*********************");
+
         resultType = LOGIN;
         try {
-            System.out.println("Ajax Handler action generateInvoice");
+
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUsrSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 String editoverlay = ServiceLocator.getInvoiceAjaxService().generateInvoice(this);
-                System.out.println("this is generate invoice-->" + editoverlay);
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -84,17 +105,32 @@ public class InvoiceAjaxAction extends ActionSupport implements ServletRequestAw
 
             resultType = ERROR;
         }
+        System.out.println("********************InvoiceAjaxAction :: generateInvoice Method End*********************");
         return null;
     }
-     public String getRecreatedList() {
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getStates() method is used to get state names of a particular
+     * country.
+     *
+     * *****************************************************************************
+     */
+    public String getRecreatedList() {
+        System.out.println("********************InvoiceAjaxAction :: getRecreatedList Method Start*********************");
+
         resultType = LOGIN;
         try {
-            System.out.println("Ajax Handler action SOW");
+
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUsrSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 String recreatedList = ServiceLocator.getInvoiceAjaxService().getRecreatedList(this);
-                System.out.println("this is generate invoice-->" + recreatedList);
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -106,6 +142,50 @@ public class InvoiceAjaxAction extends ActionSupport implements ServletRequestAw
 
             resultType = ERROR;
         }
+        System.out.println("********************InvoiceAjaxAction :: getRecreatedList Method End*********************");
+        return null;
+    }
+    /**
+     * *****************************************************************************
+     * Date : 03/26/2016
+     *
+     * Author : Manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : sendPendingInvMail() method is used to send Pending Invoice Mail
+     * 
+     *
+     * *****************************************************************************
+     */
+     public String sendPendingInvMail() {
+        resultType = LOGIN;
+        System.out.println("********************InvoiceAjaxAction :: sendPendingInvMail Method Start*********************");
+        try {
+            System.out.println("Ajax  action sendPendingInvMail");
+            String resultString = "";
+            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+                setUsrSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+                setOrgSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+                MailManager mailManager = new MailManager();
+                System.out.println("sendPendingInvMail getInvEmailBodyContent->"+getInvEmailBodyContent());
+                System.out.println("sendPendingInvMail getInvEmailSubject->"+getInvEmailSubject());
+                int status = mailManager.sendPendingInvMail(this, DataSourceDataProvider.getInstance().getEmailIdbyuser(getInvCreatedBy()));
+                if (status != 0) {
+                    resultString = "success";
+                } else {
+                    resultString = "error";
+                }
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
+                httpServletResponse.setContentType("text");
+                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.getWriter().write("" + resultString + "");
+            }
+        } catch (Exception ex) {
+
+            resultType = ERROR;
+        }
+          System.out.println("********************InvoiceAjaxAction :: sendPendingInvMail Method End*********************");
         return null;
     }
 
@@ -187,6 +267,30 @@ public class InvoiceAjaxAction extends ActionSupport implements ServletRequestAw
 
     public void setUsrId(int usrId) {
         this.usrId = usrId;
+    }
+
+    public String getInvEmailSubject() {
+        return invEmailSubject;
+    }
+
+    public void setInvEmailSubject(String invEmailSubject) {
+        this.invEmailSubject = invEmailSubject;
+    }
+
+    public String getInvEmailBodyContent() {
+        return invEmailBodyContent;
+    }
+
+    public void setInvEmailBodyContent(String invEmailBodyContent) {
+        this.invEmailBodyContent = invEmailBodyContent;
+    }
+
+    public int getInvCreatedBy() {
+        return invCreatedBy;
+    }
+
+    public void setInvCreatedBy(int invCreatedBy) {
+        this.invCreatedBy = invCreatedBy;
     }
     
     

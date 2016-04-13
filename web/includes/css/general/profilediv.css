@@ -949,7 +949,7 @@ div#imageupdateOverlay{
 div#resourceOverlay {
     display: none;
     z-index: 3;
-    background: #cccccc;
+    background: #fff;
     color: #3711F5;
     overflow-x: hidden;
 
@@ -1000,7 +1000,9 @@ div#InvoiceGenerationOverlay
     border-radius: 3px; 
     border: 1px solid #708090;
     overflow-x: hidden;
+    width:100%
 }
+
 .SearchBoximg{
     -moz-appearance: none;
     -webkit-appearance: none;

@@ -18,7 +18,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Add Account</title>
+        <title>ServicesBay :: Add Account Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -56,34 +56,7 @@
                 //             
                 
             });
-            
-            function clearfields()
-            {
-                
-                document.getElementById("account_name").value="";
-                document.getElementById("account_url").value="";
-                document.getElementById("account_type").value="";
-                document.getElementById("email_ext").value="";
-                document.getElementById("address1").value="";
-                document.getElementById("address2").value="";
-                document.getElementById(" acc_city").value="";
-                      
-                document.getElementById("acc_zip").value="";
-                document.getElementById("acc_country").value="";
-                document.getElementById("acc_state").value="";
-                document.getElementById("phone1").value="";
-                document.getElementById("fax").value="";
-                document.getElementById("acc_industry").value="";
-                document.getElementById("reqion").value="";
-                         
-                document.getElementById("acc_territory").value="";
-                document.getElementById("acc_no_of_employees").value="";
-                          
-                document.getElementById("acc_tax_id").value="";
-                document.getElementById("acc_stock_symbol").value="";
-                document.getElementById("acc_revenue").value="";
-                document.getElementById("description").value="";
-            }
+
         </script>
 
 
@@ -113,7 +86,6 @@
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                 <font color="#ffffff">Add Account</font>
                                             </h4>
                                         </div>
@@ -121,23 +93,7 @@
                                     <!-- Add Form-->
                                     <div class="col-sm-12" style="margin-bottom: 20px">
                                         <br>
-                                        <%--  <div class="col-lg-6 " ><div id="accLoadBox" class="import " style="background-color: #0099CC">
-                                                  <img src="../includes/images/icons/import.png" >
-                                                  <center> <label class="labelStyle" >Account&nbsp;: </label>
-                                                      <s:url id="loadXls" action="../users/general/loadData.action">
-                                                          <s:param name="accountType"> Customer </s:param>
-                                                      </s:url><br>
-                                                      <s:a href='%{#loadXls}'> Click Me Import Customer Account</s:a></center></div>
-                                              </div>
-                                              <div class="col-lg-6 " ><div id="accLoadBox" class="import" style="background-color: #66CCFF">
-                                                      <img src="../includes/images/icons/import.png" >
-                                                      <center> <label class="labelStyle">Vendor&nbsp;: </label>
-                                                      <s:url id="loadXls" action="../users/general/loadData.action">
-                                                          <s:param name="accountType">Vendor</s:param>
-                                                      </s:url><br>
-                                                      <s:a href='%{#loadXls}'> Click Me Import Vendor Account</s:a></center></div>
-                                              </div>
-                                        --%>
+                                        
                                         <s:form action="accountadd" method="post" theme="simple"
                                                 onSubmit="return validateForm()" id="acc_form" name="acc_form" enctype="multipart/form-data">
                                             <p id="resultMessage" align="center" class="accDetailsError"> <s:property value="resultMessage"  /></p>
@@ -194,18 +150,6 @@
                                                         </span>
                                                     </div>
 
-
-                                                    <%--<div class="col-sm-3" id="vendorType" style="display: none;">
-                                                      <label class="labelStyle2"><span class="accDetailsError">*</span> Vendor Type: </label>
-                                                      <s:select  cssClass="SelectBoxStyles form-control" id="vendorType"
-                                                                 name="account.vendorTypeId" value="%{account.vendorTypeId}"
-                                                                 list="vendorTypeList"
-                                                                 headerKey="" headerValue="Select Vendor Type"
-                                                                 cssStyle="width:100%;"
-                                                                 />
-                                                      <span id="accountVendorValidation" class="accDetailsError"></span>
-                                                    </div>
-                                                    --%>
                                                 </div>
                                             </div>
                                             <h4><b>Account Address</b></h4>
@@ -320,7 +264,7 @@
                                                                       tabindex="13"
                                                                       />
                                                             <%--onchange="validateDropDown('acc_industry','industryValidation')" --%>
-                                                            <span id="industryValidation" class="accDetailsError"/>
+                                                            <span id="industryValidation" class="accDetailsError"></span>
                                                         </span>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -357,18 +301,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <%-- onblur="isDecimal(this, 'employeeValidation')" this method for no. of employees
-                                                  <div class="col-sm-3">
-                                                    <span>
-                                                      <label class="labelStyle2">Budget </label>
-                                                      <s:textfield cssClass="form-control" id="acc_budget" type="text"
-                                                                   name="account.budget"  placeholder="Budget"
-                                                                   value="%{account.budget}"/>
-                                                      <s:hidden id="testRealValue"/>
-                                                      <span id="budgetValidation" class="accDetailsError"/>
-                                                    </span>
-                                                  </div>--%>
-
+                                                   
 
                                                     <div class="col-sm-3">
                                                         <span>
@@ -376,7 +309,7 @@
                                                             <s:textfield cssClass="form-control" id="acc_tax_id" type="text" maxLength="20"
                                                                          name="account.tax_id" placeholder="Tax ID"
                                                                          value="%{account.tax_id}" tabindex="17" />
-                                                            <span id="taxValidation" class="accDetailsError"/>
+                                                            <span id="taxValidation" class="accDetailsError"></span>
                                                         </span></div>
                                                     <!--Linked to State and Country-->
                                                     <div class="col-sm-3">
@@ -412,13 +345,13 @@
                                                     <!--<div class="col-lg-6"></div>-->
                                                     <div class="col-sm-2 pull-right">
                                                         <%--s:reset type="button" cssClass="cssbutton_emps field-margin" key="reset" value="Clear"/--%>
-                                                        <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" onclick="clearform();" tabindex="21" />
+                                                        <s:reset id="clearButton" type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser" key="reset" value="Clear" onclick="clearform();" tabindex="21" />
                                                     </div>
                                                     <div class="col-sm-2 pull-right">
-                                                        <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel" tabindex="22" />
+                                                        <s:reset id="cancelButton" type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-times" onclick="javascript:history.back();" value="Cancel" tabindex="22" />
                                                     </div>
                                                     <div class="col-sm-2 pull-right">
-                                                        <s:submit type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control" value="" tabindex="23" id="addaccountsave"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                        <s:submit  type="button" cssStyle="margin:5px 0px;" onclick="return validateForm1();"  cssClass="add_searchButton form-control" value="" tabindex="23" id="addaccountsave"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                                         </div>
                                                     </div>
                                                     <div class="row">

@@ -149,12 +149,12 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
     private int contactExperience;
     private String contactSsnNo;
     private String contactEducation;
-     private String[] skillCategoryValueList;
-     private String contactSkillValues;
-     private Map experience;
-     private Map industryMap;
-     private Map skillMap;
-     private String skillSet;
+    private String[] skillCategoryValueList;
+    private String contactSkillValues;
+    private Map experience;
+    private Map industryMap;
+    private Map skillMap;
+    private String skillSet;
 
     public String getGender() {
         return gender;
@@ -203,18 +203,19 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
     private Map workLocations;
     private int workingLocation;
     private int reportPerson;
+    private String mainProjectStatus;
+
     /**
-     * Method : Account add action
-     *
+     * *****************************************************************************
+     * Method : getAddAccount() is for getting account add page and populating
+     * all drop downs in account add page
+     * *****************************************************************************
      */
     public String getAddAccount() {
         String resultType = LOGIN;
-
+        System.out.println("********************AccountAction :: getAddAccount Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-            //Add Account true is added successfully
-            //Add Account true is added successfully
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-
             if (this.checkForNoNullValues()) {
                 if (false) {
                     resultMessage = "";
@@ -229,10 +230,16 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
             }
             createDropDowns();
         }// Session validator if END
-
+        System.out.println("********************AccountAction :: getAddAccount Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Method : execute()
+     *
+     * *****************************************************************************
+     */
     public String execute() {
         String resultType = LOGIN;
 
@@ -243,18 +250,26 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : July 16, 2015, 8:30 PM IST
+     *
+     * Author : Manikanta Eeralla<meeralla@miraclesoft.com> Author : Shankar
+     * Maddila<smaddila@miraclesoft.com>
+     *
+     * Method : addContact() Method is for adding contact(Employee role by
+     * default) to organization.
+     *
+     * *****************************************************************************
+     */
     public String addContact() {
 
         String resultType = LOGIN;
+        System.out.println("********************AccountAction :: addContact Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-            System.out.println("checkAddress true or false------>" + getAdd_checkAddress());
-            System.out.println("email------------>" + getContactEmail());
             setContactEmail(getContactEmail() + '@' + getEmail_ext());
-            System.out.println("email------------->" + getContactEmail());
             String trmEmail = getContactEmail();
             setContactEmail(trmEmail.trim());
-            System.out.println("trimEmail--->" + trmEmail.trim() + "..");
-            System.out.println(" trim email------------->" + getContactEmail() + "hello");
             if (getAdd_checkAddress()) {
                 addAddressFlag = "PC";
                 System.out.println("checkAddress" + addAddressFlag);
@@ -278,28 +293,13 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
                 System.out.println("Is TeamLead" + addTeamLead);
             }
 
-            System.out.println("checkAddress" + isCheckAddress());
-
-            //filePath = "D:\\uploadedfiles";
-            int addresult = 0;
-            //filePath="C:\\usr\\ProjectFiles\\MSP\\TASK_ATTACHMENTS";
             filePath = Properties.getProperty("Profile.Image");
-
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data Start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            System.out.println("File Name is:" + taskAttachment);
-            System.out.println("File ContentType is:" + taskAttachmentContentType);
-            System.out.println("Files Directory is:" + filePath);
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% File Data End %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             try {
                 File destFile = new File(filePath + File.separator + taskAttachmentFileName);
-                System.out.println(">>>>>>>>>>>>>>>>>>PATH>>>>>>>>>>>>" + destFile);
-                //FileUtils.copyFile(taskAttachment, destFile);
                 String dfile = destFile.toString();
                 if (taskAttachment == null) {
-                    System.out.println("In if taskAttachment>>>1111" + taskAttachment);
                     setFilePath("");
                 } else {
-                    System.out.println("In else taskAttachment>>>1111" + taskAttachment);
                     setFilePath(dfile);
                 }
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -312,87 +312,78 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
                         dataSourceDataProvider.getInstance().updateAccountLastAccessedBy(getAccountSearchOrgId(), getUserSessionId(), "VendorContactAdded");
                     }
                 }
+                System.out.println("********************AccountAction :: addContact Method End*********************");
             } catch (Exception e) {
             }
             resultType = SUCCESS;
         }
         return resultType;
     }
-    //added by praveen
 
+    /**
+     * *****************************************************************************
+     * Date : 04/may/2015
+     *
+     * Author : praveen<pkatru@miraclesoft.com>
+     *
+     * Method : ProfileImageUpdate() Method is for updating the user profile
+     * image
+     *
+     * *****************************************************************************
+     */
     public String ProfileImageUpdate() {
         String resultType = LOGIN;
-        //filePath = "D:\\uploadedfiles";
-        int addresult = 0;
-        //filePath="C:\\usr\\ProjectFiles\\MSP\\TASK_ATTACHMENTS";
-        //filePath = Properties.getProperty("Profile.Image");
         HttpSession session = getHttpServletRequest().getSession(true);
-
         try {
+            System.out.println("********************AccountAction :: ProfileImageUpdate Method Start*********************");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
 
-                //setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
-                //setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap());
                 if (getImageupdateFileName() == null) {
-                    System.out.println("file is null so it adds only data in task_list table");
                 } else {
                     filePath = Properties.getProperty("Profile.Image");
 
                     String basename = FilenameUtils.getBaseName(imageupdateFileName);
                     String extension = FilenameUtils.getExtension(imageupdateFileName);
-                    System.out.println("Base name " + basename);
-                    System.out.println("extension name " + extension);
-                    System.out.println("the path is--------" + getFilePath());
                     File destFile = new File(filePath + File.separator + getContactId() + '.' + extension);
                     setFilePath(destFile.toString());
-                    System.out.println("the path is--------" + getFilePath());
                     FileUtils.copyFile(imageupdate, destFile);
-
                 }
-//                File destFile = new File(filePath, taskAttachmentFileName);
-//                FileUtils.copyFile(taskAttachment, destFile);
-
-                //System.out.println("file is null so it adds only data in task_list table");
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                //  System.out.println("Action called in TaskHandlerAction classsssssssssssssssssssssssssssssssssssssssss");
-                //  addresult = ServiceLocator.getRecruitmentService().addConsultAttachmentDetails(this, httpServletRequest);
                 ServiceLocator.getAccountService().updateImageForProfile(this, httpServletRequest);
                 if (getUserSessionId() == getContactId()) {
                     session.setAttribute(ApplicationConstants.USER_IMAGE_PATH, getFilePath());
                 }
-
-
-
             }
+            System.out.println("********************AccountAction :: ProfileImageUpdate Method End*********************");
         } catch (IOException e) {
             e.printStackTrace();
             return ERROR;
         } catch (Exception ex) {
-            System.out.println("Exception in ADD task  action-->" + ex.getMessage());
+            // System.out.println("Exception in ADD task  action-->" + ex.getMessage());
             resultType = ERROR;
         }
 
         return SUCCESS;
     }
 
+    /**
+     * *****************************************************************************
+     *
+     * Method : setTeamMembersForProject() Method is for getting project team.
+     *
+     *
+     * *****************************************************************************
+     */
     public String setTeamMembersForProject() {
         try {
+            System.out.println("********************AccountAction :: setTeamMembersForProject Method Start*********************");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-                setContactPersons(com.mss.msp.util.DataSourceDataProvider.getInstance().getContactPersonsByProjectIdHeigerDesignationId(getProjectID(), getDesignation(), getUserID()));
-                //setReportsTOMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getReporingByProjectId(this));
+                setContactPersons(dataSourceDataProvider.getInstance().getContactPersonsByProjectIdHeigerDesignationId(getProjectID(), getDesignation(), getUserID()));
                 if (getProjectFlag() == null || "".equals(getProjectFlag().trim())) {
-//                    System.out.println("edit team member");
                     String allRoles = "";
                     int userRole = dataSourceDataProvider.getInstance().getUsrRoleById(getUserID());
                     String usrRole = String.valueOf(userRole);
-                    //,7,11,14
-//                    if ("7".equals(usrRole) || "11".equals(usrRole) || "14".equals(usrRole)) {
-//                        allRoles = Properties.getProperty("REPORTSTOROLESFOREMP"); //"2,13,4,5,3,6";
-//                    } else {
-                        allRoles = Properties.getProperty("REPORTSTOROLES");
-//                    }
-                    System.out.println("allRoles-->" + allRoles);
-
+                    allRoles = Properties.getProperty("REPORTSTOROLES");
                     String finalReportsList = "";
                     String allRoleArray[] = allRoles.split(",");
 
@@ -407,24 +398,18 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
                     if ("".equals(finalReportsList)) {
                         finalReportsList = null;
                     }
-                    System.out.println("finalReportsList" + finalReportsList);
                     finalReportsList = StringUtils.chop(finalReportsList);
-                    System.out.println("finalReportsList" + finalReportsList);
-                    setReportsTOMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getReporingByProjectId(this, finalReportsList));
+                    setReportsTOMap(dataSourceDataProvider.getInstance().getReporingByProjectId(this, finalReportsList));
                 } else {
-//                    System.out.println("add team member");
                     Map reportsMap = new HashMap();
                     setReportsTOMap(reportsMap);
                 }
-                // setAccount(ServiceLocator.getAccountService().getSubProjectDetails(httpServletRequest, this));
-                setSubProject(com.mss.msp.util.DataSourceDataProvider.getInstance().getSubProject(getProjectID(), getUserID()));
-                setAssignedSubProject(com.mss.msp.util.DataSourceDataProvider.getInstance().getAssignedSubProject(getProjectID(), getUserID()));
+                setSubProject(dataSourceDataProvider.getInstance().getSubProject(getProjectID(), getUserID()));
+                setAssignedSubProject(dataSourceDataProvider.getInstance().getAssignedSubProject(getProjectID(), getUserID()));
                 setAccountID(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setAccount(ServiceLocator.getAccountService().getProjectTeamDetails(httpServletRequest, this));
-                System.out.println("After assigned Project");
-                System.out.println("the map is ---------------" + getReportsTOMap());
-                System.out.println("project d id--------------" + getProjectID());
             }
+            System.out.println("********************AccountAction :: setTeamMembersForProject Method End*********************");
         } catch (Exception e) {
             return LOGIN;
         }
@@ -432,61 +417,67 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
         return SUCCESS;
     }
 
+    /**
+     * *****************************************************************************
+     *
+     * Method : addTeamMemberToProject() Method is for adding team members to
+     * the project.
+     *
+     *
+     * *****************************************************************************
+     */
     public String addTeamMemberToProject() throws ServiceLocatorException {
         String resulttype = LOGIN;
         String result = "";
+        System.out.println("********************AccountAction :: addTeamMemberToProject Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//            setTeamMemberId(123);
-            //  System.out.println("Teamemberid in action claas---->" + getTeamMemberId());
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setAccountID(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             if ("addMember".equals(getProjectFlag())) {
                 result = ServiceLocator.getAccountService().addTeamMemberToProject(this, httpServletRequest);
                 setProjectFlag("addMember");
                 setResultMessage("Team Member Added Succesfully..");
-                // setDesignationMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getDesignation());
             } else {
                 System.out.println("teammember Id" + getTeamMemberId());
                 System.out.println("user Id" + getUserID());
                 if ("Active".equals(getTeamMemberStatus())) {
                     if (getReportPerson() == getReportsto1()) {
-
                         String userExist = DataSourceDataProvider.getInstance().checkUserExistOrNotForProjectRespectedOrg(getTeamMemberId(), getAccountID());
                         if ("notExisted".equals(userExist)) {
                             result = ServiceLocator.getAccountService().addTeamMemberToProject(this, httpServletRequest);
                             setUserID(getUserID());
-
                             setResultMessage("Team Member Updated Succesfully..");
-
                         } else {
                             setUserID(getUserID());
-
                             setResultMessage("Team Member Already Existed..");
                         }
                     } else {
                         result = ServiceLocator.getAccountService().addTeamMemberToProject(this, httpServletRequest);
                         setUserID(getUserID());
-
                         setResultMessage("Team Member Updated Succesfully..");
                     }
                 } else {
                     result = ServiceLocator.getAccountService().addTeamMemberToProject(this, httpServletRequest);
                     setUserID(getUserID());
-
                     setResultMessage("Team Member Updated Succesfully..");
                 }
-
             }
-
-
-
-
             resulttype = SUCCESS;
         }
+        System.out.println("********************AccountAction :: addTeamMemberToProject Method End*********************");
         return resulttype;
     }
 
+    /**
+     * *****************************************************************************
+     *
+     * Method : createDropDowns() Method is for populating drop down lists.
+     *
+     *
+     * *****************************************************************************
+     */
     private void createDropDowns() {
+        System.out.println("********************AccountAction :: createDropDowns Method Start*********************");
         populateCountryList();
         populateIndustryList();
         populateAccountTypeList();
@@ -494,9 +485,9 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
         if (this.country != null && !this.country.equals("")) {
             setStateList(ServiceLocator.getLocationService().getStatesNameByCountry(getCountry()));
         } else {
-            System.out.println("no Country in add Account: " + this.country);
             setStateList(new ArrayList<String>());
         }
+        System.out.println("********************AccountAction :: createDropDowns Method End*********************");
     }
 
     /**
@@ -505,24 +496,19 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
      *
      * Author : Aklakh Ahmad<mahmad@miraclesoft.com>
      *
-     * doAddConsultantDetails() method is used to enter the consultant record
-     * into database using stored procedure
+     * updateTeamMembersForProject() method is used to Update Project
+     * TeamMembers.
      *
      * *****************************************************************************
      */
     public String updateTeamMembersForProject() {
         resultType = LOGIN;
-        System.out.println("-------IN  updateTeamMembersForProject Action Class-------");
+        System.out.println("********************AccountAction :: updateTeamMembersForProject Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-                System.out.println("INSIDE IF");
-                System.out.println(" >>>>>>> Project Id>>" + getProjectID() + " User id--------->" + getUserID());
-                System.out.println("Assigned Project--->" + getAssignedProject());
                 String[] assignedTeam = (String[]) parameters.get("assignProjectForTeam");
-                System.out.println(">>>>>>>>>>>>>>>>>Length>>>>>>" + assignedTeam.length);
                 if (assignedTeam.length > 5) {
-                    System.out.println("More than 5 projects can not be accepted!");
-                validateMessage = "More than 5 projects can not be accepted!";
+                    validateMessage = "More than 5 projects can not be accepted!";
                     setTeamMemberFlag("assignTeam");
                     httpServletRequest.setAttribute(ApplicationConstants.RESULT_MSG, validateMessage);
                     resultType = SUCCESS;
@@ -540,6 +526,7 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
                     resultType = SUCCESS;
                 }
             }
+            System.out.println("********************AccountAction :: updateTeamMembersForProject Method End*********************");
         } catch (Exception e) {
             return LOGIN;
         }
@@ -547,11 +534,22 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
         return SUCCESS;
     }
 
+    /**
+     * *****************************************************************************
+     * Date : July 15 2015
+     *
+     * Author : Manikanta Eeralla<meeralla@miraclesoft.com>
+     *
+     * setContacts() method is used to get add contact page with multiple drop
+     * downs.
+     *
+     * *****************************************************************************
+     */
     public String setContacts() {
         try {
+            System.out.println("********************AccountAction :: setContacts Method Start*********************");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
-                // setDesignations(dataSourceDataProvider.getInstance().getDesignation());
-                setCountryNames(dataSourceDataProvider.getInstance().getCountryNames());
+                setCountryNames(DataSourceDataProvider.getInstance().getCountryNames());
                 setAccountName(DataSourceDataProvider.getInstance().getAccountNameById(getAccountSearchID()));
                 setEmail_ext(DataSourceDataProvider.getInstance().getUrlExtension(getAccountSearchID()));
                 setWorkLocations(DataSourceDataProvider.getInstance().getWorkLocations(getAccountSearchID()));
@@ -560,8 +558,8 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
                 SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
                 Map skillsmap = (Map) session.get("skillsmap");
                 setSkillMap(skillsmap);
-               // setSkillMap(dataSourceDataProvider.getInstance().getReqSkillsCategory());
             }
+            System.out.println("********************AccountAction :: setContacts Method End*********************");
         } catch (Exception e) {
             return LOGIN;
         }
@@ -572,8 +570,7 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
     /**
      * *************************************
      *
-     * @addVendorForCustomer() method is used to get Requirement details of
-     * account
+     * @addVendorForCustomer() method is used to add Vendor For Customer.
      *
      * @Author:ramakrishna<lankireddy@miraclesoft.com>
      *
@@ -583,17 +580,18 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
      */
     public String addVendorForCustomer() {
         resultMessage = LOGIN;
+        System.out.println("********************AccountAction :: addVendorForCustomer Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                System.out.println("IM IN addVendorForCustomer() IN ACCOUNT ACTION   " + getAccountSearchID());
-                setAccountName(com.mss.msp.util.DataSourceDataProvider.getInstance().getAccountNameById(getAccountSearchID()));
-                setVendorTierMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getVendorTierTypes());
+                setAccountName(DataSourceDataProvider.getInstance().getAccountNameById(getAccountSearchID()));
+                setVendorTierMap(DataSourceDataProvider.getInstance().getVendorTierTypes());
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************AccountAction :: addVendorForCustomer Method End*********************");
         return resultMessage;
     }
 
@@ -1954,6 +1952,13 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
     public void setReportPerson(int reportPerson) {
         this.reportPerson = reportPerson;
     }
-    
+
+    public String getMainProjectStatus() {
+        return mainProjectStatus;
+    }
+
+    public void setMainProjectStatus(String mainProjectStatus) {
+        this.mainProjectStatus = mainProjectStatus;
+    }
     
 }

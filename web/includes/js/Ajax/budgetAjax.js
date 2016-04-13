@@ -146,7 +146,7 @@ function getCostCenterName(){
             if(add[1]=="CCN")
             {
                // alert(add[0]);
-                $("e").html("<b><font color='red'>No Budget for cost center <br> so you cann't budget for this project</font> </b>");
+                $("e").html("<font color='red'>Cost center has no budget <br> so you can't add the budget for this project</font>");
                 $("e").show().delay(4000).fadeOut();
                 document.getElementById("costCenterBudgetAmt").value="";
                 document.getElementById("costCenterName").value=add[0];
@@ -199,7 +199,7 @@ function calculateAmt(){
     if(diff<0){
         document.getElementById("oestimateBudget").value="";
         //parseToEstAmt((" <font color='gray'>Estimated amount should not exceed</font> <font color='red'>$"+costCenterBudgetAmt+".</font>"));
-        $("e").html("<b><font color='red'>Please Enter Est Amt less than specified Amount.</font></b>");  
+        $("e").html("<font color='red'>Estimated amount should be less than the specified Amount.</font>");  
         $("e").show().delay(4000).fadeOut();
     }
     return false;

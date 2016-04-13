@@ -26,10 +26,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/selectivity-full.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/media_queries.css"/>">
-        <%--<link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-<link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css"> --%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
-        <%--<script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script> --%>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/fileUploadScript.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.form.js"/>"></script>
@@ -41,7 +38,6 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/AppConstants.js"/>"></script>
         <script language="JavaScript" src="<s:url value="/includes/js/account/accountDetailsAJAX.js"/>" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/profilediv.css"/>">
-        <%-- <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script> --%>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/EmployeeProfile.js"/>'></script>
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
@@ -52,7 +48,7 @@
                 $('#skillListValue').selectivity({
                     
                     multiple: true,
-                    placeholder: 'Type to search skills'
+                    placeholder: 'Type to Search Skills'
                 });
             });
             
@@ -62,8 +58,6 @@
         </style>
         <script type="text/javascript">
             $(function() {
-                // placement examples
-			
                 $('.east').powerTip({ placement: 'e' });
 			
             });
@@ -102,14 +96,11 @@
                                                     <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param>
                                                     <s:param name="accFlag"><%= accFlag%></s:param>
                                                 </s:url>
-                                                <s:a href='%{#myUrl}'><s:property value="%{accountName}"/></s:a> 
+                                                <s:a href='%{#myUrl}' id="accountName"><s:property value="%{accountName}"/></s:a> 
 
                                                 <div class="backgroundcolor" >
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">
-
-                                                            <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-
                                                             <% String flag = "conSearch";
                                                             %>
                                                             <font color="#ffffff"> Add Contact</font>
@@ -117,7 +108,7 @@
                                                                 <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param> 
                                                                 <s:param name="accFlag"><%=flag%></s:param>
                                                             </s:url>
-                                                            <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                            <span class="pull-right"><s:a href='%{#myUrl}' id="backToList"><i class="fa fa-undo"></i></s:a></span>
 
                                                         </h4>
                                                     </div>
@@ -129,19 +120,6 @@
                                                 <div>
                                                     <s:form name="contactform" action="addContact" cssClass="form-horizontal" theme="simple"  enctype="multipart/form-data" onsubmit="return contactInfoValidation()">
                                                         <div>
-                                                            <%-- <div class="col-lg-12">
-                                                                 <div class="col-lg-6 " ><div id="accLoadBox" class="import" style="background-color: #66CCFF">
-                                                                         <img src="../includes/images/icons/import.png" >
-                                                                         <center> <label class="labelStyle">Upload&nbsp;Contacts&nbsp;: </label>
-                                                                             <s:url id="loadXls" action="../users/general/loadDataForUser.action">
-                                                                                 <s:param name="contactAccountType"><s:property value="accountType"/></s:param>
-                                                                                 <s:param name="accountSearchOrgId"><s:property value="accountSearchID"/></s:param>
-                                                                             </s:url><br>
-                                                                             <s:a href='%{#loadXls}'> Click Me Import Contacts</s:a></center></div>
-                                                                     </div>
-                                                                 </div> --%>
-                                                            <%--<s:hidden value="%{userid}" name="userid"/>
-                                                            <s:hidden id="usr_edu_id" name="usr_edu_id" /> <br> --%>
                                                             <s:hidden name="AccountSearchOrgId" id="AccountSearchOrgId" value="%{accountSearchID}"/>
                                                             <s:hidden name="accountType" id="accountType" value="%{accountType}"/>
                                                             <s:hidden id="email_ext" name="email_ext" value="%{email_ext}" />
@@ -181,8 +159,6 @@
                                                                     <div class="col-sm-4">
                                                                         <label class="addAcclabelStyle">Gender</label>
                                                                         <s:select cssClass="SelectBoxStyles form-control " id="gender" name="gender" label="gender" list="#@java.util.LinkedHashMap@{'M':'Male','F':'Female'}" />
-                                                                        <%-- <label class="addAcclabelStyle"><span style="color:red;">*</span>Designation</label><s:textfield cssClass="form-control" placeholder="Designation"  name="contactDesignation" id="designation"  required="true" onkeyup="contactDesignationValidation()"/>--%>
-                                                                        <%--label class="addAcclabelStyle">Designation:</label><s:select cssClass="form-control SelectBoxStyles" placeholder="Designation"  name="contactDesignation" id="designation" headerkey="-1" list="designations" /--%>
                                                                     </div>
 
                                                                 </div>
@@ -284,39 +260,6 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row"></div>
-                                                            <%--<div class="inner-addAcc-elements ">
-                                                                </div>--%>
-
-
-
-                                                            <%--<label class="addAcclabelStyle">Departments:</label><s:textfield cssClass="addAccInputStyle" id="departments1" name="departments1" placeholder="Department" />--%>
-
-                                                            <%-- <label class="addAcclabelStyle">Departments:</label><s:select cssClass="addAccSelectStyle " id="departments" name="departments" label="Departments" headerKey="0" headerValue="-Select-" list="departments" onchange="getTitlesForDepatments()"/>--%>
-
-                                                            <%--<s:textfield cssClass="form-control" label="Email" value="%{empDetails.email2}" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Must be valid email')"   onchange="try{setCustomValidity('')}catch(e){}"  tabindex="2" name="email2" id="email2" onkeyup="EmailValidation2()"/>
-
-                                                                                                    <label class="addAcclabelStyle">Titles:</label><s:textfield cssClass="addAccInputStyle" placeholder="Title"  name="titles" id="titlesId" />--%>
-                                                            <%-- <label class="addAcclabelStyle">Titles:</label><s:select cssClass="addAccSelectStyle " label="Titles" name="titles" id="titlesId" headerKey="0" headerValue="-Select-" list="{}"/>--%>
-
-
-                                                            <%--    <div class="inner-addAcc-elements">
-
-
-                                                                                                    <div class="checkbox-inline " >
-                                                                                                        <label for="is_manager" class="checkbox  ">
-                                                                                                            <s:checkbox name="isManager" id="isManager" type="checkbox"/>Is Manager</label>
-                                                                                                    </div>
-                                                                                                    <div class="checkbox-inline " >
-                                                                                                        <label for="team_leader" class="checkbox ">
-                                                                                                            <s:checkbox name="isTeamLead" id="isTeam" type="checkbox"/>Is Team Leader</label>
-                                                                                                    </div>
-                                                                                                </div>--%>
-                                                            <%-- <div class="inner-addAcc-elements">--%>
-
-
-                                                            <%--     <s:checkbox name="" id="isManager" value="%{empDetails.is_manager}"/><label>is Manager</label>
-                                                                 <s:checkbox name="" id="isTeam" value="%{empDetails.is_team_lead}"/><label>is TeamLeader</label> --%>
-                                                            <%--</div>--%>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -324,69 +267,16 @@
                                             <div class="panel-body" id="task-panel">
                                                 <div class="row">
                                                     <!-- Contact Information , start  -->
-                                                    <%--div class="col-lg-6 col-md-offset-0">
-
-                                                <div id="AddressBox">
-                                                    <div class="contactInfoDiv">
-
-                                                        <table>
-
-                                                            <tr id="trStyleContact"><td>Permanent Address:  </td></tr>
-                                                            <span id="spanUpdatep" class="pull-right">
-
-                                                        </table>
-
-                                                    </div>
-                                                    <div id="margins" class="col-lg-11 col-md-offset-1 ">
-                                                        <br/>
-                                                        <span><errmsg></errmsg></span>
-                                                        <br>
-                                                        <table>
-                                                            <label class="addAcclabelStyle">Address:</label> <s:textfield   cssClass="form-control" id="conAddress" name="conAddress" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z\s]{3,}" onchange="try{setCustomValidity('')}catch(e){}"  onkeyup="paddresValidation()"  />
-                                                            <label class="addAcclabelStyle">Address2:</label>     <s:textfield cssClass="form-control"  id="conAddress2" name="conAddress2"/>
-                                                            <label class="addAcclabelStyle">City:</label>     <s:textfield cssClass="form-control" id="conCity" name="conCity" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z\s]{3,}" onchange="try{setCustomValidity('')}catch(e){}" onkeyup="contactPcityValidation()" /> 
-                                                            <label class="addAcclabelStyle">Zip:</label>    <s:textfield cssClass="form-control"  id="conZip" name="conZip" maxLength="5"  required="true"  />
-                                                            <label class="addAcclabelStyle">Country:</label>    <s:select cssClass="form-control SelectBoxStyles" name="conCountry" id="conCountry" headerKey="" headerValue="Select Country" list="countryNames" onchange="ConPermanentStateChange()" tabindex="1"/>
-                                                            <label class="addAcclabelStyle">State:</label>   <s:select cssClass="form-control SelectBoxStyles" name="conState" id="conState" headerKey="" headerValue="Select  state" list="{'Relocation','Travel'}" listValue="getTranslation(value)"  />
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-offset-0">
-
-                                                <div id="AddressBox">
-                                                    <div class="contactInfoDiv" >
-
-                                                        <table >
-
-                                                            <tr id="trStyleContact" ><td>&nbsp;&nbsp;Current&nbsp;Address &nbsp;&nbsp;</td></tr>
-                                                            <span id="spanUpdatec" class="pull-right">
-                                                        </table>
-
-                                                    </div>
-                                                    <div id="margins" class="col-lg-11 col-md-offset-1">
-                                                        <table>  <s:checkbox  name="add_checkAddress"  id="add_checkAddress"  onclick="FillContactAddressAdding()"   ></s:checkbox> <label class="addAcclabelStyle">&nbsp;Same as Permanent Address </label> 
-                                                            <br> <errmsgc></errmsgc>
-                                                            <br> <label class="addAcclabelStyle">Address:</label> <s:textfield cssClass="form-control" id="conCAddress" name="conCAddress" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}"  onchange="try{setCustomValidity('')}catch(e){}" onkeyup="CaddresValidation()" />
-                                                            <label class="addAcclabelStyle">Address2:</label><s:textfield cssClass="form-control" id="conCAddress2" name="conCAddress2" />
-                                                            <label class="addAcclabelStyle">City:</label><s:textfield cssClass="form-control"  id="conCCity" name="conCCity" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}"  onchange="try{setCustomValidity('')}catch(e){}" onkeyup="ccityValidation()" />
-                                                            <label class="addAcclabelStyle">Zip:</label><s:textfield cssClass="form-control" id="conCZip" name="conCZip" maxLength="5" required="true" />
-                                                            <label class="addAcclabelStyle">Country:</label>  <s:select cssClass="form-control SelectBoxStyles" name="conCCountry" id="conCCountry"  headerKey="" headerValue="Select Country" list="countryNames" onchange="ConCurrentStateChange()" tabindex="1"/>
-                                                            <label class="addAcclabelStyle">State:</label><s:select cssClass="form-control SelectBoxStyles" name="conCState" id="conCState" headerKey="" headerValue="Select  state" list="{'Relocation','Travel'}" listValue="getTranslation(value)"  />
-                                                            </table>
-                                                    </div>
-                                                </div>
-                                            </div--%>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-sm-2 pull-right">
-                                            <s:submit type="button" cssStyle="margin:5px 0px;"  value="Save" cssClass="add_searchButton fa fa-floppy-o form-control" theme="simple" tabindex="8"></s:submit>
+                                            <s:submit id="saveContact" type="button" cssStyle="margin:5px 0px;"  value="Save" cssClass="add_searchButton fa fa-floppy-o form-control" theme="simple" tabindex="8"></s:submit>
 
                                         </div>
                                         <div class="col-sm-2 pull-right">
-                                            <s:reset type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-eraser form-control" id="button_manage"  value="Clear" tabindex="8"/>&nbsp;
+                                            <s:reset  type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-eraser form-control" id="button_manage"  value="Clear" tabindex="8"/>&nbsp;
 
                                         </div>
                                         <br/>
@@ -420,6 +310,9 @@
         </div>
     </div>
 </footer><!--/Footer-->
+<script type="text/javascript">
+    $("#InsertContactInfo").show().delay(5000).fadeOut();
+</script>
 <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
 <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 </body>

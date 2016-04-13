@@ -9,7 +9,7 @@ public interface GeneralService {
 
     public String generateUserId(String mailId) throws ServiceLocatorException;
 
-    ;
+    
     
     public int doUpdateResetPassword(String password, String email) throws ServiceLocatorException;
 

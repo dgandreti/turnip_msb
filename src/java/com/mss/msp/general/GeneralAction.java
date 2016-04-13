@@ -85,12 +85,23 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
     }
     private DataSourceDataProvider dataSourceDataProvider;
 
+    /**
+     * ***********************************************************************
+     *
+     * @dosetPassword() to get the  status of the forgot password link status
+     * 
+     *
+     *************************************************************************
+     */
+    
     public String dosetPassword() {
-        int isUpdated = 0;
-        //System.out.println("::::dosetPassword :::");
+      
+        
+         System.out.println("********************GeneralAction :: dosetPassword Action Start*********************");
+       
         try {
             String linkStatus = ServiceLocator.getGeneralService().forGotPwdLinkStatus(getEmailId(), getSessionId());
-            //System.out.println("Forgotpasssword link status-->" + linkStatus);
+           
             if (linkStatus.equalsIgnoreCase("Active")) {
                 resultType = SUCCESS;
             } else {
@@ -98,87 +109,96 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
             }
 
         } catch (Exception ex) {
-            //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
-
+           
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
 
 
             resultType = ERROR;
         }
 
-
+         System.out.println("********************GeneralAction :: dosetPassword Action End*********************");
         return resultType;
     }
 
+    /**
+     ************************************************************
+     *
+     * @doResetPassword() to update the  password of the user 
+     * 
+     *
+     ************************************************************
+     */
     public String doResetPassword() {
         int isUpdated = 0;
         int linkInactive = 0;
-        //System.out.println("::::doResetPassword :::");
+      System.out.println("********************GeneralAction :: doResetPassword Action Start*********************");
         try {
 
-            // isUpdated=ServiceLocator.getGeneralService().doUpdateResetPassword(getPassword(),getEmailId());
+          
             isUpdated = ServiceLocator.getGeneralService().doUpdateResetPassword(getPassword(), getEmailId());
             if (isUpdated > 0) {
-                //System.out.println("updated successfully !!");
+              
                 linkInactive = ServiceLocator.getGeneralService().doPasswordLinkStatusUpdate(getEmailId());
                 resultType = SUCCESS;
                 resultMessage = "Password Updated successfully";
             } else {
-                //System.out.println("error while update");
+              
                 resultType = ERROR;
             }
         } catch (Exception ex) {
-            //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+          
 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
 
-            //System.err.println("exception --->" + ex.toString());
+           
             resultType = ERROR;
         }
-
+         System.out.println("********************GeneralAction :: doResetPassword Action End*********************");
 
         return resultType;
     }
 
-    //New Method for registration
+ /**
+     ***********************************************************
+     *
+     * @doAddRegistration() to get the  add registration page
+     * 
+     *
+     ***********************************************************
+     */
     public String doAddRegistration() {
         int isUpdated = 0;
         int linkInactive = 0;
-        //System.out.println("::::doAddRegistration :::");
+      System.out.println("********************GeneralAction :: doAddRegistration Action Start*********************");
 
         try {
             resultType = SUCCESS;
 
-            /*isUpdated=ServiceLocator.getGeneralService().doUpdateResetPassword(getPassword(),getEmailId());
-             if(isUpdated>0)
-             {
-             System.out.println("updated successfully !!");
-             linkInactive=ServiceLocator.getGeneralService().doPasswordLinkStatusUpdate(getEmailId());
-             resultType = SUCCESS;
-             resultMessage="Password Updated successfully";
-             }
-             else
-             {
-             System.out.println("error while update");
-             resultType = ERROR;   
-             }*/
+           
         } catch (Exception ex) {
-            //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+         
 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
 
-            // System.err.println("exception --->" + ex.toString());
+          
             resultType = ERROR;
         }
 
-
+       System.out.println("********************GeneralAction :: doAddRegistration Action End*********************");
         return resultType;
     }
 
-    //new methods for reset user password and reset my passwords
+    /**
+     ***********************************************************
+     *
+     * @resetUserPassword() to get the  reset password page
+     * 
+     *
+     ***********************************************************
+     */
     public String resetUserPassword() {
         int isUpdated = 0;
-        //   System.out.println("::::dosetPassword :::");
+       System.out.println("********************GeneralAction :: resetUserPassword Action Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -188,7 +208,7 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
 
             }
         } catch (Exception ex) {
-            //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+          
 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
 
@@ -196,13 +216,21 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
             resultType = ERROR;
         }
 
-
+          System.out.println("********************GeneralAction :: resetUserPassword Action End*********************");
         return resultType;
     }
 
+     /**
+     ***********************************************************
+     *
+     * @changeMyPassword() to get the  change my password page
+     * 
+     *
+     ***********************************************************
+     */
     public String changeMyPassword() {
         int isUpdated = 0;
-        // System.out.println("::::dosetPassword :::");
+       System.out.println("********************GeneralAction :: changeMyPassword Action Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -210,7 +238,7 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
-            //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+        
 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
 
@@ -218,44 +246,56 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
             resultType = ERROR;
         }
 
-
+         System.out.println("********************GeneralAction :: changeMyPassword Action End*********************");
         return resultType;
     }
 
+    /**
+     *************************************************
+     *
+     * @doResetMyPassword() to reset password page
+     * 
+     *
+     ************************************************
+     */
     public String doResetMyPassword() {
         int isUpdated = 0;
         int linkInactive = 0;
-        // System.out.println("::::doResetPassword :::");
+       System.out.println("********************GeneralAction :: doResetMyPassword Action Start*********************");
         try {
-            //    System.out.println("::::doResetPassword :::Old Pasword-->"+getOldpwd());
-            // System.out.println("::::doResetPassword :::newPassword--->"+getNewpwd());
-            //    System.out.println("::::doResetPassword :::confirmPassword----->"+getCnfrmpwd());
+         
             isUpdated = ServiceLocator.getGeneralService().doUpdateResetPassword(getNewpwd(), httpServletRequest.getSession(false).getAttribute(ApplicationConstants.LOGIN_ID).toString());
             if (isUpdated > 0) {
                 setResultMessage("Password Updated Successfully");
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
-            //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+          
 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
 
-            //System.err.println("exception --->" + ex.toString());
+         
             resultType = ERROR;
         }
 
-
+         System.out.println("********************GeneralAction :: doResetMyPassword Action End*********************");
         return resultType;
     }
 
+     /**
+     *************************************************
+     *
+     * @doResetUserPassword() to reset user password
+     * 
+     *
+     ************************************************
+     */
     public String doResetUserPassword() {
         int isUpdated = 0;
         int linkInactive = 0;
-        //System.out.println("::::doResetUserPassword :::");
+     System.out.println("********************GeneralAction :: doResetUserPassword Action Start*********************");
         try {
-            //  System.out.println("::::doResetUserPassword :::Old Pasword-->"+getEmailId());
-            // System.out.println("::::doResetUserPassword :::newPassword--->"+getNewpwd());
-            //   System.out.println("::::doResetUserPassword :::confirmPassword----->"+getCnfrmpwd());
+          
             isUpdated = ServiceLocator.getGeneralService().doUpdateResetPassword(getNewpwd(), getEmailId());
             if (isUpdated > 0) {
                 setResultMessage("User Password Updated Successfully");
@@ -265,22 +305,31 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
-            //List errorMsgList = ExceptionToListUtility.errorMessages(ex);
+       
 
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
 
-            // System.err.println("exception --->" + ex.toString());
+      
             resultType = ERROR;
         }
 
-
+  System.out.println("********************GeneralAction :: doResetUserPassword Action End*********************");
         return resultType;
     }
 
+     /**
+     *************************************************
+     *
+     * @dosetSuccessMessage() to set success message
+     * 
+     *
+     ************************************************
+     */
     public String dosetSuccessMessage() {
 
+          System.out.println("********************GeneralAction :: dosetSuccessMessage Action Start*********************");
         try {
-            //System.out.println(getResultMessage());
+           
             setResultMessage(getResultMessage());
             resultType = SUCCESS;
 
@@ -289,14 +338,23 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
             resultType = ERROR;
         }
 
-
+          System.out.println("********************GeneralAction :: dosetSuccessMessage Action End*********************");
         return resultType;
     }
 
+      /**
+     *************************************************
+     *
+     * @doseterrorMessage() to set error message
+     * 
+     *
+     ************************************************
+     */
     public String doseterrorMessage() {
 
+         System.out.println("********************GeneralAction :: doseterrorMessage Action Start*********************");
         try {
-            //System.out.println(getResultMessage());
+         
             setResultMessage(getResultMessage());
             resultType = SUCCESS;
 
@@ -305,14 +363,16 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
             resultType = ERROR;
         }
 
-
+     System.out.println("********************GeneralAction :: doseterrorMessage Action End*********************");
         return resultType;
     }
 
+     
     public String regerrorDirect() {
-
+        
+       System.out.println("********************GeneralAction :: regerrorDirect Action Start*********************");
         try {
-            //System.out.println(getResultMessage());
+           
             setResultMessage(getResultMessage());
             resultType = SUCCESS;
 
@@ -321,21 +381,28 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
             resultType = ERROR;
         }
 
-
+       System.out.println("********************GeneralAction :: regerrorDirect Action End*********************");
         return resultType;
     }
 
+     /**
+     ***********************************************
+     *
+     * @getState() to get the  states of country
+     * 
+     *
+     ***********************************************
+     */
     public String getState() {
 
+         System.out.println("********************GeneralAction :: getState Action Start*********************");
         try {
-            System.out.println("I am   in States action");
-            // Map countries =ServiceLocator.getLocationService().getCountriesNames();
+          
+       
             String states = ServiceLocator.getGeneralService().getStatesOfCountry(httpServletRequest, getId());
-            //setStateMap(states);
-            System.out.println("list of States----->" + states);
-//            setResultMessage(getResultMessage());
-//            httpServletRequest.setAttribute("stateList", states);
-//            setResultMessage(getResultMessage());
+          
+           
+
             httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -345,41 +412,39 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
 
 
 
-            //System.out.println(httpServletRequest.getAttribute("statesList"));
+         
 
 
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             //resultType = ERROR;
         }
+         System.out.println("********************GeneralAction :: getState Action End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *******************************************************************
      *
-     * @getDefaultRequirementDashBoardDetails() update status in requirement
-     * table
+     * @dashBoardDetails() to represent the  requirements details for csr
+     * 
      *
-     *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
-     *
-     * @Created Date:06/03/2015
-     *
-     **************************************
+     *********************************************************************
      */
     public String dashBoardDetails() throws ServiceLocatorException {
         String resulttype = LOGIN;
+          System.out.println("********************GeneralAction :: dashBoardDetails Action Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
             setCusterMap(com.mss.msp.util.DataSourceDataProvider.getInstance().customerList(typeOfUser,getUserSessionId()));
             setVendorMap(com.mss.msp.util.DataSourceDataProvider.getInstance().getVendorList());
             csrDashBoardList = (ServiceLocator.getGeneralService().getDefaultRequirementDashBoardDetails(this));
-            System.out.println(">>>>>>>>ACTION>>>>>>" + getCsrDashBoardList().toString());
+           
             setYear(Calendar.getInstance().get(Calendar.YEAR));
             resulttype = SUCCESS;
         }
+         System.out.println("********************GeneralAction :: dashBoardDetails Action End*********************");
         return resulttype;
     }
     
@@ -399,15 +464,13 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
     public String resetEmailVerify() throws ServiceLocatorException {
         String resulttype = LOGIN;
        int result=0;
+          System.out.println("********************GeneralAction :: resetEmailVerify Action Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
         
-            System.out.println("emailid----->"+getEmailId());
-             System.out.println("userId--->"+httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID));
-            System.out.println("orgid---"+httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID));
-            System.out.println("user session id---->"+httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID));
+          
             try {
                 result = DataSourceDataProvider.getInstance().checkResetEmailId(getEmailId(),Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                //  System.out.println("result-------"+result);
+               
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -426,6 +489,7 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             }
         }
+         System.out.println("********************GeneralAction :: resetEmailVerify Action End*********************");
         return null;
     }   
     
@@ -442,8 +506,10 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
      **************************************
      */
     public String verfiyCurrentPassword() throws ServiceLocatorException {
+        System.out.println("********************GeneralAction :: verfiyCurrentPassword Action Start*********************");
         String resulttype = LOGIN;
         int result = 0;
+         
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             setUserSessionId((Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString())));
             try {
@@ -461,35 +527,50 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
-                System.err.println("resultString---->" + result);
+              
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             }
         }
+         System.out.println("********************GeneralAction :: verfiyCurrentPassword Action End*********************");
         return null;
     }
+    
+     /**
+     ********************************************************
+     *
+     * @register() to get the  vendor registration page 
+     * 
+     *
+     ********************************************************
+     */
      public String register() {
+            System.out.println("********************GeneralAction :: register Action Start*********************");
         try {
             setCountryList(ServiceLocator.getLocationService().getCountriesNamesMap());
-            System.out.println("---------general-----------" + countryList);
+           
             resultType = SUCCESS;
 
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************GeneralAction :: register Action End*********************");
         return resultType;
     }
 
+    
     public String UserRegistration() {
+          System.out.println("********************GeneralAction :: UserRegistration Action Start*********************");
         try {
             String result = ServiceLocator.getGeneralService().UserRegistration(this);
-            System.out.println("-----------"+result);
+         
             setHome("Logout");
             if ("Added successfully".equalsIgnoreCase(result)) {
                   setResultMessage(getFirst_name()+"."+getLast_name());
-                  //resultMessage = "<font color=\"red\" size=\"1.5\">Sorry! Please Try again!</font>";
-                  addActionMessage("Your account "+getOrgName()+" is in a pending status and must now be approved.This should happen within the next few days.In case of problems or not being able to login please contact sb@miraclesoft.com");
+                  String from = com.mss.msp.util.Properties.getProperty("MSB.from").toString();
+                
+                  addActionMessage("Your account "+getOrgName()+" is in a pending status and must now be approved.This should happen within the next few days.In case of problems or not being able to login please contact "+from);
                 resultType = SUCCESS;
             } else {
                   setResultMessage("Not Registered !!");
@@ -501,13 +582,25 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
             setHome("null");
             resultType = ERROR;
         }
+        System.out.println("********************GeneralAction :: UserRegistration Action End*********************");
         return resultType;
     }
+    
+     /**
+     ***********************************************************
+     *
+     * @doMailExtensionVerify() to verify the  email extension  
+     * 
+     *
+     ***********************************************************
+     */
 public String doMailExtensionVerify() throws ServiceLocatorException {
+    
+    System.out.println("********************GeneralAction :: doMailExtensionVerify Action start*********************");
        int result=0;
             try {
                 result = DataSourceDataProvider.getInstance().doMailExtensionVerify(getEmail_ext());
-                System.out.println("---------------------"+result);
+              
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);   
@@ -522,6 +615,7 @@ public String doMailExtensionVerify() throws ServiceLocatorException {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+             System.out.println("********************GeneralAction :: doMailExtensionVerify Action End*********************");
         return null;
     } 
 

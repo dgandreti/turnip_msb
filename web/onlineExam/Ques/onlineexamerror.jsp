@@ -31,7 +31,7 @@ and open the template in the editor.
 
         <div id="header_id">
                       <div id="header_logo" style="">
-                                <a href="#"><img src="<s:url value="/includes/images/logo.jpg"/>" alt="loin" width="200" height="33"/></a>
+                                <a href="#" id="serviceBayLogo"><img src="<s:url value="/includes/images/logo30.jpg"/>" alt="loin" width="200" height="33"/></a>
                            </div>
            </div>
                 <!-- End  Header-->
@@ -41,13 +41,10 @@ and open the template in the editor.
             <tr>
 
                 <td id="onlineExamtd">
-                                <!--  webinar topic starts-->
+                             
                                  <div id="validationTable"  >
-                                     <b id="online_text">Online Technical Assesment Test</b>
-                                     <!--<p id="online_para" > Welcome to Online Technical Assesment Test. </p><br>-->
-<!--					<p id="online_para"> Hello Fname.Lname, </p>
-                                        <p id="online_para">To Write the Online Exam click on the following link  <a href="#">Click Here</a></p>
-					<p id="online_para">To Activate the Exam use the following code : </p><br>-->
+                                     <b id="online_text">Online&nbsp;Technical&nbsp;Assesment Test</b>
+                                   
                                             <div id="note_div">
                                                 <font color="red">Note*:</font> 
                                            
@@ -63,18 +60,17 @@ and open the template in the editor.
                                         <p id="online_thanks" > Thanks, </p>
 					<p id="online_team"> ServicesBay Team.</p>
                                          </div> 
-                                <!--   webinar topic ends-->
+                            
                                 <div id="validationexpireLinks">
                                             <b style="">Requirement Details</b>
 
                                         
                                         <div id="validationExpDiv">
                                             <p id="requir_title">Requirement Title.</p>
-<!--                                            <p id="requir_detail">Requirement Details</p>
-                                            <p id="requir_team">ServicesBay Team</p>-->
+
                                         </div>
                                    
-                                    <!-- speakers content ends-->
+                               
                                 </div>
                                 
                 </td>

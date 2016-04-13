@@ -35,7 +35,7 @@
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/profilediv.css"/>">
 
-        <%-- aklakh js single file start --%>
+       
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <%-- aklakh js single file end --%>
@@ -57,30 +57,7 @@
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
  <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <sx:head />
-        <%--script>
-            var pager;
-            function onLoad(){
-                //alert("onload")
-                var paginationSize = parseInt(document.getElementById("paginationOption").value);
-                // alert(paginationSize);
-                pager = new Pager('teamTaskTable', paginationSize);
-                pager.init();
-                pager.showPageNav('pager', 'pageNavPosition');
-                pager.showPage(1);
-            };
-            function pagerOption(){
-
-                paginationSize = document.getElementById("paginationOption").value;
-                if(isNaN(paginationSize))
-                    alert(paginationSize);
-
-                pager = new Pager('teamTaskTable', parseInt(paginationSize));
-                pager.init();
-                pager.showPageNav('pager', 'pageNavPosition');
-                pager.showPage(1);
-
-            };
-        </script--%>
+        
 
         <script type="text/javascript">
         function sortables_init() {
@@ -103,23 +80,21 @@
             //,"docdatepickerfrom1","docdatepicker1"
             function doOnLoad() {
                 
-                var paginationSize = 10; //parseInt(document.getElementById("paginationOption").value);
-                // alert(paginationSize);
+                var paginationSize = 10; 
+               
                 pager = new Pager('teamTaskTable', paginationSize);
                 pager.init();
                 pager.showPageNav('pager', 'pageNavPosition');
-                //document.getElementById("paginationOption").value=10;
+              
                 pager.showPage(1);
-                // alert("hii");docdatepickerfrom","docdatepicker
+               
                 myCalendar = new dhtmlXCalendarObject(["docdatepickerfrom","docdatepicker"]);
-                // alert("hii1");
+               
                 myCalendar.setSkin('omega');
-                // alert("hii2");
-                //myCalendar.setDateFormat("%m/%d/%Y %H:%i");
+               
                 myCalendar.setDateFormat("%m-%d-%Y");
                 myCalendar.hideTime();
-                // alert("hii3");
-                //alert("myCalendar")
+               
                 
                 myCalendar1 = new dhtmlXCalendarObject(["startDate","endDate"]);
                 // alert("hii1");
@@ -128,7 +103,7 @@
                 myCalendar1.setDateFormat("%Y/%m/%d");
                 myCalendar1.hideTime();
                 
-                // default date code start from here
+              
                 
                 var today = new Date();
                 var dd = today.getDate();
@@ -152,11 +127,7 @@
                 var to = mm+'-'+dd+'-'+yyyy;
                 var odd=today.getDate()+1;
                 var overlayDate=yyyy+'/'+mm+'/'+odd;
-                //alert(from+" and "+to)
-                //  document.getElementById("docdatepickerfrom").value=from;
-                //  document.getElementById("docdatepicker").value=to;
-                // document.getElementById("startDate").value=overlayDate;
-                // document.getElementById("endDate").value=overlayDate;
+               
                 document.getElementById("loadingTaskSearch").style.display="none";
             }
                         
@@ -164,8 +135,7 @@
             
             function enterDateRepository()
             {
-                // alert(document.documentForm.docdatepickerfrom.value);
-                // document.documentForm.docdatepickerfrom.value="";
+               
                 document.getElementById('docdatepickerfrom').value = "";
                 document.getElementById('docdatepicker').value = "";
                 alert("Please select from the Calender !");
@@ -188,28 +158,7 @@
                     alert("to date is madatory")
                     return false;
                 }
-                
-                /*  var res = fromValue.split(" ");
-                fromValue=res[0];
-                var res1 = toValue.split(" ");
-                toValue=res1[0];
-                //alert(fromValue+" and "+toValue)
-                if (Date.parse(fromValue) > Date.parse(toValue)) {
-                    alert("Invalid Date Range!\nFrrom Date cannot be after To Date!")
-                    return false;
-                }*/
-                //                var addStartDate = Date.parse(fromValue);
-                //                var addEndDate = Date.parse(toValue);
-                //
-                //                var difference = (addEndDate - addStartDate) / (86400000 * 7);
-                //                if (difference < 0) {
-                //                    alert("The start date must come before the end date.");
-                //                    $("errorEduAdd").html(" <b><font color='red'>start date must be less than end date</font></b>.");
-                //                    $("#fromValue").css("border", "1px solid red");
-                //      
-                //                    $("#toValue").css("border","1px solid red");
-                //                    return false;
-                //                }
+              
             }; 
             
             
@@ -306,7 +255,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
 
-                                                    <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                   
                                                     <font color="#ffffff">Tasks Search</font>
                                                     <i id="updownArrow" onclick="toggleContent('showTaskSearchDetails')" class="fa fa-minus"></i>
 
@@ -318,40 +267,14 @@
                                         <span id="taskSearchValidation"></span>
                                         <div class="col-sm-13">
                                             <s:form action="showTaskSearchDetails" onsubmit="return checkDateRange()" theme="simple">
-                                                <%--br>
-                                                <ul class="nav nav-pills">
-                                                    <s:textfield cssClass=" textbox taskfield-margin" name="docdatepickerfrom" id="docdatepickerfrom" placeholder="FromDate" value="%{docdatepickerfrom}" tabindex="1"  onkeypress="return enterDateRepository();"/>
-                                                    <s:textfield cssClass=" textbox taskfield-margin" name="docdatepicker" placeholder="ToDate" value="%{docdatepicker}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"/>
-                                                    <s:textfield cssClass="textbox taskfield-margin" id="task_id" name="task_id"  placeholder="Task_Id" />
-                                                    <s:textfield cssClass="textbox taskfield-margin"  name="task_name" placeholder="Task_Name" />
-                                                    <s:select  id="status"  name="task_status" label="Status"  cssClass="taskstatus select-margin" headerKey="-1" headerValue="Select status" theme="simple" list="tasksStatusList" />
-                                                    <div class="taskfieldbtn-margin">
-                                                        <s:submit cssClass="cssbutton " id="searchButton" value="search" onclick="checkRange()" />&nbsp;
-                                                        <a href="../tasks/addTask.action" ><input type="button" class="cssbutton " value="Addtask"></a> 
-
-
-                                                </div>
-                                            </ul>
-                                            <br--%>
+                                               
                                                 <div class="inner-reqdiv-elements">
                                                     <div class="">
                                                         <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color:#56a5ec;">Task Name</label>
-                                                            <s:textfield cssClass="form-control"  name="task_name" placeholder="Task_Name" tabindex="1" maxLength="60"/>
+                                                            <s:textfield id="task_name" cssClass="form-control"  name="task_name" placeholder="Task Name" tabindex="1" maxLength="60"/>
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color: #56a5ec;">Task Id </label>
-                                                            <s:textfield cssClass="form-control" id="task_id" name="task_id"  placeholder="Task_Id" tabindex="1" maxLength="11"/>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color: #56a5ec;">Status </label>
-                                                            <s:select  id="status"  name="task_status" label="Status"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="tasksStatusList" tabindex="1"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="inner-reqdiv-elements">
-                                                    <div class="">
-                                                        <div class="col-sm-4">
+                                                       <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color: #56a5ec;">Start Date </label>
                                                             <div class="calImage"><s:textfield cssClass=" form-control " name="docdatepickerfrom" id="docdatepickerfrom" placeholder="FromDate" value="%{startDate}" tabindex="1"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
                                                             </div></div>
@@ -359,13 +282,32 @@
                                                             <label class="labelStylereq" style="color: #56a5ec;">End Date </label>
                                                             <div class="calImage"> <s:textfield cssClass=" form-control " name="docdatepicker" placeholder="ToDate" value="%{endDate}" id="docdatepicker" tabindex="2"  onkeypress="return enterDateRepository();"><i class="fa fa-calendar"></i></s:textfield>
                                                             </div></div>
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="inner-reqdiv-elements">
+                                                    <div class="">
+                                                        <div class="col-sm-4">
+                                                            <label class="labelStylereq" style="color: #56a5ec;">Status </label>
+                                                            <s:select  id="status"  name="task_status" label="Status"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="tasksStatusList" tabindex="1"/>
+                                                        </div>
                                                         <div class="col-sm-4">
                                                             <div class=" ">
 
+                                                               <s:if test="#session.typeOfUsr=='VC'">
+                                                                 <s:if test="#session.primaryrole==8 ">   
                                                                 <div class="col-sm-6 pull-right">
                                                                     <label class="labelStylereq" style=""></label>
-                                                                    <a href="../tasks/addTask.action" class="add_searchButton form-control " style="margin:5px 0px;" tabindex="4"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a> 
+                                                                    <a id="addTaskButtonVendor" href="../tasks/addTask.action" class="add_searchButton form-control " style="margin:5px 0px;" tabindex="4"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a> 
                                                                 </div>
+                                                                 </s:if>
+                                                                </s:if>
+                                                                <s:else>
+                                                                    <div class="col-sm-6 pull-right">
+                                                                    <label class="labelStylereq" style=""></label>
+                                                                    <a id="addTaskButtonCustomer" href="../tasks/addTask.action" class="add_searchButton form-control " style="margin:5px 0px;" tabindex="4"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a> 
+                                                                </div>
+                                                                </s:else>
                                                                 <div class="col-sm-6 pull-right">
                                                                     <label class="labelStylereq" style=""></label>
                                                                     <s:submit type="button"  cssClass="add_searchButton form-control " id="searchButton" value="search" tabindex="3" cssStyle="margin:5px 0px;" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>&nbsp;

@@ -43,7 +43,7 @@ public interface RequirementService {
 
     public int doUpdateStatusReport(RequirementAction aThis) throws ServiceLocatorException;
 
-    //  public String getConsultantSkillCSR(HttpServletRequest httpServletRequest, RequirementAction requirementAction) throws ServiceLocatorException;
+    
     public int getOrgIdCustomer(String requirementid) throws ServiceLocatorException;
 
     public String getRequirementDashBoardDetails(RequirementAction requirementAction) throws ServiceLocatorException;

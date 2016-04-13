@@ -136,18 +136,7 @@
                 //document.getElementById("paginationOption").value=10;
                 pager.showPage(1);
             });
-            //            function pagerOption(){
-            //
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //
-            //                pager = new Pager('timesheet_results', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'timesheetpageNavPosition');
-            //                pager.showPage(1);
-            //
-            //            };
+         
         </script>
 
     </head>
@@ -180,7 +169,7 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
 
-                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
+                                                      
                                                         <font color="#ffffff">Time Sheets Search</font>
                                                         <i id="updownArrow" onclick="toggleContent('getAllTimeSheetsSearch')" class="fa fa-minus"></i> 
 
@@ -231,7 +220,7 @@
                                                         <div class="col-sm-10"></div>
                                                         <div class="pull-right">
 
-                                                            <%--a href="#" onclick="addTimeSheetOverlayOpen()"><input type="button" class="cssbutton addTimeSheet_open" value="Add Timesheet"></a--%>&nbsp;&nbsp;&nbsp; 
+                                                          &nbsp;&nbsp;&nbsp; 
                                                             <s:submit type="button"  cssStyle="margin:5px 15px;" cssClass="add_searchButton form-control contact_search" id="searchButton" value="" tabindex="8" ><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                             </div>
                                                         </ul>
@@ -271,14 +260,13 @@
                                                                             <th>Submitted Date</th>
 
                                                                             <th>Total Hours</th>
-                                                                            <%--th>Approved Date</th--%>
-                                                                            <%--th>Delete</th--%>
+                                                                         
 
                                                                         </tr>
                                                                         <%
 
                                                                             int c = 0;
-                                                                            //out.println("request for time sheets---> "+session.getAttribute("timesheetsData"));
+                                                                          
                                                                             if ((List) session.getAttribute("teamTimesheetsData") != null) {
 
                                                                                 List l = (List) session.getAttribute("teamTimesheetsData");
@@ -306,7 +294,7 @@
                                                                         <tr>
                                                                             <td>
 
-                                                                                <%--s:a href='%{#myUrl}'></s:a--%>
+                                                                              
                                                                                 <s:url var="myUrl" action="../timesheets/getTimeSheets.action?timesheetFlag=Operations">
                                                                                     <s:param name="usr_id"><%=usr_id%></s:param>
                                                                                     <s:param name="timesheetid"><%=tms_id%></s:param></s:url>
@@ -325,13 +313,7 @@
                                                                             <td><%= tm_submitted_date%></td>
 
                                                                             <td><%= totalHrs%></td>
-                                                                            <%--td><%= tm_approved_date%></td--%>
-                                                                            <%--td>
-                                                                                <s:url var="deleteUrl" action="deleteTimesheet">
-                                                                                    <s:param name="timesheetid"><%=tms_id%></s:param>
-                                                                                </s:url>
-                                                                                <s:a onclick="return confirm('Are you sure you want to delete this record')" id="deleteTimesheet" href='%{#deleteUrl}'><img src="<s:url value="/includes/images/deleteImage.png"/>" height="20" width="25"></s:a></td--%>
-                                                                        </tr> 
+                                                                            </tr> 
 
                                                                         <%
                                                                                 }
@@ -367,9 +349,7 @@
                                                                 <div align="right" id="timesheetpageNavPosition" style="margin-right: 0vw;display:none"></div>
                                                                 <%                                                            }
 
-                                                                    /*if (session != null) {
-                                                                     session.removeAttribute("teamTimesheetsData");
-                                                                     }*/
+                                                                  
 
                                                                 %>
 

@@ -20,6 +20,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
  * @author Greg
  */
 public class AccountDetailsAjaxAction extends ActionSupport implements ServletRequestAware, ServletResponseAware {
+
     private String resultType;
     private String resultMessage;
     private AccountDetails accountDetails;
@@ -31,18 +32,27 @@ public class AccountDetailsAjaxAction extends ActionSupport implements ServletRe
     private String accountURLCheck;
     private String viewAccountID;
     private int userSessionId;
-      private String skillValues;
-    
+    private String skillValues;
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : updateAccount() method is used to
+     *
+     * *****************************************************************************
+     */
     public String updateAccount() {
-        System.out.println("==== \tIN UPDATE\t =====\nUPDATEING "+viewAccountID);
+        System.out.println("********************AccountDetailsAjaxAction :: updateAccount Method Start*********************");
         try {
             String id = (servletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
             if (id != null) {
                 accountDetails.setId(Integer.parseInt(viewAccountID));
-                System.out.println("UPDATING INFO for \n" + accountDetails);
                 setUserSessionId(Integer.parseInt(servletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 com.mss.msp.util.DataSourceDataProvider.getInstance().updateAccountLastAccessedBy(accountDetails.getId(), getUserSessionId(), "Account Details Updated");
-                setAccountDetails(ServiceLocator.getAccountDetailsAjaxHandlerService().ajaxAccountUpdate(accountDetails,Integer.parseInt(id),getUserSessionId()));
+                setAccountDetails(ServiceLocator.getAccountDetailsAjaxHandlerService().ajaxAccountUpdate(accountDetails, Integer.parseInt(id), getUserSessionId()));
                 resultMessage = "";
                 resultType = SUCCESS;
             }
@@ -52,17 +62,27 @@ public class AccountDetailsAjaxAction extends ActionSupport implements ServletRe
             resultMessage = "Problem updating account : ==> (" + e.getMessage() + ");";
             resultType = ERROR;
         }
+        System.out.println("********************AccountDetailsAjaxAction :: updateAccount Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : checkForName() method is used to
+     *
+     * *****************************************************************************
+     */
     public String checkForName() {
+        System.out.println("********************AccountDetailsAjaxAction :: checkForName Method Start*********************");
         try {
             servletResponse.addHeader("exists", "");
-
             String id = (servletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
             if (id == null) {
                 id = "-1";//can still use searchFor name with out attached account
-                //NO account names with id of -1 <-------------------------------------------------------
             }
             if (ServiceLocator.getAccountDetailsAjaxHandlerService().checkForAccountName(accountNameCheck, Integer.parseInt(id))) {
                 servletResponse.setHeader("exists", "notFree");
@@ -77,17 +97,27 @@ public class AccountDetailsAjaxAction extends ActionSupport implements ServletRe
             resultMessage = "Problem checking account name: ==> (" + e.getMessage() + ");";
             resultType = ERROR;
         }
+        System.out.println("********************AccountDetailsAjaxAction :: checkForName Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : checkForURL() method is used to
+     *
+     * *****************************************************************************
+     */
     public String checkForURL() {
+        System.out.println("********************AccountDetailsAjaxAction :: checkForURL Method Start*********************");
         try {
             servletResponse.addHeader("urlexists", "");
-
             String id = (servletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
             if (id == null) {
                 id = "-1";//can still use searchFor name with out attached account
-                //NO account names with id of -1 <-------------------------------------------------------
             }
             if (ServiceLocator.getAccountDetailsAjaxHandlerService().checkForAccountURL(accountURLCheck, Integer.parseInt(id))) {
                 servletResponse.setHeader("urlexists", "notFree");
@@ -101,13 +131,14 @@ public class AccountDetailsAjaxAction extends ActionSupport implements ServletRe
             resultMessage = "Problem checking account name: ==> (" + e.getMessage() + ");";
             resultType = ERROR;
         }
+        System.out.println("********************AccountDetailsAjaxAction :: checkForURL Method End*********************");
         return resultType;
     }
 
     public String ajaxLoadContacts() {
         return SUCCESS;
     }
-    
+
     public String getResultType() {
         return resultType;
     }
@@ -195,7 +226,4 @@ public class AccountDetailsAjaxAction extends ActionSupport implements ServletRe
     public void setSkillValues(String skillValues) {
         this.skillValues = skillValues;
     }
-
-  
-    
 }

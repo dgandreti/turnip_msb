@@ -214,34 +214,48 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
     private int consultantId;
     private String logoFileName;
     private String accLogoHidden;
-    
-     private int sowId;
-     private String acclogo;
+    private int sowId;
+    private String acclogo;
     private String poStartDate;
     private String poEndDate;
     private String baseRate;
     private String overTimeRate;
     private String overTimeLimit;
+
     public UserAjaxHandlerAction() {
     }
 
     /**
-     * DESC : This method is for getting the forgot password METHOD :
-     * processForgotPassword CREATED DATE : 02/26/2015
+     * *****************************************************************************
+     * Date : 02/26/2015
      *
-     * @return
+     * Author :
+     *
+     * ForUse : processForgotPassword1() method is used to
+     *
+     * *****************************************************************************
      */
     public String processForgotPassword1() throws Exception {
-
-        System.err.println("::::Forgot pwd service::::");
+        System.out.println("********************UserAjaxHandlerAction :: processForgotPassword1 Method Start*********************");
         resultType = "success";
+        System.out.println("********************UserAjaxHandlerAction :: processForgotPassword1 Method End*********************");
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : checkIsExitOrNotForGrouping() method is used to
+     *
+     * *****************************************************************************
+     */
     public String checkIsExitOrNotForGrouping() {
+        System.out.println("********************UserAjaxHandlerAction :: checkIsExitOrNotForGrouping Method Start*********************");
         resultType = LOGIN;
         try {
-            // System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 boolean editoverlay = ServiceLocator.getUserAjaxHandlerService().isUserGroupExist(this.getUserId());
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -252,46 +266,38 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 httpServletResponse.getWriter().write("" + editoverlay);
             }
         } catch (Exception ex) {
-
             resultType = ERROR;
         }
+        System.out.println("********************UserAjaxHandlerAction :: checkIsExitOrNotForGrouping Method End*********************");
         return null;
     }
 
     /**
+     * *****************************************************************************
+     * Date :
      *
-     * This method is used to set the Servlet Request
+     * Author :
      *
-     * @param httpServletRequest
+     * ForUse : processForgotPassword() method is used to
+     *
+     * *****************************************************************************
      */
     public String processForgotPassword() {
-        System.err.println("::::NewForgot pwd service::::");
+        System.out.println("********************UserAjaxHandlerAction :: processForgotPassword Method Start*********************");
         int isInsert = 0;
         String resVal = "";
         String resultString = "";
         try {
-
-
             resVal = dataSourceDataProvider.getInstance().getUserIdAndStatusByEmail(getEmailId());
-            //isInsert= ServiceLocator.getUserAjaxHandlerService().addForGotPasswordDetails(getEmailId(),urlLink,key);
-            //System.out.println("isInsert-->"+isInsert);
-            System.out.println("resVal-->" + resVal);
             String resVal1[] = resVal.split("^");
-
             if (resVal.equals("NoRecordExists")) {
                 resultString = "<font color=red>No Account is associted with given email id</font>";
             } else {
-
-                // System.out.println("resVal1[0]-->" + resVal.split("\\^")[0]);
                 if (resVal.split("\\^")[1].equals("Active")) {
-                    // System.out.println("In Active state If");
                     String sessionId16Digit = SecurityServiceProvider.generateRandamSecurityKey(16, 16, 1, 1, 1);
                     String resurl = Properties.getProperty("FORGOTPASSWORDPROCESS.URL").toString();
                     MailManager.sendResetPwdLink(resurl, getEmailId(), sessionId16Digit);
-                    // System.out.println("sessionId7Digit-->" + sessionId16Digit);
-
                     resurl = resurl + "?emailId=" + getEmailId() + "&sessionId=" + sessionId16Digit;
-
                     isInsert = ServiceLocator.getUserAjaxHandlerService().addForGotPasswordDetails(getEmailId(), resurl, sessionId16Digit);
                     resultString = "<font color=green>Please check your mail to reset your password</font>";
                 } else if (resVal.split("\\^")[1].equals("Registered")) {
@@ -300,54 +306,44 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                     resultString = "<font color=red>Your account is in inactive state !!!</font>";
                 }
             }
-            //String resultString = "ForGotPassword Response String";
-
-            System.err.println("resultString---->" + resultString);
             httpServletResponse.setContentType("text");
             httpServletResponse.getWriter().write(resultString);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
         }
-
+        System.out.println("********************UserAjaxHandlerAction :: processForgotPassword Method End*********************");
         return null;
     }
 
     @SuppressWarnings("deprecation")
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doUserRegister() method is used to
+     *
+     * *****************************************************************************
+     */
     public String doUserRegister() throws Exception {
-
-        // System.err.println("objectType==>" + getObjectType());
-        // System.err.println("memberId--->" + memberId);
+        System.out.println("********************UserAjaxHandlerAction :: doUserRegister Method Start*********************");
         String generatedPath = "";
         String completePath = "";
-
         try {
-            //  System.out.println("init");
             File f = getPicture();
-            System.err.println("file--->file get----->" + f.getName());
-            System.err.println("file--->file get----->" + getLivingCountry());
-            /*if (this.getPictureFileName().endsWith(".exe")) {
-             message = "Notvalid";
-             return ERROR;
-             }*/
-
-            // generatedPath = generatePath(Properties.getProperty("Profile.Image"));
             generatedPath = Properties.getProperty("Profile.Image");
             if (DataSourceDataProvider.getInstance().getOrgIdByEmailExt(getLoginId()) > 0) {
                 generatedPath = generatedPath + "/" + DataSourceDataProvider.getInstance().getOrgIdByEmailExt(getLoginId());
             } else {
                 generatedPath = generatedPath;
             }
-            // System.out.println("generatedPath-->" + generatedPath);
             File filePath = new File(generatedPath);
-            //  System.err.println("filePath--->" + filePath);
-
             if (!filePath.exists()) {
                 filePath.mkdirs();
             }
             FileInputStream inputStream = new FileInputStream(f);
-            //  System.out.println("File-->" + getPictureFileName());
-            // System.out.println(getFirstName() + getLastName() + "." + getPictureFileName().split("\\.")[1]);
             this.setPictureFileName(getFirstName() + "_" + getLastName() + "." + getPictureFileName().split("\\.")[1]);
             FileOutputStream outputStream = new FileOutputStream(generatedPath + "/" + this.getPictureFileName());
             byte[] buf = new byte[1024];
@@ -359,11 +355,6 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             outputStream.flush();
             completePath = generatedPath + File.separator + this.getPictureFileName();
             setFilePath(completePath);
-            //  String extension = getPictureFileName().substring(getPictureFileName().lastIndexOf(".") + 1);
-            //System.out.println("File-->" + getPictureFileName());
-            // System.out.println("completePath-->" + completePath);
-            // int count = ServiceLocator.getUserAjaxHandlerService().doUserRegister(this);
-            // System.out.println("count" + count);
             if (ServiceLocator.getUserAjaxHandlerService().doUserRegister(this) > 0) {
                 message = "uploaded";
             } else {
@@ -372,29 +363,32 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println(e.getMessage());
-            // setMessage("Internal Error!!"); 
             message = "Error";
             return ERROR;
-            // httpServletResponse.setStatus(404);
         } finally {
             System.out.close();
-
         }
-
+        System.out.println("********************UserAjaxHandlerAction :: doUserRegister Method End*********************");
         return SUCCESS;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : generatePath() method is used to
+     *
+     * *****************************************************************************
+     */
     public String generatePath(String contextPath) throws ServiceLocatorException {
-
+        System.out.println("********************UserAjaxHandlerAction :: generatePath Method Start*********************");
         Date date = new Date();
         String monthName = null;
         String weekName = null;
-
         /*The path which is created in the drive and used as a home directroy*/
         String generatedPath = contextPath;
-
-
         if (date.getMonth() == 0) {
             monthName = "January";
         } else if (date.getMonth() == 1) {
@@ -421,7 +415,6 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             monthName = "December";
         }
         short week = (short) (Math.round(date.getDate() / 7));
-
         if (week == 0) {
             weekName = "WeekFirst";
         } else if (week == 1) {
@@ -435,20 +428,28 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         }
 
         /*getrequestType is used to create a directory of the object type specified in the jsp page*/
-//        createPath=new File(createPath.getAbsolutePath()+"//MirageV2/+getRequestType()+"/+String.valueOf(date.getYear()+1900)+"/+monthName+"/+weekName);
         generatedPath = generatedPath + "/MSP/"
                 + String.valueOf(date.getYear() + 1900)
                 + "/" + monthName + "/" + weekName;
+        System.out.println("********************UserAjaxHandlerAction :: generatePath Method End*********************");
         return generatedPath;
     }
 
-    /*methods for contact informaation created by ramakrishna*/
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getAddressDetails() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getAddressDetails() {
-
+        System.out.println("********************UserAjaxHandlerAction :: getAddressDetails Method Start*********************");
         resultType = LOGIN;
         String searchAddressDetails = "";
         try {
-
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 searchAddressDetails = ServiceLocator.getUserAjaxHandlerService().getEmpAddressDetails(userid);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -458,10 +459,7 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(searchAddressDetails);
                 httpServletRequest.getSession(false).setAttribute("eduProfile", searchAddressDetails);
-                //System.out.println("============================ In Action ============================");
-                //System.out.println("address details in aaction :::::"+searchAddressDetails);
             } else {
-                //System.out.println("in ifelse edu profile");
                 httpServletRequest.getSession(false).setAttribute("eduProfile", null);
                 resultType = SUCCESS;
             }
@@ -469,18 +467,27 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
-        //return searchAddressDetails;
+        System.out.println("********************UserAjaxHandlerAction :: getAddressDetails Method End*********************");
         return null;
     }
 
-    //   setAddressDetails method created by ramakrishna to update permanent address
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : ramakrishna
+     *
+     * ForUse : setAddressDetails() method is used to update permanent address
+     *
+     * *****************************************************************************
+     */
     public String setAddressDetails() {
+        System.out.println("********************UserAjaxHandlerAction :: setAddressDetails Method Start*********************");
         resultType = LOGIN;
         try {
 
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int updateDetails = ServiceLocator.getUserAjaxHandlerService().setEmpAddressDetails(userid, address, address2, city, state, zip, country, phone, address_flag);
-                // System.out.println("====================================>in action for contact information---------------->");
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -488,7 +495,6 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(updateDetails);
                 httpServletRequest.getSession(false).setAttribute("updateResult", updateDetails);
-
             } else {
                 httpServletRequest.getSession(false).setAttribute("eduProfile", null);
                 resultType = SUCCESS;
@@ -497,17 +503,26 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UserAjaxHandlerAction :: setAddressDetails Method End*********************");
         return null;
     }
 
-    //   setCAddressDetails method created by ramakrishna to update current address
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : ramakrishna
+     *
+     * ForUse : setCAddressDetails() method is used to update current address.
+     *
+     * *****************************************************************************
+     */
     public String setCAddressDetails() {
+        System.out.println("********************UserAjaxHandlerAction :: setCAddressDetails Method Start*********************");
         resultType = LOGIN;
         try {
-
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int updateDetails = ServiceLocator.getUserAjaxHandlerService().setEmpCAddressDetails(userid, address, address2, city, state, zip, country, phone, address_flag);
-
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -515,7 +530,6 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(updateDetails);
                 httpServletRequest.getSession(false).setAttribute("updateResult", updateDetails);
-
             } else {
                 httpServletRequest.getSession(false).setAttribute("eduProfile", null);
                 resultType = SUCCESS;
@@ -524,12 +538,23 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UserAjaxHandlerAction :: setCAddressDetails Method End*********************");
         return null;
     }
-    /*methods for contactinformation created by ramakrishna end*/
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getEmployeeDetails() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getEmployeeDetails() throws IOException, ServiceLocatorException {
         try {
+            System.out.println("********************UserAjaxHandlerAction :: getEmployeeDetails Method Start*********************");
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             responseString = ServiceLocator.getUserAjaxHandlerService().getEmployeeDetails(this);
             httpServletResponse.setContentType("text/xml");
@@ -537,256 +562,25 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getEmployeeDetails Method End*********************");
         return null;
     }
-
-    /* --- Start , skillDetails action add by triveni---   */
-//    public String getskillDetails() {
-//        resultType = LOGIN;
-//        try {
-//
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                String skillDetails = ServiceLocator.getUserAjaxHandlerService().getSkillDetails(httpServletRequest, userid);
-////
-////                System.out.println("--------------> if normal skill");
-////                System.out.println("" + skillDetails);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(skillDetails);
-//
-//
-//            } else {
-////                System.out.println("----------------> else normal skill");
-////               
-//                resultType = SUCCESS;
-//            }
-//        } catch (Exception ex) {
-//
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-//
-//    public String seteditSkillDetails() {
-//        resultType = LOGIN;
-//        try {
-//
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                // System.out.println("---->into action of edit");
-//                userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//
-//                int setskillDetails = ServiceLocator.getUserAjaxHandlerService().setEditSkillDetails(httpServletRequest, userSessionId, skill_id, this);
-//                //System.out.println("--------------> if edit skill action");
-//                // System.out.println("" + setskillDetails);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(setskillDetails);
-//                resultType = SUCCESS;
-//
-//            } else {
-//                //  System.out.println("----------------> else edit skill action");
-//
-//                resultType = SUCCESS;
-//            }
-//        } catch (Exception ex) {
-//
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-//
-//    public String geteditOverlayDetails() {
-//        resultType = LOGIN;
-//        try {
-//            // System.out.println("Ajax Handler action");
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                String editoverlay = ServiceLocator.getUserAjaxHandlerService().getEditOverlayDetails(httpServletRequest, userid, skill_id);
-//
-////                System.out.println("--------------> if overlay skill");
-////                System.out.println("" + editoverlay);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(editoverlay);
-//
-//
-//            } else {
-//                //   System.out.println("----------------> else overlay skill");
-//            }
-//        } catch (Exception ex) {
-//
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-//
-//    public String getaddSkills() {
-//        resultType = LOGIN;
-//        System.out.println("I Qualification Update");
-//        try {
-//
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//
-//                userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//                int addDetails = ServiceLocator.getUserAjaxHandlerService().getAddSkills(httpServletRequest, userSessionId, this);
-//
-//                // System.out.println("in if edu profile");
-//                // System.out.println("" + addDetails);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(addDetails);
-//                // httpServletRequest.getSession(false).setAttribute("eduProfile", searchDetails);
-//
-//            }
-//        } catch (Exception ex) {
-//            //  httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-//
-//    /* --- End , skillDetails action add by triveni---   */
-//    /* --- Start , EducationaDetails action add by aklakh---   */
-//    public String getEduDetails() {
-//        resultType = LOGIN;
-//        try {
-//
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                String searchDetails = ServiceLocator.getUserAjaxHandlerService().getQualificationDetails(httpServletRequest, userid);
-//
-//                // System.out.println("details in action" + searchDetails);
-//                // System.out.println("" + searchDetails);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(searchDetails);
-//                // httpServletRequest.getSession(false).setAttribute("eduProfile", searchDetails);
-//
-//            } else {
-//                // System.out.println("in ifelse edu profile");
-//                // httpServletRequest.getSession(false).setAttribute("eduProfile", null);
-//                resultType = SUCCESS;
-//            }
-//        } catch (Exception ex) {
-//            // httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-//
-//    /* --- End , EducationaDetails action add by aklakh---   */
-//    /* --- Start , ADD Qualification action add by aklakh---   */
-//    public String addQualificationDetails() {
-//        try {
-//
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//
-//                int searchDetails = ServiceLocator.getUserAjaxHandlerService().getInsertedQualificationDetails(httpServletRequest, userSessionId, this);
-//
-//                //  System.out.println("in if edu profile");
-//                // System.out.println("" + searchDetails);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(searchDetails);
-//                // httpServletRequest.getSession(false).setAttribute("eduProfile", searchDetails);
-//
-//            } else {
-//                //   System.out.println("in ifelse edu profile");
-//                // httpServletRequest.getSession(false).setAttribute("eduProfile", null);
-//                resultType = SUCCESS;
-//            }
-//        } catch (Exception ex) {
-//            httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-//
-//    /* --- End , Add Qualification  action add by aklakh---   */
-//    /* --- Start , Update Qualification  action add by aklakh---   */
-//    public String getEduUpdate() {
-//        resultType = LOGIN;
-//        try {
-//            // System.out.println("getusr_edu_id---> "+usr_edu_id);
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                //  System.out.println("---->"+usr_edu_id);
-//                userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//
-//                int editEduDetails = ServiceLocator.getUserAjaxHandlerService().getEduUpdateDetails(httpServletRequest, usr_edu_id, this);
-//
-//                // System.out.println("--------------> if update qualification action");
-//                //System.out.println("" + editEduDetails);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(editEduDetails);
-//                resultType = SUCCESS;
-//
-//            } else {
-//                System.out.println("----------------> else update qualificaton action");
-//
-//                resultType = SUCCESS;
-//            }
-//        } catch (Exception ex) {
-//
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-//
-//    public String getEditEduDetails() {
-//        resultType = LOGIN;
-//        try {
-//            //  System.out.println("Ajax Handler action");
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                String editEduOverlay = ServiceLocator.getUserAjaxHandlerService().getEditQualificationDetails(httpServletRequest, userid, usr_edu_id);
-//
-//                //System.out.println("--------------> if overlay qualification");
-//                //System.out.println("" + editEduOverlay);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(editEduOverlay);
-//
-//
-//            } else {
-//                // System.out.println("----------------> else overlay qualification");
-//            }
-//        } catch (Exception ex) {
-//
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-
-    /* --- End , Update Qualification  action add by aklakh---   */
-    /* ---START ReportInformation  action add by RK---   */
-//    public String getReportData() {
-//        resultType = LOGIN;
-//        String reportInfo = "";
-//        System.out.println("********************Action*****************");
-//        try {
-//            //  System.out.println("Ajax Handler action");
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                reportInfo = ServiceLocator.getUserAjaxHandlerService().getReportInfo(httpServletRequest, userid);
-//                //       System.out.println("===============>in action" + reportInfo);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(reportInfo);
-//                //resultType = SUCCESS;
-//
-//            } else {
-//                System.out.println("----------------> else overlay qualification");
-//                resultType = SUCCESS;
-//            }
-//        } catch (Exception ex) {
-//
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
 //    //role submit action 
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : roleSubmit() method is used to
+     *
+     * *****************************************************************************
+     */
     public String roleSubmit() {
+        System.out.println("********************UserAjaxHandlerAction :: roleSubmit Method Start*********************");
         resultType = LOGIN;
         try {
-
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int orgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
                 String action = ServiceLocator.getUserAjaxHandlerService().roleSubmit(httpServletRequest, getRoleId(), orgId);
@@ -798,271 +592,147 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 httpServletResponse.getWriter().write(action);
             }
         } catch (Exception ex) {
-
             resultType = ERROR;
         }
+        System.out.println("********************UserAjaxHandlerAction :: roleSubmit Method End*********************");
         return null;
     }
     /*END Report information created by RK*/
-
-    /**
-     *
-     * This method is used to getting Title Names based on Department Name
-     *
-     * added by praveen<pkatru@miraclesoft.com>
-     */
-//    public String getTitles() {
-//        resultType = LOGIN;
-//        String repoString = "";
-//        try {
-//            //  System.out.println("Ajax Handler action");
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                repoString = ServiceLocator.getUserAjaxHandlerService().getTitles(httpServletRequest, getDept_id());
-//                //System.out.println("===============>in titles" + repoString);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(repoString);
-//
-//                //  resultType = SUCCESS;
-//            } else {
-//                return resultType;
-//            }
-//        } catch (Exception e) {
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-    /**
-     *
-     * This method is used to Update miscellaneous Information
-     *
-     * added by praveen<pkatru@miraclesoft.com>
-     */
-//    public String updateMiscellaneousInfo() {
-//        resultType = LOGIN;
-//        try {
-//            // System.out.println("Ajax Handler action");
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//
-//                ServiceLocator.getUserAjaxHandlerService().updateMiscellaneousInfo(httpServletRequest, this);
-//                //  System.out.println("in action ajax class updateMiscell......");
-//                //  resultType = SUCCESS;
-//            } else {
-//                return resultType;
-//            }
-//        } catch (Exception e) {
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
-//    public String getSecurityDetails() throws ServiceLocatorException {
-//
-//        resultType = LOGIN;
-//        //System.out.println("getSecurity Details");
-//
-//
-//        try {
-//
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                //System.out.println("getSecurity Details session");
-//                //int usrId=Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//                //System.out.println("UesrID-->" + getUserid());
-//                String securityDetails = ServiceLocator.getUserAjaxHandlerService().getSecurityDetails(httpServletRequest, getUserid());
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(securityDetails);
-//                httpServletRequest.getSession(false).setAttribute("security", securityDetails);
-//
-//            } else {
-//                //     System.out.println("in else security details");
-//                httpServletRequest.getSession(false).setAttribute("security", null);
-//                resultType = SUCCESS;
-//            }
-//        } catch (Exception ex) {
-//            System.out.println("exception in getSecurityDetails action-->" + ex.getMessage());
-//            httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-//            resultType = ERROR;
-//        }
-//        return null;
-//
-//
-//
-//    }
-    //START Secrity Information  action add by Manikanta
-//    public String addSecurityDetails() {
-//
-//        resultType = LOGIN;
-//        //System.out.println("getSecurity Details");
-//        //System.out.println("PF no is:" + getEmpPfNo());
-//        //System.out.println("Emp Acc Name is:" + getEmpBankAccName());
-//        EmpConfidentialVTO empVto = new EmpConfidentialVTO();
-//        try {
-//
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                // System.out.println("getSecurity Details session");
-//                //int usrId=Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//                ///// System.out.println("UesrID-->" + getUserid());
-//                // System.out.println("Object is" + empConfidentialVTO);
-//                empVto.setUserid(getUserid());
-//                empVto.setSsnPanNo(getSsnPanNo());
-//                empVto.setPanName(getPanName());
-//                empVto.setEmpUan(getEmpUan());
-//                empVto.setEmpPfNo(getEmpPfNo());
-//                empVto.setEmpPassportNo(getEmpPassportNo());
-//                empVto.setEmpPassportExpDate(com.mss.msp.util.DateUtility.getInstance().convertStringToMySql(getEmpPassportExpDate()));
-//                //System.out.println("Date is" + com.mss.msp.util.DateUtility.getInstance().convertStringToMySql(getEmpPassportExpDate()));
-//
-//                empVto.setEmpBankName(getEmpBankName());
-//                empVto.setEmpBankIfsc(getEmpBankIfsc());
-//                empVto.setEmpBankAccNo(getEmpBankAccNo());
-//                empVto.setEmpBankAccName(getEmpBankAccName());
-//
-//                String updateSecurityDetails = ServiceLocator.getUserAjaxHandlerService().updateSecurityDetails(httpServletRequest, empVto);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(updateSecurityDetails);
-//                httpServletRequest.getSession(false).setAttribute("security", updateSecurityDetails);
-//
-//            } else {
-//                // System.out.println("in else security details");
-//                httpServletRequest.getSession(false).setAttribute("security", null);
-//
-//            }
-//        } catch (Exception ex) {
-//            //System.out.println("exception in getSecurityDetails action-->" + ex.getMessage());
-//            httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-//            resultType = ERROR;
-//        }
-//        return null;
-//
-//    }
-
     /* Start, Task types data in ADD task functionality , created by Aklakh */
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getTaskTypeData() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getTaskTypeData() {
+        System.out.println("********************UserAjaxHandlerAction :: getTaskTypeData Method Start*********************");
         resultType = LOGIN;
         String taskString = "";
         try {
-            //  System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 taskString = ServiceLocator.getUserAjaxHandlerService().getTypesOfTask(this);
-                System.out.println("===============>in task" + taskString);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(taskString);
-
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************UserAjaxHandlerAction :: getTaskTypeData Method End*********************");
         return null;
     }
 
     /* End, Task types data in ADD task functionality , created by Aklakh */
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getRelatedToNames() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getRelatedToNames() {
+        System.out.println("********************UserAjaxHandlerAction :: getRelatedToNames Method Start*********************");
         resultType = LOGIN;
         String taskString = "";
         try {
-            //  System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                taskString = ServiceLocator.getUserAjaxHandlerService().getRelatedToNames(this);
-                //taskString=dataSourceDataProvider.getInstance().getTeamMembers(getUserSessionId());
-                System.out.println("===============>in task" + taskString);
+                setOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+                String usrType = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
+                taskString = ServiceLocator.getUserAjaxHandlerService().getRelatedToNames(this, usrType);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(taskString);
-
-                //  resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************UserAjaxHandlerAction :: getRelatedToNames Method End*********************");
         return null;
     }
 
-    /* *************************************
+    /**
+     * *****************************************************************************
+     * Date :
      *
-     * @showTaskSearchDetails() method is used to get task details based on
-     * search scenario
+     * Author :
      *
-     * @Author:RK Ankireddy
+     * ForUse : getRelatedToNames() method is used to
      *
-     * @Created Date:04/15/2015
-     *
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getAttachment() {
+        System.out.println("********************UserAjaxHandlerAction :: getAttachment Method Start*********************");
         resultType = LOGIN;
         String attachmentString = "";
         try {
-            //  System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 attachmentString = ServiceLocator.getUserAjaxHandlerService().getAttachment(this);
-                System.out.println("===============>in Action----->" + attachmentString);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(attachmentString);
-                //resultType = SUCCESS;
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************UserAjaxHandlerAction :: getAttachment Method End*********************");
         return null;
     }
-    /* *************************************
-     *
-     * @showTaskSearchDetails() method is used to get task details based on
-     * search scenario
-     *
-     * @Author:RK Ankireddy
-     *
-     * @Created Date:04/15/2015
-     *
-     *
-     **************************************
-     */
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doDeactiveAttachment() method is used to
+     *
+     * *****************************************************************************
+     */
     public String doDeactiveAttachment() {
-        System.out.println("Enter the new dragon action    " + getTaskAttachId());
+        System.out.println("********************UserAjaxHandlerAction :: doDeactiveAttachment Method Start*********************");
         resultType = LOGIN;
         int attachmentString = 0;
         try {
-            //  System.out.println("Ajax Handler action");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-
                 attachmentString = ServiceLocator.getUserAjaxHandlerService().doDeactiveAttachment(this);
-                System.out.println("===============>in Action----->" + attachmentString);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(attachmentString);
-                //resultType = SUCCESS;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************UserAjaxHandlerAction :: doDeactiveAttachment Method End*********************");
         return null;
     }
 
@@ -1072,140 +742,57 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
      *
      * Author : jagan chukkala<jchukkala@miraclesoft.com>
      *
-     * addLeaveDetails() method can be used to add the leave by the user using
-     * user id,
+     * ForUse : addLeaveDetails() method is used to add the leave by the user.
      *
      * *****************************************************************************
      */
-//    public String addLeaveDetails() {
-//        resultType = LOGIN;
-////        System.out.println("In Qualification adding1==========>" + getUserid() + "and " + getQualification() + "and " + getPercentage());
-////        System.out.println("In Qualification adding2==========>" + getUniversity() + " and " + getInstitution() + " and " + getSpecialization());//+" and  "+getYear_start()+" and "+getYear_end());
-////        System.out.println("In Qualification adding2==========>" + getYear_start() + " and " + getYear_end());
-//        try {
-//
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-//                System.out.println("leave from-->" + getFromleave());
-//                System.out.println("leave to-->" + getToleave());
-//                System.out.println("leave type-->" + getLeavetype());
-//                System.out.println("reports to-->" + getReportsTo());
-//                System.out.println("reasson is-->" + getReason());
-//                System.out.println("Status  is-->" + getLeavestatus());
-//                System.out.println("reported persons is-->" + getReportPerson());
-////                String reportingPerson=DataSourceDataProvider.getInstance().getReportingPersonByUserId(userSessionId);
-////                System.out.println("---------> "+reportingPerson);
-////                if(" ".equals(reportingPerson))
-////                {
-////                System.out.println("reports to is null");
-//////                setResultMessage("Please contact Support team!");
-//////                httpServletResponse.sendRedirect("../general/regerrorDirect.action?resultMessage="+getResultMessage());
-//////                //setRedirectAction("../general/regerrorDirect.action?resultMessage="+getResultMessage()); 
-//////                resultType = SUCCESS;
-////                }
-//                int leaveDetails = ServiceLocator.getUserAjaxHandlerService().getInsertedLeaveDetails(httpServletRequest, userSessionId, this);
-//                System.out.println("insetted rows------->" + leaveDetails);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                //httpServletResponse.getWriter().write(leaveDetails);
-//                // httpServletRequest.getSession(false).setAttribute("eduProfile", searchDetails);
-//
-//            } else {
-//                //   System.out.println("in ifelse edu profile");
-//                // httpServletRequest.getSession(false).setAttribute("eduProfile", null);
-//                resultType = SUCCESS;
-//            }
-//        } catch (Exception ex) {
-//            httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
     public String addLeaveDetails() {
+        System.out.println("********************UserAjaxHandlerAction :: addLeaveDetails Method Start*********************");
         resultType = LOGIN;
         try {
 
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                System.out.println("add Leave details method---123---->");
                 int leaveDetails = ServiceLocator.getUserAjaxHandlerService().getInsertedLeaveDetails(userSessionId, this);
-                System.out.println("insetted rows---123---->" + leaveDetails);
-                //manager
-                //String leaveloginid=
                 String username = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.FIRST_NAME).toString() + httpServletRequest.getSession(false).getAttribute(ApplicationConstants.Last_NAME).toString();
                 String userId = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString();
-                System.out.println("userid---" + userId);
                 DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
-                System.out.println("DSDP intial------->");
                 List rep = null; //dsdp.getReportsTo(Integer.parseInt(userId));
-                //please update code over here for unused table
-                //List rep=dsdp.getReportsTo(1003);
-                System.out.println("DSDP after------->");
-                System.out.println("reporting_persons" + rep);
-                System.out.println("TO" + rep.get(0));
-                System.out.println("SUp" + rep.get(1));
                 if (rep.size() > 1) {
                     setLeaveTo(rep.get(0).toString());
                     setLeaveSupTo(rep.get(1).toString());
                 }
-                // System.out.println("to--->"+to+"sup-->"+supTo);
-                //String to="vsiram";
-                //String leaveCc="kpodipireddy";
                 if (leaveDetails == 1) {
                     MailManager mailManager = new MailManager();
                     mailManager.sendLeaveEmail(getLeaveTo(), getLeaveSupTo(), "", username, reason, leavestatus, fromleave, toleave, leavetype, userSessionId);
                 }
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
-
             } else {
-
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
+        System.out.println("********************UserAjaxHandlerAction :: addLeaveDetails Method End*********************");
         return null;
     }
-    //MANIKANTA
 
-//    public String getEmployeeNames() {
-//        resultType = LOGIN;
-//        String reponseString = "";
-//        try {
-//            //  System.out.println("Ajax Handler action");
-//            if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-//                reponseString = ServiceLocator.getUserAjaxHandlerService().getEmployeeNames(httpServletRequest, getDept_id());
-//                //System.out.println("===============>in titles" + repoString);
-//                httpServletResponse.setContentType("text");
-//                httpServletResponse.setCharacterEncoding("UTF-8");
-//                httpServletResponse.getWriter().write(reponseString);
-//
-//                //  resultType = SUCCESS;
-//            } else {
-//                return resultType;
-//            }
-//        } catch (Exception e) {
-//            resultType = ERROR;
-//        }
-//        return null;
-//    }
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getStatesOfCountry() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getStatesOfCountry() {
-
+        System.out.println("********************UserAjaxHandlerAction :: getStatesOfCountry Method Start*********************");
         try {
-            System.out.println("I am   in States action");
-            // Map countries =ServiceLocator.getLocationService().getCountriesNames();
-            System.out.println("id is" + getCountryId());
             String stateList = ServiceLocator.getUserAjaxHandlerService().getStatesOfCountry(getCountryId());
-            //setStateMap(states);
-
-            System.out.println("list of States----->" + stateList);
-
-            // System.out.println("list od countries----->"+getCounryMap());
-            //System.out.println(getResultMessage());
-            //setResultMessage(getResultMessage());
-            //httpServletRequest.setAttribute("stateList", stateList);
             setResultMessage(getResultMessage());
             httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             httpServletResponse.setHeader("Pragma", "no-cache");
@@ -1213,16 +800,11 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             httpServletResponse.setContentType("text");
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.getWriter().write(stateList);
-            // httpServletRequest.setAttribute("stateList", stateList);
-            //System.out.println(httpServletRequest.getAttribute("statesList"));
-            // resultType = SUCCESS;
-
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
-
-
+        System.out.println("********************UserAjaxHandlerAction :: getStatesOfCountry Method End*********************");
         return null;
     }
 
@@ -1232,79 +814,75 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
      *
      * Author : jagan chukkala<jchukkala@miraclesoft.com>
      *
-     * LeavesListOfUser() getting the user leaves
+     * For Use: LeavesListOfUser() getting the user leaves
      *
      *
      * *****************************************************************************
      */
     public String LeavesListOfUser() {
+        System.out.println("********************UserAjaxHandlerAction :: LeavesListOfUser Method Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-            //System.out.println("hello i am in action..");
             try {
-                //System.out.println("in if leave sarech");
                 String leavesListDetails = ServiceLocator.getUserAjaxHandlerService().getLeavesListDetails(this);
-                System.out.println("leavesListDetails" + leavesListDetails);
                 int userId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //setReportPerson(DataSourceDataProvider.getInstance().getReportingPersonByUserId(userId));
-                //please change the getreporting person method code.
-                //System.out.println("reporting person---->" + getReportingPerson());
-                System.out.println("leave list ------ " + leavesListDetails.length());
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(leavesListDetails);
-
-
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessagetUserLeavesServiceges(ex);
-                System.out.println("I am in error" + ex.toString());
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-
-
                 resultMessage = ERROR;
             }
         }// Session validator if END
+        System.out.println("********************UserAjaxHandlerAction :: LeavesListOfUser Method End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : May 15 2015
+     * Date :
      *
      * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * LeavesListOfUser() getting the user leaves
-     *
+     * ForUse : getExternalEmployeeDetails() method is used to
      *
      * *****************************************************************************
      */
     public String getExternalEmployeeDetails() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getExternalEmployeeDetails Method Start*********************");
         try {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             responseString = ServiceLocator.getUserAjaxHandlerService().getExternalEmployeeDetails(this);
-//            httpServletResponse.setContentType("text/xml");
-//            httpServletResponse.getWriter().write(responseString);
-            
             httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             httpServletResponse.setHeader("Pragma", "no-cache");
             httpServletResponse.setDateHeader("Expires", 0);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.getWriter().write(responseString);
-
-
         } catch (IOException ioe) {
-            System.err.println(ioe);
+            ioe.printStackTrace();
         }
+        System.out.println("********************UserAjaxHandlerAction :: getExternalEmployeeDetails Method End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     *
+     * ForUse : getTechEmployeeDetails() method is used to
+     *
+     * *****************************************************************************
+     */
     public String getTechEmployeeDetails() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getTechEmployeeDetails Method Start*********************");
         try {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -1312,23 +890,25 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
-            System.err.println(ioe);
+            ioe.printStackTrace();
         }
+        System.out.println("********************UserAjaxHandlerAction :: getTechEmployeeDetails Method End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : May 15 2015
+     * Date :
      *
      * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * getExternalEmployee2Details() getting the user leaves
+     * For Use: getExternalEmployee2Details() getting the user leaves
      *
      *
      * *****************************************************************************
      */
     public String getExternalEmployee2Details() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getExternalEmployee2Details Method Start*********************");
         try {
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             responseString = ServiceLocator.getUserAjaxHandlerService().getExternalEmployee2Details(this);
@@ -1337,21 +917,23 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getExternalEmployee2Details Method End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : May 15 2015
+     * Date :
      *
      * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * getVendorNames() getting the user leaves
+     * For Use : getVendorNames() method is used to
      *
      *
      * *****************************************************************************
      */
     public String getVendorNames() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getVendorNames Method Start*********************");
         try {
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             responseString = ServiceLocator.getUserAjaxHandlerService().getVendorNames(this);
@@ -1360,6 +942,7 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getVendorNames Method End*********************");
         return null;
     }
 
@@ -1369,103 +952,108 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
      *
      * Author : jagan<jchukkala@miraclesoft.com>
      *
-     * getCsrNames() getting the csr names
+     * getCsrNames() method is used to
      *
      *
      * *****************************************************************************
      */
     public String getCsrNames() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getCsrNames Method Start*********************");
         try {
-            //setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-            //System.out.println("csr name" + getCsrName());
             responseString = ServiceLocator.getUserAjaxHandlerService().getCsrNames(getCsrName());
-            //System.out.println("csrName---->" + responseString);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getCsrNames Method End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : july 15 2015 Author : manikanta<meeralla@miraclesoft.com>
-     * csrTermination() Inactivating the csrs
+     * Date : july 15 2015
+     *
+     * Author : manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : csrTermination() method is used to Inactivating the CSR's
+     *
      * *****************************************************************************
      */
     public String csrTermination() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getCsrNames Start*********************");
         try {
-            System.out.println("In Action--> csrTermination()");
-            System.out.println("userid" + getUserid());
-
-            //setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             responseString = ServiceLocator.getUserAjaxHandlerService().csrTermination(getUserid());
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getCsrNames End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : july 16 2015 Author : manikanta<meeralla@miraclesoft.com>
-     * changeCsrAccountStatus() changing the ststus of csr
+     * Date : july 16 2015
+     *
+     * Author : manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : changeCsrAccountStatus() method is used to changing the status
+     * of CSR.
+     *
      * *****************************************************************************
      */
     public String changeCsrAccountStatus() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: changeCsrAccountStatus Start*********************");
         try {
-            System.out.println("In Action--> changeCsrAccountStatus()");
-            System.out.println("csruserid" + getUserid());
-            System.out.println("csrOrgid" + getOrgId());
-
-            //setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             responseString = ServiceLocator.getUserAjaxHandlerService().changeCsrAccountStatus(this);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: changeCsrAccountStatus End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : july 16 2015 Author : manikanta<meeralla@miraclesoft.com>
-     * getCsrAccount() getting csr Account
+     * Date : july 16 2015
+     *
+     * Author : manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : getCsrAccount() method is used to getting CSR Account.
+     *
      * *****************************************************************************
      */
     public String getCsrAccount() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getCsrAccount Start*********************");
         try {
-            System.out.println("In Action--> getCsrAccount()");
-            System.out.println("csruserid" + getUserid());
-            System.out.println("csrOrgid" + getOrgId());
-
-            //setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             responseString = ServiceLocator.getUserAjaxHandlerService().getCsrAccount(this);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getCsrAccount End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : july 17 2015 Author : manikanta<meeralla@miraclesoft.com>
-     * getEmpCategories() getting Customer Employee Categories
+     * Date : july 17 2015
+     *
+     * Author : manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : getEmpCategories() method is used to getting Customer Employee
+     * Categories.
+     *
      * *****************************************************************************
      */
     public String getEmpCategories() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getEmpCategories Start*********************");
         try {
-            System.out.println("In Action--> getEmpCategories()");
-            //System.out.println("csruserid"+getUserid());
-            //System.out.println("csrOrgid"+getOrgId());
-
-            //setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             sessionOrgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
             responseString = ServiceLocator.getUserAjaxHandlerService().getEmpCategories(this, sessionOrgId);
             httpServletResponse.setContentType("text/xml");
@@ -1473,32 +1061,33 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getEmpCategories End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : visaAttachemntUpload() method is used to
+     *
+     * *****************************************************************************
+     */
     public String visaAttachemntUpload() {
-
+        System.out.println("********************UserAjaxHandlerAction :: visaAttachemntUpload Start*********************");
         try {
-
-            System.out.println("visaAttachemntUpload-->" + getFileFileName());
             File destFile = null;
             if (getFileFileName() == null) {
-                System.out.println("file is null so it adds only data in task_list table");
+//                System.out.println("file is null so it adds only data in task_list table");
             } else {
-                // String visaAttachPath = dataSourceDataProvider.getInstance().getConsultVisaAttachment(getConsultantId());
-
-                // System.out.println("visaAttachPath from db-->" + visaAttachPath);
-
-
                 String filePath = "";
                 filesPath = Properties.getProperty("Visa.Attachment");
                 File createPath = new File(filesPath);
                 Date dt = new Date();
                 String month = "";
                 short week = 0;
-
-
-
                 if (dt.getMonth() == 0) {
                     month = "Jan";
                 } else if (dt.getMonth() == 1) {
@@ -1525,32 +1114,17 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                     month = "Dec";
                 }
                 week = (short) (Math.round(dt.getDate() / 7));
-
                 /*getrequestType is used to create a directory of the object type specified in the jsp page*/
                 createPath = new File(createPath.getAbsolutePath() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
                 /*This creates a directory forcefully if the directory does not exsist*/
-
-                //System.out.println("path::"+createPath);
                 createPath.mkdir();
                 /*here it takes the absolute path and the name of the file that is to be uploaded*/
                 File theFile = new File(createPath.getAbsolutePath());
-
                 setFilesPath(theFile.toString());
                 /*copies the file to the destination*/
                 destFile = new File(theFile + File.separator + fileFileName);
                 FileUtils.copyFile(getFile(), destFile);
-
             }
-
-
-            System.out.println("this is printing file path-->" + this.getFilesPath() + "...." + fileFileName);
-            // setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-
-
-
-
-
-
             if (destFile == null) {
                 responseString = "Error";
             }
@@ -1566,37 +1140,42 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: visaAttachemntUpload End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : removeConsultantAttachement() method is used to
+     *
+     * *****************************************************************************
+     */
     public String removeConsultantAttachement() {
         /*
          *This if loop is to check whether there is Session or not
          **/
+        System.out.println("********************UserAjaxHandlerAction :: removeConsultantAttachement Start*********************");
         File destFile1 = null;
         String updateFile = "";
         try {
             String visaAttachPath = dataSourceDataProvider.getInstance().getConsultVisaAttachment(getConsultantId());
-
             if (visaAttachPath != null) {
-
                 destFile1 = new File(visaAttachPath);
-                System.out.println("destFile1--->" + destFile1);
                 destFile1.delete();
                 updateFile = "";
             }
-            System.out.println("destFile1--->" + destFile1);
-
             int updatedRows = ServiceLocator.getUserAjaxHandlerService().doUpdateVisaAttachment(getConsultantId(), updateFile);
-
             responseString = String.valueOf(updatedRows);
-//responseString =String.valueOf(lastId);
-            System.out.println("responseString-->" + responseString);
             httpServletResponse.setContentType("text");
             httpServletResponse.getWriter().write(responseString);
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
+        System.out.println("********************UserAjaxHandlerAction :: removeConsultantAttachement End*********************");
         //Close Session Checking
         return null;
     }
@@ -1611,10 +1190,20 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
     }
     private String userCatArry;
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : doUserGroupingMethod() method is used to
+     *
+     * *****************************************************************************
+     */
     public String doUserGroupingMethod() throws ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: doUserGroupingMethod Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("user id is--->" + this.getUserId());
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 responseString = ServiceLocator.getUserAjaxHandlerService().doUserGroupingMethod(this);
                 httpServletResponse.setContentType("text/xml");
@@ -1623,19 +1212,24 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: doUserGroupingMethod End*********************");
         return null;
-
     }
 
     /**
      * *****************************************************************************
-     * Date : july 17 2015 Author : manikanta<meeralla@miraclesoft.com>
-     * empCategoryTermination() For terminating Employee Categories
+     * Date : july 17 2015
+     *
+     * Author : manikanta<meeralla@miraclesoft.com>
+     *
+     * ForUse : empCategoryTermination() method is used for terminating Employee
+     * categories.
+     *
      * *****************************************************************************
      */
     public String empCategoryTermination() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: empCategoryTermination Start*********************");
         try {
-            System.out.println("In Action--> empCategoryTermination()");
             sessionOrgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
             responseString = ServiceLocator.getUserAjaxHandlerService().empCategoryTermination(this, sessionOrgId);
             httpServletResponse.setContentType("text/xml");
@@ -1643,22 +1237,23 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: empCategoryTermination End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : 05/18/2015
      *
-     * @getHomeRedirectSearchDetails() method is used to get Requirement details
-     * of account
+     * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getHomeRedirectSearchDetails() method is used to get Requirement
+     * details of account.
      *
-     * @Created Date:05/18/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getHomeRedirectSearchDetails() {
+        System.out.println("********************UserAjaxHandlerAction :: getHomeRedirectSearchDetails Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
@@ -1666,7 +1261,6 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setAccountType(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 String result = ServiceLocator.getUserAjaxHandlerService().getHomeRedirectSearchDetails(this);
-                System.out.println("in getHomeRedirectSearchDetails action" + result);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -1678,28 +1272,27 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************UserAjaxHandlerAction :: getHomeRedirectSearchDetails End*********************");
         return null;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date :
      *
-     * @getHomeRedirectSearchDetails() method is used to get Requirement details
-     * of account
+     * Author :
      *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ForUse : getRolesByAccountType() method is used for
      *
-     * @Created Date:05/18/2015
-     *
-     **************************************
+     * *****************************************************************************
      */
     public String getRolesByAccountType() {
+        System.out.println("********************UserAjaxHandlerAction :: getRolesByAccountType Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getAllRolesString(getAccountType());
-                System.out.println("in getHomeRedirectSearchDetails action" + result);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -1711,21 +1304,22 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************UserAjaxHandlerAction :: getRolesByAccountType End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : May 15 2015
+     * Date :
      *
-     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     * Author :
      *
-     * LeavesListOfUser() getting the user leaves
-     *
+     * ForUse : getAccountNames() method is used for
      *
      * *****************************************************************************
      */
     public String getAccountNames() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getAccountNames Start*********************");
         try {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -1735,21 +1329,22 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getAccountNames End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : May 15 2015
+     * Date :
      *
-     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     * Author :
      *
-     * LeavesListOfUser() getting the user leaves
-     *
+     * ForUse : storeAddOrEditHomeRedirectDetails() method is used for
      *
      * *****************************************************************************
      */
     public String storeAddOrEditHomeRedirectDetails() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: storeAddOrEditHomeRedirectDetails Start*********************");
         try {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -1759,21 +1354,22 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: storeAddOrEditHomeRedirectDetails End*********************");
         return null;
     }
 
     /**
      * *****************************************************************************
-     * Date : May 15 2015
+     * Date :
      *
-     * Author : ramakrishna<lankireddy@miraclesoft.com>
+     * Author :
      *
-     * LeavesListOfUser() getting the user leaves
-     *
+     * ForUse : getHomeRedirectCommentsDetails() method is used for
      *
      * *****************************************************************************
      */
     public String getHomeRedirectCommentsDetails() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getHomeRedirectCommentsDetails Start*********************");
         try {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -1783,6 +1379,7 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getHomeRedirectCommentsDetails End*********************");
         return null;
     }
 
@@ -1792,66 +1389,57 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
      *
      * Author : manikanta<meeralla@miraclesoft.com>
      *
-     * getEmpCategoryNames() getting the get EmpCategoryNames
-     *
+     * ForUse : getEmpCategoryNames() method is used for
      *
      * *****************************************************************************
      */
     public String getEmpCategoryNames() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getEmpCategoryNames Start*********************");
         try {
-            // setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-            // setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
             responseString = ServiceLocator.getUserAjaxHandlerService().getEmpCategoryNames(this);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getEmpCategoryNames End*********************");
         return null;
     }
-    
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : logoUploadAccount() method is used for
+     *
+     * *****************************************************************************
+     */
     public String logoUploadAccount() throws Exception {
-
-
+        System.out.println("********************UserAjaxHandlerAction :: logoUploadAccount Start*********************");
         try {
-
-            System.out.println("visaAttachemntUpload-->" + getFileFileName());
             File destFile = null;
-             File destFile1 = null;
-               String updateFile = "";
-               System.out.println("logo hidden-->"+getAccLogoHidden());
-              System.out.println("property file-->"+Properties.getProperty("DEFAULTLOGO")); 
-            if(!"".equals(getAccLogoHidden()) && !getAccLogoHidden().equals(Properties.getProperty("DEFAULTLOGO")))
-            {
-                System.out.println("DELETING");
-                 if (getAccLogoHidden() != null) {
-                      System.out.println("DELETING null");
-                destFile1 = new File(getAccLogoHidden());
-                System.out.println("destFile1--->" + destFile1);
-                destFile1.delete();
-                updateFile = "";
+            File destFile1 = null;
+            String updateFile = "";
+            if (!"".equals(getAccLogoHidden()) && !getAccLogoHidden().equals(Properties.getProperty("DEFAULTLOGO"))) {
+                if (getAccLogoHidden() != null) {
+                    destFile1 = new File(getAccLogoHidden());
+                    destFile1.delete();
+                    updateFile = "";
+                }
             }
-            System.out.println("destFile1 --->" + destFile1);
-            }
-            System.out.println("account logo--->"+getFileFileName());
             if (getFileFileName() == null) {
-                System.out.println("file is null so it adds only data in task_list table");
+//                System.out.println("file is null so it adds only data in task_list table");
             } else {
-                // String visaAttachPath = dataSourceDataProvider.getInstance().getConsultVisaAttachment(getConsultantId());
-
-                // System.out.println("visaAttachPath from db-->" + visaAttachPath);
-
-                  String basename = FilenameUtils.getBaseName(fileFileName);
-                    String extension = FilenameUtils.getExtension(fileFileName);
+                String basename = FilenameUtils.getBaseName(fileFileName);
+                String extension = FilenameUtils.getExtension(fileFileName);
                 String filePath = "";
                 filesPath = Properties.getProperty("ACCOUNTLOGO");
                 File createPath = new File(filesPath);
                 Date dt = new Date();
                 String month = "";
                 short week = 0;
-
-
-
                 if (dt.getMonth() == 0) {
                     month = "Jan";
                 } else if (dt.getMonth() == 1) {
@@ -1880,33 +1468,17 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 week = (short) (Math.round(dt.getDate() / 7));
 
                 /*getrequestType is used to create a directory of the object type specified in the jsp page*/
-//                createPath = new File(createPath.getAbsolutePath() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
-                createPath = new File(createPath.getAbsolutePath() );
+                createPath = new File(createPath.getAbsolutePath());
                 /*This creates a directory forcefully if the directory does not exsist*/
-
-                //System.out.println("path::"+createPath);
                 createPath.mkdir();
                 /*here it takes the absolute path and the name of the file that is to be uploaded*/
-                File theFile = new File(createPath.getAbsolutePath()+ File.separator + getAccountId() + '.' + extension);
-               // File destFile = new File(filePath + File.separator + getContactId() + '.' + extension);
+                File theFile = new File(createPath.getAbsolutePath() + File.separator + getAccountId() + '.' + extension);
+                // File destFile = new File(filePath + File.separator + getContactId() + '.' + extension);
                 setFilesPath(theFile.toString());
                 /*copies the file to the destination*/
-                //fileFileName=getAccountId();
                 destFile = new File(theFile + File.separator);
                 FileUtils.copyFile(getFile(), destFile);
-               
-               
             }
-
-
-            System.out.println("this is printing file path data-->" + this.getFilesPath() + "...." + fileFileName);
-            // setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-            System.out.println("dest file--->"+destFile);
-           // ServiceLocator.getUserAjaxHandlerService().doUpdateLogo(getAccountId(), destFile.toString());
-
-
-
-
             if (destFile == null) {
                 responseString = "Error";
             }
@@ -1918,10 +1490,11 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             httpServletResponse.setContentType("text");
             httpServletResponse.getWriter().write(responseString);
         } catch (ServiceLocatorException ex) {
-            System.err.println(ex);
+            ex.printStackTrace();
         } catch (IOException ioe) {
-            System.err.println(ioe);
+            ioe.printStackTrace();
         }
+         System.out.println("********************UserAjaxHandlerAction :: logoUploadAccount End*********************");
         return null;
     }
 
@@ -1935,7 +1508,18 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
     private int usrCatType;
     //praveen
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getCategoryList() method is used for
+     *
+     * *****************************************************************************
+     */
     public String getCategoryList() throws ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getCategoryList Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 userSessionId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
@@ -1946,17 +1530,26 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getCategoryList End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : checkFileNameExistOrNot() method is used for
+     *
+     * *****************************************************************************
+     */
     public String checkFileNameExistOrNot() {
-        System.out.println("in action");
+        System.out.println("********************UserAjaxHandlerAction :: checkFileNameExistOrNot Start*********************");
         resultType = LOGIN;
         String isExist = null;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                //  isExist = ServiceLocator.getUserAjaxHandlerService().checkFileName(this);
-                System.out.println("-----cheking file name exsit or not-------" + isExist);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -1970,18 +1563,27 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             resultType = ERROR;
             e.printStackTrace();
         }
+        System.out.println("********************UserAjaxHandlerAction :: checkFileNameExistOrNot End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getQuestion() method is used for
+     *
+     * *****************************************************************************
+     */
     public String getQuestion() {
+        System.out.println("********************UserAjaxHandlerAction :: getQuestion Start*********************");
         try {
             /*
              *This if loop is to check whether there is Session or not
              **/
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ONLINE_EXAM_CONSULTANTID) != null) {
-                //System.out.println(getAnswer1()+""+getAnswer2()+""+getAnswer3()+""+getAnswer4()+""+getAnswer5()+""+getAnswer6());
-                // responseString = ServiceLocator.getAjaxHandlerService().getQuestion(getQuestionNo(),httpServletRequest,getSelectedAns(),getNavigation(),getRemainingQuestions(),getOnClickStatus(),getSubTopicId());
-
                 responseString = ServiceLocator.getUserAjaxHandlerService().getQuestion(getQuestionNo(), httpServletRequest, getSelectedAns(), getNavigation(), getRemainingQuestions(), getOnClickStatus(), getSubTopicId(), getSpecficQuestionNo(), this);
                 httpServletResponse.setContentType("text/xml");
                 System.out.println("responseString-->" + responseString);
@@ -1992,10 +1594,22 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        System.out.println("********************UserAjaxHandlerAction :: getQuestion End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getEmpRecruitment() method is used for
+     *
+     * *****************************************************************************
+     */
     public String getEmpRecruitment() throws IOException, ServiceLocatorException {
+        System.out.println("********************UserAjaxHandlerAction :: getEmpRecruitment Start*********************");
         try {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -2005,10 +1619,22 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: getEmpRecruitment End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getActionNames() method is used for
+     *
+     * *****************************************************************************
+     */
     public String getActionNames() {
+        System.out.println("********************UserAjaxHandlerAction :: getActionNames Start*********************");
         resultMessage = LOGIN;
         List<String> ActionNames = new ArrayList<String>();
         String result = "";
@@ -2018,12 +1644,9 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 String accType = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 ActionNames = com.mss.msp.util.DataSourceDataProvider.getInstance().getActionNamesList(getSessionOrgId(), roleId, accType);
-                System.out.println("----------------------------list--------------------" + ActionNames);
                 for (int i = 0; i < ActionNames.size(); i++) {
                     result += ActionNames.get(i) + "|";
                 }
-                //result+="^";
-                System.out.println("in getHomeRedirectSearchDetails action" + result);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -2035,15 +1658,26 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************UserAjaxHandlerAction :: getActionNames End*********************");
         return null;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getActionDescription() method is used for
+     *
+     * *****************************************************************************
+     */
     public String getActionDescription() {
+        System.out.println("********************UserAjaxHandlerAction :: getActionDescription Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getActionDescription(getActionName());
-                System.out.println("in getHomeRedirectSearchDetails action" + result);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -2055,36 +1689,31 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************UserAjaxHandlerAction :: getActionDescription End*********************");
         return null;
     }
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : poReleaseMethod() method is used for
+     *
+     * *****************************************************************************
+     */
     public String poReleaseMethod() throws IOException, ServiceLocatorException, Exception {
+        System.out.println("********************UserAjaxHandlerAction :: poReleaseMethod Start*********************");
         try {
             MailManager mailManager = new MailManager();
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-            //responseString = ServiceLocator.getUserAjaxHandlerService().getEmpRecruitment(this);
-            //System.out.println("heelo babu--->"+Properties.getProperty("Sample.upload"));
-            //ServiceLocator.getUserAjaxHandlerService().poRelease(this);
             String customerName = DataSourceDataProvider.getInstance().getAccountNameById(getSessionOrgId());
-
-
             responseString = ServiceLocator.getUserAjaxHandlerService().poRelease(this);
-            //filesPath = Properties.getProperty("POATTACHMENT").toString();
-
-
             File createPath = new File(Properties.getProperty("POATTACHMENT").toString());
-
-            System.out.println("createPath.getAbsolutePath()-->" + createPath.getAbsolutePath());
-
-
-
-
-
-
-
             Date dt = new Date();
             /*The month is generated from here*/
-
             String month = "";
             if (dt.getMonth() == 0) {
                 month = "Jan";
@@ -2113,50 +1742,30 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
             }
             short week = (short) (Math.round(dt.getDate() / 7));
             /*getrequestType is used to create a directory of the object type specified in the jsp page*/
-            // createPath = new File(createPath.getAbsolutePath() + "/" + getSessionOrgId() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
             /*This creates a directory forcefully if the directory does not exsist*/
-
-
-
-
             String poFileName = getRequirementId() + "_" + getUserId() + "PO";
             poFileName = poFileName.concat(".pdf");
-
             String path = createPath.getAbsolutePath() + File.separator + File.separator + getSessionOrgId() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week) + File.separator + poFileName;
 // Use relative path for Unix systems
             String filePath = createPath.toString() + File.separator + getSessionOrgId() + File.separator + String.valueOf(dt.getYear() + 1900) + File.separator + month + File.separator + String.valueOf(week) + File.separator;
             String fileAttch = filePath.concat(poFileName);
-
-            System.out.println("fileAttch-->" + fileAttch + "--->filepath--->" + filePath);
             File f = new File(path);
-
             f.getParentFile().mkdirs();
             f.createNewFile();
-
-
-
-
-
             /*copies the file to the destination*/
-            //   File destFile = new File(theFile + File.separator + poFileName);
-
-
-
-
             PDFGenerator.getPOPDF(this, f.toString(), customerName);
-            System.out.println("-->" + f.toString() + "-->" + poFileName + "--->" + f.toString());
             ServiceLocator.getUserAjaxHandlerService().insertPoAttachment(this, f.toString(), filePath, poFileName);
-            System.out.println("account logo--->" + getAcclogo());
             mailManager.sendPOStatement(this, getAcclogo(), fileAttch, poFileName, customerName);
-
             responseString = "send";
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {
             System.err.println(ioe);
         }
+        System.out.println("********************UserAjaxHandlerAction :: poReleaseMethod End*********************");
         return null;
     }
+
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
@@ -3483,6 +3092,4 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
     public void setOverTimeLimit(String overTimeLimit) {
         this.overTimeLimit = overTimeLimit;
     }
-    
-    
 }

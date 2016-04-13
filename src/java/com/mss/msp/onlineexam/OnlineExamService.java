@@ -14,7 +14,6 @@ import java.util.Map;
 public interface OnlineExamService {
    public void getTokenInfo(OnlineExamAction onlineExamAction) throws ServiceLocatorException;
    public void getValidationInfo(OnlineExamAction onlineExamAction) throws ServiceLocatorException;
-  
    public Map getQuestions(Map skillsMap,int totalQuestions,String level,String examType,int orgId)  throws ServiceLocatorException;
    public int getOnlineExamKey(OnlineExamAction onlineExamAction) throws ServiceLocatorException;
    public int insertAnswer(int examQuestionId,int ans1,int ans2,int ans3,int ans4,int ans5,int ans6,int consultantId,int examKey,int skiiId,int reqid,String status,int examId) throws ServiceLocatorException;

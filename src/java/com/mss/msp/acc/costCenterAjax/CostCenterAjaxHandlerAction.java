@@ -21,13 +21,12 @@ import org.apache.struts2.interceptor.ServletResponseAware;
  *
  * @author miracle
  */
-public class CostCenterAjaxHandlerAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
+public class CostCenterAjaxHandlerAction extends ActionSupport implements ServletRequestAware, ServletResponseAware {
+
     private String resultType;
     private HttpServletRequest httpServletRequest;
     private HttpServletResponse httpServletResponse;
     // move this code to last line of this class and rebuild the code and tes the flow..
-    
-    
     private int sessionOrgId;
     private List costCenterSearchList;
     private String ccCode;
@@ -41,40 +40,35 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
     private double budgetAmt;
     private int id;
     private String year;
-    
     private int orgId;
     private int dashBoardYear;
     private String typeOfUser;
     private String costCenters;
-     private String quarter;
-     private String budgetStatus;
+    private String quarter;
+    private String budgetStatus;
     private String approveComments;
     private String rejectionComments;
-    
-    
-    
+
     /**
      * *****************************************************************************
      * Date : september 30, 2015, 04:13 PM EST
+     *
      * Author:Manikanta<meeralla@miraclesoft.com>
      *
-     * 
+     * ForUse :getCostCenterDashboardList() method is used to
+     *
      * *****************************************************************************
      */
-    public String getCostCenterDashboardList(){
+    public String getCostCenterDashboardList() {
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+            System.out.println("********************CostCenterAjaxHandlerAction :: getCostCenterDashboardList Method Start*********************");
             try {
-                String resultString =null;
+                String resultString = null;
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("---------in adding cost center--------------");
                 setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
-               
-                resultString= ServiceLocator.getCostCenterAjaxHandlerService().getCostCenterDashboardDetails(this);
-           
-                
-                System.out.println("--------------"+resultString);
-                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                resultString = ServiceLocator.getCostCenterAjaxHandlerService().getCostCenterDashboardDetails(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
@@ -83,31 +77,31 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
             }
-        }   
+        }
+        System.out.println("********************CostCenterAjaxHandlerAction :: getCostCenterDashboardList Method End*********************");
         return null;
     }
-   /**
+
+    /**
      * *****************************************************************************
      * Date : september 30, 2015, 04:13 PM EST
+     *
      * Author:Manikanta<meeralla@miraclesoft.com>
      *
-     * 
+     * ForUse : getCostCentersDashboardForOrg() method is used to
+     *
      * *****************************************************************************
      */
-    public String getCostCentersDashboardForOrg(){
+    public String getCostCentersDashboardForOrg() {
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+            System.out.println("********************CostCenterAjaxHandlerAction :: getCostCentersDashboardForOrg Method Start*********************");
             try {
-                String resultString =null;
+                String resultString = null;
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("---------in adding cost center--------------");
                 setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTypeOfUser(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
-               
-                resultString= ServiceLocator.getCostCenterAjaxHandlerService().getCostCentersDashboardForOrg(this);
-           
-                
-                System.out.println("--------------"+resultString);
-                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                resultString = ServiceLocator.getCostCenterAjaxHandlerService().getCostCentersDashboardForOrg(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
@@ -116,47 +110,54 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
             }
-        }   
+        }
+        System.out.println("********************CostCenterAjaxHandlerAction :: getCostCentersDashboardForOrg Method End*********************");
         return null;
     }
-    
+
     /**
      * *****************************************************************************
      * Date : October 14, 2015, 04:13 PM EST
+     *
      * Author:Divya<dgandreti@miraclesoft.com>
      *
-     * 
+     * ForUse : getProjectNamesInCostCenter() method is used to
+     *
      * *****************************************************************************
      */
-    public String getProjectNamesInCostCenter(){
-       if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+    public String getProjectNamesInCostCenter() {
+        if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+            System.out.println("********************CostCenterAjaxHandlerAction :: getCostCentersDashboardForOrg Method Start*********************");
             try {
-                String resultString =null;
-                System.out.println("-----enter in cc------------orject names-------");
-                 resultString= ServiceLocator.getCostCenterAjaxHandlerService().getProjectNamesInCostCenter(this);
-                 System.out.println("----------projects namess in cocst center-----------"+resultString);
-                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                String resultString = null;
+                resultString = ServiceLocator.getCostCenterAjaxHandlerService().getProjectNamesInCostCenter(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
-                 httpServletResponse.setContentType("text");
+                httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
             }
-        }   
-        return null;  
-    }  
+        }
+        System.out.println("********************CostCenterAjaxHandlerAction :: getCostCentersDashboardForOrg Method End*********************");
+        return null;
+    }
+
     /**
      * *****************************************************************************
      * Date : september 30, 2015, 04:13 PM EST
+     *
      * Author:Divya<dgandreti@miraclesoft.com>
      *
+     * ForUse : costCenterInfoSearchList() method is used to
      *
      * *****************************************************************************
      */
     public String costCenterInfoSearchList() {
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+            System.out.println("********************CostCenterAjaxHandlerAction :: costCenterInfoSearchList Method Start*********************");
             try {
                 String resultString = null;
                 resultString = ServiceLocator.getCostCenterAjaxHandlerService().costCenterInfoSearchList(this);
@@ -170,30 +171,33 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
             }
         }
+        System.out.println("********************CostCenterAjaxHandlerAction :: costCenterInfoSearchList Method End*********************");
         return null;
     }
-     /**
+
+    /**
      * *****************************************************************************
      * Date : september 30, 2015, 04:13 PM EST
+     *
      * Author:Divya<dgandreti@miraclesoft.com>
      *
+     * ForUse : addCostCenter() method is used to
      *
      * *****************************************************************************
      */
     public String addCostCenter() {
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+            System.out.println("********************CostCenterAjaxHandlerAction :: addCostCenter Method Start*********************");
             try {
                 String resultString = null;
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                System.out.println("---------in adding cost center--------------");
                 setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 if ("edit".equalsIgnoreCase(getCcFlag())) {
                     resultString = ServiceLocator.getCostCenterAjaxHandlerService().editCostCenter(this);
                 } else {
                     resultString = ServiceLocator.getCostCenterAjaxHandlerService().addCostCenter(this);
                 }
-                System.out.println("--------------" + resultString);
-                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
@@ -203,71 +207,82 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
             }
         }
+        System.out.println("********************CostCenterAjaxHandlerAction :: addCostCenter Method Start*********************");
         return null;
     }
-  /**
-     * *****************************************************************************
-     * Date : september 30, 2015, 04:13 PM EST
-     * Author:Divya<dgandreti@miraclesoft.com>
-     *
-     * 
-     * *****************************************************************************
-     */
-    public String addCostCenterBudget(){
-        System.out.println("------------------");
-       if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-            try {
-                String resultString =null;
-                System.out.println("-------------------ddd----------");
-                setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-                setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                 resultString= ServiceLocator.getCostCenterAjaxHandlerService().addCostCenterBudget(this);
-                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-                httpServletResponse.setHeader("Pragma", "no-cache");
-                httpServletResponse.setDateHeader("Expires", 0);
-                 httpServletResponse.setContentType("text");
-                httpServletResponse.setCharacterEncoding("UTF-8");
-                httpServletResponse.getWriter().write(resultString);
-            } catch (Exception ex) {
-                httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
-            }
-        }   
-        return null; 
-    }
+
     /**
      * *****************************************************************************
      * Date : september 30, 2015, 04:13 PM EST
+     *
      * Author:Divya<dgandreti@miraclesoft.com>
      *
-     * 
+     * ForUse : addCostCenterBudget() method is used to
+     *
      * *****************************************************************************
      */
-    public String getCostCenterBudgetDetails(){
-      if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+    public String addCostCenterBudget() {
+        if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+            System.out.println("********************CostCenterAjaxHandlerAction :: addCostCenterBudget Method Start*********************");
             try {
-                String resultString =null;
+                String resultString = null;
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                 resultString= ServiceLocator.getCostCenterAjaxHandlerService().getCostCenterBudgetDetails(this);
+                resultString = ServiceLocator.getCostCenterAjaxHandlerService().addCostCenterBudget(this);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
-                 httpServletResponse.setContentType("text");
+                httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(resultString);
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
             }
-        }   
-        return null;   
+        }
+        System.out.println("********************CostCenterAjaxHandlerAction :: addCostCenterBudget Method End*********************");
+        return null;
     }
-            
+
+    /**
+     * *****************************************************************************
+     * Date : september 30, 2015, 04:13 PM EST
+     *
+     * Author:Divya<dgandreti@miraclesoft.com>
+     *
+     * ForUse : getCostCenterBudgetDetails() method is used to
+     *
+     * *****************************************************************************
+     */
+    public String getCostCenterBudgetDetails() {
+        if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
+            System.out.println("********************CostCenterAjaxHandlerAction :: getCostCenterBudgetDetails Method Start*********************");
+            try {
+                String resultString = null;
+                setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
+                setSessionUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
+                resultString = ServiceLocator.getCostCenterAjaxHandlerService().getCostCenterBudgetDetails(this);
+                httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpServletResponse.setHeader("Pragma", "no-cache");
+                httpServletResponse.setDateHeader("Expires", 0);
+                httpServletResponse.setContentType("text");
+                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.getWriter().write(resultString);
+            } catch (Exception ex) {
+                httpServletRequest.getSession(false).setAttribute("errorMessage", ex.toString());
+            }
+        }
+        System.out.println("********************CostCenterAjaxHandlerAction :: getCostCenterBudgetDetails Method End*********************");
+        return null;
+    }
+
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
- public void setServletResponse(HttpServletResponse hsr) {
+
+    public void setServletResponse(HttpServletResponse hsr) {
         this.httpServletResponse = hsr;
     }
+
     public int getSessionOrgId() {
         return sessionOrgId;
     }
@@ -372,7 +387,6 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
         this.year = year;
     }
 
-   
     public int getDashBoardYear() {
         return dashBoardYear;
     }
@@ -436,6 +450,4 @@ public class CostCenterAjaxHandlerAction extends ActionSupport implements Servle
     public void setRejectionComments(String rejectionComments) {
         this.rejectionComments = rejectionComments;
     }
-    
-
 }

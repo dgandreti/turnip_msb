@@ -8,6 +8,7 @@ import com.mss.msp.util.ConnectionProvider;
 import com.mss.msp.util.DataSourceDataProvider;
 import com.mss.msp.util.ServiceLocatorException;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,78 +21,106 @@ import java.sql.Statement;
  */
 public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService {
 
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString = "";
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : insertOrUpdateAccAuth() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String insertOrUpdateAccAuth(AccAuthAjaxHandlerAction accAuthAjaxHandlerAction) throws ServiceLocatorException {
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: insertOrUpdateAccAuth Method Start*********************");
         int result = 0;
         String resultMessage = "";
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         String queryString = "";
-        //StringBuffer sb = new StringBuffer();
-        System.out.println("getActionName-->" + accAuthAjaxHandlerAction.getActionName());
-        System.out.println("Status-->" + accAuthAjaxHandlerAction.getStatus());
-        System.out.println("Desc-->" + accAuthAjaxHandlerAction.getDesc());
 
+        String status = "";
+        String updateAction = "";
+        String exist = "";
+        String available = "";
         try {
-             connection = ConnectionProvider.getInstance().getConnection();
+            connection = ConnectionProvider.getInstance().getConnection();
             if (accAuthAjaxHandlerAction.getFlag() == 0) {
-                String exist = this.checkActionExistOrNot(accAuthAjaxHandlerAction.getActionName());
+                exist = this.checkActionExistOrNot(accAuthAjaxHandlerAction.getActionName());
                 if (exist.equalsIgnoreCase("exist")) {
-                    System.out.println("existed action");
+
                     resultMessage = "Already existed";
-                }
-                else
-                {    
-                queryString = "insert into ac_action (action_name,status,description) values('" + accAuthAjaxHandlerAction.getActionName() + "'," + "'Active','" + accAuthAjaxHandlerAction.getDesc() + "')";
-                System.out.println("queryString-->" + queryString);
-                statement = connection.createStatement();
-                result = statement.executeUpdate(queryString);
-                resultMessage = "Successfully inserted";
+                } else {
+                    queryString = "insert into ac_action (action_name,status,description) values('" + accAuthAjaxHandlerAction.getActionName() + "'," + "'Active','" + accAuthAjaxHandlerAction.getDesc() + "')";
+                    System.out.println("insertOrUpdateAccAuth :: query string ------>" + queryString);
+                    statement = connection.createStatement();
+                    result = statement.executeUpdate(queryString);
+                    resultMessage = "Successfully inserted";
                 }
             } else {
-                
-                queryString = " update ac_action SET action_name=?,status=?,description=? WHERE action_id =" + accAuthAjaxHandlerAction.getActionId();
 
-                //System.out.println("get edit skill details update query" + queryStringupdate);
-                preparedStatement = connection.prepareStatement(queryString);
-                preparedStatement.setString(1, accAuthAjaxHandlerAction.getActionName());
-                preparedStatement.setString(2, accAuthAjaxHandlerAction.getStatus());
-                preparedStatement.setString(3, accAuthAjaxHandlerAction.getDesc());
-                
-                result = preparedStatement.executeUpdate();
+                if (!accAuthAjaxHandlerAction.getActionName().equals(accAuthAjaxHandlerAction.getActionHiddenName())) {
+                    exist = this.checkActionExistOrNot(accAuthAjaxHandlerAction.getActionName());
+                    if (exist.equalsIgnoreCase("exist")) {
+
+                        resultMessage = "Already existed";
+                    } else {
+                        available = "notExisted";
+                    }
+                } else {
+                    available = "notExisted";
+                }
+                if ("notExisted".equals(available)) {
+                    if ("Active".equals(accAuthAjaxHandlerAction.getStatus())) {
+
+                        updateAction = "Action";
+
+                    } else {
+                        status = "In-Active";
+                    }
+                    if ("Action".equals(updateAction)) {
+                        queryString = " update ac_action  SET action_name=?,status=?,description=? WHERE action_id =" + accAuthAjaxHandlerAction.getActionId();
+
+                        preparedStatement = connection.prepareStatement(queryString);
+                        preparedStatement.setString(1, accAuthAjaxHandlerAction.getActionName());
+                        preparedStatement.setString(2, accAuthAjaxHandlerAction.getStatus());
+                        preparedStatement.setString(3, accAuthAjaxHandlerAction.getDesc());
+
+                    } else {
+                        queryString = " update ac_action a ,ac_resources ar SET a.action_name=?,a.status=?,a.description=?,ar.status=? WHERE a.action_id =" + accAuthAjaxHandlerAction.getActionId() + " AND ar.action_id=" + accAuthAjaxHandlerAction.getActionId();
+
+                        preparedStatement = connection.prepareStatement(queryString);
+                        preparedStatement.setString(1, accAuthAjaxHandlerAction.getActionName());
+                        preparedStatement.setString(2, accAuthAjaxHandlerAction.getStatus());
+                        preparedStatement.setString(3, accAuthAjaxHandlerAction.getDesc());
+                        preparedStatement.setString(4, status);
+                    }
+                    System.out.println("insertOrUpdateAccAuth :: query string ------>" + queryString);
+
+                    result = preparedStatement.executeUpdate();
+                }
+
             }
-//            if (result > 0) {
-//                Connection connection1 = null;
-//                Statement statement1 = null;
-//                ResultSet resultSet1 = null;
-//                DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
-//                connection1 = ConnectionProvider.getInstance().getConnection();
-//                String queryString1 = "SELECT `action_id`, `action_name`, `status`, `description` FROM `servicebay`.`ac_action` where status='" + accAuthAjaxHandlerAction.getStatus() + "' LIMIT 0,150  ";
-//
-//                statement1 = connection1.createStatement();
-//                resultSet1 = statement1.executeQuery(queryString1);
-//                while (resultSet1.next()) {
-//
-//                    resultMessage += resultSet1.getInt("action_id") + "|"
-//                            + resultSet1.getString("action_name") + "|"
-//                            + resultSet1.getString("status") + "|"
-//                            + resultSet1.getString("description") + "^";
-//                }
-//                System.out.println("In Result if" + queryString1);
-//
-//            }
-            //System.out.println("String-->" + sb);
-            //System.out.println("String-->" + sb);
+
         } catch (SQLException sqle) {
             throw new ServiceLocatorException(sqle);
         } finally {
             try {
-                if (resultSet != null) {
+                if (statement != null) {
 
-                    resultSet.close();
-                    resultSet = null;
+                    statement.close();
+                    statement = null;
                 }
                 if (preparedStatement != null) {
                     preparedStatement.close();
@@ -103,68 +132,73 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     connection = null;
                 }
             } catch (SQLException sql) {
-                //System.err.print("Error :"+sql);
             }
 
         }
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: insertOrUpdateAccAuth Method End*********************");
         return resultMessage;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getRolesForAccType() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getRolesForAccType(AccAuthAjaxHandlerAction accAuthAjaxHandlerAction) throws ServiceLocatorException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+
         int result = 0;
         String resultMessage = "";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         String queryString = "";
-        //StringBuffer sb = new StringBuffer();
-//        System.out.println("getActionName-->" + accAuthAjaxHandlerAction.getActionName());
-//        System.out.println("Status-->" + accAuthAjaxHandlerAction.getStatus());
-//        System.out.println("Desc-->" + accAuthAjaxHandlerAction.getDesc());
+
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: getRolesForAccType Method Start*********************");
 
         try {
-            
+
             connection = ConnectionProvider.getInstance().getConnection();
             if ("-1".equals(accAuthAjaxHandlerAction.getAccType())) {
                 queryString = "SELECT `role_id`,`role_name`,org_type FROM `servicebay`.`roles` ";
-                
-                
+
             } else {
                 queryString = "SELECT `role_id`,`role_name`,org_type FROM `servicebay`.`roles` WHERE org_type='" + accAuthAjaxHandlerAction.getAccType() + "' ";
             }
-            System.out.println("queryString-->" + queryString);
+            System.out.println("getRolesForAccType::queryString-->" + queryString);
 
             preparedStatement = connection.prepareStatement(queryString);
-            // preparedStatement.setInt(1, dept_id);
+
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String roleName="";
-                   if (resultSet.getString("role_name").equalsIgnoreCase("Employee") || resultSet.getString("role_name").equalsIgnoreCase("Team Lead") || resultSet.getString("role_name").equalsIgnoreCase("Manager")) {
+                String roleName = "";
+                if (resultSet.getString("role_name").equalsIgnoreCase("Employee") || resultSet.getString("role_name").equalsIgnoreCase("Team Lead") || resultSet.getString("role_name").equalsIgnoreCase("Manager")) {
                     if (resultSet.getString("org_type").equalsIgnoreCase("C")) {
                         roleName += "Customer." + resultSet.getString("role_name");
-                        System.out.println(roleName);
+
                     } else if (resultSet.getString("org_type").equalsIgnoreCase("V")) {
                         roleName += "Vendor." + resultSet.getString("role_name");
                     } else {
                         roleName += resultSet.getString("role_name");
                     }
-                   resultMessage += resultSet.getInt("role_id") + "#" + roleName + "^";
-                }else{
+                    resultMessage += resultSet.getInt("role_id") + "#" + roleName + "^";
+                } else {
                     resultMessage += resultSet.getInt("role_id") + "#" + resultSet.getString("role_name") + "^";
-                } 
-               
-            }
-             System.out.println("resultMessage--->"+resultMessage);
+                }
 
-            //System.out.println("String-->" + sb);
+            }
+
         } catch (SQLException sqle) {
             throw new ServiceLocatorException(sqle);
         } finally {
             try {
                 if (resultSet != null) {
-
                     resultSet.close();
                     resultSet = null;
                 }
@@ -178,23 +212,35 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     connection = null;
                 }
             } catch (SQLException sql) {
-                //System.err.print("Error :"+sql);
             }
 
         }
-        return resultMessage;
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: getRolesForAccType Method End*********************");
 
+        return resultMessage;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getAccountNames() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String getAccountNames(AccAuthAjaxHandlerAction accAuthAjaxHandlerAction) throws ServiceLocatorException {
-        boolean isGetting = false;
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        StringBuffer sb = new StringBuffer();
         String queryString = "";
-
+        boolean isGetting = false;
+        StringBuffer sb = new StringBuffer();
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: getAccountNames Method Start*********************");
         if ("dashboard".equals(accAuthAjaxHandlerAction.getAccNameFlag())) {
 
             if (accAuthAjaxHandlerAction.getTypeOfUser().equalsIgnoreCase("SA") || "V".equals(accAuthAjaxHandlerAction.getAccType())) {
@@ -211,21 +257,20 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
             }
 
         } else {
-          if("-1".equals(accAuthAjaxHandlerAction.getAccType()))
-            {
-            queryString = "SELECT a.account_name ,a.account_id FROM accounts a LEFT OUTER JOIN org_rel o ON(a.account_id=o.related_org_Id) WHERE "
-                    + " a.account_name LIKE '%" + accAuthAjaxHandlerAction.getAccName() + "%'";
-            }
-            else
-            {     
-              queryString = "SELECT a.account_name ,a.account_id FROM accounts a LEFT OUTER JOIN org_rel o ON(a.account_id=o.related_org_Id) WHERE o.type_of_relation='" + accAuthAjaxHandlerAction.getAccType() + "'"
-                    + " AND a.account_name LIKE '%" + accAuthAjaxHandlerAction.getAccName() + "%'";   
+            if ("-1".equals(accAuthAjaxHandlerAction.getAccType())) {
+                queryString = "SELECT a.account_name ,a.account_id FROM accounts a LEFT OUTER JOIN org_rel o ON(a.account_id=o.related_org_Id) WHERE "
+                        + " a.account_name LIKE '%" + accAuthAjaxHandlerAction.getAccName() + "%'";
+            } else {
+                queryString = "SELECT a.account_name ,a.account_id FROM accounts a LEFT OUTER JOIN org_rel o ON(a.account_id=o.related_org_Id) WHERE o.type_of_relation='" + accAuthAjaxHandlerAction.getAccType() + "'"
+                        + " AND a.account_name LIKE '%" + accAuthAjaxHandlerAction.getAccName() + "%'";
             }
         }
+        System.out.println("getAccountNames::queryString-->" + queryString);
+
         try {
-            System.out.println("queryString-->" + queryString);
+
             connection = ConnectionProvider.getInstance().getConnection();
-            // System.out.println("query-->getEmployeeDetails"+queryString);
+
             preparedStatement = connection.prepareStatement(queryString);
             resultSet = preparedStatement.executeQuery();
 
@@ -245,7 +290,7 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     }
                     sb.append("<NAME>" + title + "</NAME>");
                 }
-                //sb.append("<NAME>" +resultSet.getString(1) + "</NAME>");
+
                 sb.append("<ACCOUNTID>" + resultSet.getInt(2) + "</ACCOUNTID>");
                 sb.append("</ACCOUNT>");
                 isGetting = true;
@@ -253,16 +298,13 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
             }
 
             if (!isGetting) {
-                //sb.append("<EMPLOYEES>" + sb.toString() + "</EMPLOYEES>");
-                //} else {
                 isGetting = false;
-                //nothing to show
-                //  response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+
                 sb.append("<ACCOUNT><VALID>false</VALID></ACCOUNT>");
             }
             sb.append("</ACCOUNTS>");
             sb.append("</xml>");
-            //System.out.println("String-->" + sb);
+
         } catch (SQLException sqle) {
             throw new ServiceLocatorException(sqle);
         } finally {
@@ -282,28 +324,36 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     connection = null;
                 }
             } catch (SQLException sql) {
-                //System.err.print("Error :"+sql);
             }
 
         }
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: getAccountNames Method End*********************");
+
         return sb.toString();
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : getActionResorucesSearchResults() method is used to get state
+     * names of a particular country.
+     *
+     * *****************************************************************************
+     */
     public String getActionResorucesSearchResults(AccAuthAjaxHandlerAction accAuthAjaxHandlerAction) throws ServiceLocatorException {
         String resultMessage = "";
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: getActionResorucesSearchResults Method Start*********************");
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String queryString = "";
         try {
-
-
             DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
             connection = ConnectionProvider.getInstance().getConnection();
-//            String queryString = "SELECT a.id,a.action_id,a.STATUS,a.description,CASE a.org_id WHEN 0 THEN 'All'  ELSE account_name END AS account_name,role_name,action_name,type_of_relation FROM ac_action aa LEFT OUTER JOIN ac_resources a ON(aa.action_id=a.action_id) LEFT OUTER JOIN accounts "
-//                    + " ON(a.org_id=accounts.account_id) LEFT OUTER JOIN roles ON(a.usr_role_id=roles.role_id)"
-//                    + " LEFT OUTER JOIN org_rel ON(a.org_id=org_rel.related_org_Id) "
-//                    + " WHERE a.action_id=" + accAuthAjaxHandlerAction.getActionId() + "";
-            String queryString = "SELECT DISTINCT block_flag,a.id,a.action_id,a.STATUS,a.description,CASE a.org_id WHEN 0 THEN 'All'  ELSE account_name END AS account_name,role_name,action_name,org_type FROM ac_action aa LEFT OUTER JOIN ac_resources a ON(aa.action_id=a.action_id) LEFT OUTER JOIN accounts "
+            queryString = "SELECT DISTINCT block_flag,a.id,a.action_id,a.STATUS,a.description,CASE a.org_id WHEN 0 THEN 'All'  ELSE account_name END AS account_name,role_name,action_name,org_type FROM ac_action aa LEFT OUTER JOIN ac_resources a ON(aa.action_id=a.action_id) LEFT OUTER JOIN accounts "
                     + " ON(a.org_id=accounts.account_id) LEFT OUTER JOIN roles ON(a.usr_role_id=roles.role_id)"
                     + " LEFT OUTER JOIN org_rel ON(a.org_id=CASE a.org_id WHEN 0 THEN 0  ELSE org_rel.related_org_Id END) "
                     + " WHERE a.action_id=" + accAuthAjaxHandlerAction.getActionId() + "";
@@ -322,14 +372,10 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     queryString = queryString + " and a.STATUS= '" + accAuthAjaxHandlerAction.getStatus() + "'";
                 }
             }
-            System.out.println("AccName" + accAuthAjaxHandlerAction.getAccName());
             if (!"".equals(accAuthAjaxHandlerAction.getAccName())) {
                 queryString = queryString + " and account_name like '" + accAuthAjaxHandlerAction.getAccName() + "%'";
             }
-//            if (accAuthAjaxHandlerAction.getAccountName() != null || !"".equals(userAjaxHandlerAction.getAccountName())) {
-//                queryString1 = queryString1 + " and a.account_name LIKE '" + userAjaxHandlerAction.getAccountName() + "%'";
-//            }
-//LIKE '" + userAjaxHandlerAction.getEmpName() + "%' "
+            System.out.println("getActionResorucesSearchResults :: query string ------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -341,24 +387,11 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                         + resultSet.getString("a.description") + "|"
                         + resultSet.getInt("a.action_id") + "|"
                         + resultSet.getString("action_name") + "|"
-                        + resultSet.getString("org_type") + "^";
+                        + resultSet.getString("org_type") + "|"
+                        + resultSet.getString("block_flag") + "^";
 
-                /*   accauthVTO.setId(resultSet.getInt("a.id"));
-
-                 accauthVTO.setAction_id(resultSet.getInt("a.action_id"));
-                 //accauthVTO.setAction_name(resultSet.getString("action_name"));
-                 accauthVTO.setAccountName(resultSet.getString("account_name"));
-                 accauthVTO.setRollName(resultSet.getString("role_name"));
-                 accauthVTO.setAccType(resultSet.getString("type_of_relation"));
-
-
-                 accauthVTO.setStatus(resultSet.getString("a.status"));
-                 accauthVTO.setDescription(resultSet.getString("a.description"));*/
             }
-            System.out.println("In Result if" + queryString);
 
-
-            //System.out.println("String-->" + sb);
         } catch (SQLException sqle) {
             throw new ServiceLocatorException(sqle);
         } finally {
@@ -372,40 +405,58 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     connection.close();
                     connection = null;
                 }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
             } catch (SQLException sql) {
-                //System.err.print("Error :"+sql);
             }
 
         }
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: getActionResorucesSearchResults Method End*********************");
+
         return resultMessage;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : insertOrUpdateActionResources() method is used to get state
+     * names of a particular country.
+     *
+     * *****************************************************************************
+     */
     public String insertOrUpdateActionResources(AccAuthAjaxHandlerAction accAuthAjaxHandlerAction) throws ServiceLocatorException {
+
+        int result = 0;
+        String resultMessage = "";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        int result = 0;
-        String resultMessage = "";
         String queryString = "";
-        //StringBuffer sb = new StringBuffer();
-        System.out.println("getActionName-->" + accAuthAjaxHandlerAction.getActionName());
-        System.out.println("Status-->" + accAuthAjaxHandlerAction.getStatus());
-        System.out.println("Desc-->" + accAuthAjaxHandlerAction.getDesc());
+
+        String exist = "";
+        String status = accAuthAjaxHandlerAction.getStatus();
+        String available = "";
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: insertOrUpdateActionResources Method Start*********************");
 
         try {
- 
+
             connection = ConnectionProvider.getInstance().getConnection();
             if (accAuthAjaxHandlerAction.getFlag() == 0) {
-                String status = accAuthAjaxHandlerAction.getStatus();
-                String exist = this.checkActionExistForResourceOrNot(accAuthAjaxHandlerAction,status);
+
+                exist = this.checkActionExistForResourceOrNot(accAuthAjaxHandlerAction, status);
                 if (exist.equalsIgnoreCase("exist")) {
-                    System.out.println("existed al");
+
                     resultMessage = "Already existed";
                 } else {
-                   queryString = "insert into ac_resources (action_id,org_id,usr_role_id,status,description,block_flag,groupid)"
-                            + " values(" + accAuthAjaxHandlerAction.getActionId() + "," + accAuthAjaxHandlerAction.getOrgId() + "," + accAuthAjaxHandlerAction.getRoles() + ",'" + status + "','" + accAuthAjaxHandlerAction.getDesc() + "'," + accAuthAjaxHandlerAction.getBlockFlag() + "," + accAuthAjaxHandlerAction.getUserGroupId() + ")";                                                      
-                    System.out.println("queryString-->" + queryString);
+                    queryString = "insert into ac_resources (action_id,org_id,usr_role_id,status,description,block_flag,groupid)"
+                            + " values(" + accAuthAjaxHandlerAction.getActionId() + "," + accAuthAjaxHandlerAction.getOrgId() + "," + accAuthAjaxHandlerAction.getRoles() + ",'" + status + "','" + accAuthAjaxHandlerAction.getDesc() + "'," + accAuthAjaxHandlerAction.getBlockFlag() + "," + accAuthAjaxHandlerAction.getUserGroupId() + ")";
+
                     statement = connection.createStatement();
                     result = statement.executeUpdate(queryString);
                     resultMessage = "Added Successfuiiy";
@@ -413,35 +464,44 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
 
             } else {
 
-                queryString = " update ac_resources SET org_id=?,usr_role_id=?,status=?,description=?,block_flag=?,groupid=? WHERE id =" + accAuthAjaxHandlerAction.getId();
+                if (accAuthAjaxHandlerAction.getRoles() != accAuthAjaxHandlerAction.getActionHiddenRole()) {
+                    exist = this.checkActionExistForResourceOrNot(accAuthAjaxHandlerAction, status);
+                    if (exist.equalsIgnoreCase("exist")) {
 
-                
-                preparedStatement = connection.prepareStatement(queryString);
-                preparedStatement.setInt(1, accAuthAjaxHandlerAction.getOrgId());
-                preparedStatement.setInt(2, accAuthAjaxHandlerAction.getRoles());
-                preparedStatement.setString(3, accAuthAjaxHandlerAction.getStatus());
-                preparedStatement.setString(4, accAuthAjaxHandlerAction.getDesc());
-                preparedStatement.setInt(5, accAuthAjaxHandlerAction.getBlockFlag());
-                preparedStatement.setInt(6, accAuthAjaxHandlerAction.getUserGroupId());
+                        resultMessage = "Already existed";
+                    } else {
+                        available = "notExisted";
+                    }
+                } else {
+                    available = "notExisted";
+                }
 
-                result = preparedStatement.executeUpdate();
-                resultMessage = "Updated Successfully";
-               
+                if ("notExisted".equals(available)) {
+                    queryString = " update ac_resources SET org_id=?,usr_role_id=?,status=?,description=?,block_flag=?,groupid=? WHERE id =" + accAuthAjaxHandlerAction.getId();
+
+                    preparedStatement = connection.prepareStatement(queryString);
+                    preparedStatement.setInt(1, accAuthAjaxHandlerAction.getOrgId());
+                    preparedStatement.setInt(2, accAuthAjaxHandlerAction.getRoles());
+                    preparedStatement.setString(3, accAuthAjaxHandlerAction.getStatus());
+                    preparedStatement.setString(4, accAuthAjaxHandlerAction.getDesc());
+                    preparedStatement.setInt(5, accAuthAjaxHandlerAction.getBlockFlag());
+                    preparedStatement.setInt(6, accAuthAjaxHandlerAction.getUserGroupId());
+
+                    result = preparedStatement.executeUpdate();
+                    resultMessage = "Updated Successfully";
+                }
             }
 
+            System.out.println("insertOrUpdateActionResources::queryString----------->" + queryString);
 
-            System.out.println("In Result if" + queryString);
-
-
-            //System.out.println("String-->" + sb);
         } catch (SQLException sqle) {
             throw new ServiceLocatorException(sqle);
         } finally {
             try {
-                if (resultSet != null) {
+                if (statement != null) {
 
-                    resultSet.close();
-                    resultSet = null;
+                    statement.close();
+                    statement = null;
                 }
                 if (preparedStatement != null) {
                     preparedStatement.close();
@@ -453,73 +513,58 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     connection = null;
                 }
             } catch (SQLException sql) {
-                //System.err.print("Error :"+sql);
             }
 
         }
-        System.out.println("resultMessage" + resultMessage);
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: insertOrUpdateActionResources Method End*********************");
+
         return resultMessage;
 
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : actionResourceTermination() method is used to get state names of
+     * a particular country.
+     *
+     * *****************************************************************************
+     */
     public String actionResourceTermination(AccAuthAjaxHandlerAction accAuthAjaxHandlerAction) throws ServiceLocatorException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: actionResourceTermination Method Start*********************");
         int result = 0;
         String resultMessage = "";
+        String status = "";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         String queryString = "";
+
+        if ("Active".equals(accAuthAjaxHandlerAction.getActionResourceStatus())) {
+            status = "In-Active";
+        } else {
+            status = "Active";
+        }
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-           
-                queryString = " update ac_resources SET status=? WHERE id =" + accAuthAjaxHandlerAction.getId();
+            queryString = " update ac_resources SET status=? WHERE id =" + accAuthAjaxHandlerAction.getId();
+            preparedStatement = connection.prepareStatement(queryString);
+            preparedStatement.setString(1, status);
+            result = preparedStatement.executeUpdate();
 
-                //System.out.println("get edit skill details update query" + queryStringupdate);
-                preparedStatement = connection.prepareStatement(queryString);
-                preparedStatement.setString(1, "In-Active");
-
-                result = preparedStatement.executeUpdate();
-            
             if (result > 0) {
-              resultMessage="Deleted Successfully";  
-//                Connection connection1 = null;
-//                Statement statement1 = null;
-//                ResultSet resultSet1 = null;
-//               // DataSourceDataProvider dsdp = DataSourceDataProvider.getInstance();
-//                connection1 = ConnectionProvider.getInstance().getConnection();
-//               // String queryString1 = "SELECT `action_id`, `action_name`, `status`, `description` FROM `servicebay`.`ac_action` where status='" + accAuthAjaxHandlerAction.getStatus() + "' LIMIT 0,150  ";
-//                
-//                String queryString1 = "SELECT a.id,a.action_id,a.STATUS,a.description,CASE a.org_id WHEN 0 THEN 'All'  ELSE account_name END AS account_name,role_name,action_name,type_of_relation FROM ac_action aa LEFT OUTER JOIN ac_resources a ON(aa.action_id=a.action_id) LEFT OUTER JOIN accounts "
-//                    + " ON(a.org_id=accounts.account_id) LEFT OUTER JOIN roles ON(a.usr_role_id=roles.role_id)"
-//                    + " LEFT OUTER JOIN org_rel ON(a.org_id=org_rel.related_org_Id) "
-//                    + " WHERE a.action_id=" + accAuthAjaxHandlerAction.getActionId() + "";
-//                statement1 = connection1.createStatement();
-//                resultSet1 = statement1.executeQuery(queryString1);
-//                while (resultSet1.next()) {
-//
-//                  resultMessage += resultSet.getInt("a.id") + "|"
-//                        + resultSet.getString("account_name") + "|"
-//                        + resultSet.getString("role_name") + "|"
-//                        + resultSet.getString("a.status") + "|"
-//                        + resultSet.getString("a.description") + "|"
-//                        + resultSet.getInt("a.action_id") + "|"
-//                        + resultSet.getString("action_name") + "|"
-//                        + resultSet.getString("type_of_relation") + "^";
-//                }
-//                System.out.println("In Result if" + queryString1);
-//
+                resultMessage = "Deleted Successfully";
+
             }
-            //System.out.println("String-->" + sb);
+
         } catch (SQLException sqle) {
             throw new ServiceLocatorException(sqle);
         } finally {
             try {
-                if (resultSet != null) {
 
-                    resultSet.close();
-                    resultSet = null;
-                }
                 if (preparedStatement != null) {
                     preparedStatement.close();
                     preparedStatement = null;
@@ -530,43 +575,51 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     connection = null;
                 }
             } catch (SQLException sql) {
-                //System.err.print("Error :"+sql);
             }
 
         }
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: actionResourceTermination Method End*********************");
         return resultMessage;
 
     }
-    public String checkActionExistForResourceOrNot(AccAuthAjaxHandlerAction accAuthAjaxHandlerAction,String status) throws ServiceLocatorException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : checkActionExistForResourceOrNot() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
+    public String checkActionExistForResourceOrNot(AccAuthAjaxHandlerAction accAuthAjaxHandlerAction, String status) throws ServiceLocatorException {
+
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: checkActionExistForResourceOrNot Method Start*********************");
         int result = 0;
         String resultMessage = "";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         String queryString = "";
-        System.out.println(accAuthAjaxHandlerAction.getActionId()+","+accAuthAjaxHandlerAction.getOrgId()+","+accAuthAjaxHandlerAction.getRoles());
-      //  AccAuthAjaxHandlerAction accAuthAjaxHandlerAction=new AccAuthAjaxHandlerAction();
         try {
-            System.out.println("method checkActionExistForResourceOrNot()");
-            connection = ConnectionProvider.getInstance().getConnection();
-            System.out.println("status"+status);
 
-            queryString = "select action_id FROM ac_resources WHERE action_id=" + accAuthAjaxHandlerAction.getActionId() + " and usr_role_id=" + accAuthAjaxHandlerAction.getRoles() + " and org_id=" + accAuthAjaxHandlerAction.getOrgId();    
-                  
-            System.out.println("record exist" + queryString);
+            connection = ConnectionProvider.getInstance().getConnection();
+
+            queryString = "select action_id FROM ac_resources WHERE action_id=" + accAuthAjaxHandlerAction.getActionId() + " and usr_role_id=" + accAuthAjaxHandlerAction.getRoles() + " and org_id=" + accAuthAjaxHandlerAction.getOrgId();
+
+            System.out.println("checkActionExistForResourceOrNot::record exist---------------->" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
-            
-            
+
             if (resultSet.next()) {
-               
+
                 resultMessage = "exist";
             } else {
                 resultMessage = "not exist";
             }
 
-            //System.out.println("String-->" + sb);
         } catch (SQLException sqle) {
             throw new ServiceLocatorException(sqle);
         } finally {
@@ -576,9 +629,9 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     resultSet.close();
                     resultSet = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
                 }
 
                 if (connection != null) {
@@ -586,42 +639,49 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     connection = null;
                 }
             } catch (SQLException sql) {
-                //System.err.print("Error :"+sql);
             }
 
         }
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: checkActionExistForResourceOrNot Method End*********************");
         return resultMessage;
 
     }
-    
+
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : checkActionExistOrNot() method is used to
+     *
+     *
+     * *****************************************************************************
+     */
     public String checkActionExistOrNot(String actionName) throws ServiceLocatorException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: checkActionExistOrNot Method Start*********************");
         int result = 0;
         String resultMessage = "";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         String queryString = "";
-        System.out.println("actionName"+actionName);
         try {
-            System.out.println("method checkActionExistOrNot()");
+
             connection = ConnectionProvider.getInstance().getConnection();
-            
-            queryString = "select * FROM ac_action WHERE action_name='"+actionName+"'" ;
-            
-            System.out.println("record exist" + queryString);
+
+            queryString = "select * FROM ac_action WHERE action_name='" + actionName + "'";
+            System.out.println("checkActionExistOrNot::queryString" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
-            
-            
             if (resultSet.next()) {
-                
+
                 resultMessage = "exist";
             } else {
                 resultMessage = "not exist";
             }
 
-            
         } catch (SQLException sqle) {
             throw new ServiceLocatorException(sqle);
         } finally {
@@ -631,9 +691,9 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     resultSet.close();
                     resultSet = null;
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    preparedStatement = null;
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
                 }
 
                 if (connection != null) {
@@ -641,10 +701,10 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
                     connection = null;
                 }
             } catch (SQLException sql) {
-                //System.err.print("Error :"+sql);
             }
 
         }
+        System.out.println("********************AccAuthAjaxHandlerServiceImpl :: checkActionExistOrNot Method End*********************");
         return resultMessage;
 
     }

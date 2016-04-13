@@ -13,7 +13,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Action Authorization Search Page</title>
+        <title>ServicesBay :: Action&nbsp;Authorization&nbsp;Search&nbsp;Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -37,7 +37,6 @@
 
         <script type="text/javascript">
             $(document).ready(function(){
-//                alert("acc")
                 
                 document.getElementById("loadingAccountSearch").style.display="none";
                 
@@ -86,8 +85,8 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
 
-                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                        <font color="#ffffff">Action Search</font>
+                                                       
+                                                        <font color="#ffffff">Action&nbsp;Search</font>
                                                         <i id="updownArrow" onclick="toggleContent('searchAccAuthorization')" class="fa fa-minus"></i> 
                                                     </h4>
                                                 </div>
@@ -106,7 +105,7 @@
                                                 <s:form action="searchAccAuthorization" theme="simple">
                                                     
                                                         <div class="col-sm-4">
-                                                            <label class="labelStylereq" style="color:#56a5ec;">Action Name </label>
+                                                            <label class="labelStylereq" style="color:#56a5ec;">Action&nbsp;Name </label>
                                                             <s:textfield id="actionName"
                                                                          cssClass="form-control"
                                                                          type="text"
@@ -130,12 +129,12 @@
                                                         
                                                         <div class="col-sm-2 pull-right">
                                                             <div align="right">
-                                                                <button type="button" style="margin: 5px 0px;" tabindex="4" class="add_searchButton form-control addAuthAccOverlay_popup_open cssbutton" onclick="addAuthAccOverlayFun();addOrUpdateChecking('a');clearActionValues();"  style=""><i class="fa fa-plus-square"></i>&nbsp;Add</button>
+                                                                <button type="button" id="accAuthAddButton" style="margin: 5px 0px;" tabindex="4" class="add_searchButton form-control addAuthAccOverlay_popup_open cssbutton" onclick="addAuthAccOverlayFun();addOrUpdateChecking('a');clearActionValues();"  style=""><i class="fa fa-plus-square"></i>&nbsp;Add</button>
                                                         </div>
                                                         </div>
                                                         <div class="col-sm-2 pull-right">
 
-                                                            <s:submit type="button" cssStyle="margin:5px 0px;"
+                                                            <s:submit type="button" cssStyle="margin:5px 0px;" id="accAuthSearchButton"
                                                                       cssClass="add_searchButton form-control" tabindex="3"
                                                                       value=""><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                             </div>
@@ -143,7 +142,6 @@
                                            
                                                 </s:form>
                                             </div>
-                                                <%--<s:submit cssClass="css_button" value="show"/><br>--%>
                                                 <div class="row">
                                                 <div class="col-sm-12">
                                                     <div id="loadingAccountSearch" class="loadingImg">
@@ -155,7 +153,7 @@
                                                                 <tbody>
                                                                     <tr>
 
-                                                                        <th>Action Name</th>
+                                                                        <th>Action&nbsp;Name</th>
 
                                                                         <th class="unsortable">Status</th>
 
@@ -227,7 +225,7 @@
                             <div class="backgroundcolor">
                                 <table>
                                     <tr><td><h4 style="font-family:cursive"><font class="titleColor" >&nbsp;&nbsp;Description &nbsp;&nbsp; </font></h4></td>
-                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="authAccOverlay_popup_close" onclick="authAccOverlayFun()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" id="authDescCloseButton" class="authAccOverlay_popup_close" onclick="authAccOverlayFun()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                 </table>
                             </div>
                             <div>
@@ -245,8 +243,8 @@
                         <div id="addAuthAccBox">
                             <div class="backgroundcolor">
                                 <table>
-                                    <tr><td><h4 id="" style="font-family:cursive"><font id="heading" class="titleColor" >&nbsp;&nbsp;Add Account Authorization &nbsp;&nbsp; </font></h4></td>
-                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="addAuthAccOverlay_popup_close" onclick="addAuthAccOverlayFun();removeErrorMsg()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                    <tr><td><h4 id="" style="font-family:cursive"><font id="heading" class="titleColor" >&nbsp;&nbsp;Add&nbsp;Account&nbsp;Authorization &nbsp;&nbsp; </font></h4></td>
+                                    <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" id="authAddCloseButton" class="addAuthAccOverlay_popup_close" onclick="addAuthAccOverlayFun();removeErrorMsg()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                 </table>
                             </div>
                             <span id="validationMessage"></span>
@@ -255,11 +253,12 @@
                                 <s:hidden id="overlayActionName" value="overlayActionName"/>
                                 <s:hidden id="overlayActionStatus" value="overlayActionStatus"/>
                                 <s:hidden id="overlayActionDesc" value="overlayActionDesc"/>
+                                 <s:hidden id="actionHiddenName" name="actionHiddenName" value=""></s:hidden> 
                                 <br>
                                 <div class="inner-addAcc-elements required" id="accNameDiv">
-                                    <label class="addAcclabelStyle" style="color:#56a5ec;">Action Name </label>
+                                    <label class="addAcclabelStyle" style="color:#56a5ec;">Action&nbsp;Name </label>
                                     <s:textfield id="action_name" 
-                                                 cssClass="addAccInputStyle"
+                                                 cssClass="form-control"
                                                  type="text"
                                                  name="action_name"
                                                  placeholder="Action Name"
@@ -268,11 +267,10 @@
                                                  /> 
                                 </div>
                                 <div class="inner-addAcc-elements" id="statusDiv">
-                                    <%--  <s:hidden id="overLayAction_id" name="overLayAction_id" value="action_id"/>--%>
                                     <label class="addAcclabelStyle" style="color:#56a5ec;">Status </label>
                                     <s:select  id="accauthStatus"
                                                name="accauthStatus"
-                                               cssClass="addAccSelectStyle"
+                                               cssClass="SelectBoxStyles form-control"
                                                headerKey="-1"  
                                                theme="simple" 
                                                list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}"
@@ -280,18 +278,18 @@
                                 </div>
                                 <div class="inner-addAcc-elements required" id="descDiv">
                                     <label class="addAcclabelStyle" style="color:#56a5ec;">Description </label>
-                                    <s:textarea id="addingAccAuthDesc" cssClass="authareacss" name="addingAccAuthDesc" placeholder="Description" onkeydown="actionAuthDescription(this)"  onfocus="return removeErrorMsg();"/>
+                                    <s:textarea id="addingAccAuthDesc" cssClass="form-control" name="addingAccAuthDesc" placeholder="Description" onkeydown="actionAuthDescription(this)"  onfocus="return removeErrorMsg();"/>
 
                                 </div>
                                 <span class="charNum" id="addingAccAuthValid"></span> 
-                                <div class="col-sm-6"></div>
-                                <div class="col-sm-4 pull-right" id="addDiv">
-                                    <button type="button" style="margin: 5px 0px;" class="add_searchButton  form-control" onclick="insertOrUpdateAccAuth('0');" value=""><i class="fa fa-plus-square"></i>&nbsp;Add</button>
+                               
+                                <div class="col-sm-5 pull-right" id="addDiv">
+                                    <button type="button" id="authAddButton" style="margin: 5px 0px;" class="add_searchButton  form-control" onclick="insertOrUpdateAccAuth('0');" value=""><i class="fa fa-plus-square"></i>&nbsp;Add</button>
                                 </div>
-                                <div class="col-sm-4 pull-right" id="updateDiv">
-                                    <button type="button" style="margin: 5px 0px;" class="add_searchButton  form-control" onclick="insertOrUpdateAccAuth('1');" value=""><i class="fa fa-refresh"></i>&nbsp;update</button>
+                                <div class="col-sm-5 pull-right" id="updateDiv">
+                                    <button type="button" id="authUpdateButton" style="margin: 5px 0px;" class="add_searchButton  form-control" onclick="insertOrUpdateAccAuth('1');" value=""><i class="fa fa-refresh"></i>&nbsp;update</button>
                                 </div>
-                                <font style="color: #ffffff">..................... ..............................  ..........................................</font>
+                                
                             </div>   
                         </div> 
                     </div>
@@ -319,7 +317,6 @@
         </script>
         <script>
             var message=$("#accAuthId").html("");
-            //alert(message)
             $("#accAuthId").show().delay(15000).fadeOut();
         </script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
@@ -332,7 +329,6 @@
                 {
                 }
                 recordPage=paginationSize;
-                // alert(recordPage)
                 $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
             };
             $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);

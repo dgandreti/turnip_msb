@@ -21,17 +21,38 @@ public class LocationAction extends ActionSupport{
   private String stockSymbolString="";
   private List<State> states;
 
+  
+  /**
+     ***********************************************************
+     *
+     * @getStatesForCountry() to get the  states for country
+     * 
+     *
+     ***********************************************************
+     */
   public String getStatesForCountry()
   {
+       System.out.println("********************LocationAction :: getStatesForCountry Action Start*********************");
     states = new ArrayList<State>();
     String resultType = SUCCESS;
     states = ServiceLocator.getLocationService().getStatesByCountry(countryId);
+       System.out.println("********************LocationAction :: getStatesForCountry Action Start*********************");  
     return resultType;
   }
 
+  /**
+     ***********************************************************
+     *
+     * @getStockSymbol() to get the  stock symbol
+     * 
+     *
+     ***********************************************************
+     */
  public String getStockSymbol(){
+     System.out.println("********************LocationAction :: getStockSymbol Action Start*********************");
     String resultType=SUCCESS;
     stockSymbolString=ServiceLocator.getLocationService().lookupCountryCurrency(countryId);
+     System.out.println("********************LocationAction :: getStockSymbol Action Start*********************");
     return resultType;
   }
 

@@ -99,15 +99,16 @@
                                                 <label class="labelStylereq" >Email Id</label>    
                                                 <s:textfield cssClass="form-control" name="consult_email" id="consult_email" placeholder="Email Id" required="true" oninvalid="setCustomValidity('Must be valid email')"   onchange="try{setCustomValidity('')}catch(e){}"   onblur="ConsultEmailValidation()" tabindex="1"  maxlength="60"/>                                                
                                             </div>
-                                            <div class="col-sm-4">
-                                                <label class="labelStylereq" >Available Date</label>
-                                                  <div class="calImage">
-                                                <s:textfield cssClass="form-control" name="consult_add_date"  id="consult_add_date"  placeholder="Date" onfocus="removeResultMessage()"    onkeypress="return enterDateRestrict();" onclick="availableValidate()" tabindex="2"><i class="fa fa-calendar"></i></s:textfield>
-                                            </div>
-                                            </div>
+                                           
                                             <div class="col-sm-4">
                                                 <label class="labelStylereq" >Available</label>
                                                 <s:select cssClass="form-control SelectBoxStyles " name="consult_available " id="consult_available" headerKey="" headerValue="Select availabilty" list="#@java.util.LinkedHashMap@{'Y':'Yes','PRM':'No'}"  onchange="availableValidation()" tabindex="3"/>
+                                            </div>
+                                             <div class="col-sm-4">
+                                                <label class="labelStylereq" >Available Date</label>
+                                                  <div class="calImage">
+                                                <s:textfield cssClass="form-control" name="consult_add_date"  id="consult_add_date" disabled="true"  placeholder="Date" onfocus="removeResultMessage()"    onkeypress="return enterDateRestrict();" onclick="availableValidate()" tabindex="2"><i class="fa fa-calendar"></i></s:textfield>
+                                            </div>
                                             </div>
 
                                             <div class="col-sm-4 required">
@@ -240,6 +241,7 @@
 
                                     <div class="col-sm-12">
                                         <div class="form-group">
+                                             <div id="description_feedback"></div>
                                             <label  class="task-label" style="max-height:10px;">Education</label>
                                             <s:textarea cssClass="titleStyle"   id="consult_education" placeholder="Education" name="consult_education" maxlength="500" cols="100" rows="2" onkeyup="checkCharactersDescription(this)" tabindex="29"/>
                                         </div>
@@ -257,7 +259,7 @@
                                 <div class="row"></div>
                                 <div class="panel-body" id="task-panel"> 
                                     <div style="margin-left: -13%;">
-                                        <div id="description_feedback"></div>
+                                       
                                         <div  class="col-sm-4 "  >
                                             <span class="required">     
                                                 <label class="labelStylereq" >Title</label>   
@@ -376,10 +378,7 @@
                     $("#consult_preferredState").hide();
                     $(".pref_state").hide();
                     $("#PrefstateValues").val('');
-                    /* document.getElementById("consult_pcountry").disabled = true;
-                     document.getElementById('consult_pcountry').value=-1;
-                     document.getElementById("consult_preferredState").disabled = true;
-                     document.getElementById('consult_preferredState').value=-1;*/
+                   
                 }
             }   
  

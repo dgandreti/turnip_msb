@@ -13,7 +13,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Action Resources Page</title>
+        <title>ServicesBay :: Action&nbsp;Resources&nbsp;Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -23,9 +23,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href='<s:url value="/includes/css/general/profilediv.css"/>'>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
-        <%-- <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
-             <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">--%>
-
+       
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
@@ -39,15 +37,11 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
         <script>
             var pager;
-            //function onLoad(){
-            //alert("onload")
-            $(document).ready(function(){
-                var paginationSize = 10; //parseInt(document.getElementById("paginationOption").value);
-                // alert(paginationSize);
+                $(document).ready(function(){
+                var paginationSize = 10; 
                 pager = new Pager('empCategorizationResults', paginationSize);
                 pager.init();
                 pager.showPageNav('pager', 'pageNavPosition');
-                // document.getElementById("paginationOption").value=10;
                 pager.showPage(1);
                 document.getElementById("loadingResourceSearch").style.display="none";
             });
@@ -95,17 +89,17 @@
                                     <div class="backgroundcolor" >
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <font color="#ffffff">Action Resources</font>
+                                                <font color="#ffffff">Action&nbsp;Resources</font>
                                                 <i id="updownArrowAccount" onclick="toggleContentAccount('searchAccAuthorization')" class="fa fa-angle-up"></i> 
                                                 <s:url var="myUrl" action="getAccAuthrization.action">
                                                 </s:url>
-                                                <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                <span class="pull-right"><s:a href='%{#myUrl}' id="resourcesBackButton"><i class="fa fa-undo"></i></s:a></span>
                                                 </h4>
                                             </div>
 
                                         </div>
                                         <!-- content start -->
-                                        <div ><label class="labelStylereq" style="color: #56a5ec;">Action Name : &nbsp; </label><span style="color: #FF8A14;"><s:property value="action_name" /></span></div>
+                                        <div ><label class="labelStylereq" style="color: #56a5ec;">Action&nbsp;Name : &nbsp; </label><span style="color: #FF8A14;"><s:property value="action_name" /></span></div>
                                     <s:hidden id="action_id" name="action_id" value="%{action_id}"/>
                                     <s:hidden id="action_name" name="action_name" value="%{action_name}"/>
                                     <s:hidden id="authId" name="authId" value="authrization"/>
@@ -114,7 +108,7 @@
                                         <div class="row">
                                         <s:form action="searchAccAuthorization" theme="simple">
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Account Type </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Account&nbsp;Type </label>
                                                 <s:select  id="accType"
                                                            name="accType"
                                                            cssClass="SelectBoxStyles form-control"
@@ -150,7 +144,7 @@
                                             </div >
                                             <div class="col-sm-4">
                                                 <s:hidden name="orgId" id="orgId"/>
-                                                <label class="labelStylereq" style="color:#56a5ec;">Account Name </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Account&nbsp;Name </label>
                                                 <s:textfield id="accountNamePopup"
                                                              cssClass="form-control"
                                                              tabindex="4"
@@ -162,12 +156,12 @@
                                             </div>
                                             <div class="col-sm-2 pull-right">
                                                 <label class="labelStylereq" style="color:#56a5ec;"> </label>
-                                                <a href='actionResourcesForAddOrUpdate.action?action_id=<s:property value="%{action_id}"/>&AMP;action_name=<s:property value="%{action_name}"/>&AMP;accType=C' style="margin: 5px 0px;" tabindex="6" class="add_searchButton form-control"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
+                                                <a href='actionResourcesForAddOrUpdate.action?action_id=<s:property value="%{action_id}"/>&AMP;action_name=<s:property value="%{action_name}"/>&AMP;accType=C' style="margin: 5px 0px;" tabindex="6" id="resAddButton" class="add_searchButton form-control"><i class="fa fa-plus-square"></i>&nbsp;Add</button></a>
 
                                             </div>
                                             <div class="col-sm-2 pull-right">
                                                 <label class="labelStylereq" style="color:#56a5ec;"> </label>
-                                                <button type="button" style="margin: 5px 0px;"
+                                                <button type="button" style="margin: 5px 0px;" id="resSearchButton"
                                                         class="add_searchButton  form-control" tabindex="5"
                                                         value="" onclick="return getActionResorucesSearchResults();"><i class="fa fa-search"></i>&nbsp;Search</button>
                                             </div>
@@ -186,11 +180,11 @@
                                                         <tbody>
                                                             <tr>
 
-                                                                <th>Organization Name</th>
-                                                                <th class="unsortable">Role Name</th>
+                                                                <th>Organization&nbsp;Name</th>
+                                                                <th class="unsortable">Role&nbsp;Name</th>
                                                                 <th class="unsortable">Status</th>
                                                                 <th class="unsortable">Description</th>
-                                                                <th class="unsortable">Delete</th>
+                                                                <th class="unsortable">Operations</th>
                                                             </tr>
                                                             <s:if test="accauthVTO.size == 0">
                                                                 <tr>
@@ -214,14 +208,19 @@
                                                                         <s:param name="rollName"><s:property value="rollName"/></s:param>
                                                                         <s:param name="userGroupList"><s:property value="userGroupList"/></s:param>
                                                                         <s:param name="flag">update</s:param>
-
+                                                                         <s:param name="blockFlag"><s:property value="blockFlag"/></s:param>
 
                                                                     </s:url>
                                                                     <td><s:a href='%{#myUrl}'><s:property value="accountName"></s:property></s:a></td>
                                                                     <td><s:property value="rollName"></s:property></td>
                                                                     <td><s:property value="status"></s:property></td>
                                                                     <td><s:property value="description"></s:property></td>
-                                                                    <td><s:a href="#" onclick="actionResourceTermination('%{id}','%{action_id}');"><i class="fa fa-trash-o fa-size"></i></s:a></td>
+                                                                     <s:if test="status=='Active'">
+                                                                    <td><s:a href="#" onclick="actionResourceTermination('%{id}','%{action_id}','%{status}');"><i class="fa fa-trash-o fa-size"></i></s:a></td>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                    <td><s:a href="#" onclick="actionResourceTermination('%{id}','%{action_id}','%{status}');"><i class="fa fa-check fa-size"></i></s:a></td>    
+                                                                    </s:else>
                                                                     </tr>
                                                             </s:iterator>
                                                         </tbody>
@@ -296,7 +295,6 @@
                        
                 }
                 recordPage=paginationSize;
-                // alert(recordPage)
                 $('#empCategorizationResults').tablePaginate({navigateType:'navigator'},recordPage);
 
             };

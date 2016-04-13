@@ -655,7 +655,7 @@ function releasePo(id,reqId)
             req.open("GET",url,"true");
             req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
             req.send(null);
-            swal("Success", " Successfully Forwarded ", "success");
+            swal("Success", " Successfully released ", "success");
         }
         
     
@@ -848,4 +848,42 @@ function doPODownload(){
     ;
 //    alert(tabFlag)
     window.location = url;
+}
+
+function sendPendingInvoiceMail(){
+    //alert("sendPendingInvoiceMail");
+    document.getElementById("invResultMessage").innerHTML="";
+    var invEmailSubject=$("#invEmailSubject").val();
+    var invEmailBodyContent=$("#invEmailBodyContent").val();
+    var invCreatedBy=$("#invCreatedBy").val();
+    //alert(invEmailSubject);
+    //alert(invCreatedBy);
+    if(invEmailSubject==""){
+        document.getElementById("invResultMessage").innerHTML="<font color='red'>Email subject field is mandatory</font>";
+        return false;
+    }
+    if(invEmailBodyContent==""){
+        document.getElementById("invResultMessage").innerHTML="<font color='red'>Email bodycontent field is mandatory</font>";
+        return false;
+    }
+    //alert(invEmailSubject);
+    var url=CONTENXT_PATH+'/sag/sendPendingInvMail.action?invEmailSubject='+invEmailSubject+'&invEmailBodyContent='+invEmailBodyContent+'&invCreatedBy='+invCreatedBy;
+    //alert(url);
+    var req=initRequest(url);
+    
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            if(req.responseText=="success"){
+                document.getElementById("invResultMessage").innerHTML="<font color='green'>The Mail has been Sent Successfully</font>";
+            }
+            else
+            {
+                document.getElementById("invResultMessage").innerHTML="<font color='red'>Mail not send. Please try again</font>";
+            }
+        } 
+    };
+    req.open("GET",url,"true");
+    req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    req.send(null);
+    return false;
 }

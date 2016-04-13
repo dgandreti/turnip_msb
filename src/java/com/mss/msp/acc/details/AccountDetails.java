@@ -25,7 +25,7 @@ public class AccountDetails {
     private String industry;
     private String taxId;
     private Integer budget;
-    private Integer revenue;
+    private String revenue;
     private String phone;
     private String fax;
     private String noemp;
@@ -63,7 +63,7 @@ public class AccountDetails {
     public AccountDetails() {
     }
 
-    public AccountDetails(Integer id, String name, String url, String status, String region, String stockSymbol, String description, String industry, String taxId, Integer budget, Integer revenue, String phone, String fax, String noemp, String territory, String country, String address1, String address2, String state, String zip, String city, Integer accountType, String lkState, String lkCountry, String lkIndustry, String lkAccountType, String lkVendor, String emailExt, String bankAccountNumber, String bankName, String bankAddress, String bankCity, String bankZip, String bankRoutingNumber, Integer isPrimary, String beneficiaryName, String skillValues, String accLogo) {
+    public AccountDetails(Integer id, String name, String url, String status, String region, String stockSymbol, String description, String industry, String taxId, Integer budget, String revenue, String phone, String fax, String noemp, String territory, String country, String address1, String address2, String state, String zip, String city, Integer accountType, String lkState, String lkCountry, String lkIndustry, String lkAccountType, String lkVendor, String emailExt, String bankAccountNumber, String bankName, String bankAddress, String bankCity, String bankZip, String bankRoutingNumber, Integer isPrimary, String beneficiaryName, String skillValues, String accLogo) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -193,11 +193,11 @@ public class AccountDetails {
         this.budget = budget;
     }
 
-    public Integer getRevenue() {
+    public String getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(Integer revenue) {
+    public void setRevenue(String revenue) {
         this.revenue = revenue;
     }
 

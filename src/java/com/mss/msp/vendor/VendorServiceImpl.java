@@ -36,30 +36,29 @@ public class VendorServiceImpl implements VendorService {
     PreparedStatement preparedStatement = null;
     Statement statement = null;
     ResultSet resultSet = null;
+    String queryString = "";
 
-     /**
-     * *************************************
+    /**
+     * *****************************************************************************
+     * Date : MAY 05, 2015, 8:30 PM IST
      *
-     * @getVendorDetails()
+     * Author : Praveen kumar<pkatru@miraclesoft.com>
      *
-     * @Author:praveen kumar<pkatru@miraclesoft.com>
+     * ForUse : getVendorDetails() method is used to get vendor details in
+     * default.
      *
-     * @Created Date:05/05/2015
-     *
-     * For USe:getting search details in default
-     * *************************************
+     * *****************************************************************************
      */
-    public List getVendorDetails( VendorAction vendorAction) throws ServiceLocatorException {
-
-        ArrayList<VendorListVTO> vendorlist = new ArrayList<VendorListVTO>();
-        StringBuffer stringBuffer = new StringBuffer();
+    public List getVendorDetails(VendorAction vendorAction) throws ServiceLocatorException {
+        System.out.println("********************VendorServiceImpl :: getVendorDetails Method Start*********************");
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         String queryString = "";
+        ArrayList<VendorListVTO> vendorlist = new ArrayList<VendorListVTO>();
         int i = 0;
-        //System.err.println(days+"Diff in Dyas...");
         try {
-                 Map map = DataSourceDataProvider.getInstance().getMyTeamMembers(vendorAction.getUserSessionId());
-            //ConsultantListDetails.add(map);
-            
+            Map map = DataSourceDataProvider.getInstance().getMyTeamMembers(vendorAction.getUserSessionId());
 
             String key, retrunValue = "";
             int mapsize = map.size();
@@ -82,16 +81,16 @@ public class VendorServiceImpl implements VendorService {
                     + "LEFT OUTER JOIN accteam act ON(ac.account_id=act.acc_id) LEFT OUTER JOIN acc_address aa ON (orl.related_org_id=aa.acc_id) "
                     + "LEFT OUTER JOIN acc_basic_info abc ON (orl.related_org_id=abc.acc_id) LEFT OUTER JOIN  lk_acc_industry_type it "
                     + "ON (it.id=acc_type) LEFT OUTER JOIN lk_states lks ON (lks.id=aa.acc_state)"
-                    + "WHERE orl.org_id="+vendorAction.getSessionOrg_id()+" AND acc_type=5 AND act.teamMember_Id=?";
-             if("My".equalsIgnoreCase(vendorAction.getVendorFlag())){
-            queryString = queryString + " and ac.created_by = '" + vendorAction.getUserSessionId() + "'";
+                    + "WHERE orl.org_id=" + vendorAction.getSessionOrg_id() + " AND acc_type=5 AND act.teamMember_Id=?";
+            if ("My".equalsIgnoreCase(vendorAction.getVendorFlag())) {
+                queryString = queryString + " and ac.created_by = '" + vendorAction.getUserSessionId() + "'";
             }
-             if("Team".equalsIgnoreCase(vendorAction.getVendorFlag())){
-            
-                 queryString = queryString + " and ac.created_by in(" + retrunValue + ")";
-             }
-             
-           System.out.println("queryString-->" + queryString);
+            if ("Team".equalsIgnoreCase(vendorAction.getVendorFlag())) {
+
+                queryString = queryString + " and ac.created_by in(" + retrunValue + ")";
+            }
+
+            System.out.println("getVendorDetails :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setInt(1, vendorAction.getTeamMemberId());
@@ -111,9 +110,6 @@ public class VendorServiceImpl implements VendorService {
                 vendorlist.add(vendorListVto);
 
             }
-
-//            System.out.println("queryString-->" + vendorlist);
-
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -122,9 +118,9 @@ public class VendorServiceImpl implements VendorService {
                     resultSet.close();
                     resultSet = null;
                 }
-                if (statement != null) {
-                    statement.close();
-                    statement = null;
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                    preparedStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -134,31 +130,29 @@ public class VendorServiceImpl implements VendorService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorServiceImpl :: getVendorDetails Method End*********************");
         return vendorlist;
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : MAY 05, 2015, 8:30 PM IST
      *
-     * @getVendorDetailsById()
+     * Author : rama krishna<lankireddy@miraclesoft.com>
      *
-     * @Author:rama krishna<lankireddy@miraclesoft.com>
+     * ForUse : getVendorDetailsById() method is used to get details of
+     * particular vendor.
      *
-     * @Created Date:05/05/2015
-     *
-     * For USe:getting details of particular vendor
-     * *************************************
+     * *****************************************************************************
      */
     public VendorListVTO getVendorDetailsById(VendorAction vendorAction) throws ServiceLocatorException {
-        VendorListVTO vendorListVTO = new VendorListVTO();
-        CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+        System.out.println("********************VendorServiceImpl :: getVendorDetailsById Method Start*********************");
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-        String resultString = "";
+        VendorListVTO vendorListVTO = new VendorListVTO();
         try {
-//            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%ENTERED IN TO IMPL TRY%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5");
             queryString = "SELECT a.account_name,a.account_url,a.STATUS,ad.acc_address1,ad.acc_address2,"
                     + "ad.acc_city,ad.acc_state,ad.acc_country,ad.acc_zip,acb.acc_phone,acb.acc_fax,acb.acc_region,"
                     + "acb.acc_territory,acb.acc_no_of_employees,acb.acc_revenue,acb.acc_it_budget,"
@@ -170,9 +164,8 @@ public class VendorServiceImpl implements VendorService {
                     + "LEFT OUTER JOIN lk_acc_industry_type i ON(i.id=acb.acc_industry_type) "
                     + "LEFT OUTER JOIN org_rel o ON(o.related_org_Id=a.account_id) "
                     + "LEFT OUTER JOIN lk_acc_type atp ON(atp.id=o.acc_type) "
-                    + "WHERE a.account_id="+vendorAction.getVendorId()+" AND o.acc_type=5 ";
-
-//            System.out.println(queryString);
+                    + "WHERE a.account_id=" + vendorAction.getVendorId() + " AND o.acc_type=5 ";
+            System.out.println("getVendorDetailsById :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -201,9 +194,7 @@ public class VendorServiceImpl implements VendorService {
                 vendorListVTO.setVendorType(resultSet.getInt("acc_type"));
                 vendorListVTO.setVendorIndustry(resultSet.getInt("acc_industry_type"));
 
-//                System.out.println("THE INDUSTRY::::::" + resultSet.getString("industry"));
             }
-//            System.out.println("%%%%%%%%%%%%%%%%%%Exiting While ::::::::" + vendorListVTO);
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -224,38 +215,35 @@ public class VendorServiceImpl implements VendorService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorServiceImpl :: getVendorDetailsById Method End*********************");
         return vendorListVTO;
 
     }
 
     /**
-     * *************************************
+     * *****************************************************************************
+     * Date : MAY 05, 2015, 8:30 PM IST
      *
-     * @updateVendorSalesTeam()
+     * Author : rama krishna<lankireddy@miraclesoft.com>
      *
-     * @Author:rama krishna<lankireddy@miraclesoft.com>
+     * ForUse : updateVendorSalesTeam() method is used to updating details of
+     * particular vendor sales team.
      *
-     * @Created Date:05/05/2015
-     *
-     * For USe:updating details of particular vendor sales team
-     * *************************************
+     * *****************************************************************************
      */
-    public int updateVendorSalesTeam(VendorAction vendorAction, String[] salesId,int primaryAccount) throws ServiceLocatorException {
-        Statement statement = null;
-
-        ResultSet resultSet;
-
+    public int updateVendorSalesTeam(VendorAction vendorAction, String[] salesId, int primaryAccount) throws ServiceLocatorException {
+        System.out.println("********************VendorServiceImpl :: updateVendorSalesTeam Method Start*********************");
         Connection connection = null;
-        String queryString;
+        Statement statement = null;
         int insertedRows = 0;
         int updateRows = 0;
         int deletedRows = 0;
         try {
-            System.out.println("%%%%%%%%%%%%%%%%%%Entered in to the IMPL%%%%%%%%%%%%%%%%%%%%%%");
             System.out.println("VendorID>>>>>>>>>>>>>>>>>>>>" + vendorAction.getVendorId());
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             queryString = "DELETE FROM accteam WHERE acc_id=" + vendorAction.getVendorId();
+            System.out.println("updateVendorSalesTeam :: query string ------>" + queryString);
             deletedRows = statement.executeUpdate(queryString);
             statement.close();
             statement = null;
@@ -270,18 +258,14 @@ public class VendorServiceImpl implements VendorService {
              * its <code>{@link
              *          java.lang.NullPointerException}</code>
              */
-//            //System.out.println("assignedRoleIds.length-->" + assignedRoleIds.length);
-           for (int counter = 0; counter < salesId.length; counter++) {
-                System.out.println("IN IMPL>>>>>>>>>>>>>>>>" + salesId[counter]);
-                if(Integer.parseInt(salesId[counter]) == primaryAccount){
-                queryString = "Insert into accteam(primaryflag,acc_id,teamMember_Id,created_by) values(1," + vendorAction.getVendorId() + "," + salesId[counter] + "," + vendorAction.getUserSessionId() + ")";
-                //System.out.println(queryString);
+            for (int counter = 0; counter < salesId.length; counter++) {
+                if (Integer.parseInt(salesId[counter]) == primaryAccount) {
+                    queryString = "Insert into accteam(primaryflag,acc_id,teamMember_Id,created_by) values(1," + vendorAction.getVendorId() + "," + salesId[counter] + "," + vendorAction.getUserSessionId() + ")";
+                } else {
+                    queryString = "Insert into accteam(primaryflag,acc_id,teamMember_Id,created_by) values(0," + vendorAction.getVendorId() + "," + salesId[counter] + "," + vendorAction.getUserSessionId() + ")";
                 }
-                else{
-                  queryString = "Insert into accteam(primaryflag,acc_id,teamMember_Id,created_by) values(0," + vendorAction.getVendorId() + "," + salesId[counter] + "," + vendorAction.getUserSessionId() + ")";  
-                //System.out.println(queryString);
-                }
-                  insertedRows = statement.executeUpdate(queryString);
+                System.out.println("updateVendorSalesTeam :: query string ------>" + queryString);
+                insertedRows = statement.executeUpdate(queryString);
             }
 
 
@@ -303,28 +287,28 @@ public class VendorServiceImpl implements VendorService {
                 throw new ServiceLocatorException(se);
             }
         }
+        System.out.println("********************VendorServiceImpl :: updateVendorSalesTeam Method End*********************");
         return insertedRows;
     }
-    
+
     /**
-     * ****************************************************************************
-     * Date : June 02 2015
+     * *****************************************************************************
+     * Date : June 02, 2015, 8:30 PM IST
      *
      * Author : manikanta eeralla<meeralla@miraclesoft.com>
      *
+     * ForUse : showVendorDashboard() method
+     *
      * *****************************************************************************
      */
-
     public List<VendorDashboardList> showVendorDashboard(int orgId) {
-
+        System.out.println("********************VendorServiceImpl :: showVendorDashboard Method Start*********************");
         List<VendorDashboardList> vendorDashboardList = new ArrayList<VendorDashboardList>();
-        // CallableStatement callableStatement = null;
-        PreparedStatement preparedStatement = null;
+        int year;
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-        int year;
-
         year = Calendar.getInstance().get(Calendar.YEAR);
         try {
             queryString = "SELECT MONTHNAME(rcr.created_Date) AS MONTH,"
@@ -340,7 +324,7 @@ public class VendorServiceImpl implements VendorService {
                     + "ON(ac.account_id=rcr.createdbyOrgId) WHERE rcr.createdbyOrgId= " + orgId + " "
                     + "AND EXTRACT(YEAR FROM rcr.created_Date)= " + year + " "
                     + " GROUP BY DATE_FORMAT(rcr.created_Date, '%m') ";
-            System.out.println("%%%%%%%%%%%%%%%%%%queryString-->vendorDashboardList() ::::::::" + queryString);
+            System.out.println("showVendorDashboard :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -348,8 +332,6 @@ public class VendorServiceImpl implements VendorService {
                 VendorDashboardList dashboardList = new VendorDashboardList();
                 dashboardList.setMonths(resultSet.getString("MONTH"));
                 dashboardList.setRequirementCount(resultSet.getInt("requirements"));
-                //dashboardList.setNoOfReqWon(resultSet.getInt("Won"));
-                //dashboardList.setNoOfReqLose(resultSet.getInt("Lost"));
                 dashboardList.setNoOfConProcessing(resultSet.getInt("Processing"));
                 dashboardList.setNoOfConSelected(resultSet.getInt("Selected"));
                 dashboardList.setNoOfConRejected(resultSet.getInt("Rejected"));
@@ -358,9 +340,8 @@ public class VendorServiceImpl implements VendorService {
                 dashboardList.setNoOfConShortListed(resultSet.getInt("ShortListed"));
                 vendorDashboardList.add(dashboardList);
 
-//                System.out.println("THE INDUSTRY::::::" + resultSet.getString("industry"));
             }
-            
+
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -381,6 +362,7 @@ public class VendorServiceImpl implements VendorService {
                 sqle.printStackTrace();
             }
         }
+        System.out.println("********************VendorServiceImpl :: showVendorDashboard Method End*********************");
         return vendorDashboardList;
     }
 }

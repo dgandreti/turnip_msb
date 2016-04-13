@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -28,8 +29,17 @@ import org.hibernate.Transaction;
  */
 public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxHandlerService {
 
-    
-    public AccountDetails ajaxAccountUpdate(AccountDetails account, int relOrgId,int userSessionId) {
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    PreparedStatement preparedStatement = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    String queryString = "";
+
+    public AccountDetails ajaxAccountUpdate(AccountDetails account, int relOrgId, int userSessionId) {
+        System.out.println("********************AccountDetailsAjaxHandlerServiceImpl :: ajaxAccountUpdate Method Start*********************");
+        Connection connection = null;
+        CallableStatement callableStatement = null;
         Session session = null;
         Transaction tx = null;
         Integer country = Integer.parseInt(account.getCountry());
@@ -42,24 +52,20 @@ public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxH
                 account.setState(null);
             }
         }
-        System.out.println("country" + country);
-        System.out.println("country" + industry);
-
         if (country < 0) {
             account.setCountry(null);
         }
         if (industry < 0) {
             account.setIndustry(null);
         }
-        Connection connection = null;
-        CallableStatement callableStatement = null;
-        ResultSet resultSet = null;
         boolean isExceute = false;
         String resultString = "";
         int updatedRows = 0;
+
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             callableStatement = connection.prepareCall("{CALL updateAccount(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            System.out.println("ajaxAccountUpdate :: procedure name : updateAccount ");
             callableStatement.setInt(1, account.getId());
             callableStatement.setString(2, account.getAddress1());
             callableStatement.setString(3, account.getAddress2());
@@ -72,30 +78,18 @@ public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxH
             callableStatement.setString(10, account.getPhone());
             callableStatement.setString(11, account.getFax());
             callableStatement.setString(12, account.getIndustry());
-           // callableStatement.setInt(13, account.getBudget());
             callableStatement.setString(13, account.getRegion());
             callableStatement.setString(14, account.getTaxId());
             callableStatement.setString(15, account.getTerritory());
             callableStatement.setString(16, account.getStockSymbol());
-            //callableStatement.setInt(17, account.getNoemp());
-//            Integer noEmp = account.getNoemp();
-//            if (noEmp != null && noEmp.intValue() >= 0) {
-//                callableStatement.setInt(17, noEmp);
-//            } else {
-//                callableStatement.setString(17, null);
-//            }
             callableStatement.setString(17, account.getNoemp());
             callableStatement.setString(18, account.getDescription());
-            // callableStatement.setInt(19, account.getRevenue());
-            Integer rev = account.getRevenue();
-            if (rev != null) {
-                callableStatement.setInt(19, rev.intValue());
+            String rev = account.getRevenue();
+            if (rev != null && !"".equals(rev)) {
+                callableStatement.setString(19, rev);
             } else {
                 callableStatement.setString(19, null);
             }
-           // callableStatement.setInt(17, account.getNoemp());
-            
-          //  callableStatement.setInt(19, account.getRevenue());
             callableStatement.setString(20, account.getEmailExt());
             callableStatement.setInt(21, account.getAccountType());
             callableStatement.setString(22, account.getBankName());
@@ -105,34 +99,21 @@ public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxH
             callableStatement.setString(26, com.mss.msp.util.DataUtility.encrypted(account.getBankRoutingNumber()));
             callableStatement.setString(27, com.mss.msp.util.DataUtility.encrypted(account.getBankAccountNumber()));
             callableStatement.setString(28, account.getBeneficiaryName());
-//            String str = account.getSkillValues();
-//            StringTokenizer stk = new StringTokenizer(str, ",");
-//            String reqSkillsResultString = "";
-//            while (stk.hasMoreTokens()) {
-//                reqSkillsResultString += com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(stk.nextToken()));
-//            }
-//            account.setReqSkillSet(StringUtils.chop(reqSkillsResultString));
-            System.out.println("reqSkillsResultString---------->" + account.getSkillValues());
             callableStatement.setString(29, account.getSkillValues());
-           
-            
-           // callableStatement.setInt(22, account.getUserSessionId());
             callableStatement.registerOutParameter(30, Types.INTEGER);
-            System.out.println("hello here print after prepare call parameter ");
-
             isExceute = callableStatement.execute();
             updatedRows = callableStatement.getInt(30);
             if (updatedRows > 0) {
                 resultString = "Updated";
             }
-            System.out.println("is updatedRows " + updatedRows);
+            System.out.println("ajaxAccountUpdate::is updatedRows " + updatedRows);
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    resultSet = null;
+                if (callableStatement != null) {
+                    callableStatement.close();
+                    callableStatement = null;
                 }
                 if (connection != null) {
                     connection.close();
@@ -141,20 +122,20 @@ public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxH
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
             }
-        
-
-       
+            System.out.println("********************AccountDetailsAjaxHandlerServiceImpl :: ajaxAccountUpdate Method End*********************");
             return account;
         }
     }
 
     /**
+     * *****************************************************************************
+     * Date :
      *
-     * @param name the name to search for
-     * @param id the id of the account trying to rename itself
-     * @return boolean true if name exists and is not the current account name,
-     * false if the account name does not exists or is the current account name.
-     * @throws ServiceLocatorException
+     * Author :
+     *
+     * ForUse : checkForAccountName() method is used to
+     *
+     * *****************************************************************************
      */
     public boolean checkForAccountName(String name, int id) throws ServiceLocatorException {
         boolean exists = false;
@@ -173,8 +154,8 @@ public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxH
         } else {
             exists = false;
         }
+        System.out.println("********************AccountDetailsAjaxHandlerServiceImpl :: checkForAccountName Method start*********************");
         try {
-            // Closing hibernate session
             session.close();
             session = null;
         } catch (HibernateException he) {
@@ -189,10 +170,20 @@ public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxH
                 }
             }
         }
-        //System.out.println("AJAX : CHECK FOR NAME:" + name + " IN USE :" + exists);
+        System.out.println("********************AccountDetailsAjaxHandlerServiceImpl :: checkForAccountName Method End*********************");
         return exists;
     }
 
+    /**
+     * *****************************************************************************
+     * Date :
+     *
+     * Author :
+     *
+     * ForUse : checkForAccountURL() method is used to
+     *
+     * *****************************************************************************
+     */
     public boolean checkForAccountURL(String url, int id) throws ServiceLocatorException {
         boolean exists = false;
         Session session = HibernateServiceLocator.getInstance().getSession();
@@ -202,8 +193,8 @@ public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxH
             exists = true;
             System.out.println("url Exists");
         }
+        System.out.println("********************AccountDetailsAjaxHandlerServiceImpl :: checkForAccountURL Method Start*********************");
         try {
-            // Closing hibernate session
             session.close();
             session = null;
         } catch (HibernateException he) {
@@ -218,7 +209,7 @@ public class AccountDetailsAjaxHandlerServiceImpl implements AccountDetailsAjaxH
                 }
             }
         }
-        System.out.println("AJAX : CHECK FOR URL:" + url + " IN USE :" + exists);
+        System.out.println("********************AccountDetailsAjaxHandlerServiceImpl :: checkForAccountURL Method End*********************");
         return exists;
     }
 }

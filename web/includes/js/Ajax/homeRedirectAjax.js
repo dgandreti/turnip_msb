@@ -149,10 +149,10 @@ function storeAddOrEditHomeRedirectDetails(){
                 //alert(req.responseText)
                 if(req.responseText=='Success'){
                     $("e").html(" <b><font color='green'>Home Redirect Details saved Succesfully</font></b>");
-//                    $("#errorSpan").show().delay(5000).fadeOut();
+                    $("#errorSpan").show().delay(5000).fadeOut();
                 }else{
                     $("e").html(" <b><font color='red'>Sorry, This action is already exists for this Role!</font></b>");
-//                    $("#errorSpan").show().delay(5000).fadeOut();
+                    $("#errorSpan").show().delay(5000).fadeOut();
                 }
             }
         };

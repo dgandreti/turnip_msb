@@ -10,6 +10,8 @@
         </action>
         <action name="getRecreatedList" class="com.mss.msp.sagAjax.InvoiceAjaxAction" method="getRecreatedList">
         </action>  
+        <action name="sendPendingInvMail" class="com.mss.msp.sagAjax.InvoiceAjaxAction" method="sendPendingInvMail">
+        </action>
        
     </package>
     

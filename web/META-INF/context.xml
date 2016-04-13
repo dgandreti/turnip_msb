@@ -10,6 +10,7 @@
     password="lokam001" 
     type="com.mchange.v2.c3p0.ComboPooledDataSource" 
     user="miracledb"/>  -->
+    <!-- Dev DB Server-->
    <Resource 
         auth="Container" 
         description="c3pO DataSource" 
@@ -19,7 +20,21 @@
         name="jndi/msb" 
         password="lokam001"
         type="com.mchange.v2.c3p0.ComboPooledDataSource" 
-        user="miracledb"/>
+        user="miracledb"/> 
+   <!-- Stage1 server start-->
+   
+   <!-- Stage1 server end -->
+   <!-- QA Testting -->
+<!--      <Resource 
+        auth="Container" 
+        description="c3pO DataSource" 
+        driverClass="com.mysql.jdbc.Driver" 
+        factory="org.apache.naming.factory.BeanFactory" 
+        jdbcUrl="jdbc:mysql://192.168.1.239:3306/servicebay?autoReconnect=true" 
+        name="jndi/msb" 
+        password="lokam001"
+        type="com.mchange.v2.c3p0.ComboPooledDataSource" 
+        user="miracledb"/>-->
     <!--  <Resource 
     auth="Container" 
     description="c3pO DataSource" 
@@ -30,6 +45,7 @@
     password="" 
     type="com.mchange.v2.c3p0.ComboPooledDataSource" 
     user="root"/>-->
+    <!-- Public IP -->
 <!--<Resource 
     auth="Container" 
     description="c3pO DataSource" 

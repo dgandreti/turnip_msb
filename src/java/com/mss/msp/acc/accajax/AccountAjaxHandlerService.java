@@ -61,4 +61,6 @@ public interface AccountAjaxHandlerService {
     public String getVendorFormEditDetails(int searchOrgId, int acc_attachment_id) throws ServiceLocatorException;
 
     public String getAttachmentsSearchDetails(AccountAjaxHandler accountAjaxHandler, int searchOrgId) throws ServiceLocatorException;
+    
+    public int getLocationCount(int orgUserId,String locationName) throws ServiceLocatorException;
 }

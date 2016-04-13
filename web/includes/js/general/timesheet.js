@@ -3287,13 +3287,14 @@ function onloadTotal(){
     totalSaturday();
 }  
 function addTimeSheetOverlayOpen(){
-   // var reportingPerson=document.getElementById("reportingPerson").value;
-    //alert("reporting person is"+reportingPerson);
-   /* if(reportingPerson==" "|| reportingPerson==null)
+    var reportingPerson=document.getElementById("reportingPerson").value;
+   // alert("reporting person is"+reportingPerson);
+    if(reportingPerson==""|| reportingPerson==null)
     {
-        alert("You dont have Reporting person please contact support team");
+         $('#timesheetValidation').html(" <font color='red'>You dont have Reporting person please contact support team</font>");
+         $('#timesheetValidation').show().delay(4000).fadeOut();
        
-    }else{*/
+    }else{
         var specialBox = document.getElementById('addTimeSheetOverlay');
         if(specialBox.style.display == "block"){       
             specialBox.style.display = "none";         
@@ -3303,7 +3304,7 @@ function addTimeSheetOverlayOpen(){
         // Initialize the plugin    
         $('#addTimeSheet').popup(      
             );
-    //}
+    }
 }
 function addTimeSheetOverlayClose(){
     var specialBox = document.getElementById('addTimeSheetOverlay');

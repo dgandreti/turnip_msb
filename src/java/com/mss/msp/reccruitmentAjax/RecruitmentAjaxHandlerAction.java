@@ -209,18 +209,29 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
         this.resourceType = resourceType;
     }
 
+    /**
+     * **********************************************************************************
+     *
+     * Method: getConsultanceExistance() is to download The vendor form
+     * attachment
+     *
+     * ************************************************************************************
+     */
     public String getConsultanceExistance() {
+        
+         System.out.println("********************RecruitmentAjaxHandlerAction :: getConsultanceExistance() Action Start*********************");
         resultMessage = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
+
                 String resultNumber = "";
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
-                System.out.println("this.contactType()-->" + this.getContactType());
+
 
                 String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getEmiltExistOrNot(this.getContactType(), this.getConEmail(), this.getSessionOrgId());
 
-                // String result = com.mss.msp.util.DataSourceDataProvider.getInstance().getEmiltExistOrNot(this.getResourceType(), this.getConEmail(), this.getSessionOrgId());
+
 
                 String checkResult = "";
 
@@ -238,7 +249,7 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 }
 
                 //not valid email id
-                System.out.println("in recruitment action" + resultNumber);
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -251,6 +262,7 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 resultMessage = ERROR;
             }
         }
+        System.out.println("********************RecruitmentAjaxHandlerAction :: getConsultanceExistance() Action End*********************");
         return resultMessage;
     }
 
@@ -265,7 +277,9 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
      * *****************************************************************************
      */
     public String doEmailVerify() {
-        System.out.println("-------In action class-------");
+
+        
+        System.out.println("********************RecruitmentAjaxHandlerAction :: doEmailVerify() Action Start*********************");
         resultMessage = LOGIN;
         int result;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID) != null) {
@@ -273,7 +287,7 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
             int sessionOrgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
             try {
                 result = DataSourceDataProvider.getInstance().checkConsultantLoginId(getConsultantId(), sessionId, sessionOrgId);
-                //  System.out.println("result-------"+result);
+
                 if (result == 0) {
                     httpServletResponse.setContentType("text");
                     httpServletResponse.setCharacterEncoding("UTF-8");
@@ -286,12 +300,13 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
-                System.err.println("resultString---->" + result);
+
 
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             }
         }
+         System.out.println("********************RecruitmentAjaxHandlerAction :: doEmailVerify() Action End*********************");
         return null;
     }
 
@@ -308,20 +323,15 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
      */
     public String doAddnewConsultant() {
         try {
-            System.out.println(">>>>>>In Add consultant action<<<<<<<<<<");
-            //  System.out.println("Org_id--------------->>>" + DataSourceDataProvider.getInstance().getOrgIdByEmailExt(getConsultantId()));
-            System.out.println("After ORG");
-            // if (DataSourceDataProvider.getInstance().getOrgIdByEmailExt(getConsultantId()) > 0) {
+           
+            System.out.println("********************RecruitmentAjaxHandlerAction :: doAddnewConsultant() Action Start*********************");
             String oId = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString();
             int orgid = Integer.valueOf(oId);
-            System.out.println("OID---" + orgid);
+           
             setOrganization(DataSourceDataProvider.getInstance().getOrganizationByOrgId(orgid));
             setCnslt_WCountry(ServiceLocator.getLocationService().getCountriesNamesMap());        // getGeneralService().getCountriesNames());
             setIndustry(DataSourceDataProvider.getInstance().getIndustryName());
             int res = ServiceLocator.getRecruitmentAjaxHandlerService().getAddedConsultantDetails(this, orgid);
-            //int searchDetails = ServiceLocator.getRecruitmentService().getAddedConsultantDetails(httpServletRequest, orgId, this);
-
-            System.out.println("result-----------======>>>" + res);
             httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             httpServletResponse.setHeader("Pragma", "no-cache");
             httpServletResponse.setDateHeader("Expires", 0);
@@ -329,34 +339,31 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.getWriter().write(res);
 
-
-            //   } else {
-
-            // resultType = SUCCESS;
-            // }
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-            // resultType = ERROR;
+          
         }
+        System.out.println("********************RecruitmentAjaxHandlerAction :: doAddnewConsultant() Action End*********************");
         return null;
     }
 
     /**
-     * Method : Fetches the attachment list.
+     * *****************************************************************************
+     * Date : 
      *
+     * Author :
+     *
+     * Method: getAttachmentList() method can be used to get the attachment 
+     *     
+     * *****************************************************************************
      */
     public String getAttachmentList() {
-        // resultMessage = LOGIN;
+       
+          System.out.println("********************RecruitmentAjaxHandlerAction :: getAttachmentList() Action Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
-                System.out.println("in attachment");
                 String attachmentList = ServiceLocator.getRecruitmentAjaxHandlerService().getAttachmentDetails(this);
                 int Response = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
-                //System.out.println("reporting person---->" + getReportingPerson());
-                //System.out.println("leave list ------ " + leavesListDetails.size());
-                // resultMessage = SUCCESS;
-
-                System.out.println("-----after impl in action" + attachmentList);
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -364,16 +371,13 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(attachmentList);
 
-
             } catch (Exception ex) {
-                //List errorMsgList = ExceptionToListUtility.errorMessagetUserLeavesServiceges(ex);
-                System.out.println("I am in error" + ex.toString());
+              
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
 
-
-                //resultMessage = ERROR;
             }
-        }// Session validator if END
+        }
+          System.out.println("********************RecruitmentAjaxHandlerAction :: getAttachmentList() Action End*********************");
         return null;
     }
 
@@ -390,13 +394,14 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
      */
     public String getConsultantTechReviews() {
         resultType = LOGIN;
+        System.out.println("********************RecruitmentAjaxHandlerAction :: getConsultantTechReviews() Action Start*********************");
         String reponseString = "";
         try {
-            System.out.println(" Consultant Ajax Handler action -->" + getConsultantId());
+           
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
 
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().getConsultantTechReviews(this);
-                //System.out.println("===============>in titles" + repoString);
+               
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -404,13 +409,14 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
+               
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+          System.out.println("********************RecruitmentAjaxHandlerAction :: getConsultantTechReviews() Action End*********************");
         return null;
     }
 
@@ -420,20 +426,21 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
      *
      * Author : ramakrishna<lankireddy@miraclesoft.com>
      *
-     * getConsultantTechReviews() method is used to add the consultant login
-     * details
+     * techReviewCommentsOverlay() method is used to get the tech review comments
+     * 
      *
      * *****************************************************************************
      */
     public String techReviewCommentsOverlay() {
         resultType = LOGIN;
+        System.out.println("********************RecruitmentAjaxHandlerAction :: techReviewCommentsOverlay() Action Start*********************");
         String reponseString = "";
         try {
-            System.out.println(" Consultant Ajax Handler action -->" + getConsultantId());
+           
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
 
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().techReviewCommentsOverlay(this);
-                //System.out.println("===============>in titles" + repoString);
+              
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -441,37 +448,39 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
+                
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+         System.out.println("********************RecruitmentAjaxHandlerAction :: techReviewCommentsOverlay() Action End*********************");
         return null;
     }
 
     /**
-     * *************************************
-     *
-     * @getSearchTechReviewList() method is used to get Requirement details of
-     * account
-     *
-     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * ****************************************************************************************
      *
      * @Created Date:05/18/2015
+     * 
+     * @Author:ramakrishna<lankireddy@miraclesoft.com>
+     * 
+     * @getTechReviewResultOnOverlay() method is used to get tech review details on overlay
+     * 
      *
-     **************************************
+     *****************************************************************************************
      */
     public String getTechReviewResultOnOverlay() {
         resultType = LOGIN;
+        System.out.println("********************RecruitmentAjaxHandlerAction :: getTechReviewResultOnOverlay() Action Start*********************");
         String reponseString = "";
         try {
-            System.out.println(" Consultant Ajax Handler action -->" + getConsultantId());
+          
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
 
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().getTechReviewResultOnOverlay(this);
-                //System.out.println("===============>in titles" + repoString);
+               
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -479,26 +488,38 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
+                
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************RecruitmentAjaxHandlerAction :: getTechReviewResultOnOverlay() Action End*********************");
         return null;
     }
-
+     /**
+     * *************************************************************************************************
+     *
+     * @Created Date:08/18/2015
+     * 
+     * @Author:Jagan Chukkala<jchukkla@miraclesoft.com>
+     * 
+     * @questionsCount() method is used to get the questions count of particular skill of organization
+     * 
+     *
+     ***************************************************************************************************
+     */
     public String questionsCount() {
         resultType = LOGIN;
         String reponseString = "";
         try {
-            System.out.println(" recruitment Ajax Handler action -->questionsCount()");
+            System.out.println("********************RecruitmentAjaxHandlerAction :: questionsCount() Action Start*********************");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
-                System.out.println("skillSetCategory--->" + getSkillCategoryArry());
+               
                 int oId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().questionsCount(this, oId);
-                System.out.println("===============>in titles" + reponseString);
+               
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -506,26 +527,39 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
+               
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************RecruitmentAjaxHandlerAction :: questionsCount() Action End*********************");
         return null;
     }
 
+    /**
+     * *************************************************************************************************
+     *
+     * @Created Date:08/18/2015
+     * 
+     * @Author:Jagan Chukkala<jchukkla@miraclesoft.com>
+     * 
+     * @questionsCountCheck() method is used to get the check no of questions of skill of organization
+     * based on severity
+     *
+     ***************************************************************************************************
+     */
     public String questionsCountCheck() {
         resultType = LOGIN;
         String reponseString = "";
         try {
-            System.out.println(" questionsCountCheck-->");
+            System.out.println("********************RecruitmentAjaxHandlerAction :: questionsCountCheck() Action Start*********************");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int orgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
-                System.out.println("skillSetCategory--->" + getSkillCategoryArry());
+                
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().questionsCountCheck(this, orgId);
-                System.out.println("===============>in titles" + reponseString);
+               
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -533,40 +567,53 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
+              
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+         System.out.println("********************RecruitmentAjaxHandlerAction :: questionsCountCheck() Action End*********************");
         return null;
     }
-
+     /**
+     * *************************************************************************************************
+     *
+     * @Created Date:08/19/2015
+     * 
+     * @Author:Jagan Chukkala<jchukkla@miraclesoft.com>
+     * 
+     * @skillsQuestions() method is used to get the questions per skill of organization
+     * based on severity
+     *
+     ***************************************************************************************************
+     */
     public String skillsQuestions() {
         resultType = LOGIN;
         String reponseString = "";
         try {
-            System.out.println(" questionsCountCheck-->");
+            System.out.println("********************RecruitmentAjaxHandlerAction :: skillsQuestions() Action Start*********************");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 int orgId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
-                System.out.println("skillSetCategory--->" + getSkillCategoryArry());
+               
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().skillsQuestions(this, orgId);
-                System.out.println("===============>in titles" + reponseString);
+               
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
                 httpServletResponse.setContentType("text");
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
-
-                //  resultType = SUCCESS;
+                
+              
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+         System.out.println("********************RecruitmentAjaxHandlerAction :: skillsQuestions() Action End*********************");
         return null;
     }
 
@@ -587,11 +634,11 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
         resultType = LOGIN;
         String reponseString = "";
         try {
-            System.out.println(" Consultant Ajax Handler action -->" + getConsultantId());
+          System.out.println("********************RecruitmentAjaxHandlerAction :: skillsQuestions() Action Start*********************");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
 
                 reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().saveOnlineExamStatus(this);
-                //System.out.println("===============>in titles" + repoString);
+              
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -599,106 +646,72 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
+              
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+        System.out.println("********************RecruitmentAjaxHandlerAction :: skillsQuestions() Action End*********************");
         return null;
     }
 
+     /**
+     *****************************************************************
+     *
+     * @doDownloadResults() method is used to download the  grid data
+     * 
+     *****************************************************************
+     */
     public String doDownloadResults() throws Exception {
         try {
             resultType = SUCCESS;
-
-            System.out.println("=================>Entered into the doDownloadResults");
+            
+            System.out.println("********************RecruitmentAjaxHandlerAction :: doDownloadResults() Action Start*********************");
             String accType = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
             ServletContext context = ServletActionContext.getServletContext();
 
             String contextPath = context.getRealPath(File.separator);
-            //String[] s = new ;
+           
             if (!"".equals(getGridDownload())) {
                 String data = DataSourceDataProvider.getInstance().getGridData(getGridDownload(), getGridDownloadFlag(), accType);
                 setGridDownload(data);
-                //  System.out.println("Total Count-->" + Count);
+              
                 String[] s = getGridDownload().split("\\^");
                 int columnCount = 0;
                 for (int i = 0; i < s.length; i++) {
-                    System.out.println("stk.split;-->" + s[i]);
+                   
                     String[] inner = s[0].split("\\|");
-                    //  System.out.println("inner--->"+inner);
+                  
                     columnCount = inner.length;
                     break;
                 }
                 PdfPTable table = new PdfPTable(columnCount);
 
-                table.setWidthPercentage(100);  //
-                // set relative columns width
-                // table.setWidths(new float[]{2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.6f, 2.6f}); //
-
+                table.setWidthPercentage(100); 
+            
                 table = DataSourceDataProvider.getInstance().getITextPDFTable(getGridDownload(), table);
 
                 ByteArrayOutputStream baos = new HeaderFooter().createPdf(table);
 
-                // Create a stamper that will copy the document to a new file
-            /*  PdfReader reader = new PdfReader(((ByteArrayOutputStream) baos).toByteArray());
-                 OutputStream out = new ByteArrayOutputStream();
-                 PdfStamper stamper = new PdfStamper(reader, out);
-                 // Reader reader = new InputStreamReader(new ByteArrayInputStream(baos.toByteArray()));
-                 int i = 1;
-                 PdfContentByte under;
-                 PdfContentByte over;
-                 Image image = Image.getInstance(contextPath + "/includes/images/logo.png");
-
-                 BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA,
-                 BaseFont.WINANSI, BaseFont.EMBEDDED);
-
-                 image.setRotation((float) Math.PI / 4);
-                 image.setAbsolutePosition(40, 160);
-                 image.setTransparency(new int[]{0x00, 0x10});
-                 // image.scaleAbsolute(120f, 60f);
-                 System.out.println("reader.getNumberOfPages()-->" + reader.getNumberOfPages());
-                 while (i <= reader.getNumberOfPages()) {
-                 // Watermark under the existing page
-                 under = stamper.getUnderContent(i);
-                 under.addImage(image);
-                 // Text over the existing page
-                 over = stamper.getOverContent(i);
-                 over.beginText();
-                 over.setFontAndSize(bf, 14);
-                 over.endText();
-                 i++;
-                 }
-                 stamper.close(); 
-                 */
-                // setting some response headers
-//            httpServletResponse.setHeader("Expires", "0");
-//            httpServletResponse.setHeader("Cache-Control",
-//                "must-revalidate, post-check=0, pre-check=0");
-//            httpServletResponse.setHeader("Pragma", "public");
                 String filename = getPdfHeaderName();
                 String withoutWhitespace = StringUtils.deleteWhitespace(filename);
                 filename = withoutWhitespace.concat(".pdf");
-                System.out.println("filename---->" + filename);
+               
                 httpServletResponse.setHeader("Content-Disposition", "attachment; filename=" + filename + "");
-                // setting the content type
+               
                 httpServletResponse.setContentType("application/pdf");
-                // the contentlength
-                // httpServletResponse.setContentLength(out.size());
-                // write ByteArrayOutputStream to the ServletOutputStream
                 httpServletResponse.getOutputStream().write(((ByteArrayOutputStream) baos).toByteArray());
-                //  OutputStream os = httpServletResponse.getOutputStream();
-                //  baos.writeTo(os);
-
+             
                 baos.flush();
                 baos.close();
             }
 
         } catch (Exception ex) {
-            System.out.println("eeeeeeee" + ex.getMessage());
+            
         }
+         System.out.println("********************RecruitmentAjaxHandlerAction :: doDownloadResults() Action End*********************");
         return null;
     }
 
@@ -747,8 +760,8 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
         @Override
         public void onStartPage(PdfWriter writer, Document document) {
             try {
-                System.out.println("contextPath-->" + contextPath);
-                Image image = Image.getInstance(contextPath + "/includes/images/logo.png");
+              
+                Image image = Image.getInstance(contextPath + "/includes/images/logo30.png");
                 Font green = new Font(FontFamily.HELVETICA, 14, Font.BOLD, BaseColor.GREEN);
 
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -780,21 +793,7 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
 
                 Rectangle rect = writer.getBoxSize("art");
 
-                // System.out.println(dateFormat.format(date));
-//                ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Document Generated On : " + dateFormat.format(date)), rect.getLeft(), rect.getTop(), 0);
-//                if (getRequirementName() != null) {
-//                    ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Requirement : " + getRequirementName()), rect.getRight(), rect.getTop(), 0);
-//                }
-
-
-
-
-//                 document.add(new Paragraph("Document Generated On : " + dateFormat.format(date)));
-//                if(getRequirementName()!=null){
-//                document.add(new Paragraph("Requirement : " + getRequirementName()));
-//                }
-//                  document.add(Chunk.NEWLINE);
-                //image width,height
+                
             } catch (DocumentException ex) {
                 Logger.getLogger(RecruitmentAjaxHandlerAction.class.getName()).log(Level.SEVERE, null, ex);
             } catch (MalformedURLException ex) {
@@ -814,18 +813,7 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
         @Override
         public void onEndPage(PdfWriter writer, Document document) {
             Rectangle rect = writer.getBoxSize("art");
-//            switch (writer.getPageNumber() % 2) {
-//                case 0:
-//                    ColumnText.showTextAligned(writer.getDirectContent(),
-//                            Element.ALIGN_RIGHT, header[0],
-//                            rect.getRight(), rect.getTop(), 0);
-//                    break;
-//                case 1:
-//                    ColumnText.showTextAligned(writer.getDirectContent(),
-//                            Element.ALIGN_LEFT, header[1],
-//                            rect.getLeft(), rect.getTop(), 0);
-//                    break;
-//            }
+
             ColumnText.showTextAligned(writer.getDirectContent(),
                     Element.ALIGN_CENTER, new Phrase(String.format("page %d", pagenumber)),
                     (rect.getLeft() + rect.getRight()) / 2, rect.getBottom() - 18, 0);
@@ -841,39 +829,46 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
          */
         public ByteArrayOutputStream createPdf(PdfPTable table)
                 throws IOException, DocumentException {
-            // step 1
+           
             Document document = new Document(PageSize.A4, 36, 36, 54, 54);
-            // step 2
+           
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PdfWriter writer = PdfWriter.getInstance(document, baos);
             HeaderFooter event = new HeaderFooter();
-            // writer.setBoxSize("art", new Rectangle(30, 30, 1000, 1000));
+          
             writer.setBoxSize("art", new Rectangle(36, 54, 559, 788));
             writer.setPageEvent(event);
-            // step 3
+          
             document.open();
 
             document.add(table);
-//            document.add(table);
-//            document.add(table);
-//            document.add(table);
-//            document.add(table);
-//            document.add(table);
-            // step 5
+
             document.close();
             return baos;
         }
     }
-
+ /**
+     * ****************************************************************************
+     *
+     * @doWithdrawConsultant() method is used to withdraw the cosultant by vendor
+     * 
+     *
+     *
+     * @Author:manikanta eeralla<meeralla@miraclesoft.com>
+     *
+     * @Created Date:10/01/2016
+     *
+     *****************************************************************************
+     */
     public String doWithdrawConsultant() {
         resultType = LOGIN;
-        // String reponseString = "";
+        System.out.println("********************RecruitmentAjaxHandlerAction :: doWithdrawConsultant() Action Start*********************");
         try {
-            System.out.println(" Consultant Ajax Handler action -->" + getConsultantId());
+           
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 int reponseString = ServiceLocator.getRecruitmentAjaxHandlerService().doWithdrawConsultant(this);
-                //System.out.println("===============>in titles" + repoString);
+
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -881,28 +876,44 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
+              
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+         System.out.println("********************RecruitmentAjaxHandlerAction :: doWithdrawConsultant() Action End*********************");
         return null;
     }
-
+    
+    /**
+     * ****************************************************************************
+     *
+     * @doDeclineConsultant() method is used to reject the cosultant by customer
+     * 
+     *
+     *
+     * @Author:manikanta eeralla<meeralla@miraclesoft.com>
+     *
+     * @Created Date:10/01/2016
+     *
+     *****************************************************************************
+     */
+    
+    
     public String doDeclineConsultant() {
         resultType = LOGIN;
         String reponseString = "";
         try {
-            System.out.println(" Consultant Ajax Handler action -->" + getConsultantId());
+            System.out.println("********************RecruitmentAjaxHandlerAction :: doDeclineConsultant() Action Start*********************");
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
                 int reponse = ServiceLocator.getRecruitmentAjaxHandlerService().doDeclineConsultant(this);
                 if (reponse > 1) {
                     reponseString = "Rejected Successfully";
                 }
-                //System.out.println("===============>in titles" + repoString);
+               
                 httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 httpServletResponse.setHeader("Pragma", "no-cache");
                 httpServletResponse.setDateHeader("Expires", 0);
@@ -910,17 +921,33 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.getWriter().write(reponseString);
 
-                //  resultType = SUCCESS;
+             
             } else {
                 return resultType;
             }
         } catch (Exception e) {
             resultType = ERROR;
         }
+             System.out.println("********************RecruitmentAjaxHandlerAction :: doDeclineConsultant() Action End*********************");
         return null;
     }
 
+    /**
+     * ******************************************************************
+     *
+     * @doDownloadXlsResults() method is used to download the xls file 
+     * 
+     *
+     *
+     * @Author:manikanta eeralla<meeralla@miraclesoft.com>
+     *
+     * @Created Date:10/01/2016
+     *
+     ********************************************************************
+     */
+    
     public String doDownloadXlsResults() throws IOException, WriteException, BiffException, ServiceLocatorException {
+        System.out.println("********************RecruitmentAjaxHandlerAction :: doDownloadXlsResults() Action Start*********************");
         String filename = getPdfHeaderName();
         String accType = (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString());
         filename = filename.concat(".xls");
@@ -940,16 +967,15 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
 
             WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
             cellFormat.setBackground(Colour.BLUE);
-            // int Count = stk.countTokens();
-            //  System.out.println("Total Count-->" + Count);
+        
             String[] s = getGridDownload().split("\\^");
             for (int i = 0; i < s.length; i++) {
-                System.out.println("stk.split;-->" + s[i]);
+               
                 String ss = s[i];
                 String[] inner = ss.split("\\|");
-                //  System.out.println("inner--->"+inner);
+            
                 for (int j = 0; j < inner.length; j++) {
-                    System.out.println("inner.split;-->" + inner[j]);
+                   
                     if (i == 0) {
                         label = new Label(j, i, inner[j], cellFormat);
                         wsheet.addCell(label);
@@ -965,6 +991,7 @@ public class RecruitmentAjaxHandlerAction extends ActionSupport implements Servl
         if (out != null) {
             out.close();
         }
+         System.out.println("********************RecruitmentAjaxHandlerAction :: doDownloadXlsResults() Action End*********************");
         return null;
     }
 

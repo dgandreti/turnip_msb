@@ -49,22 +49,6 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
 
-        <%--script>
-            var pager;
-            
-            function pagerOption(){
-                //alert("HI")
-                paginationSize = document.getElementById("paginationOption").value;
-                if(isNaN(paginationSize))
-                //alert(paginationSize);
-
-                pager = new Pager('sowResults', parseInt(paginationSize));
-            pager.init();
-            pager.showPageNav('pager', 'pageNavPosition');
-            pager.showPage(1);
-
-        };
-        </script--%>
 
         <script>
             var pager;
@@ -79,18 +63,7 @@
                 pager.showPage(1);
                 document.getElementById("loadingSowSearch").style.display="none";
             };
-            //            function pagerOption(){
-            //                        
-            //                paginationSize = document.getElementById("paginationOption").value;
-            //                if(isNaN(paginationSize))
-            //                    alert(paginationSize);
-            //                        
-            //                pager = new Pager('sowResults', parseInt(paginationSize));
-            //                pager.init();
-            //                pager.showPageNav('pager', 'pageNavPosition');
-            //                pager.showPage(1);
-            //                        
-            //            };
+           
             function sortables_init() {
                 // Find all tables with class sortable and make them sortable
                 //alert("hello")
@@ -132,7 +105,6 @@
                                                 <h4 class="panel-title">
                                                     <font color="#ffffff">Contracts</font>
                                                     <i id="updownArrow" onclick="toggleContent('SOWSearchForm')" class="fa fa-minus"></i> 
-                                                    <%--<span class="pull-right"><s:a href='%{#contechReqEditUrl}'><img  src="<s:url value="/includes/images/repeat.png"/>" height="25" width="25"></s:a></span>--%>
                                                 </h4>
                                             </div>
                                         </div>
@@ -174,9 +146,9 @@
 
                                                     </div>
                                                     <div class="col-sm-7"></div>
-                                                    <div class="col-sm-2 ">
+                                                    <div class="col-sm-2  pull-right">
                                                         <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                        <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                        <s:submit id="sowSearch" cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -186,7 +158,7 @@
                                             <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
                                         </div>
                                         <s:form>
-                                            <span><font style="color: green"><s:property value="resultMessage"></s:property></font></span>
+                                            <span id="updatedmessage"><font style="color: green"><s:property value="resultMessage"></s:property></font></span>
                                                 <div class="task_content" id="task_div" align="center" style="display: none" >
 
                                                     <div>
@@ -350,7 +322,7 @@
                                         </table>
                                     </center>
                                     <br/>
-                                    <s:submit cssClass="cssbutton migrationButton"
+                                    <s:submit cssClass="cssbutton migrationButton btn_pull"
                                               id="migrate" 
                                               onclick="return userMigration();"
                                               value="Migrate" />
@@ -372,7 +344,9 @@
         </footer><!--/Footer-->
 
 
-
+<script type="text/javascript">
+            $("#updatedmessage").show().delay(2000).fadeOut();
+        </script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>

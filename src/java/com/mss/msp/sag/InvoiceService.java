@@ -23,5 +23,5 @@ public interface InvoiceService {
 
     public boolean doEditInvoiceDetatils(InvoiceVTO invoiceVTOClass,String typeOfUser,InvoiceAction aThis)throws ServiceLocatorException;
 
-    
+    public List getOutstandingInvoiceList(InvoiceAction aThis,String typeofuser) throws ServiceLocatorException;
 }

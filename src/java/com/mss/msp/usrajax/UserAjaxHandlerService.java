@@ -1,12 +1,7 @@
 package com.mss.msp.usrajax;
 
-import com.mss.msp.requirement.RequirementAction;
 import com.mss.msp.util.ServiceLocatorException;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  *
@@ -23,7 +18,6 @@ public interface UserAjaxHandlerService {
 
     public int doUserRegister(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
 
-    // public String getEmployeeDetails(String query) throws ServiceLocatorException;
     public String getEmployeeDetails(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
 
     public String getTechEmployeeDetails(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
@@ -41,7 +35,7 @@ public interface UserAjaxHandlerService {
     public String getTypesOfTask(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
     /* ---End, Add task types by Aklakh---  */
 
-    public String getRelatedToNames(UserAjaxHandlerAction userAjaxHandlerAction);
+    public String getRelatedToNames(UserAjaxHandlerAction userAjaxHandlerAction, String usrType);
     //Added By Jagan
 
     public int getInsertedLeaveDetails(int userSessionId, UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
@@ -51,7 +45,6 @@ public interface UserAjaxHandlerService {
     public int doDeactiveAttachment(UserAjaxHandlerAction userAjaxHandlerAction);
     //added by manikanta
 
-    //public String getEmployeeNames(HttpServletRequest httpServletRequest, int dept_id) throws ServiceLocatorException;
     public String getStatesOfCountry(int countryId) throws ServiceLocatorException;
 
     public String getLeavesListDetails(UserAjaxHandlerAction aThis) throws ServiceLocatorException;
@@ -97,10 +90,10 @@ public interface UserAjaxHandlerService {
     public String getEmpRecruitment(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
 
     public int doUpdateVisaAttachment(int consultantId, String fileName) throws ServiceLocatorException;
-    
-    public int doUpdateLogo(String accountId, String fileName) throws ServiceLocatorException;  
-    
-     public String poRelease(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
-    public String insertPoAttachment(UserAjaxHandlerAction userAjaxHandlerAction,String filePath,String files,String fileName) throws ServiceLocatorException;
 
+    public int doUpdateLogo(String accountId, String fileName) throws ServiceLocatorException;
+
+    public String poRelease(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
+
+    public String insertPoAttachment(UserAjaxHandlerAction userAjaxHandlerAction, String filePath, String files, String fileName) throws ServiceLocatorException;
 }

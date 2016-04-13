@@ -1,5 +1,5 @@
 <%--
-    Document   : Vendor Dashboard
+    Document   : Projects Budget Page
     Created on : July 01, 2015, 07:10:41 PM
 --%>
 
@@ -119,7 +119,7 @@
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
-                                                <font color="#ffffff">Budget Details</font>
+                                                <font color="#ffffff">Budgets Search</font>
                                                 <i id="updownArrow" onclick="toggleContent('projectbudgetForm')" class="fa fa-minus"></i> 
                                             </h4>
                                         </div>
@@ -155,11 +155,11 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-3 pull-right budget_search">
-                                                        <s:a href="#" ><button type="button" tabindex="6" class="add_searchButton form-control" value="" style="margin:5px;padding:0" onclick="getProjectBudgetSearch();"><i class="fa fa-search"></i>&nbsp;Search</button></s:a>
+                                                        <s:a href="#" id="budgetSearch"><button type="button" tabindex="6" class="add_searchButton form-control" value="" style="margin:5px;padding:0" onclick="getProjectBudgetSearch();"><i class="fa fa-search"></i>&nbsp;Search</button></s:a>
                                                     </div>
                                                     <s:if test="roleValue!='Director'">
                                                         <div class="col-sm-3 pull-right contact_search">
-                                                            <s:a href="#" cssClass="projectBudget_popup_open" onclick="projectBudgetOverlay('Add');"><button class="add_searchButton form-control" tabindex="5" style="margin:5px;padding:0" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
+                                                            <s:a href="#" id="budgetAdd" cssClass="projectBudget_popup_open" onclick="projectBudgetOverlay('Add');"><button class="add_searchButton form-control" tabindex="5" style="margin:5px;padding:0" ><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
                                                         </div>
                                                     </s:if>
 
@@ -234,7 +234,7 @@
                                                                 </s:else>
                                                                 <td><s:property value="status"></s:property></td>
                                                                 <s:if test="comments.length()>9">    
-                                                                    <td><s:a href="#" cssClass="budgetCommentsOverlay_popup_open" onclick="budgetCommentsOverlay('%{comments}')"><s:property  value="%{comments.substring(0,10)}"/></s:a></td>
+                                                                    <td><s:a href="#" cssClass="budgetCommentsOverlay_popup_open" onclick="budgetCommentsOverlay('%{comments}')"><s:property  value="%{comments.substring(0,10)}"/>...</s:a></td>
                                                                 </s:if>
                                                                 <s:else>
                                                                     <td><s:a href="#" cssClass="budgetCommentsOverlay_popup_open" onclick="budgetCommentsOverlay('%{comments}')"><s:property  value="%{comments}"/></s:a></td>
@@ -315,7 +315,7 @@
                 <div id="budgetCommentsBox" class="marginTasks">
                     <div class="backgroundcolor">
                         <table>
-                            <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Skill Details&nbsp;&nbsp; </font></h4></td>
+                            <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Comments&nbsp;&nbsp; </font></h4></td>
                             <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="budgetCommentsOverlay_popup_close" onclick="budgetCommentsOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
@@ -343,6 +343,7 @@
                             <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="projectBudget_popup_close" onclick="closeProjectBudgetOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                         </table>
                     </div>
+                    <div class="" style="padding:5px"> 
                     <div class="row row2"> <span><e></e></span></div>
                     <%--form start from here --%>
                     <s:hidden name="costCenterCode" id="costCenterCode" value=""/>
@@ -502,16 +503,17 @@
                         <div id="oLaybuttons">
                             <s:if test="roleValue=='Director'">
                                 <div class="pull-right "><s:submit type="button" cssClass="cssbutton  fa fa-check-circle-o" onclick="saveBudgetDetails('A');" style="" value="Approve"></s:submit></div>
-                                <div class="pull-right "><s:submit type="button" cssClass="cssbutton fa fa-times"  onclick="saveBudgetDetails('R');" style="" value="Reject">
+                                <div class="pull-right col-sm-3"><s:submit type="button" cssClass="cssbutton fa fa-times"  onclick="saveBudgetDetails('R');" style="" value="Reject">
                                        </s:submit></div>
                             </s:if>
                             <s:else>
-                                <div class="pull-right "><s:submit type="button" cssClass="cssbutton fa fa-check-square-o" onclick="saveBudgetDetails('SB');"  tabindex="8" value="Save&Submit"></s:submit></div>
-                                <div class="pull-right "><s:submit type="button" cssClass="cssbutton fa fa-floppy-o" style="" onclick="saveBudgetDetails('S');"  tabindex="7" value="Save"></s:submit></div>
+                                <div class="pull-right "><s:submit type="button" cssClass="cssbutton fa fa-check-square-o opts" onclick="saveBudgetDetails('SB');"  tabindex="8" value="Save&Submit"></s:submit></div>
+                                <div class="pull-right col-sm-3"><s:submit type="button" cssClass="cssbutton fa fa-floppy-o opts" style="" onclick="saveBudgetDetails('S');"  tabindex="7" value="Save"></s:submit></div>
                             </s:else>
 
                         </div>
                     </div>
+                </div>
                 </div>
                 <%--close of future_items--%>
             </div>

@@ -40,7 +40,7 @@ public class RequirementVTO {
     private String RequirementComments;
     private String RequirementExp;
     private String RequirementPreferredSkills;
-    //for mailing release requirements
+   
     private String reqName;
     private String reqStartDate;
     private String reqEndDate;
@@ -49,7 +49,7 @@ public class RequirementVTO {
     private int accountSearchID;
     private String billingContact;
     private String requirementDurationDescriptor;
-    //for customer dashboard
+   
     private String month;
     private String total;
     private String open;

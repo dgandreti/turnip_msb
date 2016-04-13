@@ -14,9 +14,20 @@ function doOnLoad() {
         $("#csrDiv").css('visibility', 'hidden');
     }
 }
+function changeTaskType(){
+    $("#secondaryReport").val("");
+    getTaskType();
+    var task_related=document.getElementById("taskRelatedTo").value;
+    if(task_related==1){
+         var secondaryAssign=document.getElementById("secondaryAssign").value;
+//     alert(secondaryAssign)
+     $("#secondaryReport").val(secondaryAssign);
+    }
+    
+}
 /* start, function creted by Aklakh for select task types */
 function getTaskType(){
-    $("#secondaryReport").val("");
+//    $("#secondaryReport").val("");
     clearTable();
     var task_related=document.getElementById("taskRelatedTo").value;
     //alert(task_related)
@@ -230,6 +241,7 @@ function doUpdateTaskInfo()
             if (req.readyState == 4 && req.status == 200) {
             
                 $("UpdateTaskInfo").html(" <b><font color='green'>Task Information updated Successfully.</font></b>");
+                $("UpdateTaskInfo").show().delay(5000).fadeOut();
             } 
         };
         req.open("GET",url,"true");
@@ -332,6 +344,7 @@ function updateNoteDetails(){
             if (req.readyState == 4 && req.status == 200) {
                 //alert("success")
                 $("UpdateNoteInfo").html(" <b><font color='green'> &nbsp&nbspNotes Information updated Successfully.</font></b>");
+                $("UpdateNoteInfo").show().delay(5000).fadeOut();
                 getNotesDetailsBySearch();
             } 
         };
@@ -354,6 +367,7 @@ function addNotesDetails(){
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 $("InsertNoteInfo").html(" <b><font color='green'> &nbsp&nbspNotes Information Added Successfully.</font></b>");
+                $("InsertNoteInfo").show().delay(5000).fadeOut();
                 document.getElementById("noteNamesadd").value ="";
                 document.getElementById("noteCommentsadd").value="";
                 document.getElementById("addNoteButton").disabled = false;
@@ -488,6 +502,7 @@ function addTaskValidation(){
     var endDate=document.getElementById("endDate").value;
     var taskName=document.getElementById("task_name").value;
     var editTask=document.getElementById("editTaskValidation");
+    var primaryAssign =document.getElementById("primary_assign").value;
     if(startDate==""){
         $("editTask").html("<b><font color='red'> enter start date</font></b>");
         $("#startDate").css("border","1px solid red");
@@ -533,6 +548,15 @@ function addTaskValidation(){
     else{
         $("editTask").html("");
         $("#task_name").css("border","1px solid #3BB9FF")
+    }
+    if(primaryAssign==""){
+        $("editTask").html("<b><font color='red'> Select Primary Assign To</font></b>");
+        $("#primary_assign").css("border","1px solid red");
+        return false;
+    }
+    else{
+        $("editTask").html("");
+        $("#primary_assign").css("border","1px solid #3BB9FF")
     }
     var FileUploadPath = document.getElementById('taskAttachment').value;
 
@@ -738,16 +762,16 @@ function checkTaskDescription(id){
     var elem = document.getElementById("description_feedback");
     $(id).keyup(function(){
         el = $(this);
-        if(el.val().length >= 200){
-            el.val( el.val().substr(0, 200) );
+        if(el.val().length >= 500){
+            el.val( el.val().substr(0, 500) );
         } else {
             elem.style.color="green";
-            $("#description_feedback").text(200-el.val().length+' Characters remaining . ');
+            $("#description_feedback").text(500-el.val().length+' Characters remaining . ');
         }
-        if(el.val().length==200)
+        if(el.val().length==500)
         {
             elem.style.color="red";
-            $("#description_feedback").text(' Cannot enter  more than 200 Characters .');
+            $("#description_feedback").text(' Cannot enter  more than 500 Characters .');
         }
 
     })
@@ -759,22 +783,24 @@ function checkEditTaskDescription(id){
     var elem = document.getElementById("description_feedback");
     $(id).keyup(function(){
         el = $(this);
-        if(el.val().length >= 200){
-            el.val( el.val().substr(0, 200) );
+        if(el.val().length >= 500){
+            el.val( el.val().substr(0, 500) );
         } else {
             elem.style.color="green";
-            $("#description_feedback").text(200-el.val().length+' Characters remaining . ');
+            $("#description_feedback").text(500-el.val().length+' Characters remaining . ');
         }
-        if(el.val().length==200)
+        if(el.val().length==500)
         {
             elem.style.color="red";
-            $("#description_feedback").text(' Cannot enter  more than 200 Characters .');
+            $("#description_feedback").text(' Cannot enter  more than 500 Characters .');
         }
 
     })
     return false;
 }
-
+function clearDescriptionSpan(){
+    $("#description_feedback").text('');
+}
 function clearNotesFields(){
     document.getElementById("noteNamesadd").value="";
     document.getElementById("noteCommentsadd").value="";

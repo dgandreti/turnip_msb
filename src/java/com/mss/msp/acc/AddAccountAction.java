@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 /**
@@ -31,6 +32,7 @@ public class AddAccountAction extends ActionSupport implements ServletRequestAwa
     /**
      * The resultMessage is used for storing resultMessage.
      */
+    private static Logger log = Logger.getLogger(AddAccountAction.class);
     private String resultMessage;
     private String successMessage;
     private Integer userId;
@@ -41,7 +43,13 @@ public class AddAccountAction extends ActionSupport implements ServletRequestAwa
     private Map<Integer, String> accountTypeList;
     private Map<Integer, String> vendorTypeList;
 
+    /**
+     * *****************************************************************************
+     * Method : getAddAccount() is used to adding account
+     * *****************************************************************************
+     */
     public String getAddAccount() {
+        log.info("********************AddAccountAction :: getAddAccount Method Start*********************");
         String resultType = LOGIN;
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             setUserId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -51,9 +59,7 @@ public class AddAccountAction extends ActionSupport implements ServletRequestAwa
                 account.setUrl(account.getUrl().trim());
                 account.setEmail_ext(account.getEmail_ext().trim());
                 String existed = ServiceLocator.getAccountService().checkAccount(this.account, getUserId(), orgId);
-                System.out.println("Account is---->" + existed);
                 if (existed != null) {
-                    System.out.println("existed: " + existed);
                     resultMessage = "";
                     successMessage = existed;
                     resultType = SUCCESS;
@@ -76,11 +82,17 @@ public class AddAccountAction extends ActionSupport implements ServletRequestAwa
                 }
             }
             createDropDowns();
+            log.info("********************AddAccountAction :: getAddAccount Method End*********************");
         }// Session validator if END
 
         return resultType;
     }
 
+    /**
+     * *****************************************************************************
+     * Method : createDropDowns() is used to Populating drop down lists
+     * *****************************************************************************
+     */
     private void createDropDowns() {
         populateCountryList();
         populateIndustryList();
@@ -111,7 +123,14 @@ public class AddAccountAction extends ActionSupport implements ServletRequestAwa
         this.vendorTypeList = ServiceLocator.getLookUpHandlerService().getVendorTypesMap();
     }
 
+    /**
+     * *****************************************************************************
+     * Method : isVaildInput() is used to validating Account details while
+     * adding the account
+     * *****************************************************************************
+     */
     private boolean isVaildInput() {
+        log.info("********************AddAccountAction :: isVaildInput Method Start*********************");
         boolean isVaildInput = true;
         if (account == null) {
             isVaildInput = false;
@@ -122,51 +141,20 @@ public class AddAccountAction extends ActionSupport implements ServletRequestAwa
         } else if (account.getUrl() == null || account.getUrl().equals("")) {
             isVaildInput = false;
             resultMessage = "Please enter an Account Url";
-        }
-        else if (account.getTypeId() == null || account.getTypeId().intValue() < 0) {
+        } else if (account.getTypeId() == null || account.getTypeId().intValue() < 0) {
             isVaildInput = false;
             resultMessage = "Please select an Account Type";
-        }
-        else if (account.getEmail_ext() == null || account.getEmail_ext().equals("")) {
+        } else if (account.getEmail_ext() == null || account.getEmail_ext().equals("")) {
             isVaildInput = false;
             resultMessage = "Please enter Email extension";
         } else if (account.getAddress1() == null || account.getAddress1().equals("")) {
             account.setAddress1(null);
         } else if (account.getAddress2() == null || account.getAddress2().equals("")) {
             account.setAddress2(null);
-        } //    else if (account.getState() == null || account.getState().getId() == null ) {
-        //      isVaildInput = false;
-        //      resultMessage = "Please Enter a state";
-        //    } else if (account.getCountry() == null || account.getCountry().getId() == null) {
-        //      isVaildInput = false;
-        //      resultMessage = "Please Enter a country";
-        //    }
-        else if (account.getZip() == null || account.getZip().equals("")) {
+        } else if (account.getZip() == null || account.getZip().equals("")) {
             account.setZip(null);
-        } //    else if (account.getPhone() == null || account.getPhone().equals("")) {
-        //      isVaildInput = false;
-        //      resultMessage = "Please Enter a phone number";
-        //    } else if (account.getIndustryId() == null || account.getIndustryId().intValue() < 0) {
-        //      isVaildInput = false;
-        //      resultMessage = "Please select an industry(id)";
-        //    } else if (account.getStockSymbol() == null || account.getStockSymbol().equals("")) {
-        //      isVaildInput = false;
-        //      resultMessage = "Please Enter a stockSymbol";
-        //    }  else if (account.getDescription() == null || account.getDescription().equals("")) {
-        //      isVaildInput = false;
-        //      resultMessage = "Please Enter a description";
-        //    } else if (account.getDescription().length() > ApplicationConstants.ACCOUNT_DESCRIPTION_LENGTH  ){
-        //      isVaildInput = false;
-        //      resultMessage = "Please enter a shorter description ("+ApplicationConstants.ACCOUNT_DESCRIPTION_LENGTH+" Characters) or less";
-        //    }
-        
-//    else if (account.getTypeId().intValue() == 5) {
-//      if (account.getVendorTypeId() == null || account.getVendorTypeId().intValue() < 0) {
-//        isVaildInput = false;
-//        resultMessage = "Please select a vendor type";
-//      }
-//    }
-
+        }
+        log.info("********************AddAccountAction :: isVaildInput Method End*********************");
         return isVaildInput;
     }
 

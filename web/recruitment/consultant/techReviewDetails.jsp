@@ -1,5 +1,5 @@
 <%-- 
-    Document   : All Requirement List
+       Document   : All Requirement List
     Created on : May 7, 2015
     Author     : Praveen<pkatru@miraclesoft.com>
 --%>
@@ -58,6 +58,11 @@
             };
            
         </script>
+        <style>
+ 
+
+
+        </style>
     </head>
     <body style="overflow-x: hidden" onload="doOnLoad(); techReview();">
         <div id="wrap">
@@ -82,7 +87,6 @@
                                             <div class="backgroundcolor" >
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                         <font color="#ffffff">Tech Review Consultants List</font>
                                                         <i id="updownArrow" onclick="toggleContent('techReviewDetailsForm')" class="fa fa-minus"></i> 
                                                     </h4>
@@ -112,9 +116,9 @@
                                                                     <label class="labelStylereq" style="color: #56a5ec;">Status </label>
                                                                 <s:select cssClass="SelectBoxStyles form-control" name="techReviewStatus" id="techReviewStatus" tabindex="3" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Processing':'Processing','ShortListed':'ShortListed','Rejected':'Rejected','Selected':'Selected'}" />
                                                             </div>
-                                                            <div class="col-sm-2">
+                                                            <div class="col-sm-2 pull-right">
                                                                 <label class="labelStylereq" style="color: #56a5ec;"></label>
-                                                                <s:submit type="button" cssClass="add_searchButton form-control " tabindex="4"
+                                                                <s:submit type="button" cssClass="add_searchButton form-control " tabindex="4" id="techReviewListSearch" 
                                                                           value="" onclick="return getSearchTechReviewList()" cssStyle="margin:5px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                                 <s:hidden name="techSearch" id="techSearch" value="%{techSearch}"/>
                                                                 <s:hidden name="downloadFlag" id="downloadFlag" value="%{downloadFlag}"/>
@@ -146,7 +150,6 @@
                                                                         <th>Phone</th>
                                                                         <th>Interview Type</th>
                                                                         <th>Interview Date&Time</th>
-                                                                        <!--<th>Forwarded Date</th>-->
                                                                         <th>Forwarded By</th>
                                                                         <th>Status</th>
                                                                         <th>Resume</th>
@@ -163,7 +166,6 @@
                                                                             <s:param name="consult_id" value="%{consult_id}" />
                                                                             <s:param name="vendorcomments" value="%{vendorcomments}"/>
                                                                         </s:url>
-                                                                        <%--<s:hidden name="requirementId" id="requirementId" value="%{requirementId}" />--%>
                                                                         <tr>
                                                                             <td><s:a href='%{#myUrl}'><s:property value="%{consult_name}"></s:property></s:a></td>
                                                                             <td><s:property value="consult_email"></s:property></td>
@@ -244,6 +246,7 @@
                                                 </table>
                                             </div>
                                             <%--form start from here --%>
+                                            <div class="col-sm-12">
                                             <div class="pull-right " id="saveButtonReview"><s:submit type="button" id="saveTechReview" cssClass="add_searchButton fa fa-floppy-o" style="width:75px; height:30px" onclick="saveTechReviewResults();" value="Save"></s:submit></div>
                                                 <span><e></e></span><br>
                                             <s:hidden name="consultId" id="consultId"/>
@@ -268,7 +271,7 @@
                                                                  id="consultantJobTitle"
                                                                  disabled="true"
                                                                  />
-                                                    <label class="">Email&nbsp;&nbsp; </label>
+                                                    <label class="popuplabel tech_lab">Email</label>
                                                     <s:textfield type="text"
                                                                  name="consultantEmail"
                                                                  cssClass="techReviewInputStyle"
@@ -291,7 +294,7 @@
                                                                  id="interviewDate"
                                                                  disabled="true"
                                                                  />
-                                                    <label class="">Status</label>
+                                                    <label class="popuplabel tech_lab">Status</label>
 
                                                     <s:if test="#session.primaryrole == 6">
                                                         <span id="onlineExam">
@@ -336,7 +339,7 @@
                                                 <div id="reviewalignBox">
 
                                                     <div class="inner-techReviewdiv-elements required" id="skillRate">
-                                                        <label class="">Technical Skills </label>
+                                                        <label class="popuplabel1">Technical Skills </label>
                                                         <s:textfield type="text"
                                                                      name="techSkill"
                                                                      cssClass="ratingInputStyle"
@@ -347,7 +350,7 @@
                                                                      maxLength="11"
                                                                      />
 
-                                                        <label class="">Domain Skills </label>
+                                                        <label class="popuplabel1">Domain Skills </label>
                                                         <s:textfield type="text"
                                                                      name="domainSkill"
                                                                      cssClass="ratingInputStyle"
@@ -357,7 +360,7 @@
                                                                      onkeypress="return acceptNumbers(event);"
                                                                      maxLength="11"
                                                                      />  
-                                                        <label class="">Communication Skills</label>
+                                                        <label class="popuplabel1">Communication Skills</label>
                                                         <s:textfield type="text"
                                                                      name="comSkill"
                                                                      cssClass="ratingInputStyle"
@@ -387,7 +390,7 @@
                                                                     onblur="removeCommentsRemainMessage()"
                                                                     value=""
                                                                     disabled="true"/>
-                                                        <div class="charNum" id="remainingCharsDiv"></div>
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -464,7 +467,7 @@
                                             <span id="examButton"> 
                                                 <div class="pull-left "><s:submit type="button" cssClass="cssbutton fa fa-times"  value="Rejected" onclick="saveExamResult(this.value,'reviewDetails');" style="margin-left: -27px;"></s:submit></div>
                                                 <div class="pull-right "><s:submit type="button" cssClass="cssbutton fa fa-check"  value="ShortListed" onclick="saveExamResult(this.value,'reviewDetails');"></s:submit></div>
-                                                </span>          
+                                            </span>  </div>        
                                             </div>
                                         <%--close of future_items--%>
                                     </div>

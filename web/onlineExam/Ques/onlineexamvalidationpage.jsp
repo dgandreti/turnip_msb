@@ -25,7 +25,7 @@ and open the template in the editor.
 
          <div id="header_id">
                       <div id="header_logo" style="">
-                                <a href="#"><img src="<s:url value="/includes/images/logo.jpg"/>" alt="loin" width="200" height="33"/></a>
+                                <a href="#" id="serviceBayLogoValidation" ><img src="<s:url value="/includes/images/logo30.jpg"/>" alt="loin" width="200" height="33"/></a>
                            </div>
            </div>
                 <!-- End  Header-->
@@ -85,12 +85,12 @@ and open the template in the editor.
                                        
                                             
                                           
-                                               <!-- <button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" onclick="getCustomerDashboardList();"> -->
-                                             <s:submit name="submit" value="Next" cssClass="add_searchButton form-control" id="sumitValidationButton"/>
+                                             
+                                             <s:submit  name="submit" value="Next" cssClass="add_searchButton form-control" id="sumitValidationButton"/>
                                                
                                             
                                         
-                                    <!-- speakers content ends-->
+                                  
 
                                       </div>
                                     </div>

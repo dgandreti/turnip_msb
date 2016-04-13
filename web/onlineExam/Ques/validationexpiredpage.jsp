@@ -31,7 +31,7 @@ and open the template in the editor.
 
         <div id="header_id">
                       <div id="header_logo" style="">
-                                <a href="#"><img src="<s:url value="/includes/images/logo.jpg"/>" alt="loin" width="200" height="33"/></a>
+                                <a href="#" id="serviceBayLogoValidationExpire"><img src="<s:url value="/includes/images/logo30.jpg"/>" alt="loin" width="200" height="33"/></a>
                            </div>
            </div>
                 <!-- End  Header-->

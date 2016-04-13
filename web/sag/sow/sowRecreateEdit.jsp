@@ -82,7 +82,7 @@
                                                             <s:param name="serviceType"><s:property value="serviceTypeRedirect"/></s:param>
                                                             <s:param name="tabFlag">recreatedList</s:param>
                                                         </s:url>
-                                                        <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                        <span class="pull-right"><s:a href='%{#myUrl}' id="finderBackLink"><i class="fa fa-undo"></i></s:a></span>
                                                     </h4>
                                                 </div>
                                             </div>
@@ -186,11 +186,6 @@
                                                                 <s:if test="serviceType!='PE'">
                                                                     <span class="input-group-addon" style="padding-top: 5px">/</span>
                                                                     <s:select id="submittedPayRateType" cssClass="SelectBoxStyles form-control input-group-addon" name="submittedPayRateType" value="%{submittedPayRateType}" list="#@java.util.LinkedHashMap@{'HR':'Hr','DAY':'Day','MONTH':'Month'}" />
-                                                                    <%--<select id="pRate" class="SelectBoxStyles form-control input-group-addon" name="pRate" style="width: auto">
-                                                                        <option>/Hr</option>
-                                                                        <option>/Week</option>
-                                                                        <option>/Month</option>
-                                                                    </select>--%>
                                                                 </s:if>
                                                             </div>
                                                         </div>
@@ -372,27 +367,28 @@
                                                             <label class="labelStylereq" style="color:#56a5ec"></label>
                                                             <s:if test="status == 'Recreated'||status== 'Rejected'">
                                                                 <s:if test="(serviceType == 'PE' && #session.typeOfUsr == 'AC')||(serviceType == 'CO' && #session.typeOfUsr == 'VC')">   
-                                                                    <div class="col-sm-2"> 
-                                                                        <s:submit type="button" cssClass="add_searchButton form-control"  value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Recreated&SOWFlag=2"'><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                                   <div class="col-sm-2 pull-right">
+                                                                        <s:submit id="denyButton" type="button" cssClass="add_searchButton form-control"  value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Denied&SOWFlag=2"'><i class="fa fa-terminal"></i>&nbsp;Deny</s:submit>
+                                                                        </div>
+                                                                        <div class="col-sm-2 pull-right">
+                                                                        <s:submit id="submitButton" type="button" cssClass="add_searchButton form-control"  value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Submitted&SOWFlag=2"'><i class="fa fa-check-circle-o "></i>&nbsp;Submit</s:submit> 
+                                                                        </div>
+                                                                         <div class="col-sm-2 pull-right"> 
+                                                                        <s:submit id="saveButton" type="button" cssClass="add_searchButton form-control"  value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Recreated&SOWFlag=2"'><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                                                         </div> 
-                                                                        <div class="col-sm-2">
-                                                                        <s:submit type="button" cssClass="add_searchButton form-control"  value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Submitted&SOWFlag=2"'><i class="fa fa-check-circle-o "></i>&nbsp;Submit</s:submit> 
-                                                                        </div>
-                                                                        <div class="col-sm-2">
-                                                                        <s:submit type="button" cssClass="add_searchButton form-control"  value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Denied&SOWFlag=2"'><i class="fa fa-terminal"></i>&nbsp;Deny</s:submit>
-                                                                        </div>
+                                                                       
                                                                 </s:if>
                                                             </s:if>
                                                             <s:elseif test="status == 'Submitted'">
                                                                 <s:if test="(serviceType == 'PE' && #session.typeOfUsr == 'VC')||(serviceType == 'CO' && #session.typeOfUsr == 'AC')">  
                                                                     <div class="col-sm-2"> 
-                                                                        <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Approved&SOWFlag=2"'><i class="fa fa-check-circle"></i>&nbsp;Approve</s:submit>
+                                                                        <s:submit  id="approveButton"  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Approved&SOWFlag=2"'><i class="fa fa-check-circle"></i>&nbsp;Approve</s:submit>
                                                                         </div> 
                                                                         <div class="col-sm-2">
-                                                                        <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Rejected&SOWFlag=2"'><i class="fa fa-times-circle"></i>&nbsp;Reject</s:submit>
+                                                                        <s:submit  id="rejectButton" cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Rejected&SOWFlag=2"'><i class="fa fa-times-circle"></i>&nbsp;Reject</s:submit>
                                                                         </div>
                                                                         <div class="col-sm-2">
-                                                                        <s:submit  cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Denied&SOWFlag=2"'><i class="fa fa-terminal"></i>&nbsp;Deny</s:submit>
+                                                                        <s:submit  id="denyButton1" cssClass="add_searchButton form-control" type="button" value="" cssStyle="margin:5px 0px 0px" onclick='document.SOWForm.action="SOWSaveOrSubmit.action?SOWStatus=Denied&SOWFlag=2"'><i class="fa fa-terminal"></i>&nbsp;Deny</s:submit>
                                                                         </div>
                                                                 </s:if> 
 

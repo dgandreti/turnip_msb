@@ -73,47 +73,45 @@
                                         </div>
                                         <!-- Start Special Centered Box -->
                                         <div class="col-sm-12 password_box"><!--login form-->
-                                            <form id="ResetPassword" action="changeUserPassword" >
-                                                <%//if(request.getAttribute(ApplicationConstants.RESULT_MSG)!=null){
-                                                    //out.println(request.getAttribute(ApplicationConstants.RESULT_MSG));
-                                                    //}                                
-%>
-                                                <font style="color: green;font-size: 12px;"><s:property value="#request.resultMessage"/></font>
+                                            <form id="ResetPassword" action="changeUserPassword" autocomplete="off">
+                                                <font style="color: green;font-size: 12px; margin : 7px;" id="clear"><s:property value="#request.resultMessage"/></font>
+                                               
                                                 <span><resetMessage></resetMessage></span>
+                                              
                                                 <div class=" required"> 
                                                     <div class="col-lg-5  col-sm-5 req_margin">
                                                         <label id="labelLevelStatusReq" >Email</label> 
                                                     </div>
                                                     <div class="col-lg-6 col-sm-6 req_margin">
-                                                        <s:textfield id="email" name="emailId" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"  cssClass="form-control"  placeholder="Email Id" required="true" oninvalid="setCustomValidity('Must be valid email')"   onchange="try{setCustomValidity('')}catch(e){}" onblur="checkEmailIdExistance();" tabindex="1" maxLength="60"/>
+                                                        <s:textfield id="email" name="emailId" autocomplete="off" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"  cssClass="form-control"  placeholder="Email Id" required="true" oninvalid="setCustomValidity('Must be valid email')"   onchange="try{setCustomValidity('')}catch(e){}" onblur="return checkEmailIdExistance();" tabindex="1" maxLength="60"/>
                                                     </div>
                                                     <div class="col-lg-5  col-sm-5 req_margin"> 
                                                         <label id="labelLevelStatusReq">New Password</label> 
                                                     </div>
                                                     <div class="col-lg-6 col-sm-6  req_margin">
-                                                        <s:password name="newpwd" id="pwd1" placeholder="Password"  required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" cssClass="form-control" onchange="form.cnfrmpwd.pattern=this.value"    title="Password must contain at least 6 characters, including UPPER/lowercase and numbers"   tabindex="2"/>
+                                                        <s:password name="newpwd" id="pwd1" placeholder="Password" autocomplete="off" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" cssClass="form-control" onchange="form.cnfrmpwd.pattern=this.value"    title="Password must contain at least 6 characters, including UPPER/lowercase and numbers"   tabindex="2"/>
                                                     </div>
                                                     <div class="col-lg-5 col-sm-5 req_margin">
                                                         <label id="labelLevelStatusReq">Confirm Password</label> 
                                                     </div>
                                                     <div class="col-lg-6 col-sm-6 req_margin">
-                                                        <s:password name="cnfrmpwd" id="pwd2" placeholder="Confirm Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"  cssClass="form-control"  oninvalid="setCustomValidity('Please enter the same Password as above')"   onchange="try{setCustomValidity('')}catch(e){}" tabindex="3"/>
+                                                        <s:password name="cnfrmpwd" id="pwd2"  autocomplete="off" placeholder="Confirm Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"  cssClass="form-control"  oninvalid="setCustomValidity('Please enter the same Password as above')"   onchange="try{setCustomValidity('')}catch(e){}" tabindex="3"/>
                                                     </div> 
                                                 </div>
                                                 <div class="col-sm-11" >
-                                           <div class=" col-sm-13 req_margin ">
-                                               <div align="right"><button type="submit" id="" value="Submit" tabindex="4" class="cssbutton req_margin align_left fa fa-check-circle-o">&nbsp;Submit</button>
-                                           </div>
+                                                    <div class=" col-sm-13 req_margin ">
+                                                        <div align="right"><button type="submit" id="submit" value="Submit" tabindex="4" class="cssbutton req_margin align_left fa fa-check-circle-o">&nbsp;Submit</button>
+                                                        </div>
                                                     </div>
-
+                                                </div>
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- content start -->
                         </div>
-                        <!-- content start -->
-                    </div>
                 </section><!--/form-->
             </div>
         </div>
@@ -124,7 +122,9 @@
                 </div>
             </div>
         </footer><!--/Footer-->
-
+<script>
+        $("#clear").show().delay(5000).fadeOut();
+    </script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     </body>
 </html>

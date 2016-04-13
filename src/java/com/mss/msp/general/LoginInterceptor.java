@@ -21,6 +21,7 @@ public class LoginInterceptor extends AbstractInterceptor implements StrutsStati
     }
     
     public String intercept(ActionInvocation actionInvocation) throws Exception {
+        System.out.println("********************LoginAction :: LoginInterceptor Action start*********************");
         ActionContext context = actionInvocation.getInvocationContext();
         HttpServletRequest request= (HttpServletRequest) context.get(HTTP_REQUEST);
         HttpSession session =  request.getSession(false);
@@ -28,7 +29,7 @@ public class LoginInterceptor extends AbstractInterceptor implements StrutsStati
             return "sessionExpire";
         }
         
-            
+       System.out.println("********************LoginAction :: LoginInterceptor Action End*********************");   
         return actionInvocation.invoke();
     }
     

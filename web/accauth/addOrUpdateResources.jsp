@@ -13,7 +13,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Action Resources Page</title>
+        <title>ServicesBay :: Action&nbsp;Resources&nbsp;Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -34,7 +34,7 @@
 
 
     </head>
-    <body style="overflow-x: hidden" onload="getAccountNames(); getUserGroups();">
+    <body style="overflow-x: hidden" onload="getAccountNames(); getUserGroups();setBlockFlag();">
         <div id="wrap">
 
             <header id="header"><!--header-->
@@ -61,33 +61,31 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <s:if test="flag=='update'">
-                                                        <font color="#ffffff">Update Action Resources</font>
+                                                        <font color="#ffffff">Update&nbsp;Action&nbsp;Resources</font>
                                                     </s:if>
                                                     <s:else>
-                                                        <font color="#ffffff">Add Action Resources</font>
+                                                        <font color="#ffffff">Add&nbsp;Action&nbsp;Resources</font>
                                                     </s:else>
-                                                    <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                     <s:url var="myUrl" action="searchActionResources.action">
                                                         <s:param name="action_id"><s:property value="action_id"/></s:param> 
                                                         <s:param name="action_name"><s:property value="action_name"/></s:param>
                                                     </s:url>
-                                                    <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
+                                                    <span class="pull-right"><s:a href='%{#myUrl}' id="addResBackButton"><i class="fa fa-undo"></i></s:a></span>
 
                                                     </h4>
                                                 </div>
 
                                             </div>
                                             <!-- content start -->
-                                            <div ><label class="labelStylereq" style="color:#FF8A14;">Action Name : &nbsp; </label><span style="color: #FF8A14  "><s:property value="action_name" /></span></div>
+                                            <div ><label class="labelStylereq" style="color:#FF8A14;">Action&nbsp;Name : &nbsp; </label><span style="color: #FF8A14  "><s:property value="action_name" /></span></div>
                                         <s:hidden id="action_id" name="action_id" value="%{action_id}"/>
                                         <s:hidden id="id" name="id" value="%{id}"/>
                                         <s:hidden id="authId" name="authId" />
 
                                         <div class="col-sm-16">
                                             <div id="outputMessage" style="color: green"></div>
-                                            <%-- <s:form action="searchAccAuthorization" theme="simple"> --%>
                                             <div class="col-sm-4">
-                                                <label class="labelStylereq" style="color:#56a5ec;">Account Type </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Account&nbsp;Type </label>
                                                 <s:select  id="accType"
                                                            name="accType"
                                                            cssClass="SelectBoxStyles form-control"
@@ -95,6 +93,7 @@
                                                            theme="simple" onchange="getRolesForAccType();"
                                                            list="#@java.util.LinkedHashMap@{'C':'Customer','V':'Vendor','M':'Main'}"
                                                            />
+                                                
                                             </div>
                                             <s:if test="flag=='update'">
 
@@ -122,6 +121,7 @@
                                                            list="rolesMap"
                                                            onchange="getUserGroups();"
                                                            />
+                                                <s:hidden id="actionHiddenRole" name="actionHiddenRole" value="%{roleId}" ></s:hidden>
                                             </div >
                                             <div class="col-sm-4" id="usergroupDiv" style="display: none">
                                                 <label class="labelStylereq" style="color:#56a5ec;">Group </label>
@@ -139,7 +139,7 @@
                                                 <s:hidden name="orgId" id="orgId"/>
 
 
-                                                <label class="labelStylereq" style="color:#56a5ec;">Account Name </label>
+                                                <label class="labelStylereq" style="color:#56a5ec;">Account&nbsp;Name </label>
                                                 <s:if test="accountName == 'All'">   
                                                     <s:textfield id="accountNamePopup"
                                                                  cssClass="form-control"
@@ -167,10 +167,10 @@
                                                 <s:textarea id="addingAccAuthDesc" cssClass="form-control" name="addingAccAuthDesc" placeholder="Description" value="%{description}" onkeydown="actionAuthDescription(this)"/>
                                                 <span class="charNum" id="addingAccAuthValid"></span> 
                                             </div>
-
+                                                <s:hidden id="blockFlagHidden" name="blockFlagHidden" value="%{blockFlag}" ></s:hidden>
                                             <div class="col-sm-4">
                                                 <label for="block_flag" class="checkbox" style="margin: 25px 0px">
-                                                    <s:checkbox name="blockFlag" id="blockFlag" value="%{blockFlag}"/>Block Action
+                                                    <s:checkbox name="blockFlag" id="blockFlag" value="%{blockFlag}"/>Block&nbsp;Action
                                                 </label>
                                             </div>
 
@@ -181,7 +181,7 @@
                                                     <div class="col-sm-6">
                                                         <label class="labelStylereq" style="color:#56a5ec;"></label>
 
-                                                        <button type="button"
+                                                        <button type="button" id="addResUpdateButton"
                                                                 class="add_searchButton form-control" style="margin: 5px 0px;"
                                                                 value="Update" onclick="return insertOrUpdateActionResources('1');"><i class="fa fa-refresh"></i>&nbsp;Update</button>
                                                     </s:if>
@@ -190,8 +190,8 @@
                                                         <div class="col-sm-6">
                                                             <label class="labelStylereq" style="color:#56a5ec;"></label>
 
-                                                            <button type="button" style="margin: 5px 0px;"
-                                                                    class="add_searchButton  form-control"
+                                                            <button type="button" style="margin: 5px 15px;"
+                                                                    class="add_searchButton  form-control" id="addResAddButton"
                                                                     value="" onclick="return insertOrUpdateActionResources('0');"><i class="fa fa-plus-square"></i>&nbsp;Add</button>
                                                         </div>
                                                     </s:else>

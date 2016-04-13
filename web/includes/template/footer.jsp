@@ -12,10 +12,10 @@
     <div class="col-sm-6 pull-left">Copyright <i class="fa fa-copyright"></i> <%GregorianCalendar cal = new GregorianCalendar();out.print(cal.get(Calendar.YEAR));%> ServicesBay. All rights reserved.</div>
     <div class="col-sm-6">
         <ul class="pull-right socialHover">
-            <a class="btn btn-social btn-facebook " href="https://www.facebook.com/miracle45625" target="_blank" itemprop="sameAs"><i class="fa fa-facebook" style=""></i></a>
-            <a class="btn btn-social btn-google-plus" href="https://plus.google.com/+Team_MSS/" target="_blank" itemprop="sameAs"><i class="fa fa-google-plus"></i></a>
-            <a class="btn btn-social btn-twitter" href="https://twitter.com/Team_MSS" target="_blank" itemprop="sameAs"><i class="fa fa-twitter"></i></a>
-            <a class="btn btn-social btn-linkedin" href="https://www.linkedin.com/company/miracle-software-systems-inc" target="_blank" itemprop="sameAs"><i class="fa fa-linkedin"></i></a>
+            <a id="footerFacebookLink" class="btn btn-social btn-facebook " href="https://www.facebook.com/miracle45625" target="_blank" itemprop="sameAs"><i class="fa fa-facebook" style=""></i></a>
+            <a id="footerGooglePlusLink" class="btn btn-social btn-google-plus" href="https://plus.google.com/+Team_MSS/" target="_blank" itemprop="sameAs"><i class="fa fa-google-plus"></i></a>
+            <a id="footerTwitterLink" class="btn btn-social btn-twitter" href="https://twitter.com/Team_MSS" target="_blank" itemprop="sameAs"><i class="fa fa-twitter"></i></a>
+            <a id="footerLinkedInLink" class="btn btn-social btn-linkedin" href="https://www.linkedin.com/company/miracle-software-systems-inc" target="_blank" itemprop="sameAs"><i class="fa fa-linkedin"></i></a>
         </ul>
     </div>
 </div>

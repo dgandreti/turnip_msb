@@ -14,13 +14,14 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Tech Review search Page</title>
+        <title>ServicesBay :: Tech&nbsp;Review&nbsp;search&nbsp;Page</title>
 
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/animate.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/main.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive.css"/>">
+        <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive_queries.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/GridStyle.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/taskiframe.css"/>">
 
@@ -45,7 +46,11 @@
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/vendorAjax.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/techReviewAjax.js"/>"></script>
-
+        <style>
+            .techreview_details{
+                padding: 1% 1%;
+            }
+        </style>
     </head>
 
     <script>
@@ -53,19 +58,15 @@
         function techreview(){
                     
             var paginationSize = 10;
-            //var paginationSize = parseInt(document.getElementById("paginationOption").value);
             pager = new Pager('techReviewSearchTable', paginationSize);
             pager.init();
             pager.showPageNav('pager', 'pageNavPosition');
-            //document.getElementById("paginationOption").value=10;
             pager.showPage(1);
         };
         function pagerOption(){
                     
             paginationSize = document.getElementById("paginationOption").value;
             if(isNaN(paginationSize))
-                alert(paginationSize);
-                    
             pager = new Pager('techReviewSearchTable', parseInt(paginationSize));
             pager.init();
             pager.showPageNav('pager', 'pageNavPosition');
@@ -129,24 +130,24 @@
 
                                         <label class=""> </label> 
                                         <s:if test="accountFlag=='csr'" >
-                                            <s:a href='%{#csrMyUrl}' ><s:property value="%{accountName}"/></s:a>
+                                            <s:a href='%{#csrMyUrl}' id="techSearchAccountName" ><s:property value="%{accountName}"/></s:a>
                                         </s:if>
                                         <s:else>
-                                            <s:a href='#' ><s:property value="%{accountName}"/></s:a>
+                                            <s:a href='#' id="techSearchAccountName" ><s:property value="%{accountName}"/></s:a>
                                         </s:else>
                                         <s:if test="accountFlag=='csr'" >
-                                            <s:a href='%{#csrReqUrl}' > >> Requirements List</s:a>
+                                            <s:a href='%{#csrReqUrl}' id="techSearchReqList" > >> Requirements&nbsp;List</s:a>
                                         </s:if>
                                         <s:else>
-                                            <s:a href='%{#custReqUrl}' > >> Requirements List</s:a>        
+                                            <s:a href='%{#custReqUrl}'  id="techSearchReqList"> >> Requirements&nbsp;List</s:a>        
                                         </s:else>
                                         <s:if test="accountFlag=='csr'" >
-                                            <s:a href='%{#csrReqEditUrl}'> >> <s:property value="%{jdId}"/></s:a>
+                                            <s:a href='%{#csrReqEditUrl}' id="techSearchJdId"> >> <s:property value="%{jdId}"/></s:a>
                                         </s:if>
                                         <s:else>
-                                            <s:a href='%{#custReqEditUrl}' > >> <s:property value="%{jdId}"/></s:a>
+                                            <s:a href='%{#custReqEditUrl}' id="techSearchJdId" > >> <s:property value="%{jdId}"/></s:a>
                                         </s:else>    
-                                        <span class="breadcrumActive"> >> Tech Review</span>
+                                        <span class="breadcrumActive"> >> Tech&nbsp;Review</span>
 
 
 
@@ -156,7 +157,7 @@
                                         <div class="backgroundcolor" >
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
-                                                    <font color="#ffffff">Tech Review Details</font>
+                                                    <font color="#ffffff">Tech&nbsp;Review&nbsp;Details</font>
                                                     <i id="updownArrowAccount" onclick="toggleContentAccount('techReviewForm')" class="fa fa-angle-up"></i> 
                                                     <s:url var="contechReqEditUrl" action="Requirements/requirementedit.action">
                                                         <s:param name="requirementId"><s:property value="%{requirementId}"/></s:param> 
@@ -167,26 +168,26 @@
                                                         <s:param name="accountSearchID"><s:property value="accountSearchID"/></s:param>
                                                     </s:url>
                                                     <span class="pull-right"><s:a href='%{#contechReqEditUrl}'><i class="fa fa-undo"></i></s:a></span>
-                                                </h4>
-                                            </div>
-                                        </div>
-
-
-                                        <div id="emailPhoneShow_popup">
-                                            <div id="emailPhoneShowOnOverlay" >
-                                                <div class="overlayOrButton_color">
-                                                    <table>
-                                                        <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Techie Details&nbsp;&nbsp; </font></h4></td>
-                                                        </tr>
-                                                        <span class=" pull-right"><h5><a href="" class="emailPhoneShow_popup_close" onclick="techReviewEmailPhoneOverlay();"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
-                                                    </table>
+                                                    </h4>
                                                 </div>
-                                                <div>
-                                                    <form action="#" theme="simple" >
-                                                        <div>
-                                                            <div class="inner-reqdiv-elements">
-                                                                <table>
-                                                                    <span><error></error></span>
+                                            </div>
+
+
+                                            <div id="emailPhoneShow_popup">
+                                                <div id="emailPhoneShowOnOverlay" >
+                                                    <div class="overlayOrButton_color">
+                                                        <table>
+                                                            <tr><td><h4 style=""><font color="#ffffff">&nbsp;&nbsp;Techie&nbsp;Details&nbsp;&nbsp; </font></h4></td>
+                                                            </tr>
+                                                            <span class=" pull-right"><h5><a href="" id="techSearchPhoneOverlayClose" class="emailPhoneShow_popup_close" onclick="techReviewEmailPhoneOverlay();"><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                                        </table>
+                                                    </div>
+                                                    <div>
+                                                        <form action="#" theme="simple" >
+                                                            <div>
+                                                                <div class="inner-reqdiv-elements">
+                                                                    <table>
+                                                                        <span><error></error></span>
                                                                     <s:textfield name="email"  label="Email-Id" id="email"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
                                                                     <s:textfield name="contactNo"  label="Contact No" id="contactNo"  style="background-color:white;color:black;border:solid 1px #B0B0B0 ;" disabled="true" cssClass="form-control"/>
 
@@ -203,8 +204,8 @@
                                             <div id="reviewCommentsOverlay">
                                                 <div class="backgroundcolor">
                                                     <table>
-                                                        <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Review Comments&nbsp;&nbsp; </font></h4></td>
-                                                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="techReviewCommentsOverlay_popup_close" onclick="techReviewCommentsOverlayJs()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                                        <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Review&nbsp;Comments&nbsp;&nbsp; </font></h4></td>
+                                                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" id="techSearchCommentsOverlayClose" class="techReviewCommentsOverlay_popup_close" onclick="techReviewCommentsOverlayJs()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                     </table>
                                                 </div>
                                                 <div>
@@ -223,168 +224,187 @@
                                             <div id="techReviewBoxResults" class="techReviewPopupStyle">
                                                 <div class="backgroundcolor">
                                                     <table>
-                                                        <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Tech Review Results of Consultant&nbsp;&nbsp; </font></h4></td>
-                                                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="techReviewResults_popup_close" onclick="techReviewResultsOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
+                                                        <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;Tech&nbsp;Review&nbsp;Results&nbsp;of&nbsp;Consultant&nbsp;&nbsp; </font></h4></td>
+                                                        <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" id="techSearchResultOverlay" class="techReviewResults_popup_close" onclick="techReviewResultsOverlay()" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                     </table>
                                                 </div>
-                                                <%--form start from here --%>
+                                                <div style="padding:0 1%">
+                                                    <%--form start from here --%>
 
-                                                <span><e></e></span><br>
-                                                <s:hidden name="consultId" id="consultId"/>
+                                                    <span><e></e></span><br>
+                                                    <s:hidden name="consultId" id="consultId"/>
 
-                                                <label class="headingLabel">Consultant Details</label>
-                                                <div id="reviewalignBox">
-                                                    <div class="inner-techReviewdiv-elements">
-                                                        <label class="popuplabel">Name  </label>
-                                                        <s:textfield type="text"
-                                                                     name="consultantName"
-                                                                     cssClass="techReviewInputStyle"
-                                                                     id="consultantName"
-                                                                     disabled="true"
-                                                                     />
-                                                        <label class="popuplabel">Title </label>
-                                                        <s:textfield type="text"
-                                                                     name="consultantJobTitle"
-                                                                     cssClass="techReviewInputStyle"
-                                                                     id="consultantJobTitle"
-                                                                     disabled="true"
-                                                                     />
-                                                        <label class="">Email&nbsp;&nbsp; </label>
-                                                        <s:textfield type="text"
-                                                                     name="consultantEmail"
-                                                                     cssClass="techReviewInputStyle"
-                                                                     id="consultantEmail"
-                                                                     disabled="true"
-                                                                     />
-                                                    </div>
-                                                    <div class="inner-techReviewdiv-elements">
-                                                        <label class="popuplabel">Mobile </label>
-                                                        <s:textfield type="text"
-                                                                     name="consultantMobile"
-                                                                     cssClass="techReviewInputStyle"
-                                                                     id="consultantMobile"
-                                                                     disabled="true"
-                                                                     />
-                                                        <label class="popuplabel">Sch.Date</label>
-                                                        <s:textfield type="text"
-                                                                     name="interviewDate"
-                                                                     cssClass="techReviewInputStyle"
-                                                                     id="interviewDate"
-                                                                     disabled="true"
-                                                                     />
-                                                        <label class="">Status</label>
-                                                        <span id="onlineExam">
-                                                            <s:select cssClass="techReviewSelectStyle" 
-                                                                      name="finalTechReviewStatus" 
-                                                                      id="finalTechReviewStatus" 
-                                                                      list="#@java.util.LinkedHashMap@{'Processing':'Processing','Rejected':'Rejected','ShortListed':'ShortListed','Selected':'Selected'}" 
-                                                                      disabled="true"
-                                                                      />
-                                                        </span>
-                                                        <span id="examStatus"> </span>
-
-
-
-                                                    </div>
-
-                                                </div>
-                                                <span id="notOnline">   
-                                                    <label class="headingLabel">Skill Details</label>
-
+                                                    <label class="headingLabel">Consultant&nbsp;Details</label>
                                                     <div id="reviewalignBox">
+                                                        <div class="techreview_details row">
+                                                            <div class="col-sm-4">
+                                                                <label class="popuplabel">Name  </label>
+                                                                <s:textfield type="text"
+                                                                             name="consultantName"
+                                                                             cssClass="techReviewInputStyle"
+                                                                             id="consultantName"
+                                                                             disabled="true"
+                                                                             />
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <label class="popuplabel">Title </label>
+                                                                <s:textfield type="text"
+                                                                             name="consultantJobTitle"
+                                                                             cssClass="techReviewInputStyle"
+                                                                             id="consultantJobTitle"
+                                                                             disabled="true"
+                                                                             />
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <label class="label_order popuplabel">Email</label>
+                                                                <s:textfield type="text"
+                                                                             name="consultantEmail"
+                                                                             cssClass="techReviewInputStyle"
+                                                                             id="consultantEmail"
+                                                                             disabled="true"
+                                                                             />
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <label class="popuplabel">Mobile </label>
+                                                                <s:textfield type="text"
+                                                                             name="consultantMobile"
+                                                                             cssClass="techReviewInputStyle"
+                                                                             id="consultantMobile"
+                                                                             disabled="true"
+                                                                             />
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <label class="popuplabel">Sch.Date</label>
+                                                                <s:textfield type="text"
+                                                                             name="interviewDate"
+                                                                             cssClass="techReviewInputStyle"
+                                                                             id="interviewDate"
+                                                                             disabled="true"
+                                                                             />
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <label class="label_order popuplabel col-lg-6 no_gutter">Status</label>
+                                                                <span id="examStatus" class="col-sm-12 col-lg-6 no_gutter"> </span>
+                                                                <span id="onlineExam">
+                                                                    <s:select cssClass="techReviewSelectStyle" 
+                                                                              name="finalTechReviewStatus" 
+                                                                              id="finalTechReviewStatus" 
+                                                                              list="#@java.util.LinkedHashMap@{'Processing':'Processing','Rejected':'Rejected','ShortListed':'ShortListed','Selected':'Selected'}" 
+                                                                              disabled="true"
+                                                                              />
+                                                                </span>
+                                                                
+                                                            </div>
+                                                            <div class="col-sm-12">   </div>
+
+
+
+                                                        </div>
+
+                                                    </div>
+                                                    <span id="notOnline">   
+                                                        <label class="headingLabel">Skill&nbsp;Details</label>
+
+                                                        <div id="reviewalignBox">
+                                                            <div class="inner-techReviewdiv-elements">
+                                                                <s:textarea type="text"
+                                                                            name="consultantSkill"
+                                                                            cssClass="reviewareacss"
+                                                                            id="consultantSkill"
+                                                                            disabled="true"
+                                                                            />
+                                                            </div>
+
+                                                        </div>
+                                                        <label class="headingLabel">Rating&nbsp;Details(**Rating&nbsp;between&nbsp;1(min)&nbsp;to&nbsp;10(max))</label>
+
+                                                        <div id="reviewalignBox row">
+
+                                                            
+                                                                <div class="col-sm-3">
+                                                                    <label class="contact_search">Technical&nbsp;Skills </label>
+                                                                    <s:textfield type="text"
+                                                                                 name="techSkill"
+                                                                                 cssClass="ratingInputStyle"
+                                                                                 id="techSkill"
+                                                                                 value=""
+                                                                                 disabled="true"
+                                                                                 />
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <label class="contact_search">Domain&nbsp;Skills </label>
+                                                                    <s:textfield type="text"
+                                                                                 name="domainSkill"
+                                                                                 cssClass="ratingInputStyle"
+                                                                                 id="domainSkill"
+                                                                                 value=""
+                                                                                 disabled="true"
+                                                                                 /> 
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <label class="">Communication&nbsp;Skills</label>
+                                                                    <s:textfield type="text"
+                                                                                 name="comSkill"
+                                                                                 cssClass="ratingInputStyle"
+                                                                                 id="comSkill"
+                                                                                 placeholder=""
+                                                                                 value=""
+                                                                                 disabled="true"
+                                                                                 /> 
+                                                                </div>
+
+                                                          
+                                                        </div>
+
+
+
+                                                        <font style="color: #ffffff">..................... ..............................  ..........................................</font>
+                                                    </span>
+                                                    <span id="online" >
+                                                        <s:hidden id="contechId" name="contechId"/>
+                                                        <s:hidden id="consultantId" name="consultantId" value="%{consult_id}"/>
+                                                        <s:hidden id="requirementId" name="consultantId" value="%{requirementId}"/>
+                                                        <label class="headingLabel">Online&nbsp;Exam&nbsp;Details</label>
+
+                                                        <div class="skillQuestionBox">
+                                                            <label class="headingLabel " style="color: #56a5ec">Exam&nbsp;Performed&nbsp;On &nbsp;<span id="examsubmittedDate" /></label>   
+                                                            <div class="row">
+
+                                                                <div class="col-sm-3" id="skillDivQuestion1">  <label class="skillQuestionsLabel"> <span id="skillQuestion1" ></span></label> </div>
+                                                                <div class="col-sm-3" id="skillDivQuestion2"> <label class="skillQuestionsLabel"> <span id="skillQuestion2"></span></label></div> 
+                                                                <div class="col-sm-3" id="skillDivQuestion3"> <label class="skillQuestionsLabel"> <span id="skillQuestion3"></span></label></div>
+                                                                <div class="col-sm-3" id="skillDivQuestion4"> <label class="skillQuestionsLabel"> <span id="skillQuestion4"></span></label></div> 
+                                                                <div class="col-sm-3" id="skillDivQuestion5"> <label class="skillQuestionsLabel"> <span id="skillQuestion5"></span></label></div> 
+                                                            </div>
+                                                            <div class="row">
+
+                                                                <div class="col-sm-3" id="skillDivQuestion6"> <label class="skillQuestionsLabel"> <span id="skillQuestion6"></span></label></div> 
+                                                                <div class="col-sm-3" id="skillDivQuestion7"> <label class="skillQuestionsLabel"> <span id="skillQuestion7"></span></label></div> 
+                                                                <div class="col-sm-3" id="skillDivQuestion8"> <label class="skillQuestionsLabel"> <span id="skillQuestion8"></span></label></div> 
+                                                                <div class="col-sm-3" id="skillDivQuestion9"><label class="skillQuestionsLabel"> <span id="skillQuestion9"></span></label></div> 
+                                                                <div class="col-sm-3" id="skillDivQuestion10"><label class="skillQuestionsLabel"> <span id="skillQuestion10"></span></label></div> 
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                    <div id="reviewalignBox"  name="reviewComments">
+                                                        <label class="headingLabel">Comments</label>
                                                         <div class="inner-techReviewdiv-elements">
-                                                            <s:textarea type="text"
-                                                                        name="consultantSkill"
+                                                            <s:textarea id="consultantComments"
+                                                                        name="consultantComments"
                                                                         cssClass="reviewareacss"
-                                                                        id="consultantSkill"
+                                                                        type="text"
+                                                                        placeholder="Any comments"
+                                                                        value=""
                                                                         disabled="true"
                                                                         />
                                                         </div>
-
-                                                    </div>
-                                                    <label class="headingLabel">Rating Details(**Rating between 1(min) to 10(max))</label>
-
-                                                    <div id="reviewalignBox">
-
-                                                        <div class="inner-techReviewdiv-elements">
-                                                            <label class="">Technical Skills </label>
-                                                            <s:textfield type="text"
-                                                                         name="techSkill"
-                                                                         cssClass="ratingInputStyle"
-                                                                         id="techSkill"
-                                                                         value=""
-                                                                         disabled="true"
-                                                                         />
-
-                                                            <label class="">Domain Skills </label>
-                                                            <s:textfield type="text"
-                                                                         name="domainSkill"
-                                                                         cssClass="ratingInputStyle"
-                                                                         id="domainSkill"
-                                                                         value=""
-                                                                         disabled="true"
-                                                                         />  
-                                                            <label class="">Communication Skills</label>
-                                                            <s:textfield type="text"
-                                                                         name="comSkill"
-                                                                         cssClass="ratingInputStyle"
-                                                                         id="comSkill"
-                                                                         placeholder=""
-                                                                         value=""
-                                                                         disabled="true"
-                                                                         /> 
-
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <font style="color: #ffffff">..................... ..............................  ..........................................</font>
-                                                </span>
-                                                <span id="online" >
-                                                    <s:hidden id="contechId" name="contechId"/>
-                                                    <s:hidden id="consultantId" name="consultantId" value="%{consult_id}"/>
-                                                    <s:hidden id="requirementId" name="consultantId" value="%{requirementId}"/>
-                                                    <label class="headingLabel">Online Exam Details</label>
-
-                                                    <div class="skillQuestionBox">
-                                                        <label class="headingLabel " style="color: #56a5ec">Exam Performed On<span id="examsubmittedDate" /></label>   
-                                                        <div class="row">
-
-                                                            <div class="col-sm-3" id="skillDivQuestion1">  <label class="skillQuestionsLabel"> <span id="skillQuestion1" ></span></label> </div>
-                                                            <div class="col-sm-3" id="skillDivQuestion2"> <label class="skillQuestionsLabel"> <span id="skillQuestion2"></span></label></div> 
-                                                            <div class="col-sm-3" id="skillDivQuestion3"> <label class="skillQuestionsLabel"> <span id="skillQuestion3"></span></label></div>
-                                                            <div class="col-sm-3" id="skillDivQuestion4"> <label class="skillQuestionsLabel"> <span id="skillQuestion4"></span></label></div> 
-                                                            <div class="col-sm-3" id="skillDivQuestion5"> <label class="skillQuestionsLabel"> <span id="skillQuestion5"></span></label></div> 
-                                                        </div>
-                                                        <div class="row">
-
-                                                            <div class="col-sm-3" id="skillDivQuestion6"> <label class="skillQuestionsLabel"> <span id="skillQuestion6"></span></label></div> 
-                                                            <div class="col-sm-3" id="skillDivQuestion7"> <label class="skillQuestionsLabel"> <span id="skillQuestion7"></span></label></div> 
-                                                            <div class="col-sm-3" id="skillDivQuestion8"> <label class="skillQuestionsLabel"> <span id="skillQuestion8"></span></label></div> 
-                                                            <div class="col-sm-3" id="skillDivQuestion9"><label class="skillQuestionsLabel"> <span id="skillQuestion9"></span></label></div> 
-                                                            <div class="col-sm-3" id="skillDivQuestion10"><label class="skillQuestionsLabel"> <span id="skillQuestion10"></span></label></div> 
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                <div id="reviewalignBox"  name="reviewComments">
-                                                    <label class="headingLabel">Comments</label>
-                                                    <div class="inner-techReviewdiv-elements">
-                                                        <s:textarea id="consultantComments"
-                                                                    name="consultantComments"
-                                                                    cssClass="reviewareacss"
-                                                                    type="text"
-                                                                    placeholder="Any comments"
-                                                                    value=""
-                                                                    disabled="true"
-                                                                    />
-                                                    </div>
-                                                </div>           
-                                                <span id="examButton"> 
-                                                    <div class="pull-left "><s:submit cssClass="cssbutton"  value="Rejected" onclick="saveExamResult(this.value,'reviewSearch');" style="margin-left: -27px;"></s:submit></div>
-                                                    <div class="pull-right "><s:submit cssClass="cssbutton"  value="ShortListed" onclick="saveExamResult(this.value,'reviewSearch');"></s:submit></div>
-                                                    </span>         
+                                                    </div>           
+                                                    <span id="examButton"> 
+                                                        <div class="pull-left "><s:submit type="button" id="rejectButton" cssClass="cssbutton fa fa-times"  value="Rejected" onclick="saveExamResult(this.value,'reviewSearch');" style="margin-left: -27px;"></s:submit></div>
+                                                        <div class="pull-right "><s:submit type="button" id="shortlistButton" cssClass="cssbutton fa fa-check"  value="ShortListed" onclick="saveExamResult(this.value,'reviewSearch');"></s:submit></div>
+                                                    </span>  
                                                 </div>
+                                            </div>
                                             <%--close of future_items--%>
                                         </div>
 
@@ -400,19 +420,19 @@
                                             <s:param name="jdId"><s:property value="%{jdId}"/></s:param> 
                                             <s:param name="reqFlag">consultantTab</s:param>
                                         </s:url>
-                                        <label class="">Consultant Name:<font style="color: #FF8A14;"><s:a href='%{#myUrl}'><s:property value="%{consult_name}"/></s:a></font></label>
+                                        <label class="">Consultant Name:<font style="color: #FF8A14;"><s:a href='%{#myUrl}' id="techSearchConsName"><s:property value="%{consult_name}"/></s:a></font></label>
                                             <s:url var="ReqUrl" action="Requirements/requirementedit.action">
                                                 <s:param name="requirementId"><s:property value="%{requirementId}"/></s:param> 
                                                 <s:param name="accountSearchID"><s:property value="%{accountSearchID}"/></s:param> 
                                                 <s:param name="jdId"><s:property value="%{jdId}"/></s:param> 
                                             </s:url>
-                                        <label class="pull-right ">Job Title:<font style="color: #FF8A14; pointer-events: hand;"><s:a href='%{#ReqUrl}'><s:property value="%{reqName}"/></s:a></font></label>
+                                        <label class="pull-right ">Job Title:<font style="color: #FF8A14; pointer-events: hand;"><s:a href='%{#ReqUrl}' id="techSearchReqName"><s:property value="%{reqName}"/></s:a></font></label>
                                             <div><span id="validationMessage" /> </div>
 
                                             <div class="inner-reqdiv-elements" id="techReviewForm">
                                                 <div class="row">
                                                     <div class="col-sm-4">
-                                                        <label class="labelStylereq" style="color:#56a5ec">Interview Date</label>
+                                                        <label class="labelStylereq" style="color:#56a5ec">Interview&nbsp;Date</label>
                                                         <div class="calImage"><s:textfield cssClass="form-control" tabindex="1" id="searchInterviewDate" placeholder="Interview Date"  name="searchInterviewDate"  onkeypress="return enterTechDateRepository(this);" ><i class="fa fa-calendar"></i></s:textfield>
                                                         </div></div>
                                                     <s:hidden name="empIdTechReview" id="empIdTechReview" />
@@ -423,7 +443,7 @@
                                                 </div>
                                                 <div class="col-sm-2 pull-right">
                                                     <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                    <s:submit id="" cssClass="add_searchButton form-control" tabindex="4" type="button" onclick="searchTechReviews();" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                    <s:submit id="techSearchButton" cssClass="add_searchButton form-control" tabindex="4" type="button" onclick="searchTechReviews();" value="" cssStyle="margin:5px 0px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                     </div>
                                                 <s:form action="../Requirements/forwardTechReview.action" id="#" theme="simple" enctype="multipart/form-data" >
                                                     <s:hidden name="requirementId" id="requirementId" value="%{requirementId}" />
@@ -438,14 +458,14 @@
                                                         <s:param name="accountSearchID"><s:property value="%{accountSearchID}"/></s:param> 
                                                         <s:param name="jdId"><s:property value="%{jdId}"/></s:param> 
                                                         <s:param name="accountFlag" ><s:property value="%{accountFlag}" /></s:param> 
-
+                                                        <s:param name="techReviewStatus" ><s:property value="%{techReviewStatus}" /></s:param> 
                                                     </s:url>
                                                     <s:if test="techReviewStatus=='Processing' || techReviewStatus=='ShortListed'">
-                                                    <div class="col-sm-2 pull-right">
-                                                        <label class="labelStylereq" style="color:#56a5ec"></label>
-                                                        <%--  <s:submit cssClass="cssbutton form-control" value="Add Review" cssStyle="margin:5px 0px 0px" />--%>
-                                                        <s:a href='%{#reviewUrl}' cssClass="add_searchButton form-control" tabindex="3" cssStyle="margin:5px 0px 0px"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
-                                                        </div>
+                                                        <div class="col-sm-2 pull-right">
+                                                            <label class="labelStylereq" style="color:#56a5ec"></label>
+                                                            <%--  <s:submit cssClass="cssbutton form-control" value="Add Review" cssStyle="margin:5px 0px 0px" />--%>
+                                                            <s:a href='%{#reviewUrl}' id="techSearchAddButton" cssClass="add_searchButton form-control" tabindex="3" cssStyle="margin:5px 0px 0px"><i class="fa fa-plus-square"></i>&nbsp;Add</button></s:a>
+                                                            </div>
                                                     </s:if>     
                                                     <%--<a href="../Requirements/forwardTechReview.action"><input type="button" class="cssbutton " value="Forward Review" /></a> --%>
                                                 </s:form>
@@ -463,11 +483,11 @@
                                                         <table id="techReviewSearchTable" class="responsive CSSTable_task" border="5"cell-spacing="2">
                                                             <tbody>
                                                                 <tr>
-                                                                    <th>Review Type</th>
-                                                                    <th>Date of Review</th>
+                                                                    <th>Review&nbsp;Type</th>
+                                                                    <th>Date&nbsp;of&nbsp;Review</th>
                                                                     <th>Reviewer</th>
                                                                     <!--<th>Review By Techie2</th>-->
-                                                                    <th>Avg Rating(10)</th>
+                                                                    <th>Avg&nbsp;Rating(10)</th>
                                                                     <th>Comments</th>
                                                                     <th>Status</th>
                                                                 </tr>
@@ -555,14 +575,12 @@
         <script type="text/javascript">
             var recordPage=10;
             function pagerOption(){
-                //alert("recordPage")
                 var paginationSize = document.getElementById("paginationOption").value;
                 if(isNaN(paginationSize))
                 {
                        
                 }
                 recordPage=paginationSize;
-                //alert(recordPage)
                 $('#techReviewSearchTable').tablePaginate({navigateType:'navigator'},recordPage);
 
             };

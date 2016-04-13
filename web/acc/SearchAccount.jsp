@@ -12,7 +12,7 @@
         <!-- new styles -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ServicesBay :: Account Search Page</title>
+        <title>ServicesBay :: Accounts Search Page</title>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/bootstrap.min.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/home/home.css"/>">
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/font-awesome.min.css"/>">
@@ -26,7 +26,6 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive_queries.css"/>">
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
-        <%--script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script--%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
@@ -37,7 +36,6 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script>
             $(document).ready(function(){
-                //                alert("acc")
                 $(".img-swap").click(function(){
                     $(".popup_block").animate({
                         width: 'toggle'
@@ -45,10 +43,6 @@
                 });
                 document.getElementById("loadingAcoountSearch").style.display="none";
             });
-            
-           
-            
-        
         </script>
 
 
@@ -115,7 +109,6 @@
                                             <div class="backgroundcolor" >
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <!--<span class="pull-right"><a href="" class="profile_popup_open" ><font color="#DE9E2F"><b>Edit</b></font></a></span>-->
                                                         <font color="#ffffff">Account Search</font>
                                                         <i id="updownArrow" onclick="toggleContent('searchAccountsBy')" class="fa fa-minus"></i> 
                                                     </h4>
@@ -125,27 +118,7 @@
                                             <div class="col-sm-12">
                                                 <s:form action="searchAccountsBy"  method="post" theme="simple" >
                                                     <br>
-                                                    <%--div class="row">
-                                                        <div class="col-sm-4">
-                                                            <label class="accountLabel" style="" >Name:</label>
-                                                            <s:textfield  cssClass="textbox" label="accountName" id="accountName"
-                                                                          type="text" name="account.name" placeholder="Account Name"
-                                                                          value="%{account.name}"
-                                                                          />
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="accountLabel" style="">URL:</label>
-                                                            <s:textfield cssClass="textbox" id="accountUrl" type="text"
-                                                                         name="account.url" placeholder="Account Url"
-                                                                         value="%{account.url}"/>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="accountLabel" style="" >Zip:</label>
-                                                            <s:textfield cssClass="textbox" id="accountZip" type="dropdown"
-                                                                         name="account.zip" placeholder="Zip"
-                                                                         value="%{account.zip}"/>
-                                                        </div>
-                                                    </div--%>
+                                                    
                                                     <div class="inner-reqdiv-elements">
 
                                                         <div class="col-sm-4">
@@ -171,35 +144,7 @@
                                                     </div>
 
 
-                                                    <%--div class="row">
-                                                        <div class="col-sm-4">
-                                                            <label class="accountLabel" style="">Date:</label>
-                                                            <s:textfield cssClass="textbox" id="accountLastAccessDate"
-                                                                         type="dropdown" name="account.lastAccessDate"
-                                                                         placeholder="Last access date" value="%{account.lastAccessDate}"
-                                                                         />
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="accountLabel" style="">Country:</label>
-                                                            <s:select  id="Countries" type="dropdown"
-                                                                       listKey="%{id}" listValue="%{name}"
-                                                                       name="account.country.id" placeholder="Country"
-                                                                       value="%{account.country.id}"
-                                                                       list="countries" label="Country" headerKey="-1"
-                                                                       headerValue="Select Country"
-                                                                       cssClass="selectBoxStyle" onchange="javascript: getStates($(Countries).val(),'#accountState')"/>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="accountLabel" style="">State:</label>
-                                                            <s:select  id="accountState" type="dropdown"
-                                                                       name="account.state.id" placeholder="State"
-                                                                       value="%{account.state.id}"
-                                                                       list="accountState" label="State" headerKey="-1"
-                                                                       listKey="%{id}" listValue="%{name}"
-                                                                       headerValue="Select State"
-                                                                       cssClass="selectBoxStyle"/>
-                                                        </div>
-                                                    </div--%>
+                                                    
                                                     <div class="inner-reqdiv-elements">
 
                                                         <div class="col-sm-4">
@@ -234,35 +179,6 @@
                                                     </div>
 
 
-                                                    <%--div class="row">
-                                                        <div class="col-sm-4">
-                                                            <label class="accountLabel" style="">Type:</label>
-                                                            <s:select  id="accountType" type="dropdown"
-                                                                       name="account.typeId" placeholder="Type"
-                                                                       value="%{account.typeId}"
-                                                                       list="types" label="AccountType" headerKey="-1"
-                                                                       headerValue="Select Account Type"
-                                                                       cssClass="selectBoxStyle"/>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="accountLabel" style="">Industry:</label>
-                                                            <s:select  id="accountIndustry" type="dropdown"
-                                                                       name="account.industryId" placeholder="Industry"
-                                                                       value="%{account.industryId}"
-                                                                       list="industries" label="Industry" headerKey="-1"
-                                                                       headerValue="Select Industry"
-                                                                       cssClass="selectBoxStyle"/>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="accountLabel" style="">Status:</label>
-                                                            <s:select  id="accountStatus" type="dropdown"
-                                                                       name="account.status" placeholder="Status"
-                                                                       value="%{account.status}"
-                                                                       list="accountStatus" label="Status" headerKey="-1"
-                                                                       headerValue="Select Status"
-                                                                       cssClass="selectBoxStyle "/>
-                                                        </div>
-                                                    </div--%>
                                                     <div class="inner-reqdiv-elements">
 
                                                         <div class="col-sm-4">
@@ -295,25 +211,17 @@
 
                                                         <div class="col-sm-2 pull-right">
 
-                                                            <s:submit type="button" cssClass="add_searchButton  form-control"
+                                                            <s:submit id="accountSearchButton" type="button" cssClass="add_searchButton  form-control"
                                                                       value="" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                             </div>
 
                                                         </div>
-
-                                                    <%--div class="row">
-                                                        <div class="col-sm-4"> <s:submit type="submit" cssClass="cssbutton_emps field-margin"
-                                                                  value="Search" cssStyle="margin:0px"/></div>
-                                                        <div class="col-sm-4"></div>
-                                                    </div--%>
-
                                                 </s:form>
                                                 <br>
                                                 <div class="row"></div>
                                                 <div id="loadingAcoountSearch" class="loadingImg">
                                                     <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
                                                 </div>
-                                                <%--<s:submit cssClass="css_button" value="show"/><br>--%>
                                                 <div class="col-sm-12">
                                                     <s:form>
                                                         <s:hidden id="accountSearchID" value="%{id}" ></s:hidden>
@@ -345,12 +253,10 @@
                                                                             <td><s:a href="%{accountDetailsUrl}"><s:property value="name"></s:property></s:a></td>
                                                                             <td><s:a href="#" onclick="window.open('http://%{url}');"><s:property value="url" /></s:a></td>
                                                                             <td><s:property value="type"></s:property></td>
-                                                                            <%--<td><s:a href="javascript:getEmpMailPhone(%{lastAccessById});" class="emailPhoneShow_popup_open"><s:property value="lastAccessBy"></s:property></s:a></td>--%>
                                                                             <td><s:a href="#" onclick="getEmpMailPhone(%{lastAccessById});" cssClass="emailPhoneShow_popup_open"><s:property value="lastAccessBy"></s:property></s:a></td>
                                                                             <td><s:property value="lastAccessDateString"></s:property></td>
                                                                             <td><s:property value="state.name"></s:property></td>
                                                                             <td><s:property value="status"></s:property></td>
-
                                                                             </tr>
                                                                     </s:iterator>
 
@@ -378,15 +284,7 @@
                                 </div>
                             </div>
                             <s:if test="%{responceFlag==0}">
-                                <!--            <div id="grayBG_default" class="grayBox animated fadeInLeftBig">
-                                                <table class="tabside_popup">
-                                                    <tr class="popup_element"><td><img src="../includes/images/addAccount.png" style="width:40px;height:40px"><h4><font class="titleColor">&nbsp;Account&nbsp;&nbsp; </font></h4></td>
-                                                    <div class="popupClose pull-right" id="" ><a href="#"  onclick="closePopup();"   class="close_img" data-toggle="" data-target="" application_id=""><img   src="<s:url value="/includes/images/close_popup.png"/>" height="15" width="15"></a>  </div>
-                                                </table>
-                                                <div class="addlink" style="" >   &nbsp;&nbsp;Here you can :  
-                                                    <a href="accountadd.action" class="add_Acc">Add Account</a> </div>
-                                            </div>
-                                -->
+                                
                                 <div class="side_popup">
 
                                     <div class="popup_block"> 
@@ -397,13 +295,8 @@
                                                 <s:param name="customerFlag" value="%{customerFlag}" ></s:param> 
                                             </s:url>
 
-                                            <!--<div class="alignField">  <a href="accountadd.action" class="add_Acc">  <img src="../includes/images/addAccount.png" style="width:50px;height:50px;" onclick="ck_redirect()"> </a></div>-->
-
                                             <div class="alignField">
-
-
-
-                                                <a href="accountadd.action" class="add_Acc">Add Account</a> </div>
+                                                <a id="addAccountSidePopupLink" href="accountadd.action" class="add_Acc">Add Account</a> </div>
                                         </div>
 
                                     </div>

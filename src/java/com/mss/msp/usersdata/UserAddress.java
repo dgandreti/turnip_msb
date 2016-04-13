@@ -10,7 +10,6 @@ package com.mss.msp.usersdata;
  */
 public class UserAddress {
 
-    //address for permanent address
     private String p_address;
     private String p_city;
     private String p_state;
