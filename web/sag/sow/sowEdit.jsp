@@ -69,7 +69,7 @@
 
             </header>
             <div id="main">
-                <%-- ------------MIDDLE -----------------------------------------%>
+                <%-- ------------MIDDLE -------------------------------------------%>
                 <section id="generalForm"><!--form-->
                     <div class="container">
                         <div class="row">
