@@ -76,8 +76,8 @@
                             <s:include value="/includes/menu/LeftMenu.jsp"/>
                             <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
                                 <div class="features_items">
-                                    <div id="SOWApproveOverlay_popup">
-                                        <div id="attachmentBox" style="width: 800px;">
+                                    <div id="SOWApproveOverlay_popup" style="width: 50%;min-width:300px">
+                                        <div id="attachmentBox" >
                                             <div class="backgroundcolor">
                                                 <table>
                                                     <tr><td><h4 style="font-family:cursive"><font class="titleColor">&nbsp;&nbsp;SOW&nbsp;&nbsp; </font></h4></td>
