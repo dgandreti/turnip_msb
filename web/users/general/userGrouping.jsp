@@ -153,7 +153,7 @@
                                 <span><deascOpt></deascOpt></span>
                             </div>
                             <div class="col-sm-10"></div>
-                            <div class="col-sm-2">   
+                            <div class="col-sm-2 pull-right">   
                                 <s:submit type="button" id="saveUserGroupButton" cssStyle="margin:5px 0px;" value="" cssClass="add_searchButton form-control " onclick="doUserGroupingMethod()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                 </div>
                                 <div class="col-sm-1"> 

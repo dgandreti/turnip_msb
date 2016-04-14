@@ -97,6 +97,7 @@
                                         <s:form action="accountadd" method="post" theme="simple"
                                                 onSubmit="return validateForm()" id="acc_form" name="acc_form" enctype="multipart/form-data">
                                             <p id="resultMessage" align="center" class="accDetailsError"> <s:property value="resultMessage"  /></p>
+                                             <span id="orgExtCheckSpan"></span>
                                             <s:if test="successMessage=='Account already Exist'">
                                                 <p id="succMessage" align="center" class="accDetailsExists"> <s:property value="successMessage"  /></p>
                                             </s:if>
@@ -336,7 +337,7 @@
                                                             <label  class="labelStyle2">Description </label>
                                                             <s:textarea cssClass="form-control" id="description" type="text"
                                                                         name="account.description"  placeholder="Description"
-                                                                        maxlength="200" value="%{account.description}"  tabindex="20"  />
+                                                                        maxlength="200" value="%{account.description}"  tabindex="20" onkeyup="ResponseCheckCharacters(this)" />
                                                             <span id="ResponsecharNum" class="charNum"></span>
                                                         </span>
                                                     </div>

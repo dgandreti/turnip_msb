@@ -291,7 +291,7 @@
                                                             <label class="labelStylereq" style="color: #56a5ec;">Status </label>
                                                             <s:select  id="status"  name="task_status" label="Status"  cssClass="SelectBoxStyles form-control" headerKey="-1" headerValue="All" theme="simple" list="tasksStatusList" tabindex="1"/>
                                                         </div>
-                                                        <div class="col-sm-4">
+                                                        <div class="col-sm-4 pull-right">
                                                             <div class=" ">
 
                                                                <s:if test="#session.typeOfUsr=='VC'">

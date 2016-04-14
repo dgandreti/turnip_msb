@@ -184,7 +184,7 @@
                                                     </div>
                                                     <div>
                                                         <form action="#" theme="simple" >
-                                                            <div>
+                                                            <div class="techie">
                                                                 <div class="inner-reqdiv-elements">
                                                                     <table>
                                                                         <span><error></error></span>

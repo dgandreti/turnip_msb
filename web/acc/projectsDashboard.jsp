@@ -146,6 +146,7 @@
                 }
                 var data = google.visualization.arrayToDataTable(Combined, false);
                 var options = {
+                    legend: { position: 'top', alignment: 'center' },
                     colors: ['#0000FF', '#00FF00'],
                     titleColor: "green",
                     vAxis: {

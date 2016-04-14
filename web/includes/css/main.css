@@ -14,6 +14,13 @@ html, body {height: 97%;}
     width:41%;
 }
 
+#vendorAssoEdit_popup{
+    min-width:302px;
+}
+
+#ResponsecharNum{
+    color:green;
+}
 .quest{
     font-size: 15px !important;
     color:#45b5de;
@@ -26,6 +33,10 @@ html, body {height: 97%;}
  
 }
 
+
+.techie{
+    padding:13px;
+}
 #costCenterBudget_popup{  
   width:50%;  
 }

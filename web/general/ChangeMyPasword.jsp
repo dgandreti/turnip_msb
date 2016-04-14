@@ -98,8 +98,8 @@
                                                             </div>
 
                                                             <br>
-                                                             <div  class="">
-                                                                <div style="float:left" class="col-sm-8 req_margin ">  
+                                                             <div  class="col-lg-6 pull-right btn_pull">
+                                                                <div class="col-sm-5 req_margin pull-right">  
 
                                                                     <div align="right"><button type="submit" id="submit" value="Submit" tabindex="4" class="cssbutton req_margin align_left fa fa-check-circle-o">&nbsp;Submit</button>
                                                                     </div>
@@ -107,7 +107,7 @@
 
 
                                                                 </div>
-                                                                <div style="float:left" class="col-sm-3 req_margin "> 
+                                                                <div  class="col-sm-6 req_margin pull-right"> 
 
                                                                     <div align="right"><button id="reset" type="reset" value="Cancel" tabindex="5" class="cssbutton req_margin align_left  fa fa-times" onclick="javascript:history.back();">&nbsp;Cancel</button>
                                                                     </div>

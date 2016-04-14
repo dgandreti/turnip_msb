@@ -9,21 +9,21 @@
                 {
                    
                   // alert(account_name);
-                   $("#resultMessage").html("<font color='red'>Enter account_name</font>");  
+                   $("#resultMessage").html("<font color='red'>Enter account name</font>");  
                     $("#resultMessage").show().delay(5000).fadeOut();
                     return false;
                 }
                 if(account_url=="")
                 {
                    //  alert(account_url);
-                    $("#resultMessage").html("<font color='red'>Enter account_url</font>"); 
+                    $("#resultMessage").html("<font color='red'>Enter account url</font>"); 
                     $("#resultMessage").show().delay(5000).fadeOut();
                     return false;
                 }
                 if(account_type=="")
                 {
                    //alert(account_type);
-                    $("#resultMessage").html("<font color='red'>Select account_type</font>");  
+                    $("#resultMessage").html("<font color='red'>Select account type</font>");  
                     $("#resultMessage").show().delay(5000).fadeOut();
                     return false;
                 }
@@ -31,7 +31,7 @@
                 if(email_ext=="")
                 {
                    //  alert(email_ext);
-                    $("#resultMessage").html("<font color='red'>Enter email_ext</font>");   
+                    $("#resultMessage").html("<font color='red'>Enter email extension</font>");   
                     $("#resultMessage").show().delay(5000).fadeOut();
                     return false;
                 } 
@@ -330,7 +330,9 @@ function getValidExtention(){
         req.send(null);
       }
       else{
-           $("#orgExtCheckSpan").html("  <b><font color='red'><br>Please enter valid email extension!</font></b>");
+           $("#orgExtCheckSpan").html("  <font color='red'><br>Please enter valid email extension!</font>");
+           
+             document.getElementById("email_ext").value="";
             $("#orgExtCheckSpan").show().delay(3000).fadeOut();
           mailExtention.focus();
           return false;

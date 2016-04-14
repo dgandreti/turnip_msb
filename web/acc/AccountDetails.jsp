@@ -1782,7 +1782,7 @@ Author     : Greg
 
                                                                     <%--close of future_items--%>
                                                                 </div>
-                                                                <div id="addAttachment_popup" style="width:50%">
+                                                                <div id="addAttachment_popup" style="width:50%;min-width: 300px;">
                                                                     <div id="attachmentBox" class="marginTasks">
                                                                         <div class="backgroundcolor">
                                                                             <table>
@@ -1962,7 +1962,7 @@ Author     : Greg
                                                                     <div id="contactLoginBox" class="marginTasks">
                                                                         <div class="backgroundcolor">
                                                                             <table>
-                                                                                <tr><td><h4 style="font-family:cursive"><font class="titleColor" >&nbsp;&nbsp; contact Login Credentials&nbsp;&nbsp; </font></h4></td>
+                                                                                <tr><td><h4 style="font-family:cursive"><font class="titleColor" >&nbsp;&nbsp; Contact Login Credentials&nbsp;&nbsp; </font></h4></td>
                                                                                 <span class="pull-right"> <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="contactLoginOverlay_popup_close" onclick="contactOverlayLogin();
                                                                                         getContactSearchResults();" ><i class="fa fa-times-circle-o fa-size"></i></a></h5></span>
                                                                             </table>
