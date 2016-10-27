@@ -112,10 +112,16 @@
             }
             myCalendar2.setSensitiveRange(startDate, null);
             
-            var mainPrjectStartDate = document.getElementById('mainPrjectStartDate').value;
-               
-            var mainPrjectTargetDate = document.getElementById('mainPrjectTargetDate').value;
-            myCalendar1.setSensitiveRange(mainPrjectStartDate, null);
+          var projectType = document.getElementById("projectType").value;
+          
+           if(projectType=='Sub-Project'){
+              
+                var mainPrjectStartDate = document.getElementById('mainPrjectStartDate').value;
+              
+            var mainPrjectTargetDate = document.getElementById('mainProjectTargetDate').value;
+            
+            myCalendar1.setSensitiveRange(mainPrjectStartDate, mainPrjectTargetDate);
+           }
           
             document.getElementById("projectStartDate").value=overlayDate;
             document.getElementById("projectTargetDate").value=overlayDate;
@@ -135,7 +141,7 @@
 
 
 </head>
-<body onload="calculateRemainingHrs();doOnLoad();javascript: $.getScript('/includes/js/general/GridNavigation.js' );">
+<body oncontextmenu="return false" onload="calculateRemainingHrs();doOnLoad();javascript: $.getScript('/includes/js/general/GridNavigation.js' );">
     <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
@@ -217,7 +223,7 @@
                                                     <s:hidden id="accountID" value="%{project.accountID}"/>
                                                     <s:hidden id="projectType" value="%{project.projectType}"/>                                                    </div>
                                                     <s:hidden id="mainProjectId" value="%{project.parentProjectID}"/> 
-                                                     <s:hidden id="mainProjectStatus" value="%{mainProjectStatus}" /> 
+                                                     <s:hidden id="mainProjectStatus" value="%{mainProjectStatus}" name="mainProjectStatus" /> 
 
 
                                                 <div class="col-sm-3 required">
@@ -263,7 +269,7 @@
                                                         </div>
                                                         <s:hidden name ="remainingSubpjctTotalHrs" id="remainingSubpjctTotalHrs" value="%{remainingTargetHrs}"/>
                                                         <s:hidden name ="targetHours" id="targetHours" value="%{project.projectTargetHrs}"/>
-                                                        <s:hidden name ="mainPrjectStartDate" id="mainPrjectStartDate" value="%{mainProjectStartDate}"/>
+                                                        <s:hidden name ="mainProjectStartDate" id="mainPrjectStartDate" value="%{mainProjectStartDate}"/>
                                                         <s:hidden name ="mainProjectTargetDate" id="mainProjectTargetDate" value="%{mainProjectTargetDate}"/>
 
                                                     </div> 

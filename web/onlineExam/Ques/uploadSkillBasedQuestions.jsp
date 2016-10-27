@@ -47,7 +47,7 @@
         <!-- end of new styles -->
 
     </head>
-    <body >
+    <body oncontextmenu="return false">
         <div id="wrap"> 
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
@@ -99,7 +99,7 @@
                                         <div class="col-sm-12">
                                             <s:form action="skillXlsFileUpload" id="myForm" theme="simple" method="POST" enctype="multipart/form-data" >
                                                 <s:hidden name="fileExist" value="%{fileExist}"/>
-                                                <span><fileuplaoderror></fileuplaoderror></span>
+                                                <span id="fileUploadingValidation"><fileuplaoderror></fileuplaoderror></span>
                                                 <div class="col-sm-12">
                                                     <s:if test="fileExist!=''&&fileExist!=null">
                                                         <span id="resume"><font style='color:red;font-size:15px;'>File Name Already Exists!!</font></span>
@@ -118,7 +118,7 @@
                                                     </div>  
 
                                                     <div class="col-sm-3 required"><br>
-                                                        <s:file name="xlsfile" tabindex="3" cssClass="" style="width:180px" label="Xls File" id="file"></s:file>
+                                                        <s:file name="xlsfile" tabindex="3" cssClass="" style="width:180px" label="Xls File" id="file" onchange="return checkExtensionFile(this.id)"></s:file>
                                                             <span style="color:#4E4E4E;font-size: 10px">Upload XLS file.</span>
                                                         </div>
 
@@ -186,7 +186,9 @@
             </div>
 
         </footer><!--/Footer-->
-
+        <script type="text/javascript">
+            $("#fileUploadingValidation").show().delay(5000).fadeOut();
+        </script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 

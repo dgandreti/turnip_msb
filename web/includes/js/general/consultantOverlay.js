@@ -98,14 +98,14 @@ function activityFormValid(){
   
     
     if(skill_name=="" || skill_name==null){
-        $("error").html(" <b><font color='red'>Field is Required</font></b>.");
+        $("error").html(" <font color='red'>Field is Required</font>.");
         $("#s_name").css("border","1px solid red");
         return false;
     }
        
     if((skill_rate>10 || skill_rate < 0) || (skill_rate=="" || skill_rate==null) ) 
     {
-        $("error").html(" <b><font color='red'>skillrate must be in between 0 to 10</font></b>.");
+        $("error").html(" <font color='red'>skillrate must be in between 0 to 10</font>.");
         $("#s_rate").css("border","1px solid red");
         return false;
     }
@@ -250,7 +250,7 @@ function addConsultActivity(){
                 if (req.status == 200) {
                     //alert("welcome")
                     //alert(req.responseText)
-                    $("errorActivityUpdate").html(" <b><font color='green'>Activity Added Successfully.</font></b>");
+                    $("errorActivityUpdate").html(" <font color='green'>Activity Added Successfully.</font>");
                     document.forms["activityAddForm"].reset();
                     showActivityDetails(consultId);
                     //populateActivityTable(req.responseText);
@@ -311,7 +311,7 @@ function editConsultActivityDetails(){
                 if (req.status == 200) {
                     //alert("welcome")
                     //alert(req.responseText)
-                    $("errorActivityUpdate").html(" <b><font color='green'>Activity successfully Updated.</font></b>");
+                    $("errorActivityUpdate").html(" <font color='green'>Activity successfully Updated.</font>");
                      document.forms["activityForm"].reset(); 
                     showActivityDetails(consultId);
                     //populateActivityTable(req.responseText);
@@ -423,7 +423,7 @@ function addActivityValidate(){
     var activityType=$("#add_activityType").val();
     
     if(activityName=="" || activityName==null){
-        $("errorActivityUpdate").html(" <b><font color='red'>Activity Name is Required</font></b>.");
+        $("errorActivityUpdate").html(" <font color='red'>Activity Name is Required</font>.");
         $("#activityName").css("border", "1px solid red");
        $("#add_Activity_name").css("border", "1px solid red");
         return false;
@@ -436,7 +436,7 @@ function addActivityValidate(){
 //    }
     
     if(activityType=="" || activityType==null){
-        $("errorActivityUpdate").html(" <b><font color='red'>Activity Type is Required</font></b>.");
+        $("errorActivityUpdate").html(" <font color='red'>Activity Type is Required</font>.");
         $("#activityType").css("border", "1px solid red");
        $("#add_activityType").css("border", "1px solid red");
         return false;
@@ -481,20 +481,20 @@ function editActivityValidate(){
   
     
    if(activityName=="" || activityName==null){
-        $("errorActivityUpdate").html(" <b><font color='red'>Activity Name is Required</font></b>.");
+        $("errorActivityUpdate").html(" <font color='red'>Activity Name is Required</font>.");
         $("#activityName").css("border", "1px solid red");
        $("#Activity_name").css("border", "1px solid red");
         return false;
     }
     if(activityStatus=="" || activityStatus==null){
-        $("errorActivityUpdate").html(" <b><font color='red'>Activity Status is Required</font></b>.");
+        $("errorActivityUpdate").html(" <font color='red'>Activity Status is Required</font>.");
         $("#activityStatus").css("border", "1px solid red");
         $("#Activity_status").css("border", "1px solid red");
         return false;
     }
     
     if(activityType=="" || activityType==null){
-        $("errorActivityUpdate").html(" <b><font color='red'>Activity Type is Required</font></b>.");
+        $("errorActivityUpdate").html(" <font color='red'>Activity Type is Required</font>.");
         $("#activityType").css("border", "1px solid red");
        $("#activityType").css("border", "1px solid red");
         return false;

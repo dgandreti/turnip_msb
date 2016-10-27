@@ -134,6 +134,25 @@ public class ConsultantVTO implements Serializable {
     private String consultantIdProof;
     private String consultantIdProofAttach;
     private String vendorcomments;
+    
+    private String consultPrimarySkill;
+    private int consult_preferredRegion;
+
+    public String getConsultPrimarySkill() {
+        return consultPrimarySkill;
+    }
+
+    public void setConsultPrimarySkill(String consultPrimarySkill) {
+        this.consultPrimarySkill = consultPrimarySkill;
+    }
+
+    public int getConsult_preferredRegion() {
+        return consult_preferredRegion;
+    }
+
+    public void setConsult_preferredRegion(int consult_preferredRegion) {
+        this.consult_preferredRegion = consult_preferredRegion;
+    }
 
     public String getConsultantIdProof() {
         return consultantIdProof;
@@ -150,7 +169,6 @@ public class ConsultantVTO implements Serializable {
     public void setConsultantIdProofAttach(String consultantIdProofAttach) {
         this.consultantIdProofAttach = consultantIdProofAttach;
     }
-    
 
     public String getConsultantVisa() {
         return ConsultantVisa;

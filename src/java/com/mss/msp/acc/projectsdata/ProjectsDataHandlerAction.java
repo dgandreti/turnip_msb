@@ -64,6 +64,7 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
     private String mainProjectStartDate;
     private String mainProjectTargetDate;
     private String mainProjectStatus;
+    private String remainingSubpjctTotalHrs;
     /**
      * The project object is used for storing ProjectsVTO object for the
      * ProjectDetails.jsp for displaying project details and updating the
@@ -466,7 +467,15 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
                     projectsDataHandlerService.updateProject(p, httpServletRequest);
                 }
                 resultMessage = "Successfully updated";
-                resultType = SUCCESS;
+               if (p.getProjectType().equals("MP")) {
+                    
+                  resultType = "mainProjectReturn";
+                 }
+                 else
+                 {
+                    
+                   resultType = "subProjectReturn";   
+                 }
 
             }
         } catch (Exception ex) {
@@ -928,4 +937,14 @@ public class ProjectsDataHandlerAction extends ActionSupport implements ServletR
     public void setMainProjectStatus(String mainProjectStatus) {
         this.mainProjectStatus = mainProjectStatus;
     }
+
+    public String getRemainingSubpjctTotalHrs() {
+        return remainingSubpjctTotalHrs;
+    }
+
+    public void setRemainingSubpjctTotalHrs(String remainingSubpjctTotalHrs) {
+        this.remainingSubpjctTotalHrs = remainingSubpjctTotalHrs;
+    }
+    
+    
 }

@@ -75,7 +75,7 @@
         };
     </script>
 
-    <body onload="doOnLoad(); techreview();">
+    <body oncontextmenu="return false" onload="doOnLoad(); techreview();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

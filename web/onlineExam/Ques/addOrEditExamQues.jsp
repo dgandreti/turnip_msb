@@ -128,9 +128,9 @@
                 }
             }
                
-            if(question=="")
+            if(question.trim()==="")
             {
-                $("#formValidationMsg").html("<font color='red'>please enter Question</font>");
+                $("#formValidationMsg").html("<font color='red'>Please enter the question</font>");
                 $("#question").css('border','1px solid red');
                 return false; 
             } else
@@ -176,7 +176,7 @@
    
             if(option1=="")
             {
-                $("#formValidationMsg").html("<font color='red'>Option1 is mandaratory</font>");
+                $("#formValidationMsg").html("<font color='red'>Option1 is mandatory</font>");
                 $("#option1").css('border','1px solid red');
                 return false; 
             }else
@@ -187,7 +187,7 @@
             }
             if(option2=="")
             {
-                $("#formValidationMsg").html("<font color='red'>Option2 is mandaratory</font>");
+                $("#formValidationMsg").html("<font color='red'>Option2 is mandatory</font>");
                 $("#option2").css('border','1px solid red');
                 return false; 
             }else
@@ -262,7 +262,7 @@
 
     </head>
 
-    <body onload="checkanswerType();showBrowse();skillValues(examType.value);">
+    <body oncontextmenu="return false" onload="checkanswerType();showBrowse();skillValues(examType.value);">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -310,7 +310,7 @@
                                     <div class="col-sm-12" style="margin-bottom: 20px">
                                         <br>
 
-                                        <s:form action="storeAddOrEditExamQues" id="addEditForm" method="post"  enctype="multipart/form-data" theme="simple" >
+                                        <s:form action="storeAddOrEditExamQues" id="addEditForm" method="post"  enctype="multipart/form-data" theme="simple" onsubmit="return submitQuestionData()">
                                             <span id="resume"><font style='color:green;font-size:15px;'><s:property value="successMsg"/></font></span>
                                             <div class="col-sm-12">
                                                 <span id="formValidationMsg"></span>

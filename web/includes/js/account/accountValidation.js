@@ -264,7 +264,7 @@ function editAccountValidation()
 
     if(accType== -1)
     {
-        $("editAccountError").html(" <b><font color='red'>Account type is required</font></b>");
+        $("editAccountError").html(" <font color='red'>Account type is required</font>");
         $("#account_type").css("border", "1px solid red");
         return false;
     }
@@ -278,7 +278,7 @@ function editAccountValidation()
     }
     if(accCity=="")
     {
-        $("editAccountError").html(" <b><font color='red'>City is required</font></b>");
+        $("editAccountError").html(" <font color='red'>City is required</font>");
         $("#account_city").css("border", "1px solid red");
         return false;
     }

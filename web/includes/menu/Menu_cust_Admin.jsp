@@ -20,7 +20,7 @@
             <div class="panel panel-default left-menu" id="accordian_my">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#homeMenuCustAdmin">
+                        <a id="homeCustAdminLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#homeMenuCustAdmin">
                             <i  class="fa fa-home leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Home
@@ -47,7 +47,7 @@
             <div class="panel panel-default left-menu" id="accordian_services">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#dashboardMenuCustAdmin">
+                        <a id="dashboardCustAdminLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#dashboardMenuCustAdmin">
                             <i  class="fa fa-tachometer leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Dashboard
@@ -60,6 +60,8 @@
                             <li><a id="customerDashboardCustAdmin" href="/<%=ApplicationConstants.CONTEXT_PATH%>/dashboard/customerDashBoardDetails.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Requirements</a></li>
                             <li><a id="costcenterDashboardCustAdmin" href="/<%=ApplicationConstants.CONTEXT_PATH%>/costCenter/costCenterDashBoardDetails.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Cost&nbsp;Center</a></li>
                             <li><a id="projectDashboardCustAdmin" href="/<%=ApplicationConstants.CONTEXT_PATH%>/projectDashBoardDetails.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Projects</a></li>
+                            <li><a id="customerDashboardCustAdmin" href="/<%=ApplicationConstants.CONTEXT_PATH%>/turnip/getVendorResourcePage.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Turnip</a></li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -67,7 +69,7 @@
             <div class="panel panel-default left-menu" id="accordian_services">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#utilitiesMenuCustAdmin">
+                        <a id="utilitiesCustAdminLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#utilitiesMenuCustAdmin">
                             <i  class="fa fa-cogs leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Utilities

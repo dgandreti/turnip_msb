@@ -46,13 +46,13 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/timesheet.js"/>"></script>
     </head>
     <s:if test="timeSheetVTO.timeSheetStatus=='Entered'">
-        <body onload ="getProjets();
+        <body oncontextmenu="return false" onload ="getProjets();
                 onloadTotal();
                 getProjectsEdit();
                 onloadeditMis();">
         </s:if>
         <s:else>     
-        <body onload="getProjectsEdit();
+        <body oncontextmenu="return false" onload="getProjectsEdit();
                 onloadTotal();
                 onloadeditMis();">
         </s:else>

@@ -17,13 +17,24 @@ function doOnLoad() {
 function changeTaskType(){
     $("#secondaryReport").val("");
     getTaskType();
-    var task_related=document.getElementById("taskRelatedTo").value;
-    if(task_related==1){
-         var secondaryAssign=document.getElementById("secondaryAssign").value;
-//     alert(secondaryAssign)
-     $("#secondaryReport").val(secondaryAssign);
-    }
-    
+//    var task_related=document.getElementById("taskRelatedTo").value;
+//    if(task_related==1){
+//         var secondaryAssign=document.getElementById("secondaryAssign").value;
+////     alert(secondaryAssign)
+//     $("#secondaryReport").val(secondaryAssign);
+//    }
+//    
+}
+function changeProject(){
+    $("#secondaryReport").val("");
+    getRelatedNames();
+}
+function clearProjects(){
+    var $select = $('#taskType');
+    $select.find('option').remove();   
+    $("#csrDiv").css('visibility', 'hidden');
+   document.getElementById("taskRelatedTo").value=2;
+    getRelatedNames();
 }
 /* start, function creted by Aklakh for select task types */
 function getTaskType(){
@@ -65,6 +76,11 @@ function setTaskTypes(responseTypes){
             $('<option>').val(Values[0]).text(Values[1]).appendTo($select); 
         }
     }
+     var proVal=document.getElementById("addTaskPage").value;
+    if(proVal==1)
+        {
+          document.getElementById("taskType").value=document.getElementById("taskProject").value;   
+        }
 }
 
 
@@ -135,7 +151,8 @@ function doDownload(id)
     $("#resume").html("");
     var task_id=$("#taskid").val();
     var path=document.getElementById(id).value;
-    window.location = '../general/downloadAttachment.action?attachmentId='+id+'&taskid='+task_id;
+    var myTask = document.getElementById("myTask").value;
+    window.location = '../general/downloadAttachment.action?attachmentId='+id+'&taskid='+task_id+'&myTask='+myTask;
 }
 
 
@@ -220,7 +237,7 @@ function doUpdateTaskInfo()
     //alert(pri_assign_to)
     if(pri_assign_to=="")
     {
-        $("UpdateTaskInfo").html(" <b><font color='red'>Plase select Primary assign</font></b>");
+        $("UpdateTaskInfo").html(" <font color='red'>Plase select Primary assign</font>");
         return false;
     }
 
@@ -240,7 +257,7 @@ function doUpdateTaskInfo()
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
             
-                $("UpdateTaskInfo").html(" <b><font color='green'>Task Information updated Successfully.</font></b>");
+                $("UpdateTaskInfo").html(" <font color='green'>Task Information updated Successfully.</font>");
                 $("UpdateTaskInfo").show().delay(5000).fadeOut();
             } 
         };
@@ -343,7 +360,7 @@ function updateNoteDetails(){
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 //alert("success")
-                $("UpdateNoteInfo").html(" <b><font color='green'> &nbsp&nbspNotes Information updated Successfully.</font></b>");
+                $("UpdateNoteInfo").html(" <font color='green'> &nbsp&nbspNotes Information updated Successfully.</font>");
                 $("UpdateNoteInfo").show().delay(5000).fadeOut();
                 getNotesDetailsBySearch();
             } 
@@ -366,7 +383,7 @@ function addNotesDetails(){
         var req=initRequest(url);
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
-                $("InsertNoteInfo").html(" <b><font color='green'> &nbsp&nbspNotes Information Added Successfully.</font></b>");
+                $("InsertNoteInfo").html(" <font color='green'> &nbsp&nbspNotes Information Added Successfully.</font>");
                 $("InsertNoteInfo").show().delay(5000).fadeOut();
                 document.getElementById("noteNamesadd").value ="";
                 document.getElementById("noteCommentsadd").value="";
@@ -468,7 +485,7 @@ function editTaskValidation(){
     var taskName=document.getElementById("task-textform").value;
     var editTaskValidation=document.getElementById("editTaskValidate");
     if(startDate==""){
-        $("editTask").html("<b><font color='red'> enter start date</font></b>");
+        $("editTask").html("<font color='red'> enter start date</font>");
         $("#start_date").css("border","1px solid red");
         return false;
     }
@@ -477,7 +494,7 @@ function editTaskValidation(){
         $("#start_date").css("border","1px solid #3BB9FF")
     }
     if(endDate==""){
-        $("editTask").html("<b><font color='red'> enter end date</font></b>");
+        $("editTask").html("<font color='red'> enter end date</font>");
         $("#end_date").css("border","1px solid red");
         return false;
     }
@@ -486,7 +503,7 @@ function editTaskValidation(){
         $("#end_date").css("border","1px solid #3BB9FF")
     }
     if(taskName==""){
-        $("editTask").html("<b><font color='red'> enter title</font></b>");
+        $("editTask").html("<font color='red'> enter title</font>");
         $("#task-textform").css("border","1px solid red");
         return false;
     }
@@ -503,8 +520,8 @@ function addTaskValidation(){
     var taskName=document.getElementById("task_name").value;
     var editTask=document.getElementById("editTaskValidation");
     var primaryAssign =document.getElementById("primary_assign").value;
-    if(startDate==""){
-        $("editTask").html("<b><font color='red'> enter start date</font></b>");
+    if(startDate=="" || startDate==" "){
+        $("editTask").html("<font color='red'> Enter start date</font>");
         $("#startDate").css("border","1px solid red");
         return false;
     }
@@ -512,8 +529,8 @@ function addTaskValidation(){
         $("editTask").html("");
         $("#startDate").css("border","1px solid #3BB9FF")
     }
-    if(endDate==""){
-        $("editTask").html("<b><font color='red'> enter end date</font></b>");
+    if(endDate=="" || endDate==" "){
+        $("editTask").html("<font color='red'> Ennter end date</font>");
         $("#endDate").css("border","1px solid red");
         return false;
     }
@@ -532,7 +549,7 @@ function addTaskValidation(){
     {
              
         // alert("hi")
-        $("editTask").html(" <b><font color='red'>Start date Must be less than End date</font></b>");
+        $("editTask").html("<font color='red'>Start date Must be less than End date</font>");
         //        $("#startDate").css("border", "1px solid red");
         //        $("#endDate").css("border", "1px solid red");
       
@@ -540,8 +557,8 @@ function addTaskValidation(){
         //          $("#endDate").show().delay(5000).fadeOut();
         return false;
     }  
-    if(taskName==""){
-        $("editTask").html("<b><font color='red'> enter title</font></b>");
+    if(taskName=="" || taskName==" "){
+        $("editTask").html("<font color='red'> Enter title</font>");
         $("#task_name").css("border","1px solid red");
         return false;
     }
@@ -549,8 +566,8 @@ function addTaskValidation(){
         $("editTask").html("");
         $("#task_name").css("border","1px solid #3BB9FF")
     }
-    if(primaryAssign==""){
-        $("editTask").html("<b><font color='red'> Select Primary Assign To</font></b>");
+    if(primaryAssign=="" || primaryAssign==" "){
+        $("editTask").html("<font color='red'> Select Primary Assign To</font>");
         $("#primary_assign").css("border","1px solid red");
         return false;
     }
@@ -580,7 +597,7 @@ function addTaskValidation(){
             if(FileUploadPath.length>50)
             {
                                                                                                     
-                $("editTask").html("<font color=red>file name should not more than 30 characters</font>");
+                $("editTask").html("<font color=red>File name should not more than 30 characters</font>");
                 //alert("please select the file length");   
                 return false;
             }
@@ -614,7 +631,7 @@ function editNotesValidation(){
     var note_name=document.getElementById("noteNames").value;
     var note_comments=document.getElementById("noteComments").value;
     if(note_name==""||note_name==null){
-        $("UpdateNoteInfo").html("<b><font color='red'> enter name</font></b>");
+        $("UpdateNoteInfo").html("<font color='red'> enter name</font>");
         $("#noteNames").css("border","1px solid red");
         return false;
     }
@@ -624,7 +641,7 @@ function editNotesValidation(){
         
     }
     if(note_comments==""||note_comments==null){
-        $("UpdateNoteInfo").html("<b><font color='red'> enter comments</font></b>");
+        $("UpdateNoteInfo").html("<font color='red'> enter comments</font>");
         $("#noteComments").css("border","1px solid red");
         return false;
     }
@@ -740,7 +757,7 @@ function dateValidation(startDate,endDate,validatemessage)
     {
              
         // alert("hi")
-        $(validatemessage).html(" <b><font color='red'>Start date Must be less than End date</font></b>");
+        $(validatemessage).html(" <font color='red'>Start date Must be less than End date</font>");
         //        $("#startDate").css("border", "1px solid red");
         //        $("#endDate").css("border", "1px solid red");
         $(validatemessage).show().delay(4000).fadeOut();
@@ -817,6 +834,7 @@ function attachmentUploadValidation(){
         $("#upaloadMessages").html("<font color='red'>Please upload a file</font>");
         return false;
     } else {
+         var leafname= FileUploadPath.split('\\').pop().split('/').pop();
         var Extension = FileUploadPath.substring(
             FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
             
@@ -826,7 +844,7 @@ function attachmentUploadValidation(){
             //alert(sizeInMb)
             var sizeLimit= 2;
             //alert(sizeInMb)
-            if(FileUploadPath.length>50)
+            if(leafname.length>50)
             {
                                                                                                     
                 document.getElementById('upaloadMessages').innerHTML = "<font color=red>file name should not maore than 30 characters</font>";  

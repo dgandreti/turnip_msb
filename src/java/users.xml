@@ -301,7 +301,7 @@
             <interceptor-ref name="validation"/>
             <interceptor-ref name="workflow"/>
             <interceptor-ref name="token"/>
-            <result name="success" type="redirect">./doTasksSearch.action</result>
+            <result name="success" type="redirect">./doTasksSearch.action?resultMessage=${resultMessage}</result>
             <result name="error">/error.jsp</result>
             <result name="accessDenied" type="redirect">../../general/deneid.action</result>
             <result name="invalid.token" type="redirect">./doTasksSearch.action</result>

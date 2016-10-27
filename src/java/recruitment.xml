@@ -113,6 +113,15 @@
         <action name="getState" class="com.mss.msp.general.GeneralAction" method="getState">
             
         </action> 
+        
+        <action name="getSkillsBasedOnPrimarySkill" class="com.mss.msp.general.GeneralAction" method="getSkillsBasedOnPrimarySkill">
+            
+        </action>
+        
+        <action name="getStateBasedOnRegion" class="com.mss.msp.general.GeneralAction" method="getStateBasedOnRegion">
+            
+        </action>
+        
         <action name="getAllRequirementList" class="com.mss.msp.recruitment.RecruitmentAction" method="getAllRequirementList">
             <!--<interceptor-ref name="crudStack" />-->
             <interceptor-ref name="authorizationcheckStack" />

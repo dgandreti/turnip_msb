@@ -36,7 +36,7 @@ window.location.hash="Again-No-back-button";//again because google chrome don't 
 window.onhashchange=function(){window.location.hash="no-back-button";}
 </script> 
     </head>
-    <body >
+    <body oncontextmenu="return false">
 
         <!-- Wrapper -->
 

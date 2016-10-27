@@ -44,7 +44,7 @@
 
         <sx:head />
     </head>
-    <body style="overflow-x: hidden" onload="doOnLoadLeave();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="doOnLoadLeave();">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">

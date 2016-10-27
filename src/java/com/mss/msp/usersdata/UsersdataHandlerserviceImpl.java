@@ -1022,7 +1022,7 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                     userVTO.setIsPrimary("Yes");
                 }
                 userVTO.setStatus(resultSet.getString("uc.status"));
-                userVTO.setCreatedBy(dsdp.getUserNameByUserId(resultSet.getInt("uc.created_by")));
+                //userVTO.setCreatedBy(dsdp.getUserNameByUserId(resultSet.getInt("uc.created_by")));
                 userVTOList.add(userVTO);
             }
 
@@ -1077,7 +1077,7 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
         System.out.println("********************UsersdataHandlerserviceImpl :: getUserGroupingData Method Start*********************");
         connection = ConnectionProvider.getInstance().getConnection();
 
-        queryString = "SELECT CONCAT(first_name,'.',last_name) NAMES,sub_cat, ug.id,ug.usr_id,ug.cat_type,ug.is_primary,ug.STATUS,ug.description FROM usr_grouping ug JOIN users u ON (ug.usr_id=u.usr_id) WHERE ug.id=" + usersdataHandlerAction.getGroupingId();
+        queryString = "SELECT CONCAT(first_name,'.',last_name) NAMES,sub_cat, ug.id,ug.usr_id,ug.cat_type,ug.is_primary,ug.STATUS,ug.description,ur.role_id FROM usr_grouping ug JOIN users u ON (ug.usr_id=u.usr_id) LEFT OUTER JOIN usr_roles ur ON (ug.usr_id=ur.usr_id) WHERE ug.id=" + usersdataHandlerAction.getGroupingId();
         System.out.println("getUserGroupingData :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
@@ -1087,6 +1087,7 @@ public class UsersdataHandlerserviceImpl implements UsersdataHandlerservice {
                 usersdataHandlerAction.setUserName(resultSet.getString("NAMES"));
                 usersdataHandlerAction.setUserId(resultSet.getInt("usr_id"));
                 usersdataHandlerAction.setUsrCatType(resultSet.getInt("cat_type"));
+                usersdataHandlerAction.setRoleId(resultSet.getInt("role_id"));
                 if (resultSet.getInt("is_primary") == 1) {
                     usersdataHandlerAction.setPrimaryvalue(true);
                 } else {

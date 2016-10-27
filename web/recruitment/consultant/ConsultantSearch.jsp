@@ -87,7 +87,7 @@
 
 
 
-    <body style="overflow-x: hidden" onload="consultantPage();StateChange();jumper();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="consultantPage();StateChange();jumper();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -169,6 +169,11 @@
                                                                 <label class="labelStylereq" style="color:#56a5ec">Phone</label>
                                                                 <s:textfield cssClass="form-control" name="consult_phno" id="consult_phno" placeholder="Phone" value="%{consult_phno}" tabindex="7" maxLength="15"/>
                                                             </div>
+                                                            
+                                                            <div class="col-sm-4">
+                                                                <label class="labelStylereq" style="color:#56a5ec">Experience</label>
+                                                                <s:textfield cssClass="form-control" name="yearExperience" id="yearExperience" placeholder="Experience" value="" tabindex="8" maxLength="15"/>
+                                                            </div>
 
                                                             <s:if test="consultantFlag == 'Team' || consultantFlag == 'All'">
                                                                 <div class="col-sm-4" >
@@ -213,6 +218,7 @@
                                                                         <tr>
                                                                             <th>Name</th>
                                                                             <th>E-Mail</th>
+                                                                            <th>Experience</th>
                                                                             <th>Skill Set</th>
                                                                             <th>Phone No</th>
                                                                             <th>Status</th>
@@ -237,6 +243,7 @@
                                                                                 <s:hidden id="rec_exits" value="yes"/>
                                                                                 <td> <s:a href='%{#myUrl}'><s:property value="%{consult_name}"></s:property></s:a></td>
                                                                                 <td><s:property value="consult_email"></s:property></td>
+                                                                                 <td><s:property value="yearExperience"></s:property></td>
                                                                                 <s:if test="%{consult_skill.length()>8}">
                                                                                     <td><s:a href="#" cssClass="consultantSkillOverlay_popup_open" onclick="consultantSkillSetOverlay('%{consult_skill}')"><s:property value="consult_skill.substring(0,8)"></s:property></s:a></td>
                                                                                 </s:if>

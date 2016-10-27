@@ -44,7 +44,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
     </head>
 
-    <body onload="onloadDate();">
+    <body oncontextmenu="return false" onload="onloadDate();">
         <div id="wrap">
             <div id="generalForm">
                 <header id="header"><!--header-->
@@ -231,24 +231,24 @@
                                                             </div>
                                                             <s:if test="#session.typeOfUsr=='VC'">
                                                                 <div class="col-sm-3">
-                                                                    <label class="labelStylereq" style="color:#56a5ec">Payment Trns.No.</label>
+                                                                    <label class="labelStylereq" style="color:#56a5ec">Payment Trns.No</label>
                                                                     <s:textfield id="transNO" tabindex="23" name="" placeholder="Payment Trns.No." value="%{invoiceVTOClass.cheOrTransno}" cssClass=" form-control "  disabled="true"/>
                                                                 </div>
                                                             </s:if>
                                                             <s:else>
-                                                                <div class="col-sm-3">
-                                                                    <label class="labelStylereq" style="color:#56a5ec">Payment Trns.No.</label>
+                                                                <div class="col-sm-3 required">
+                                                                    <label class="labelStylereq" style="color:#56a5ec">Payment Trns.No</label>
                                                                     <s:textfield id="transNO" tabindex="23" placeholder="Payment Trns.No." name="invoiceVTOClass.cheOrTransno" value="%{invoiceVTOClass.cheOrTransno}" cssClass=" form-control" maxLength="15"/>
                                                                 </div>
                                                             </s:else>
                                                             <s:if test="#session.typeOfUsr=='VC' ">
                                                                 <div class="col-sm-3">
-                                                                    <label class="labelStylereq" style="color:#56a5ec">Paid Amount.</label>
+                                                                    <label class="labelStylereq" style="color:#56a5ec">Paid Amount</label>
                                                                     <s:textfield id="paidAmt" tabindex="24" name="" value="%{invoiceVTOClass.paidAmt}"  cssClass=" form-control "  disabled="true" maxLength="11"/>
                                                                 </div></s:if>
                                                             <s:else>
-                                                                <div class="col-sm-3">
-                                                                    <label class="labelStylereq" style="color:#56a5ec">Paid Amount.</label>
+                                                                <div class="col-sm-3 required">
+                                                                    <label class="labelStylereq" style="color:#56a5ec">Paid Amount</label>
                                                                     <s:textfield id="paidAmt" tabindex="24" name="invoiceVTOClass.paidAmt" value="%{invoiceVTOClass.paidAmt}"  cssClass=" form-control" onblur="getBalanceAmt()" onkeypress="return acceptNumbersOnly(event)" maxLength="11"/>
                                                                 </div>  
                                                             </s:else>

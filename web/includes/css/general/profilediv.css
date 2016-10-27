@@ -683,7 +683,7 @@ div#leaveBoxOverlay{
     margin-left: 15px;
     font-family: sans-serif;
     font-size: 13px;
-    color: #3A3A3A;
+    color: green;
 }
 /* End leave overlay*/
 
@@ -746,7 +746,7 @@ div#emailPhoneShowBoxOverlay {
     margin-left: 5px;
     font-family: sans-serif;
     font-size: 13px;
-    color: #3A3A3A;
+    color: green;
 }
 div#vendorAssocitaionOverlay{
 

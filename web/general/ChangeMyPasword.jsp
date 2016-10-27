@@ -44,7 +44,7 @@
             });
         </script>
     </head>
-    <body>
+    <body oncontextmenu="return false">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -101,15 +101,15 @@
                                                              <div  class="col-lg-6 pull-right btn_pull">
                                                                 <div class="col-sm-5 req_margin pull-right">  
 
-                                                                    <div align="right"><button type="submit" id="submit" value="Submit" tabindex="4" class="cssbutton req_margin align_left fa fa-check-circle-o">&nbsp;Submit</button>
+                                                                      <div align="right"><button id="reset" type="reset" value="Cancel" tabindex="5" class="cssbutton req_margin align_left  fa fa-times" onclick="javascript:history.back();">&nbsp;Cancel</button>
                                                                     </div>
 
 
 
                                                                 </div>
                                                                 <div  class="col-sm-6 req_margin pull-right"> 
-
-                                                                    <div align="right"><button id="reset" type="reset" value="Cancel" tabindex="5" class="cssbutton req_margin align_left  fa fa-times" onclick="javascript:history.back();">&nbsp;Cancel</button>
+<div align="right"><button type="submit" id="submit" value="Submit" tabindex="4" class="cssbutton req_margin align_left fa fa-check-circle-o">&nbsp;Submit</button>
+                                                                  
                                                                     </div>
 
 

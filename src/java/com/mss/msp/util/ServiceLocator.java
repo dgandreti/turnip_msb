@@ -33,6 +33,8 @@ import com.mss.msp.acc.projectsdata.ProjectTeamsDataHandlerService;
 import com.mss.msp.acc.projectsdata.ProjectTeamsDataHandlerServiceImpl;
 import com.mss.msp.acc.projectsdata.ProjectsDataHandlerService;
 import com.mss.msp.acc.projectsdata.ProjectsDataHandlerServiceImpl;
+import com.mss.msp.turnip.turnipService;
+import com.mss.msp.turnip.turnipServiceImpl;
 import com.mss.msp.accauth.AccAuthServiceImpl;
 import com.mss.msp.accauth.AccAuthServices;
 import com.mss.msp.accauthajax.AccAuthAjaxHandlerService;
@@ -77,6 +79,8 @@ import com.mss.msp.opp.OpportunityDataHandlerService;
 import com.mss.msp.opp.OpportunityDataHandlerServiceImpl;
 import com.mss.msp.usr.timesheets.UsrTimesheetService;
 import com.mss.msp.usr.timesheets.UsrTimesheetServiceImpl;
+import com.mss.msp.vendorReviews.VendorReviewsService;
+import com.mss.msp.vendorReviews.VendorReviewsServiceImpl;
 
 public class ServiceLocator {
 
@@ -224,5 +228,12 @@ public class ServiceLocator {
         OnlineExamService onlineExamService = new OnlineExamServiceImpl();
         return onlineExamService;
     }   
-    
+    public static VendorReviewsService getVendorReviewsService(){
+        VendorReviewsService vendorReviewsService= new VendorReviewsServiceImpl();
+        return vendorReviewsService;
+    }
+    public static turnipService getTurnipService(){
+        turnipService turnipService= new turnipServiceImpl();
+        return turnipService;
+    }
 }

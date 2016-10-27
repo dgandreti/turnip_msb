@@ -53,10 +53,10 @@
 
     </head>
     <s:if test="homeRedirectActionId!=0">
-        <body>
+        <body oncontextmenu="return false">
         </s:if>
         <s:else>
-        <body onload="setHRValues();">
+        <body oncontextmenu="return false" onload="setHRValues();">
         </s:else>    
         <div id="wrap">
             <header id="header"><!--header-->

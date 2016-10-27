@@ -37,7 +37,7 @@
         <script language="JavaScript" type="text/JavaScript" src="<s:url value="/includes/js/opportunity/formValidation.js"/>"></script>
 
     </head>
-    <body>
+    <body oncontextmenu="return false">
         <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->

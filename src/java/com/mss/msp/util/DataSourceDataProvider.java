@@ -27,6 +27,7 @@ import com.mss.msp.requirement.RequirementVTO;
 import com.mss.msp.sag.sow.SOWAction;
 import com.mss.msp.usr.task.TaskHandlerAction;
 import com.mss.msp.usr.task.TasksVTO;
+import com.mss.msp.vendorReviews.VendorReviewsAction;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -712,8 +713,8 @@ public class DataSourceDataProvider {
                     public int compare(
                             final Map.Entry< K, V> entry1,
                             final Map.Entry< K, V> entry2) {
-                        return entry1.getValue().compareTo(entry2.getValue());
-                    }
+                                return entry1.getValue().compareTo(entry2.getValue());
+                            }
                 });
 
         Map< K, V> sortedMap = new LinkedHashMap< K, V>();
@@ -3919,8 +3920,8 @@ public class DataSourceDataProvider {
                     public int compare(
                             final Map.Entry< K, V> entry1,
                             final Map.Entry< K, V> entry2) {
-                        return entry1.getValue().compareTo(entry2.getValue());
-                    }
+                                return entry1.getValue().compareTo(entry2.getValue());
+                            }
                 });
         Map< K, V> sortedMap = new LinkedHashMap< K, V>();
         for (Map.Entry< K, V> entry : entries) {
@@ -4978,7 +4979,7 @@ public class DataSourceDataProvider {
         String queryString = "";
         int groupid = 0;
         try {
-            queryString = "SELECT cat_type FROM usr_grouping WHERE usr_id=? ";
+            queryString = "SELECT cat_type FROM usr_grouping WHERE usr_id=? AND status='Active' ";
             System.out.println("getCategoryByUserId :: query string ------>" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
@@ -5164,7 +5165,7 @@ public class DataSourceDataProvider {
         String queryString = "";
         String resultmsg = null;
         connection = ConnectionProvider.getInstance().getConnection();
-        queryString = "SELECT sub_cat FROM usr_grouping WHERE usr_id=" + usrId;
+        queryString = "SELECT sub_cat FROM usr_grouping WHERE usr_id=" + usrId + " AND status='Active' ";
         System.out.println("getUserSubCategoryByUsrId :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
@@ -5594,7 +5595,7 @@ public class DataSourceDataProvider {
         String queryString = "";
         int roleId = 0;
         connection = ConnectionProvider.getInstance().getConnection();
-        queryString = "SELECT m.id FROM con_or_ven_mig_rel m WHERE m.reqId=" + reqId + " AND m.consultantid=" + conId;
+        queryString = "SELECT m.id FROM con_or_ven_mig_rel m WHERE  m.consultantid=" + conId;
         System.out.println("doCheckEmailExistsOrNot :: query string ------>" + queryString);
         try {
             statement = connection.createStatement();
@@ -7244,9 +7245,9 @@ public class DataSourceDataProvider {
                 }
             } else if ("Sub".equals(flag)) {
                 if ("AC".equalsIgnoreCase(accType)) {
-                    resultString = "Vendor" + "|" + "Candidate Name" + "|" + "Submitted Date" + "|" + "SSN No" + "|" + "Skills" + "|" + "Status" + "|" + "Rate" + "^";
+                    resultString = "Vendor" + "|" + "Candidate Name" + "|" + "Submitted Date" + "|" + "SSN No" + "|" + "Skills" + "|" + "Experience" + "|" + "Status" + "|" + "Rate" + "^";
                 } else {
-                    resultString = "Candidate Name" + "|" + "Submitted Date" + "|" + "SSN No" + "|" + "Email" + "|" + "Skills" + "|" + "Phone Number" + "|" + "Status" + "|" + "Rate" + "^";
+                    resultString = "Candidate Name" + "|" + "Submitted Date" + "|" + "SSN No" + "|" + "Email" + "|" + "Skills" + "|" + "Experience" + "|" + "Phone Number" + "|" + "Status" + "|" + "Rate" + "^";
                 }
                 while (resultSet.next()) {
                     if (resultSet.getString("ssn_number") != null && !"".equalsIgnoreCase(resultSet.getString("ssn_number"))) {
@@ -7258,6 +7259,7 @@ public class DataSourceDataProvider {
                                 + com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(resultSet.getDate("created_date")) + "|"
                                 + decryptedSSN + "|"
                                 + resultSet.getString("consultant_skills") + "|"
+                                + resultSet.getString("experience") + "|"
                                 + resultSet.getString("status") + "|"
                                 + resultSet.getString("rate_salary") + "/Hr^";
                     } else {
@@ -7266,16 +7268,18 @@ public class DataSourceDataProvider {
                                 + decryptedSSN + "|"
                                 + resultSet.getString("email1") + "|"
                                 + resultSet.getString("consultant_skills") + "|"
+                                + resultSet.getString("experience") + "|"
                                 + resultSet.getString("phone1") + "|"
                                 + resultSet.getString("status") + "|"
                                 + resultSet.getString("rate_salary") + "/Hr^";
                     }
                 }
             } else {
-                resultString = "Name" + "|" + "E-Mail" + "|" + "Skill Set" + "|" + "Rate/Salary" + "|" + "Phone Number" + "|" + "Status" + "^";
+                resultString = "Name" + "|" + "E-Mail" + "|" + "Experience" + "|" + "Skill Set" + "|" + "Rate/Salary" + "|" + "Phone Number" + "|" + "Status" + "^";
                 while (resultSet.next()) {
                     resultString += resultSet.getString("name") + "|"
                             + resultSet.getString("email1") + "|"
+                            + resultSet.getString("experience") + "|"
                             + resultSet.getString("consultant_skills") + "|"
                             + resultSet.getString("rate_salary") + "|"
                             + resultSet.getString("phone1") + "|"
@@ -7418,5 +7422,1107 @@ public class DataSourceDataProvider {
         }
         System.out.println("********************DataSourceDataProvider :: getUsrExistedOrNotProject Method End*********************");
         return available;
+    }
+
+    public String checkGroupingId(int aInt, int groupid, int usrId) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: checkGroupingId Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String checkAllow = "";
+        queryString = "SELECT COUNT(ug.id) AS groupcheck FROM usr_grouping ug LEFT OUTER JOIN users u ON(ug.usr_id=u.usr_id) WHERE ug.id = " + groupid + "  AND org_id = " + aInt;
+        if (usrId > 0) {
+            queryString = queryString + " AND ug.usr_id =" + usrId;
+        }
+        System.out.println("checkGroupingId :: query string ------>" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+
+                if (resultSet.getInt("groupcheck") == 0) {
+                    checkAllow = "notAllow";
+                } else {
+                    checkAllow = "allow";
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: checkGroupingId Method End*********************");
+        return checkAllow;
+    }
+
+    public String checkHomeRedirectId(int aInt, int homeId, int primaryRole) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: checkHomeRedirectId Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String checkAllow = "";
+        if (primaryRole == 0) {
+            queryString = "SELECT COUNT(id) AS homecheck FROM home_redirect_action WHERE id= " + homeId;
+        } else {
+            queryString = "SELECT COUNT(id) AS homecheck FROM home_redirect_action WHERE id= " + homeId + " AND org_id=" + aInt;
+        }
+
+        System.out.println("checkHomeRedirectId :: query string ------>" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+
+                if (resultSet.getInt("homecheck") == 0) {
+                    checkAllow = "notAllow";
+                } else {
+
+                    checkAllow = "allow";
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: checkHomeRedirectId Method End*********************");
+        return checkAllow;
+    }
+
+    public String checkCostCenterCode(int aInt, String ccCode) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: checkCostCenterCode Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String checkAllow = "";
+        queryString = "SELECT COUNT(*) AS total FROM costcenter WHERE cccode='" + ccCode + "' AND orgid=" + aInt;
+        System.out.println("checkCostCenterCode :: query string ------>" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+
+                if (resultSet.getInt("total") == 0) {
+                    checkAllow = "notAllow";
+                } else {
+                    checkAllow = "allow";
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: checkCostCenterCode Method End*********************");
+        return checkAllow;
+    }
+
+    public String checkInvoiceId(int aInt, int invoiceId, int userId, String typeOfUser) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: checkInvoiceId Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String checkAllow = "";
+        System.out.println("typeOfUser------->" + typeOfUser);
+        if ("VC".equals(typeOfUser)) {
+            queryString = "SELECT COUNT(*) AS total FROM invoice WHERE invoiceid=" + invoiceId + " AND frm_orgid=" + aInt + " AND usr_id =" + userId;
+        } else {
+            queryString = "SELECT COUNT(*) AS total FROM invoice WHERE invoiceid=" + invoiceId + " AND custorg_id=" + aInt + " AND usr_id =" + userId;
+        }
+
+        System.out.println("checkInvoiceId :: query string ------>" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+
+                if (resultSet.getInt("total") == 0) {
+                    checkAllow = "notAllow";
+                } else {
+                    checkAllow = "allow";
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: checkInvoiceId Method End*********************");
+        return checkAllow;
+    }
+
+    public String checkTimesheetAuthId(int aInt, int timesheetId, int userId, String flag, int role, int usersessionId) throws ServiceLocatorException, SQLException {
+        System.out.println("********************DataSourceDataProvider :: checkTimesheetAuthId Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String checkAllow = "";
+
+        // System.out.println("checkTimesheetAuthId :: query string ------>" + queryString);
+        try {
+            if ("Team".equals(flag)) {
+
+                checkAllow = checkTimeSheetForAuth(userId, usersessionId);
+                if ("allow".equals(checkAllow)) {
+                    queryString = "SELECT COUNT(*) AS total  FROM usrtimesheets ut LEFT OUTER JOIN users u ON(ut.usr_id = u.usr_id) WHERE ut.timesheetid = " + timesheetId + " AND ut.usr_id = " + userId;
+
+                    connection = ConnectionProvider.getInstance().getConnection();
+                    statement = connection.createStatement();
+                    resultSet = statement.executeQuery(queryString);
+                    while (resultSet.next()) {
+
+                        if (resultSet.getInt("total") == 0) {
+                            checkAllow = "notAllow";
+                        } else {
+                            checkAllow = "allow";
+                        }
+
+                    }
+                }
+            } else {
+
+                queryString = "SELECT COUNT(*) AS total  FROM usrtimesheets ut LEFT OUTER JOIN users u ON(ut.usr_id = u.usr_id) WHERE ut.timesheetid = " + timesheetId + " AND ut.usr_id = " + userId + " AND u.org_id = " + aInt;
+
+                connection = ConnectionProvider.getInstance().getConnection();
+                statement = connection.createStatement();
+                resultSet = statement.executeQuery(queryString);
+                while (resultSet.next()) {
+
+                    if (resultSet.getInt("total") == 0) {
+                        checkAllow = "notAllow";
+                    } else {
+                        checkAllow = "allow";
+                    }
+
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: checkTimesheetAuthId Method End*********************");
+        return checkAllow;
+    }
+
+    public String checkTimeSheetForAuth(int userId, int userSesionId) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: checkInvoiceId Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String checkAllow = "";
+        //System.out.println("typeOfUser------->"+typeOfUser);
+        // int userSession=0;
+
+        // queryString = "SELECT COUNT(*) AS total FROM vwtimesheetlist WHERE  EmpId in ("+userId+") " ;    
+        // }
+        System.out.println("checkInvoiceId :: query string ------>" + queryString);
+        try {
+
+            Map map = getMyTeamMembers(userSesionId);
+            String key, retrunValue = "";
+            int mapsize = map.size();
+            if (map.size() > 0) {
+                Iterator tempIterator = map.entrySet().iterator();
+                while (tempIterator.hasNext()) {
+                    Map.Entry entry = (Map.Entry) tempIterator.next();
+                    key = entry.getKey().toString();
+                    mapsize--;
+                    if (mapsize != 0) {
+                        retrunValue += key + ",";
+                    } else {
+                        retrunValue += key;
+                    }
+                    entry = null;
+
+                }
+            }
+            System.out.println("reutn value----->" + retrunValue + "  userId----" + userId);
+            String teamMemberArr[] = retrunValue.split(",");
+            // System.out.println("teamMemberArr.length----->" + teamMemberArr.length);
+            checkAllow = "notAllow";
+            for (int i = 0; i < teamMemberArr.length; i++) {
+                System.out.println("String.valueOf(userId)" + String.valueOf(userId) + "--->teamMemberArr[i]" + teamMemberArr[i]);
+                if (String.valueOf(userId).equals(teamMemberArr[i])) {
+                    System.out.println("String.valueOf(userId)" + String.valueOf(userId) + "--->teamMemberArr[i]" + teamMemberArr[i]);
+                    checkAllow = "allow";
+                    break;
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: checkInvoiceId Method End*********************");
+        return checkAllow;
+    }
+
+    public String checkTasksAuthId(int aInt, int taskId, String flag, int usersessionId) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: checkTimesheetAuthId Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String checkAllow = "";
+        System.out.println("flag------->" + flag);
+        if ("mytaskflag".equals(flag)) {
+            // queryString= "SELECT COUNT(*) AS total  FROM usrtimesheets ut LEFT OUTER JOIN users u ON(ut.usr_id = u.usr_id) WHERE ut.timesheetid = "+timesheetId+" AND ut.usr_id = "+userId+" AND u.org_id = "+aInt;
+            queryString = "SELECT COUNT(*) AS total FROM task_list WHERE task_id =" + taskId + " AND (task_created_by=" + usersessionId + " OR pri_assigned_to=" + usersessionId + " OR sec_assigned_to=" + usersessionId + ")";
+        } else {
+            queryString = "SELECT pri_assigned_to,sec_assigned_to,task_created_by FROM task_list WHERE task_id = " + taskId;
+        }
+
+        System.out.println("checkTimesheetAuthId :: query string ------>" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                if (!"mytaskflag".equals(flag)) {
+                    //dfdqueryString= "SELECT COUNT(*) AS total FROM vwtimesheetlist WHERE  EmpId in ("+userId+")";
+                    //checkTimeSheetId(); 
+
+                    String userIds = resultSet.getString("pri_assigned_to") + "," + resultSet.getString("task_created_by") + ",";
+                    if (resultSet.getInt("sec_assigned_to") != 0) {
+                        userIds = userIds + resultSet.getString("sec_assigned_to") + ",";
+                    }
+                    // StringUtils.chop(userIds);
+                    System.out.println("assingned,priassign,created" + userIds);
+                    checkAllow = checkTasksAuth(StringUtils.chop(userIds), usersessionId);
+
+                } else {
+                    if (resultSet.getInt("total") == 0) {
+                        checkAllow = "notAllow";
+                    } else {
+                        checkAllow = "allow";
+                    }
+                }
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: checkTimesheetAuthId Method End*********************");
+        return checkAllow;
+    }
+
+    public String checkTasksAuth(String userId, int userSesionId) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: checkTasksAuth Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String checkAllow = "";
+        String userIds[] = userId.split(",");
+
+        try {
+
+            Map map = getMyTeamMembers(userSesionId);
+            String key, retrunValue = userSesionId + ",";
+            int mapsize = map.size();
+            if (map.size() > 0) {
+                Iterator tempIterator = map.entrySet().iterator();
+                while (tempIterator.hasNext()) {
+                    Map.Entry entry = (Map.Entry) tempIterator.next();
+                    key = entry.getKey().toString();
+                    mapsize--;
+                    if (mapsize != 0) {
+                        retrunValue += key + ",";
+                    } else {
+                        retrunValue += key;
+                    }
+                    entry = null;
+                }
+            }
+
+            String teamMemberArr[] = retrunValue.split(",");
+
+            checkAllow = "notAllow";
+            for (int i = 0; i < teamMemberArr.length; i++) {
+
+                for (int j = 0; j < userIds.length; j++) {
+                    if (userIds[j].equals(teamMemberArr[i])) {
+
+                        checkAllow = "allow";
+                        break;
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: checkTasksAuth Method End*********************");
+        return checkAllow;
+    }
+
+    public String checkConsultantExistPerReqId(int consultantId, int requirementId) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: checkInvoiceId Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String checkAllow = "";
+        //System.out.println("typeOfUser------->" + typeOfUser);
+
+        queryString = "SELECT COUNT(*) AS total FROM users u JOIN usr_details c ON (u.usr_id = c.usr_id) JOIN usr_address a ON (u.usr_id = a.usr_id) JOIN acc_rec_attachment ar ON(ar.object_id=u.usr_id) WHERE u.usr_id = " + consultantId + " AND ar.req_id = " + requirementId + " AND a.STATUS='ACTIVE' AND ar.STATUS='Active' AND (object_type= 'CSA' OR object_type='E')";
+        // }
+
+        System.out.println("checkInvoiceId :: query string ------>" + queryString);
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+
+                if (resultSet.getInt("total") == 0) {
+                    checkAllow = "notAllow";
+                } else {
+                    checkAllow = "allow";
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: checkInvoiceId Method End*********************");
+        return checkAllow;
+    }
+
+    /**
+     * *****************************************************************************
+     * Date : 05/03/2016
+     *
+     * Author: Manikanta Eeralla<meeralla@miraclesoft.com>
+     *
+     * ForUse : checkReqExists() method is used to checking requirement is exist
+     * for that user or not.
+     *
+     * *****************************************************************************
+     */
+    public boolean checkUsrBelongsToHisOrg(int invokusrorgid, int invokuserId) throws ServiceLocatorException {
+
+        System.out.println("********************DataSourceDataProvider :: checkReqExists Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        int available = 0;
+
+        boolean isExist = false;
+
+        connection = ConnectionProvider.getInstance().getConnection();
+
+        queryString = "SELECT COUNT(*) AS total FROM users WHERE usr_id=" + invokuserId + " AND org_id=" + invokusrorgid;
+        // queryString = "SELECT COUNT(*) AS total FROM acc_requirements WHERE requirement_id="+ reqId +" AND acc_id="+sesOrgId;
+
+        System.out.println("checkUsrBelongsToHisOrg :: query string ------>" + queryString);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                available = resultSet.getInt("total");
+            }
+            if (available > 0) {
+                isExist = true;
+            } else {
+                isExist = false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: getUsrExistedOrNotProject Method End*********************");
+        return isExist;
+
+    }
+
+    /**
+     * *****************************************************************************
+     * Date : 05/03/2016
+     *
+     * Author: Manikanta Eeralla<meeralla@miraclesoft.com>
+     *
+     * ForUse : checkReqExists() method is used to checking requirement is exist
+     * for that user or not.
+     *
+     * *****************************************************************************
+     */
+    public String checkReqExists(int reqId, String typeOfUsr, int sesOrgId) throws ServiceLocatorException {
+
+        System.out.println("********************DataSourceDataProvider :: checkReqExists Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        int available = 0;
+        String resultString = "";
+
+        connection = ConnectionProvider.getInstance().getConnection();
+
+        if ("AC".equals(typeOfUsr)) {
+            queryString = "SELECT COUNT(*) AS total FROM acc_requirements WHERE requirement_id=" + reqId + " AND acc_id=" + sesOrgId;
+        }
+        if ("VC".equals(typeOfUsr)) {
+            queryString = "SELECT COUNT(*) AS total FROM  req_ven_rel WHERE req_id=" + reqId + " AND ven_id=" + sesOrgId;
+        }
+
+        System.out.println("checkReqExists :: query string ------>" + queryString);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                available = resultSet.getInt("total");
+            }
+            if (available > 0) {
+                resultString = "allow";
+            } else {
+                resultString = "notAllow";
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: getUsrExistedOrNotProject Method End*********************");
+        return resultString;
+
+    }
+
+    public int projectIdExistOrNotInOrg(int accountId, int projectId) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: projectIdExistOrNotInOrg Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        int result = 0;
+        connection = ConnectionProvider.getInstance().getConnection();
+        queryString = "SELECT project_id FROM acc_projects WHERE acc_id=" + accountId + " AND project_id=" + projectId;
+        System.out.println("projectIdExistOrNotInOrg :: query string ------>" + queryString);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                result = resultSet.getInt("project_id");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: projectIdExistOrNotInOrg Method End*********************");
+        return result;
+    }
+
+    public int consultExistOrNotForOrg(int primaryRole, int invokeId, int consult_id) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: consultExistOrNotForOrg Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        int result = 0;
+        connection = ConnectionProvider.getInstance().getConnection();
+        queryString = "SELECT usr_id FROM users WHERE type_of_user LIKE 'IC' AND usr_id= " + consult_id;
+        if (primaryRole == 9) {
+            queryString = queryString + " AND created_by_org_id=" + invokeId;
+        } else {
+            queryString = queryString + " AND created_by=" + invokeId;
+        }
+        System.out.println("consultExistOrNotForOrg :: query string ------>" + queryString);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                result = resultSet.getInt("usr_id");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: consultExistOrNotForOrg Method End*********************");
+        return result;
+    }
+
+    public int serviceIdExistOrNotForOrg(int primaryRole, int invokusrorgid, int serviceId, String serviceType) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: serviceIdExistOrNotForOrg Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        int result = 0;
+        connection = ConnectionProvider.getInstance().getConnection();
+        if ("CO".equalsIgnoreCase(serviceType)) {
+            serviceType = "S";
+        }
+        queryString = "SELECT COUNT(*) as exist FROM serviceagreements WHERE serviceid=" + serviceId + " AND servicetype= '" + serviceType + "'";
+        if (primaryRole == 7) {
+            queryString = queryString + " AND customer_id= " + invokusrorgid;
+        } else {
+            queryString = queryString + " AND vendor_id= " + invokusrorgid;
+        }
+        System.out.println("serviceIdExistOrNotForOrg :: query string ------>" + queryString);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                result = resultSet.getInt("exist");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: serviceIdExistOrNotForOrg Method End*********************");
+        return result;
+    }
+
+    public int projectIdExistOrNotForOrg(int invokusrorgid, int projectID, String flag, int userId) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: projectIdExistOrNotForOrg Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        int result = 0;
+        connection = ConnectionProvider.getInstance().getConnection();
+        queryString = "SELECT count(*) AS exist FROM acc_projects ac LEFT OUTER JOIN project_team pt ON(ac.project_id=pt.project_id) WHERE acc_id= " + invokusrorgid + " AND ac.project_id=" + projectID;
+        if ("addMember".equals(flag)) {
+            queryString = queryString;
+        } else {
+            queryString = queryString + " AND usr_id=" + userId;
+        }
+        System.out.println("projectIdExistOrNotForOrg :: query string ------>" + queryString);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                result = resultSet.getInt("exist");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: projectIdExistOrNotForOrg Method End*********************");
+        return result;
+    }
+
+    public int serviceIdExistOrNotInRecreatedListForOrg(int primaryRole, int invokusrorgid, int serviceId, int hisId) throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: serviceIdExistOrNotInRecreatedListForOrg Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        int result = 0;
+        connection = ConnectionProvider.getInstance().getConnection();
+        queryString = "SELECT COUNT(*) AS exist FROM his_serviceagreements WHERE his_serviceId=" + serviceId + " AND his_id= " + hisId;
+        if (primaryRole == 7) {
+            queryString = queryString + " AND his_customer_id= " + invokusrorgid;
+        } else {
+            queryString = queryString + " AND his_vendor_id= " + invokusrorgid;
+        }
+        System.out.println("serviceIdExistOrNotInRecreatedListForOrg :: query string ------>" + queryString);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                result = resultSet.getInt("exist");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: serviceIdExistOrNotInRecreatedListForOrg Method End*********************");
+        return result;
+    }
+
+    public String getImgPath(VendorReviewsAction vendorReviewsAction) {
+        System.out.println("********************DataSourceDataProvider :: getCostCenterBudget Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String resultString = "";
+        try {
+            queryString = "SELECT acc_logo FROM accounts WHERE account_id = " + vendorReviewsAction.getSessionOrgId() + " ";
+            System.out.println("query string ------>" + queryString);
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                resultString = resultSet.getString("acc_logo");
+            }
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: getCostCenterBudget Method End*********************");
+        return resultString;
+    }
+
+    public String getStarCalculations(int vendorId) {
+        System.out.println("********************DataSourceDataProvider :: getCostCenterBudget Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String resultString = "";
+        try {
+            queryString = "SELECT COUNT(vendor_orgId) AS total, ROUND(AVG(review_rating)) AS AVG,"
+                    + " COUNT(IF(review_rating=5,1,NULL)) AS count5,"
+                    + " COUNT(IF(review_rating=4,1,NULL)) AS count4,"
+                    + " COUNT(IF(review_rating=3,1,NULL)) AS count3,"
+                    + " COUNT(IF(review_rating=2,1,NULL)) AS count2,"
+                    + " COUNT(IF(review_rating=1,1,NULL)) AS count1"
+                    + " FROM ven_reviews WHERE vendor_orgId =" + vendorId + " ";
+            System.out.println("query string ------>" + queryString);
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                resultString += resultSet.getInt("count5") + "^"
+                        + resultSet.getInt("count4") + "^"
+                        + resultSet.getInt("count3") + "^"
+                        + resultSet.getInt("count2") + "^"
+                        + resultSet.getInt("count1") + "^"
+                        + resultSet.getInt("total") + "^"
+                        + resultSet.getInt("avg");
+            }
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: getCostCenterBudget Method End*********************");
+        return resultString;
+    }
+    
+    public String getSkillsBasedOnPrimarySkill(int priSkillId) throws ServiceLocatorException{
+        System.out.println("********************DataSourceDataProvider :: getSkillsBasedOnPrimarySkill Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String resultString = "";
+        try {
+            queryString = "SELECT id,skill_name FROM lk_skills WHERE STATUS='Active' AND online_flag=1 AND Category_Id = "+priSkillId+"";
+            System.out.println("query string ------>" + queryString);
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                resultString += resultSet.getInt("id") + "#"
+                        + resultSet.getString("skill_name") + "^";
+            }
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: getSkillsBasedOnPrimarySkill Method End*********************");
+        return resultString;
+    }
+    
+    public String getStatesOfCountryBasedOnRegion(int regionId,int countryId) throws ServiceLocatorException{
+        System.out.println("********************DataSourceDataProvider :: getCostCenterBudget Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        String resultString = "";
+        try {
+            queryString = "SELECT id,name FROM lk_states WHERE countryId = "+countryId+" AND regionId = "+ regionId;
+            System.out.println("query string ------>" + queryString);
+            connection = ConnectionProvider.getInstance().getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                resultString += resultSet.getInt("id") + "#"
+                        + resultSet.getString("name") + "^";
+            }
+        } catch (Exception sqe) {
+            sqe.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: getCostCenterBudget Method End*********************");
+        return resultString;
+    }
+    
+    public Map getRegionName() throws ServiceLocatorException {
+        System.out.println("********************DataSourceDataProvider :: getRegionName Method Start*********************");
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String queryString = "";
+        Map regionMap = new HashMap();
+        connection = ConnectionProvider.getInstance().getConnection();
+        queryString = "SELECT region_id,NAME FROM lk_region";
+        System.out.println("getRegionName :: query string ------>" + queryString);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+                regionMap.put(resultSet.getInt("region_id"), resultSet.getString("NAME"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                // resultSet Object Checking if it's null then close and set null
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException ex) {
+                throw new ServiceLocatorException(ex);
+            }
+        }
+        System.out.println("********************DataSourceDataProvider :: getRegionName Method End*********************");
+        return regionMap;
     }
 }

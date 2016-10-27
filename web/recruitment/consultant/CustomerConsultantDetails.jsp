@@ -75,7 +75,7 @@
             </style>
 
         </head>
-        <body style="overflow-x: hidden" onload="conDetailsCustomer();consultdoOnLoad(); defaultClick();">
+        <body style="overflow-x: hidden" oncontextmenu="return false" onload="conDetailsCustomer();consultdoOnLoad(); defaultClick();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

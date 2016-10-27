@@ -58,7 +58,7 @@
         </script>
     </head>
 
-    <body onload="getPresentTimeYear()">
+    <body oncontextmenu="return false" onload="getPresentTimeYear()">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

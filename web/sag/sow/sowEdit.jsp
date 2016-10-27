@@ -58,7 +58,7 @@
            
         </script>
     </head>
-    <body onload="hoursValidations();onloadDates();POdownloadButton();">
+    <body oncontextmenu="return false" onload="hoursValidations();onloadDates();POdownloadButton();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -120,8 +120,8 @@
                                                         <div class="input-group">
                                                             <span class="input-group-addon " style="padding-top: 5px" >$</span>
                                                             <s:textfield cssClass="form-control " id="overTimeLimit"  name="overTimeLimit" value=""/>
-                                                            <span class="input-group-addon" style="padding-top: 5px">/</span>
-                                                            <s:textfield id="overTimeLimitType" cssClass=" form-control input-group-addon" name="overTimeLimitType" value="Hr" readonly="true"/>
+                                                            <!--<span class="input-group-addon" style="padding-top: 5px">/</span>-->
+                                                            <%--<s:textfield id="overTimeLimitType" cssClass=" form-control input-group-addon" name="overTimeLimitType" value="Hr" readonly="true"/>--%>
                                                         </div>
                                                     </div>
 
@@ -651,7 +651,7 @@
                                                                 <div class="col-sm-3">
                                                                     <label class="labelStylereq" style="color:#56a5ec">Status</label>
                                                                     <%--<s:select id="status" cssClass="SelectBoxStyles form-control" name="status" headerKey="-1" headerValue="All" list="#@java.util.LinkedHashMap@{'Selected':'Selected','Approved':'Approved','Rejected':'Rejected','Generated':'SOW generated','Submitted':'SOW Submitted','Released':'Released'}"/>--%>
-                                                                    <s:select id="his_status" cssClass="SelectBoxStyles form-control" name="his_status" list="#@java.util.LinkedHashMap@{'All':'All','Approved':'Approved','Rejected':'Rejected','Denied':'Denied','Recreated':'Recreated'}"/>
+                                                                    <s:select id="his_status" cssClass="SelectBoxStyles form-control" name="his_status" list="#@java.util.LinkedHashMap@{'All':'All','Submitted':'Submitted','Approved':'Approved','Rejected':'Rejected','Denied':'Denied','Recreated':'Recreated'}"/>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <label class="labelStylereq" style="color:#56a5ec">Service&nbsp;Type</label>
@@ -671,6 +671,9 @@
                                                     <div class="col-sm-12">
                                                         <br>
                                                         <s:form>
+                                                            <div id="loadingSowRecreate" class="loadingImg" style="display: none">
+                                                                <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>
+                                                            </div>
                                                             <span><font style="color: green"><s:property value="resultMessage"></s:property></font></span>
 
                                                             <table id="sowResults" class="responsive CSSTable_task" border="5"cell-spacing="2">
@@ -828,10 +831,10 @@
             var tabFlag=document.getElementById("tabFlag").value;
             var uploadRes=document.getElementById("uploadRes").value;
             if(uploadRes=='S'){
-                $("upload").html(" <b><font color='green'>Attachment Uploaded Successfully!</font></b>");
+                $("upload").html(" <font color='green'>Attachment Uploaded Successfully!</font>");
                 $("#uploadSpan").show().delay(5000).fadeOut();
             }else if(uploadRes=='F'){
-                $("upload").html(" <b><font color='red'>Failed To upload!</font></b>");
+                $("upload").html(" <font color='red'>Failed To upload!</font>");
                 $("#uploadSpan").show().delay(5000).fadeOut();
             }else{
                 $("upload").html("");

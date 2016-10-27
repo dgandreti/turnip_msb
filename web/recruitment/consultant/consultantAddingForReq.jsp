@@ -57,7 +57,7 @@
         </style>
 
     </head>
-    <body style="overflow-x: hidden">
+    <body oncontextmenu="return false" style="overflow-x: hidden">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -175,7 +175,7 @@
                                                         </div>  
                                                     </div>
                                                     <div class="col-sm-6"> <!--id="IsEmployee"-->
-                                                        <label class="labelStylereq" style="margin-left:0px">Upload&nbsp;resume&nbsp;<font color="red">*</font></label><s:file  cssStyle="margin-left:  0px" name="file" id="file" cssClass=""   onclick="clearConultantAddOverlay()" tabindex="4" />
+                                                        <label class="labelStylereq" style="margin-left:0px">Upload&nbsp;resume&nbsp;<font color="red">*</font></label><s:file  cssStyle="margin-left:  0px" name="file" id="file" cssClass="" onchange="return addConReqFileValidation()"     onclick="clearConultantAddOverlay()" tabindex="4" />
                                                         <span style="color:red;margin-left: 0px">Upload PDF or Doc or Docx file.</span>
                                                     </div>
                                                     <div class="form-group col-sm-12">
@@ -222,6 +222,9 @@
                 });
             });
             
+        </script>
+        <script>
+            $("#actionMessage").show().delay(5000).fadeOut();
         </script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>

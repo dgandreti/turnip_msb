@@ -81,7 +81,7 @@
 
         </style>
     </head>
-    <body style="overflow-x: hidden" onload="loadPopup(); doOnLoad();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="loadPopup(); doOnLoad();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -161,8 +161,8 @@
                                                                        listKey="%{id}" listValue="%{name}"
                                                                        name="account.country.id" placeholder="Country"
                                                                        value="%{account.country.id}"
-                                                                       list="countries" label="Country" headerKey="-1"
-                                                                       headerValue="Select Country"
+                                                                       list="countries" label="Country"
+                                                                       headerKey="-1" headerValue="Select Country"
                                                                        cssClass="SelectBoxStyles form-control" onchange="javascript: getStates($(Countries).val(),'#accountState')"/>
                                                         </div>
                                                         <div class="col-sm-4">
@@ -180,7 +180,7 @@
 
 
                                                     <div class="inner-reqdiv-elements">
-
+                                                        <s:if test="#session.primaryrole != 1">
                                                         <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color:#56a5ec;">Type </label>
                                                             <s:select  id="accountType" type="dropdown"
@@ -190,6 +190,7 @@
                                                                        headerValue="Select Account Type"
                                                                        cssClass="SelectBoxStyles form-control"/>
                                                         </div>
+                                                        </s:if>
                                                         <div class="col-sm-4">
                                                             <label class="labelStylereq" style="color:#56a5ec;">Industry</label>
                                                             <s:select  id="accountIndustry" type="dropdown"
@@ -212,7 +213,7 @@
                                                         <div class="col-sm-2 pull-right">
 
                                                             <s:submit id="accountSearchButton" type="button" cssClass="add_searchButton  form-control"
-                                                                      value="" cssStyle="margin:5px 0px;"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                                      value="" cssStyle="margin:28px 0px 15px 0px"><i class="fa fa-search"></i>&nbsp;Search</s:submit>
                                                             </div>
 
                                                         </div>

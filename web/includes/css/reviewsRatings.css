@@ -1,0 +1,107 @@
+
+            .glyphicon { margin-right:5px;}
+            .ratingS .glyphicon {font-size: 22px;}
+            .rating-num { margin-top:0px;font-size: 54px; }
+            .progress { margin-bottom: 5px;}
+            .progress-bar { text-align: left; }
+            .rating-desc .col-md-3 {padding-right: 0px;}
+            .sr-only { margin-left: 5px;overflow: visible;clip: auto; }
+
+
+            /*            comments*/
+
+            .thumbnail {
+                padding:0px;
+                background-color: #E1E1E1;
+
+            }
+
+            .thumbnail > fa-user{
+                color: #BDBDBD;
+
+            }
+
+            .thumbnail > i{
+                margin-top: 11px;
+                margin-left: 4px;
+            }
+            .panel {
+                position:relative;
+            }
+            .panel>.panel-heading:after,.panel>.panel-heading:before{
+                position:absolute;
+                top:11px;left:-16px;
+                right:100%;
+                width:0;
+                height:0;
+                display:block;
+                content:" ";
+                border-color:transparent;
+                border-style:solid solid outset;
+                pointer-events:none;
+            }
+            .panel>.panel-heading:after{
+                border-width:7px;
+                border-right-color:#f7f7f7;
+                margin-top:1px;
+                margin-left:2px;
+            }
+            .panel>.panel-heading:before{
+                border-right-color:#ddd;
+                border-width:8px;
+            }
+
+
+            #comment{
+
+            }
+            .left_Bullet
+            {
+                color: #000;
+                font-size: 14px;
+            }
+            .left_Bullet:hover
+            {
+                color: #C66200;
+
+            }
+
+            /*ratings*/
+
+            .myclass {
+                color: red;
+                font-size: 12px;
+            }
+
+            @font-face {
+                font-family: 'Material Icons';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');
+            }
+
+            .material-icons {
+                font-family: 'Material Icons';
+                font-weight: normal;
+                font-style: normal;
+                font-size: 28px;
+                line-height: 1;
+                letter-spacing: normal;
+                text-transform: none;
+                display: inline-block;
+                white-space: nowrap;
+                word-wrap: normal;
+                direction: ltr;
+                -moz-font-feature-settings: 'liga';
+                -moz-osx-font-smoothing: grayscale;
+                margin-left: 10px;
+            }
+
+            .star_ed{
+                font-size: 20px !important;
+                float: right;
+
+            }
+
+
+

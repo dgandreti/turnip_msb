@@ -73,7 +73,7 @@
 
         </script>
     </head>
-    <body style="overflow-x: hidden" onload="pagerOption();
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="pagerOption();
             onLoadLoader()">
         <div id="wrap">
             <header id="header"><!--header-->
@@ -175,7 +175,7 @@
                                                                     <th>Role</th>
                                                                     <th class="unsortable">Is Primary</th> 
                                                                     <th class="unsortable">Status</th>
-                                                                    <th class="unsortable">Created By</th>
+                                                                   <%-- <th class="unsortable">Created By</th> --%>
                                                                     <th class="unsortable">Delete</th>
                                                                 </tr>
                                                                 <s:if test="userVTO.size == 0">
@@ -198,8 +198,13 @@
                                                                         <td><s:property value="role"></s:property></td>
                                                                         <td><s:property value="isPrimary"></s:property></td>
                                                                         <td><s:property value="status"></s:property></td>
-                                                                        <td><s:property value="createdBy"></s:property></td>
-                                                                        <td><center><s:a href="#" onclick="empCategoryTermination('%{groupingId}');"><i class="fa fa-trash-o fa-size"></i></s:a></center></td>
+                                                                        <%-- <td><s:property value="createdBy"></s:property></td> --%>
+                                                                        <s:if test="status=='Active'">
+                                                                            <td><center><s:a href="#" onclick="empCategoryTermination('%{groupingId}');"><i class="fa fa-trash-o fa-size"></i></s:a></center></td>
+                                                                        </s:if>
+                                                                        <s:else>
+                                                                    <td><center><i class="fa fa-trash-o fa-size" style="opacity: 0.3"></i></center></td>
+                                                                </s:else>
                                                                     </tr>
                                                             </s:iterator>
                                                             </tbody>

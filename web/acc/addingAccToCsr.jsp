@@ -41,7 +41,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/GeneralAjax.js"/>"></script>
     </head>
-    <body onload="getStockSymbol($(acc_country).val());">
+    <body oncontextmenu="return false" onload="getStockSymbol($(acc_country).val());">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -85,10 +85,10 @@
 
                                                     <s:hidden name="orgUId" value="%{orgUserId}"/>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 required">
 
                                                     <label class="labelStylereq" style="color:#56a5ec">CSR</label>
-                                                    <s:textfield cssClass="form-control " name="Name" id="csrName" placeholder="CSR" onkeyup="return getCSRNames();" autocomplete='off' maxLength="60" tabindex="2"/>
+                                                    <s:textfield cssClass="form-control " name="Name" id="csrName" placeholder="CSR" onkeyup="return getCSRNames();" autocomplete='off' maxLength="60" tabindex="2" onblur="checkCSRName()"/>
                                                     <s:hidden name="csrId" id="csrId"/>
                                                     <span id="validationMessage" />
                                                 </div>
@@ -99,7 +99,7 @@
                                                 </div>
                                                 <div class="col-sm-10"></div>
                                                 <div class="col-sm-2 pull-right">
-                                                    <s:submit id="addAccToCsrSave" type="button" cssStyle="margin:5px 0px;" value="" cssClass="add_searchButton form-control" tabindex="4" onclick="doAddAccountToCsr()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
+                                                    <s:submit id="addAccToCsrSave" type="button" cssStyle="margin:5px 0px;" value="" cssClass="add_searchButton form-control" tabindex="4" onclick="return doAddAccountToCsr()"><i class="fa fa-floppy-o"></i>&nbsp;Save</s:submit>
                                                 </div>
                                             </div>
                                         </div>

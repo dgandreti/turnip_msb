@@ -124,7 +124,7 @@ function headingMessage(message)
     }
     if (message.id == "vendorFormsHead") {
 
-        document.getElementById("headingmessage").innerHTML = 'Vendor Forms <i  class="fa fa-angle-up " id="updownArrowAccount" onclick="toggleContentAccount(\'VendorFormstDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
+        document.getElementById("headingmessage").innerHTML = 'Attachments <i  class="fa fa-angle-up " id="updownArrowAccount" onclick="toggleContentAccount(\'VendorFormstDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i>';
         showAttachments();
     }
     if (message.id == "acitivitieshead") {
@@ -294,14 +294,14 @@ function addorUpdateLocation(val)
                     if (req.responseText == "Successfully inserted") {
 
                         showLocations();
-                        $("locationValidation").html("<b><font color='green'>Successfully Added</font></b>");
+                        $("locationValidation").html("<font color='green'>Successfully Added</font>");
                         $("locationValidation").show().delay(5000).fadeOut();
                         clearLocationFields();
                     }
                     else if (req.responseText == "Successfully Updated") {
 
                         showLocations();
-                        $("locationValidation").html(" <b><font color='green'>Successfully Updated</font></b>");
+                        $("locationValidation").html(" <font color='green'>Successfully Updated</font>");
                         $("locationValidation").show().delay(5000).fadeOut();
                     }
                     else
@@ -322,28 +322,28 @@ function addorUpdateLocation(val)
 }
 function locationValidation(city, country, state, name)
 {
-    if (name == "")
+    if (name == "" || name == " ")
     {
-        $("locationValidation").html("<b><font color='red'>Enter Name</font></b>");
+        $("locationValidation").html("<font color='red'>Enter Name</font>");
         $("locationValidation").show().delay(5000).fadeOut();
         return false;
     }
     if (country == "")
     {
-        $("locationValidation").html("<b><font color='red'>Select Country</font></b>");
+        $("locationValidation").html("<font color='red'>Select Country</font>");
         $("locationValidation").show().delay(5000).fadeOut();
         return false;
     }
     if (state == "")
     {
-        $("locationValidation").html("<b><font color='red'>Select State</font></b>");
+        $("locationValidation").html("<font color='red'>Select State</font>");
         $("locationValidation").show().delay(5000).fadeOut();
         return false;
     }
     //alert(state)
-    if (city == "")
+    if (city == "" || city == " ")
     {
-        $("locationValidation").html("<b><font color='red'>Enter City</font></b>");
+        $("locationValidation").html("<font color='red'>Enter City</font>");
         $("locationValidation").show().delay(5000).fadeOut();
         return false;
     }
@@ -703,7 +703,7 @@ function contactInfoValidation() {
     re = /^[A-Za-z\s]+$/;
     if (!re.test(first_name) || first_name.length < 3)
     {
-        $("#InsertContactInfo").html(" <b><font color='red'>must be valid First Name</font></b>.");
+        $("#InsertContactInfo").html("<font color='red'>Please Enter First Name</font>");
         $("#ContactFname").css("border", "1px solid red");
         return false;
     }
@@ -711,7 +711,7 @@ function contactInfoValidation() {
     var last_name = document.getElementById("ContactLname").value;
     if (!re.test(last_name) || last_name.length < 3)
     {
-        $("#InsertContactInfo").html(" <b><font color='red'>must be valid Last Name</font></b>.");
+        $("#InsertContactInfo").html(" <font color='red'>Please Enter Last Name</font>");
         $("#ContactLname").css("border", "1px solid red");
         return false;
     }
@@ -723,22 +723,21 @@ function contactInfoValidation() {
     if (!re.test(status))
     {
         //$("#addContactError").html("");
-        $("#InsertContactInfo").html(" <b><font color='red'>must be valid  corp.email</font></b>.");
+        $("#InsertContactInfo").html("<font color='red'>Please Enter valid  corp.email</font>");
         $("#ContactEmail").css("border", "1px solid red");
         return false;
     }
-    var officePhone = document.getElementById("Officephone").value;
-
-    if (officePhone == ' ' || officePhone == null)
+    var Officephone = document.getElementById("Officephone").value;
+    if (Officephone == "")
     {
-        $("#InsertContactInfo").html(" <b><font color='red'>must be valid phone number</font></b>.");
-        $("#Officephone").css("border", "1px solid red");
+        $("#InsertContactInfo").html("<font color='red'>Please enter Office Phone</font>.");
+        //$("#Officephone").css("border", "1px solid red");
         return false;
     }
     var contactTitle = document.getElementById("contactTitle").value;
-    if (contactTitle == ' ' || contactTitle == null)
+    if (contactTitle == "")
     {
-        $("#addContactError").html(" <b><font color='red'>must be valid title</font></b>.");
+        $("#InsertContactInfo").html("<font color='red'>Please enter Title</font>.");
         $("#contactTitle").css("border", "1px solid red");
         return false;
     }
@@ -756,7 +755,7 @@ function contactInfoValidation() {
                 return true; // valid file extension
             }
         }
-        $("#InsertContactInfo").html(" <b><font color='red'>The file uploaded is invalid type</font></b>");
+        $("#InsertContactInfo").html(" <font color='red'>The file uploaded is invalid type</font>");
 
         return false;
     }
@@ -769,7 +768,7 @@ function contactInfoValidation() {
     else if (!repattern.test(altemail))
     {
         //$("#addContactError").html("");
-        $("#InsertContactInfo").html(" <b><font color='red'>Please enter valid e-mail.</font></b>.");
+        $("#InsertContactInfo").html(" <font color='red'>Please enter valid e-mail.</font>");
         $("#ContactAEmail").css("border", "1px solid red");
         return false;
     }
@@ -788,7 +787,7 @@ function contactFirstNameValidation() {
     {
         if (first_name.length == 0)
         {
-            $("#InsertContactInfo").html(" <font color='red'>Please enter the required field name</font>.");
+            $("#InsertContactInfo").html(" <font color='red'>Please enter the First Name</font>.");
             $("#ContactFname").css("border", "1px solid red");
             return false;
         }
@@ -814,7 +813,7 @@ function contactLastNameValidation() {
     if (!re.test(last_name) || last_name.length < 3)
     {
         if (last_name.length == 0) {
-            $("#InsertContactInfo").html(" <font color='red'>Please enter the required field Name</font>.");
+            $("#InsertContactInfo").html(" <font color='red'>Please enter the Last Name</font>.");
             $("#ContactLname").css("border", "1px solid red");
             return false;
         }
@@ -883,12 +882,12 @@ function ContactEmailValidate() {
 }
 function resultEmail(response) {
     if (response == "success") {
-        $("#InsertContactInfo").html("  <b><font color='green'>E-mail is Available</font></b>");
+        $("#InsertContactInfo").html(" <font color='green'>E-mail is Available</font>");
         return true;
     }
     else {
         document.getElementById("ContactEmail").value = "";
-        $("#InsertContactInfo").html(" <b><font color=#B20000>E-mail  Already Exists !</font></b>");
+        $("#InsertContactInfo").html("<font color='red'>E-mail  Already Exists !</font>");
         return false;
     }
 }
@@ -900,12 +899,12 @@ function ContactAddressValidation()
     letters = /^[0-9A-Za-z]+$/;
     if (OfficeAddress.value.match(letters))
     {
-        alert("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii ");
+        //alert("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii ");
         return true;
     }
     else
     {
-        $("InsertContactInfo").html(" <b><font color=#B20000>User address must have alphanumeric characters only</font></b>");
+        $("InsertContactInfo").html(" <font color=#B20000>User address must have alphanumeric characters only</font>");
         //uadd.focus(); 
         $("#OfficeAddress").css("border", "1px solid red");
         return false;
@@ -919,7 +918,7 @@ function paddresValidation() {
     if (Address.length < 2)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("errmsg").html(" <b><font color='red'>must be valid Address</font></b>");
+        $("errmsg").html("<font color='red'>must be valid Address</font>");
         $("#conAddress").css("border", "1px solid red");
         return false;
     }
@@ -940,7 +939,7 @@ function CaddresValidation() {
     if (Address.length < 2)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("errmsgc").html(" <b><font color='red'>must be valid Address</font></b>");
+        $("errmsgc").html(" <font color='red'>must be valid Address</font>");
         $("#Address").css("border", "1px solid red");
         return false;
     }
@@ -1062,7 +1061,7 @@ function contactPZipValidation() {
     if (isNaN($('#conZip').val()))
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("errmsg").html(" <b><font color='red'>must be valid Zip</font></b>");
+        $("errmsg").html(" <font color='red'>must be valid Zip</font>");
         $("#conZip").css("border", "1px solid red");
         document.getElementById("conZip").value = "";
         return false;
@@ -1070,7 +1069,7 @@ function contactPZipValidation() {
     else if (conZip.length != 5)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("errmsg").html(" <b><font color='red'>must be valid Zip</font></b>");
+        $("errmsg").html(" <font color='red'>must be valid Zip</font>");
         $("#conZip").css("border", "1px solid red");
         return false;
     }
@@ -1092,7 +1091,7 @@ function contactCZipValidation() {
     if (isNaN($('#conCZip').val()))
     {
         $("#showUpdatec").css('visibility', 'hidden');
-        $("errmsgc").html(" <b><font color='red'>must be valid Zip</font></b>");
+        $("errmsgc").html(" <font color='red'>must be valid Zip</font>");
         $("#conCZip").css("border", "1px solid red");
         document.getElementById("conCZip").value = "";
     }
@@ -1100,7 +1099,7 @@ function contactCZipValidation() {
     else if (conCZip.length != 5)
     {
         $("#showUpdatec").css('visibility', 'hidden');
-        $("errmsgc").html(" <b><font color='red'>must be valid Zip</font></b>");
+        $("errmsgc").html(" <font color='red'>must be valid Zip</font>");
         $("#conCZip").css("border", "1px solid red");
         return false;
     }
@@ -1133,7 +1132,7 @@ function ccityValidation() {
     if (City.length < 3)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("errmsgc").html(" <b><font color='red'>must be valid City</font></b>");
+        $("errmsgc").html(" <font color='red'>must be valid City</font>");
         $("#conCCity").css("border", "1px solid red");
         return false;
     }
@@ -1153,7 +1152,7 @@ function contactPcityValidation() {
     if (City.length < 3)
     {
         // $("#spanUpdatep").css('visibility', 'hidden');
-        $("#InsertContactInfo").html(" <b><font color='red'>must be valid City</font></b>");
+        $("#InsertContactInfo").html(" <font color='red'>must be valid City</font>");
         $("#conCity").css("border", "1px solid red");
         return false;
     }
@@ -1255,7 +1254,7 @@ function EmailValidation() {
     if (!re.test(status))
     {
         //$("#addContactError").html("");
-        $("#InsertContactInfo").html(" <b><font color='red'>must be valid  corp.email</font></b>.");
+        $("#InsertContactInfo").html(" <font color='red'>must be valid  corp.email</font>.");
         $("#ContactEmail").css("border", "1px solid red");
         return false;
     }
@@ -1442,7 +1441,7 @@ function contactDesignationValidation() {
     re = /^[A-Za-z\s]+$/;
     if (!re.test(designation) || designation.length < 2)
     {
-        $("#InsertContactInfo").html(" <b><font color='red'>must be valid designation</font></b>.");
+        $("#InsertContactInfo").html(" <font color='red'>must be valid designation</font>.");
         $("#designation").css("border", "1px solid red");
         return false;
     }
@@ -1535,25 +1534,39 @@ function populateCsrTable(response) {
     reqPager.init();
 
 }
-
+function checkCSRName(){
+    var csrName = document.getElementById("csrName").value;
+//    var csrId = document.getElementById("csrId").value;
+    if(csrName.length<3){
+        document.getElementById("csrName").value = "";
+        document.getElementById("csrId").value = ""; 
+    }
+}
 
 function doAddAccountToCsr()
 {
     //    alert("hello")
     var org_id = document.getElementById("orgUId").value;
+    var csrName = document.getElementById("csrName").value;
     var csrId = document.getElementById("csrId").value;
     var url = '../acc/doAddAccountToCsr.action?orgUserId=' + org_id + '&csrId=' + csrId;
+    if(csrId==""||csrName==""){
+        $("csrResult").html(" <font color='red'>Please Enter Valid CSR</font>.").show().delay(5000).fadeOut();
+        document.getElementById("csrName").value = "";
+        document.getElementById("csrId").value = "";
+        return false;
+    }
     //alert(url)
     var req = initRequest(url);
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
             if (req.status == 200) {
                 if (req.responseText > 0) {
-                    $("csrResult").html(" <b><font color='green'>Account successfully added to CSR</font></b>.");
+                    $("csrResult").html(" <font color='green'>Account successfully added to CSR</font>.").show().delay(5000).fadeOut();
                 }
                 else
                 {
-                    $("csrResult").html(" <b><font color='red'>Account Already Exist for CSR</font></b>.");
+                    $("csrResult").html(" <font color='red'>Account Already Exist for CSR</font>.").show().delay(5000).fadeOut();
                 }
                 document.getElementById("csrName").value = "";
                 document.getElementById("csrId").value = "";
@@ -1567,7 +1580,7 @@ function doAddAccountToCsr()
     req.open("GET", url, "true");
     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     req.send(null);
-
+    return false;
 }
 function csrStatusChange() {
     var csrId = document.getElementById("csrIdInOverlay").value;
@@ -1582,7 +1595,7 @@ function csrStatusChange() {
         if (req.readyState == 4) {
             if (req.status == 200) {
                 //alert(req.responseText)
-                $("#updateCsr").html(" <b><font color='green'>Succesfully Updated</font></b>.");
+                $("#updateCsr").html(" <font color='green'>Succesfully Updated</font>.");
                 getCsrDetailsTable();
             }
             else
@@ -2154,7 +2167,14 @@ function populateCsrSearchTable(response) {
                 row.append($("<td>" + Values[3] + "</td>"));
                 //row.append($("<td>" + Values[4] + "</td>"));
                 row.append($('<td><a href="getCsrAccounts.action?userId=' + Values[0] + '&csrName=' + Values[1] + '" > ' + Values[4] + "</td>"));
-                row.append($("<td><a href='#' onclick=csrTermination(" + Values[0] + ")><img src='../../includes/images/delete.png' height=20 width=20 ></td>"));
+                if (Values[4] != 0)
+                {
+                    row.append($("<td><a href='#' onclick=csrTermination(" + Values[0] + ")><img src='../../includes/images/delete.png' height=20 width=20 ></td>"));
+                }
+                else
+                {
+                    row.append($("<td><img style='opacity:0.2' src='../../includes/images/delete.png' height=20 width=20 ></td>"));
+                }
                 // attach_row.append($("<td><figcaption><button type='button' id='id' value="+ Values[4] +" onclick=doConsultAttachmentDownload("+ Values[4] +")><img src='../../includes/images/download.png' height=20 width=20 ></button></figcaption></td>"));
             }
         }
@@ -2318,7 +2338,7 @@ function getEmpCategories() {
     var empId = document.getElementById("teamMemberId").value;
 
     var empCategoryType = document.getElementById("categoryType").value;
-   document.getElementById("loadingEmpSearch").style.display="block";
+    document.getElementById("loadingEmpSearch").style.display = "block";
     // var empCategoryName= document.getElementById("categoryNames").value;
 
     // alert(userId);
@@ -2332,7 +2352,7 @@ function getEmpCategories() {
         if (req.readyState == 4) {
 
             if (req.status == 200) {
-                document.getElementById("loadingEmpSearch").style.display="none";
+                document.getElementById("loadingEmpSearch").style.display = "none";
                 populateEmpCategoriesTable(req.responseText);
             }
             else
@@ -2377,8 +2397,15 @@ function populateEmpCategoriesTable(response) {
                 row.append($("<td>" + Values[7] + "</td>"));
                 row.append($("<td>" + Values[9] + "</td>"));
                 row.append($("<td>" + Values[6] + "</td>"));
-                row.append($("<td>" + Values[8] + "</td>"));
-                row.append($("<td><a href='#' onclick=empCategoryTermination(" + Values[0] + ")><img src='../../includes/images/deleteImage.png' height=25 width=25 ></td>"));
+                // row.append($("<td>" + Values[8] + "</td>")); // Created by name
+                 if(Values[6]=='Active')
+                    {
+                  row.append($("<td><a href='#' onclick=empCategoryTermination(" + Values[0] + ")><img src='../../includes/images/deleteImage.png' height=25 width=25 ></td>"));       
+                    }
+                    else
+                        {
+                     row.append($("<td><img src='../../includes/images/deleteImage.png' height=25 width=25 style='opacity:0.3'></td>"));                
+                        }
                 //row.append($("<td>" + Values[4] + "</td>"));
                 //row.append($("<td>" + Values[7] + "</td>"));
                 //onclick="saveContactDetails(' + Values[0] +');" > '
@@ -2394,7 +2421,7 @@ function populateEmpCategoriesTable(response) {
     $('#empCategorizationResults').tablePaginate({
         navigateType: 'navigator'
     }, recordPage);
-    
+
 
 }
 //function empCategoryTermination(groupingId){
@@ -2543,49 +2570,49 @@ function populateOverLayCategoriesTable(response) {
 }
 function fileFormatValidation() {
     var file = $("#taskAttachment").val();
-  
+
     if (file != '')
     {
 
         var size = document.getElementById('taskAttachment').files[0].size;
-        var leafname= file.split('\\').pop().split('/').pop();
-   
-        var extension = file.substring(file.lastIndexOf('.')+1);
+        var leafname = file.split('\\').pop().split('/').pop();
 
-        if(extension=="jpg"||extension=="png"||extension=="gif" ){
+        var extension = file.substring(file.lastIndexOf('.') + 1);
+
+        if (extension == "jpg" || extension == "png" || extension == "gif") {
             var size = document.getElementById('taskAttachment').files[0].size;
-          
-            if(leafname.length>30){
+
+            if (leafname.length > 30) {
                 document.getElementById('taskAttachment').value = '';
-                document.getElementById('addContactError').innerHTML = "<font color=red>File name length must be less than 30 characters!</font>"
+                document.getElementById('InsertContactInfo').innerHTML = "<font color=red>File name length must be less than 30 characters!</font>"
                 // showAlertModal("File size must be less than 2 MB");
                 return false;
             }
-            else 
+            else
             {
-                if(parseInt(size)<2097152) {
-                
-                  
-                }else {
+                if (parseInt(size) < 2097152) {
+
+
+                } else {
                     document.getElementById('taskAttachment').value = '';
-                    document.getElementById('addContactError').innerHTML = "<font color=red>File size must be less than 2 MB.</font>"
+                    document.getElementById('InsertContactInfo').innerHTML = "<font color=red>File size must be less than 2 MB.</font>"
                     // showAlertModal("File size must be less than 2 MB");
                     return false;
                 }
             }
         }
-        else 
+        else
         {
-    
+
             document.getElementById('taskAttachment').value = "";
             //document.getElementById('InsertContactInfo').innerHTML = "<font color=red>Invalid file extension!Please select pdf or doc or docx or gif or jpg or png or jpeg file.</font>"
-            $("#addContactError").html(" <font color=red>Invalid file extension!Please select gif or jpg or png file.</font>");
+            $("#InsertContactInfo").html(" <font color=red>Invalid file extension!&nbsp;Please select gif or jpg or png file.</font>");
             return false;
         }
 
 
     }
-    $("#addContactError").html("");
+    $("#InsertContactInfo").html("");
     return true;
 }
 
@@ -2617,7 +2644,7 @@ function invoceYear(evt) {
     {
         //alert("enter only numbers ")
         if (rate != 4) {
-            $("#invoiceValidation").html(" <b><font color='red'>enter only numbers</font></b>");
+            $("#invoiceValidation").html(" <font color='red'>enter only numbers</font>");
             $("#invoiceValidation").show().delay(4000).fadeOut();
         }
         if (iKeyCode == 8)
@@ -2665,7 +2692,7 @@ function invoceOverlayYear(evt) {
     {
         //alert("enter only numbers ")
         if (rate != 4) {
-            $("invoiceGenerarionMessage").html(" <b><font color='red'>enter only numbers</font></b>");
+            $("invoiceGenerarionMessage").html(" <font color='red'>enter only numbers</font>");
             $("invoiceGenerarionMessage").show().delay(4000).fadeOut();
         }
         if (iKeyCode == 8)
@@ -2706,16 +2733,18 @@ function invoceOverlayYear(evt) {
 
 function checkExtention() {
     //alert("hi")
+    $("#fileUploadingValidation").val("");
+    $("#fileUploadingValidation").show();
     var FileUploadPath = document.getElementById('file').value;
     //alert(FileUploadPath);
     var res;
     if (FileUploadPath == '') {
 
-        $("fileuplaoderror").html("<font color='red'>Please upload a file</font>");
+        $("#fileUploadingValidation").html("<font color='red'>Please upload a file</font>");
         res = false;
     }
     else if (FileUploadPath.length > 34) {
-        $("fileuplaoderror").html("<font color='red'>File Name Length Should be less than 30 Characters</font>");
+        $("#fileUploadingValidation").html("<font color='red'>File Name Length Should be less than 30 Characters</font>");
         res = false;
     }
     else {
@@ -2723,7 +2752,7 @@ function checkExtention() {
                 FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
 
         if (Extension == "xls") {
-            $("fileuplaoderror").html(" ");
+            $("#fileUploadingValidation").html(" ");
             //    if(contentAddings()){
             res = true;
             //            }else
@@ -2733,7 +2762,7 @@ function checkExtention() {
 
         }
         else {
-            $("fileuplaoderror").html("<font color='red'> Allows only Xls type.</font>");
+            $("#fileUploadingValidation").html("<font color='red'> Allows only Xls type.</font>");
             res = false;
         }
     }
@@ -2760,7 +2789,7 @@ function checkFileName()
 
                 if (req.status == 200) {
                     if (req.responseText == "Exist") {
-                        $("fileuplaoderror").html(" <b><font color='red'>Name Already Exists</font></b>");
+                        $("fileuplaoderror").html(" <font color='red'>Name Already Exists</font>");
                         document.getElementById('file').value = "";
                         document.getElementById('rValue').value = "false";
                     }
@@ -2853,7 +2882,7 @@ function alternateMailValidation() {
     else if (!repattern.test(email))
     {
         //$("#addContactError").html("");
-        $("#InsertContactInfo").html(" <b><font color='red'>Please enter valid e-mail.</font></b>.");
+        $("#InsertContactInfo").html(" <font color='red'>Please enter valid e-mail.</font>.");
         $("#ContactEmail2").css("border", "1px solid red");
         return false;
     }
@@ -3009,7 +3038,7 @@ function getVendorFormDetails() {
         if (validTo == "")
         {
             // alert("Please select End date")
-            $("#formValidationMsg").html("<font color='red'>Please Select End Date</font>");
+            $("#formValidationMsg").html("<font color='red'>Please Select validTo Date</font>");
             $("#formValidationMsg").show().delay(4000).fadeOut();
             // $("#validTo").css('border','1px solid red');
             return false;
@@ -3020,7 +3049,7 @@ function getVendorFormDetails() {
     {
         if (validFrom == "")
         {
-            $("#formValidationMsg").html("<font color='red'>Please Select Start Date</font>");
+            $("#formValidationMsg").html("<font color='red'>Please Select validFrom Date</font>");
             $("#formValidationMsg").show().delay(4000).fadeOut();
             // $("#validFrom").css('border','1px solid red');
             // alert("Please select Start date")
@@ -3049,7 +3078,7 @@ function getVendorFormDetails() {
     //        }
     //    
     //    }
-     document.getElementById('loadingAttachments').style.display = 'block';
+    document.getElementById('loadingAttachments').style.display = 'block';
     var orgId = document.getElementById("viewAccountID").value;
     var url = '../acc/getAttachmentsSearchDetails.action?viewAccountID=' + orgId + '&vendorDocs=' + vendorDocs + '&validFrom=' + validFrom + '&validTo=' + validTo + '&attachmentTitle=' + attachmentTitle;
     var req = initRequest(url);
@@ -3057,7 +3086,7 @@ function getVendorFormDetails() {
         if (req.readyState == 4) {
             if (req.status == 200) {
                 populateVendorFormsTable(req.responseText);
-                 document.getElementById('loadingAttachments').style.display = 'none';
+                document.getElementById('loadingAttachments').style.display = 'none';
                 //$("securityinfo").html(" <b><font color='green'>Confidential information Saved Successfully</font></b>");
             }
             else
@@ -3078,6 +3107,7 @@ function getVendorFormDetails() {
 
 function addVendorFormDetails() {
     //alert("attachments");
+     $("#formValidationMsg1").show();
     var validity = $("#validity").val();
     var file = $("#file").val();
     var title = $("#attachmentTitle").val();
@@ -3086,7 +3116,7 @@ function addVendorFormDetails() {
     if (title == "")
     {
         $("#formValidationMsg1").html("<font color='red'>Enter The Title</font>");
-        $("#formValidationMsg1").show().delay(5000).fadeOut();
+        $("#formValidationMsg1").fadeOut(4000);
         //$("#attachmentTitle").css('border','1px solid red');
         return false;
     }
@@ -3094,12 +3124,14 @@ function addVendorFormDetails() {
     if (file == "")
     {
         $("#formValidationMsg1").html("<font color='red'>Please Upload Form</font>");
+        $("#formValidationMsg1").fadeOut(4000);
         // $("#file").css('border','1px solid red');
         return false;
     }
     if (validity == "")
     {
         $("#formValidationMsg1").html("<font color='red'>Please select Date</font>");
+        $("#formValidationMsg1").fadeOut(4000);
         // $("#validity").css('border','1px solid red');
         return false;
     }
@@ -3108,23 +3140,63 @@ function addVendorFormDetails() {
 
 
 }
-function accAttachmentValidation() {
-    //alert("hello")
-    var file = $('#file').val();
-    //alert(file)
-    var p = file.lastIndexOf(".");
-    var e = file.substring(p + 1, file.length);
-    //alert(e)
-    var rVal = false;
-    if (e == "pdf" || e == "doc" || e == "docx") {
-        rVal = true;
-    } else {
-        // alert("error")
-        $("#formValidationMsg1").html(" <b><font color='red'>only pdf or doc files allowed!</font></b>");
-        document.getElementById("file").value = "";
-        //$("#formValidationMsg1").show().delay(5000).fadeOut();
+function accAttachmentValidation()
+{
+     $("#formValidationMsg1").val("");
+     $("#formValidationMsg1").show();
+   var file = document.getElementById("file").value;
+  //  alert(file)
+     if (file == '') {
+       
+         document.getElementById("formValidationMsg1").innerHTML = "<font color='red'>Please Upload an file</font>"
+        //  $("#fileUploadingValidation").show().delay(5000).fadeOut();
+        return false;
     }
-    return rVal;
+    
+    if (file != '')
+    {
+        var size = document.getElementById("file").files[0].size;
+        var leafname= file.split('\\').pop().split('/').pop();
+        var extension = file.substring(file.lastIndexOf('.')+1);
+        //alert(extension)
+        if(extension=="pdf" || extension=="doc" || extension=="docx" ){
+            var size = document.getElementById("file").files[0].size;
+            if(leafname.length>30){
+                document.getElementById("file").value = '';
+//                $(spanid).html("<font color='red'>File name length must be less than 30 characters!</font>");
+                document.getElementById("formValidationMsg1").innerHTML = "<font color=red>File name length must be less than 30 characters!</font>"
+                 $("#formValidationMsg1").show().delay(5000).fadeOut();
+                // showAlertModal("File size must be less than 2 MB");
+                return false;
+            }
+            else 
+            {
+                if(parseInt(size)<2097152) {
+                     
+                      document.getElementById("formValidationMsg1").value = '';
+                }else {
+                    document.getElementById("file").value = '';
+                   // $(spanid).html("<font color='red'>File size must be less than 2 MB</font>");
+                    document.getElementById("formValidationMsg1").innerHTML = "<font color=red>File size must be less than 2 MB</font>"
+                    $("#formValidationMsg1").show().delay(5000).fadeOut();
+                    // showAlertModal("File size must be less than 2 MB");
+                    return false;
+                }
+            }
+        }
+        else 
+        {
+            document.getElementById("file").value = "";
+            document.getElementById("formValidationMsg1").innerHTML = "<font color=red>Only pdf or doc files allowed!</font>"
+            $("#formValidationMsg1").show().delay(5000).fadeOut();
+            //$(spanid).html("<font color='red'>Invalid file extension!Please select xls file only</font>");
+            // $("#InsertContactInfo").html(" <font color=red>Invalid file extension! Please select gif or jpg or png file</font>");
+            return false;
+        }
+    }
+   
+   document.getElementById("formValidationMsg1").innerHTML = ""
+    return true;  
 }
 function vendorFormOverlay() {
     initSessionTimer();
@@ -3246,6 +3318,7 @@ function checkAttachmentValidation()
 }
 
 function CheckRemainingAttachCharacters(id) {
+    $("#charRemainAttach").show();
     var elem = document.getElementById("charRemainAttach");
     $(id).keyup(function() {
         el = $(this);
@@ -3262,6 +3335,7 @@ function CheckRemainingAttachCharacters(id) {
         }
 
     })
+    $("#charRemainAttach").fadeOut(4000);
     return false;
 }
 ;
@@ -3303,7 +3377,7 @@ function checkLoactionNameExistOrNot()
                     //alert(req.responseText)
                     if (req.responseText == "Existed")
                     {
-                        $("locationValidation").html("<b><font color='red'>Location Name Existed</font></b>");
+                        $("locationValidation").html("<font color='red'>Location Name Existed</font>");
                         document.getElementById("locationName").value = "";
                         $("locationValidation").show().delay(5000).fadeOut();
                     }
@@ -3326,4 +3400,142 @@ function clearAttachmentForm() {
     document.getElementById("validFrom").value = "";
     document.getElementById("attachmentTitle").value = "";
 //        alert("hi------------"+document.getElementById("vendorDocs").value)
+}
+function clearContatForm() {
+    // alert("clearContatForm");
+    $("#skillListValue").selectivity('clear');
+    $("#InsertContactInfo").html("");
+    $("#ContactFname").css("border", "");
+    $("#ContactLname").css("border", "");
+    $("#ContactEmail").css("border", "");
+    $("#contactTitle").css("border", "");
+}
+function titleValidation(){
+     var contactTitle = document.getElementById("contactTitle").value;
+    if (contactTitle=="")
+    {
+        $("#InsertContactInfo").html("<font color='red'>Please enter Title</font>.");
+        $("#contactTitle").css("border", "1px solid red");
+       
+    }
+    else{
+        $("#InsertContactInfo").html("");
+        $("#contactTitle").css("border", "1px solid green");
+    }
+}
+
+function editContactInfoValidation() {
+    //alert("hello")
+    var contactSkillArry = [];
+    $("#skillListValue :selected").each(function() {
+        contactSkillArry.push($(this).text());
+    });
+    document.getElementById("contactSkillValues").value = contactSkillArry;
+    var first_name = document.getElementById("ContactFname").value;
+    re = /^[A-Za-z\s]+$/;
+    if (!re.test(first_name) || first_name.length < 3)
+    {
+        $("#InsertContactInfo").html("<font color='red'>Please Enter the First Name</font>");
+        $("#ContactFname").css("border", "1px solid red");
+        return false;
+    }
+    re = /^[A-Za-z0-9\s]+$/;
+    var last_name = document.getElementById("ContactLname").value;
+    if (!re.test(last_name) || last_name.length < 3)
+    {
+        $("#InsertContactInfo").html("<font color='red'>Please Enter the Last Name</font>");
+        $("#ContactLname").css("border", "1px solid red");
+        return false;
+    }
+
+    var Officephone = document.getElementById("Officephone").value;
+ 
+    if (Officephone == "")
+    {
+        $("#InsertContactInfo").html("<font color='red'>Please enter Office Phone</font>.");
+        //$("#Officephone").css("border", "1px solid red");
+        return false;
+    }
+    var contactTitle = document.getElementById("contactTitle").value;
+    if (contactTitle == "")
+    {
+        $("#InsertContactInfo").html("<font color='red'>Please enter Title</font>.");
+        $("#contactTitle").css("border", "1px solid red");
+        return false;
+    }
+
+    var altemail = document.getElementById("ContactEmail2").value;
+    repattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (altemail == '')
+    {
+        return true;
+    }
+    else if (!repattern.test(altemail))
+    {
+        //$("#addContactError").html("");
+        $("#InsertContactInfo").html("<font color='red'>Please enter valid e-mail</font>");
+        $("#ContactEmail2").css("border", "1px solid red");
+        return false;
+    }
+
+}
+
+function   checkExtensionFile(id){
+    //alert(id)
+   // alert(spanid)
+     $("#fileUploadingValidation").val("");
+     $("#fileUploadingValidation").show();
+   var file = document.getElementById(id).value;
+  //  alert(file)
+     if (file == '') {
+       
+         document.getElementById("fileUploadingValidation").innerHTML = "<font color='red'>Please Upload an file</font>"
+          $("#fileUploadingValidation").show().delay(5000).fadeOut();
+        return false;
+    }
+    
+    if (file != '')
+    {
+        var size = document.getElementById(id).files[0].size;
+        var leafname= file.split('\\').pop().split('/').pop();
+        var extension = file.substring(file.lastIndexOf('.')+1);
+        //alert(extension)
+        if(extension=="xls"  ){
+            var size = document.getElementById(id).files[0].size;
+            if(leafname.length>30){
+                document.getElementById(id).value = '';
+//                $(spanid).html("<font color='red'>File name length must be less than 30 characters!</font>");
+                document.getElementById("fileUploadingValidation").innerHTML = "<font color=red>File name length must be less than 30 characters!</font>"
+                  $("#fileUploadingValidation").show().delay(5000).fadeOut();
+                // showAlertModal("File size must be less than 2 MB");
+                return false;
+            }
+            else 
+            {
+                if(parseInt(size)<2097152) {
+                     
+                      document.getElementById("fileUploadingValidation").value = '';
+                }else {
+                    document.getElementById(id).value = '';
+                   // $(spanid).html("<font color='red'>File size must be less than 2 MB</font>");
+                    document.getElementById("fileUploadingValidation").innerHTML = "<font color=red>File size must be less than 2 MB</font>"
+                     $("#fileUploadingValidation").show().delay(5000).fadeOut();
+                    // showAlertModal("File size must be less than 2 MB");
+                    return false;
+                }
+            }
+        }
+        else 
+        {
+            document.getElementById(id).value = "";
+            document.getElementById("fileUploadingValidation").innerHTML = "<font color=red>Invalid file Please select xls file only</font>"
+             $("#fileUploadingValidation").show().delay(5000).fadeOut();
+            //$(spanid).html("<font color='red'>Invalid file extension!Please select xls file only</font>");
+            // $("#InsertContactInfo").html(" <font color=red>Invalid file extension! Please select gif or jpg or png file</font>");
+            return false;
+        }
+    }
+   
+   document.getElementById("fileUploadingValidation").innerHTML = ""
+    return true;  
 }

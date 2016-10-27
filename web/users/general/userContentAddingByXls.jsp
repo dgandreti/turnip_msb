@@ -51,7 +51,7 @@
             });
         </script>
     </head>
-    <body style="overflow-x: hidden" onload="jumper();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="jumper();">
         <div id="wrap">     
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

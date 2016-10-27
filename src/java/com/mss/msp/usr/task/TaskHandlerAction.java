@@ -110,6 +110,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
     private String mainProject;
     private String subProject;
     private String downloadFlag;
+     private String myTask;
 
     public TaskHandlerAction() {
     }
@@ -179,7 +180,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setTasksStatusList(dataSourceDataProvider.getInstance().getTaskStatusByOrgId());
                 setTasksRelatedToList(dataSourceDataProvider.getInstance().getTaskrelatedToMap(usrPriRole,usrType,getUserSessionId()));
-                teamtaskDetails = ServiceLocator.getTaskHandlerService().getLoggedInEmpTasksDetails(this);
+                teamtaskDetails = ServiceLocator.getTaskHandlerService().getLoggedInEmpTasksDetails(this,usrPriRole,usrType);
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
@@ -353,8 +354,9 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     int result = mailManager.generateTaskAddEmail(this);
                     if (result > 0) {
                     }
+                      resultMessage="<font color='green' >Task Added Succesfully</font>";
                 } else {
-                   
+                    resultMessage="<font color='red' >Sorry Task Not Added</font>";
                 }
             }
         } catch (IOException e) {
@@ -507,7 +509,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
      * *****************************************************************************
      */
     
-    public String addAttachment() {
+     public String addAttachment() {
         resultType = LOGIN;
         int addresult = 0;
         System.out.println("********************TaskHandlerAction :: addAttachment Method Start*********************");
@@ -558,7 +560,7 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
                     File theFile = new File(createPath.getAbsolutePath());
 
 
-                    setFilePath(theFile.toString() + "\\");
+                    setFilePath(theFile.toString() + File.separator + taskAttachmentFileName);
                     /*copies the file to the destination*/
                     File destFile = new File(theFile, taskAttachmentFileName);
                     FileUtils.copyFile(taskAttachment, destFile);
@@ -1327,4 +1329,14 @@ public class TaskHandlerAction extends ActionSupport implements ServletRequestAw
     public void setDownloadFlag(String downloadFlag) {
         this.downloadFlag = downloadFlag;
     }
+
+    public String getMyTask() {
+        return myTask;
+    }
+
+    public void setMyTask(String myTask) {
+        this.myTask = myTask;
+    }
+    
+    
 }

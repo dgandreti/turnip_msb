@@ -179,7 +179,7 @@ Author     : Greg
 
 
     </head>
-    <body onload="doOnLoadRequirement(), AccountTypeDropDown();
+    <body oncontextmenu="return false" onload="doOnLoadRequirement(), AccountTypeDropDown();
             attachmentsValidFromTo();
             attachmentsValidFromToOverlay();
             editAttachmentvalidity();
@@ -255,7 +255,7 @@ Author     : Greg
                                                                             </li>
                                                                         </s:else>
 
-                                                                        <s:if test="#session.primaryrole != 0 && #session.primaryrole != 2" >
+                                                                        <s:if test="#session.primaryrole != 0 && #session.primaryrole != 2 && #session.primaryrole != 13" >
                                                                             <s:if test="%{userType!='vendor'}">
                                                                                 <li class=""><a aria-expanded="false" href="#requirements" data-toggle="tab" id="requirementshead" onclick="getSearchRequirementsList();
                                                                                         headingMessage(this);
@@ -598,7 +598,7 @@ Author     : Greg
                                                                                                         type="text"
                                                                                                         value="%{accountDetails.industry}"
                                                                                                         list="industries"
-                                                                                                        onchange="accIndustryValidate()"/>
+                                                                                                        />
                                                                                             <span id="industryError" class="accDetailsError"></span>
                                                                                         </div>
                                                                                         <div class="col-sm-4">
@@ -983,7 +983,7 @@ Author     : Greg
                                                                                                 <div class="col-md-6 col-lg-6 pull-right contact_add">
                                                                                                     <label class="labelStylereq" style="color:#56a5ec;"></label> 
                                                                                                 <%--<s:submit id="" cssClass="Contact_popup_open cssbutton_emps form-control"  onclick="removeDataAfterContactOverlay()"  onfocus="clearContactOverlay()" value="Add Contact" style="margin:5px"/>--%>
-                                                                                                <a id="addContactLink" href='setContacts.action?accountType=<s:property value="%{accountDetails.accountType}"/>&accountSearchID=<s:property value="%{accountSearchID}"/>'><button class="add_searchButton form-control" tabindex="6" style="margin: 5px 0px;"><i class="fa fa-user"></i>&nbsp;Add</button></a>
+                                                                                                <a id="addContactLink" href='setContacts.action?accountType=<s:property value="%{accountDetails.accountType}"/>&accountSearchID=<s:property value="%{accountSearchID}"/>'><button class="add_searchButton form-control" tabindex="6" style="margin: 5px 0px;"><i class="fa fa-user-plus"></i>&nbsp;Add</button></a>
                                                                                             </div>
 
                                                                                         </div>
@@ -1267,10 +1267,11 @@ Author     : Greg
                                                                                                 <th>Job Title</th>
                                                                                                 <th>Positions</th>
                                                                                                 <th>Skill set</th>
-                                                                                                <th>Pre Skills</th>
+                                                                                                <%-- <th>Pre Skills</th>
                                                                                                 <th>Recruiter1</th>
-                                                                                                <th>Recruiter2</th>
+                                                                                                <th>Recruiter2</th> --%>
                                                                                                 <th>Status</th>
+                                                                                                <th>No.Of Submissions</th>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -1958,7 +1959,7 @@ Author     : Greg
                                                                         <font style="color: #ffffff">..................... ..............................  ..........................................</font>
                                                                     </div>   
                                                                 </div>
-                                                                <div id="contactLoginOverlay_popup" >
+                                                                <div id="contactLoginOverlay_popup" style="width:30%">
                                                                     <div id="contactLoginBox" class="marginTasks">
                                                                         <div class="backgroundcolor">
                                                                             <table>
@@ -2128,8 +2129,8 @@ Author     : Greg
             }
             if (flag == "attachDetails")
             {
-                document.getElementById("headingmessage").innerHTML = "Vendor Forms";
-                document.getElementById("headingmessage").innerHTML = 'Vendor Forms <i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'VendorFormstDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
+                document.getElementById("headingmessage").innerHTML = "Attachments";
+                document.getElementById("headingmessage").innerHTML = 'Attachments <i  class="fa fa-angle-up" id="updownArrowAccount" onclick="toggleContentAccount(\'VendorFormstDiv\')" style="margin-top: 0vw;position:absolute;color:#56a5ec"> </i> ';
                 document.getElementById('VendorForms').className = 'tab-pane fade in active';
                 showAttachments();
             }

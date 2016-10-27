@@ -59,10 +59,13 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/sweetalert.min.js"/>'></script>
 
         <script>
-            ; 
+            ;
         </script>
     </head>
-    <body style="overflow-x: hidden" onload="onloadIdProofDetails(); loadConsultantAvaliable(); consultdoOnLoad();   defaultClick();">
+    <body oncontextmenu="return false" style="overflow-x: hidden" onload="onloadIdProofDetails();
+        loadConsultantAvaliable();
+        consultdoOnLoad();
+        defaultClick();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -79,7 +82,7 @@
                             <s:include value="/includes/menu/LeftMenu.jsp"/> 
                             <!-- content start -->
                             <div class="col-sm-12 col-md-9 col-lg-9 right_content" style="background-color:#fff">
-                               
+
                                 <s:if test="consultFlag=='vendor'">
                                     <s:url var="myUrl" action="getMyConsultantSearch.action">
                                         <s:param name="consultantFlag"><s:property value="%{consultantFlag}"/></s:param> 
@@ -124,18 +127,19 @@
                                         </s:url>
                                     <span class="pull-right" style="padding: 19px"><s:a href='%{#myUrl}' id="consultantBackButton"><img src="<s:url value="/includes/images/backButton.png"/>" height="25" width="25"></s:a></span>
                                     </s:if>
-                                   
+
                                 <!-- Content end  -->
                                 <br>
                                 <!-- tab starting  -->
                                 <s:if test="%{consultFlag !='consultant'}">
                                 </s:if>
                                 <!-- Nav tabs -->
-                                
+
                                 <ul class="nav nav-tabs">
                                     <li class="" id="consultantLi"><a aria-expanded="false" onclick="cheadingMessage(this);" id="c_details"  href="#Consultant" data-toggle="tab"> Consultant Details </a>
                                     </li>
-                                    <li id="attachLi" class=""><a aria-expanded="false" onclick="showAttachmentDetails('<%= request.getParameter("consult_id")%>');cheadingMessage(this);" id="c_attach" href="#consult_attach" data-toggle="tab"> Attachments </a>
+                                    <li id="attachLi" class=""><a aria-expanded="false" onclick="showAttachmentDetails('<%= request.getParameter("consult_id")%>');
+                                        cheadingMessage(this);" id="c_attach" href="#consult_attach" data-toggle="tab"> Attachments </a>
                                     </li>
                                 </ul>
 
@@ -156,12 +160,12 @@
 
                                             <!-- Content start -->
                                             <s:if test="%{updateMessage =='success'}">
-                                                <span><successMessage><font style="color: green"> Consultant record Updated successfully!</font></successMessage></span>
+                                                <span id="fadeout_message"><successMessage><font style="color: green"> Consultant record Updated successfully!</font></successMessage></span>
                                                     </s:if>
                                                     <s:if test="%{updateMessage=='failure'}">
                                                 <font style="color: green"> Sorry, Consultant record not update!</font>
                                             </s:if> 
-                                            <span><consult_error></consult_error></span>
+                                            <span><consult_error id="consultDetailsErrMsg"></consult_error></span>
                                             <form action="updateConsultantDetails" id="consultantForm" theme="simple">
                                                 <s:hidden id="consultFlag" name="consultFlag" value="%{consultFlag}"/>
                                                 <s:hidden value="%{ConsultantVTO.consult_id}" name="consult_id" />
@@ -181,25 +185,25 @@
 
 
                                                     <label class="labelStylereq" >Email Id</label>   
-                                                    <s:textfield cssClass="form-control" disabled="true" value="%{consultantVTO.consult_email}" required="true" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" id="consult_email" placeholder="Email Id" tabindex="1" onkeyup="consultvalid_email()"/>
+                                                    <s:textfield cssClass="form-control" disabled="true" value="%{consultantVTO.consult_email}"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" id="consult_email" placeholder="Email Id" tabindex="1" onkeyup="consultvalid_email()"/>
                                                 </div>
                                                 <div class="col-sm-4" >
                                                     <label class="labelStylereq" >Available</label>
                                                     <s:select cssClass="form-control SelectBoxStyles " value="%{consultantVTO.consult_available}" name="consult_available" id="consult_available" onkeyup="consultvalid_avail()"   headerKey="-1" headerValue="Select availabilty" list="#@java.util.LinkedHashMap@{'Y':'Yes','N':'No'}" onchange="loadConsultantAvaliable();" tabindex="3"/>
                                                 </div>
-                                                  <div class="col-sm-4" >
-                                                      <s:hidden id="consult_favail1" name="consult_favail1" value="%{consultantVTO.consult_favail}"/>
+                                                <div class="col-sm-4" >
+                                                    <s:hidden id="consult_favail1" name="consult_favail1" value="%{consultantVTO.consult_favail}"/>
                                                     <label class="labelStylereq" >Available Date</label>
                                                     <div class="calImage">   <s:textfield cssClass="form-control" name="consult_favail" value="%{consultantVTO.consult_favail}" id="consult_favail"  disabled="true" placeholder="Date" onkeypress="return consultantDateRepository(this)" tabindex="2"><i class="fa fa-calendar"></i></s:textfield></div>
-                                                </div>
-                                                <div class="col-sm-4 required">
-                                                    <label class="labelStylereq" >First Name</label>    
-                                                    <s:textfield cssClass="form-control" name="consult_fstname" value="%{consultantVTO.consult_fstname}" id="consult_fstname" required="true" placeholder="First Name" tabindex="4" onkeyup="consultvalid_fname()" maxlength="30"/>
+                                                    </div>
+                                                    <div class="col-sm-4 required">
+                                                        <label class="labelStylereq" >First Name</label>    
+                                                    <s:textfield cssClass="form-control" name="consult_fstname" value="%{consultantVTO.consult_fstname}" id="consult_fstname" placeholder="First Name" tabindex="4" onkeyup="consultvalid_fname()" maxlength="30"/>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <span class="required">
                                                         <label class="labelStylereq" >Last Name</label>   
-                                                        <s:textfield cssClass="form-control" name="consult_lstname" value="%{consultantVTO.consult_lstname}" id="consult_lstname" required="true" onkeyup="consultvalid_lstname()" placeholder="Last Name" tabindex="5" maxlength="30"/>
+                                                        <s:textfield cssClass="form-control" name="consult_lstname" value="%{consultantVTO.consult_lstname}" id="consult_lstname" onkeyup="consultvalid_lstname()" placeholder="Last Name" tabindex="5" maxlength="30"/>
                                                     </span>
                                                 </div>
                                                 <div class="col-sm-4">
@@ -208,16 +212,16 @@
                                                 </div>
                                                 <div class="col-sm-4 required">
                                                     <label class="labelStylereq" >Date of Birth</label>   
-                                                    <div class="calImage">  <s:textfield cssClass="form-control" name="consult_dob" value="%{consultantVTO.consult_dob}" required="true" id="consult_dob" onkeypress="return consultantDateRepository(this)" tabindex="7"><i class="fa fa-calendar"></i></s:textfield></div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="labelStylereq" >Home Phone</label>
+                                                    <div class="calImage">  <s:textfield cssClass="form-control" name="consult_dob" value="%{consultantVTO.consult_dob}"  id="consult_dob" onkeypress="return consultantDateRepository(this)" tabindex="7"><i class="fa fa-calendar"></i></s:textfield></div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="labelStylereq" >Home Phone</label>
                                                     <s:textfield cssClass="form-control" name="consult_homePhone" value="%{consultantVTO.consult_homePhone}" id="consult_homePhone" placeholder="Home Phone" tabindex="8"/>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <span class="required">  
                                                         <label class="labelStylereq" >Mobile No</label>      
-                                                        <s:textfield cssClass="form-control" name="consult_mobileNo" value="%{consultantVTO.consult_mobileNo}" required="true" id="consult_mobileNo" placeholder="Mobile Number" tabindex="9" onkeyup="mobValidation()"/>
+                                                        <s:textfield cssClass="form-control" name="consult_mobileNo" value="%{consultantVTO.consult_mobileNo}"  id="consult_mobileNo" placeholder="Mobile Number" tabindex="9" onkeyup="mobValidation()"/>
                                                     </span>
                                                 </div>
                                                 <div class="col-sm-4">
@@ -269,30 +273,30 @@
                                                 <div class="col-sm-4" id="proofuploadDiv" style="display: none">
                                                     <label class="labelStylereq" ></label>
                                                     <s:label><figcaption>Upload ID Proof<button id="idProofUpload" type='button' tabindex="19" class="consultVisaAttachment_popup_open" onclick="openDialogforVisaAttachment()"><img src='../../includes/images/Browse.png' height=25 width=25  ></button></figcaption></s:label>
-                                                </div>
-                                                <div class="row"></div>
-                                                <!-- Contact Information , start  -->
-                                                <div class="col-sm-6" style="">
-                                                    <span id="updateResultp">Permanent Address Updated successfully</span>
-                                                    <div id="AddressBox"> 
-                                                        <div class="contactInfoDiv">
-                                                            <table>
-                                                                <tr id="trStyleContact"><td>&nbsp;&nbsp;Permanent Address &nbsp;&nbsp;</td></tr>
-                                                            </table>
-                                                        </div>
+                                                    </div>
+                                                    <div class="row"></div>
+                                                    <!-- Contact Information , start  -->
+                                                    <div class="col-sm-6" style="">
+                                                        <span id="updateResultp">Permanent Address Updated successfully</span>
+                                                        <div id="AddressBox"> 
+                                                            <div class="contactInfoDiv">
+                                                                <table>
+                                                                    <tr id="trStyleContact"><td>&nbsp;&nbsp;Permanent Address &nbsp;&nbsp;</td></tr>
+                                                                </table>
+                                                            </div>
 
-                                                        <div class="col-lg-10 col-md-offset-1">
-                                                            <label class="labelStylereq" >Address</label>
+                                                            <div class="col-lg-10 col-md-offset-1">
+                                                                <label class="labelStylereq" >Address</label>
                                                             <s:textfield cssClass="form-control" id="consult_Address" placeholder="Address" value="%{consultantVTO.consult_Address}" name="consult_Address" oninvalid="setCustomValidity('Must be valid fn')"  onchange="try{setCustomValidity('')}catch(e){}" onclick="removedCheckedAddress();" maxlength="100" tabindex="20"/>
                                                             <label class="labelStylereq" >Address2</label>        
                                                             <s:textfield cssClass="form-control" id="consult_Address2" placeholder="Address2" value="%{consultantVTO.consult_Address2}" name="consult_Address2" onclick="removedCheckedAddress();" maxlength="100" tabindex="21"/>
                                                             <span class="required">
                                                                 <label class="labelStylereq" >City</label>             
-                                                                <s:textfield cssClass="form-control" id="consult_City" placeholder="City" value="%{consultantVTO.consult_City}" name="consult_City" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}" onchange="try{setCustomValidity('')}catch(e){}" onkeyup="pcityValidation()" onclick="removedCheckedAddress();" maxlength="20" tabindex="22"/>
+                                                                <s:textfield cssClass="form-control" id="consult_City" placeholder="City" value="%{consultantVTO.consult_City}" name="consult_City"  oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}" onchange="try{setCustomValidity('')}catch(e){}" onkeyup="pcityValidation()" onclick="removedCheckedAddress();" maxlength="20" tabindex="22"/>
                                                                 <%-- <s:select cssClass="form-control SelectBoxStyles" name="consult_CCountry" id="consult_CCountry" label="Country" headerKey="" headerValue="Select Country" list="consult_CCountry" onchange="ConsultantStateChange()" tabindex="1"/>
                                                                 <s:select cssClass="form-control SelectBoxStyles" label="State" id="consult_CState" name="consult_CState"    headerKey="" headerValue="Select state" list="{'Relocation','Travel'}" /> --%>
                                                                 <label class="labelStylereq" >Country</label>       
-                                                                <s:select cssClass="form-control SelectBoxStyles" id="consult_Country" onchange="ConsultantEditStateChange()" list="country" value="%{consultantVTO.consult_Country}" name="consult_Country" required="true" onclick="removedCheckedAddress();" tabindex="23"/>
+                                                                <s:select cssClass="form-control SelectBoxStyles" id="consult_Country" onchange="ConsultantEditStateChange()" list="country" value="%{consultantVTO.consult_Country}" name="consult_Country"  onclick="removedCheckedAddress();" tabindex="23"/>
                                                                 <label class="labelStylereq" >State</label>        
                                                                 <s:select cssClass="form-control SelectBoxStyles" id="consult_State" name="consult_State" value="%{consultantVTO.consult_State}"   headerKey="" headerValue="Select state"   list="permanentState" onchange="StateChangeValidation()"  tabindex="24"/>  <%-- onchange="alert(this.options[this.selectedIndex].innerHTML)" --%>
                                                             </span>  
@@ -316,21 +320,21 @@
                                                             <center>
                                                                 <table>
                                                                     <s:checkbox label="Same as Permanent Address" name="consult_checkAddress" tabindex="26"  id="consult_checkAddress" value="%{consultantVTO.address_flag}" onclick="sameAsAddress();"   ></s:checkbox>
-                                                                    <span><j2></j2></span>
+                                                                        <span><j2></j2></span>
 
-                                                                </table>
-                                                            </center>
-                                                            <label class="labelStylereq" >Address</label>   
+                                                                    </table>
+                                                                </center>
+                                                                <label class="labelStylereq" >Address</label>   
                                                             <s:textfield cssClass="form-control" value="%{consultantVTO.consult_CAddress}" id="consult_CAddress" placeholder="Address" name="consult_CAddress" oninvalid="setCustomValidity('Must be valid fn')"   onchange="try{setCustomValidity('')}catch(e){}" onkeyup="pCAddressValidation()" maxlength="100" tabindex="27"/>
                                                             <label class="labelStylereq" >Address2</label>    
                                                             <s:textfield cssClass="form-control" value="%{consultantVTO.consult_CAddress2}" id="consult_CAddress2" placeholder="Address2" name="consult_CAddress2"  maxlength="100" tabindex="28"/>
                                                             <span class="required">
                                                                 <label class="labelStylereq" >City</label>    
-                                                                <s:textfield cssClass="form-control" value="%{consultantVTO.consult_CCity}" id="consult_CCity" placeholder="City" name="consult_CCity" required="true" oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}"  onchange="try{setCustomValidity('')}catch(e){}" onkeyup="pCCityValidation()" maxlength="20" tabindex="29"/>
+                                                                <s:textfield cssClass="form-control" value="%{consultantVTO.consult_CCity}" id="consult_CCity" placeholder="City" name="consult_CCity"  oninvalid="setCustomValidity('Must be valid fn')" pattern="[a-zA-Z]{3,}"  onchange="try{setCustomValidity('')}catch(e){}" onkeyup="pCCityValidation()" maxlength="20" tabindex="29"/>
                                                                 <%-- <s:select cssClass="form-control SelectBoxStyles" name="consult_CCountry" id="consult_CCountry" label="Country" headerKey="" headerValue="Select Country" list="consult_CCountry" onchange="ConsultantStateChange()" tabindex="1"/>
                                                                 <s:select cssClass="form-control SelectBoxStyles" label="State" id="consult_CState" name="consult_CState"    headerKey="" headerValue="Select state" list="{'Relocation','Travel'}" /> --%>
                                                                 <label class="labelStylereq" >Country</label>    
-                                                                <s:select cssClass="form-control SelectBoxStyles"  value="%{consultantVTO.consult_CCountry}" list="country" id="consult_CCountry" name="consult_CCountry" required="true"  onchange="ConsultantCurrentStateChange()"  onkeyup="pCCountryValidation()" tabindex="30"/>
+                                                                <s:select cssClass="form-control SelectBoxStyles"  value="%{consultantVTO.consult_CCountry}" list="country" id="consult_CCountry" name="consult_CCountry"   onchange="ConsultantCurrentStateChange()"  onkeyup="pCCountryValidation()" tabindex="30"/>
                                                                 <label class="labelStylereq" >State</label>     
                                                                 <s:select cssClass="form-control SelectBoxStyles" name="consult_CState" id="consult_CState"  value="%{consultantVTO.consult_CState}"   headerKey="" headerValue="Select  state" list="currentState" onchange="CurrentStateChangeValidation()" tabindex="31" />  <%-- onchange="alert(this.options[this.selectedIndex].innerHTML)" --%>
                                                             </span>   <%--  <s:textfield cssClass="form-control" label="State" value="%{consultantVTO.consult_CState}"  id="consult_CState" name="consult_CState" required="true" onkeyup="pCStateValidation()" />  --%>
@@ -353,13 +357,13 @@
                                                         <div  class="col-sm-4 " >
                                                             <span class="required">
                                                                 <label  class="labelStylereq" >Job Title</label> 
-                                                                <s:textfield cssClass="form-control" name="consult_jobTitle" value="%{consultantVTO.consult_jobTitle}" id="consult_jobTitle" placeholder="Job Title" tabindex="34" required="true" maxlength="30" onkeyup="jobtitleValidate()"/>                                      
+                                                                <s:textfield cssClass="form-control" name="consult_jobTitle" value="%{consultantVTO.consult_jobTitle}" id="consult_jobTitle" placeholder="Job Title" tabindex="34"  maxlength="30" onkeyup="jobtitleValidate()"/>                                      
                                                                 <label  class="labelStylereq" >Industry</label>     
-                                                                <s:select cssClass="form-control SelectBoxStyles " value="%{consultantVTO.consult_industry}" name="consult_industry" id="consult_industry"  headerKey="" headerValue="Select Industry" list="industry" required="true" onchange="industryValidate()" tabindex="37"/>
+                                                                <s:select cssClass="form-control SelectBoxStyles " value="%{consultantVTO.consult_industry}" name="consult_industry" id="consult_industry"  headerKey="" headerValue="Select Industry" list="industry"  onchange="industryValidate()" tabindex="37"/>
                                                             </span> 
                                                             <label class="labelStylereq" >Relocation</label>       
                                                             <s:select cssClass="form-control SelectBoxStyles" value="%{consultantVTO.consult_relocation}" name="consult_relocation" id="consult_relocation" headerKey="-1" headerValue="Select Relocation" list="{'Yes','No'}" onchange="handleSelect(this)" tabindex="40"/>
-                                                           
+
                                                             <label  class="labelStylereq" >Status</label>    
                                                             <s:select cssClass="form-control SelectBoxStyles" value="%{consultantVTO.consult_status}" name="consult_status" id="consult_status" headerKey=""  list="#@java.util.LinkedHashMap@{'Active':'Active','In-Active':'In-Active'}" tabindex="41"/>
 
@@ -367,22 +371,23 @@
                                                         <div class="col-sm-4">      
                                                             <span class="required"> 
                                                                 <label  class="labelStylereq" >Experience</label>     
-                                                                <s:select cssClass="form-control SelectBoxStyles" value="%{consultantVTO.consult_experience}" name="consult_experience" id="consult_experience" headerKey="" headerValue="Select experience" list="experience" required="true" onchange="expValidate()" tabindex="35"/>
+                                                                <s:select cssClass="form-control SelectBoxStyles" value="%{consultantVTO.consult_experience}" name="consult_experience" id="consult_experience" headerKey="" headerValue="Select experience" list="experience"  onchange="expValidate()" tabindex="35"/>
                                                             </span> <%--s:textfield cssClass="form-control" value="%{consultantVTO.consult_workPhone}"  name="consult_workPhone" id="consult_workPhone" label="Work Phone" placeholder="Work Phone " tabindex="1"/--%> 
                                                             <label  class="labelStylereq" >Referred By</label>   
                                                             <s:textfield cssClass="form-control" value="%{consultantVTO.consult_referredBy}" name="consult_referredBy" id="consult_referredBy" placeholder="Referred by"  tabindex="38" maxlength="30"/>
                                                             <label  class="labelStylereq pref_country" >Preferred Country</label>
-                                                            <s:select cssClass="form-control SelectBoxStyles" value="%{consultantVTO.consult_preferredCountry}"   name="consult_preferredCountry" id="consult_preferredCountry"  headerKey="-1" headerValue="Select Country" list="country" onchange="AddConsultantEditPreferredStateChange()"  tabindex="3"/>
+                                                            <s:select cssClass="form-control SelectBoxStyles" value="%{consultantVTO.consult_preferredCountry}"   name="consult_preferredCountry" id="consult_preferredCountry"  headerKey="-1" headerValue="Select Country" list="country" onchange=""  tabindex="3"/>
 
                                                         </div>
                                                         <div class="col-sm-4">  
                                                             <span class="required">
                                                                 <label  class="labelStylereq" >Working Country</label>    
-                                                                <s:select cssClass="form-control SelectBoxStyles" value="%{consultantVTO.consult_wcountry}"  name="consult_wcountry" id="consult_wcountry"  headerKey="" headerValue="Select Country" list="country" tabindex="36" required="true" onchange="workingCountryValidate()"/>
+                                                                <s:select cssClass="form-control SelectBoxStyles" value="%{consultantVTO.consult_wcountry}"  name="consult_wcountry" id="consult_wcountry"  headerKey="" headerValue="Select Country" list="country" tabindex="36"  onchange="workingCountryValidate()"/>
                                                             </span>
                                                             <label  class="labelStylereq" >Rate/Salary</label>
                                                             <s:textfield cssClass="form-control" value="%{consultantVTO.consult_salary}" name="consult_salary" id="consult_salary" placeholder="Rate/Salary" tabindex="39" maxlength="10"/>
-
+                                                            <label class="labelStylereq pref_region" >Preferred Region</label>       
+                                                            <s:select cssClass="form-control SelectBoxStyles" value="%{consultantVTO.consult_preferredRegion}" name="consult_preferredRegion " id="consult_preferredRegion"  headerKey="-1" headerValue="Select preferred region" list="regionName" onchange="AddConsultantEditPreferredStateChange()" tabindex="5"/>
                                                             <label  class="labelStylereq pref_state" >Preferred State</label>
                                                             <s:select cssClass="" value="%{consultantVTO.consult_preferredState}"  name="consult_preferredState" multiple="true" id="consult_preferredState"     headerKey="-1" headerValue="Select preferred state" list="preState" tabindex="3"/>
                                                             <s:hidden  id="PrefstateValues" name="PrefstateValues" />
@@ -406,9 +411,13 @@
                                                 </s:if>
                                                 <br/>      
                                                 <div class="row"></div>
+                                                <div class="col-sm-4 required">
+                                                    <label  class="labelStylereq" style="margin:-0px;">Primary Skill</label>
+                                                    <s:select cssClass="form-control SelectBoxStyles" name="primarySkillValue"  tabindex="30" id="primarySkillValue" list="reqCategory" value="%{consultantVTO.consultPrimarySkill}" onchange="AddConsultantSkillChange();"/> 
+                                                </div>
                                                 <div class="col-sm-6">
 
-                                                    <label  class="labelStylereq" style="margin-left:10px;">Skills</label>
+                                                    <label  class="labelStylereq skills" style="margin-left:10px;">Skills</label>
 
 
                                                     <s:select cssClass="commentsStyle" name="skillCategoryValueList"  id="skillCategoryValue" list="skillValuesMap" multiple="true" onfocus="clearErrosMsgForGrouping()" value="%{consultantVTO.skillSetList}" tabindex="42"/> 
@@ -436,9 +445,9 @@
                                                     <div class="col-lg-12 " >
                                                         <div class="col-lg-10"></div>
                                                         <div class="col-sm-4 pull-right ">
-                                                            <s:submit type="button" cssStyle="margin:12px;" name="savetask" cssClass="cssbutton" onclick="return ConsultDetails_valid()"  value="" tabindex="44"><i class="fa fa-plus-square"></i>&nbsp;Save</s:submit>
+                                                            <s:submit type="button" cssStyle="margin:12px;" name="savetask" cssClass="cssbutton" onclick="return ConsultDetails_valid()"  value="" tabindex="44"><i class="fa fa-refresh"></i>&nbsp;Update</s:submit>
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                 </s:else>
 
 
@@ -497,9 +506,9 @@
                                                 <span class="successInforesult"><securityinfo id="successInfo"></securityinfo></span>
                                                 <div id="profileBox1"><center>
                                                         <table>
-                                                            <s:textfield cssClass="form-control" id="consult_pan" label="SSN/PAN" maxLength="10" required="true"   placeholder="ABCde1234F/123-12-1234" onkeyup="consult_panValidation()" />
-                                                            <s:textfield cssClass="form-control" id="consult_panname" label="Name on PAN" maxLength="40" required="true"   placeholder="Ex.John" onkeyup="consult_nameValidation()"/>
-                                                            <s:textfield cssClass="form-control" id="consult_bank" label="Bank Name" required="true"  maxLength="20" placeholder="Ex.SBI/kvb" onkeyup="consult_banknameValidation()"/>
+                                                            <s:textfield cssClass="form-control" id="consult_pan" label="SSN/PAN" maxLength="10"    placeholder="ABCde1234F/123-12-1234" onkeyup="consult_panValidation()" />
+                                                            <s:textfield cssClass="form-control" id="consult_panname" label="Name on PAN" maxLength="40"   placeholder="Ex.John" onkeyup="consult_nameValidation()"/>
+                                                            <s:textfield cssClass="form-control" id="consult_bank" label="Bank Name"   maxLength="20" placeholder="Ex.SBI/kvb" onkeyup="consult_banknameValidation()"/>
                                                             <s:textfield cssClass="form-control" id="consult_banknum" label="Bank A/C No." required="true"  maxLength="20" placeholder="Ex.A1234d567891234567" onkeyup="consult_banAccknumValidation()"/>
                                                             <s:textfield cssClass="form-control" id="consult_hname" label="A/C H.Name" required="true"  maxLength="25" placeholder="Ex.John" onkeyup="consult_holdnameValidation()"/>
                                                         </table></center></div>
@@ -616,9 +625,9 @@
 %>
                                             <tr>
 
-                                               
+
                                                 <td>
-                                                    
+
                                                     <a onclick="populateActivityOverlay('<%=activity_id%>')" href="#" class="ActivityEdit_popup_open">
                                                         <%=activity_id%>
                                                     </a>
@@ -656,9 +665,9 @@
                                     </s:form>
                                     <div id="pageNavPosition" align="right" style="margin-right: 0vw"></div>
                                     <script type="text/javascript">
-                                        var pager = new Pager('consult_activity', 4); 
-                                        pager.init(); 
-                                        pager.showPageNav('pager', 'pageNavPosition'); 
+                                        var pager = new Pager('consult_activity', 4);
+                                        pager.init();
+                                        pager.showPageNav('pager', 'pageNavPosition');
                                         pager.showPage(1);
                                     </script>
                                     </table> 
@@ -727,16 +736,18 @@
                             <%-- activity tab ends --%>
                             <%-- attachment tab starts --%>
                             <div class="tab-pane fade " id="consult_attach" onclick="getConsultantAttachments.action"   >
-                                    <div id="loadingConsultantResumes" class="loadingImg">
-                                                <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
-                                            </div>
+                                <div id="loadingConsultantResumes" class="loadingImg">
+                                    <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
+                                </div>
                                 <div id="consultAttachment_popup">
                                     <div id="taskAttachOverlay">
 
                                         <div class="overlayOrButton_color">
                                             <table>
                                                 <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Add Resume&nbsp;&nbsp; </font></h4></td>
-                                                <span class=" pull-right"><h5><a id="consultAttachPopUpId" href="" class="consultAttachment_popup_close" onclick="attachPopJs();showAttachmentDetails('<%= request.getParameter("consult_id")%>');msgclr()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
+                                                <span class=" pull-right"><h5><a id="consultAttachPopUpId" href="" class="consultAttachment_popup_close" onclick="attachPopJs();
+                                                    showAttachmentDetails('<%= request.getParameter("consult_id")%>');
+                                                    msgclr()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
                                             </table>
                                         </div>
                                         <div>
@@ -748,14 +759,14 @@
                                                         <s:hidden name="downloadFlag" id="downloadFlag" value="%{downloadFlag}"/>
                                                         <s:hidden name="consultFlag" id="consultFlag" value="%{consultFlag}"/>
                                                         <s:hidden id="consult_id" name="consult_id" value="%{consult_id}"/>
-                                                        <s:file name="consultAttachment" id="consultAttachment"/>
+                                                        <s:file name="consultAttachment" id="consultAttachment" onchange="return resumeAddValidation();"/>
                                                     </div>
                                                     <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
                                                     <center><s:submit  id="consultAttachUpload" type="button" cssClass="cssbutton fa fa-upload" value="Upload" theme="simple" onclick="return editResumeValidation(); msgclr()" /></center><br>
                                                 </div> 
 
                                             </div>
-                                                <s:token />
+                                            <s:token />
                                         </s:form>
                                     </div>
                                 </div>
@@ -771,9 +782,9 @@
                                         </s:if> 
                                     <table id="consult-attach_pagenav" class="CSSTable_task  responsive"  >
                                         <tr>
-                                            <th>Attachment</th>
+                                            <th>Attachment&nbsp;Name</th>
 
-                                            <th>Location</th>
+                                            <!--<th>Location</th>-->
                                             <th>Date Of Attachment</th>
                                             <th>Download Link</th>
                                             <th>Status</th>
@@ -865,13 +876,13 @@
     </div>
 </footer><!--/Footer-->
 <script type="text/javascript">
-           
+
     var cpager = new Pager('consult-attach_pagenav', 10);
     //  alert("-------->in jsp");
-    cpager.init();     
-    cpager.showPageNav('cpager', 'cattach_pageNavPosition'); 
+    cpager.init();
+    cpager.showPageNav('cpager', 'cattach_pageNavPosition');
     cpager.showPage(1);
-           
+
 </script>
 <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
@@ -881,56 +892,55 @@
 <script>
     $(document).ready(function() {
         $('#skillCategoryValue').selectivity({
-                    
             multiple: true,
             placeholder: 'Type to search skills'
         });
     });
-            
+
 </script>
 <script type="text/javascript">
-      
+
     $("#consult_mobileNo").mask("(999)-999-9999");
     $("#consult_workPhone").mask("(999)-999-9999");
     $("#consult_Phone").mask("(999)-999-9999");
     $("#consult_CPhone").mask("(999)-999-9999");
     $("#consult_homePhone").mask("(999)-999-9999");
-              
-    
-     
+
+
+
 </script>
 <script type="text/javascript">
-    var flag=document.getElementById("downloadFlag").value;
+    var flag = document.getElementById("downloadFlag").value;
     //alert(flag);
-    if(flag=="noResume"||flag=="noFile")
+    if (flag == "noResume" || flag == "noFile")
     {
         //alert("in if");
-        var consult_id=document.getElementById('consult_id').value;
+        var consult_id = document.getElementById('consult_id').value;
         //alert(consult_id);
         showAttachmentDetails(consult_id);
-        document.getElementById('attachLi').className='active active_details';
-        document.getElementById('consult_attach').className='tab-pane fade in active  ';
-        document.getElementById('Consultant').className='tab-pane fade ';
+        document.getElementById('attachLi').className = 'active active_details';
+        document.getElementById('consult_attach').className = 'tab-pane fade in active  ';
+        document.getElementById('Consultant').className = 'tab-pane fade ';
         cheadingMessage(c_attach);
         //window.location = '../consultant/getConsultantAttachments.action?consult_id='+consult_id;
         // javascript: ajaxReplaceDiv('/getConsultantAttachments','#consult_attach','consult_id='+consult_id);
-       
-        
+
+
     }
     else
     {
-        document.getElementById('consultantLi').className='active';
-         
+        document.getElementById('consultantLi').className = 'active';
+
     }
-    
-    function handleSelect(a)    
+
+    function handleSelect(a)
     {
-            
-        if(a.value=='Yes')
+
+        if (a.value == 'Yes')
         {
             $("#consult_preferredCountry").show();
             $(".pref_country").show();
-            $("#consult_preferredCountry").val('-1');    
+            $("#consult_preferredCountry").val('-1');
         }
         else
         {
@@ -941,7 +951,7 @@
             $("#PrefstateValues").val('');
         }
     }
-    if($("#consult_relocation").val()=='Yes')
+    if ($("#consult_relocation").val() == 'Yes')
     {
         $("#consult_pcountry").show();
         $(".pref_country").show();
@@ -955,10 +965,9 @@
         $("#PrefstateValues").val('');
     }
     $('#consult_preferredState').selectivity({
-            
         multiple: true,
         placeholder: 'Type to search Categories'
-                   
+
     });
 </script>
 
@@ -967,26 +976,30 @@
 
 
 <script type="text/javascript">
-    var recordPage=10;
-    function con_pagerOption(){
+    var recordPage = 10;
+    function con_pagerOption() {
 
         var paginationSize = document.getElementById("con_paginationOption").value;
-        if(isNaN(paginationSize))
+        if (isNaN(paginationSize))
         {
-                       
-        }
-        recordPage=paginationSize;
-        // alert(recordPage)
-        $('#consult-attach_pagenav').tablePaginate({navigateType:'navigator'},recordPage);
 
-    };
-    $('#consult-attach_pagenav').tablePaginate({navigateType:'navigator'},recordPage);
+        }
+        recordPage = paginationSize;
+        // alert(recordPage)
+        $('#consult-attach_pagenav').tablePaginate({navigateType: 'navigator'}, recordPage);
+
+    }
+    ;
+    $('#consult-attach_pagenav').tablePaginate({navigateType: 'navigator'}, recordPage);
 </script>
 
 <script>
-    setTimeout(function(){              
+    setTimeout(function() {
         $('#resume').remove();
-    },3000);
+    }, 3000);
+</script>
+<script>
+    $("#fadeout_message").show().delay(5000).fadeOut();
 </script>
 
 <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>

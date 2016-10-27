@@ -619,7 +619,7 @@ public class DateUtility {
 
     public String convertToviewFormatInDashWithTime(String dateString) {
         SimpleDateFormat sdfInput = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat sdfOutput = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+        SimpleDateFormat sdfOutput = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
         java.util.Date date = null;
         try {
             date = sdfInput.parse(dateString);

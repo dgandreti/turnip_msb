@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 /**
  * *****************************************************************************
@@ -32,6 +34,7 @@ import java.util.Map;
  */
 public class InvoiceServiceImpl implements InvoiceService {
 
+    private static Logger log = Logger.getLogger(InvoiceServiceImpl.class);
     Connection connection = null;
     CallableStatement callableStatement = null;
     PreparedStatement preparedStatement = null;
@@ -42,14 +45,13 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     public List getInvoiceDetails(InvoiceAction invoiceAction, String typeOfUser) throws ServiceLocatorException {
 
+        log.info("********************InvoiceServiceImpl :: getInvoiceDetails Method Start*********************");
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-
-        System.out.println("********************InvoiceServiceImpl :: getInvoiceDetails Method Start*********************");
+        
         ArrayList<InvoiceVTO> listVto = new ArrayList<InvoiceVTO>();
-
 
         String sqlquery = "";
         try {
@@ -66,7 +68,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                         + "LEFT OUTER JOIN accounts acc ON (inv.frm_orgid=acc.account_id) WHERE  inv.custorg_id=" + invoiceAction.getSessionOrgId() + " and invoiceyear=" + invoiceAction.getInvoiceYear() + " and invoicestatus !='Created' ";
             }
             sqlquery += " order by NAMES limit 100 ";
-            System.out.println("getInvoiceDetails :: query string ------>" + sqlquery);
+            log.info("getInvoiceDetails :: query string ------>" + sqlquery);
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sqlquery);
@@ -83,6 +85,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 listVto.add(ivto);
             }
         } catch (SQLException ex) {
+            log.log(Level.ERROR, "Exception in getInvoiceDetails : " + ex);
             listVto = null;
             ex.printStackTrace();
         } finally {
@@ -111,7 +114,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 }
             }
         }
-        System.out.println("********************InvoiceServiceImpl :: getInvoiceDetails Method End*********************");
+        log.info("********************InvoiceServiceImpl :: getInvoiceDetails Method End*********************");
         return listVto;
     }
 

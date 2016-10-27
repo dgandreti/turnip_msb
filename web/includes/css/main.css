@@ -10,10 +10,18 @@ html, body {height: 97%;}
          height: 50px;
          clear:both;} 
 
+.required_label:after{
+    content:" *";
+    color: red;
+}
+
 #InvoiceGenerationOverlay_popup{
     width:41%;
 }
 
+#description_feedback{
+    color:green;
+}
 #vendorAssoEdit_popup{
     min-width:302px;
 }
@@ -25,12 +33,12 @@ html, body {height: 97%;}
     font-size: 15px !important;
     color:#45b5de;
     margin-left:2px;
- 
+
 }
 
 .no_gutter{
-   padding:0;
- 
+    padding:0;
+
 }
 
 
@@ -38,7 +46,7 @@ html, body {height: 97%;}
     padding:13px;
 }
 #costCenterBudget_popup{  
-  width:50%;  
+    width:50%;  
 }
 
 .opts{
@@ -56,7 +64,6 @@ html, body {height: 97%;}
 body {
     font-family: 'Roboto', sans-serif !important;
     position: relative;
-    font-weight:400px;
     /*background-color:#ededed;*/
     background-color: #FFFFFF;
 }
@@ -591,16 +598,16 @@ ul.sub-menu {
 
 @-webkit-keyframes fadeInUp {
     0% {
-    opacity: 0;
-    -webkit-transform: translateY(20px);
-    transform: translateY(20px);
-}
+        opacity: 0;
+        -webkit-transform: translateY(20px);
+        transform: translateY(20px);
+    }
 
-100% {
-    opacity: 1;
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-}
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
 }
 
 /*************************
@@ -3247,7 +3254,7 @@ select::-ms-expand {
     margin-top: 18px;
     padding: 7px 15px;
     margin: 4px 0px;
-    
+
 }
 
 .cssbutton_update{
@@ -3767,11 +3774,11 @@ div#SOWBox {
 #footer a.btn-linkedin:hover {
     color: #21a6d8;
 }
-.pull-left
+/*.pull-left
 {
     color: white;
     padding-left: 30px;
-}
+}*/
 #footer_bottom .pull-right {
 
     padding-right: 30px;

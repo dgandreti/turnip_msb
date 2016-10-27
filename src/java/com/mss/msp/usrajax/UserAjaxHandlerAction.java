@@ -556,7 +556,8 @@ public class UserAjaxHandlerAction extends ActionSupport implements ServletReque
         try {
             System.out.println("********************UserAjaxHandlerAction :: getEmployeeDetails Method Start*********************");
             setSessionOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
-            responseString = ServiceLocator.getUserAjaxHandlerService().getEmployeeDetails(this);
+            String typeofusr = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
+            responseString = ServiceLocator.getUserAjaxHandlerService().getEmployeeDetails(this,typeofusr);
             httpServletResponse.setContentType("text/xml");
             httpServletResponse.getWriter().write(responseString);
         } catch (IOException ioe) {

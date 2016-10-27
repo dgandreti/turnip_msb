@@ -63,7 +63,7 @@ public class DownloadAction implements Action, ServletRequestAware, ServletRespo
     private String resultType;
     private String downloadFlag;
     private int taskid;
-
+    private String myTask;
     /**
      * Creates a new instance of DownloadAction
      */
@@ -169,6 +169,14 @@ this.httpServletResponse = httpServletResponse;
 
     public void setTaskid(int taskid) {
         this.taskid = taskid;
+    }
+
+    public String getMyTask() {
+        return myTask;
+    }
+
+    public void setMyTask(String myTask) {
+        this.myTask = myTask;
     }
     
 }

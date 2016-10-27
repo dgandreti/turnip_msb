@@ -70,14 +70,14 @@
         }
         else {
             if (difference == -1) {
-                $("searchSubProject").html(" <b><font color='red'>Select start date!</font></b>");
+                $("searchSubProject").html(" <font color='red'>Select start date!</font>");
                 $("#projectStartDateSearch").css("border", "1px solid red");
             }
             else if (difference == -2) {
-                $("searchSubProject").html(" <b><font color='red'>Select target date!</font></b>");
+                $("searchSubProject").html(" <font color='red'>Select target date!</font>");
                 $("#projectTargetDateSearch").css("border", "1px solid red");
             } else {
-                $("searchSubProject").html(" <b><font color='red'>Start date must be less than target date!</font></b>");
+                $("searchSubProject").html(" <font color='red'>Start date must be less than target date!</font>");
                 $("#projectStartDateSearch").css("border", "1px solid red");
                 $("#projectTargetDateSearch").css("border", "1px solid red");
             }
@@ -91,7 +91,7 @@
     function checkSubProjectName(projName) {
         if (projName.replace(/\s/g, '') == "")
         {
-            $("#addProjectValidation").html(" <b><font color='red'>Enter Project name</font></b>");
+            $("#addProjectValidation").html(" <font color='red'>Enter Project name</font>");
             return false;
         }
         var mainProjectId = $("#parentProjectId").val();
@@ -100,7 +100,7 @@
             success: function(data) {
 
                 if (data == "true") {
-                    $("#addProjectValidation").html("<font color='red'><b>Project name exists!</b></font>");
+                    $("#addProjectValidation").html("<font color='red'>Project name exists!</font>");
                     document.getElementById("projectNamePopup").value = "";
                     $("#projectNamePopup").focus();
                 }
@@ -129,8 +129,8 @@
                             <font color="#ffffff">&nbsp;Resources&nbsp;Of&nbsp;Sub-Project&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</font>
 
                         </h4></td>
-                <span class=" pull-right"><h5><a href="" id="resOverlayCloseButton" class="resourceOverlay_popup_close" onclick="showResourceTeamOverlayClose();
-        pagerOption();"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
+            <td style="">    <span class=" pull-right"><h5><a href="" id="resOverlayCloseButton" class="resourceOverlay_popup_close" onclick="showResourceTeamOverlayClose();
+                pagerOption();"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span></td></tr>
             </table>
         </div>
         <div style="margin: 10px">
@@ -302,20 +302,20 @@
 
                     <div class="col-sm-3">
                         <label >Skill&nbsp;Set </label>
-                        <s:textfield cssClass="form-control" id="projectReqSkillSet" type="text"  placeholder="Skill Set" maxLength="100" tabindex="1"/>
+                        <s:textfield cssClass="form-control" name="projectReqSkillSet" id="projectReqSkillSet" type="text"  placeholder="Skill Set" maxLength="100" tabindex="1"/>
 
                     </div>
                     <div class="col-sm-3">
                         <label >Project&nbsp;Name </label>
-                        <s:textfield  cssClass="form-control" id="projectName" type="text" placeholder="Project Name" maxLength="30" tabindex="1"/>
+                        <s:textfield  cssClass="form-control" name="projectName" id="projectName" type="text" placeholder="Project Name" maxLength="30" tabindex="1"/>
                     </div>
                     <div class="col-sm-3">
                         <label >Start&nbsp;Date </label>
-                        <div class="calImage"> <s:textfield cssClass="form-control" id="projectStartDateSearch" type="text" placeholder="Project Start Date"  onkeypress=" return subProjectDaterepository();" autocomplete="off" tabindex="3"><i  class="fa fa-calendar"></i></s:textfield>
+                        <div class="calImage"> <s:textfield cssClass="form-control" name="projectStartDate" id="projectStartDateSearch" type="text" placeholder="Project Start Date"  onkeypress=" return subProjectDaterepository();" autocomplete="off" tabindex="3"><i  class="fa fa-calendar"></i></s:textfield>
                             </div></div>
                         <div class="col-sm-3">
                             <label >Target&nbsp;Date </label>
-                            <div class="calImage"><s:textfield cssClass="form-control" id="projectTargetDateSearch" type="text" placeholder="Project Target Date"  onkeypress=" return subProjectDaterepository();" autocomplete="off" tabindex="4"><i  class="fa fa-calendar"></i></s:textfield>
+                            <div class="calImage"><s:textfield cssClass="form-control" name="projectTargetDate" id="projectTargetDateSearch" type="text" placeholder="Project Target Date"  onkeypress=" return subProjectDaterepository();" autocomplete="off" tabindex="4"><i  class="fa fa-calendar"></i></s:textfield>
                             </div></div>
 
 

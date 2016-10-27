@@ -64,7 +64,7 @@
 
         </style>
     </head>
-    <body style="overflow-x: hidden" onload="doOnLoad(); techReview();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="doOnLoad(); techReview();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -165,6 +165,7 @@
                                                                         <s:url id="myUrl" action="getConsultantDetails.action?consultFlag=customer&techReviewFlag=techReview&customerFlag=customer">
                                                                             <s:param name="consult_id" value="%{consult_id}" />
                                                                             <s:param name="vendorcomments" value="%{vendorcomments}"/>
+                                                                            <s:param name="requirementId" value="%{requirementId}"/>
                                                                         </s:url>
                                                                         <tr>
                                                                             <td><s:a href='%{#myUrl}'><s:property value="%{consult_name}"></s:property></s:a></td>
@@ -374,7 +375,7 @@
                                                     </div>
                                                 </div>
                                             </span> 
-                                            <div class="required" id="notesDiv">
+                                            <div class="" id="notesDiv">
                                                 <label class="headingLabel">Notes:</label>
 
                                                 <div id="reviewalignBox">
@@ -394,7 +395,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="required" id="loctionDiv">
+                                            <div class="" id="loctionDiv">
                                                 <label class="headingLabel">Location:</label>
 
                                                 <div id="reviewalignBox">

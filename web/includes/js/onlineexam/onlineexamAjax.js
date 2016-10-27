@@ -44,7 +44,7 @@ function getQuestion(questionNumber,answer1,answer2,answer3,answer4,answer5,answ
     var req = newXMLHttpRequest();
     req.onreadystatechange = readyStateHandlerXml(req, populateQuestions);
     //  url = CONTENXT_PATH+"/getQuestion.action?questionNo="+questionNumber+"&selectedAns="+selectedAns+"&navigation="+navigation+"&onClickStatus="+onClickStatus+"&remainingQuestions="+remainingQuestions+"&random="+Math.random()+"&subTopicId="+subtopicId;
-    url = "MSB/getQuestion.action?questionNo="+questionNumber+"&answer1="+answer1+"&answer2="+answer2+"&answer3="+answer3+"&answer4="+answer4+"&answer5="+answer5+"&answer6="+answer6+"&navigation="+navigation+"&onClickStatus="+onClickStatus+"&remainingQuestions="+remainingQuestions+"&random="+Math.random()+"&subTopicId="+subtopicId+"&specficQuestionNo="+specficQuestion+"&examId="+examId;
+    url = CONTENXT_PATH+"/getQuestion.action?questionNo="+questionNumber+"&answer1="+answer1+"&answer2="+answer2+"&answer3="+answer3+"&answer4="+answer4+"&answer5="+answer5+"&answer6="+answer6+"&navigation="+navigation+"&onClickStatus="+onClickStatus+"&remainingQuestions="+remainingQuestions+"&random="+Math.random()+"&subTopicId="+subtopicId+"&specficQuestionNo="+specficQuestion+"&examId="+examId;
     //alert("url----->"+url);
 
     req.open("GET",url,"true");    
@@ -93,7 +93,7 @@ function populateQuestions(resXML) {
     var oldChild=document.getElementById("questionPath").lastChild;
 
          var myImage = document.createElement("img");
-myImage.src = "/MSB/renderImage/rImage.action?path="+questionImage+"";
+myImage.src = CONTENXT_PATH+"/renderImage/rImage.action?path="+questionImage+"";
 myImage.className="img-responsive";
 document.getElementById("questionPath").replaceChild(myImage, oldChild);
 document.getElementById("questionPath").style.display="block"; 
@@ -445,5 +445,134 @@ function populateSkillsOnChange(data){
             $('<option>').val(Values[0]).text(Values[1]).appendTo($select); 
         }
     }
+    }
+}
+function submitQuestionData()
+{
+    
+  
+    var option1=$("#option1").val();  
+    var option2=$("#option2").val();  
+    var option3=$("#option3").val(); 
+    var option4=$("#option4").val(); 
+    var option5=$("#option5").val(); 
+    var option6=$("#option6").val(); 
+    var ansType=$("#answerType").val(); 
+    var optionCount=0;
+    var ansCount=0;
+    
+   
+                
+    
+    if(option1!="")
+    {
+                    
+        optionCount=1; 
+    }
+    if(option2!="")
+    {
+                    
+        optionCount=2; 
+    }
+    if(option3!="")
+    {
+                    
+        optionCount=3; 
+    }
+    if(option4!="")
+    {
+        optionCount=4; 
+    }
+    if(option5!="")
+    {
+        optionCount=5; 
+    }
+    if(option6!="")
+    {
+        optionCount=6; 
+    }
+    
+    if(ansType=='S'){
+        var ans1=$('input:radio[name=answer ]:checked').val();
+       
+        if(ans1 == "Answer1")
+        {
+            ansCount=1; 
+        }
+        if(ans1 == "Answer2")
+        {
+            ansCount=2; 
+        }
+        if(ans1 == "Answer3")
+        {
+            ansCount=3; 
+        }
+        if(ans1 == "Answer4")
+        {
+            ansCount=4; 
+        }
+        if(ans1 == "Answer5")
+        {
+            ansCount=5; 
+        }
+        if(ans1 == "Answer6")
+        {
+            ansCount=6; 
+        }
+      
+        if(ansCount>optionCount)
+        {
+            $("#formValidationMsg").html("<font color='red'>Please select Proper answers for given options </font>");
+                 
+            return false;     
+        }
+        else
+        {
+            return true;       
+        }
+    }
+    else
+    {
+        var ans1=document.getElementById('ans1'); 
+        var ans2=document.getElementById('ans2'); 
+        var ans3=document.getElementById('ans3'); 
+        var ans4=document.getElementById('ans4'); 
+        var ans5=document.getElementById('ans5'); 
+        var ans6=document.getElementById('ans6'); 
+        if(ans1.checked == true)
+        {
+            ansCount=1; 
+        }
+        if(ans2.checked == true)
+        {
+            ansCount=2; 
+        }
+        if(ans3.checked == true)
+        {
+            ansCount=3; 
+        }
+        if(ans4.checked == true)
+        {
+            ansCount=4; 
+        }
+        if(ans5.checked == true)
+        {
+            ansCount=5; 
+        }
+        if(ans6.checked == true)
+        {
+            ansCount=6; 
+        }
+       
+        if(ansCount>optionCount)
+        {
+            $("#formValidationMsg").html("<font color='red'>Please select Proper answers for given options </font>");
+                 
+            return false;     
+        }
+         else
+        {
+            return true;       
+        }
     }
 }

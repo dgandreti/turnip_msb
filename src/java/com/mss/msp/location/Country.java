@@ -62,12 +62,14 @@ public class Country {
   }
 
   public void setId(Integer id) {
+      System.out.println("Country-->setId(int)"+id);
     this.id = id;
   }
 
    public void setId(String id)
    {
-     if(id != null && ! id.equals("") && Integer.parseInt(id) >= 0){
+       System.out.println("Country-->setId(String)"+id);
+     if(id != null && ! id.equals("") && Integer.parseInt(id) >= -1){
        this.id = Integer.parseInt(id);
      }
    }

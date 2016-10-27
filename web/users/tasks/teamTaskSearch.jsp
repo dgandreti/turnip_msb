@@ -176,7 +176,7 @@
 
 
 
-    <body style="overflow-x: hidden" onload="jumper();doOnLoad();onLoad(); init(); getTaskType();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="jumper();doOnLoad();onLoad(); init(); getTaskType();">
      
         <div id="wrap"><header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
@@ -296,6 +296,7 @@
                                                             <s:iterator value="teamtaskDetails">
                                                                 <s:url var="myUrl" action="../tasks/getTaskDetails.action">
                                                                     <s:param name="taskid"><s:property value="task_id"></s:property></s:param>
+                                                                      <s:param name="myTask">teamtaskflag</s:param>
                                                                 </s:url>
                                                                 <tr>
                                                                     <s:hidden id="taskid" name="taskid" value="task_id"/>

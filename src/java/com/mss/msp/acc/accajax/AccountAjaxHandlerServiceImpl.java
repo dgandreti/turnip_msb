@@ -265,7 +265,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
         try {
 
 
-            queryString = "SELECT u.cur_status,u.usr_id,CONCAT(first_name,'.',last_name) AS NAME,u.email1,u.office_phone,r.role_name FROM users u,usr_roles ur ,roles r WHERE u.usr_id=ur.usr_id AND r.role_id=ur.role_id AND u.org_id=" + searchOrgId + " AND type_of_user='" + typeOfAccount + "' AND u.cur_status  LIKE 'Active' ORDER BY NAME LIMIT 100";
+            queryString = "SELECT u.cur_status,u.usr_id,CONCAT(first_name,'.',last_name) AS NAME,u.email1,u.office_phone,r.role_name FROM users u,usr_roles ur ,roles r WHERE u.usr_id=ur.usr_id AND r.role_id=ur.role_id AND u.org_id=" + searchOrgId + " AND type_of_user='" + typeOfAccount + "' AND u.cur_status  LIKE 'Active' ORDER BY u.usr_id DESC LIMIT 100";
 
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
@@ -537,6 +537,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             if (!"DF".equalsIgnoreCase(accountAjaxHandler.getStatus())) {
                 queryString = queryString + " and cur_status = '" + accountAjaxHandler.getStatus() + "' ";
             }
+            queryString = queryString +"  ORDER BY u.usr_id DESC LIMIT 100";
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -1487,7 +1488,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             System.out.println("getAttachmentDetails in service Impl------------->");
 
             //queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity,acc_attachment_id FROM acc_rec_attachment WHERE object_id="+searchOrgId;
-            queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity,acc_attachment_id,attachment_title,comments FROM acc_rec_attachment WHERE object_id=" + searchOrgId;
+            queryString = " SELECT attachment_name,object_type,opp_created_date,opp_created_by,validity,acc_attachment_id,attachment_title,comments FROM acc_rec_attachment WHERE object_id=" + searchOrgId+ " ORDER BY opp_created_date DESC";
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -1613,7 +1614,7 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
             if (!"".equals(accountAjaxHandler.getAttachmentTitle())) {
                 queryString = queryString + " and  attachment_title LIKE '%" + accountAjaxHandler.getAttachmentTitle() + "%' ";
             }
-
+            queryString = queryString + " ORDER BY opp_created_date DESC";
             System.out.println("queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -1628,8 +1629,11 @@ public class AccountAjaxHandlerServiceImpl implements AccountAjaxHandlerService 
 //              resultString += resultSet.getString("attachment_name") + "|"+resultSet.getString("object_type")+"|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("opp_created_date"))
 //                        + "|" +com.mss.msp.util.DataSourceDataProvider.getInstance().getUserNameByUserId(resultSet.getInt("opp_created_by")) + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("validity"))
 //                        + '^';
-                resultString += resultSet.getString("attachment_name") + "|" + resultSet.getString("object_type") + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("opp_created_date"))
-                        + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getUserNameByUserId(resultSet.getInt("opp_created_by")) + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("validity")) + "|" + resultSet.getInt("acc_attachment_id")
+                resultString += resultSet.getString("attachment_name") + "|"
+                        + resultSet.getString("object_type") + "|" 
+                        + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("opp_created_date"))
+                        + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getUserNameByUserId(resultSet.getInt("opp_created_by")) 
+                        + "|" + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("validity")) + "|" + resultSet.getInt("acc_attachment_id")
                         + "|" + resultSet.getString("attachment_title") + "|" + resultSet.getString("comments") + '^';
 
                 System.out.println("---------------->" + resultString);

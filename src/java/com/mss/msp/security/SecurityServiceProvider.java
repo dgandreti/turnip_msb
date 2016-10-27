@@ -128,16 +128,23 @@ public class SecurityServiceProvider {
      * *****************************************************************************
      */
     public static String getEncrypt(String plainText, String salt) {
+        System.out.println(salt+"==----------------------------------------------------------------------------"
+                + "--------------------------"+plainText);
         log.info("************Entered into SecurityServiceProvider :: getEncrypt*********");
         //String salt = "Random";
         MessageDigest messageDigest = null;
         try {
             messageDigest = MessageDigest.getInstance("MD5");
             messageDigest.update((plainText + salt).getBytes());
+            System.out.println(messageDigest.toString()+"==----------------------------beftor that ------------------------------------------------"
+                + "--------------------------"+messageDigest);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        
         String encryptedPassword = (new BigInteger(messageDigest.digest())).toString(16);
+        System.out.println("==----------------------------beftor that ------------------------------------------------"
+                + "--------------------------"+encryptedPassword);
         //System.out.println("Encrypted Password: " + encryptedPassword);
         log.info("************End of SecurityServiceProvider :: getEncrypt*********");
         return encryptedPassword;
@@ -163,6 +170,7 @@ public class SecurityServiceProvider {
         connection = ConnectionProvider.getInstance().getConnection();
         //  String queryString = "SELECT action_name FROM home_redirect_action where org_id=" + orgId + " and type_of_user='" + typeofuser + "' and primaryrole=" + primaryrole + " and status='Active'";
         String queryString = "SELECT action_name, status FROM home_redirect_action where org_id=" + orgId + " and type_of_user='" + typeofuser + "' and primaryrole=" + primaryrole;
+        System.out.println("-----------------------------------------------------"+queryString);
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);

@@ -36,7 +36,7 @@
         <script type="text/javascript" src="<s:url value="/includes/js/general/glinechart.js"/>"></script>
          <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.js"/>"></script>
     </head>
-    <body style="overflow-x: hidden" onload="pagerOption();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="pagerOption();">
         <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->

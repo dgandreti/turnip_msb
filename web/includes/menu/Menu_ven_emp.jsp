@@ -20,7 +20,7 @@
             <div class="panel panel-default left-menu" id="accordian_my">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#homeMenuVenEmp">
+                        <a id="homeVendorEmpLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#homeMenuVenEmp">
                             <i  class="fa fa-home leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Home
@@ -54,7 +54,7 @@
                 <div class="panel panel-default left-menu" id="accordian_services">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordian" href="#dashboardMenuVen">
+                            <a id="dashboardVendorEmpLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#dashboardMenuVen">
                                 <i  class="fa fa-cogs leftBullet"></i>
                                 <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                                 Dashboard
@@ -75,7 +75,7 @@
             <div class="panel panel-default left-menu" id="accordian_services">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#utiltiesMenuVen">
+                        <a id="utilitiesVendorEmpLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#utiltiesMenuVen">
                             <i  class="fa fa-cogs leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Utilities
@@ -94,12 +94,13 @@
                             <s:if test="%{#session['usrgrpid']==1}">
 
                                 <li><a id="requirementsDashboardUtilitiesMenuVen" href="/<%=ApplicationConstants.CONTEXT_PATH%>/recruitment/consultant/getLoginUserRequirementList.action?accountFlag=MyRequirements&orgid=<%=orgId%>&vendor=yes"><img src="<s:url value="/includes/images/icons/requirement.png"/>" height="15" width="15">&nbsp;Requirements</a></li>
+                                <li><a id="requirementsDashboardUtilitiesMenuVen" href="/<%=ApplicationConstants.CONTEXT_PATH%>/Requirements/vendorRatingAndReveiw.action?vendorOrgId=<%=orgId%>"><img src="<s:url value="/includes/images/icons/requirement.png"/>" height="15" width="15">&nbsp;Vendor Reviews</a></li>     
                                     </s:if>
                                     <s:if test="%{#session['usrgrpid']==2}">
                                 <li><a id="allTimesheetsUtilitiesMenuVen" href="/<%=ApplicationConstants.CONTEXT_PATH%>/users/timesheets/getAllTimeSheets.action"><img  src="<s:url value="/includes/images/icons/timesheet_icon.png"/>" height="15" width="15">&nbsp;Time&nbsp;Sheets</a></li>
                                 <li><a id="contractsUtilitiesMenuVen" href="/<%=ApplicationConstants.CONTEXT_PATH%>/sag/sow/getSowList.action"><img src="<s:url value="/includes/images/icons/aggrement.png"/>" height="15" width="15">&nbsp;Contracts</a></li>
                                 <li><a id="invoiceUtilitiesMenuVen" href="/<%=ApplicationConstants.CONTEXT_PATH%>/sag/getInvoice.action"><img src="<s:url value="/includes/images/icons/invoiceImg.png"/>" height="15" width="15">&nbsp;Invoice</a></li>
-                                <li><a id="outStandingUtilitiesMenuVen" href="/<%=ApplicationConstants.CONTEXT_PATH%>/sag/getInvoice.action"><img src="<s:url value="/includes/images/icons/invoiceImg.png"/>" height="15" width="15">&nbsp;Outstanding&nbsp;Invoices</a></li>
+                                <li><a id="outStandingUtilitiesMenuVen" href="/<%=ApplicationConstants.CONTEXT_PATH%>/sag/getOutstandingInvoiceList.action"><img src="<s:url value="/includes/images/icons/invoiceImg.png"/>" height="15" width="15">&nbsp;Outstanding&nbsp;Invoices</a></li>
                                     </s:if>
 
 

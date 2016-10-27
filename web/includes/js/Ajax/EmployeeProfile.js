@@ -137,7 +137,7 @@ function permanentAddressUpdate(userId) //javascript by ramakrishna to update pe
     re = /^[A-Za-z ]+$/;
     if(!re.test(State)||!re.test(Country)||address.length<3||City.length<2||State.length<2||Country.length<2)
     {
-        $("j1").html(" <b><font color='red'>can't update invalid fields are there</font></b>");
+        $("j1").html("<font color='red'>Can't update invalid fields are there</font>");
         $("#spanUpdatep").css('visibility', 'hidden');
         $("#spanUpdatec").css('visibility', 'hidden');
         return false;
@@ -188,7 +188,7 @@ function currentAddressUpdate(userId)//javascript by ramakrishna to update curre
     re = /^[A-Za-z]+$/;
     if(!re.test(State)||!re.test(Country)||address.length<3||City.length<2||State.length<2||Country.length<2)
     {
-        $("j2").html(" <b><font color='red'>can't update invalid fields are there</font></b>");
+        $("j2").html(" <font color='red'>Can't update invalid fields are there</font>");
         //$("#spanUpdatep").css('visibility', 'hidden');
         $("#spanUpdatec").css('visibility', 'hidden');
         return false;
@@ -228,7 +228,7 @@ function paddressValidation(){
     if(Address.length<2)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("j1").html(" <b><font color='red'>must be valid Address</font></b>");
+        $("j1").html(" <font color='red'>Must be valid Address</font>");
         $("#Address").css("border", "1px solid red");
     }
     else
@@ -245,7 +245,7 @@ function pcityValidation(){
     if(City.length<3)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("j1").html(" <b><font color='red'>must be valid City</font></b>");
+        $("j1").html(" <font color='red'>Must be valid City</font>");
         $("#City").css("border", "1px solid red");
     }
     else
@@ -264,7 +264,7 @@ function pStateValidation(){
     if(!re.test(State)||City.length<3)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("j1").html(" <b><font color='red'>must be valid State</font></b>");
+        $("j1").html(" <font color='red'>Must be valid State</font>");
         $("#State").css("border", "1px solid red");
     }
     else
@@ -282,7 +282,7 @@ function pZipValidation(){
     if(Zip.length!=5)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("j1").html(" <b><font color='red'>must be valid Zip</font></b>");
+        $("j1").html(" <font color='red'>Must be valid Zip</font>");
         $("#Zip").css("border", "1px solid red");
     }
     else
@@ -301,7 +301,7 @@ function pCountryValidation(){
     if(!re.test(Country)||Country.length<3)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("j1").html(" <b><font color='red'>must be valid Country</font></b>");
+        $("j1").html(" <font color='red'>Must be valid Country</font>");
         $("#Country").css("border", "1px solid red");
     }
     else
@@ -318,7 +318,7 @@ function pPhoneValidation(){
     if(Phone.length!=14)
     {
         $("#spanUpdatep").css('visibility', 'hidden');
-        $("j1").html(" <b><font color='red'>must be valid Phone</font></b>");
+        $("j1").html(" <font color='red'>Must be valid Phone</font>");
         $("#Phone").css("border", "1px solid red");
     }
     else
@@ -340,7 +340,7 @@ function pCAddressValidation(){
     if(CAddress.length<2)
     {
         $("#spanUpdatec").css('visibility', 'hidden');
-        $("j2").html(" <b><font color='red'>must be valid Address</font></b>");
+        $("j2").html(" <font color='red'>Must be valid Address</font>");
         $("#CAddress").css("border", "1px solid red");
     }
     else
@@ -357,7 +357,7 @@ function pCCityValidation(){
     if(CCity.length<3)
     {
         $("#spanUpdatec").css('visibility', 'hidden');
-        $("j2").html(" <b><font color='red'>must be valid City</font></b>");
+        $("j2").html(" <font color='red'>Must be valid City</font>");
         $("#CCity").css("border", "1px solid red");
     }
     else
@@ -376,7 +376,7 @@ function pCStateValidation(){
     if(!re.test(State)||City.length<3)
     {
         $("#spanUpdatec").css('visibility', 'hidden');
-        $("j2").html(" <b><font color='red'>must be valid State</font></b>");
+        $("j2").html("<font color='red'>Must be valid State</font>");
         $("#CState").css("border", "1px solid red");
     }
     else
@@ -395,7 +395,7 @@ function pCZipValidation(){
     if(Zip.length!=5)
     {
         $("#spanUpdatec").css('visibility', 'hidden');
-        $("j2").html(" <b><font color='red'>must be valid Zip</font></b>");
+        $("j2").html(" <font color='red'>Must be valid Zip</font>");
         $("#CZip").css("border", "1px solid red");
     }
     else
@@ -414,7 +414,7 @@ function pCCountryValidation(){
     if(!re.test(Country)||Country.length<3)
     {
         $("#spanUpdatec").css('visibility', 'hidden');
-        $("j2").html(" <b><font color='red'>must be valid Country</font></b>");
+        $("j2").html(" <font color='red'>Must be valid Country</font>");
         $("#CCountry").css("border", "1px solid red");
     }
     else
@@ -431,7 +431,7 @@ function pCPhoneValidation(){
     if(Phone.length!=14)
     {
         $("#spanUpdatec").css('visibility', 'hidden');
-        $("j2").html(" <b><font color='red'>must be valid Phone</font></b>");
+        $("j2").html(" <font color='red'>must be valid Phone</font>");
         $("#CPhone").css("border", "1px solid red");
     }
     else
@@ -570,7 +570,7 @@ function firstNameValidation(){
     re = /^[A-Za-z]+$/;
     if(!re.test(first_name)||first_name.length<3)
     {
-        $("j").html(" <b><font color='red'>must be valid First Name</font></b>.");
+        $("j").html("<font color='red'>Must be valid First Name</font>.");
         $("#first_name").css("border", "1px solid red");
     }
     else
@@ -588,7 +588,7 @@ function lastNameValidation(){
     var last_name=document.getElementById("last_name").value;
     if(!re.test(last_name)||last_name.length<3)
     {
-        $("j").html(" <b><font color='red'>must be valid Last Name</font></b>.");
+        $("j").html(" <font color='red'>Must be valid Last Name</font>.");
         $("#last_name").css("border", "1px solid red");
     }
     else
@@ -603,7 +603,7 @@ function CountryValidation(){
     
     if(country.length=="")
     {
-        $("j").html(" <b><font color='red'>must be valid working country</font></b>.");
+        $("j").html(" <font color='red'>Must be valid working country</font>.");
         $("#working_country").css("border", "1px solid red");
     }
     else
@@ -619,7 +619,7 @@ function CountryValidation1(){
    
     if(country.length=="")
     {
-        $("j").html(" <b><font color='red'>must be valid living country</font></b>.");
+        $("j").html(" <font color='red'>Must be valid living country</font>.");
         $("#living_country").css("border", "1px solid red");
     }
     else
@@ -638,7 +638,7 @@ function StatusValidation(){
    
     if(status.length=="")
     {
-        $("j").html(" <b><font color='red'>must be valid status</font></b>.");
+        $("j").html(" <font color='red'>Must be valid status</font>.");
         $("#current_status").css("border", "1px solid red");
     }
     else
@@ -656,7 +656,7 @@ function EmailValidation1(){
     re=/[^@]+@[^@]+\.[a-zA-Z]{2,}/;
     if(!re.test(status))
     {
-        $("j").html(" <b><font color='red'>must be valid  corp.email</font></b>.");
+        $("j").html(" <font color='red'>Must be valid  corp.email</font>.");
         $("#email1").css("border", "1px solid red");
     }
     else
@@ -674,7 +674,7 @@ function EmailValidation2(){
    
     if(!re.test(status))
     {
-        $("j").html(" <b><font color='red'>must be valid email</font></b>.");
+        $("j").html(" <font color='red'>Must be valid email</font>.");
         $("#email2").css("border", "1px solid red");
     }
     else
@@ -693,7 +693,7 @@ function phoneValidation(){
    
     if(status.length!=14)
     {
-        $("j").html(" <b><font color='red'>must be valid phone Number</font></b>.");
+        $("j").html(" <font color='red'>Must be valid phone Number</font>.");
         $("#phone1").css("border", "1px solid red");
     }
     else
@@ -849,13 +849,13 @@ function addQualification()
         req.onreadystatechange = function() {
             if (req.readyState == 4) {
                 if (req.status == 200) {
-                    $("errorEduAdd").html(" <b><font color='green'>Record successfully Added</font></b>");
+                    $("errorEduAdd").html(" <font color='green'>Record successfully Added</font>");
                     document.forms["EduAddInfo"].reset();
                     showEducationDetails(userid);
                 } 
                 else
                 {
-                    $("edu").html(" <b><font color='red'>Record not Added</font></b>");
+                    $("edu").html(" <font color='red'>Record not Added</font>");
                 //  alert("Error occured");
                 }
             }
@@ -959,7 +959,7 @@ function editQualificationDetails(){
             //         alert("---->"+req.status);
             if (req.readyState == 4) {
                 if (req.status == 200) {
-                    $("errorEduUpdate").html(" <b><font color='green'>Record successfully Updated.</font></b>");
+                    $("errorEduUpdate").html("<font color='green'>Record successfully Updated.</font>");
 
                     showEducationDetails(userid);
              
@@ -1138,14 +1138,14 @@ function skillrateValid(){
   
     
     if(skill_name=="" || skill_name==null){
-        $("error").html(" <b><font color='red'>Field is Required</font></b>.");
+        $("error").html(" <font color='red'>Field is Required</font>.");
         $("#s_name").css("border","1px solid red");
         return false;
     }
        
     if((skill_rate>10 || skill_rate < 0) || (skill_rate=="" || skill_rate==null) ) 
     {
-        $("error").html(" <b><font color='red'>skillrate must be in between 0 to 10</font></b>.");
+        $("error").html("<font color='red'>skillrate must be in between 0 to 10</font>.");
         $("#s_rate").css("border","1px solid red");
         return false;
     }
@@ -1168,14 +1168,14 @@ function editskillrateValid(){
   
     
     if(skill_name=="" || skill_name==null){
-        $("error").html(" <b><font color='red'>Field is Required</font></b>.");
+        $("error").html(" <font color='red'>Field is Required</font>.");
         $("#skill_name").css("border", "1px solid red");
         return false;
     }
        
     if((skill_rate>10 || skill_rate < 0) || (skill_rate=="" || skill_rate==null) ) 
     {
-        $("error").html(" <b><font color='red'>skillrate must be in between 0 to 10</font></b>.");
+        $("error").html(" <font color='red'>Skillrate must be in between 0 to 10</font>.");
         $("#skill_rate").css("border", "1px solid red");
         return false;
     }
@@ -1207,7 +1207,7 @@ function seteditSkillDetails(){
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 //   location.reload(true);
-                $("EditSkillOverlayResult").html(" <b><font color='Green'>Skill record successfully Updated.</font></b>");
+                $("EditSkillOverlayResult").html(" <font color='Green'>Skill record successfully Updated.</font>");
                
                 showSkillDetails(userid);
                
@@ -1247,7 +1247,7 @@ function addSkills(){
             if (req.readyState == 4) {
                 if (req.status == 200) {
                     //alert("Record Updated Successfully");
-                    $("addSkillOverlayResult").html(" <b><font color='Green'>Skill Record successfully Added.</font></b>.");
+                    $("addSkillOverlayResult").html(" <font color='Green'>Skill Record successfully Added.</font>.");
                     document.forms["skillForm"].reset();
 
                     showSkillDetails(userid);
@@ -1545,7 +1545,7 @@ function addSecurityInfo(){
       
     if(!panpattern.test(pan)||!namepattern.test(panonname)||!bankpattern.test(bank)||!banknumpattern.test(banknum)||!hnamepattern.test(hname)||!ifscpattern.test(ifsc)||!uanpattern.test(uan)||!pfpattern.test(pf)||!passpattern.test(pass)||passportDate=="")
     {
-        $("securityinfo").html(" <b><font color='red'>Can't Save invalid fields</font></b>");
+        $("securityinfo").html(" <font color='red'>Can't Save invalid fields</font>");
         $("#").css('visibility', 'hidden');
         $("#").css('visibility', 'hidden');
         return false;
@@ -1588,7 +1588,7 @@ function panValidation(){
     pattern = /^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$|^\d{3}-\d{2}-\d{4}$/;
    
     if(pancard=="" || pancard==null){
-        $("securityinfo").html("<b><font color='red'>field is required<br></font></b>");
+        $("securityinfo").html("<font color='red'>Field is required<br></font>");
         $("#pan").css("border", "1px solid red");
        
     }
@@ -1596,7 +1596,7 @@ function panValidation(){
     else if(!pattern.test(pancard))
     {
         //alert("hii")
-        $("securityinfo").html(" <b><font color='red'>must be valid pancard number<br>Example:ABCde1234F/123-12-1234</font></b>");
+        $("securityinfo").html(" <font color='red'>must be valid pancard number<br>Example:ABCde1234F/123-12-1234</font>");
         $("#pan").css("border", "1px solid red");
      
     }
@@ -1617,12 +1617,12 @@ function nameValidation(){
     pattern = /^[A-Za-z ]+$/;
     
     if(Name=="" || Name==null){
-        $("securityinfo").html(" <b><font color='red'>field is required</font></b>");
+        $("securityinfo").html(" <font color='red'>field is required</font>");
         $("#name").css("border", "1px solid red");
     }
     else if(!pattern.test(Name))
     {
-        $("securityinfo").html(" <b><font color='red'>must be valid name<br>Example:John</font></b>");
+        $("securityinfo").html(" <font color='red'>must be valid name<br>Example:John</font>");
         $("#name").css("border", "1px solid red");
     }
     else
@@ -1638,12 +1638,12 @@ function banknameValidation(){
     var Bank=document.getElementById("bank").value;
     pattern = /^[A-Za-z ]+$/;
     if(Bank=="" || Bank==null){
-        $("securityinfo").html(" <b><font color='red'>field is required</font></b>");
+        $("securityinfo").html(" <font color='red'>field is required</font>");
         $("#bank").css("border", "1px solid red");
     }
     else if(!pattern.test(Bank))
     {
-        $("securityinfo").html(" <b><font color='red'>must be valid bank name<br>Example:SBI</font></b>");
+        $("securityinfo").html(" <font color='red'>must be valid bank name<br>Example:SBI</font>");
         $("#bank").css("border", "1px solid red");
     }
     else
@@ -1660,12 +1660,12 @@ function banAccknumValidation(){
     //pattern = /^[A-Za-z]{2}[0-9]{16}$/;
     pattern=/^[a-zA-Z0-9](?=[\w.]{10,20}$)\w*\.?\w*$/i;
     if(Banknumber=="" || Banknumber==null){
-        $("securityinfo").html(" <b><font color='red'>field is required</font></b>");
+        $("securityinfo").html(" <font color='red'>field is required</font>");
         $("#banknum").css("border", "1px solid red");
     }
     else if(!pattern.test(Banknumber))
     {
-        $("securityinfo").html(" <b><font color='red'>must be valid Bank Account Number<br>Example:A1234d567891234567</font></b>");
+        $("securityinfo").html(" <font color='red'>must be valid Bank Account Number<br>Example:A1234d567891234567</font>");
         $("#banknum").css("border", "1px solid red");
     }
     else
@@ -1681,12 +1681,12 @@ function b_holdnameValidation(){
     var Holdername=document.getElementById("hname").value;
     pattern = /^[A-Za-z ]+$/;
     if(Holdername=="" || Holdername==null){
-        $("securityinfo").html(" <b><font color='red'>field is required</font></b>");
+        $("securityinfo").html(" <font color='red'>field is required</font>");
         $("#hname").css("border", "1px solid red");
     }
     else if(!pattern.test(Holdername))
     {
-        $("securityinfo").html(" <b><font color='red'>must be valid Account Holder Name<br>Example:John</font></b>");
+        $("securityinfo").html("<font color='red'>must be valid Account Holder Name<br>Example:John</font>");
         $("#hname").css("border", "1px solid red");
     }
     else
@@ -1702,12 +1702,12 @@ function ifscValidation(){
     var IFSC=document.getElementById("ifsc").value;
     pattern = /^[A-Za-z]{4}[0-9]{7}$/;
     if(IFSC=="" || IFSC==null){
-        $("securityinfo").html(" <b><font color='red'>field is required</font></b>");
+        $("securityinfo").html(" <font color='red'>field is required</font>");
         $("#ifsc").css("border", "1px solid red");
     }
     else if(!pattern.test(IFSC))
     {
-        $("securityinfo").html(" <b><font color='red'>must be valid IFSC number<br>Example:ABcd0123456</font></b>");
+        $("securityinfo").html(" <font color='red'>must be valid IFSC number<br>Example:ABcd0123456</font>");
         $("#ifsc").css("border", "1px solid red");
     }
     else
@@ -1723,12 +1723,12 @@ function uanValidation(){
     var UAN=document.getElementById("uan").value;
     pattern = /^[0-9]+$/;
     if(UAN=="" || UAN==null){
-        $("securityinfo").html(" <b><font color='red'>field is required</font></b>");
+        $("securityinfo").html(" <font color='red'>field is required</font>");
         $("#uan").css("border", "1px solid red");
     }
     else if(!pattern.test(UAN))
     {
-        $("securityinfo").html(" <b><font color='red'>must be valid UAN number<br>Example:123456</font></b>");
+        $("securityinfo").html(" <font color='red'>Must be valid UAN number<br>Example:123456</font>");
         $("#uan").css("border", "1px solid red");
     }
     else
@@ -1744,12 +1744,12 @@ function pfValidation(){
     var PF=document.getElementById("pf").value;
     pattern = /^[A-Za-z]{2}-[0-9]{5}-[0-9]{7}$/;
     if(PF=="" || PF==null){
-        $("securityinfo").html(" <b><font color='red'>field is required</font></b>");
+        $("securityinfo").html(" <font color='red'>Field is required</font>");
         $("#pf").css("border", "1px solid red");
     }
     else if(!pattern.test(PF))
     {
-        $("securityinfo").html(" <b><font color='red'>must be valid PF number<br>Example:Ab-12345-1234567</font></b>");
+        $("securityinfo").html(" <font color='red'>Must be valid PF number<br>Example:Ab-12345-1234567</font>");
         $("#pf").css("border", "1px solid red");
     }
     else
@@ -1766,12 +1766,12 @@ function passportnumValidation(){
     //pattern = /^[A-Za-z]{1}[0-9]{7}$/;
     pattern=/^[a-zA-Z0-9](?=[\w.]{7,16}$)\w*\.?\w*$/i;
     if(PASS=="" || PASS==null){
-        $("securityinfo").html(" <b><font color='red'>field is required</font></b>");
+        $("securityinfo").html(" <font color='red'>Field is required</font>");
         $("#pass").css("border", "1px solid red");
     }
     else if(!pattern.test(PASS))
     {
-        $("securityinfo").html(" <b><font color='red'>must be valid passport number<br>Example:A12a3455</font></b>");
+        $("securityinfo").html(" <font color='red'>Must be valid passport number<br>Example:A12a3455</font>");
         $("#pass").css("border", "1px solid red");
     }
     else
@@ -1796,39 +1796,39 @@ function addQualificationValidate(){
   
     
     if(val_qualification=="" || val_qualification==null){
-        $("errorEduAdd").html(" <b><font color='red'>Qualification field is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>Qualification field is Required</font>.");
         $("#val_qualification").css("border", "1px solid red");
         $("#qualification").css("border","1px solid red");
         return false;
     }
     if(val_university=="" || val_university==null){
-        $("errorEduAdd").html(" <b><font color='red'>University name is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>University name is Required</font>.");
         $("#val_university").css("border", "1px solid red");
         $("#university").css("border","1px solid red");
         return false;
     }
     
     if(val_institution=="" || val_institution==null){
-        $("errorEduAdd").html(" <b><font color='red'>Institution name is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>Institution name is Required</font>.");
         $("#val_institution").css("border", "1px solid red");
         $("#institution").css("border","1px solid red");
         return false;
     }
     if(val_year_start=="" || val_year_start==null){
-        $("errorEduAdd").html(" <b><font color='red'>start year is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>Start year is Required</font>.");
         $("#val_year_start").css("border", "1px solid red");
         $("#year_start").css("border","1px solid red");
         return false;
     }
     if(val_year_end=="" || val_year_end==null){
-        $("errorEduAdd").html(" <b><font color='red'>End year is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>End year is Required</font>.");
         $("#val_year_end").css("border", "1px solid red");
         $("#year_end").css("border","1px solid red");
         return false;
     }
     if(val_percentage<1 || val_percentage>100 || val_percentage=="" ) {
       
-        $("errorEduAdd").html(" <b><font color='red'>Percentage must be between 1 to 100</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>Percentage must be between 1 to 100</font>.");
         $("#val_percentage").css("border", "1px solid red");
         $("#percentage").css("border","1px solid red");
         return false;
@@ -1837,7 +1837,7 @@ function addQualificationValidate(){
     var difference = (addEndDate - addStartDate) / (86400000 * 7);
     if (difference < 0) {
         // alert("The start date must come before the end date.");
-        $("errorEduAdd").html(" <b><font color='red'>start date must be less than end date</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>Start date must be less than end date</font>.");
         $("#val_year_start").css("border", "1px solid red");
         $("#year_start").css("border","1px solid red");
         $("#year_end").css("border","1px solid red");
@@ -1878,39 +1878,39 @@ function editQualificationValidate(){
   
     
     if(val_qualification=="" || val_qualification==null){
-        $("errorEduUpdate").html(" <b><font color='red'>Qualification field is Required</font></b>.");
+        $("errorEduUpdate").html(" <font color='red'>Qualification field is Required</font>.");
         $("#val_qualification").css("border", "1px solid red");
         $("#edu_qualification").css("border","1px solid red");
         return false;
     }
     if(val_university=="" || val_university==null){
-        $("errorEduUpdate").html(" <b><font color='red'>University name is Required</font></b>.");
+        $("errorEduUpdate").html(" <font color='red'>University name is Required</font>.");
         $("#val_university").css("border", "1px solid red");
         $("#edu_university").css("border","1px solid red");
         return false;
     }
     
     if(val_institution=="" || val_institution==null){
-        $("errorEduUpdate").html(" <b><font color='red'>Institution name is Required</font></b>.");
+        $("errorEduUpdate").html(" <font color='red'>Institution name is Required</font>.");
         $("#val_institution").css("border", "1px solid red");
         $("#edu_institution").css("border","1px solid red");
         return false;
     }
     if(val_year_start=="" || val_year_start==null){
-        $("errorEduUpdate").html(" <b><font color='red'>start year is Required</font></b>.");
+        $("errorEduUpdate").html(" <font color='red'>Start year is Required</font>.");
         $("#val_year_start").css("border", "1px solid red");
         $("#edu_start_year").css("border","1px solid red");
         return false;
     }
     if(val_year_end=="" || val_year_end==null){
-        $("errorEduUpdate").html(" <b><font color='red'>End year is Required</font></b>.");
+        $("errorEduUpdate").html(" <font color='red'>End year is Required</font>.");
         $("#val_year_end").css("border", "1px solid red");
         $("#edu_end_year").css("border","1px solid red");
         return false;
     }
     if(val_percentage<1 || val_percentage>100 || val_percentage=="" ) {
       
-        $("errorEduUpdate").html(" <b><font color='red'>Percentage must be between 1 to 100</font></b>.");
+        $("errorEduUpdate").html(" <font color='red'>Percentage must be between 1 to 100</font>.");
         $("#val_percentage").css("border", "1px solid red");
         $("#edu_percentage").css("border","1px solid red");
         return false;
@@ -1919,7 +1919,7 @@ function editQualificationValidate(){
     var difference = (editEndDate - editStartDate) / (86400000 * 7);
     if (difference < 0) {
         alert("The start date must come before the end date.");
-        $("errorEduUpdate").html(" <b><font color='red'>start year must be less than end year</font></b>.");
+        $("errorEduUpdate").html(" <font color='red'>start year must be less than end year</font>.");
         $("#edu_start_year").css("border","1px solid red");
         $("#edu_end_year").css("border","1px solid red");
         return false;
@@ -2114,7 +2114,7 @@ function checkleaveRange() {
                 
     if(leaveStatus==-1)
     {
-        $("leaveerror").html(" <b><font color='red'>  Status field is required</font></b>");
+        $("leaveerror").html(" <font color='red'>  Status field is required</font>");
         $("#leaveStatus").css("border", "1px solid red");
         return false;
  
@@ -2125,7 +2125,7 @@ function checkleaveRange() {
     }
     if(leaveType==-1)
     {
-        $("leaveerror").html(" <b><font color='red'>  Leave Type field is required</font></b>");
+        $("leaveerror").html(" <font color='red'>  Leave Type field is required</font>");
         $("#leaveType").css("border", "1px solid red");
         return false;
  
@@ -2139,7 +2139,7 @@ function checkleaveRange() {
     //alert(fromValue+" and "+toValue)
     if(fromValue==""){
         // alert("from date is madatory")
-        $("leaveerror").html(" <b><font color='red'>  From Date field is required</font></b>");
+        $("leaveerror").html(" <font color='red'>  From Date field is required</font>");
         $("#leavefrom").css("border", "1px solid red");
         return false;
     }else{
@@ -2150,7 +2150,7 @@ function checkleaveRange() {
     if(toValue==""){
         // alert("to date is madatory");
                      
-        $("leaveerror").html(" <b><font color='red'>  To Date field is required</font></b>");
+        $("leaveerror").html(" <font color='red'>  To Date field is required</font>");
         $("#leaveto").css("border", "1px solid red");
         return false;
 
@@ -2163,7 +2163,7 @@ function checkleaveRange() {
     //alert(fromValue+" and "+toValue)
     if (Date.parse(fromValue) > Date.parse(toValue)) {
         // alert("Invalid Date Range!\nFrrom Date cannot be after To Date!")
-        $("leaveerror").html(" <b><font color='red'>Invalid Date Range!\nFrrom Date cannot be after To Date!</font></b>");
+        $("leaveerror").html(" <font color='red'>Invalid Date Range!\nFrom Date cannot be after To Date!</font>");
         $("#leaveto").css("border", "1px solid red");
         $("#leavefrom").css("border", "1px solid red"); 
         return false;
@@ -2195,7 +2195,7 @@ function editleave() {
     
     if(status=="-1")
     {
-        $("editleaveerror").html(" <b><font color='red'>status field is required</font></b>");
+        $("editleaveerror").html(" <font color='red'>Status field is required</font>");
         $("#status").css("border", "1px solid red");
         return false; 
     }
@@ -2207,7 +2207,7 @@ function editleave() {
     
     if(reason=="")
     {
-        $("editleaveerror").html(" <b><font color='red'>reason field is required</font></b>");
+        $("editleaveerror").html(" <font color='red'>Reason field is required</font>");
         $("#alertMessage").css("border", "1px solid red");
         return false; 
     }
@@ -2218,7 +2218,7 @@ function editleave() {
     }
     if(fromValue==""){
         //   alert("from date is madatory")
-        $("editleaveerror").html(" <b><font color='red'>start date field is required</font></b>");
+        $("editleaveerror").html(" <font color='red'>Start date field is required</font>");
         $("#leaveEditFrmDate").css("border", "1px solid red");
         return false;
     }
@@ -2231,7 +2231,7 @@ function editleave() {
         //  alert("to date is madatory");
                     
 
-        $("editleaveerror").html(" <b><font color='red'>field is required</font></b>");
+        $("editleaveerror").html(" <font color='red'>Field is required</font>");
         $("#leaveEditEndDate").css("border", "1px solid red");
         return false;
     }
@@ -2256,7 +2256,7 @@ function editleave() {
     //alert(fromValue+" and "+toValue)
     if (Date.parse(fromValue) > Date.parse(toValue)) {
         //alert("Invalid Date Range!\nFrrom Date cannot be after To Date!")
-        $("editleaveerror").html(" <b><font color='red'>Invalid Date Range!\nFrrom Date cannot be after To Date!</font></b>");
+        $("editleaveerror").html(" <font color='red'>Invalid Date Range!\nFrrom Date cannot be after To Date!</font>");
         $("#leaveEditFrmDate").css("border", "1px solid red");
         $("#leaveEditEndDate").css("border", "1px solid red");
 
@@ -2270,7 +2270,7 @@ function editleave() {
     }
     if(leavetype==-1)
     {
-        $("editleaveerror").html(" <b><font color='red'>StatusType field is required</font></b>");
+        $("editleaveerror").html(" <font color='red'>StatusType field is required</font>");
         $("#leavetype").css("border", "1px solid red");
         return false;
  
@@ -2282,7 +2282,7 @@ function editleave() {
                 
     if(reporsto=="")
     {
-        $("editleaveerror").html(" <b><font color='red'>field is required</font></b>");
+        $("editleaveerror").html(" <font color='red'>Field is required</font>");
         $("#reportsto").css("border", "1px solid red");  
         return false;
     }
@@ -2364,7 +2364,7 @@ function leaveSearchDateValidation()
     var difference = (addEndDate - addStartDate) / (86400000 * 7);
     if (difference < 0) {
         // alert("The start date must come before the end date.");
-        $("leaveerror").html(" <b><font color='red'>start date must be less than end date</font></b>.");
+        $("leaveerror").html(" <font color='red'>Start date must be less than end date</font>.");
         $("#startDate").css("border", "1px solid red");
         // $("#val_fromleave").css("border","1px solid red");
         $("#endDate").css("border","1px solid red");
@@ -2564,44 +2564,49 @@ function openUploadFileDialogueClose(){
 }
 
 function ValidateFileUpload() {
-    var fuData = document.getElementById('imageupdate');
-    var FileUploadPath = fuData.value;
-
-    //To check if user upload any file
-    if (FileUploadPath == '') {
-       
-        $("imageErrorMsg").html(" <b><font color='red'>Please upload an image</font></b>");
+    var file = $("#imageupdate").val();
+    
+     if (file == '') {
+        $("imageErrorMsg").html("<font color='red'>Please Upload an image</font>");
         return false;
-    } else {
-        var Extension = FileUploadPath.substring(
-            FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
-
-        //The file uploaded is an image
-
-        if (Extension == "gif" || Extension == "png" || Extension == "bmp"
-            || Extension == "jpeg" || Extension == "jpg") {
-
-            //            // To Display
-            //            if (fuData.files && fuData.files[0]) {
-            //                var reader = new FileReader();
-            //
-            //                reader.onload = function(e) {
-            //                    $('#blah').attr('src', e.target.result);
-            //                }
-            //
-            //                reader.readAsDataURL(fuData.files[0]);
-            //            }
-            return true;
-
-        } 
-
-        //The file upload is NOT an image
-        else {
-            $("imageErrorMsg").html(" <b><font color='red'>Photo only allows file types of GIF, PNG, JPG, JPEG and BMP.</font></b>");
-
-         
-            // alert("Photo only allows file types of GIF, PNG, JPG, JPEG and BMP. ");
+    }
+    
+    if (file != '')
+    {
+        var size = document.getElementById('imageupdate').files[0].size;
+        var leafname= file.split('\\').pop().split('/').pop();
+        var extension = file.substring(file.lastIndexOf('.')+1);
+        if(extension=="jpg"||extension=="png"||extension=="gif" ){
+            var size = document.getElementById('imageupdate').files[0].size;
+            if(leafname.length>30){
+                document.getElementById('imageupdate').value = '';
+                $("imageErrorMsg").html("<font color='red'>File name length must be less than 30 characters!</font>");
+                // document.getElementById('InsertContactInfo').innerHTML = "<font color=red>File name length must be less than 30 characters!</font>"
+                // showAlertModal("File size must be less than 2 MB");
+                return false;
+            }
+            else 
+            {
+                if(parseInt(size)<2097152) {
+                     $("imageErrorMsg").html("");
+                }else {
+                    document.getElementById('imageupdate').value = '';
+                    $("imageErrorMsg").html("<font color='red'>File size must be less than 2 MB</font>");
+                    // document.getElementById('InsertContactInfo').innerHTML = "<font color=red>File size must be less than 2 MB</font>"
+                    // showAlertModal("File size must be less than 2 MB");
+                    return false;
+                }
+            }
+        }
+        else 
+        {
+            document.getElementById('imageupdate').value = "";
+            //document.getElementById('InsertContactInfo').innerHTML = "<font color=red>Invalid file extension!Please select pdf or doc or docx or gif or jpg or png or jpeg file.</font>"
+            $("imageErrorMsg").html("<font color='red'>Invalid file extension!<br> Please select gif or jpg or png file</font>");
+            // $("#InsertContactInfo").html(" <font color=red>Invalid file extension! Please select gif or jpg or png file</font>");
             return false;
         }
     }
+    $("#imageErrorMsg").html("");
+    return true;
 }

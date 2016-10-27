@@ -37,7 +37,7 @@
 
 
     </head>
-    <body style="overflow-x: hidden">
+    <body oncontextmenu="return false" style="overflow-x: hidden">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">

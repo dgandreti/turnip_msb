@@ -157,7 +157,7 @@ function dashboardMessage(message)
 
 function getCustomerDashboardList(){
     $("#individualCustomerYearChart").css('visibility', 'visible');
-    document.getElementById('chartTitle').innerHTML = "<font color=green><b>Customer Requirements Yearly Analysis</b></font>";
+    document.getElementById('chartTitle').innerHTML = "<font color=green>Customer Requirements Yearly Analysis</font>";
 
     var dashYears=$('#year').val();
     var dashMonths=$('#month').val();
@@ -520,7 +520,7 @@ function validationDashboardYear(evt)
         //alert("enter only numbers ")
         if(rate != 4)
         {
-            $("#customerDashValidation").html(" <b><font color='red'>enter only numbers</font></b>");  
+            $("#customerDashValidation").html(" <font color='red'>enter only numbers</font>");  
             $("#customerDashValidation").show().delay(4000).fadeOut();
         }
         if(iKeyCode == 8)
@@ -575,7 +575,7 @@ function validationDashboardVendorYear(evt)
         {   
              
             //alert(rate+"rate is")
-            $("#reqVendorDashboard").html(" <b><font color='red'>enter only numbers</font></b>");  
+            $("#reqVendorDashboard").html(" <font color='red'>Enter only numbers</font>");  
             $("#reqVendorDashboard").show().delay(4000).fadeOut();
         }
         
@@ -629,7 +629,7 @@ function validationDashboardCustomerYear(evt)
         //alert("enter only numbers ")
         if(rate!=4)
         {    
-            $("#reqCustomerDashBoardValidation").html(" <b><font color='red'>enter only numbers</font></b>");  
+            $("#reqCustomerDashBoardValidation").html(" <font color='red'>Enter only numbers</font>");  
             $("#reqCustomerDashBoardValidation").show().delay(4000).fadeOut();
         }
         if(iKeyCode == 8)
@@ -756,7 +756,7 @@ function populateCostCenterDashBoardTable(response,quarters,costcenternames){
         // document.getElementById("norecords").style.display = 'block';
         document.getElementById('costcentersnorecords').innerHTML = "<font color=red> No Cost Centers to Display!</font>";
         // var v=$('#quarter option:selected').text();
-        document.getElementById('costcenterchartTitle').innerHTML = "<font color=red ><b>&nbsp; "+ quarters +" </font><font color=green><b>Cost Center Budget Yearly Analysis</b></font>";
+        document.getElementById('costcenterchartTitle').innerHTML = "<font color=red >&nbsp; "+ quarters +" </font><font color=green>Cost Center Budget Yearly Analysis</font>";
         document.getElementById("costCentersProjectsDiv").style.display = 'none';
     // document.getElementById("projectsnorecords").style.display = 'none';        
     }
@@ -767,7 +767,7 @@ function populateCostCenterDashBoardTable(response,quarters,costcenternames){
         document.getElementById("projectsnorecords").style.display = 'block';
         document.getElementById('projectsnorecords').innerHTML = "<font color=red> No Projects to Display!</font>";
         //  var v=$('#costCenters option:selected').text();
-        document.getElementById('projectschartTitle').innerHTML = "<font color=red ><b>&nbsp; "+ costcenternames +" </font><font color=green><b>Cost Center Projects Budget Yearly Analysis</b></font>";
+        document.getElementById('projectschartTitle').innerHTML = "<font color=red >&nbsp; "+ costcenternames +" </font><font color=green>Cost Center Projects Budget Yearly Analysis</font>";
         document.getElementById("projectsBarchart").style.display = 'none';
         
     // document.getElementById("BarchartForResources").style.display = 'none';
@@ -865,7 +865,7 @@ function showCostCenterChart(month,open,release,close,costcenterResponse,quarter
     if(costcenterResponse=="costcenterresponse"){
         document.getElementById("costCentersDiv").style.display = 'block'; 
         // var v=$('#quarter option:selected').text();
-        document.getElementById('costcenterchartTitle').innerHTML = "<font color=red ><b>&nbsp; " + quarters +" </font><font color=green><b>Cost Centers Budget Yearly Analysis</b></font>";
+        document.getElementById('costcenterchartTitle').innerHTML = "<font color=red >&nbsp; " + quarters +" </font><font color=green>Cost Centers Budget Yearly Analysis</font>";
         var options = {
             //        width: 370,
             //        height:300,
@@ -893,7 +893,7 @@ function showCostCenterChart(month,open,release,close,costcenterResponse,quarter
     }
     else if(costcenterResponse=="costcenterpojectresponse"){
         document.getElementById("costCentersProjectsDiv").style.display = 'block';
-        document.getElementById('projectschartTitle').innerHTML = "<font color=red ><b>&nbsp; "+ costcenternames +" </font><font color=green><b>Cost Center Projects Budget Yearly Analysis</b></font>";
+        document.getElementById('projectschartTitle').innerHTML = "<font color=red >&nbsp; "+ costcenternames +" </font><font color=green>Cost Center Projects Budget Yearly Analysis</font>";
         var options = {
             //        width: 370,
             //        height:300,
@@ -918,7 +918,7 @@ function showCostCenterChart(month,open,release,close,costcenterResponse,quarter
     }
     else
     {
-        document.getElementById('chartTitle').innerHTML = "<font color=green><b>Budget Analysis</b></font>";
+        document.getElementById('chartTitle').innerHTML = "<font color=green>Budget Analysis</font>";
         var options = {
             titleColor:"green",
             colors: ['#0000FF', '#FF0000', '#00FF00'],
@@ -1023,7 +1023,7 @@ function getMainProjectsChart(){
 }
 
 function getProjectDashboardList(selectedValue,flag){
-    // alert("selectedValue-->"+selectedValue);
+     alert("selectedValue-->"+selectedValue);
     // $("#individualCustomerYearChart").css('visibility', 'visible');
     
   
@@ -1035,7 +1035,7 @@ function getProjectDashboardList(selectedValue,flag){
     if(flag=="mainprojectsselected")
     {
         var subprojectsMap=document.getElementById("mainprojectsList").value;
-        //   alert("subprojectsMap-->"+subprojectsMap);
+           alert("subprojectsMap-->"+subprojectsMap);
     
         var flags=subprojectsMap.split("FLAG");
         var addList=flags[0].split("^");
@@ -1052,7 +1052,7 @@ function getProjectDashboardList(selectedValue,flag){
    else if(flag=="mainprojects")
     {
         var mainprojectsList=document.getElementById("mainprojectsList").value;
-        // alert("mainprojectsList"+mainprojectsList);
+         alert("mainprojectsList"+mainprojectsList);
     
         var mainprojectsValues=  mainprojectsList.replace(/[{()}]/g, '');
         var mainprofflagList=mainprojectsValues.split("FLAG")
@@ -1071,7 +1071,7 @@ function getProjectDashboardList(selectedValue,flag){
   else if(flag=="subprojects")
     {
         var subprojectsMap=document.getElementById("subprojectsMap").value;
-        //   alert("subprojectsMap-->"+subprojectsMap);
+           alert("subprojectsMap-->"+subprojectsMap);
     
         var flags=subprojectsMap.split("FLAG");
         var addList=flags[0].split("^");
@@ -1153,7 +1153,7 @@ function populateProjectsDashBoardTable(response,selectedValue){
             // document.getElementById("norecords").style.display = 'block';
             
             //var v=$('#projects option:selected').text();
-            document.getElementById('subProjectsTitle').innerHTML = "<font color=red ><b>&nbsp; "+ selectedValue +" </font><font color=green><b>Sub Project(s) Hours Analysis</b></font>";
+            document.getElementById('subProjectsTitle').innerHTML = "<font color=red >&nbsp; "+ selectedValue +" </font><font color=green>Sub Project(s) Hours Analysis</font>";
            
             // document.getElementById("norecords").style.display = 'block';
             document.getElementById('subProjectsnorecords').innerHTML = "<font color=red> No Sub Projects to Display!</font>";
@@ -1168,7 +1168,7 @@ function populateProjectsDashBoardTable(response,selectedValue){
             document.getElementById("resourcesnorecords").style.display = 'block';
             
             // var v=$('#subProjects option:selected').text();
-            document.getElementById('resorceschartTitle').innerHTML = "<font color=red ><b>&nbsp; "+ selectedValue +" </font><font color=green><b>Project Resources Hours Analysis</b></font>";
+            document.getElementById('resorceschartTitle').innerHTML = "<font color=red >&nbsp; "+ selectedValue +" </font><font color=green>Project Resources Hours Analysis</font>";
       
             
             
@@ -1302,7 +1302,7 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
     var data = google.visualization.arrayToDataTable(Combined, false);
     // alert("main Projects data-->"+data);
     if(subProjects=="mainprojects"){
-        document.getElementById('chartTitle').innerHTML = "<font color=green><b>Projects Analysis</b></font>";
+        document.getElementById('chartTitle').innerHTML = "<font color=green>Projects Analysis</font>";
         var options = {
             //        width: 370,
             //        height:300,
@@ -1330,7 +1330,7 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
     else if(resourceHours=="resourceworkedhrs"){
         // document.getElementById("resouresDiv").style.display = 'block';
         //  var v=null;
-        document.getElementById('resorceschartTitle').innerHTML = "<font color=red ><b>&nbsp; "+ selectedValue +" </font><font color=green><b>Project Resources Hours Analysis</b></font>";
+        document.getElementById('resorceschartTitle').innerHTML = "<font color=red >&nbsp; "+ selectedValue +" </font><font color=green>Project Resources Hours Analysis</font>";
         var options = {
             //        width: 370,
             //        height:300,
@@ -1357,7 +1357,7 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
     {
         //  alert("in ");
         // var v=null;
-        document.getElementById('subProjectsTitle').innerHTML = "<font color=red ><b>&nbsp; "+ selectedValue +" </font><font color=green><b>Sub Project(s) Hours Analysis</b></font>";
+        document.getElementById('subProjectsTitle').innerHTML = "<font color=red >&nbsp; "+ selectedValue +" </font><font color=green>Sub Project(s) Hours Analysis</font>";
       
         // document.getElementById('subProjectsTitle').innerHTML = "<font color=green><b>Project Hours Analysis</b></font>";
         var options = {
@@ -1393,7 +1393,7 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
             var selectedItem = chart.getSelection()[0];
             if (selectedItem) {
                 var practice = data.getValue(selectedItem.row, 0);
-               //  alert('The user selected--> '+practice);
+                 alert('The user selected--> '+practice);
                 getProjectDashboardList(practice,"mainprojectsselected");
             }
         }
@@ -1414,7 +1414,7 @@ function showProjectsChart(project,targetHrs,workedHrs,subProjects,resourceHours
             var selectedItem = chart.getSelection()[0];
             if (selectedItem) {
                 var practice = data.getValue(selectedItem.row, 0);
-                //  alert('The user selected--> '+practice);
+                  alert('The user selected in sub--> '+practice);
                 getProjectDashboardList(practice,"subprojects");
             }
         }

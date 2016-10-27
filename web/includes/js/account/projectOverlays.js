@@ -95,7 +95,7 @@ function checkProjectName(projName, type) {
     if (projName.replace(/\s/g, '') == "")
     {
 
-        $("updateProject").html(" <b><font color='red'>Enter Project name</font></b>");
+        $("updateProject").html("<font color='red'>Enter Project name</font>");
         return false;
     }
     // alert(projName)
@@ -104,14 +104,14 @@ function checkProjectName(projName, type) {
         success: function(data) {
 
             if (data == "true") {
-                $("updateProject").html(" <b><font color='red'>Project name exists!</font></b>");
+                $("updateProject").html(" <font color='red'>Project name exists!</font>");
                 // document.getElementById("projectNameError").style.display = "block";
                 document.getElementById("editprojectName").value = "";
                 $("#editprojectName").focus();
             }
 
             else {
-                $("updateProject").html("<b><font color='green'>Project name is valid.</font></b>");
+                $("updateProject").html("<font color='green'>Project name is valid.</font>");
                 $("#editprojectName").css('border', '1px solid green');
                 // $("#projectNameError").html("Project name is valid.");
                 // document.getElementById("projectNameError").style.display = "none";
@@ -274,7 +274,7 @@ function addVendorTierType() {
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             //alert("Success")
-            $("e").html(" <b><font color='green'>vendor tier added Succesfully</font></b>");
+            $("e").html(" <font color='green'>vendor tier added Succesfully</font>");
             getVendors();
         }
     };
@@ -294,7 +294,7 @@ function editVendorTierDetails() {
     // var rndNo=Math.random();
     if (pf == 0 && vendorTier == 0) {
         flag = false;
-        $("e1").html(" <b><font color='red'>select either Tier or Head Hunter</font></b>");
+        $("e1").html(" <font color='red'>select either Tier or Head Hunter</font>");
     }
     //alert("HIIIIIIIIIIIIII"+accountSearchID+" "+vendorTierStatus+"  "+tierId)
     if (flag == true) {
@@ -303,7 +303,7 @@ function editVendorTierDetails() {
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 //alert("Success")
-                $("e1").html(" <b><font color='green'>vendor tier updated Succesfully</font></b>");
+                $("e1").html(" <font color='green'>vendor tier updated Succesfully</font>");
                 getVendors();
             }
         };
@@ -636,31 +636,31 @@ function addProjectValidation()
 
     if (projectNamePopup == "")
     {
-        $("#addProjectValidation").html(" <b><font color='red'>Project name is required</font></b>");
+        $("#addProjectValidation").html("<font color='red'>Project name is required</font>");
         $("#projectNamePopup").css("border", "1px solid red");
         return false;
     }
     if (project_statusPopup == -1)
     {
-        $("#addProjectValidation").html(" <b><font color='red'>Project status is required</font></b>");
+        $("#addProjectValidation").html(" <font color='red'>Project status is required</font>");
         $("#project_statusPopup").css("border", "1px solid red");
         return false;
     }
     if (projectStartDateOverlay == "")
     {
-        $("#addProjectValidation").html(" <b><font color='red'>Project start date is required</font></b>");
+        $("#addProjectValidation").html(" <font color='red'>Project start date is required</font>");
         $("#projectStartDateOverlay").css("border", "1px solid red");
         return false;
     }
     if (projectTargetDateOverlay == "")
     {
-        $("#addProjectValidation").html(" <b><font color='red'>Project end date is required</font></b>");
+        $("#addProjectValidation").html(" <font color='red'>Project end date is required</font>");
         $("#projectTargetDateOverlay").css("border", "1px solid red");
         return false;
     }
     if (projectTargetHrs == "")
     {
-        $("#addProjectValidation").html(" <b><font color='red'>Target hours is required</font></b>");
+        $("#addProjectValidation").html(" <font color='red'>Target hours is required</font>");
         $("#projectTargetHrs").css("border", "1px solid red");
         return false;
     }
@@ -680,7 +680,7 @@ function addProjectValidation()
     {
 
         // alert("hi")
-        $("#addProjectValidation").html(" <b><font color='red'>Target Date Should not Exceed Main Project Target date</font></b>");
+        $("#addProjectValidation").html(" <font color='red'>Target Date Should not Exceed Main Project Target date</font>");
         document.getElementById('projectTargetDateOverlay').value = "";
         $("#projectTargetDateOverlay").css("border", "1px solid red");
         //        $("#startDate").css("border", "1px solid red");
@@ -702,7 +702,7 @@ function addProjectValidation()
     {
 
         // alert("hi")
-        $("#addProjectValidation").html(" <b><font color='red'>Start date Should not Exceed Main Project Target date</font></b>");
+        $("#addProjectValidation").html(" <font color='red'>Start date Should not Exceed Main Project Target date</font>");
         document.getElementById('projectStartDateOverlay').value = "";
         $("#projectStartDateOverlay").css("border", "1px solid red");
         //        $("#startDate").css("border", "1px solid red");
@@ -724,7 +724,7 @@ function addProjectValidation()
     var difference = (mainProjectTargetDate - mainProjectStartDate) / (86400000 * 7);
     if (difference < 0)
     {
-        $("#addProjectValidation").html(" <b><font color='red'>Start date must be less than target date</font></b>");
+        $("#addProjectValidation").html(" <font color='red'>Start date must be less than target date</font>");
         $("#projectStartDateOverlay").css("border", "1px solid red");
         $("#projectTargetDateOverlay").css("border", "1px solid red");
         return false;
@@ -779,7 +779,7 @@ function projectTeamMemberValidation() {
 //    }
     if (id == 0 || teamMemberName == "" || teamMemberName.length <= 2) {
         $("#teamMemberNamePopup").css("border", "1px solid red");
-        $("#validationMessage").html("<b><font color='red'>Enter name</font></b>");
+        $("#validationMessage").html("<font color='red'>Enter name</font>");
         $('#validationMessage').show().fadeIn();
         return false;
     }
@@ -793,21 +793,21 @@ function projectTeamMemberValidation() {
         //alert(mainProjectStatus)
         if (mainProjectStatus != "Active")
         {
-            $("#validationMessage").html("<b><font color='red'>Main Project is Not In Active</font></b>");
+            $("#validationMessage").html("<font color='red'>Main Project is Not In Active</font>");
             $("#validationMessage").show().delay(4000).fadeOut();
             return false;
         }
     }
     return true;
 }
-function assignProjectsValidation(){
-    var teamMemberStatusHidden= document.getElementById("teamMemberStatusHidden").value;
+function assignProjectsValidation() {
+    var teamMemberStatusHidden = document.getElementById("teamMemberStatusHidden").value;
     //alert(teamMemberStatusHidden);
-    if(teamMemberStatusHidden=="In-Active"){
+    if (teamMemberStatusHidden == "In-Active") {
         $("#projectClear").html("<font color='red'>Team member is not in active status</font>");
         $("#projectClear").show().delay(2000).fadeOut();
         return false;
-    } 
+    }
 }
 function updateProjectValidation()
 {
@@ -826,7 +826,7 @@ function updateProjectValidation()
         var mainProjectStatus = document.getElementById("mainProjectStatus").value;
         if (mainProjectStatus != "Active")
         {
-            $("updateProject").html(" <b><font color='red'>Main Project is Not In Active</font></b>");
+            $("updateProject").html(" <font color='red'>Main Project is Not In Active</font>");
             return false;
         }
         var parentProjectTargetDate = document.getElementById('mainProjectTargetDate').value;
@@ -843,7 +843,7 @@ function updateProjectValidation()
         {
 
             // alert("hi")
-            $("updateProject").html(" <b><font color='red'>Start date Should not Exceed Main Project Target date</font></b>");
+            $("updateProject").html(" <font color='red'>Start date Should not Exceed Main Project Target date</font>");
             document.getElementById('projectStartDate').value = "";
             $("#projectStartDate").css("border", "1px solid red");
             //        $("#startDate").css("border", "1px solid red");
@@ -865,7 +865,7 @@ function updateProjectValidation()
         {
 
             // alert("hi")
-            $("updateProject").html(" <b><font color='red'>Target date Should not Exceed Main Project Target date</font></b>");
+            $("updateProject").html(" <font color='red'>Target date Should not Exceed Main Project Target date</font>");
             // $("#addProjectValidation").html(" <b><font color='red'>Target Date Should not Exceed Main Project Target date</font></b>");
             document.getElementById('projectTargetDate').value = "";
             $("#projectTargetDate").css("border", "1px solid red");
@@ -886,31 +886,31 @@ function updateProjectValidation()
     var endDateProject = Date.parse(edate);
     if (projectNamePopup == "")
     {
-        $("updateProject").html(" <b><font color='red'>project name is required</font></b>");
+        $("updateProject").html(" <font color='red'>project name is required</font>");
         $("#editprojectName").css("border", "1px solid red");
         return false;
     }
     if (projectStartDateOverlay == "")
     {
-        $("updateProject").html(" <b><font color='red'>project start date is required</font></b>");
+        $("updateProject").html(" <font color='red'>project start date is required</font>");
         $("#projectStartDate").css("border", "1px solid red");
         return false;
     }
     if (projectTargetDateOverlay == "")
     {
-        $("updateProject").html(" <b><font color='red'>project end date is required</font></b>");
+        $("updateProject").html(" <font color='red'>project end date is required</font>");
         $("#projectTargetDate").css("border", "1px solid red");
         return false;
     }
     if (editProjectTargetHrs == 0.0 || editProjectTargetHrs == "") {
-        $("updateProject").html(" <b><font color='red'>project Target Hours is required</font></b>");
+        $("updateProject").html(" <font color='red'>project Target Hours is required</font>");
         $("#editProjectTargetHrs").css("border", "1px solid red");
         return false;
     }
     var difference = (endDateProject - StartDateProject) / (86400000 * 7);
     if (difference < 0)
     {
-        $("updateProject").html(" <b><font color='red'>Start date must be less than target date</font></b>");
+        $("updateProject").html(" <font color='red'>Start date must be less than target date</font>");
         $("#projectStartDate").css("border", "1px solid red");
         $("#projectTargetDate").css("border", "1px solid red");
         return false;
@@ -956,11 +956,11 @@ function EmpReleasefromProject(userID) {
                 if (req.readyState == 4 && req.status == 200) {
                     // alert(req.responseText)
                     if (req.responseText == 1) {
-                        $("emp").html(" <b><font color='green'> Terminated Succesfully</font></b>");
+                        $("emp").html(" <font color='green'> Terminated Succesfully</font>");
                         $("emp").show().delay(5000).fadeOut();
                         searchTeamMembers();
                     } else {
-                        $("emp").html(" <b><font color='red'>Error Occured</font></b>");
+                        $("emp").html(" <font color='red'>Error Occured</font>");
                         $("emp").show().delay(5000).fadeOut();
                     }
                 }
@@ -1165,7 +1165,7 @@ function costCenterAdd_overlay() {
 }
 function costCenterValidation(ccName) {
     if (ccName == "") {
-        $("costCenter").html(" <b><font color='red'>Please Enter name.</font></b>");
+        $("costCenter").html(" <font color='red'>Please Enter name.</font>");
         $("#name").css("border", "1px solid red");
         return false;
     }
@@ -1185,10 +1185,10 @@ function addCostCenter() {
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 if (req.responseText == "Added Successfully") {
-                    $("costCenter").html(" <b><font color='green'>Inserted Successfully.</font></b>");
+                    $("costCenter").html(" <font color='green'>Inserted Successfully.</font>");
                 }
                 else {
-                    $("costCenter").html(" <b><font color='red'>Not Inserted.</font></b>");
+                    $("costCenter").html(" <font color='red'>Not Inserted.</font>");
                 }
 
             }
@@ -1223,7 +1223,7 @@ function editCostCenter() {
     var status = $("#status").val();
     if (prjCount > 0) {
         if (status === "In-Active") {
-            $("costCenter").html("<b><font color='red'>Cost Center Consists Active Projects <br> So you cannot In-Activate it.</font></b>");
+            $("costCenter").html("<font color='red'>Cost Center Consists Active Projects <br> So you cannot In-Activate it.</font>");
             return false;
         }
     }
@@ -1236,11 +1236,11 @@ function editCostCenter() {
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 if (req.responseText == "updated Successfully") {
-                    $("costCenter").html(" <b><font color='green'>Updated Successfully.</font></b>");
+                    $("costCenter").html(" <font color='green'>Updated Successfully.</font>");
                     $("costCenter").show().delay(5000).fadeOut();
                 }
                 else {
-                    $("costCenter").html(" <b><font color='red'>Not Updated.</font></b>");
+                    $("costCenter").html(" <font color='red'>Not Updated.</font>");
                     $("costCenter").show().delay(5000).fadeOut();
                 }
             }
@@ -1363,7 +1363,7 @@ function costCenterBudgetValidation(budgetAmt) {
     var StartDateProject = Date.parse(sdate);
     var endDateProject = Date.parse(edate);
     if (startDate == "") {
-        $("costCenter").html(" <b><font color='red'>Please Enter startDate.</font></b>");
+        $("costCenter").html(" <font color='red'>Please Enter startDate.</font>");
         $("#startDate").css("border", "1px solid red");
         return false;
     }
@@ -1372,7 +1372,7 @@ function costCenterBudgetValidation(budgetAmt) {
         $("#startDate").css("border", "1px solid #ccc");
     }
     if (endDate == "") {
-        $("costCenter").html(" <b><font color='red'>Please Enter endDate.</font></b>");
+        $("costCenter").html(" <font color='red'>Please Enter endDate.</font>");
         $("#endDate").css("border", "1px solid red");
         return false;
     }
@@ -1381,7 +1381,7 @@ function costCenterBudgetValidation(budgetAmt) {
         $("#endDate").css("border", "1px solid #ccc");
     }
     if (budgetAmt == "") {
-        $("costCenter").html(" <b><font color='red'>Please Enter budgetAmt.</font></b>");
+        $("costCenter").html(" <font color='red'>Please Enter budgetAmt.</font>");
         $("#budgetAmt").css("border", "1px solid red");
         return false;
     }
@@ -1393,7 +1393,7 @@ function costCenterBudgetValidation(budgetAmt) {
     var difference = (endDateProject - StartDateProject) / (86400000 * 7);
     if (difference < 0)
     {
-        $("costCenter").html(" <b><font color='red'>Start date must be less than target date</font></b>");
+        $("costCenter").html(" <font color='red'>Start date must be less than target date</font>");
         $("#startDate").css("border", "1px solid red");
         $("#endDate").css("border", "1px solid red");
         return false;
@@ -1426,7 +1426,7 @@ function addCostCenterBudget(budgetStatus) {
         budgetStatus = "Approved";
         approveComments = $("#approveComments").val();
         if (approveComments == "") {
-            $("costCenter").html(" <b><font color='red'>Please Enter Approve Comments</font></b>");
+            $("costCenter").html(" <font color='red'>Please Enter Approve Comments</font>");
             $("#approveComments").css("border", "1px solid red");
             return false;
         }
@@ -1439,7 +1439,7 @@ function addCostCenterBudget(budgetStatus) {
         budgetStatus = "Rejected";
         rejectionComments = $("#rejectionComments").val();
         if (rejectionComments == "") {
-            $("costCenter").html(" <b><font color='red'>Please Enter Comments for Rejection</font></b>");
+            $("costCenter").html(" <font color='red'>Please Enter Comments for Rejection</font>");
             $("#rejectionComments").css("border", "1px solid red");
             return false;
         }
@@ -1459,16 +1459,18 @@ function addCostCenterBudget(budgetStatus) {
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 if (req.responseText == "Added Successfully") {
-                    $("costCenter").html(" <b><font color='green'>Budget Created Successfully.</font></b>");
+                    $("costCenter").html(" <font color='green'>Budget Created Successfully.</font>");
                     document.getElementById("enter").style.display = "none";
                     document.getElementById("submit").style.display = "none";
                 } else if (req.responseText == "updated Successfully") {
-                    $("costCenter").html(" <b><font color='green'>Updated Successfully.</font></b>");
+                    $("costCenter").html(" <font color='green'>Updated Successfully.</font>");
                     document.getElementById("submit").style.display = "none";
                     document.getElementById("enter").style.display = "none";
+                    document.getElementById("ccbudgetSave").style.display = "none";
+                    document.getElementById("ccbudgetSubmit").style.display = "none";
                 }
                 else {
-                    $("costCenter").html(" <b><font color='red'>Not Updated.</font></b>");
+                    $("costCenter").html(" <font color='red'>Not Updated.</font>");
                 }
 
             }
@@ -1654,7 +1656,7 @@ function validationCostCenterYear(evt, id)
     {
         if (rate != 4)
         {
-            $("#info").html(" <b><font color='red'>enter only numbers</font></b>");
+            $("#info").html(" <font color='red'>enter only numbers</font>");
             $("#info").show().delay(4000).fadeOut();
         }
         if (iKeyCode == 8)
@@ -1719,7 +1721,7 @@ function calculateSubProjectTargetHrs() {
         var updatedremainingHrs = parseFloat(remaingHrs) + parseFloat(targetHours);
         var diff = updatedremainingHrs - projectTargetHrs;
         if (diff < 0) {
-            $("updateProject").html(" <b><font color='red'>Sub Project Target Hours must be less than " + parseFloat(updatedremainingHrs).toFixed(1) + " Hours</font></b>");
+            $("updateProject").html(" <font color='red'>Sub Project Target Hours must be less than " + parseFloat(updatedremainingHrs).toFixed(1) + " Hours</font>");
             $("#editProjectTargetHrs").css("border", "1px solid red");
             document.getElementById("editProjectTargetHrs").value = "";
         }
@@ -1738,7 +1740,7 @@ function calculateTargetHrs() {
     var diff = remaingHrs - projectTargetHrs;
 
     if (diff < 0) {
-        $("#addProjectValidation").html(" <b><font color='red'>Sub Project Target Hours must be less than Specified Hours</font></b>");
+        $("#addProjectValidation").html(" <font color='red'>Sub Project Target Hours must be less than Specified Hours</font>");
         $("#projectTargetHrs").css("border", "1px solid red");
         document.getElementById("projectTargetHrs").value = "";
     }
@@ -1754,7 +1756,7 @@ function validationCostCenterBudget(evt, id)
     var iKeyCode = (evt.which) ? evt.which : evt.keyCode
     if (iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
     {
-        $("#info").html(" <b><font color='red'>enter only numbers</font></b>");
+        $("#info").html(" <font color='red'>enter only numbers</font>");
         $("#info").show().delay(4000).fadeOut();
         if (iKeyCode == 8)
         {
@@ -1806,7 +1808,7 @@ function clearSubprojectOverlay()
     document.getElementById("projectStartDateOverlay").value = "";
     document.getElementById("projectTargetDateOverlay").value = "";
     document.getElementById("projectTargetHrs").value = "";
-    document.getElementById("projectWorkedHrs").value = "";
+    // document.getElementById("projectWorkedHrs").value = "0.0";
     document.getElementById("projectReqSkillSetPopup").value = "";
     document.getElementById("project_descriptionPopup").value = "";
 }

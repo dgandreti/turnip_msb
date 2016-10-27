@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 /**
@@ -19,7 +21,8 @@ import org.apache.struts2.interceptor.ServletRequestAware;
  * @author miracle
  */
 public class InvoiceAction extends ActionSupport implements ServletRequestAware {
-
+    
+    private static Logger log = Logger.getLogger(InvoiceAction.class);
     private String resultType;
     private HttpServletRequest httpServletRequest;
     private HttpServletResponse httpServletResponse;
@@ -49,7 +52,7 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
      * *****************************************************************************
      */
     public String getInvoice() {
-        System.out.println("********************InvoiceAction :: getInvoice Method Start*********************");
+        log.info("********************InvoiceAction :: getInvoice Method Start*********************");
         resultType = LOGIN;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -64,10 +67,11 @@ public class InvoiceAction extends ActionSupport implements ServletRequestAware 
                 resultType = SUCCESS;
             }
         } catch (Exception ex) {
+            log.log(Level.ERROR, "errorMessage: " + ex.toString());
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
         }
-        System.out.println("********************InvoiceAction :: getInvoice Method End*********************");
+        log.info("********************InvoiceAction :: getInvoice Method End*********************");
         return resultType;
     }
 

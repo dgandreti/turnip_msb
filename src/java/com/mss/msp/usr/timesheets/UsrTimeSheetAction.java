@@ -130,7 +130,7 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
     private String comments;
     private String timesheetFlag;
     private int usr_id;
-    private Date previousDate;
+    private String previousDate;
     private String status;
     private String primaryRole;
     private String vendorName;
@@ -303,7 +303,7 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 int userId = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 setEmpName(dataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId()));
                 if (getPreviousDate() != null) {
-                    String stortingDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(getPreviousDate());
+                    String stortingDate = getPreviousDate();//new java.text.SimpleDateFormat("MM/dd/yyyy").format(getPreviousDate());
                     String splitDate[] = stortingDate.split("/");
                     int mon = Integer.parseInt(splitDate[0]);
                     int day = Integer.parseInt(splitDate[1]);
@@ -668,7 +668,7 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
                 setEmpName(dataSourceDataProvider.getInstance().getFnameandLnamebyUserid(getUserSessionId()));
                 /*added by kiran*/
                 if (getPreviousDate() != null) {
-                    String stortingDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(getPreviousDate());
+                    String stortingDate = getPreviousDate(); //new java.text.SimpleDateFormat("MM/dd/yyyy").format(getPreviousDate());
                     String splitDate[] = stortingDate.split("/");
                     int mon = Integer.parseInt(splitDate[0]);
                     int day = Integer.parseInt(splitDate[1]);
@@ -1655,11 +1655,11 @@ public class UsrTimeSheetAction extends ActionSupport implements ServletRequestA
         this.usr_id = usr_id;
     }
 
-    public Date getPreviousDate() {
+    public String getPreviousDate() {
         return previousDate;
     }
 
-    public void setPreviousDate(Date previousDate) {
+    public void setPreviousDate(String previousDate) {
         this.previousDate = previousDate;
     }
 

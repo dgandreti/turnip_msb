@@ -81,7 +81,7 @@
         </script>
 
     </head>
-    <body onload="sowpagination();">
+    <body oncontextmenu="return false" onload="sowpagination();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

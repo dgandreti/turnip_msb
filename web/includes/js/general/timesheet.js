@@ -380,13 +380,13 @@ function getProjets()
                 // alert("get the data");
                 // alert(req.responseText);
                 populateProjects(req.responseText);
-                $("errorEduAdd").html(" <b><font color='green'>Record successfully Added</font></b>");
+                $("errorEduAdd").html(" <font color='green'>Record successfully Added</font>");
             // doGetLeavesData();
             //                    showEducationDetails(userid);
             } 
             else
             {
-                $("edu").html(" <b><font color='red'>Record not Added</font></b>");
+                $("edu").html(" <font color='red'>Record not Added</font>");
             //  alert("Error occured");
             }
         }
@@ -505,7 +505,7 @@ function acceptNumbers(evt){
     var iKeyCode = (evt.which) ? evt.which : evt.keyCode
     if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
     {
-        $("edittimesheetserror").html(" <b><font color='green'>enter only numbers</font></b>");
+        $("edittimesheetserror").html(" <font color='green'>enter only numbers</font>");
         return false;
     }
     else
@@ -531,7 +531,7 @@ function projectSun1(){
     var totalSun=$("#totalSun").val();
     if(projectNameSun>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSun1").css("border", "1px solid red");
         document.getElementById('projectNameSun1').value= parseFloat(0).toFixed(1);
         return false; 
@@ -544,14 +544,14 @@ function projectSun1(){
     sundays=totalSunday();
     alldays=totalProjectDays1();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun1').value= 0.0;
         totalSunday();
         return false;
     }
     else if(sundays==totalSun)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun1').value= 0.0;
         totalProjectDays1();
         totalSunday();
@@ -567,7 +567,7 @@ function projectSun2(){
     var totalSun=$("#totalSun").val();
     if(projectNameSun>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSun2").css("border", "1px solid red");
         document.getElementById('projectNameSun2').value= parseFloat(0).toFixed(1);
         return false; 
@@ -580,14 +580,14 @@ function projectSun2(){
     sundays=totalSunday();
     alldays=totalProjectDays2();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun2').value= 0.0;
         totalSunday();
         return false;
     }
     else if(sundays==totalSun)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun2').value= 0.0;
         totalProjectDays2();
         totalSunday();
@@ -603,7 +603,7 @@ function projectSun3(){
     var totalSun=$("#totalSun").val();
     if(projectNameSun>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSun3").css("border", "1px solid red");
         document.getElementById('projectNameSun3').value= parseFloat(0).toFixed(1);
         return false; 
@@ -616,14 +616,14 @@ function projectSun3(){
     sundays=totalSunday();
     alldays=totalProjectDays3();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun3').value= 0.0;
         totalSunday();
         return false;
     }
     else if(sundays==totalSun)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun3').value= 0.0;
         totalProjectDays3();
         totalSunday();
@@ -639,7 +639,7 @@ function projectSun4(){
     var totalSun=$("#totalSun").val();
     if(projectNameSun>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSun4").css("border", "1px solid red");
         document.getElementById('projectNameSun4').value= parseFloat(0).toFixed(1);
         return false; 
@@ -652,14 +652,14 @@ function projectSun4(){
     sundays=totalSunday();
     alldays=totalProjectDays4();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun4').value= 0.0;
         totalSunday();
         return false;
     }
     else if(sundays==totalSun)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun4').value= 0.0;
         totalProjectDays4();
         totalSunday();
@@ -675,7 +675,7 @@ function projectSun5(){
     var totalSun=$("#totalSun").val();
     if(projectNameSun>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSun5").css("border", "1px solid red");
          document.getElementById('projectNameSun5').value= parseFloat(0).toFixed(1);
         return false; 
@@ -688,14 +688,14 @@ function projectSun5(){
     sundays=totalSunday();
     alldays=totalProjectDays5();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun5').value= 0.0;
         totalSunday();
         return false;
     }
     else if(sundays==totalSun)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSun5').value= 0.0;
         totalProjectDays5();
         totalSunday();
@@ -711,7 +711,7 @@ function projectMon1()
     var all=$("#projectNameAll1").val();
     if(projectNameMon>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameMon1").css("border", "1px solid red");
         document.getElementById('projectNameMon1').value= parseFloat(0).toFixed(1);
         return false; 
@@ -724,14 +724,14 @@ function projectMon1()
     Mondays=totalMonday();
     alldays=totalProjectDays1();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon1').value= 0.0;
         totalMonday();
         return false;
     }
     else if(Mondays==totalMon)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon1').value= 0.0;
         totalProjectDays1();
         totalMonday();
@@ -747,7 +747,7 @@ function projectMon2()
     var all=$("#projectNameAll2").val();
     if(projectNameMon>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameMon2").css("border", "1px solid red");
          document.getElementById('projectNameMon2').value= parseFloat(0).toFixed(1);
         return false; 
@@ -760,14 +760,14 @@ function projectMon2()
     Mondays=totalMonday();
     alldays=totalProjectDays2();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon2').value= 0.0;
         totalMonday();
         return false;
     }
     else if(Mondays==totalMon)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon2').value= 0.0;
         totalProjectDays2();
         totalMonday();
@@ -783,7 +783,7 @@ function projectMon3()
     var all=$("#projectNameAll3").val();
     if(projectNameMon>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameMon3").css("border", "1px solid red");
         document.getElementById('projectNameMon3').value= parseFloat(0).toFixed(1);
         return false; 
@@ -796,14 +796,14 @@ function projectMon3()
     Mondays=totalMonday();
     alldays=totalProjectDays3();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon3').value= 0.0;
         totalMonday();
         return false;
     }
     else if(Mondays==totalMon)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon3').value= 0.0;
         totalProjectDays3();
         totalMonday();
@@ -819,7 +819,7 @@ function projectMon4()
     var all=$("#projectNameAll4").val();
     if(projectNameMon>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameMon4").css("border", "1px solid red");
         document.getElementById('projectNameMon4').value= parseFloat(0).toFixed(1);
         return false; 
@@ -832,14 +832,14 @@ function projectMon4()
     Mondays=totalMonday();
     alldays=totalProjectDays4();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon4').value= 0.0;
         totalMonday();
         return false;
     }
     else if(Mondays==totalMon)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon4').value= 0.0;
         totalProjectDays4();
         totalMonday();
@@ -856,7 +856,7 @@ function projectMon5()
     var all=$("#projectNameAll5").val();
     if(projectNameMon>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameMon5").css("border", "1px solid red");
         document.getElementById('projectNameMon5').value= parseFloat(0).toFixed(1);
         return false; 
@@ -869,14 +869,14 @@ function projectMon5()
     Mondays=totalMonday();
     alldays=totalProjectDays5();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon5').value= 0.0;
         totalMonday();
         return false;
     }
     else if(Mondays==totalMon)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameMon5').value= 0.0;
         totalProjectDays5();
         totalMonday();
@@ -893,7 +893,7 @@ function projectTue1()
     var tuesdays,alldays;
     if(projectNameTue>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameTue1").css("border", "1px solid red");
         document.getElementById('projectNameTue1').value= parseFloat(0).toFixed(1);
         return false; 
@@ -906,14 +906,14 @@ function projectTue1()
     tuesdays=totalTuesday();
     alldays=totalProjectDays1();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue1').value= 0.0;
         totalTuesday();
         return false;
     }
     else if(tuesdays==totalTue)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue1').value= 0.0;
         totalProjectDays1();
         totalTuesday();
@@ -929,7 +929,7 @@ function projectTue2()
     var tuesdays,alldays;
     if(projectNameTue>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameTue2").css("border", "1px solid red");
         document.getElementById('projectNameTue2').value= parseFloat(0).toFixed(1);
         return false; 
@@ -942,14 +942,14 @@ function projectTue2()
     tuesdays=totalTuesday();
     alldays=totalProjectDays2();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue2').value= 0.0;
         totalTuesday();
         return false;
     }
     else if(tuesdays==totalTue)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue2').value= 0.0;
         totalProjectDays2();
         totalTuesday();
@@ -965,7 +965,7 @@ function projectTue3()
     var tuesdays,alldays;
     if(projectNameTue>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameTue3").css("border", "1px solid red");
         document.getElementById('projectNameTue3').value= parseFloat(0).toFixed(1);
         return false; 
@@ -978,14 +978,14 @@ function projectTue3()
     tuesdays=totalTuesday();
     alldays=totalProjectDays3();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue3').value= 0.0;
         totalTuesday();
         return false;
     }
     else if(tuesdays==totalTue)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue3').value= 0.0;
         totalProjectDays3();
         totalTuesday();
@@ -1001,7 +1001,7 @@ function projectTue4()
     var tuesdays,alldays;
     if(projectNameTue>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameTue4").css("border", "1px solid red");
         document.getElementById('projectNameTue4').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1014,14 +1014,14 @@ function projectTue4()
     tuesdays=totalTuesday();
     alldays=totalProjectDays4();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue4').value= 0.0;
         totalTuesday();
         return false;
     }
     else if(tuesdays==totalTue)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue4').value= 0.0;
         totalProjectDays4();
         totalTuesday();
@@ -1037,7 +1037,7 @@ function projectTue5()
     var tuesdays,alldays;
     if(projectNameTue>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameTue5").css("border", "1px solid red");
         document.getElementById('projectNameTue5').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1050,14 +1050,14 @@ function projectTue5()
     tuesdays=totalTuesday();
     alldays=totalProjectDays5();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue5').value= 0.0;
         totalTuesday();
         return false;
     }
     else if(tuesdays==totalTue)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameTue5').value= 0.0;
         totalProjectDays5();
         totalTuesday();
@@ -1073,7 +1073,7 @@ function projectWed1()
     var wednesdays,alldays;
     if(projectNameWed>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameWed1").css("border", "1px solid red");
         document.getElementById('projectNameWed1').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1087,14 +1087,14 @@ function projectWed1()
     alldays=totalProjectDays1();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed1').value= 0.0;
         totalWednesday();
         return false;
     }
     else if(wednesdays==totalWed)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed1').value= 0.0;
         totalProjectDays1();
         totalWednesday();
@@ -1110,7 +1110,7 @@ function projectWed2()
     var wednesdays,alldays;
     if(projectNameWed>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameWed2").css("border", "1px solid red");
          document.getElementById('projectNameWed2').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1124,14 +1124,14 @@ function projectWed2()
     alldays=totalProjectDays2();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed2').value= 0.0;
         totalWednesday();
         return false;
     }
     else if(wednesdays==totalWed)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed2').value= 0.0;
         totalProjectDays2();
         totalWednesday();
@@ -1147,7 +1147,7 @@ function projectWed3()
     var wednesdays,alldays;
     if(projectNameWed>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameWed3").css("border", "1px solid red");
          document.getElementById('projectNameWed3').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1161,14 +1161,14 @@ function projectWed3()
     alldays=totalProjectDays3();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed3').value= 0.0;
         totalWednesday();
         return false;
     }
     else if(wednesdays==totalWed)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed3').value= 0.0;
         totalProjectDays3();
         totalWednesday();
@@ -1184,7 +1184,7 @@ function projectWed4()
     var wednesdays,alldays;
     if(projectNameWed>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameWed4").css("border", "1px solid red");
          document.getElementById('projectNameWed4').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1198,14 +1198,14 @@ function projectWed4()
     alldays=totalProjectDays4();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed4').value= 0.0;
         totalWednesday();
         return false;
     }
     else if(wednesdays==totalWed)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed4').value= 0.0;
         totalProjectDays4();
         totalWednesday();
@@ -1221,7 +1221,7 @@ function projectWed5()
     var wednesdays,alldays;
     if(projectNameWed>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameWed5").css("border", "1px solid red");
          document.getElementById('projectNameWed5').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1235,14 +1235,14 @@ function projectWed5()
     alldays=totalProjectDays5();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed5').value= 0.0;
         totalWednesday();
         return false;
     }
     else if(wednesdays==totalWed)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameWed5').value= 0.0;
         totalProjectDays5();
         totalWednesday();
@@ -1258,7 +1258,7 @@ function projectThu1()
     var thursdays,alldays;
     if(projectNameThu>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameThu1").css("border", "1px solid red");
         document.getElementById('projectNameThu1').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1271,14 +1271,14 @@ function projectThu1()
     thursdays=totalThursday();
     alldays=totalProjectDays1();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu1').value= 0.0;
         totalThursday();
         return false;
     }
     else if(thursdays==totalThu)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu1').value= 0.0;
         totalProjectDays1();
         totalThursday();
@@ -1294,7 +1294,7 @@ function projectThu2()
     var thursdays,alldays;
     if(projectNameThu>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameThu2").css("border", "1px solid red");
         document.getElementById('projectNameThu2').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1307,14 +1307,14 @@ function projectThu2()
     thursdays=totalThursday();
     alldays=totalProjectDays2();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu2').value= 0.0;
         totalThursday();
         return false;
     }
     else if(thursdays==totalThu)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu2').value= 0.0;
         totalProjectDays2();
         totalThursday();
@@ -1330,7 +1330,7 @@ function projectThu3()
     var thursdays,alldays;
     if(projectNameThu>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameThu3").css("border", "1px solid red");
         document.getElementById('projectNameThu3').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1343,14 +1343,14 @@ function projectThu3()
     thursdays=totalThursday();
     alldays=totalProjectDays3();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu3').value= 0.0;
         totalThursday();
         return false;
     }
     else if(thursdays==totalThu)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu3').value= 0.0;
         totalProjectDays3();
         totalThursday();
@@ -1366,7 +1366,7 @@ function projectThu4()
     var thursdays,alldays;
     if(projectNameThu>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameThu4").css("border", "1px solid red");
         document.getElementById('projectNameThu4').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1379,14 +1379,14 @@ function projectThu4()
     thursdays=totalThursday();
     alldays=totalProjectDays4();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu4').value= 0.0;
         totalThursday();
         return false;
     }
     else if(thursdays==totalThu)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu4').value= 0.0;
         totalProjectDays4();
         totalThursday();
@@ -1402,7 +1402,7 @@ function projectThu5()
     var thursdays,alldays;
     if(projectNameThu>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameThu5").css("border", "1px solid red");
         document.getElementById('projectNameThu5').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1415,14 +1415,14 @@ function projectThu5()
     thursdays=totalThursday();
     alldays=totalProjectDays5();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu5').value= 0.0;
         totalThursday();
         return false;
     }
     else if(thursdays==totalThu)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameThu5').value= 0.0;
         totalProjectDays5();
         totalThursday();
@@ -1438,7 +1438,7 @@ function projectFri1()
     var fridays,alldays;
     if(projectNameFri>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameFri1").css("border", "1px solid red");
         document.getElementById('projectNameFri1').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1451,14 +1451,14 @@ function projectFri1()
     fridays=totalFriday();
     alldays=totalProjectDays1();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri1').value= 0.0;
         totalFriday();
         return false;
     }
     else if(fridays==totalFri)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri1').value= 0.0;
         totalProjectDays1();
         totalFriday();
@@ -1474,7 +1474,7 @@ function projectFri2()
     var fridays,alldays;
     if(projectNameFri>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameFri2").css("border", "1px solid red");
         document.getElementById('projectNameFri2').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1487,14 +1487,14 @@ function projectFri2()
     fridays=totalFriday();
     alldays=totalProjectDays2();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri2').value= 0.0;
         totalFriday();
         return false;
     }
     else if(fridays==totalFri)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri2').value= 0.0;
         totalProjectDays2();
         totalFriday();
@@ -1510,7 +1510,7 @@ function projectFri3()
     var fridays,alldays;
     if(projectNameFri>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameFri3").css("border", "1px solid red");
         document.getElementById('projectNameFri3').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1523,14 +1523,14 @@ function projectFri3()
     fridays=totalFriday();
     alldays=totalProjectDays3();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri3').value= 0.0;
         totalFriday();
         return false;
     }
     else if(fridays==totalFri)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri3').value= 0.0;
         totalProjectDays3();
         totalFriday();
@@ -1546,7 +1546,7 @@ function projectFri4()
     var fridays,alldays;
     if(projectNameFri>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameFri4").css("border", "1px solid red");
         document.getElementById('projectNameFri4').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1559,14 +1559,14 @@ function projectFri4()
     fridays=totalFriday();
     alldays=totalProjectDays5();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri4').value= 0.0;
         totalFriday();
         return false;
     }
     else if(fridays==totalFri)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri4').value= 0.0;
         totalProjectDays4();
         totalFriday();
@@ -1582,7 +1582,7 @@ function projectFri5()
     var fridays,alldays;
     if(projectNameFri>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameFri5").css("border", "1px solid red");
         document.getElementById('projectNameFri5').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1595,14 +1595,14 @@ function projectFri5()
     fridays=totalFriday();
     alldays=totalProjectDays5();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri5').value= 0.0;
         totalFriday();
         return false;
     }
     else if(fridays==totalFri)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameFri5').value= 0.0;
         totalProjectDays5();
         totalFriday();
@@ -1618,7 +1618,7 @@ function projectSat1()
     var saturdays,alldays;
     if(projectNameSat>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSat1").css("border", "1px solid red");
         document.getElementById('projectNameSat1').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1631,14 +1631,14 @@ function projectSat1()
     saturdays=totalSaturday();
     alldays=totalProjectDays1();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat1').value= 0.0;
         totalSaturday();
         return false;
     }
     else if(saturdays==totalSat)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat1').value= 0.0;
         totalProjectDays1();
         totalSaturday();
@@ -1654,7 +1654,7 @@ function projectSat2()
     var saturdays,alldays;
     if(projectNameSat>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSat2").css("border", "1px solid red");
         document.getElementById('projectNameSat2').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1667,14 +1667,14 @@ function projectSat2()
     saturdays=totalSaturday();
     alldays=totalProjectDays2();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat2').value= 0.0;
         totalSaturday();
         return false;
     }
     else if(saturdays==totalSat)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat2').value= 0.0;
         totalProjectDays2();
         totalSaturday();
@@ -1690,7 +1690,7 @@ function projectSat3()
     var saturdays,alldays;
     if(projectNameSat>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSat3").css("border", "1px solid red");
         document.getElementById('projectNameSat3').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1703,14 +1703,14 @@ function projectSat3()
     saturdays=totalSaturday();
     alldays=totalProjectDays3();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat3').value= 0.0;
         totalSaturday();
         return false;
     }
     else if(saturdays==totalSat)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat3').value= 0.0;
         totalProjectDays3();
         totalSaturday();
@@ -1726,7 +1726,7 @@ function projectSat4()
     var saturdays,alldays;
     if(projectNameSat>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSat4").css("border", "1px solid red");
         document.getElementById('projectNameSat4').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1739,14 +1739,14 @@ function projectSat4()
     saturdays=totalSaturday();
     alldays=totalProjectDays4();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat4').value= 0.0;
         totalSaturday();
         return false;
     }
     else if(saturdays==totalSat)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat4').value= 0.0;
         totalProjectDays4();
         totalSaturday();
@@ -1762,7 +1762,7 @@ function projectSat5()
     var saturdays,alldays;
     if(projectNameSat>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#projectNameSat5").css("border", "1px solid red");
         document.getElementById('projectNameSat5').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1775,14 +1775,14 @@ function projectSat5()
     saturdays=totalSaturday();
     alldays=totalProjectDays5();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat5').value= 0.0;
         totalSaturday();
         return false;
     }
     else if(saturdays==totalSat)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('projectNameSat5').value= 0.0;
         totalProjectDays5();
         totalSaturday();
@@ -1798,7 +1798,7 @@ function internalSunday()
     var alldays,sundays;
     if(internalSun>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#internalSun").css("border", "1px solid red");
          document.getElementById('internalSun').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1811,14 +1811,14 @@ function internalSunday()
     sundays=totalSunday();
     alldays=totalinternalDays();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalSun').value= 0.0;
         totalSunday();
         return false;
     }
     else if(sundays==totalSun)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalSun').value= 0.0;
         totalinternalDays();
         totalSunday();
@@ -1834,7 +1834,7 @@ function internalMonday()
     var alldays,mondays;
     if(internalMon>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#internalMon").css("border", "1px solid red");
          document.getElementById('internalMon').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1847,14 +1847,14 @@ function internalMonday()
     mondays=totalMonday();
     alldays=totalinternalDays();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalMon').value= 0.0;
         totalMonday();
         return false;
     }
     else if(mondays==totalMon)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalMon').value= 0.0;
         toalinternalDays();
         totalMonday();
@@ -1870,7 +1870,7 @@ function internalTuesday()
     var alldays,tuesdays;
     if(internalTue>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#internalTue").css("border", "1px solid red");
          document.getElementById('internalTue').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1884,14 +1884,14 @@ function internalTuesday()
     alldays=totalinternalDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalTue').value= 0.0;
         totalTuesday();
         return false;
     }
     else if(tuesdays==totalTue)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalTue').value= 0.0;
         totalinternalDays();
         totalTuesday();
@@ -1907,7 +1907,7 @@ function internalWednesday()
     var alldays,wednesdays;
     if(internalWed>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#internalWed").css("border", "1px solid red");
         document.getElementById('internalWed').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1920,14 +1920,14 @@ function internalWednesday()
     wednesdays=totalWednesday();
     alldays=totalinternalDays();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalWed').value= 0.0;
         totalWednesday();
         return false;
     }
     else if(wednesdays==totalWed)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalWed').value= 0.0;
         totalinternalDays();
         totalWednesday();
@@ -1943,7 +1943,7 @@ function internalThursday()
     var alldays,thursdays;
     if(internalThu>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#internalThu").css("border", "1px solid red");
         document.getElementById('internalThu').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1957,14 +1957,14 @@ function internalThursday()
     alldays=totalinternalDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalThu').value= 0.0;
         totalThursday();
         return false;
     }
     else if(thursdays==totalThu)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalThu').value= 0.0;
         totalinternalDays();
         totalThursday();
@@ -1980,7 +1980,7 @@ function internalFriday()
     var alldays,fridays;
     if(internalFri>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#internalFri").css("border", "1px solid red");
         document.getElementById('internalFri').value= parseFloat(0).toFixed(1);
         return false; 
@@ -1994,14 +1994,14 @@ function internalFriday()
     alldays=totalinternalDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalFri').value= 0.0;
         totalFriday();
         return false;
     }
     else if(fridays==totalFri)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalFri').value= 0.0;
         totalinternalDays();
         totalFriday();
@@ -2017,7 +2017,7 @@ function internalSaturday()
     var alldays,saturdays;
     if(internalSat>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#internalSat").css("border", "1px solid red");
         document.getElementById('internalSat').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2031,14 +2031,14 @@ function internalSaturday()
     alldays=totalinternalDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalSat').value= 0.0;
         totalSaturday();
         return false;
     }
     else if(saturdays==totalSat)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('internalSat').value= 0.0;
         totalinternalDays();
         totalSaturday();
@@ -2054,7 +2054,7 @@ function vacationSunday()
     var alldays,sundays;
     if(vacationSun>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#vacationSun").css("border", "1px solid red");
         document.getElementById('vacationSun').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2067,14 +2067,14 @@ function vacationSunday()
     sundays=totalSunday();
     alldays=totalvacationDays();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationSun').value= 0.0;
         totalSunday();
         return false;
     }
     else if(sundays==totalSun)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationSun').value= 0.0;
         totalvacationDays();
         totalSunday();
@@ -2090,7 +2090,7 @@ function vacationMonday()
     var alldays,mondays;
     if(vacationMon>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#vacationMon").css("border", "1px solid red");
         document.getElementById('vacationMon').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2104,14 +2104,14 @@ function vacationMonday()
     alldays=totalvacationDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationMon').value= 0.0;
         totalMonday();
         return false;
     }
     else if(mondays==totalMon)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationMon').value= 0.0;
         totalvacationDays();
         totalMonday();
@@ -2127,7 +2127,7 @@ function vacationTuesday()
     var alldays,tuesdays;
     if(vacationTue>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#vacationTue").css("border", "1px solid red");
         document.getElementById('vacationTue').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2140,14 +2140,14 @@ function vacationTuesday()
     tuesdays=totalTuesday();
     alldays=totalvacationDays();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html("<font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationTue').value= 0.0;
         totalTuesday();
         return false;
     }
     else if(tuesdays==totalTue)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationTue').value= 0.0;
         totalvacationDays();
         totalTuesday();
@@ -2163,7 +2163,7 @@ function vacationWednesday()
     var alldays,wednesdays;
     if(vacationWed>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#vacationWed").css("border", "1px solid red");
         document.getElementById('vacationWed').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2177,14 +2177,14 @@ function vacationWednesday()
     alldays=totalvacationDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationWed').value= 0.0;
         totalWednesday();
         return false;
     }
     else if(wednesdays==totalWed)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationWed').value= 0.0;
         totalvacationDays();
         totalWednesday();
@@ -2200,7 +2200,7 @@ function vacationThursday()
     var alldays,thursdays;
     if(vacationThu>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#vacationThu").css("border", "1px solid red");
         document.getElementById('vacationThu').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2214,14 +2214,14 @@ function vacationThursday()
     alldays=totalvacationDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationThu').value= 0.0;
         totalThursday();
         return false;
     }
     else if(thursdays==totalThu)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationThu').value= 0.0;
         totalvacationDays();
         totalThursday();
@@ -2237,7 +2237,7 @@ function vacationFriday()
     var alldays,fridays;
     if(vacationFri>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#vacationFri").css("border", "1px solid red");
         document.getElementById('vacationFri').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2251,14 +2251,14 @@ function vacationFriday()
     alldays=totalvacationDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationFri').value= 0.0;
         totalFriday();
         return false;
     }
     else if(fridays==totalFri)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationFri').value= 0.0;
         totalvacationDays();
         totalFriday();
@@ -2274,7 +2274,7 @@ function vacationSaturday()
     var alldays,saturdays;
     if(vacationSat>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#vacationSat").css("border", "1px solid red");
         document.getElementById('vacationSat').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2288,14 +2288,14 @@ function vacationSaturday()
     alldays=totalvacationDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationSat').value= 0.0;
         totalSaturday();
         return false;
     }
     else if(saturdays==totalSat)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('vacationSat').value= 0.0;
         totalvacationDays();
         totalSaturday();
@@ -2311,7 +2311,7 @@ function holidaySunday()
     var alldays,sundays;
     if(holidaySun>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#holidaySun").css("border", "1px solid red");
         document.getElementById('holidaySun').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2325,14 +2325,14 @@ function holidaySunday()
     alldays=totalholidayDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidaySun').value= 0.0;
         totalSunday();
         return false;
     }
     else if(sundays==totalSun)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidaySun').value= 0.0;
         totalholidayDays();
         totalSunday();
@@ -2348,7 +2348,7 @@ function holidayMonday()
     var alldays,mondays;
     if(holidayMon>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#holidayMon").css("border", "1px solid red");
         document.getElementById('holidayMon').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2362,14 +2362,14 @@ function holidayMonday()
     alldays=totalholidayDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayMon').value= 0.0;
         totalMonday();
         return false;
     }
     else if(mondays==totalMon)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayMon').value= 0.0;
         totalholidayDays();
         totalMonday();
@@ -2385,7 +2385,7 @@ function holidayTuesday()
     var alldays,tuesdays;
     if(holidayTue>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#holidayTue").css("border", "1px solid red");
         document.getElementById('holidayTue').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2399,14 +2399,14 @@ function holidayTuesday()
     alldays=totalholidayDays();
     if(alldays==all)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayTue').value= 0.0;
         totalTuesday();
         return false;
     }
     else if((tuesdays==totalTue))
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayTue').value= 0.0;
         totalholidayDays();
         totalTuesday();
@@ -2423,7 +2423,7 @@ function holidayWednesday()
     var alldays,wednesdays;
     if(holidayWed>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#holidayWed").css("border", "1px solid red");
         document.getElementById('holidayWed').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2437,14 +2437,14 @@ function holidayWednesday()
     alldays=totalholidayDays();
     if(alldays==all)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayWed').value= 0.0;
         totalWednesday();
         return false;
     }
     else if(wednesdays==totalWed)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayWed').value= 0.0;
         totalholidayDays();
         totalWednesday();
@@ -2460,7 +2460,7 @@ function holidayThursday()
     var alldays,thursdays;
     if(holidayThu>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#holidayThu").css("border", "1px solid red");
         document.getElementById('holidayThu').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2473,14 +2473,14 @@ function holidayThursday()
     thursdays=totalThursday();
     alldays=totalholidayDays();
     if(alldays==all){
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayThu').value= 0.0;
         totalThursday();
         return false;
     }
     else if (thursdays==totalThu)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayThu').value= 0.0;
         totalholidayDays();
         totalThursday();
@@ -2496,7 +2496,7 @@ function holidayFriday()
     var alldays,fridays;
     if(holidayFri>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html("<font color='red'>value must be less than 24</font>");
         $("#holidayFri").css("border", "1px solid red");
         document.getElementById('holidayFri').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2510,14 +2510,14 @@ function holidayFriday()
     alldays=totalholidayDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayFri').value= 0.0;
         totalFriday();
         return false;
     }
     else if(fridays==totalFri)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidayFri').value= 0.0;
         totalholidayDays();
         totalFriday();
@@ -2533,7 +2533,7 @@ function holidaySaturday()
     var alldays,saturdays;
     if(holidaySat>24.0)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>value must be less than 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value must be less than 24</font>");
         $("#holidaySat").css("border", "1px solid red");
         document.getElementById('holidaySat').value= parseFloat(0).toFixed(1);
         return false; 
@@ -2547,14 +2547,14 @@ function holidaySaturday()
     alldays=totalholidayDays();
     if(alldays==all)
     {
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidaySat').value= 0.0;
         totalSaturday();
         return false; 
     }
     else if(saturdays==totalSat)
     {//alert(to);
-        $("edittimesheetserror").html(" <b><font color='red'>total exceeding 24 hrs</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>total exceeding 24 hrs</font>");
         document.getElementById('holidaySat').value= 0.0;
         totalholidayDays();
         totalSaturday();
@@ -2880,7 +2880,7 @@ function totalSunday()
     // if(comptimeSun=="")
     //    comptimeSun = 0.0;
     if(totalSun>24.0){
-        $("edittimesheetserror").html(" <b><font color='red'>value exceeded 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value exceeded 24</font>");
         $("#totalSun").css("border", "1px solid red");
         return false; 
     }
@@ -2933,7 +2933,7 @@ function totalMonday()
     // if(comptimeMon=="")
     //   comptimeMon = 0.0;
     if(totalMon>24.0){
-        $("edittimesheetserror").html(" <b><font color='red'>value exceeded 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value exceeded 24</font>");
         $("#totalMon").css("border", "1px solid red");
         return false; 
     }
@@ -2983,7 +2983,7 @@ function totalTuesday()
     // if(comptimeTue=="")
     //   comptimeTue = 0.0;
     if(totalTue>24.0){
-        $("edittimesheetserror").html(" <b><font color='red'>value exceeded 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value exceeded 24</font>");
         $("#totalTue").css("border", "1px solid red");
         return false; 
     }
@@ -3033,7 +3033,7 @@ function totalWednesday()
     //if(comptimeWed=="")
     //     comptimeWed = 0.0;
     if(totalWed>24.0){
-        $("edittimesheetserror").html(" <b><font color='red'>value exceeded 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value exceeded 24</font>");
         $("#totalWed").css("border", "1px solid red");
         return false; 
     }
@@ -3085,7 +3085,7 @@ function totalThursday()
     // if(comptimeThu=="")
     //   comptimeThu = 0.0;
     if(totalThu>24.0){
-        $("edittimesheetserror").html(" <b><font color='red'>value exceeded 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value exceeded 24</font>");
         $("#totalThu").css("border", "1px solid red");
         return false; 
     }
@@ -3135,7 +3135,7 @@ function totalFriday()
     //if(comptimeFri=="")
     //  comptimeFri = 0.0;
     if(totalFri>24.0){
-        $("edittimesheetserror").html(" <b><font color='red'>value exceeded 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value exceeded 24</font>");
         $("#totalFri").css("border", "1px solid red");
         return false; 
     }
@@ -3185,7 +3185,7 @@ function totalSaturday()
     //if(comptimeSat=="")
     //  comptimeSat = 0.0;
     if(totalSat>24.0){
-        $("edittimesheetserror").html(" <b><font color='red'>value exceeded 24</font></b>");
+        $("edittimesheetserror").html(" <font color='red'>value exceeded 24</font>");
         $("#totalSat").css("border", "1px solid red");
         return false; 
     }
@@ -3463,7 +3463,7 @@ function timesheetAddOverlayDetails(){
     // alert("===>>>");
     var weekrange=$("#weekrange").val();
     //alert(weekrange);
-    if(weekrange==null || weekrange==" ")
+    if(weekrange==null || weekrange=="")
     {
         var url='../timesheets/timeSheetCheck.action';//?userid='+userid+'&usr_edu_id='+eid;
     } 
@@ -3730,13 +3730,13 @@ function getProjectsEdit()
                 // alert(req.responseText);
                 populateProjectsedit(req.responseText);
             
-                $("errorEduAdd").html(" <b><font color='green'>Record successfully Added</font></b>");
+                $("errorEduAdd").html(" <font color='green'>Record successfully Added</font>");
             // doGetLeavesData();
             //                    showEducationDetails(userid);
             } 
             else
             {
-                $("edu").html(" <b><font color='red'>Record not Added</font></b>");
+                $("edu").html(" <font color='red'>Record not Added</font>");
             //  alert("Error occured");
             }
         }
@@ -4056,7 +4056,7 @@ function dateTimesheetValidation(startDate,endDate,validatemessage)
     {
              
         // alert("hi")
-        $(validatemessage).html(" <b><font color='red'>Start date Must be less than End date</font></b>");
+        $(validatemessage).html(" <font color='red'>Start date Must be less than End date</font>");
 //        $("#startDate").css("border", "1px solid red");
 //        $("#endDate").css("border", "1px solid red");
         $(validatemessage).show().delay(4000).fadeOut();

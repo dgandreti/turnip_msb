@@ -162,11 +162,12 @@ function addRequirement()
             if (req.readyState == 4 && req.status == 200) {
                 $('#loadingAddReq').hide();
                 if(req.responseText==0){
-                    $("reqAdded").html(" <b><font color='red'>Requirement is not Added</font></b>");
+                    $("editrequirementerror").html(" <font color='red'>Requirement is not Added</font>");
                 }else
                 {
-                    $("reqAdded").html(" <b><font color='green'>Requirement Added Successfully</font></b>");
-                    requirementClearValidation();
+                     requirementClearValidation();
+                    $("editrequirementerror").html(" <font color='green'>Requirement Added Successfully</font>");
+                   
                 }
             //setPrimaryAssigned(req.responseText);
             } 
@@ -398,13 +399,13 @@ function updaterequirements(){
             if (req.readyState == 4) {
                 if (req.status == 200) {
                     $('#loadingReq').hide();
-                    $("editrequirementerror").html(" <b><font color='green'>Record updated successfully </font></b>");
+                    $("editrequirementerror").html(" <font color='green'>Requirement updated successfully </font>");
                     $("editrequirementerror").show().delay(5000).fadeOut();
                      document.getElementById("status_check").value=status;
                 }
                 else
                 {
-                    $("editrequirementerror").html(" <b><font color='red'>Record not updated</font></b>");
+                    $("editrequirementerror").html(" <font color='red'>Requirement not updated</font>");
                     $("editrequirementerror").show().delay(5000).fadeOut();
                 }
             }
@@ -507,7 +508,7 @@ function acceptNumbers(evt){
     var iKeyCode = (evt.which) ? evt.which : evt.keyCode
     if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
     {
-        $("editrequirementerror").html(" <b><font color='green'>enter only numbers</font></b>");
+        $("editrequirementerror").html(" <font color='green'>enter only numbers</font>");
         return false;
     }
     else
@@ -562,7 +563,7 @@ function RequirementMaxRate(evt){
     var iKeyCode = (evt.which) ? evt.which : evt.keyCode
     if ( iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57) )
     {
-        $("editrequirementerror").html(" <b><font color='red'>enter only numbers</font></b>");     
+        $("editrequirementerror").html(" <font color='red'>Enter only numbers</font>");     
         if(iKeyCode == 8 )
         {
             return true;       
@@ -602,7 +603,7 @@ function RequirementMinRate(evt){
     var iKeyCode = (evt.which) ? evt.which : evt.keyCode
     if ( iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57) )
     {
-        $("editrequirementerror").html(" <b><font color='red'>enter only numbers</font></b>");     
+        $("editrequirementerror").html(" <font color='red'>Enter only numbers</font>");     
         if(iKeyCode == 8)
         {
             return true;       
@@ -663,7 +664,7 @@ function durationValidation(evt)
     {
         //alert("enter only numbers ")
        
-        $("editrequirementerror").html(" <b><font color='red'>enter only numbers</font></b>");  
+        $("editrequirementerror").html(" <font color='red'>Enter only numbers</font>");  
         $("editrequirementerror").show().delay(4000).fadeOut();
         
         if(iKeyCode == 8)
@@ -714,10 +715,10 @@ function vendorReqEdit()
             var strUser5 = e5.options[e5.selectedIndex].text;
             //alert(strUser5)
             document.getElementById("reqDuration").innerHTML=strUser5;
-            var e6 = document.getElementById("billingtype");
-            var strUser6 = e6.options[e6.selectedIndex].text;
-            //alert(strUser5)
-            document.getElementById("reqVendorBillingType").innerHTML=strUser6;
+//            var e6 = document.getElementById("billingtype");
+//            var strUser6 = e6.options[e6.selectedIndex].text;
+//            //alert(strUser5)
+//            document.getElementById("reqVendorBillingType").innerHTML=strUser6;
 
         }
         var skillCategoryArry = [];    
@@ -794,42 +795,42 @@ function RequirementValidations(skillCategoryArry){
     
    if(name==""||name.length>50){
         
-        $("editrequirementerror").html(" <b><font color='red'>enter valid requirement name</font></b>");
+        $("editrequirementerror").html("<font color='red'>Enter requirement title</font>");
         $("#RequirementName").css("border", "1px solid red");
         return false;
     }
    if(fromValue==""){
        
-        $("editrequirementerror").html(" <b><font color='red'>fromdate field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>From date field is required</font>");
         $("#RequirementFrom").css("border", "1px solid red");
         return false;
     }
     if(taxterm=="DF"){
-        $("editrequirementerror").html(" <b><font color='red'>Type field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>Type field is required</font>");
         $("#RequirementTaxTerm").css("border", "1px solid red");
         return false;
     }
     if(contact1=="-1"){
         
-        $("editrequirementerror").html(" <b><font color='red'>Approver field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>Approver field is required</font>");
         $("#RequirementContact1").css("border", "1px solid red");
         return false;
     }
      if(noofresources==""||noofresources.length>9){
        
-        $("editrequirementerror").html(" <b><font color='red'>enter valid Positions field value</font></b>");
+        $("editrequirementerror").html("<font color='red'>Enter valid Positions field value</font>");
         $("#RequirementNoofResources").css("border", "1px solid red");
         return false;
     }
    if(targetrate==""||targetrate.length>10){
       
-        $("editrequirementerror").html(" <b><font color='red'>enter valid minimum rate</font></b>");
+        $("editrequirementerror").html("<font color='red'>Enter valid minimum rate</font>");
         $("#RequirementTargetRate").css("border", "1px solid red");
         return false;
     } 
     if(requirementMaxRate==""||requirementMaxRate.length>10){
       
-        $("editrequirementerror").html(" <b><font color='red'>enter valid maximum rate</font></b>");
+        $("editrequirementerror").html("<font color='red'>Enter valid maximum rate</font>");
         $("#requirementMaxRate").css("border", "1px solid red");
         return false;
     }
@@ -837,20 +838,20 @@ function RequirementValidations(skillCategoryArry){
     var diff=requirementMaxRate-targetrate;
     if(diff <= 0)
     {
-        $("editrequirementerror").html("<b><font color='red'>Maximum rate should be Greater than Minimum rate</font></b>");
+        $("editrequirementerror").html("<font color='red'>Maximum rate should be Greater than Minimum rate</font>");
         $("#requirementMaxRate").css("border","1px solid red");
         return false;
     } 
      if(contact2=="-1"){
    
-        $("editrequirementerror").html(" <b><font color='red'>Requisitioner field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>Requisitioner field is required</font>");
         $("#RequirementContact2").css("border", "1px solid red");
         return false;
     }
     if(taxterm!="PE") {
         if(duration==""||duration.length>10){
         
-            $("editrequirementerror").html(" <b><font color='red'>enter valid duration</font></b>");
+            $("editrequirementerror").html("<font color='red'>Enter valid duration</font>");
             $("#RequirementDuration").css("border", "1px solid red");
             return false;
         }
@@ -860,46 +861,46 @@ function RequirementValidations(skillCategoryArry){
    
         if(requirementDurationDescriptor=="-1")
         {
-            $("editrequirementerror").html("<b><font color='red'>enter hrs/weeks/months</font></b>");
+            $("editrequirementerror").html("<font color='red'>Enter hrs/weeks/months</font>");
             $("#requirementDurationDescriptor").css("border","1px solid red");
             return false;
         }
     }
     if(billingContact=="DF"){
-        $("editrequirementerror").html(" <b><font color='red'>billingContact field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>BillingContact field is required</font>");
         $("#billingContact").css("border", "1px solid red");
         return false;
     }
     if(location=="DF"){
-        $("editrequirementerror").html(" <b><font color='red'>location field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>Location field is required</font>");
         $("#RequirementLocation").css("border", "1px solid red");
         return false;
     }
     if(Years==-1){
         
-        $("editrequirementerror").html(" <b><font color='red'>Experience field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>Experience field is required</font>");
         $("#RequirementYears").css("border", "1px solid red");
         return false;
     }
     if(requirementQualification==""){
        
-        $("editrequirementerror").html(" <b><font color='red'>Qualification field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>Qualification field is required</font>");
         $("#requirementQualification").css("border", "1px solid red");
         return false;
     } 
     if(jobdesc==""){
-        $("editrequirementerror").html(" <b><font color='red'>job desc field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>Job description field is required</font>");
         $("#RequirementJobdesc").css("border", "1px solid red");
         return false;
     }
      if(responsibilities==""){
-        $("editrequirementerror").html(" <b><font color='red'>responsibilities field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>Responsibilities field is required</font>");
         $("#RequirementResponse").css("border", "1px solid red");
         return false;
     }
     if(skillCategoryArry==""){
        
-        $("editrequirementerror").html(" <b><font color='red'>Skill field is required</font></b>");
+        $("editrequirementerror").html("<font color='red'>Skill field is required</font>");
         $("#skillCategoryValue").css("border", "1px solid red");
         return false;
     } 
@@ -928,15 +929,13 @@ function RequirementValidations(skillCategoryArry){
   return true;
     }
     
-    function clearFormFields()
-{
+    function clearFormFields(){
+
    // alert(type)
     document.getElementById('RequirementName').value= "";
     document.getElementById('RequirementFrom').value = "";
     //document.getElementById('RequirementTaxTerm').value = type;
     document.getElementById('RequirementContact1').selectedIndex = "0";
-    
-    
     
     document.getElementById('RequirementNoofResources').value = "";
     document.getElementById('RequirementTargetRate').value = "";
@@ -954,11 +953,56 @@ function RequirementValidations(skillCategoryArry){
     document.getElementById('RequirementJobdesc').value = "";
     document.getElementById('RequirementResponse').value = "";
     
-   
-    
      $("#skillCategoryValue").selectivity('clear');
      $("#preSkillCategoryValue").selectivity('clear');
     //    document.getElementById('RequirementDescription').value = "";
     document.getElementById('RequirementComments').value= "";
-    
+}
+
+function addRequirementSkillChange(){
+
+    var reqCatId = document.getElementById('reqCategoryValue').value;
+
+    alert("reqCategoryValue----->"+reqCatId)
+   
+    if ($("div").is("#skillCategoryValue"))
+    {
+        $("#skillCategoryValue").remove();
+        $(".skills").after('<select id="skillCategoryValue" class=" "  onclick="" multiple="multiple" tabindex="10" name="skillCategoryValue "><option value="-1">Select Req.Category</option></select>');
+    }
+    var url = CONTENXT_PATH + '/recruitment/consultant/getSkillsBasedOnPrimarySkill.action?priSkillId=' + reqCatId; 
+    //alert("url--->"+url)
+    var req = initRequest(url);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            requirementSkillsChanging(req.responseText); 
+           document.getElementById("skillCategoryValue").disabled = false;
+        }
+    };
+    req.open("GET", url, "true");
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.send(null);
+}
+
+function requirementSkillsChanging(data) {
+  // alert("response---->"+data);
+    //var topicId = document.getElementById("skillCategoryValue");
+    var flag = data.split("FLAG");
+    var addList = flag[0].split("^");
+    var $select = $('#skillCategoryValue');
+    $select.find('option').remove();
+    for (var i = 0; i < addList.length - 1; i++) {
+        var Values = addList[i].split("#");
+        {
+            $('<option>').val(Values[0]).text(Values[1]).appendTo($select);
+        }
+    }
+
+    $('#skillCategoryValue').selectivity({
+        multiple: true,
+        placeholder: 'Type to search Categories'
+
+    });
+    $("#skillCategoryValue").show();
+    $(".skills").show();
 }

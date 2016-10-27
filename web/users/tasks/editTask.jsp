@@ -101,7 +101,7 @@
 
         <sx:head />
     </head>
-    <body onload="doOnLoad(); init(); getTaskType(); " style="overflow-x: hidden">
+    <body onload="doOnLoad(); init(); getTaskType(); " oncontextmenu="return false" style="overflow-x: hidden">
          <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
@@ -127,7 +127,13 @@
                                     <div class="panel panel-info">
                                         <div class="panel-heading" id="taskedit-heading">
                                             <font class="titleColor">&nbsp;&nbsp;&nbsp;Edit Task  </font>  
-                                            <span class="pull-right"><a href="#" id="editTaskSearchBackButtton" style="margin-right:9px" onclick="history.back();return false;"><i class="fa fa-undo"></i></a></span>
+                                           <s:if test="myTask=='mytaskflag'">
+                                            <span class="pull-right"><a href="doTasksSearch.action" id="editTaskSearchBackButtton" style="margin-right:9px" ><i class="fa fa-undo"></i></a></span>
+                                            </s:if>
+                                            <s:else>
+                                              <span class="pull-right"><a href="doTeamTasksSearch.action" id="editTaskSearchBackButtton" style="margin-right:9px" ><i class="fa fa-undo"></i></a></span>   
+                                            </s:else>
+                                              <s:hidden id="myTask"  value="%{myTask}"></s:hidden>
                                         </div>
                                         <div class="panel-body" id="panel-task-body" >
                                             <!-- Nav tabs -->
@@ -152,6 +158,7 @@
                                                                         <label class="labelStylereq" style="color: #56a5ec;">StartDate </label>
                                                                         <div class="calImage"><s:textfield cssClass="form-control " name="startDate" id="start_date"  value="%{tasksVto.start_date}" tabindex="1"  onkeypress="return enterTaskDateRepository(this)"><i class="fa fa-calendar"></i></s:textfield>
                                                                         <s:hidden name="taskid" value="%{taskid}" id="taskid"/>
+                                                                          <s:hidden id="addTaskPage" value="1" name="addTaskPage"/>  
                                                                         </div></div>
                                                                     <div class="col-sm-4 required">
                                                                         <label class="labelStylereq" style="color: #56a5ec;">EndDate </label>
@@ -176,7 +183,8 @@
                                                                     </div>
                                                                     <div class="col-sm-4" id="csrDiv">
                                                                         <label class="labelStylereq" style="color: #56a5ec;">Projects </label>
-                                                                        <s:select  id="taskType"   name="taskType" cssClass="SelectBoxStyles form-control" headerKey="-1"  theme="simple" list="%{tasksVto.typeMaps}" value="%{tasksVto.task_prj_related_to}" tabindex="6" onchange="getRelatedNames();" />
+                                                                        <s:select  id="taskType"   name="taskType" cssClass="SelectBoxStyles form-control" headerKey="-1"  theme="simple" list="%{tasksVto.typeMaps}" value="%{tasksVto.task_prj_related_to}" tabindex="6" onchange="changeProject();" />
+                                                                        <s:hidden name="taskProject" value="%{tasksVto.task_prj_related_to}" id="taskProject"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -219,7 +227,7 @@
                                                                     <div class="col-sm-4">
                                                                         <label class="labelStylereq" style="color: #56a5ec;">Secondary AssignTo</label>
                                                                         <s:hidden id="secondaryAssign" value="%{tasksVto.sec_assigned_to}"/>
-                                                                        <s:textfield  id="secondaryReport"  name="sec_assign_to"  placeholder="SecondaryAssignTo" cssClass="form-control"  theme="simple" onkeyup="return getSecondaryAssignedNames();" value="%{tasksVto.sec_assigned_to}" autocomplete='off' tabindex="10" maxLength="30"/>
+                                                                        <s:textfield  id="secondaryReport"  name="sec_assign_to"  placeholder="SecondaryAssignTo" cssClass="form-control"  theme="simple" onkeyup="return getSecondaryAssignedNames();" value="%{tasksVto.sec_assigned_to}" autocomplete='off' tabindex="10" maxLength="30" onblur="removingValidateMsg()"/>
                                                                     </div> 
                                                                     </s:else>
                                                                 </div>
@@ -239,7 +247,8 @@
                                                         <div class="overlayOrButton_color">
                                                             <table>
                                                                 <tr><td style=""><h4><font color="#ffffff">&nbsp;&nbsp;Task Attachments Details&nbsp;&nbsp; </font></h4></td>
-                                                                <span class=" pull-right"><h5><a href="" class="taskAttachments_popup_close" onclick="attachementPopUp()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span>
+                                                              <td style="">  <span class=" pull-right"><h5><a href="" class="taskAttachments_popup_close" onclick="attachementPopUp()"><i class="fa fa-times-circle-o fa-size"></i></a>&nbsp;</h5></span></td>
+                                                            </tr>
                                                             </table>
                                                         </div>
                                                         <div>
@@ -547,9 +556,9 @@
                 </div>
             </div>
         </footer><!--/Footer-->
-         <script type="text/JavaScript">
+<!--         <script type="text/JavaScript">
             $("#validationMessage").show().delay(5000).fadeOut();
-        </script>
+        </script>-->
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/javascript">
             var flag=document.getElementById("downloadFlag").value;

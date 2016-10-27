@@ -80,6 +80,25 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
     private Map countryList;
     private String home;
     private String email_ext;
+    
+    private int regionId;
+    private int priSkillId;
+
+    public int getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(int regionId) {
+        this.regionId = regionId;
+    }
+
+    public int getPriSkillId() {
+        return priSkillId;
+    }
+
+    public void setPriSkillId(int priSkillId) {
+        this.priSkillId = priSkillId;
+    }
 
     public GeneralAction() {
     }
@@ -422,6 +441,33 @@ public class GeneralAction extends ActionSupport implements ServletRequestAware,
          System.out.println("********************GeneralAction :: getState Action End*********************");
         return null;
     }
+    
+    /**
+             ***********************************************
+             *
+             * @getStateBasedOnRegion() to get the states of country region wise
+             *
+             *
+             ***********************************************
+             */
+
+    public String getStateBasedOnRegion() {
+        System.out.println("********************GeneralAction :: getStateBasedOnRegion Action Start*********************");
+        try {
+            String states = dataSourceDataProvider.getInstance().getStatesOfCountryBasedOnRegion(getRegionId(),getId());
+            httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            httpServletResponse.setHeader("Pragma", "no-cache");
+            httpServletResponse.setDateHeader("Expires", 0);
+            httpServletResponse.setContentType("text");
+            httpServletResponse.setCharacterEncoding("UTF-8");
+            httpServletResponse.getWriter().write(states);
+        } catch (Exception ex) {
+            httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
+            //resultType = ERROR;
+        }
+        System.out.println("********************GeneralAction :: getStateBasedOnRegion Action End*********************");
+        return null;
+    }
 
     /**
      * *******************************************************************
@@ -618,6 +664,34 @@ public String doMailExtensionVerify() throws ServiceLocatorException {
              System.out.println("********************GeneralAction :: doMailExtensionVerify Action End*********************");
         return null;
     } 
+
+/**
+             ***********************************************
+             *
+             * @getSkillsBasedOnPrimarySkill() to get the skills of primary role
+             *
+             *
+             ***********************************************
+             */
+
+    public String getSkillsBasedOnPrimarySkill() {
+        System.out.println("********************GeneralAction :: getSkillsBasedOnPrimarySkill Action Start*********************");
+        try {
+            String skills = dataSourceDataProvider.getInstance().getSkillsBasedOnPrimarySkill(getPriSkillId());
+            System.out.println("skillbasedonPrimamrySkill---->"+skills);
+            httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            httpServletResponse.setHeader("Pragma", "no-cache");
+            httpServletResponse.setDateHeader("Expires", 0);
+            httpServletResponse.setContentType("text");
+            httpServletResponse.setCharacterEncoding("UTF-8");
+            httpServletResponse.getWriter().write(skills);
+        } catch (Exception ex) {
+            httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
+            //resultType = ERROR;
+        }
+        System.out.println("********************GeneralAction :: getSkillsBasedOnPrimarySkill Action End*********************");
+        return null;
+    }
 
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;

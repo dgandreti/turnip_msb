@@ -76,7 +76,7 @@
 
 
 
-    <body style="overflow-x: hidden" onload="getEmployeeNames();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="getEmployeeNames();">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">

@@ -41,6 +41,7 @@
             }
 
 function ResponseCheckCharacters(id){
+    $("#ResponsecharNum").show();
     $(id).keyup(function(){
         el = $(this);
         if(el.val().length >= 200){
@@ -54,6 +55,7 @@ function ResponseCheckCharacters(id){
         }
 
     })
+    $("#ResponsecharNum").fadeout(3000);
     return false;
 };
 
@@ -188,7 +190,7 @@ function urlCheck(textBoxId,errorTextId){
   }
   $.ajax({
     type:'POST',
-    url: 'MSB/acc/ajaxAccountURLCheck?accountURLCheck='+$(textBoxId).val(),
+    url: CONTENXT_PATH+'/acc/ajaxAccountURLCheck?accountURLCheck='+$(textBoxId).val(),
     dataType:'text',
     success:function(data,stat,xhr){
       console.log('RESPONSE SAYS '+data+" " + xhr.getResponseHeader('urlexists'));
@@ -233,7 +235,7 @@ function nameCheck(textBoxId,errorTextId){
   }
   $.ajax({
     type:'POST',
-    url: 'MSB/acc/ajaxAccountNameCheck?accountNameCheck='+$(textBoxId).val(),
+    url: CONTENXT_PATH+'/acc/ajaxAccountNameCheck?accountNameCheck='+$(textBoxId).val(),
     dataType:'text',
     success:function(data,stat,xhr){
       console.log('RESPONSE SAYS '+data+" " + xhr.getResponseHeader('exists'));
@@ -296,7 +298,7 @@ function getValidExtention(){
   if(mailExtention.match(emailExp))
       {
           //alert("fine")
-               var url="MSB/acc/mailext_Check.action?email_ext="+mailExtention;
+               var url=CONTENXT_PATH+"/acc/mailext_Check.action?email_ext="+mailExtention;
        // alert("url-->"+url);
         var req = initRequest(url);
         req.onreadystatechange = function() {
@@ -304,7 +306,7 @@ function getValidExtention(){
                 if (req.status == 200) {
                    // alert(req.responseText);
                     if(req.responseText=="Not Exist"){
-                        $("#orgExtCheckSpan").html("  <b><font color='green'><br>Mail Extension is Available</font></b>");
+                        $("#orgExtCheckSpan").html("  <font color='green'><br>Mail Extension is Available</font>");
                         $("#email_ext").css("border", "1px solid green");
                         setTimeout(function(){
                             $("#email_ext").css('border', '');
@@ -313,7 +315,7 @@ function getValidExtention(){
                     }
                     else{
                         document.getElementById("email_ext").value="";
-                        $("#orgExtCheckSpan").html(" <b><font color=red><br>Mail Extension Already Exists !</font></b>");
+                        $("#orgExtCheckSpan").html(" <font color=red><br>Mail Extension Already Exists !</font>");
                         $("#email_ext").css("border", "1px solid red");
                         setTimeout(function(){
                             $("#email_ext").css('border', '');
@@ -614,13 +616,12 @@ function noeValidate(event)
 }
 
 function clearform() {
-//    alert("hi clearform");
+   // alert("hi clearform");
     $('#resultMessage').html(" ");
     $('#errorMessage').html(" ");
     $("#revenueValidation").html("");
-    $("#employeeValidation").html("");
-    $("#acc_revenue").css("border", "1px solid green");
-    $("#acc_no_of_employees").css("border", "1px solid green");
+   // $("#acc_revenue").css("border", "1px solid green");
+   // $("#acc_no_of_employees").css("border", "1px solid green");
     $('#succMessage').html(" ");
    // document.getElementById('acc_form').value="";
     document.getElementById('account_name').value="";
@@ -631,7 +632,7 @@ function clearform() {
     document.getElementById('address2').value="";
     document.getElementById('acc_city').value="";
     document.getElementById('acc_zip').value="";
-    document.getElementById('acc_country').value="";
+  //  document.getElementById('acc_country').value="3";
     document.getElementById('acc_state').value="";
     document.getElementById('phone1').value="";
     document.getElementById('fax').value="";
@@ -640,8 +641,13 @@ function clearform() {
     document.getElementById('acc_territory').value="";
     document.getElementById('acc_no_of_employees').value="";
     document.getElementById('acc_tax_id').value="";
-    document.getElementById('acc_stock_symbol').value="";
+  //  document.getElementById('acc_stock_symbol').value="";
     document.getElementById('acc_revenue').value="";
     document.getElementById('description').value="";
+    
+     $("#employeeValidation").html("");
         
+}
+function accountSearchRedirecton(){
+    window.location=CONTENXT_PATH+"/acc/searchAccountsBy.action";
 }

@@ -16,7 +16,7 @@ public interface TaskHandlerService {
 
     public List getEmployeeTasksDetails(TaskHandlerAction taskHandlerAction) throws ServiceLocatorException;
 
-    public List getLoggedInEmpTasksDetails( TaskHandlerAction taskHandlerAction) throws ServiceLocatorException;
+    public List getLoggedInEmpTasksDetails( TaskHandlerAction taskHandlerAction,int usrPriRole,String usrType) throws ServiceLocatorException;
 
     public List getLoggedInTeamTasksDetails( TaskHandlerAction taskHandlerAction) throws ServiceLocatorException;
 

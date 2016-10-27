@@ -29,6 +29,8 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.toggle.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/CountriesAjax.js"/>"></script>
+        
+        <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/AppConstants.js"/>"></script>
     
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/vendorAjax.js"/>'></script> 
         <script type="text/JavaScript" src="<s:url value="/includes/js/onlineexam/onlineexamAjax.js"/>"></script>
@@ -67,7 +69,7 @@
 
 
     </head>
-    <body>
+    <body oncontextmenu="return false">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

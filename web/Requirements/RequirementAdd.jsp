@@ -89,7 +89,7 @@
         </script>
     </head>
 
-    <body style="overflow-x: hidden" onload="showHideDuration();doOnLoadRequirement();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="showHideDuration();doOnLoadRequirement();">
         <div id="wrap">  
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -166,7 +166,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <label class="labelStylereq " style="color:#56a5ec;">Req.Category</label>
-                                                                <s:select id="reqCategoryValue" name="reqCategoryValue" cssClass="SelectBoxStyles form-control"  theme="simple" list="%{reqCategory}" value="%{requirementVTO.reqCatgory}"/>
+                                                                <s:select id="reqCategoryValue" name="reqCategoryValue" cssClass="SelectBoxStyles form-control" headerValue="Select Category" headerKey="-1"  theme="simple" list="%{reqCategory}" value="%{requirementVTO.reqCatgory}" onchange="addRequirementSkillChange();"/>
                                                             </div>
                                                             <div class="col-sm-3 required" id="">
                                                                 <label class="labelStyle" id="labelLevelStatusReq">From </label> <div class="calImage"><s:textfield cssClass="form-control"  id="RequirementFrom" placeholder="StartDate" value="%{requirementVTO.RequirementFrom}" onkeypress="return enterDateRepository();" cssStyle="z-index: 10000004;" onfocus="removeErrorMessages()"><i class="fa fa-calendar"></i></s:textfield></div>
@@ -215,7 +215,7 @@
                                                         <div class="col-sm-14">
                                                             <div class="col-sm-6 ">
                                                                 <span class="required">
-                                                                    <label class="labelStyle " id="labelLevelStatusReq">Skill&nbsp;Set </label> <s:select cssClass="" name="skillCategoryValue"  id="skillCategoryValue" list="skillValuesMap" multiple="true" onfocus="removeErrorMessages()" value="%{requirementVTO.skillSetList}"/> 
+                                                                    <label class="labelStyle skills" id="labelLevelStatusReq">Skill&nbsp;Set </label> <s:select cssClass="" name="skillCategoryValue"  id="skillCategoryValue" list="{}" multiple="true" onfocus="removeErrorMessages()"/> 
                                                                 </span>
                                                             </div>
                                                             <div class="col-sm-6 ">
@@ -234,7 +234,7 @@
                                                         </div>
                                                         <div class="col-sm-6 pull-right "> 
                                                             <div class="col-sm-2 contact_search pull-right">
-                                                                <s:reset  id="requirementClear" cssStyle="margin:5px 0px;" cssClass="add_searchButton  form-control fa fa-eraser" value="Clear" theme="simple"  onfocus="removeErrorMessages()" onclick="return clearFormFields()"/> &nbsp;    
+                                                                <input type="button"  id="requirementClear" style="margin:5px 0px;" class="add_searchButton  form-control fa fa" value="&#xf12d; Clear" theme="simple"  onfocus="removeErrorMessages()" onclick="clearFormFields()"/> &nbsp;    
                                                             </div>
                                                             <div class="col-sm-2 contact_search pull-right">
                                                                 <s:submit type="button" id="requirementSubmit" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-check-circle-o  form-control"  onclick="return addRequirement()" value="submit" theme="simple"/>

@@ -44,10 +44,14 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/Ajax/sowAjax.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/sweetalert.min.js"/>"></script>
 
-
+        <script>
+           function hideLoadingImage(){
+               document.getElementById('loadingInvoiceSearch').style.display = "none";
+           } 
+        </script>
     </head>
 
-    <body>
+    <body oncontextmenu="return false" onload="hideLoadingImage();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -189,7 +193,7 @@
                         </div>
                         <span id="invResultMessage"></span>
                         <s:hidden name="invCreatedBy"  id="invCreatedBy"/>
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 required">
                             <label>Subject</label>
                             <s:textarea id="invoiceEmailSubject" name="invoiceEmailSubject" cssClass="form-control"  theme="simple"/>
                             <label>Body Content</label>

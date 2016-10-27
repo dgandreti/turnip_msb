@@ -56,59 +56,59 @@ function doOnLoadRequirement() {
     
       if(name==""||name.length>50){
         
-        $("editrequirementerror").html(" <b><font color='red'>enter valid requirement name</font></b>");
+        $("editrequirementerror").html(" <font color='red'>enter valid requirement name</font>");
         $("#RequirementName").css("border", "1px solid red");
         return false;
     }
     if(fromValue==""){
        
-        $("editrequirementerror").html(" <b><font color='red'>fromdate field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>fromdate field is required</font>");
         $("#RequirementFrom").css("border", "1px solid red");
         return false;
     }
     if(toValue==""){
-        $("editrequirementerror").html(" <b><font color='red'>to date is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>to date is required</font>");
         $("#RequirementTo").css("border", "1px solid red");
         return false;
     }
        if(duration==""||duration.length>10){
         
-        $("editrequirementerror").html(" <b><font color='red'>enter valid duration</font></b>");
+        $("editrequirementerror").html(" <font color='red'>enter valid duration</font>");
         $("#RequirementDuration").css("border", "1px solid red");
         return false;
     }
      if(noofresources==""||noofresources.length>9){
        
-        $("editrequirementerror").html(" <b><font color='red'>enter valid noofresources field value</font></b>");
+        $("editrequirementerror").html(" <font color='red'>enter valid noofresources field value</font>");
         $("#RequirementNoofResources").css("border", "1px solid red");
         return false;
     }
      if(targetrate==""||targetrate.length>10){
       
-        $("editrequirementerror").html(" <b><font color='red'>enter valid target value</font></b>");
+        $("editrequirementerror").html(" <font color='red'>enter valid target value</font>");
         $("#RequirementTargetRate").css("border", "1px solid red");
         return false;
     }
     if(taxterm=="DF"){
-        $("editrequirementerror").html(" <b><font color='red'>taxterm field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>taxterm field is required</font>");
         $("#RequirementTaxTerm").css("border", "1px solid red");
         return false;
     }
        if(location=="DF"){
-        $("editrequirementerror").html(" <b><font color='red'>location field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>location field is required</font>");
         $("#RequirementLocation").css("border", "1px solid red");
         return false;
     }
     if(contact1=="-1"){
         
-        $("editrequirementerror").html(" <b><font color='red'>contact1 field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>contact1 field is required</font>");
         $("#RequirementContact1").css("border", "1px solid red");
         return false;
     }
     
      if(contact2=="-1"){
    
-        $("editrequirementerror").html(" <b><font color='red'>contact2 field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>contact2 field is required</font>");
         $("#RequirementContact2").css("border", "1px solid red");
         return false;
     }
@@ -117,7 +117,7 @@ function doOnLoadRequirement() {
     
    if(reason=="DF"){
        
-        $("editrequirementerror").html(" <b><font color='red'> reason field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'> reason field is required</font>");
         $("#RequirementReason").css("border", "1px solid red");
         return false;
     }
@@ -125,31 +125,31 @@ function doOnLoadRequirement() {
      
   
     if(presales1=="-1"){
-        $("editrequirementerror").html(" <b><font color='red'>presales1 field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>presales1 field is required</font>");
         $("#RequirementPresales1").css("border", "1px solid red");
         return false;
     }
      if(presales2=="-1"){
-        $("editrequirementerror").html(" <b><font color='red'>presales2 field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>presales2 field is required</font>");
         $("#RequirementPresales2").css("border", "1px solid red");
         return false;
     }
    if(status=="DF"){
      
-        $("editrequirementerror").html(" <b><font color='red'>status field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>status field is required</font>");
         $("#RequirementStatus").css("border", "1px solid red");
         return false;
     }
  
    if(Exp=="DF"){
         
-        $("editrequirementerror").html(" <b><font color='red'>type field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>type field is required</font>");
         $("#RequirementExp").css("border", "1px solid red");
         return false;
     }
     if(practice=="-1"){
         
-        $("editrequirementerror").html(" <b><font color='red'>practice field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>practice field is required</font>");
         $("#RequirementPractice").css("border", "1px solid red");
         return false;
     }
@@ -157,58 +157,58 @@ function doOnLoadRequirement() {
    
    
     if(contactno==""){
-        $("editrequirementerror").html(" <b><font color='red'>contact number field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>contact number field is required</font>");
         $("#RequirementContactNo").css("border", "1px solid red");
         return false;
     }
     
     if(state=="-1"){
-        $("editrequirementerror").html(" <b><font color='red'>state field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>state field is required</font>");
         $("#RequirementState").css("border", "1px solid red");
         return false;
     }
     if(country=="-1"){
-        $("editrequirementerror").html(" <b><font color='red'>Country field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>Country field is required</font>");
         $("#RequirementCountry").css("border", "1px solid red");
         return false;
     }
      if(address==""){
-        $("editrequirementerror").html(" <b><font color='red'>address field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>address field is required</font>");
         $("#RequirementAddress").css("border", "1px solid red");
         return false;
     }
     if(responsibilities==""){
-        $("editrequirementerror").html(" <b><font color='red'>responsibilities field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>responsibilities field is required</font>");
         $("#RequirementResponse").css("border", "1px solid red");
         return false;
     }
     if(jobdesc==""){
-        $("editrequirementerror").html(" <b><font color='red'>job desc field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>job desc field is required</font>");
         $("#RequirementJobdesc").css("border", "1px solid red");
         return false;
     }
      if(skill==""){
        
-        $("editrequirementerror").html(" <b><font color='red'>skill set field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>skill set field is required</font>");
         $("#RequirementSkills").css("border", "1px solid red");
         return false;
     }
     if(preferredSkills==""){
-         $("editrequirementerror").html(" <b><font color='red'>preferred skills field is required</font></b>");
+         $("editrequirementerror").html(" <font color='red'>preferred skills field is required</font>");
         $("#RequirementPreferredSkills").css("border", "1px solid red");
         return false;
     }
     
      if(desc==""){
        
-        $("editrequirementerror").html(" <b><font color='red'>description field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>description field is required</font>");
         $("#RequirementDescription").css("border", "1px solid red");
         return false;
     }
     
      if(comment==""){
       
-        $("editrequirementerror").html(" <b><font color='red'>comments field is required</font></b>");
+        $("editrequirementerror").html(" <font color='red'>comments field is required</font>");
         $("#RequirementComments").css("border", "1px solid red");
         return false;
     }
@@ -220,7 +220,7 @@ function doOnLoadRequirement() {
     //alert(fromValue+" and "+toValue)
     if (Date.parse(fromValue) >= Date.parse(toValue)) {
         //alert("Invalid Date Range!\nFrrom Date cannot be after To Date!")
-        $("editrequirementerror").html(" <b><font color='red'>Invalid Date Range!\nFrrom Date cannot be after To Date!</font></b>");
+        $("editrequirementerror").html(" <font color='red'>Invalid Date Range!\nFrrom Date cannot be after To Date!</font>");
         $("#RequirementFrom").css("border", "1px solid red");
         $("#RequirementTo").css("border", "1px solid red");
 
@@ -315,12 +315,12 @@ function updaterequirements(){
     req.onreadystatechange = function() {
        
         if (req.readyState == 4 && req.status == 200) {
-              $("editrequirementerror").html(" <b><font color='green'>Record updated successfully </font></b>");
+              $("editrequirementerror").html(" <font color='green'>Record updated successfully </font>");
                   
         }
         else
                 {
-                    $("editrequirementerror").html(" <b><font color='red'>Record not updated</font></b>");
+                    $("editrequirementerror").html(" <font color='red'>Record not updated</font>");
                 //  alert("Error occured");
                 }
     };

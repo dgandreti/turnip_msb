@@ -115,9 +115,16 @@
                 $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
                 //responsive code end
             };
+            </script>
+            <script>
+              function disableBack(){
+            window.location.hash="no-back-button";
+            window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
+            window.onhashchange=function(){window.location.hash="";}
+            }
         </script>
     </head>
-    <body>
+    <body oncontextmenu="return false" onload="disableBack();">
 
         <div id="wrap">
             <header id="header"><!--header-->

@@ -37,7 +37,7 @@
         <!-- end of js -->
 
     </head>
-    <body>
+    <body oncontextmenu="return false">
         <header id="header"><!--header-->
             <div class="header_top" id="header_top"><!--header_top-->
                 <div class="container">

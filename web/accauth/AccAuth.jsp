@@ -57,7 +57,7 @@
            
         </script>
     </head>
-    <body style="overflow-x: hidden" onload="onLoad();">
+    <body oncontextmenu="return false" style="overflow-x: hidden" onload="onLoad();">
         <div id="wrap">
 
             <header id="header"><!--header-->

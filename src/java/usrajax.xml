@@ -156,6 +156,7 @@
                 <param name="actionName">../../users/tasks/getTaskDetails.action</param>
                 <param name="taskid">${taskid}</param>
                 <param name="downloadFlag">${downloadFlag}</param>
+                  <param name="myTask">${myTask}</param>
             </result>
             <!-- <result>TaskDetails.jsp</result>     -->
         </action>

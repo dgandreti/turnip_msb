@@ -59,7 +59,7 @@
             }
         </script>
     </head>
-    <body style="overflow-x: hidden" onload="onLoad();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="onLoad();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -188,9 +188,12 @@
                                                                             <s:a href='%{#myUrl}'><s:property value="noOfAccounts"></s:property></s:a>
                                                                                 </td>
                                                                                 <td>
-                                                                            <%-- <s:a href="#" cssClass="csrTerminateOverlay_popup_open" onclick="csrTerminateOverlay();csrTerminateOverlayValue('%{first_name}','%{empId}')"><img src="<s:url value="/includes/images/delete-button.jpg"/>" height="25" width="25"></s:a></td>--%>
+                                                                           <s:if test="noOfAccounts!=0">
                                                                             <s:a href="#" onclick="csrTermination('%{empId}');"><img src="<s:url value="/includes/images/delete.png"/>" height="25" width="25"></s:a></td>
-                                                                        </tr>
+                                                                            </s:if>
+                                                                            <s:else>
+                                                                            <img style="opacity: 0.2" src="<s:url value="/includes/images/delete.png"/>" height="25" width="25" >
+                                                                            </s:else>    </tr>
                                                                 </s:iterator>
                                                             </tbody>
                                                         </table>

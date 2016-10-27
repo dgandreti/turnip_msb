@@ -79,7 +79,7 @@
         </script>
 
     </head>
-    <body onload="costCenterPagination();doOnLoadCostCenter();">
+    <body oncontextmenu="return false" onload="costCenterPagination();doOnLoadCostCenter();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -501,10 +501,11 @@
                                                                 label="Comments on Approve"
                                                                 value="" onkeydown="checkCharactersProjects(this)"   
                                                                 onfocus="return removesMsg();"/>
+                                                     <div class="charNum" id="charNumProjects"></div>
                                                 </s:if>
                                             </div>
                                         </div>
-                                        <div class="charNum" id="charNumProjects"></div>
+                                       
                                         <div class="col-lg-12">
                                             <div  id="rejComm" style="display: none">
                                                 <s:if test="#session.primaryrolevalue=='Director'">
@@ -516,10 +517,11 @@
                                                                 label="Comments on Rejection"
                                                                 value="" onkeydown="checkCharactersSkill(this)"   
                                                                 onfocus="return removesMsg();"/>  
+                                                     <div class="charNum" id="charNumSkill"></div>
                                                 </s:if>
                                             </div>
                                         </div>
-                                        <div class="charNum" id="charNumSkill"></div>
+                                       
 
 
                                         <div class="col-lg-6  col-md-7 col-sm-9 pull-right">

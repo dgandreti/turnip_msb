@@ -19,7 +19,7 @@
             <div class="panel panel-default left-menu" id="accordian_my">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#homeMenu">
+                        <a id="homeCustEmpLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#homeMenu">
                             <i  class="fa fa-home leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Home
@@ -51,7 +51,7 @@
             <div class="panel panel-default left-menu" id="accordian_services">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#utilitiesMenu">
+                        <a id="utilitiesCustEmpLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#utilitiesMenu">
                             <i  class="fa fa-cogs leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Utilities

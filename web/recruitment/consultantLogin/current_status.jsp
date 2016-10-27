@@ -47,7 +47,7 @@
 
         <!-- end of new styles -->
     </head>
-    <body style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans' ;overflow-x: hidden">
+    <body oncontextmenu="return false" style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans' ;overflow-x: hidden">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">

@@ -607,6 +607,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public String addTeamMemberToProject(AccountAction accountAction, HttpServletRequest httpServletRequest) throws ServiceLocatorException {
+        
+            log.info("********************AccountServiceImpl :: addTeamMemberToProject Method Start*********************");
         Connection connection = null;
 
         PreparedStatement preparedStatement = null;
@@ -618,11 +620,11 @@ public class AccountServiceImpl implements AccountService {
             connection = (Connection) ConnectionProvider.getInstance().getConnection();
             if (isAvailableTeamPerson(accountAction.getTeamMemberId(), accountAction.getProjectID())) {
                 querystring = "INSERT INTO Project_team(project_id,usr_id,current_status,created_date,created_by,reportsto1,reportsto2,account_id,designation,resource_type) values(?,?,?,?,?,?,?,?,?,?)";
-                System.out.println("query is " + querystring);
+               log.info("******************** querystring ****************"+querystring);
                 preparedStatement = connection.prepareStatement(querystring);
-                System.out.println("up to here okay....1");
-                System.out.println("this is list of values==="
-                        + accountAction.getDesignation() + " ");
+               // System.out.println("up to here okay....1");
+               // System.out.println("this is list of values==="
+                //        + accountAction.getDesignation() + " ");
 
                 preparedStatement.setInt(1, accountAction.getProjectID());
                 preparedStatement.setInt(2, accountAction.getTeamMemberId());
@@ -636,9 +638,9 @@ public class AccountServiceImpl implements AccountService {
                 preparedStatement.setString(10, accountAction.getResourceType());
                 result = "Insert";
             } else {
-                System.out.println("query is in update");
+               // System.out.println("query is in update");
                 querystring = "UPDATE Project_team SET current_status='" + accountAction.getTeamMemberStatus() + "',modified_date='" + com.mss.msp.util.DateUtility.getInstance().getCurrentMySqlDateTime() + "',modified_by=" + accountAction.getUserSessionId() + ",reportsto1=" + accountAction.getReportsto1() + " WHERE usr_id=" + accountAction.getTeamMemberId() + " AND project_id=" + accountAction.getProjectID();
-                System.out.println("query is in update-->" + querystring);
+               log.info("******************** querystring ****************"+querystring);
                 preparedStatement = connection.prepareStatement(querystring);
                 result = "Update";
             }
@@ -646,6 +648,7 @@ public class AccountServiceImpl implements AccountService {
 
         } catch (Exception e) {
             e.printStackTrace();
+             log.log(Level.ERROR, "Exception in try catch: " +e);
         } finally {
             try {
                 if (preparedStatement != null) {
@@ -658,9 +661,11 @@ public class AccountServiceImpl implements AccountService {
                 }
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
+                 log.log(Level.ERROR, "Exception in try catch: " +sqle);
             }
 
         }
+         log.info("********************AccountServiceImpl :: addTeamMemberToProject Method End*********************");
         return result;
     }
 

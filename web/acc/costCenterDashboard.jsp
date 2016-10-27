@@ -31,7 +31,7 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/sortable.js"/>'></script>
         <script language="JavaScript" src='<s:url value="/includes/js/Ajax/dashBoardAjax.js"/>'></script>
     </head>
-    <body style="overflow-x: hidden">
+    <body oncontextmenu="return false" style="overflow-x: hidden">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

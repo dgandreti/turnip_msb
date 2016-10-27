@@ -49,7 +49,7 @@
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
 
     </head>
-    <body onload="getProjets();
+    <body oncontextmenu="return false" onload="getProjets();
             onloadTotal()">
         <div id="wrap">
             <header id="header"><!--header-->

@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 /**
  * *****************************************************************************
@@ -38,6 +40,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public class RequirementServiceImpl implements RequirementService {
 
+    private static Logger log = Logger.getLogger(RequirementServiceImpl.class);
     Connection connection = null;
     CallableStatement callableStatement = null;
     PreparedStatement preparedStatement = null;
@@ -53,7 +56,7 @@ public class RequirementServiceImpl implements RequirementService {
         String queryString = "";
         int result = 0;
 
-        System.out.println("********************RequirementServiceImpl :: addRequirementDetails Method Start*********************");
+        log.info("********************RequirementServiceImpl :: addRequirementDetails Method Start*********************");
         DateUtility dateUtility = new DateUtility();
         String startDate = "";
         String endDate = "";
@@ -66,13 +69,12 @@ public class RequirementServiceImpl implements RequirementService {
         }
         requirementAction.setReqSkillSet(StringUtils.chop(reqSkillsResultString));
 
-
         try {
             startDate = dateUtility.getInstance().convertStringToMySQLDateInDash(requirementAction.getRequirementFrom());
 
             connection = ConnectionProvider.getInstance().getConnection();
             callableStatement = connection.prepareCall("{CALL addRequirements(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            System.out.println("addRequirementDetails :: procedure name : addRequirements ");
+            log.info("addRequirementDetails :: procedure name : addRequirements ");
 
             callableStatement.setInt(1, requirementAction.getOrgId());
             callableStatement.setString(2, requirementAction.getRequirementType());
@@ -114,7 +116,6 @@ public class RequirementServiceImpl implements RequirementService {
             callableStatement.setString(26, requirementAction.getRequirementQualification());
             callableStatement.registerOutParameter(27, Types.INTEGER);
 
-
             result = callableStatement.executeUpdate();
 
             if (result > 0) {
@@ -126,6 +127,7 @@ public class RequirementServiceImpl implements RequirementService {
             }
 
         } catch (Exception sqe) {
+            log.log(Level.ERROR, "Exception in try catch: " + sqe);
             sqe.printStackTrace();
         } finally {
             try {
@@ -139,12 +141,12 @@ public class RequirementServiceImpl implements RequirementService {
                     connection = null;
                 }
             } catch (SQLException sqle) {
+                log.log(Level.ERROR, "Exception in finally catch: " + sqle);
                 sqle.printStackTrace();
             }
         }
-        System.out.println("********************RequirementServiceImpl :: addRequirementDetails Method End*********************");
+        log.info("********************RequirementServiceImpl :: addRequirementDetails Method End*********************");
         return result;
-
 
     }
 
@@ -166,12 +168,12 @@ public class RequirementServiceImpl implements RequirementService {
         String queryString = "";
 
         RequirementVTO requirementVTO = new RequirementVTO();
-        System.out.println("********************RequirementServiceImpl :: editrequirement Method Start*********************");
+        log.info("********************RequirementServiceImpl :: editrequirement Method Start*********************");
         try {
             queryString = "SELECT requirement_id,req_name,req_comments,req_desc,req_status,req_skills,req_st_date,req_tr_date,no_of_resources,req_contact1,req_contact2,"
                     + "hr_week_month,target_rate,req_duration,tax_term,req_location,presales1,presales2,req_function_desc,req_responsibilities,"
                     + "preferred_skills,req_years_exp,billing_contact,req_category,max_rate,billingtype,qualification  FROM acc_requirements WHERE requirement_id=" + requirementid;
-            System.out.println("editrequirement::queryString-->" + queryString);
+            log.info("editrequirement::queryString-->" + queryString);
 
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
@@ -199,7 +201,6 @@ public class RequirementServiceImpl implements RequirementService {
 
                 }
 
-
                 requirementVTO.setSkillSetList(list);
 
                 String str1 = resultSet.getString("preferred_skills");
@@ -211,7 +212,6 @@ public class RequirementServiceImpl implements RequirementService {
                 }
 
                 requirementVTO.setPreSkillSetList(list1);
-
 
                 requirementVTO.setRequirementTargetRate(resultSet.getString("target_rate"));
                 requirementVTO.setRequirementDuration(resultSet.getString("req_duration"));
@@ -235,6 +235,7 @@ public class RequirementServiceImpl implements RequirementService {
             }
 
         } catch (Exception sqe) {
+            log.log(Level.ERROR, "Exception in try catch : " + sqe);
             sqe.printStackTrace();
         } finally {
             try {
@@ -251,10 +252,11 @@ public class RequirementServiceImpl implements RequirementService {
                     connection = null;
                 }
             } catch (SQLException sqle) {
+                log.log(Level.ERROR, "Exception in finally catch : " + sqle);
                 sqle.printStackTrace();
             }
         }
-        System.out.println("********************RequirementServiceImpl :: editrequirement Method End*********************");
+        log.info("********************RequirementServiceImpl :: editrequirement Method End*********************");
         return requirementVTO;
     }
 
@@ -279,6 +281,7 @@ public class RequirementServiceImpl implements RequirementService {
      */
     public int updateRequirement(int userid, RequirementAction requirementAction) throws ServiceLocatorException {
 
+        log.info("********************RequirementServiceImpl :: updateRequirement Method Start*********************");
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -287,7 +290,6 @@ public class RequirementServiceImpl implements RequirementService {
         String FromDate = "";
         String ToDate = "";
         DateUtility dateUtility = new DateUtility();
-        System.out.println("********************RequirementServiceImpl :: updateRequirement Method Start*********************");
         int updated = 0;
         try {
             FromDate = dateUtility.getInstance().convertStringToMySQLDateInDash(requirementAction.getRequirementFrom());
@@ -295,7 +297,7 @@ public class RequirementServiceImpl implements RequirementService {
                     + "target_rate=?,req_duration=?,tax_term=?,req_location=?,req_function_desc=?,"
                     + "req_responsibilities=?,req_modified_date=?,req_modified_by=?,preferred_skills=?,req_years_exp=?,billing_contact=?,"
                     + "hr_week_month=?,max_rate=?,billingtype=?,qualification=?  WHERE requirement_id=" + requirementAction.getRequirementId();
-            System.out.println("updateRequirement::queryString-->" + queryString);
+            log.info("updateRequirement::queryString-->" + queryString);
             String str = requirementAction.getSkillCategoryArry();
             StringTokenizer stk = new StringTokenizer(str, ",");
             String reqSkillsResultString = "";
@@ -341,8 +343,8 @@ public class RequirementServiceImpl implements RequirementService {
             preparedStatement.setString(23, requirementAction.getRequirementQualification());
             updated = preparedStatement.executeUpdate();
 
-
         } catch (Exception sqe) {
+            log.log(Level.ERROR, "Exception in try catch: " + sqe);
             sqe.printStackTrace();
         } finally {
             try {
@@ -356,10 +358,11 @@ public class RequirementServiceImpl implements RequirementService {
                     connection = null;
                 }
             } catch (SQLException sqle) {
+                log.log(Level.ERROR, "Exception in finally catch:: " + sqle);
                 sqle.printStackTrace();
             }
         }
-        System.out.println("********************RequirementServiceImpl :: updateRequirement Method End*********************");
+        log.info("********************RequirementServiceImpl :: updateRequirement Method End*********************");
         return updated;
     }
 
@@ -377,12 +380,12 @@ public class RequirementServiceImpl implements RequirementService {
      */
     public String getRequirementDetails(RequirementAction requirementAction) throws ServiceLocatorException {
 
+        log.info("********************RequirementServiceImpl :: getRequirementDetails Method Start*********************");
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
 
-        System.out.println("********************RequirementServiceImpl :: getRequirementDetails Method Start*********************");
         ArrayList<RequirementVTO> requirementList = new ArrayList<RequirementVTO>();
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -393,7 +396,7 @@ public class RequirementServiceImpl implements RequirementService {
             queryString = "SELECT jdid,requirement_id,req_name,no_of_resources,req_skills,req_st_date,req_status,preferred_skills "
                     + "FROM acc_requirements WHERE acc_id=" + requirementAction.getAccountSearchID() + " order by jdid desc LIMIT 100 ";
 
-            System.out.println("getRequirementDetails::queryString-->" + queryString);
+            log.info("getRequirementDetails::queryString-->" + queryString);
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -418,9 +421,8 @@ public class RequirementServiceImpl implements RequirementService {
                 resultString += resultSet.getInt("requirement_id") + "|" + resultSet.getString("req_name") + "|" + resultSet.getInt("no_of_resources") + "|" + resultSet.getString("req_st_date") + "|" + status + "|" + resultSet.getString("req_skills") + "|" + resultSet.getString("preferred_skills") + "|" + resultSet.getInt("jdid") + "^";
             }
 
-
-
         } catch (Exception sqe) {
+            log.log(Level.ERROR, "Exception in getRequirementDetails: " + sqe);
             sqe.printStackTrace();
         } finally {
             try {
@@ -437,6 +439,7 @@ public class RequirementServiceImpl implements RequirementService {
                     connection = null;
                 }
             } catch (SQLException sqle) {
+                log.log(Level.ERROR, "Exception in getRequirementDetails: " + sqle);
                 sqle.printStackTrace();
             }
         }
@@ -494,7 +497,6 @@ public class RequirementServiceImpl implements RequirementService {
                 queryString += " and req_name like '%" + requirementAction.getJobTitle() + "%'";
             }
 
-
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -514,8 +516,8 @@ public class RequirementServiceImpl implements RequirementService {
                 } else if (resultSet.getString("req_status").equalsIgnoreCase("W")) {
                     status = "Withdraw";
                 }
-                resultString +=
-                        resultSet.getInt("requirement_id") + "|"
+                resultString
+                        += resultSet.getInt("requirement_id") + "|"
                         + resultSet.getString("req_name") + "|"
                         + resultSet.getString("no_of_resources") + "|"
                         + resultSet.getString("req_st_date") + "|"
@@ -573,13 +575,12 @@ public class RequirementServiceImpl implements RequirementService {
             connection = ConnectionProvider.getInstance().getConnection();
             queryString = "SELECT req_skills FROM acc_requirements WHERE requirement_id=" + requirementAction.getRequirementId();
 
-
             System.out.println("getSkillDetaisls::queryString" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                resultString +=
-                        resultSet.getString("req_skills");
+                resultString
+                        += resultSet.getString("req_skills");
             }
 
         } catch (SQLException ex) {
@@ -630,13 +631,12 @@ public class RequirementServiceImpl implements RequirementService {
             connection = ConnectionProvider.getInstance().getConnection();
             queryString = "SELECT preferred_skills FROM acc_requirements WHERE requirement_id=" + requirementAction.getRequirementId();
 
-
             System.out.println("getPreferedSkillDetails::queryString" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
-                resultString +=
-                        resultSet.getString("preferred_skills");
+                resultString
+                        += resultSet.getString("preferred_skills");
             }
 
         } catch (SQLException ex) {
@@ -695,14 +695,12 @@ public class RequirementServiceImpl implements RequirementService {
 
             String typeofusr = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
 
-
             int sessionusrPrimaryrole = requirementAction.getPrimaryRole();
             if (typeofusr.equalsIgnoreCase("VC")) {
 
                 queryString = "SELECT account_name,r.created_date,tax_term,jdid,requirement_id,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_created_by,req_status,req_contact1,req_contact2 ,created_by_org_id,target_rate,max_rate FROM acc_requirements acc LEFT OUTER JOIN req_ven_rel r ON requirement_id=req_id  LEFT OUTER JOIN accounts a ON account_id= created_by_org_id WHERE ven_id=" + requirementAction.getSessionOrgId() + " AND  NOW() >= req_access_time AND  r.STATUS LIKE 'Active' ";
                 System.out.println("getSearchRequirementsList::queryString------->" + queryString);
             } else {
-
 
                 if (sessionusrPrimaryrole == 3) { // for pr.manager
                     queryString = "SELECT DISTINCT(requirement_id),account_name,req_created_by,r.created_date,req_created_date,tax_term,req_type,target_rate,jdid,req_name,no_of_resources,req_skills,preferred_skills,req_st_date,req_status,req_contact1,req_contact2,created_by_org_id,max_rate FROM acc_requirements LEFT OUTER JOIN req_ven_rel r ON requirement_id=req_id LEFT OUTER JOIN accounts a ON account_id= created_by_org_id "
@@ -717,14 +715,9 @@ public class RequirementServiceImpl implements RequirementService {
                 }
             }
 
-
-
             if (requirementAction.getJdId() != null && !"".equals(requirementAction.getJdId())) {
                 queryString += " and jdid like '%" + requirementAction.getJdId() + "%'";
             }
-
-
-
 
             if (typeofusr.equalsIgnoreCase("VC") || typeofusr.equalsIgnoreCase("AC")) {
                 if (sessionusrPrimaryrole != 13) {
@@ -739,9 +732,6 @@ public class RequirementServiceImpl implements RequirementService {
                     queryString += " and req_category =" + requirementAction.getReqCategoryValue() + "";
                 }
             }
-
-
-
 
             if (!requirementAction.getVendor().equalsIgnoreCase("yes")) {
                 if (!"-1".equalsIgnoreCase(requirementAction.getRequirementStatus())) {
@@ -812,9 +802,8 @@ public class RequirementServiceImpl implements RequirementService {
                     postedDate = "---";
                 }
 
-
-                resultString +=
-                        resultSet.getInt("requirement_id") + "|"
+                resultString
+                        += resultSet.getInt("requirement_id") + "|"
                         + resultSet.getString("req_name") + "|"
                         + resultSet.getString("no_of_resources") + "|"
                         + com.mss.msp.util.DateUtility.getInstance().convertToviewFormatInDash(resultSet.getString("req_st_date")) + "|"
@@ -888,8 +877,8 @@ public class RequirementServiceImpl implements RequirementService {
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
 
-                resultString +=
-                        resultSet.getString("Name") + "|"
+                resultString
+                        += resultSet.getString("Name") + "|"
                         + resultSet.getString("email1") + "|"
                         + resultSet.getString("phone1");
 
@@ -950,8 +939,8 @@ public class RequirementServiceImpl implements RequirementService {
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
 
-                resultString +=
-                        resultSet.getString("req_skills");
+                resultString
+                        += resultSet.getString("req_skills");
 
             }
 
@@ -1011,8 +1000,8 @@ public class RequirementServiceImpl implements RequirementService {
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
 
-                resultString +=
-                        resultSet.getString("preferred_skills");
+                resultString
+                        += resultSet.getString("preferred_skills");
 
             }
 
@@ -1067,7 +1056,7 @@ public class RequirementServiceImpl implements RequirementService {
         String str = requirementAction.getPropsedSkills();
         StringTokenizer stk = new StringTokenizer(str, ",");
         String skillsResultString = "";
-        System.out.println("********************RequirementServiceImpl :: storeProofData Method Start*********************");
+        log.info("********************RequirementServiceImpl :: storeProofData Method Start*********************");
         while (stk.hasMoreTokens()) {
             skillsResultString += com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(stk.nextToken()));
 
@@ -1077,9 +1066,8 @@ public class RequirementServiceImpl implements RequirementService {
         try {
             connection = ConnectionProvider.getInstance().getConnection();
 
-
             callableStatement = connection.prepareCall("{CALL addConsultantProof(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            System.out.println("storeProofData :: procedure name : addConsultantProof ");
+            log.info("storeProofData :: procedure name : addConsultantProof ");
             callableStatement.setInt(1, requirementAction.getUserSessionId());
 
             callableStatement.setInt(2, DataSourceDataProvider.getInstance().getusrIdByemailId(requirementAction.getConEmail()));
@@ -1093,7 +1081,6 @@ public class RequirementServiceImpl implements RequirementService {
                 callableStatement.setString(7, "E");
 
             } else {
-
 
                 callableStatement.setString(7, "C");
             }
@@ -1109,9 +1096,9 @@ public class RequirementServiceImpl implements RequirementService {
             isExceute = callableStatement.execute();
             Result = callableStatement.getString(14);
             if (Result.equalsIgnoreCase("AddSuccess")) {
-                System.out.println("****************** in impl result after NotExist:::::::::" + Result);
+                log.info("****************** in impl result after NotExist:::::::::" + Result);
             } else {
-                System.out.println("****************** in impl result after :::::::::" + Result);
+                 log.info("****************** in impl result after :::::::::" + Result);
             }
 
         } catch (Exception sqe) {
@@ -1131,7 +1118,7 @@ public class RequirementServiceImpl implements RequirementService {
                 sqle.printStackTrace();
             }
         }
-        System.out.println("********************RequirementServiceImpl :: storeProofData Method End*********************");
+        log.info("********************RequirementServiceImpl :: storeProofData Method End*********************");
         return Result;
     }
 
@@ -1157,13 +1144,12 @@ public class RequirementServiceImpl implements RequirementService {
 
         int count = 0;
         boolean isExceute = false;
-        System.out.println("********************RequirementServiceImpl :: doReleaseRequirements Method Start*********************");
+        log.info("********************RequirementServiceImpl :: doReleaseRequirements Method Start*********************");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
 
-
             callableStatement = connection.prepareCall("{CALL spReleaseRequirements(?,?,?,?,?,?)}");
-            System.out.println("doReleaseRequirements :: procedure name : spReleaseRequirements ");
+             log.info("doReleaseRequirements :: procedure name : spReleaseRequirements ");
             callableStatement.setInt(1, requirementAction.getSessionOrgId());
             callableStatement.setString(2, requirementAction.getTaxTerm());
             callableStatement.setString(3, requirementAction.getRequirementId());
@@ -1173,7 +1159,6 @@ public class RequirementServiceImpl implements RequirementService {
             callableStatement.registerOutParameter(6, Types.INTEGER);
             isExceute = callableStatement.execute();
             count = callableStatement.getInt(6);
-
 
         } catch (Exception sqe) {
             sqe.printStackTrace();
@@ -1191,7 +1176,7 @@ public class RequirementServiceImpl implements RequirementService {
                 sqle.printStackTrace();
             }
         }
-        System.out.println("********************RequirementServiceImpl :: doReleaseRequirements Method End*********************");
+        log.info("********************RequirementServiceImpl :: doReleaseRequirements Method End*********************");
         return count;
     }
 
@@ -1276,7 +1261,6 @@ public class RequirementServiceImpl implements RequirementService {
             connection = ConnectionProvider.getInstance().getConnection();
             queryString = "SELECT acc_id FROM acc_requirements WHERE requirement_id=" + requirementid;
 
-
             System.out.println("getOrgIdCustomer::query------>" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
@@ -1357,7 +1341,6 @@ public class RequirementServiceImpl implements RequirementService {
                         + "AND csr.STATUS = 'active'"
                         + "AND csr.csr_id=" + requirementAction.getUserSessionId() + " ";
             }
-
 
             if (!"".equalsIgnoreCase(requirementAction.getCsrCustomer())) {
                 queryString = queryString + " AND acc_id = '" + requirementAction.getCsrCustomer() + "'  ";
@@ -1615,7 +1598,6 @@ public class RequirementServiceImpl implements RequirementService {
                     resultString = "";
                 }
             }
-
 
         } catch (SQLException ex) {
             ex.printStackTrace();

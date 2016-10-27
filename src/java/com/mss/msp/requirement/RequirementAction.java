@@ -21,12 +21,15 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 public class RequirementAction extends ActionSupport implements ServletRequestAware, ServletResponseAware {
 
+    private static Logger log = Logger.getLogger(RequirementAction.class);
     private int primaryRole;
     private String downloadFlag;
     private int userSessionId;
@@ -152,10 +155,8 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
      */
     public String addRequirements() {
         resultMessage = LOGIN;
-        System.out.println("********************RequirementAction :: addRequirements Method Start*********************");
-
+        log.info("********************RequirementAction :: addRequirements Method Start*********************");
         try {
-
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -174,11 +175,12 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = SUCCESS;
             }
         } catch (Exception ex) {
+            log.log(Level.ERROR, "errorMessage: " + ex.toString());
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
 
         }
-        System.out.println("********************RequirementAction :: addRequirements Method End*********************");
+        log.info("********************RequirementAction :: addRequirements Method End*********************");
         return resultMessage;
     }
 
@@ -195,9 +197,8 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
      */
     public String doCopyRequirement() {
         resultMessage = LOGIN;
-        System.out.println("********************RequirementAction :: doCopyRequirement Method Start*********************");
+        log.info("********************RequirementAction :: doCopyRequirement Method Start*********************");
         try {
-
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
                 setOrgId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -216,11 +217,12 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = SUCCESS;
             }
         } catch (Exception ex) {
+            log.log(Level.ERROR, "errorMessage: " + ex.toString());
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
 
         }
-        System.out.println("********************RequirementAction :: doCopyRequirement Method End*********************");
+        log.info("********************RequirementAction :: doCopyRequirement Method End*********************");
         return resultMessage;
     }
 
@@ -237,10 +239,9 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
      */
     public String addRequirementDetails() {
         resultMessage = LOGIN;
-        System.out.println("********************RequirementAction :: addRequirementDetails Method Start*********************");
+        log.info("********************RequirementAction :: addRequirementDetails Method Start*********************");
         int requirement;
         try {
-
 
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -257,11 +258,12 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
 
             }
         } catch (Exception ex) {
+            log.log(Level.ERROR, "errorMessage: " + ex.toString());
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
             resultType = ERROR;
 
         }
-        System.out.println("********************RequirementAction :: addRequirementDetails Method End*********************");
+        log.info("********************RequirementAction :: addRequirementDetails Method End*********************");
         return resultMessage;
     }
 
@@ -279,13 +281,14 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
     public String setrequirementedit() {
         String resultMessage;
         resultMessage = LOGIN;
-        System.out.println("********************RequirementAction :: setrequirementedit Method Start*********************");
+        log.info("********************RequirementAction :: setrequirementedit Method Start*********************");
 
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
                 int org_id = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
                 String typeOfUser = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
+                int roleId=Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.PRIMARYROLE).toString());
                 setContacts(dataSourceDataProvider.getInstance().getSalesTeam(org_id));
                 setReqCategory(dataSourceDataProvider.getInstance().getRequiteCategory(1));
                 setCountryMap(dataSourceDataProvider.getInstance().getCountryNames());
@@ -295,7 +298,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 setSkillValuesMap(skillsmap);
                 setPreSkillValuesMap(skillsmap);
 
-                if (typeOfUser.equals("VC") || typeOfUser.equals("SA")) {
+                if (typeOfUser.equals("VC") || typeOfUser.equals("SA")|| roleId==1) {
 
                     int orgId = ServiceLocator.getRequirementService().getOrgIdCustomer(getRequirementId());
 
@@ -317,14 +320,13 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                     resultMessage = SUCCESS;
                 }
             } catch (Exception ex) {
-
+                log.log(Level.ERROR, "errorMessage: " + ex.toString());
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-
 
                 resultMessage = ERROR;
             }
         }
-        System.out.println("********************RequirementAction :: setrequirementedit Method End*********************");
+        log.info("********************RequirementAction :: setrequirementedit Method End*********************");
         return resultMessage;
     }
 
@@ -340,19 +342,17 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
      * *****************************************************************************
      */
     public String updateRequirements() {
+        log.info("********************RequirementAction :: updateRequirements Method Start*********************");
         String resultMessage;
         resultMessage = LOGIN;
         int updated = 0;
         int mailResult = 0;
-        System.out.println("********************RequirementAction :: updateRequirements Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
 
                 int userid = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString());
 
                 int org_id = Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString());
-
-
 
                 updated = ServiceLocator.getRequirementService().updateRequirement(userid, this);
 
@@ -370,16 +370,14 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                     }
                 }
 
-
             } catch (Exception ex) {
-
+                log.log(Level.ERROR, "errorMessage: " + ex.toString());
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
-
 
                 resultType = ERROR;
             }
         }
-        System.out.println("********************RequirementAction :: updateRequirements Method End*********************");
+        log.info("********************RequirementAction :: updateRequirements Method End*********************");
         return null;
     }
 
@@ -397,7 +395,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
      */
     public String getRequirementDetails() {
         resultType = LOGIN;
-        System.out.println("********************RequirementAction :: getRequirementDetails Method Start*********************");
+        log.info("********************RequirementAction :: getRequirementDetails Method Start*********************");
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString() != null) {
 
@@ -412,10 +410,10 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultType = null;
             }
         } catch (Exception ex) {
-            System.out.println("Exception in req search action1-->" + ex.getMessage());
+            log.log(Level.ERROR, "errorMessage: " + ex.toString());
             resultType = ERROR;
         }
-        System.out.println("********************RequirementAction :: getRequirementDetails Method End*********************");
+        log.info("********************RequirementAction :: getRequirementDetails Method End*********************");
         return null;
     }
 
@@ -556,7 +554,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
      */
     public String storeProofData() {
         resultMessage = LOGIN;
-        System.out.println("********************RequirementAction :: storeProofData Method Start*********************");
+         log.info("********************RequirementAction :: storeProofData Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
 
@@ -565,7 +563,6 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                     filesPath = Properties.getProperty("Task.Attachment");
                     File createPath = new File(filesPath);
                     Date dt = new Date();
-
 
                     String month = "";
                     if (dt.getMonth() == 0) {
@@ -597,8 +594,6 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
 
                     createPath = new File(createPath.getAbsolutePath() + "/" + String.valueOf(dt.getYear() + 1900) + "/" + month + "/" + String.valueOf(week));
 
-
-
                     createPath.mkdir();
 
                     File theFile = new File(createPath.getAbsolutePath());
@@ -620,7 +615,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
-        System.out.println("********************RequirementAction :: storeProofData Method End*********************");
+         log.info("********************RequirementAction :: storeProofData Method End*********************");
         return resultMessage;
     }
     /**
@@ -787,7 +782,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
      */
     public String doReleaseRequirements() {
         resultMessage = LOGIN;
-        System.out.println("********************RequirementAction :: doReleaseRequirements Method Start*********************");
+         log.info("********************RequirementAction :: doReleaseRequirements Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             try {
                 setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
@@ -806,7 +801,7 @@ public class RequirementAction extends ActionSupport implements ServletRequestAw
                 resultMessage = ERROR;
             }
         }
-        System.out.println("********************RequirementAction :: doReleaseRequirements Method End*********************");
+         log.info("********************RequirementAction :: doReleaseRequirements Method End*********************");
         return null;
     }
 

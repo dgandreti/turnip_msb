@@ -111,7 +111,7 @@ function forwardReviewToCustomer(){
     
         if($("#eNameTechReview").val()=="" ){
             $("#eNameTechReview").css("border", "1px solid red");
-            $("e").html(" <b><font color='red'>please enter Techie Name</font></b>");
+            $("e").html(" <font color='red'>Please enter Techie Name</font>");
             flag=false;
             return false;
         }
@@ -122,7 +122,7 @@ function forwardReviewToCustomer(){
     
         if($("#interviewDate").val()=="" ){
             $("#interviewDate").css("border", "1px solid red");
-            $("e").html(" <b><font color='red'>please enter Interview Date</font></b>");
+            $("e").html(" <font color='red'>Please enter Interview Date</font>");
             flag=false;
             return false;
         }
@@ -132,7 +132,7 @@ function forwardReviewToCustomer(){
         }
     
         if(consultantDate<todayDate){
-            $("e").html(" <b><font color='red'>Interview time must be greater than  current time!</font></b>");
+            $("e").html(" <font color='red'>Interview time must be greater than  current time!</font>");
             flag=false;
             return false;
         }
@@ -143,7 +143,7 @@ function forwardReviewToCustomer(){
         {
             if(interviewLocation=="")      
             {
-                $("e").html(" <b><font color='red'>Please Enter Location!</font></b>");
+                $("e").html(" <font color='red'>Please Enter Location!</font>");
                 flag=false;
                 return false;      
             }
@@ -158,14 +158,14 @@ function forwardReviewToCustomer(){
         var examTime=$('#techReviewTime').val();
         if($("#eNameTechReview").val()=="" ){
             //$("#eNameTechReview").css("border", "1px solid red");
-            $("e").html(" <b><font color='red'>please enter Techie Name</font></b>");
+            $("e").html(" <font color='red'>Please enter Techie Name</font>");
             
             return false;
         }
         if(examTime==0 && examMints==0)
         {
             //  alert("Please Select The Time"); 
-            $("e").html(" <b><font color='red'>Please Select The Time</font></b>");
+            $("e").html(" <font color='red'>Please Select The Time</font>");
            // $("e").show().delay(4000).fadeOut();
             return false;
         }
@@ -181,7 +181,7 @@ function forwardReviewToCustomer(){
             if($("#skillCategoryValue :selected").length==0)
             {
                 //  alert("Please Select The skills"); 
-                $("e").html(" <b><font color= #FF4D4D>Please Select The skills</font></b>.");
+                $("e").html(" <font color= #FF4D4D>Please Select The skills</font>.");
                 //$("e").show().delay(4000).fadeOut();
                 //  $("#consult_preferredState").val(" <b><font color= #FF4D4D>Preferred State should not be selected more than 5</font></b>.");
                 //$("#skillCategoryValue").css("border","1px solid red");
@@ -196,7 +196,7 @@ function forwardReviewToCustomer(){
             if($("#skillCategoryValue :selected").length>10) 
             {
                 // alert("Skills should not be selected more than 10");
-                $("e").html("<b><font color='red'>Skills should not be selected more than 10</font></b>");
+                $("e").html("<font color='red'>Skills should not be selected more than 10</font>");
                // $("e").show().delay(4000).fadeOut();
                 // $("e").html(" <b><font color= #FF4D4D>Skills should not be selected more than 10</font></b>.");
                 //  $("#consult_preferredState").val(" <b><font color= #FF4D4D>Preferred State should not be selected more than 5</font></b>.");
@@ -217,7 +217,7 @@ function forwardReviewToCustomer(){
             if($("#psychoskillCategoryValue :selected").length==0)
             {
                 //  alert("Please Select The skills"); 
-                $("e").html(" <b><font color= #FF4D4D>Please Select The skills</font></b>.");
+                $("e").html(" <font color= #FF4D4D>Please Select The skills</font>.");
                 //$("e").show().delay(4000).fadeOut();
                 //  $("#consult_preferredState").val(" <b><font color= #FF4D4D>Preferred State should not be selected more than 5</font></b>.");
                 //$("#skillCategoryValue").css("border","1px solid red");
@@ -231,7 +231,7 @@ function forwardReviewToCustomer(){
             if($("#psychoskillCategoryValue :selected").length>10) 
             {
                 // alert("Skills should not be selected more than 10");
-                $("e").html("<b><font color='red'>Skills should not be selected more than 10</font></b>");
+                $("e").html("<font color='red'>Skills should not be selected more than 10</font>");
                 //$("e").show().delay(4000).fadeOut();
                 // $("e").html(" <b><font color= #FF4D4D>Skills should not be selected more than 10</font></b>.");
                 //  $("#consult_preferredState").val(" <b><font color= #FF4D4D>Preferred State should not be selected more than 5</font></b>.");
@@ -247,7 +247,7 @@ function forwardReviewToCustomer(){
         if(techieQuestions<1)
         {
             // alert("You Must Give Questions");  
-            $("e").html(" <b><font color='red'>Please Give No Of Questions</font></b>");
+            $("e").html(" <font color='red'>Please Give No Of Questions</font>");
            // $("e").show().delay(4000).fadeOut();
             return false;
         }
@@ -287,7 +287,7 @@ function responseForTechReview(interviewType,flag){
     if(interviewType=='Face to Face'){
         if(interviewLocation==""){
             $("#interviewLocation").css("border", "1px solid red");
-            $("e").html(" <b><font color='red'>Location should not be empty for Face to Face interview</font></b>"); 
+            $("e").html(" <font color='red'>Location should not be empty for Face to Face interview</font>"); 
             flag=false;
         }
         else{
@@ -297,7 +297,7 @@ function responseForTechReview(interviewType,flag){
     if($('#techReviewAlert').prop('checked')){
         checked ="checked";
         if($("#reviewAlertDate").val()=="" ){
-            $("e").html(" <b><font color='red'>Alert Date is Mandatory</font></b>");
+            $("e").html(" <font color='red'>Alert Date is Mandatory</font>");
             flag=false;
             //alert("Empty reviewAlertDate")
             return false;
@@ -306,7 +306,7 @@ function responseForTechReview(interviewType,flag){
             $("e").html("");
         }  
         if(interviewDate<reviewAlertDate){
-            $("e").html(" <b><font color='red'>Alert Date must be less than Interview Date</font></b>");
+            $("e").html(" <font color='red'>Alert Date must be less than Interview Date</font>");
             flag=false;
         }
         else{
@@ -360,14 +360,14 @@ function responseForTechReview(interviewType,flag){
                     else
                         {
                             // alert("false")
-                             $("e").html(" <b><font color='red'>Alert Date must be greater than Current Date and Time</font></b>");
+                             $("e").html(" <font color='red'>Alert Date must be greater than Current Date and Time</font>");
                                flag=false;  
                         }  
                 }
             else
                 {
                    // alert("not checked") 
-                        $("e").html(" <b><font color='red'>Alert Date must be greater than Current Date and Time</font></b>");
+                        $("e").html(" <font color='red'>Alert Date must be greater than Current Date and Time</font>");
                                flag=false;  
                 }
     }
@@ -606,8 +606,8 @@ function responseForTechReview(interviewType,flag){
                 req.onreadystatechange = function() {
                     if (req.readyState == 4 && req.status == 200) {
                         //alert("Success")
-                        //$("e").html(" <b><font color='green'>Tech Review Forwarded Succesfully</font></b>");
-                        //document.getElementsByTagName("e").innerHTML="<b><font color='green'>Tech Review Forwarded Succesfully</font></b>";
+                        //$("e").html(" <font color='green'>Tech Review Forwarded Succesfully</font></b>");
+                        //document.getElementsByTagName("e").innerHTML="<font color='green'>Tech Review Forwarded Succesfully</font></b>";
                         document.getElementById("empIdTechReview").value="";
                         document.getElementById("eNameTechReview").value="";
                         document.getElementById("interviewDate").value="";
@@ -661,7 +661,7 @@ function getSearchTechReviewList(){
     if(reviewStartDate!=''){
         if(reviewEndDate==''){
             $("#reviewEndDate").css("border", "1px solid red");
-            $('#techReviewValidation').html(" <b><font color='red'>please enter End Date</font></b>");
+            $('#techReviewValidation').html(" <font color='red'>please enter End Date</font>");
 
             $('#techReviewValidation').show().delay(4000).fadeOut();
 
@@ -672,7 +672,7 @@ function getSearchTechReviewList(){
     if(reviewEndDate!=''){
         if(reviewStartDate==''){
             $("#reviewStartDate").css("border", "1px solid red");
-            $('#techReviewValidation').html(" <b><font color='red'>please enter Start Date</font></b>");
+            $('#techReviewValidation').html(" <font color='red'>please enter Start Date</font>");
 
             $('#techReviewValidation').show().delay(4000).fadeOut();
 
@@ -694,7 +694,7 @@ function getSearchTechReviewList(){
         {
              
        
-            $('#techReviewValidation').html(" <b><font color='red'>Start date Must be less than End date</font></b>");
+            $('#techReviewValidation').html(" <font color='red'>Start date Must be less than End date</font>");
 
             $('#techReviewValidation').show().delay(4000).fadeOut();
 
@@ -742,7 +742,7 @@ function populateTechReviewTable(response){
                 var row = $("<tr />")
                 $("#techReviewTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
                 var v_comments = Values[15].trim().replace(/ /g, '%20');
-                row.append($('<td><a href=../consultant/getConsultantDetails.action?techReviewFlag=techReview&consultFlag='+consultFlag+'&consult_id='+Values[0]+'&vendorcomments='+v_comments+'>' + Values[1] + "</a></td>"));
+                row.append($('<td><a href=../consultant/getConsultantDetails.action?techReviewFlag=techReview&consultFlag='+consultFlag+'&consult_id='+Values[0]+'&vendorcomments='+v_comments+'&requirementId='+Values[9]+'>' + Values[1] + "</a></td>"));
                 row.append($("<td>" + Values[2] + "</td>"));
                 row.append($("<td>" + Values[3] + "</td>"));
                 row.append($("<td>" + Values[10]+ "</td>"));
@@ -982,7 +982,7 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                         }else{
                             $("#consultantComments").val(Values[39]);      
                         } 
-                        $("#examStatus").html(" <b><font color='green'>"+Values[5]+"</font></b>");
+                        $("#examStatus").html(" <font color='green'>"+Values[5]+"</font>");
                         $("#onlineExam").hide(); 
                         $("#onlineExamStatus").hide();
                         $("#examStatus").show(); 
@@ -1009,17 +1009,17 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                         
                         if(Values[36]=='Submitted')
                         {
-                            $("#examsubmittedDate").html("<b><font color='green'>"+Values[37]+"</font></b>");
+                            $("#examsubmittedDate").html("<font color='green'>"+Values[37]+"</font>");
                             if(Values[6]!='null' && Values[7]!=0)
                             {
                                 $("#skillDivQuestion1").show();  
                                 var percentage1=findPercentage(Values[26],Values[7]);
                                 if(percentage1 < 50)
                                 {
-                                    $("#skillQuestion1").html(" <b><font color='#56a5ec'>"+Values[6]+":</font><font color='red'> "+percentage1+"%</font></b>");    
+                                    $("#skillQuestion1").html(" <font color='#56a5ec'>"+Values[6]+":</font><font color='red'> "+percentage1+"%</font>");    
                                 } 
                                 else{
-                                    $("#skillQuestion1").html(" <b><font color='#56a5ec'>"+Values[6]+":</font><font color='green'> "+percentage1+"%</font></b>");   
+                                    $("#skillQuestion1").html(" <font color='#56a5ec'>"+Values[6]+":</font><font color='green'> "+percentage1+"%</font>");   
                                 }
                             }
                             if(Values[8]!='null' && Values[9]!=0)
@@ -1029,11 +1029,11 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                                 if( percentage2 < 50)
                                 {    
                             
-                                    $("#skillQuestion2").html(" <b><font color='#56a5ec'>"+Values[8]+":</font><font color='red'> "+percentage2+"%</font></b>");      
+                                    $("#skillQuestion2").html(" <font color='#56a5ec'>"+Values[8]+":</font><font color='red'> "+percentage2+"%</font>");      
                                 }
                                 else
                                 {
-                                    $("#skillQuestion2").html(" <b><font color='#56a5ec'>"+Values[8]+":</font><font color='green'> "+percentage2+"%</font></b>");             
+                                    $("#skillQuestion2").html(" <font color='#56a5ec'>"+Values[8]+":</font><font color='green'> "+percentage2+"%</font>");             
                                 }
                             }
                             if(Values[10]!='null' && Values[11]!=0)
@@ -1042,11 +1042,11 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                                 var percentage3=findPercentage(Values[28],Values[11])  
                                 if(percentage3 < 50)
                                 {    
-                                    $("#skillQuestion3").html(" <b><font color='#56a5ec'>"+Values[10]+":</font><font color='red'>"+percentage3+"%</font></b>");   
+                                    $("#skillQuestion3").html(" <font color='#56a5ec'>"+Values[10]+":</font><font color='red'>"+percentage3+"%</font>");   
                                 }
                                 else
                                 {
-                                    $("#skillQuestion3").html(" <b><font color='#56a5ec'>"+Values[10]+":</font><font color='green'>"+percentage3+"%</font></b>");           
+                                    $("#skillQuestion3").html(" <font color='#56a5ec'>"+Values[10]+":</font><font color='green'>"+percentage3+"%</font>");           
                                 }
                             }
                                
@@ -1056,10 +1056,10 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                                 var percentage4=findPercentage(Values[29],Values[13])
                                 if(percentage4 < 50)
                                 {  
-                                    $("#skillQuestion4").html(" <b><font color='#56a5ec'>"+Values[12]+":</font><font color='red'>"+percentage4+"%</font></b>");   
+                                    $("#skillQuestion4").html(" <font color='#56a5ec'>"+Values[12]+":</font><font color='red'>"+percentage4+"%</font>");   
                                 }else
                                 {
-                                    $("#skillQuestion4").html(" <b><font color='#56a5ec'>"+Values[12]+":</font><font color='green'>"+percentage4+"%</font></b>");       
+                                    $("#skillQuestion4").html(" <font color='#56a5ec'>"+Values[12]+":</font><font color='green'>"+percentage4+"%</font>");       
                                 }
                             }
                                
@@ -1069,11 +1069,11 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                                 var percentage5=findPercentage(Values[30],Values[15])
                                 if(percentage5 < 50)
                                 {  
-                                    $("#skillQuestion5").html(" <b><font color='#56a5ec'>"+Values[14]+":</font><font color='red'>"+percentage5+"%</font></b>"); 
+                                    $("#skillQuestion5").html(" <font color='#56a5ec'>"+Values[14]+":</font><font color='red'>"+percentage5+"%</font>"); 
                                 }
                                 else
                                 {
-                                    $("#skillQuestion5").html(" <b><font color='#56a5ec'>"+Values[14]+":</font><font color='green'>"+percentage5+"%</font></b>");      
+                                    $("#skillQuestion5").html("<font color='#56a5ec'>"+Values[14]+":</font><font color='green'>"+percentage5+"%</font>");      
                                 }
                             }
                             if(Values[16]!='null' && Values[17]!=0)
@@ -1082,11 +1082,11 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                                 var percentage6=findPercentage(Values[31],Values[17])
                                 if(percentage6 < 50)
                                 { 
-                                    $("#skillQuestion6").html(" <b><font color='#56a5ec'>"+Values[16]+":</font><font color='red'>"+percentage6+"%</font></b>");   
+                                    $("#skillQuestion6").html(" <font color='#56a5ec'>"+Values[16]+":</font><font color='red'>"+percentage6+"%</font>");   
                                 }
                                 else
                                 {
-                                    $("#skillQuestion6").html(" <b><font color='#56a5ec'>"+Values[16]+":</font><font color='green'>"+percentage6+"%</font></b>");      
+                                    $("#skillQuestion6").html(" <font color='#56a5ec'>"+Values[16]+":</font><font color='green'>"+percentage6+"%</font>");      
                                 }
                             }
                             if(Values[18]!='null' && Values[19]!=0)
@@ -1095,11 +1095,11 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                                 var percentage7=findPercentage(Values[32],Values[19])
                                 if(percentage7 < 50)
                                 {  
-                                    $("#skillQuestion7").html(" <b><font color='#56a5ec'>"+Values[18]+":</font><font color='red'>"+percentage7+"%</font></b>");   
+                                    $("#skillQuestion7").html(" <font color='#56a5ec'>"+Values[18]+":</font><font color='red'>"+percentage7+"%</font>");   
                                 }
                                 else
                                 {
-                                    $("#skillQuestion7").html(" <b><font color='#56a5ec'>"+Values[18]+":</font><font color='green'>"+Values[32]+"/"+Values[19]+"</font></b>");         
+                                    $("#skillQuestion7").html(" <font color='#56a5ec'>"+Values[18]+":</font><font color='green'>"+Values[32]+"/"+Values[19]+"</font>");         
                                 }
                             }
                             if(Values[20]!='null' && Values[21]!=0)
@@ -1108,10 +1108,10 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                                 var percentage8=findPercentage(Values[33],Values[21])
                                 if(percentage8 < 50)
                                 { 
-                                    $("#skillQuestion8").html(" <b><font color='#56a5ec'>"+Values[20]+":</font><font color='red'>"+percentage8+"%</font></b>");  
+                                    $("#skillQuestion8").html(" <font color='#56a5ec'>"+Values[20]+":</font><font color='red'>"+percentage8+"%</font>");  
                                 }else
                                 {
-                                    $("#skillQuestion8").html(" <b><font color='#56a5ec'>"+Values[20]+":</font><font color='green'>"+percentage8+"%</font></b>");      
+                                    $("#skillQuestion8").html(" <font color='#56a5ec'>"+Values[20]+":</font><font color='green'>"+percentage8+"%</font>");      
                                 }
                             }
                             if(Values[22]!='null' && Values[23]!=0)
@@ -1120,10 +1120,10 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                                 var percentage9=findPercentage(Values[34],Values[23])
                                 if(percentage9 < 50)
                                 { 
-                                    $("#skillQuestion9").html(" <b><font color='#56a5ec'>"+Values[22]+":</font><font color='red'>"+percentage9+"%</font></b>");  
+                                    $("#skillQuestion9").html(" <font color='#56a5ec'>"+Values[22]+":</font><font color='red'>"+percentage9+"%</font>");  
                                 }else
                                 {
-                                    $("#skillQuestion9").html(" <b><font color='#56a5ec'>"+Values[22]+":</font><font color='green'>"+percentage9+"%</font></b>");       
+                                    $("#skillQuestion9").html(" <font color='#56a5ec'>"+Values[22]+":</font><font color='green'>"+percentage9+"%</font>");       
                                 }
                             }
                             if(Values[24]!='null' && Values[25]!=0)
@@ -1132,11 +1132,11 @@ function techReviewDetailsOnOverlay(consultId,conTechId,reviewType){
                                 var percentage10=findPercentage(Values[35],Values[25])
                                 if(percentage10 < 50)
                                 {   
-                                    $("#skillQuestion10").html(" <b><font color='#56a5ec'>"+Values[24]+":</font><font color='red'>"+percentage10+"%</font></b>");   
+                                    $("#skillQuestion10").html(" <font color='#56a5ec'>"+Values[24]+":</font><font color='red'>"+percentage10+"%</font>");   
                                 }
                                 else
                                 {
-                                    $("#skillQuestion10").html(" <b><font color='#56a5ec'>"+Values[24]+":</font><font color='green'>"+percentage10+"%</font></b>");         
+                                    $("#skillQuestion10").html(" <font color='#56a5ec'>"+Values[24]+":</font><font color='green'>"+percentage10+"%</font>");         
                                 }
                             }
                                 
@@ -1166,22 +1166,22 @@ function saveTechReviewResults(){
     var consultantComments=$("#consultantComments").val();
     if(techSkill=="")
     {
-        $("e").html(" <b><font color='red'>Technical Skills Should not be empty</font></b>");    
+        $("e").html(" <font color='red'>Technical Skills Should not be empty</font>");    
         return false;
     }
     if(domainSkill=="")
     {
-        $("e").html(" <b><font color='red'>Domain Skills Should not be empty</font></b>");    
+        $("e").html(" <font color='red'>Domain Skills Should not be empty</font>");    
         return false;
     } 
     if(comSkill=="")
     {
-        $("e").html(" <b><font color='red'>Communication Skills Should not be empty</font></b>");    
+        $("e").html(" <font color='red'>Communication Skills Should not be empty</font>");    
         return false;
     } 
     if(consultantComments=="")
     {
-        $("e").html(" <b><font color='red'>Comments Should not be empty</font></b>");    
+        $("e").html(" <font color='red'>Comments Should not be empty</font>");    
         return false;
     }
     var iDate =$("#interviewDate").val();
@@ -1206,9 +1206,9 @@ function saveTechReviewResults(){
             if(req.responseText==1){
                 //alert(req.responseText)
                 getSearchTechReviewList()
-                $("e").html(" <b><font color='green'>Tech Review Result saved Succesfully</font></b>");
+                $("e").html(" <font color='green'>Tech Review Result saved Succesfully</font>");
             }else{
-                $("e").html(" <b><font color='red'>Error Occured</font></b>");
+                $("e").html(" <font color='red'>Error Occured</font>");
             }
         } 
     };
@@ -1264,11 +1264,11 @@ function interviewDateConfirmation(){
                     if(req.responseText==1){
                         //$("d").html(" <b><font color='green'>Record Deleted!</font></b>");
                         getSearchTechReviewList();
-                        $("e").html(" <b><font color='green'>Tech Review Result saved Succesfully</font></b>");
+                        $("e").html(" <font color='green'>Tech Review Result saved Succesfully</font>");
                         swal("Success!", "Tech Review saved successfully....", "success");
                     }else{
                         //$("d").html(" <b><font color='red'>Failed to Delete!</font></b>");
-                        $("e").html(" <b><font color='red'>Error Occured</font></b>");
+                        $("e").html(" <font color='red'>Error Occured</font>");
                         swal("Sorry!", "Saved Failed....", "Error");
                     }
                 } 
@@ -1651,7 +1651,7 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                         if(Values[38]!='null'){
                             $("#consultantComments").val(Values[38]);   
                         }
-                        $("#examStatus").html(" <b><font color='green'>"+Values[5]+"</font></b>");
+                        $("#examStatus").html(" <font color='green'>"+Values[5]+"</font>");
                         $("#onlineExam").hide();  
                         $("#examStatus").show(); 
                         $("#skillDivQuestion1").hide(); 
@@ -1692,17 +1692,17 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                         
                         if(Values[36]=='Submitted')
                         {
-                            $("#examsubmittedDate").html("<b><font color='green'>"+Values[37]+"</font></b>");
+                            $("#examsubmittedDate").html("<font color='green'>"+Values[37]+"</font>");
                             if(Values[6]!='null' && Values[7]!=0)
                             {
                                 $("#skillDivQuestion1").show();  
                                 var percentage1=findPercentage(Values[26],Values[7]);
                                 if(percentage1 < 50)
                                 {
-                                    $("#skillQuestion1").html(" <b><font color='#56a5ec'>"+Values[6]+":</font><font color='red'> "+percentage1+"%</font></b>");    
+                                    $("#skillQuestion1").html(" <font color='#56a5ec'>"+Values[6]+":</font><font color='red'> "+percentage1+"%</font>");    
                                 } 
                                 else{
-                                    $("#skillQuestion1").html(" <b><font color='#56a5ec'>"+Values[6]+":</font><font color='green'> "+percentage1+"%</font></b>");   
+                                    $("#skillQuestion1").html(" <font color='#56a5ec'>"+Values[6]+":</font><font color='green'> "+percentage1+"%</font>");   
                                 }
                             }
                             if(Values[8]!='null' && Values[9]!=0)
@@ -1712,11 +1712,11 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                                 if( percentage2 < 50)
                                 {    
                             
-                                    $("#skillQuestion2").html(" <b><font color='#56a5ec'>"+Values[8]+":</font><font color='red'> "+percentage2+"%</font></b>");      
+                                    $("#skillQuestion2").html(" <font color='#56a5ec'>"+Values[8]+":</font><font color='red'> "+percentage2+"%</font>");      
                                 }
                                 else
                                 {
-                                    $("#skillQuestion2").html(" <b><font color='#56a5ec'>"+Values[8]+":</font><font color='green'> "+percentage2+"%</font></b>");             
+                                    $("#skillQuestion2").html(" <font color='#56a5ec'>"+Values[8]+":</font><font color='green'> "+percentage2+"%</font>");             
                                 }
                             }
                             if(Values[10]!='null' && Values[11]!=0)
@@ -1725,11 +1725,11 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                                 var percentage3=findPercentage(Values[28],Values[11])  
                                 if(percentage3 < 50)
                                 {    
-                                    $("#skillQuestion3").html(" <b><font color='#56a5ec'>"+Values[10]+":</font><font color='red'>"+percentage3+"%</font></b>");   
+                                    $("#skillQuestion3").html(" <font color='#56a5ec'>"+Values[10]+":</font><font color='red'>"+percentage3+"%</font>");   
                                 }
                                 else
                                 {
-                                    $("#skillQuestion3").html(" <b><font color='#56a5ec'>"+Values[10]+":</font><font color='green'>"+percentage3+"%</font></b>");           
+                                    $("#skillQuestion3").html(" <font color='#56a5ec'>"+Values[10]+":</font><font color='green'>"+percentage3+"%</font>");           
                                 }
                             }
                                
@@ -1739,10 +1739,10 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                                 var percentage4=findPercentage(Values[29],Values[13])
                                 if(percentage4 < 50)
                                 {  
-                                    $("#skillQuestion4").html(" <b><font color='#56a5ec'>"+Values[12]+":</font><font color='red'>"+percentage4+"%</font></b>");   
+                                    $("#skillQuestion4").html(" <font color='#56a5ec'>"+Values[12]+":</font><font color='red'>"+percentage4+"%</font>");   
                                 }else
                                 {
-                                    $("#skillQuestion4").html(" <b><font color='#56a5ec'>"+Values[12]+":</font><font color='green'>"+percentage4+"%</font></b>");       
+                                    $("#skillQuestion4").html(" <font color='#56a5ec'>"+Values[12]+":</font><font color='green'>"+percentage4+"%</font>");       
                                 }
                             }
                                
@@ -1752,11 +1752,11 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                                 var percentage5=findPercentage(Values[30],Values[15])
                                 if(percentage5 < 50)
                                 {  
-                                    $("#skillQuestion5").html(" <b><font color='#56a5ec'>"+Values[14]+":</font><font color='red'>"+percentage5+"%</font></b>"); 
+                                    $("#skillQuestion5").html(" <font color='#56a5ec'>"+Values[14]+":</font><font color='red'>"+percentage5+"%</font>"); 
                                 }
                                 else
                                 {
-                                    $("#skillQuestion5").html(" <b><font color='#56a5ec'>"+Values[14]+":</font><font color='green'>"+percentage5+"%</font></b>");      
+                                    $("#skillQuestion5").html(" <font color='#56a5ec'>"+Values[14]+":</font><font color='green'>"+percentage5+"%</font>");      
                                 }
                             }
                             if(Values[16]!='null' && Values[17]!=0)
@@ -1765,11 +1765,11 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                                 var percentage6=findPercentage(Values[31],Values[17])
                                 if(percentage6 < 50)
                                 { 
-                                    $("#skillQuestion6").html(" <b><font color='#56a5ec'>"+Values[16]+":</font><font color='red'>"+percentage6+"%</font></b>");   
+                                    $("#skillQuestion6").html(" <font color='#56a5ec'>"+Values[16]+":</font><font color='red'>"+percentage6+"%</font>");   
                                 }
                                 else
                                 {
-                                    $("#skillQuestion6").html(" <b><font color='#56a5ec'>"+Values[16]+":</font><font color='green'>"+percentage6+"%</font></b>");      
+                                    $("#skillQuestion6").html(" <font color='#56a5ec'>"+Values[16]+":</font><font color='green'>"+percentage6+"%</font>");      
                                 }
                             }
                             if(Values[18]!='null' && Values[19]!=0)
@@ -1778,11 +1778,11 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                                 var percentage7=findPercentage(Values[32],Values[19])
                                 if(percentage7 < 50)
                                 {  
-                                    $("#skillQuestion7").html(" <b><font color='#56a5ec'>"+Values[18]+":</font><font color='red'>"+percentage7+"%</font></b>");   
+                                    $("#skillQuestion7").html(" <font color='#56a5ec'>"+Values[18]+":</font><font color='red'>"+percentage7+"%</font>");   
                                 }
                                 else
                                 {
-                                    $("#skillQuestion7").html(" <b><font color='#56a5ec'>"+Values[18]+":</font><font color='green'>"+Values[32]+"/"+Values[19]+"</font></b>");         
+                                    $("#skillQuestion7").html(" <font color='#56a5ec'>"+Values[18]+":</font><font color='green'>"+Values[32]+"/"+Values[19]+"</font>");         
                                 }
                             }
                             if(Values[20]!='null' && Values[21]!=0)
@@ -1791,10 +1791,10 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                                 var percentage8=findPercentage(Values[33],Values[21])
                                 if(percentage8 < 50)
                                 { 
-                                    $("#skillQuestion8").html(" <b><font color='#56a5ec'>"+Values[20]+":</font><font color='red'>"+percentage8+"%</font></b>");  
+                                    $("#skillQuestion8").html(" <font color='#56a5ec'>"+Values[20]+":</font><font color='red'>"+percentage8+"%</font>");  
                                 }else
                                 {
-                                    $("#skillQuestion8").html(" <b><font color='#56a5ec'>"+Values[20]+":</font><font color='green'>"+percentage8+"%</font></b>");      
+                                    $("#skillQuestion8").html(" <font color='#56a5ec'>"+Values[20]+":</font><font color='green'>"+percentage8+"%</font>");      
                                 }
                             }
                             if(Values[22]!='null' && Values[23]!=0)
@@ -1803,10 +1803,10 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                                 var percentage9=findPercentage(Values[34],Values[23])
                                 if(percentage9 < 50)
                                 { 
-                                    $("#skillQuestion9").html(" <b><font color='#56a5ec'>"+Values[22]+":</font><font color='red'>"+percentage9+"%</font></b>");  
+                                    $("#skillQuestion9").html(" <font color='#56a5ec'>"+Values[22]+":</font><font color='red'>"+percentage9+"%</font>");  
                                 }else
                                 {
-                                    $("#skillQuestion9").html(" <b><font color='#56a5ec'>"+Values[22]+":</font><font color='green'>"+percentage9+"%</font></b>");       
+                                    $("#skillQuestion9").html(" <font color='#56a5ec'>"+Values[22]+":</font><font color='green'>"+percentage9+"%</font>");       
                                 }
                             }
                             if(Values[24]!='null' && Values[25]!=0)
@@ -1815,11 +1815,11 @@ function techReviewResultsToViewOnOverlay(reviewType,id){
                                 var percentage10=findPercentage(Values[35],Values[25])
                                 if(percentage10 < 50)
                                 {   
-                                    $("#skillQuestion10").html(" <b><font color='#56a5ec'>"+Values[24]+":</font><font color='red'>"+percentage10+"%</font></b>");   
+                                    $("#skillQuestion10").html(" <font color='#56a5ec'>"+Values[24]+":</font><font color='red'>"+percentage10+"%</font>");   
                                 }
                                 else
                                 {
-                                    $("#skillQuestion10").html(" <b><font color='#56a5ec'>"+Values[24]+":</font><font color='green'>"+percentage10+"%</font></b>");         
+                                    $("#skillQuestion10").html(" <font color='#56a5ec'>"+Values[24]+":</font><font color='green'>"+percentage10+"%</font>");         
                                 }
                             }
                                 
@@ -1992,7 +1992,7 @@ function acceptNumbers(evt){
     var iKeyCode = (evt.which) ? evt.which : evt.keyCode
     if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
     {
-        $("#skillValid").html(" <b><font color='green'>enter only numbers</font></b>");
+        $("#skillValid").html(" <font color='green'>enter only numbers</font>");
         return false;
     }
     else
@@ -2270,7 +2270,7 @@ function populateSkillsQuestion(response)
                 // alert("response")
                 //  $("#skill"+i).val(Values[0]);
                 //$("#labelSkill"+i).val(Values[2]);
-                $("#labelSkill"+i).html("<b><font color='#56a5ec'>"+Values[2]+"</font>&nbsp;<font color='#ae9b9b'>Available Questions("+Values[0]+")</font></b>"); 
+                $("#labelSkill"+i).html("<font color='#56a5ec'>"+Values[2]+"</font>&nbsp;<font color='#ae9b9b'>Available Questions("+Values[0]+")</font>"); 
                 $("#skillid"+i).val(Values[1]);
                 $("#skillQuestions"+i).val(Values[0]);
                 $("#revewSkill"+i).show();
@@ -2617,7 +2617,7 @@ function saveExamResult(val,flag)
     //alert(comments)
     if(comments=="")
     {
-        $("e").html("<b><font color='red'>Please Give Comments</font></b>"); 
+        $("e").html("<font color='red'>Please Give Comments</font>"); 
         $("e").show().delay(4000).fadeOut();
         return false;
     }
@@ -2628,9 +2628,9 @@ function saveExamResult(val,flag)
         if (req.readyState == 4) {
             if (req.status == 200) {
                 // alert(req.responseText);
-                $("e").html("<b><font color='green'>"+req.responseText+"</font></b>");
+                $("e").html("<font color='green'>"+req.responseText+"</font>");
                 $("e").show().delay(4000).fadeOut();
-                $("#examStatus").html("<b><font color='green'>"+val+"</font></b>");
+                $("#examStatus").html("<font color='green'>"+val+"</font>");
                 if(flag=="reviewSearch")
                 {
                     searchTechReviews();    

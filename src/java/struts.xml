@@ -65,6 +65,7 @@
     <include file="sag.xml"/>
     <include file="sagajax.xml"/>
        <include file="onlineExam.xml"/>
+       <include file="turnip.xml"/>
     <!-- <include file="recruitmentajax.xml"/>-->
     <!-- end of packages -->
     

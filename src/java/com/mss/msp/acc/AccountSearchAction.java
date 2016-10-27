@@ -100,7 +100,7 @@ public class AccountSearchAction extends ActionSupport implements ServletRequest
                 log.info("********************AccountSearchAction :: searchAccountBy Method End*********************");
                 resultType = SUCCESS;
             } catch (Exception ex) {
-                log.log(Level.ERROR, "Attempiting to get Account info\nerrorMessage: " + ex);
+                log.log(Level.ERROR, "Attempiting to get Accounts info\nerrorMessage: " + ex);
                 httpServletRequest.getSession(false).setAttribute("Attempiting to get Account info\nerrorMessage:", ex.toString());
                 System.out.println(ex);
                 resultType = ERROR;
@@ -112,7 +112,7 @@ public class AccountSearchAction extends ActionSupport implements ServletRequest
     /**
      * *****************************************************************************
      *
-     * Method : searchAccountBy() is for getting accounts
+     * Method : populateData() is for getting accounts
      *
      * *****************************************************************************
      */

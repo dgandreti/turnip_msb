@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 /**
  * getMyConsultantSearch
@@ -33,6 +34,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public class RecruitmentServiceImpl implements RecruitmentService {
 
+    private static Logger log = Logger.getLogger(RecruitmentServiceImpl.class);
     private DataSourceDataProvider dataSourceDataProvider;
     Connection connection = null;
     CallableStatement callableStatement = null;
@@ -80,7 +82,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                     entry = null;
                 }
             }
-            queryString = "SELECT c.usr_id as consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS name,c.phone1,c.email1,cd.usr_id,cd.consultant_skills, cd.rate_salary ,c.cur_status FROM users c LEFT OUTER JOIN"
+            queryString = "SELECT c.usr_id as consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS name,c.phone1,c.email1,cd.usr_id,cd.experience,cd.consultant_skills, cd.rate_salary ,c.cur_status FROM users c LEFT OUTER JOIN"
                     + " usr_details cd ON c.usr_id=cd.usr_id where type_of_user='IC'";
             if ("My".equalsIgnoreCase(recruitmentAction.getConsultantFlag())) {
                 queryString = queryString + " and created_by=" + recruitmentAction.getUserSessionId();
@@ -93,11 +95,12 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);
-            String joined = "Name" + "|" + "E-Mail" + "|" + "Skill Set" + "|" + "Rate/Salary" + "|" + "Phone Number" + "|" + "Status" + "^";
+            String joined = "Name" + "|" + "E-Mail" + "|" + "Experience" + "|" + "Skill Set" + "|" + "Rate/Salary" + "|" + "Phone Number" + "|" + "Status" + "^";
             String resultantString = joined;
             while (resultSet.next()) {
                 ConsultantVTO cons = new ConsultantVTO();
                 cons.setConsult_id(resultSet.getInt("consultant_id"));
+                cons.setYearExperience(resultSet.getString("experience"));
                 cons.setConsult_email(resultSet.getString("email1"));
                 cons.setConsult_name(resultSet.getString("name"));
                 cons.setConsult_phno(resultSet.getString("phone1"));
@@ -106,7 +109,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 cons.setConsult_status(resultSet.getString("cur_status"));
                 System.out.println("div" + resultSet.getString("phone1") + "  " + resultSet.getString("email1") + "  " + resultSet.getString("name") + "    " + resultSet.getString("consultant_skills"));
                 conslist.add(cons);
-                joined = cons.getConsult_name() + "|" + cons.getConsult_email() + "|" + cons.getConsult_skill() + "|" + cons.getConsult_salary() + "|" + cons.getConsult_phno() + "|" + cons.getConsult_status() + "^";
+                joined = cons.getConsult_name() + "|" + cons.getConsult_email() + "|" + cons.getYearExperience() + "|" + cons.getConsult_skill() + "|" + cons.getConsult_salary() + "|" + cons.getConsult_phno() + "|" + cons.getConsult_status() + "^";
                 resultantString += joined;
             }
             recruitmentAction.setGridPDFDownload(queryString);
@@ -154,7 +157,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         Statement statement = null;
         ResultSet resultSet = null;
         String queryString = "";
-        String joined = "Name" + "|" + "E-Mail" + "|" + "Skill Set" + "|" + "Rate/Salary" + "|" + "Phone Number" + "|" + "Status" + "^"; // for grid download
+        String joined = "Name" + "|" + "E-Mail" + "|" + "Experience" + "|" + "Skill Set" + "|" + "Rate/Salary" + "|" + "Phone Number" + "|" + "Status" + "^"; // for grid download
         String resultantString = joined;
         System.out.println("********************RecruitmentServiceImpl :: getConsListDetails Method Start*********************");
         try {
@@ -175,7 +178,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                     entry = null;
                 }
             }
-            queryString = "SELECT DISTINCT c.usr_id as consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS name,c.phone1,c.email1,cd.usr_id,cd.consultant_skills, cd.rate_salary,c.cur_status FROM users c LEFT OUTER JOIN"
+            queryString = "SELECT DISTINCT c.usr_id as consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS name,c.phone1,c.email1,cd.experience,cd.usr_id,cd.consultant_skills, cd.rate_salary,c.cur_status FROM users c LEFT OUTER JOIN"
                     + " usr_details cd ON c.usr_id=cd.usr_id "
                     + "LEFT OUTER JOIN usr_address ca ON c.usr_id=ca.usr_id "
                     + "where type_of_user='IC'AND ca.STATUS LIKE 'Active' ";
@@ -192,6 +195,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             }
             if (recruitmentAction.getConsult_name() != null && !"".equals(recruitmentAction.getConsult_name())) {
                 queryString = queryString + " and (c.first_name like'%" + recruitmentAction.getConsult_name().trim() + "%' or c.middle_name like'%" + recruitmentAction.getConsult_name().trim() + "%' or c.last_name like'%" + recruitmentAction.getConsult_name().trim() + "%') ";
+            }
+            if (recruitmentAction.getYearExperience() != null && !"".equals(recruitmentAction.getYearExperience())) {
+                queryString = queryString + " and cd.experience =" + recruitmentAction.getYearExperience().trim() + " ";
             }
             if (recruitmentAction.getConsult_email() != null && !"".equals(recruitmentAction.getConsult_email())) {
                 queryString = queryString + " and c.email1 like'%" + recruitmentAction.getConsult_email().trim() + "%' ";
@@ -228,13 +234,14 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 cons.setConsult_id(resultSet.getInt("consultant_id"));
                 cons.setCons_id(resultSet.getInt("consultant_id"));
                 cons.setConsult_email(resultSet.getString("email1"));
+                cons.setYearExperience(resultSet.getString("experience"));
                 cons.setConsult_name(resultSet.getString("name"));
                 cons.setConsult_phno(resultSet.getString("phone1"));
                 cons.setConsult_skill(resultSet.getString("consultant_skills"));
                 cons.setConsult_salary(resultSet.getString("rate_salary"));
                 cons.setConsult_status(resultSet.getString("cur_status"));
                 conslist.add(cons);
-                joined = cons.getConsult_name() + "|" + cons.getConsult_email() + "|" + cons.getConsult_skill() + "|" + cons.getConsult_salary() + "|" + cons.getConsult_phno() + "|" + cons.getConsult_status() + "^";
+                joined = cons.getConsult_name() + "|" + cons.getConsult_email() + "|" + cons.getYearExperience() + "|" + cons.getConsult_skill() + "|" + cons.getConsult_salary() + "|" + cons.getConsult_phno() + "|" + cons.getConsult_status() + "^";
                 resultantString += joined;
             }
             recruitmentAction.setGridPDFDownload(queryString);
@@ -459,7 +466,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             }
             dobDate = dateUtility.getInstance().convertStringToMySQLDateInDash(recruitmentAction.getConsult_dob());
             connection = ConnectionProvider.getInstance().getConnection();
-            callableStatement = connection.prepareCall("{CALL addConsultant(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            callableStatement = connection.prepareCall("{CALL addConsultant(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             System.out.println("doAddConsultantDetails :: procedure name : addConsultant ");
             callableStatement.setInt(1, orgId);
             callableStatement.setString(2, recruitmentAction.getConsult_email());
@@ -511,8 +518,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 callableStatement.setString(45, consult_relocation);
             }
             callableStatement.setString(46, recruitmentAction.getConsultantVisa());
+            callableStatement.setString(47, recruitmentAction.getPrimarySkillValue());
+            callableStatement.setString(48, recruitmentAction.getConsult_preferredRegion());
             isExceute = callableStatement.execute();
-            addResult = callableStatement.getInt(47);
+            addResult = callableStatement.getInt(49);
         } catch (Exception sqe) {
             sqe.printStackTrace();
         } finally {
@@ -553,17 +562,30 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         ResultSet resultSet = null;
         String queryString = "";
         try {
-            queryString = "SELECT c.usr_id AS usr_consultant_id,c.job_title,c.usr_industry,c.preffered_country, "
+            queryString = "SELECT c.usr_id AS usr_consultant_id,c.job_title,c.usr_industry,c.preffered_country,c.preffered_region, "
                     + "c.preffered_state,c.referred_by,c.experience,c.rate_salary,c.available_from, "
                     + "c.available,c.education,c.relocation,c.comments,c.ssn_number,u.email1,u.email2, "
                     + "u.first_name,u.last_name,u.middle_name,u.dob,u.created_by_org_id,u.living_country, "
                     + "u.working_country,u.phone2,u.phone1,u.cur_status ,u.linkedin_link, u.facebook_link, "
-                    + "u.twitter_link, c.consultant_skills,a.address,a.city,a.state,a.zip,a.country, "
+                    + "u.twitter_link,c.consultant_primary_skill, c.consultant_skills,a.address,a.city,a.state,a.zip,a.country, "
                     + "a.phone,a.address2,a.address_flag,a.STATUS,ar.object_id, ar.acc_attachment_id, ar.object_type, ar.attachment_path, ar.attachment_name,u.type_of_user,c.visa,c.idprooftype,c.idproofattachment FROM users u JOIN usr_details c ON (u.usr_id = c.usr_id) "
-                    + "JOIN usr_address a ON (u.usr_id = a.usr_id) JOIN acc_rec_attachment ar ON(ar.object_id=u.usr_id) WHERE u.usr_id = ? AND a.STATUS='ACTIVE' AND ar.STATUS='Active' ";
+                    + "JOIN usr_address a ON (u.usr_id = a.usr_id) JOIN acc_rec_attachment ar ON(ar.object_id=u.usr_id) WHERE u.usr_id = ? ";
+            if (recruitmentAction.getRequirementId() != 0) {
+                queryString = queryString + " AND ar.req_id = ?";
+            }
+            queryString = queryString + " AND a.STATUS='ACTIVE' AND ar.STATUS='Active'";
+            if (recruitmentAction.getRequirementId() != 0) {
+                queryString = queryString + " AND (object_type= 'CSA' OR object_type='E')";
+            } else {
+                queryString = queryString + " AND (object_type= 'CV')";
+            }
             connection = ConnectionProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(queryString);
             preparedStatement.setInt(1, recruitmentAction.getConsult_id());
+            if (recruitmentAction.getRequirementId() != 0) {
+                preparedStatement.setInt(2, recruitmentAction.getRequirementId());
+            }
+            System.out.println("=================================" + queryString);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 consult.setVendorcomments(recruitmentAction.getVendorcomments());
@@ -591,6 +613,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 consult.setConsult_jobTitle(resultSet.getString("job_title"));
                 consult.setConsult_industry(resultSet.getInt("usr_industry"));
                 consult.setConsult_preferredCountry(resultSet.getInt("preffered_country"));
+                consult.setConsult_preferredRegion(resultSet.getInt("preffered_region"));
                 consult.setConsult_acc_attachment_id(resultSet.getString("acc_attachment_id"));
                 consult.setConsult_object_id(resultSet.getInt("object_id"));
                 consult.setConsult_attachment_name(resultSet.getString("attachment_name"));
@@ -619,6 +642,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 consult.setConsult_relocation(resultSet.getString("relocation"));
                 consult.setConsult_skill(resultSet.getString("consultant_skills"));
                 consult.setConsult_comments(resultSet.getString("comments"));
+                consult.setConsultPrimarySkill(resultSet.getString("consultant_primary_skill"));
                 String str1 = resultSet.getString("consultant_skills");
                 StringTokenizer stk1 = new StringTokenizer(str1, ",");
                 String reqSkillsResultString = "";
@@ -730,6 +754,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         String consult_relocation = recruitmentAction.getConsult_relocation();
         String str = recruitmentAction.getSkillValues();
         StringTokenizer stk = new StringTokenizer(str, ",");
+        System.out.println("----------------------------------------" + recruitmentAction.getPrimarySkillValue());
         String reqSkillsResultString = "";
         while (stk.hasMoreTokens()) {
             reqSkillsResultString += com.mss.msp.util.DataSourceDataProvider.getInstance().getReqSkillsSet(Integer.parseInt(stk.nextToken()));
@@ -737,7 +762,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         recruitmentAction.setReqSkillSet(StringUtils.chop(reqSkillsResultString));
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-            callableStatement = connection.prepareCall("{CALL updateConsultantDetails(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            callableStatement = connection.prepareCall("{CALL updateConsultantDetails(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             System.out.println("doupdateConsultantDetails :: procedure name : updateConsultantDetails ");
             callableStatement.setString(1, recruitmentAction.getConsult_email());
             callableStatement.setString(2, recruitmentAction.getConsult_fstname());
@@ -793,9 +818,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             }
             callableStatement.setString(45, recruitmentAction.getConsultantVisa());
             callableStatement.setString(46, recruitmentAction.getConsultantIdProof());
-            callableStatement.registerOutParameter(47, Types.INTEGER);
+            callableStatement.setString(47, recruitmentAction.getPrimarySkillValue());
+            callableStatement.setString(48, recruitmentAction.getConsult_preferredRegion());
+            callableStatement.registerOutParameter(49, Types.INTEGER);
             isExceute = callableStatement.execute();
-            updatedRows = callableStatement.getInt(47);
+            updatedRows = callableStatement.getInt(49);
             if (updatedRows > 0) {
                 recruitmentAction.setUpdateMessage("success");
             } else {
@@ -844,7 +871,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             connection = ConnectionProvider.getInstance().getConnection();
             String typeofusr = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
             if (typeofusr.equalsIgnoreCase("VC")) {
-                queryString = "SELECT Distinct(c.usr_id) AS consultant_id,"
+                queryString = "SELECT Distinct(c.usr_id) AS consultant_id,ud.experience,"
                         + "CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME,c.phone1,aat.acc_attachment_id,"
                         + "c.email1,rc.STATUS,rc.con_skill AS consultant_skills,rc.createdbyOrgId as created_by_org_id,"
                         + "rc.rate_salary,r.acc_id,rc.created_Date,rc.Comments,rc.customercomments,ud.ssn_number,rc.vendorcomments "
@@ -853,9 +880,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                         + "LEFT OUTER JOIN usr_details ud ON (ud.usr_id=c.usr_id)  "
                         + "LEFT OUTER JOIN acc_requirements r ON (r.requirement_id=rc.reqId) "
                         + "LEFT OUTER JOIN acc_rec_attachment aat ON (c.usr_id=aat.object_id) ";
-                queryString = queryString + " WHERE rc.reqId=" + recruitmentAction.getRequirementId() + " AND rc.createdbyOrgId=" + recruitmentAction.getSessionOrgId() + " AND  aat.STATUS LIKE 'Active' AND (aat.object_type='E' OR aat.object_type='CSA' AND aat.req_id = " + recruitmentAction.getRequirementId() + ") LIMIT 100";
+                queryString = queryString + " WHERE rc.reqId=" + recruitmentAction.getRequirementId() + " AND rc.createdbyOrgId=" + recruitmentAction.getSessionOrgId() + " AND  aat.STATUS LIKE 'Active' AND ((aat.object_type='E' OR aat.object_type='CSA') AND aat.req_id = " + recruitmentAction.getRequirementId() + ") LIMIT 100";
             } else {
-                queryString = "SELECT Distinct(c.usr_id) AS consultant_id,"
+                queryString = "SELECT Distinct(c.usr_id) AS consultant_id,ud.experience,"
                         + "CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME,c.phone1,aat.acc_attachment_id,"
                         + "c.email1,rc.STATUS,rc.con_skill AS consultant_skills,rc.createdbyOrgId as created_by_org_id,"
                         + "rc.rate_salary,r.acc_id,rc.created_Date,rc.Comments,rc.customercomments,ud.ssn_number,rc.vendorcomments  "
@@ -864,7 +891,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                         + "LEFT OUTER JOIN usr_details ud ON (ud.usr_id=c.usr_id)  "
                         + "LEFT OUTER JOIN acc_requirements r ON (r.requirement_id=rc.reqId) "
                         + "LEFT OUTER JOIN acc_rec_attachment aat ON (c.usr_id=aat.object_id) ";
-                queryString = queryString + " WHERE  rc.reqId=" + recruitmentAction.getRequirementId() + "  AND  aat.STATUS LIKE 'Active' AND (aat.object_type='E' OR (aat.object_type='CSA' AND aat.req_id = " + recruitmentAction.getRequirementId() + ")) LIMIT 100";
+                queryString = queryString + " WHERE  rc.reqId=" + recruitmentAction.getRequirementId() + "  AND  aat.STATUS LIKE 'Active' AND ((aat.object_type='E' OR aat.object_type='CSA') AND aat.req_id = " + recruitmentAction.getRequirementId() + ") LIMIT 100";
             }
             System.out.println("getConsultantListDetails::query=========by nag=======" + queryString);
             statement = connection.createStatement();
@@ -880,7 +907,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 if (resultSet.getString("ssn_number") != null && !"".equalsIgnoreCase(resultSet.getString("ssn_number"))) {
                     decryptedSSN = com.mss.msp.util.DataUtility.decrypted(resultSet.getString("ssn_number"));
                 }
-                resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("consultant_skills") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("created_by_org_id")) + "|" + resultSet.getString("rate_salary") + "|" + resultSet.getInt("created_by_org_id") + "|" + resultSet.getInt("acc_id") + "|" + postedDate + "|" + resultSet.getString("Comments") + "|" + resultSet.getString("customercomments") + "|" + decryptedSSN + "|" + resultSet.getString("rc.vendorcomments") + "|" + queryString + "^";
+                resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("consultant_skills") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("created_by_org_id")) + "|" + resultSet.getString("rate_salary") + "|" + resultSet.getInt("created_by_org_id") + "|" + resultSet.getInt("acc_id") + "|" + postedDate + "|" + resultSet.getString("Comments") + "|" + resultSet.getString("customercomments") + "|" + decryptedSSN + "|" + resultSet.getString("rc.vendorcomments") + "|" + queryString + "|" + resultSet.getString("experience") + "^";
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -931,26 +958,26 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             connection = ConnectionProvider.getInstance().getConnection();
             String typeofusr = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
             if (typeofusr.equalsIgnoreCase("VC")) {
-                queryString = " SELECT Distinct(c.usr_id) as consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME, "
+                queryString = " SELECT Distinct(c.usr_id) as consultant_id,cd.experience,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME, "
                         + "c.phone1,acc_attachment_id,c.email1,rc.status,rc.con_skill AS consultant_skills,rc.createdbyOrgId AS created_by_org_id,rc.rate_salary,rc.created_Date,"
                         + " rc.Comments,ar.acc_id,rc.customercomments,cd.ssn_number,rc.vendorcomments  FROM users c LEFT OUTER JOIN "
                         + "usr_details cd ON (c.usr_id=cd.usr_id) LEFT OUTER JOIN req_con_rel rc"
                         + " ON (c.usr_id=rc.consultantId) LEFT OUTER JOIN accounts a ON(a.account_id=rc.createdbyOrgId)"
                         + " LEFT OUTER JOIN acc_requirements ar "
-                        + "ON (requirement_id=reqId) LEFT OUTER JOIN acc_rec_attachment aat ON (c.usr_id=object_id) WHERE reqId='" + recruitmentAction.getRequirementId() + "' AND aat.STATUS='active' AND (aat.object_type='E' OR (aat.object_type='CSA' AND aat.req_id ='" + recruitmentAction.getRequirementId() + "'))";
+                        + "ON (requirement_id=reqId) LEFT OUTER JOIN acc_rec_attachment aat ON (c.usr_id=object_id) WHERE reqId='" + recruitmentAction.getRequirementId() + "' AND aat.STATUS='active' AND ((aat.object_type='E' OR aat.object_type='CSA') AND aat.req_id ='" + recruitmentAction.getRequirementId() + "'))";
                 if (recruitmentAction.getVen_id() == 0) {
                     queryString = queryString + " AND rc.createdbyOrgId=" + recruitmentAction.getSessionOrgId() + " ";
                 } else {
                     queryString = queryString + " AND rc.createdbyOrgId=" + recruitmentAction.getVen_id() + " ";
                 }
             } else {
-                queryString = " SELECT Distinct(c.usr_id) as consultant_id,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME, "
+                queryString = " SELECT Distinct(c.usr_id) as consultant_id,cd.experience,CONCAT_WS(' ',c.first_name,c.middle_name,c.last_name) AS NAME, "
                         + "c.phone1,acc_attachment_id,c.email1,rc.status,rc.con_skill AS consultant_skills,rc.createdbyOrgId AS created_by_org_id,rc.rate_salary,rc.created_Date,"
                         + " rc.Comments,ar.acc_id,rc.customercomments,cd.ssn_number,rc.vendorcomments  FROM users c LEFT OUTER JOIN "
                         + "usr_details cd ON (c.usr_id=cd.usr_id) LEFT OUTER JOIN req_con_rel rc"
                         + " ON (c.usr_id=rc.consultantId) LEFT OUTER JOIN accounts a ON(a.account_id=rc.createdbyOrgId)"
                         + " LEFT OUTER JOIN acc_requirements ar "
-                        + "ON (requirement_id=reqId) LEFT OUTER JOIN acc_rec_attachment aat ON (c.usr_id=object_id) WHERE reqId='" + recruitmentAction.getRequirementId() + "' AND aat.STATUS='active' AND (aat.object_type='E' OR (aat.object_type='CSA' AND aat.req_id ='" + recruitmentAction.getRequirementId() + "'))";
+                        + "ON (requirement_id=reqId) LEFT OUTER JOIN acc_rec_attachment aat ON (c.usr_id=object_id) WHERE reqId='" + recruitmentAction.getRequirementId() + "' AND aat.STATUS='active' AND ((aat.object_type='E' OR aat.object_type='CSA') AND aat.req_id ='" + recruitmentAction.getRequirementId() + "'))";
             }
             if (recruitmentAction.getConsult_name() != null && !"".equals(recruitmentAction.getConsult_name())) {
                 queryString = queryString + " and c.first_name like'%" + recruitmentAction.getConsult_name().trim() + "%' ";
@@ -976,6 +1003,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             if (recruitmentAction.getConsult_ssnNo() != null && !"".equals(recruitmentAction.getConsult_ssnNo())) {
                 queryString = queryString + " and cd.ssn_number ='" + com.mss.msp.util.DataUtility.encrypted(recruitmentAction.getConsult_ssnNo().trim()) + "' ";
             }
+            if (recruitmentAction.getYearExperience() != null && !"".equals(recruitmentAction.getYearExperience())) {
+                queryString = queryString + " and cd.experience ='" + recruitmentAction.getYearExperience().trim() + "' ";
+            }
             queryString = queryString + " LIMIT 100";
             System.out.println("searchConsultantListDetails::query================" + queryString);
             statement = connection.createStatement();
@@ -984,7 +1014,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 if (resultSet.getString("ssn_number") != null && !"".equalsIgnoreCase(resultSet.getString("ssn_number"))) {
                     decryptedSSN = com.mss.msp.util.DataUtility.decrypted(resultSet.getString("ssn_number"));
                 }
-                resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("consultant_skills") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("created_by_org_id")) + "|" + resultSet.getString("rate_salary") + "|" + resultSet.getInt("created_by_org_id") + "|" + resultSet.getInt("acc_id") + "|" + com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(resultSet.getDate("created_date")) + "|" + resultSet.getString("Comments") + "|" + resultSet.getString("customercomments") + "|" + decryptedSSN + "|" + resultSet.getString("vendorcomments") + "|" + queryString + "^";
+                resultString += resultSet.getString("consultant_id") + "|" + resultSet.getString("name") + "|" + resultSet.getString("email1") + "|" + resultSet.getString("consultant_skills") + "|" + resultSet.getString("phone1") + "|" + resultSet.getString("status") + "|" + resultSet.getString("acc_attachment_id") + "|" + com.mss.msp.util.DataSourceDataProvider.getInstance().getOrganizationName(resultSet.getInt("created_by_org_id")) + "|" + resultSet.getString("rate_salary") + "|" + resultSet.getInt("created_by_org_id") + "|" + resultSet.getInt("acc_id") + "|" + com.mss.msp.util.DateUtility.getInstance().convertDateToViewInDashFormat(resultSet.getDate("created_date")) + "|" + resultSet.getString("Comments") + "|" + resultSet.getString("customercomments") + "|" + decryptedSSN + "|" + resultSet.getString("vendorcomments") + "|" + queryString + "|" + resultSet.getString("experience") + "^";
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -1399,8 +1429,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 requirementListVTO.setStatus(status);
                 requirementListVTO.setReq_contact1(resultSet.getString("req_contact1"));
                 requirementListVTO.setReq_contact2(resultSet.getString("req_contact2"));
-                requirementListVTO.setReqContactName1(com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("req_contact1")));
-                requirementListVTO.setReqContactName2(com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("req_contact2")));
+                // requirementListVTO.setReqContactName1(com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("req_contact1")));
+                // requirementListVTO.setReqContactName2(com.mss.msp.util.DataSourceDataProvider.getInstance().getFnameandLnamebyStringId(resultSet.getString("req_contact2")));
                 requirementListVTO.setCustomerName(resultSet.getString("account_name"));
                 requirementListVTO.setRequirementMaxRate(resultSet.getString("max_rate"));
                 requirementListVTO.setNoOfSubmissions(com.mss.msp.util.DataSourceDataProvider.getInstance().getNoOfSubmisions(resultSet.getInt("requirement_id"), 0));
@@ -1567,7 +1597,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
      * *****************************************************************************
      */
     public int techReviewForward(RecruitmentAction recruitmentAction, String accToken, String validKey) throws ServiceLocatorException {
-        System.out.println("********************RecruitmentServiceImpl :: techReviewForward Method Start*********************");
+        log.info("********************RecruitmentServiceImpl :: techReviewForward Method Start*********************");
         StringBuffer stringBuffer = new StringBuffer();
         String queryString = "";
         int addResult = 0;
@@ -1589,7 +1619,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             }
             connection = ConnectionProvider.getInstance().getConnection();
             callableStatement = connection.prepareCall("{CALL techReviewForward(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            System.out.println("techReviewForward :: procedure name : techReviewForward ");
+            log.info("techReviewForward :: procedure name : techReviewForward ");
             callableStatement.setInt(1, recruitmentAction.getRequirementId());
             callableStatement.setInt(2, recruitmentAction.getConsult_id());
             callableStatement.setInt(3, recruitmentAction.getEmpIdTechReview());
@@ -1659,7 +1689,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 sqle.printStackTrace();
             }
         }
-        System.out.println("********************RecruitmentServiceImpl :: techReviewForward Method End*********************");
+        log.info("********************RecruitmentServiceImpl :: techReviewForward Method End*********************");
         return addResult;
     }
 
@@ -1694,6 +1724,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                     + "WHERE ct.forwarded_to=" + recruitmentAction.getUserSessionId() + " AND r.STATUS='active' ORDER BY forwarded_date  DESC LIMIT 50";
             connection = ConnectionProvider.getInstance().getConnection();
             statement = connection.createStatement();
+            System.out.println("  getTechReviewDetails :: queryString ------------------>" + queryString);
             resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
                 ConsultantVTO consultantVTO = new ConsultantVTO();
@@ -2239,7 +2270,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public int userMigration(RecruitmentAction recruitmentAction) throws ServiceLocatorException {
         System.out.println("********************RecruitmentServiceImpl :: userMigration Method Start*********************");
         int resultString = 0;
-        
+
         Connection connection = null;
         CallableStatement callableStatement = null;
         try {
@@ -2293,7 +2324,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        
+
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             queryString = "INSERT INTO acc_rec_attachment(object_id,object_type,attachment_name,attachment_path,STATUS,opp_created_by,validity,attachment_title,comments) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -2350,7 +2381,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         boolean isExceute = false;
 
         DateUtility dateUtility = new DateUtility();
-        
+
         try {
             connection = ConnectionProvider.getInstance().getConnection();
             queryString = "UPDATE acc_rec_attachment SET validity=?,comments=?,attachment_title=?  WHERE acc_attachment_id=" + attachment_id;
@@ -2399,7 +2430,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        
+
         try {
             String typeofusr = httpServletRequest.getSession(false).getAttribute(ApplicationConstants.TYPE_OF_USER).toString();
             queryString = "SELECT acc_id,account_name,jdid,requirement_id,req_name,no_of_resources,target_rate,max_rate FROM accounts a JOIN acc_requirements ar ON ar.acc_id=a.account_id LEFT OUTER JOIN req_ven_rel r ON requirement_id=req_id WHERE ven_id=" + recruitmentAction.getOrgid() + " AND  NOW() >= req_access_time AND  r.STATUS LIKE 'Active' AND  ar.req_status = 'OR' order by requirement_id desc LIMIT 3 ";

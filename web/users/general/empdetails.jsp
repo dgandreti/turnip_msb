@@ -76,7 +76,7 @@
         </style>
         <!-- end of new styles -->
     </head>
-    <body style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans'" onload="doOnLoad(); doOnLoadDatePicker(); init(); initReport('<%= request.getParameter("userid")%>'); showAddressDetails('<%= request.getParameter("userid")%>');">
+    <body oncontextmenu="return false" style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans'" onload="doOnLoad(); doOnLoadDatePicker(); init(); initReport('<%= request.getParameter("userid")%>'); showAddressDetails('<%= request.getParameter("userid")%>');">
         <div id="main">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->

@@ -80,7 +80,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
 
 
     </head>
-    <body style="overflow-x: hidden" onload="doOnLoadReqList(); loadPopup();reqPagination();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="doOnLoadReqList(); loadPopup();reqPagination();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -279,7 +279,7 @@ Author     : Praveen<pkatru@miraclesoft.com>
                                         </div>
                                         <%--<s:submit cssClass="css_button" value="show"/><br>--%>
                                         <div class="col-sm-12  share">
-                                            <span><releaseMessage></releaseMessage></span>
+                                            <span><releaseMessage id="reqResultMsg"></releaseMessage></span>
                                             <s:form>
 
                                                 <div class="task_content form-control col-sm-12" id="task_div" align="center" style="display: none" >

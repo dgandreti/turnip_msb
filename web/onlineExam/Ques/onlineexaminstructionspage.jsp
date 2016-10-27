@@ -31,7 +31,7 @@ and open the template in the editor.
         </style>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/onlineExam/onlineExam.css"/>"/>
     </head>
-    <body >
+    <body oncontextmenu="return false">
 
         <!-- Wrapper -->
         <div id="header_id">
@@ -97,7 +97,7 @@ and open the template in the editor.
 
 
                             <!-- <button  type="button" class="add_searchButton form-control" value="" style="margin:5px 0px;" onclick="getCustomerDashboardList();"> -->
-                            <s:submit id="examStartButton" type="submit" value="Start" cssClass="add_searchButton form-control" id="start_button"/>
+                            <s:submit type="submit" value="Start" cssClass="add_searchButton form-control" id="start_button"/>
                             <!-- speakers content ends-->
 
                         </div>

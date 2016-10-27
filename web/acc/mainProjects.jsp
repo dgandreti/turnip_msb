@@ -39,7 +39,7 @@
         
         <script type="text/JavaScript" src="<s:url value="/includes/js/bootstrap.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/main.js"/>"></script>
-        <script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script>
+        <%--<script type="text/JavaScript" src="<s:url value="/includes/js/general/taskOverlay.js"/>"></script> --%>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
 
         <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>
@@ -49,7 +49,7 @@
         <sx:head />
 
     </head>
-    <body>
+    <body oncontextmenu="return false">
         <div id="wrap">
         
         <header id="header"><!--header-->
@@ -136,7 +136,7 @@
                             window.setTimeout("pagerOption();", 1000);
                             window.setTimeout("doOnLoad();", 1000);
                             $(projectsPage).children().remove();
-                            document.getElementById('projectsPage').innerHTML = data;
+                            document.getElementById('projectsPage').innerHTML = data; alert(data)
                              document.getElementById("loadingProjectSearch").style.display="none";
                         },
                         type: 'GET'
@@ -144,14 +144,14 @@
                 }
                 else{
                     if(difference==-1){
-                        $("searchProject").html(" <b><font color='red'>Select start date!</font></b>");
+                        $("searchProject").html(" <font color='red'>Select start date!</font>");
                         $("#projectStartDate").css("border", "1px solid red");
                     }
                     else if(difference==-2){
-                        $("searchProject").html(" <b><font color='red'>Select target date!</font></b>");
+                        $("searchProject").html(" <font color='red'>Select target date!</font>");
                         $("#projectTargetDate").css("border", "1px solid red");
                     }else{
-                        $("searchProject").html(" <b><font color='red'>Start date must be less than target date!</font></b>");
+                        $("searchProject").html("<font color='red'>Start date must be less than target date!</font>");
                         $("#projectStartDate").css("border", "1px solid red");
                         $("#projectTargetDate").css("border", "1px solid red");
                     }
@@ -189,7 +189,7 @@
                             +"&accountID=<s:property value="accountID"/>"
                         ,
                         success: function(data){
-                            $("#addProjectValidation").html("<font color='green'><b>Project inserted successfully.</b></font>");
+                            $("#addProjectValidation").html("<font color='green'>Project inserted successfully.</font>");
                             $("#projects").html(data);
                             resetOverlayForm();
                         },
@@ -198,14 +198,14 @@
                 }else{
                     if(projectNamePopup=="")
                     {
-                        $("#addProjectValidation").html(" <font color='red'>Please , Enter the Project name!</font>");
+                        $("#addProjectValidation").html(" <font color='red'>Please enter the Project name!</font>");
                         $("#projectNamePopup").css("border", "1px solid red");
                         return false;
                     }
                    
                     if(projectStartDateOverlay=="")
                     {
-                        $("#addProjectValidation").html(" <b><font color='red'>project start date is required</font></b>");
+                        $("#addProjectValidation").html("<font color='red'>Project start date is required</font>");
                         $("#projectStartDateOverlay").css("border", "1px solid red");
                         return false;
                     }
@@ -214,13 +214,13 @@
                     
                     if(projectTargetDateOverlay=="")
                     {
-                        $("#addProjectValidation").html(" <b><font color='red'>project target date is required</font></b>");
+                        $("#addProjectValidation").html("<font color='red'>Project target date is required</font>");
                         $("#projectTargetDateOverlay").css("border", "1px solid red");
                         return false;
                     }
                   
                     if(difference<=0){
-                        $("#addProjectValidation").html(" <b><font color='red'>Start date must be less then target date</font></b>");
+                        $("#addProjectValidation").html("<font color='red'>Start date must be less then target date</font>");
                         $("#projectStartDateOverlay").css("border", "1px solid red");
                         $("#projectTargetDateOverlay").css("border", "1px solid red");
                         return false;

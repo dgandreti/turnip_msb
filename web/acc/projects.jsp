@@ -65,14 +65,14 @@
       function checkAddProjectName(projName){
           if(projName.replace(/\s/g, '')=="" )
           {
-              $("#addProjectValidation").html(" <b><font color='red'>Enter Project name</font></b>");    
+              $("#addProjectValidation").html("<font color='red'>Enter Project name</font>");    
               return false;
           }
           $.ajax({url:"<%=request.getContextPath()%>/checkProjectNames.action?projectName="+ projName+"&projectFlag=main",
               success: function(data){
                    
                   if(data == "true"){
-                      $("#addProjectValidation").html("<font color='red'><b>Project name exists!</b></font>");
+                      $("#addProjectValidation").html("<font color='red'>Project name exists!</font>");
                       document.getElementById("projectNamePopup").value="";
                       $("#projectNamePopup").focus();
                   }

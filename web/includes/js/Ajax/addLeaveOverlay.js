@@ -32,20 +32,20 @@ function addLeaveValidate(){
   
     
     if(val_fromleave==" " || val_fromleave==null){
-        $("errorEduAdd").html(" <b><font color='red'>Leave From field is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>Leave From field is Required</font>.");
         $("#val_fromleave").css("border", "1px solid red");
         $("#fromleave").css("border","1px solid red");
         return false;
     }
     if(val_toleave==" " || val_toleave==null){
-        $("errorEduAdd").html(" <b><font color='red'>Required To is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>Required To is Required</font>.");
         $("#val_toleave").css("border", "1px solid red");
         $("#toleave").css("border","1px solid red");
         return false;
     }
     
     if(val_leaveType=="" || val_leaveType==null){
-        $("errorEduAdd").html(" <b><font color='red'>Leave Type is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>Leave Type is Required</font>.");
         $("#val_leaveType").css("border", "1px solid red");
         $("#leavetype").css("border","1px solid red");
         return false;
@@ -57,27 +57,27 @@ function addLeaveValidate(){
     //        return false;
     //    }
     if(val_reason=="" || val_reason==null){
-        $("errorEduAdd").html(" <b><font color='red'>Reason is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>Reason is Required</font>.");
         $("#val_reason").css("border", "1px solid red");
         $("#reason").css("border","1px solid red");
         return false;
     }
     if(val_leavestatus=="" || val_leavestatus==null){
-        $("errorEduAdd").html(" <b><font color='red'>leave status  is Required</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>leave status  is Required</font>.");
         $("#val_leavestatus").css("border", "1px solid red");
         $("#leavestatus").css("border","1px solid red");
         return false;
     }
     if(val_fromleave > val_toleave){
         //alert("start"+"val_year_start"+"----end----"+"val_year_end");
-        $("errorEduAdd").html(" <b><font color='red'>start date must be less than end date</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>start date must be less than end date</font>.");
         $("#val_fromleave").css("border", "1px solid red");
         $("#val_fromleave").css("border","1px solid red");
         $("#val_toleave").css("border","1px solid red");
         return false;
     }
     if( val_reportsTo==null){
-        $("errorEduAdd").html(" <b><font color='red'>You dont have any reporting person</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>You dont have any reporting person</font>.");
         $("#val_reportsTo").css("border", "1px solid red");
         $("#reportsTo").css("border","1px solid red");
         return false;
@@ -88,7 +88,7 @@ function addLeaveValidate(){
     var difference = (addEndDate - addStartDate) / (86400000 * 7);
     if (difference < 0) {
         // alert("The start date must come before the end date.");
-        $("errorEduAdd").html(" <b><font color='red'>start date must be less than end date</font></b>.");
+        $("errorEduAdd").html(" <font color='red'>start date must be less than end date</font>.");
         $("#val_fromleave").css("border", "1px solid red");
         $("#val_fromleave").css("border","1px solid red");
         $("#val_toleave").css("border","1px solid red");
@@ -142,13 +142,13 @@ function addLeave()
             if (req.readyState == 4) {
                 if (req.status == 200) {
                    
-                    $("errorEduAdd").html(" <b><font color='green'>Record successfully Added</font></b>");
+                    $("errorEduAdd").html(" <font color='green'>Record successfully Added</font>");
                     doGetLeavesData();
                 //                    showEducationDetails(userid);
                 } 
                 else
                 {
-                    $("edu").html(" <b><font color='red'>Record not Added</font></b>");
+                    $("edu").html(" <font color='red'>Record not Added</font>");
                 //  alert("Error occured");
                 }
             }
@@ -284,7 +284,7 @@ function populateLeaves(response)
           //  alert("Get ready ")
             RecordsData = RecordsData+'<tr><td><s:url action="../leaves/editLeaves.action"><s:param name="leave_id"></s:param></s:url>'+
 
-            '<a href="editLeaves.action?leave_id='+Values[0]+'&leaveflag='+myLeaveFlag+'"><img width="20" height="20" src="/MSB/includes/images/edit_icon.png"></td></a>'+
+            '<a href="editLeaves.action?leave_id='+Values[0]+'&leaveflag='+myLeaveFlag+'"><img width="20" height="20" src="'+CONTENXT_PATH+'/includes/images/edit_icon.png"></td></a>'+
             '<td>'+Values[1]+'</td>'+
             '<td>'+Values[2]+'</td>'+
             '<td>'+Values[3]+'</td>'+

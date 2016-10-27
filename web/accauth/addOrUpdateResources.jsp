@@ -34,7 +34,7 @@
 
 
     </head>
-    <body style="overflow-x: hidden" onload="getAccountNames(); getUserGroups();setBlockFlag();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="getAccountNames(); getUserGroups();setBlockFlag();">
         <div id="wrap">
 
             <header id="header"><!--header-->

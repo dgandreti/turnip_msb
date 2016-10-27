@@ -54,7 +54,7 @@
             });
         </script>
     </head>
-    <body style="overflow-x: hidden">
+    <body oncontextmenu="return false" style="overflow-x: hidden">
         <div id="wrap"> 
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -150,7 +150,7 @@
                                             </s:if>
                                             <div>
 
-                                                <form action="updateAccountContact" onsubmit="return contactInfoValidation()">
+                                                <form action="updateAccountContact" onsubmit="return editContactInfoValidation()">
                                                     <div>
 
                                                         <span id="InsertContactInfo"></span>
@@ -177,7 +177,7 @@
 
 
                                                                 <div class="col-sm-3 required">
-                                                                    <label class="contactLabelStyle">First Name</label><s:textfield  name="ContactFname" value="%{accountContactVTO.firstName}"  id="ContactFname" required="true" maxLength="28" cssClass="form-control" placeholder="first Name" onkeyup="contactFirstNameValidation()" tabindex="1"/>
+                                                                    <label class="contactLabelStyle">First Name</label><s:textfield  name="ContactFname" value="%{accountContactVTO.firstName}"  id="ContactFname"  maxLength="28" cssClass="form-control" placeholder="first Name" onkeyup="contactFirstNameValidation()" tabindex="1"/>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <label class="contactLabelStyle">Middle&nbsp;Name</label><s:textfield name="ContactMname" value="%{accountContactVTO.middleName}" id="ContactMname"  cssClass="form-control" placeholder="middle Name" maxLength="28"  onfocus="removeResultMessage()" pattern='[A-Za-z\\s]*' onkeypress="return middlename(event);" tabindex="2"/>   
@@ -190,14 +190,14 @@
                                                                     <label class="contactLabelStyle">Email</label><s:textfield cssClass="form-control" disabled="true" value="%{accountContactVTO.email}" name="ContactEmail" id="ContactEmail" tabindex="4"/>
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    <label class="contactLabelStyle">Alternate&nbsp;Email</label><s:textfield cssClass="form-control" value="%{accountContactVTO.email2}" name="ContactEmail2" id="ContactEmail2" maxLength="58" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Must be valid email')" placeholder="Alternate Email" onblur="alternateMailValidation()" onkeyup="removeActionMessage()" tabindex="5"/>
+                                                                    <label class="contactLabelStyle">Alternate&nbsp;Email</label><s:textfield cssClass="form-control" value="%{accountContactVTO.email2}" name="ContactEmail2" id="ContactEmail2" maxLength="58" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"  placeholder="Alternate Email" onblur="alternateMailValidation()" onkeyup="removeActionMessage()" tabindex="5"/>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <label class="addAcclabelStyle">Gender</label>
                                                                     <s:select cssClass="SelectBoxStyles form-control " id="gender" name="gender" list="#@java.util.LinkedHashMap@{'M':'Male','F':'Female'}" value="%{accountContactVTO.gender}" tabindex="6"/>
                                                                 </div>
                                                                 <div class="col-sm-3 required">
-                                                                    <label class="contactLabelStyle">Office&nbsp;Phone</label> <s:textfield id="Officephone" value="%{accountContactVTO.officePhone}" cssClass="form-control" required="true" name="Officephone"  type="text" placeholder="Phone #"  tabindex="7"/>  
+                                                                    <label class="contactLabelStyle">Office&nbsp;Phone</label> <s:textfield id="Officephone" value="%{accountContactVTO.officePhone}" cssClass="form-control" name="Officephone"  type="text" placeholder="Phone #"  tabindex="7"/>  
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <label class="contactLabelStyle">Mobile&nbsp;Number</label> <s:textfield id="moblieNumber" value="%{accountContactVTO.moblieNumber}" cssClass="form-control" name="moblieNumber"  type="text" placeholder="Mobile #" tabindex="8"/>
@@ -209,7 +209,7 @@
                                                                     <%-- for space --%>
                                                                 </div>
                                                                 <div class="col-sm-3  required">
-                                                                    <label class="addAcclabelStyle">Title</label><s:textfield cssClass="form-control " name="contactTitle" id="contactTitle" placeholder="Title"  required="true" maxLength="30"  tabindex="10" value="%{accountContactVTO.contactTitle}"/>
+                                                                    <label class="addAcclabelStyle">Title</label><s:textfield cssClass="form-control " name="contactTitle" id="contactTitle" placeholder="Title"  maxLength="30"  tabindex="10" value="%{accountContactVTO.contactTitle}" onkeyup="titleValidation();"/>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <label class="addAcclabelStyle">Industry</label><s:select cssClass="form-control SelectBoxStyles" name="contactIndustry" id="contactIndustry" headerKey="-1" headerValue="Select Industry" list="industryMap"  tabindex="11" value="%{accountContactVTO.contactIndustry}"/>
@@ -271,16 +271,16 @@
                                                                 </div>
                                                                 <s:if test="accountContactVTO.conPCountry==-1">
                                                                     <div class="col-sm-4">
-                                                                        <label class="contactLabelStyle">Country</label><s:select cssClass="form-control SelectBoxStyles" required="true" value="3" name="conCountry" id="conCountry"   list="countryNames" onchange="ConPermanentStateChange()" tabindex="23" />
+                                                                        <label class="contactLabelStyle">Country</label><s:select cssClass="form-control SelectBoxStyles" value="3" name="conCountry" id="conCountry"   list="countryNames" onchange="ConPermanentStateChange()" tabindex="23" />
                                                                     </div>
                                                                 </s:if>
                                                                 <s:else>
                                                                     <div class="col-sm-4">
-                                                                        <label class="contactLabelStyle">Country</label><s:select cssClass="form-control SelectBoxStyles" required="true" value="%{accountContactVTO.conPCountry}" name="conCountry" id="conCountry"  headerKey="-1" headerValue="Select Country" list="countryNames" onchange="ConPermanentStateChange()" tabindex="23"/>
+                                                                        <label class="contactLabelStyle">Country</label><s:select cssClass="form-control SelectBoxStyles"  value="%{accountContactVTO.conPCountry}" name="conCountry" id="conCountry"  headerKey="-1" headerValue="Select Country" list="countryNames" onchange="ConPermanentStateChange()" tabindex="23"/>
                                                                     </div>
                                                                 </s:else>
                                                                 <div class="col-sm-4">
-                                                                    <label class="contactLabelStyle">State</label><s:select cssClass="form-control SelectBoxStyles"  required="true" name="conState" id="conState" headerKey="-1" headerValue="Select State" value="%{accountContactVTO.conPState}" list="%{accountContactVTO.state1}" tabindex="24"/>
+                                                                    <label class="contactLabelStyle">State</label><s:select cssClass="form-control SelectBoxStyles"  name="conState" id="conState" headerKey="-1" headerValue="Select State" value="%{accountContactVTO.conPState}" list="%{accountContactVTO.state1}" tabindex="24"/>
                                                                 </div>
 
                                                                 <div class="col-sm-4">
@@ -345,7 +345,7 @@
                                             <s:hidden name="accountSearchID" value="%{accountSearchID}"/>
                                             <s:hidden name="flag" value="%{flag}"/>
                                             <s:hidden name="accountType" id="accountType" value="%{accountType}" />
-                                            <s:file name="imageupdate" id="imageupdate"/>
+                                            <s:file name="imageupdate" id="imageupdate" onchange="return ValidateFileUpload();" />
                                         </div>
                                         <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
 

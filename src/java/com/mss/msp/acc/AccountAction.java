@@ -37,7 +37,7 @@ import org.apache.struts2.interceptor.ParameterAware;
  * @author NagireddySeerapu
  */
 public class AccountAction extends ActionSupport implements ServletRequestAware, ParameterAware {
-
+    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AccountAction.class);
     private List<String> countryList;
     private List<String> stateList;
     private List<String> industryList;
@@ -429,7 +429,7 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
     public String addTeamMemberToProject() throws ServiceLocatorException {
         String resulttype = LOGIN;
         String result = "";
-        System.out.println("********************AccountAction :: addTeamMemberToProject Method Start*********************");
+        log.info("********************AccountAction :: addTeamMemberToProject Method Start*********************");
         if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
             setUserSessionId(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID).toString()));
             setAccountID(Integer.parseInt(httpServletRequest.getSession(false).getAttribute(ApplicationConstants.ORG_ID).toString()));
@@ -438,8 +438,8 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
                 setProjectFlag("addMember");
                 setResultMessage("Team Member Added Succesfully..");
             } else {
-                System.out.println("teammember Id" + getTeamMemberId());
-                System.out.println("user Id" + getUserID());
+               // System.out.println("teammember Id" + getTeamMemberId());
+               // System.out.println("user Id" + getUserID());
                 if ("Active".equals(getTeamMemberStatus())) {
                     if (getReportPerson() == getReportsto1()) {
                         String userExist = DataSourceDataProvider.getInstance().checkUserExistOrNotForProjectRespectedOrg(getTeamMemberId(), getAccountID());
@@ -464,7 +464,7 @@ public class AccountAction extends ActionSupport implements ServletRequestAware,
             }
             resulttype = SUCCESS;
         }
-        System.out.println("********************AccountAction :: addTeamMemberToProject Method End*********************");
+       log.info("********************AccountAction :: addTeamMemberToProject Method End*********************");
         return resulttype;
     }
 

@@ -123,7 +123,7 @@
                 var difference = (addEndDate - addStartDate) / (86400000 * 7);
                 if (difference < 0) {
                     alert("The start date must come before the end date.");
-                    $("errorEduAdd").html(" <b><font color='red'>start date must be less than end date</font></b>.");
+                    $("errorEduAdd").html(" <font color='red'>start date must be less than end date</font>.");
                     $("#fromValue").css("border", "1px solid red");
       
                     $("#toValue").css("border","1px solid red");
@@ -169,7 +169,7 @@
 
 
 
-    <body style="overflow-x: hidden" onload="doOnLoad();checkWeekStatus()">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="doOnLoad();checkWeekStatus()">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

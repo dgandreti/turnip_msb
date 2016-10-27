@@ -119,7 +119,7 @@ function getSearchRequirementsList()
         {
              
        
-            $(requirementValidation).html(" <b><font color='red'>Start date Must be less than End date</font></b>");
+            $(requirementValidation).html(" <font color='red'>Start date Must be less than End date</font>");
 
             $(requirementValidation).show().delay(4000).fadeOut();
 
@@ -976,7 +976,7 @@ function saveVendorAssociation(){
     var req=initRequest(url);
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
-            $("saveVendorAssociation").html(" <b><font color='green'>Vendor Association Saved Successfully</font></b>");
+            $("saveVendorAssociation").html(" <font color='green'>Vendor Association Saved Successfully</font>");
             getVendorAssociationDetails()
         } 
     };
@@ -1455,7 +1455,7 @@ function checkRecordInReqConRel(conId,reqId){
                 } 
             }
             else{
-                $("e1").html(" <b><font color='red'>You dont have any proof add any one</font></b>");
+                $("e1").html(" <font color='red'>You dont have any proof add any one</font>");
             }
             
         } 
@@ -1498,20 +1498,20 @@ function addconsultantValidation(){
     if(conEmail=="")
     {
         // alert("no email");
-        $("e1").html(" <b><font color='red'>Email Should not be empty</font></b>");
+        $("e1").html(" <font color='red'>Email Should not be empty</font>");
         $("e1").css("margin-left", "30px");
         return false;
     }
     if(ratePerHour=="")
     {
         // alert("no ratePerHour");
-        $("e1").html(" <b><font color='red'>Please Enter Rate/Hr </font></b>");
+        $("e1").html(" <font color='red'>Please Enter Rate/Hr </font>");
         $("e1").css("margin-left", "30px");
         return false;
     }
     if(skillCatArry==""){
        
-        $("e1").html(" <b><font color='red'>Please select Skill</font></b>");
+        $("e1").html(" <font color='red'>Please select Skill</font>");
         $("e1").css("margin-left", "30px");
         //  $("#skillListValue").css("border", "1px solid red");
         // $("e1").show().delay(4000).fadeOut();
@@ -1523,21 +1523,21 @@ function addconsultantValidation(){
     if(!emailpattern.test(conEmail))
     {
         // alert("no email");
-        $("e1").html(" <b><font color='red'>Email Must be Valid</font></b>");
+        $("e1").html(" <font color='red'>Email Must be Valid</font>");
         $("e1").css("margin-left", "30px");
         return false;
     }
     if(!ratepattern.test(ratePerHour))
     {
         // alert("no ratePerHour");
-        $("e1").html(" <b><font color='red'>Rate/Hr Must be valid</font></b>");
+        $("e1").html(" <font color='red'>Rate/Hr Must be valid</font>");
         $("e1").css("margin-left", "30px");
         return false;
     }
     if(file=="" && isHidden==false)
     {
         // alert("no ratePerHour");
-        $("e1").html(" <b><font color='red'>Please upload the attachment</font></b>");
+        $("e1").html(" <font color='red'>Please upload the attachment</font>");
         $("e1").css("margin-left", "30px");
         return false;
     }
@@ -1748,6 +1748,7 @@ function doAttachmentDownload(acc_attachment_id)
 
 function doReleaseRequirement(id,orgId,taxTerm){
     $("releaseMessage").html("");
+    $("reqResultMsg").show();
     var requirementId=id;
     var url='Requirements/doReleaseRequirements.action?requirementId='+requirementId+'&orgId='+orgId+'&taxTerm='+taxTerm;
     //alert(url)
@@ -1756,16 +1757,17 @@ function doReleaseRequirement(id,orgId,taxTerm){
         if (req.readyState == 4 && req.status == 200) {
             //alert(req.responseText)
             if(req.responseText==0){
-                $("releaseMessage").html(" <b><font color='red'>Requirement already Released</font></b>");
+                $("releaseMessage").html(" <font color='red'>Requirement already Released</font>");
             }
             else{
                 if(taxTerm=='CO'){
-                    $("releaseMessage").html(" <b><font color='green'>Requirement release for Tier1 Vendors</font></b>");
+                    $("releaseMessage").html(" <font color='green'>Requirement release for Tier1 Vendors</font>");
                 }else{
-                    $("releaseMessage").html(" <b><font color='green'>Requirement release for Head Hunters Vendors</font></b>");
+                    $("releaseMessage").html(" <font color='green'>Requirement release for Head Hunters Vendors</font>");
                 }
             }
             getSearchRequirementsList();
+            $("reqResultMsg").fadeOut(5000);
         } 
     };
     req.open("GET",url,"true");
@@ -1919,7 +1921,7 @@ function dateReqValidation(startDate,endDate,validatemessage)
     {
              
        
-        $(validatemessage).html(" <b><font color='red'>Start date Must be less than End date</font></b>");
+        $(validatemessage).html(" <font color='red'>Start date Must be less than End date</font>");
         //        $("#startDate").css("border", "1px solid red");
         //        $("#endDate").css("border", "1px solid red");
         $(validatemessage).show().delay(4000).fadeOut();
@@ -2023,4 +2025,53 @@ function downloadXLSRequirementList(){
     var url= "../../recruitment/consultant/downloadXlsResults.action?pdfHeaderName=Requirements List&gridDownload="
     +gridDownload+"&gridDownloadFlag=Req";
     window.location=url;
+}
+
+function addConReqFileValidation()
+{
+   //document.getElementByName('e1').innerHTML = '';
+    $("e1").html("");
+    var fullPath = document.getElementById('file').value;
+        
+    //alert(fullPath);
+            
+    var size = document.getElementById('file').files[0].size;
+    var extension = fullPath.substring(fullPath.lastIndexOf('.')+1);
+    var leafname= fullPath.split('\\').pop().split('/').pop();
+    if(extension=="pdf"||extension=="doc"|| extension=="docx" ){
+        var size = document.getElementById('file').files[0].size;
+                  
+        if(leafname.length>30){
+            document.getElementById('file').value = '';
+          //  document.getElementName('e1').innerHTML = "<font color=red>File name length must be less than 30 characters!</font>"
+           $("e1").html("<font color=red>File name length must be less than 30 characters!</font>");
+          // showAlertModal("File size must be less than 2 MB");
+            return false;
+        }
+        else 
+        {
+            if(parseInt(size)>2097152) {
+                document.getElementById('file').value = '';
+               // document.getElementByName('e1').innerHTML = "<font color=red>File size must be less than 2 MB.</font>"
+                 $("e1").html("<font color=red>File size must be less than 2 MB.</font>");
+                // showAlertModal("File size must be less than 2 MB");
+                return false;
+                  
+            }
+            else
+                {
+             return true;        
+                }
+        }
+    }
+    else 
+    {
+    
+        document.getElementById('file').value = "";
+        //document.getElementByName('e1').innerHTML = "<font color=red>Invalid file extension!Please select pdf or doc or docx  file.</font>"
+         $("e1").html("<font color=red>Invalid file extension!Please select pdf or doc or docx  file.</font>");
+        return false;
+    } 
+    
+   
 }

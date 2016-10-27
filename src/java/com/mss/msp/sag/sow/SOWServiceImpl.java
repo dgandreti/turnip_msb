@@ -53,6 +53,7 @@ public class SOWServiceImpl implements SOWService {
             } else {
                 sqlquery = "SELECT * from vwCustomerSAG where acc_id=" + sowAction.getSessionOrgId() + " ";
             }
+            sqlquery = sqlquery + " ORDER BY serviceid DESC";
             System.out.println("getSowDetails::sqlquery-------->" + sqlquery);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sqlquery);
@@ -183,6 +184,7 @@ public class SOWServiceImpl implements SOWService {
             if (!"-1".equalsIgnoreCase(sowAction.getSOWSelectValue())) {
                 queryString = queryString + " AND servicetype='" + sowAction.getSOWSelectValue() + "'";
             }
+            queryString = queryString + " ORDER BY serviceid DESC";
             System.out.println("getSOWSearchResults::queryString-------->" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);

@@ -32,7 +32,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/responsive.css"/>">
         <!-- end of new styles -->
     </head>
-    <body>
+    <body oncontextmenu="return false">
         <header id="header"><!--header-->
             <div class="header_top" id="header_top"><!--header_top-->
                 <div class="container">

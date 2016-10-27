@@ -11,7 +11,9 @@ function getProjectBudgetSearch(){
     //alert(url)
     var req=initRequest(url);
     req.onreadystatechange = function() {
+        document.getElementById('loadingProjectBudgets').style.display = 'block';
         if (req.readyState == 4 && req.status == 200) {
+            $('#loadingProjectBudgets').hide();
             populateProjectBudgetTable(req.responseText);
         } 
     };
@@ -233,7 +235,7 @@ function saveBudgetDetails(formFlag){
     if(diff<0){
         document.getElementById("oestimateBudget").value="";
         //document.getElementById("oremainingAmt").value="";
-        $("e").html(" <b><font color='red'>Estimated amount should not exceed Cost Center Budget.</font></b>");  
+        $("e").html(" <font color='red'>Estimated amount should not exceed Cost Center Budget.</font>");  
         $("e").show().delay(4000).fadeOut();
         flg=false;
         return false;
@@ -245,7 +247,7 @@ function saveBudgetDetails(formFlag){
     //if($("#oyear").val()=="" && !re.test(oyear))
     if(year== -1){
         $("#oyear").css("border", "1px solid red");
-        $("e").html(" <b><font color='red'>Year is Mandatory</font></b>");
+        $("e").html(" <font color='red'>Year is Mandatory</font>");
         
         flg=false;
         return false;
@@ -253,7 +255,7 @@ function saveBudgetDetails(formFlag){
     else if(!re.test(year)){
        
         $("#oyear").css("border", "1px solid red");
-        $("e").html(" <b><font color='red'>please select year</font></b>");
+        $("e").html(" <font color='red'>Please select year</font>");
         flg=false;
         return false;
     }
@@ -264,13 +266,13 @@ function saveBudgetDetails(formFlag){
     }
     if(estimateBudget==""){
         $("#oestimateBudget").css("border", "1px solid red");
-        $("e").html(" <b><font color='red'>Estimated Budget is Mandatory</font></b>");
+        $("e").html(" <font color='red'>Estimated Budget is Mandatory</font>");
         flg=false;
         return false;
     }
     //    else if(!re1.test(estimateBudget)){
     //        $("#oestimateBudget").css("border", "1px solid red");
-    //        $("e").html(" <b><font color='red'>please enter numeric values</font></b>");
+    //        $("e").html(" <font color='red'>please enter numeric values</font>");
     //        flg=false;
     //        return false;
     //    }
@@ -283,7 +285,7 @@ function saveBudgetDetails(formFlag){
     if(comments==""){
         // alert("comments");
         $("#ocomments").css("border", "1px solid red");
-        $("e").html(" <b><font color='red'>Please Enter Comments</font></b>");
+        $("e").html(" <font color='red'>Please Enter Comments</font>");
         flg=false;
         return false;
     } 
@@ -293,11 +295,11 @@ function saveBudgetDetails(formFlag){
         $("#ocomments").css("border", "1px solid green");
    
     }
-    if(formFlag=='A'){
+//    if(formFlag=='A'){
         approveComments = $("#approveComments").val();
         if(approveComments==""){
             $("#approveComments").css("border", "1px solid red");
-            $("e").html(" <b><font color='red'>Please Enter Approve/Rejection Comments</font></b>");
+            $("e").html(" <font color='red'>Please Enter Approve/Rejection Comments</font>");
             flg=false;
             return false;
         } 
@@ -306,7 +308,7 @@ function saveBudgetDetails(formFlag){
             $("e").html("");
             $("#approveComments").css("border", "1px solid green");
         }
-    }
+//    }
     //alert(flg)
     if(flg){
         
@@ -316,25 +318,25 @@ function saveBudgetDetails(formFlag){
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 if(req.responseText=='Added'){
-                    $("e").html(" <b><font color='Green'>Budget Details Added For Project Selected</font></b>");
+                    $("e").html(" <font color='Green'>Budget Details Added For Project Selected</font>");
                 //getProjectBudgetSearch();
                 // window.location = "ProjectBudgetDetails.action";
                 }else if(req.responseText=='Exist'){
-                    $("e").html(" <b><font color='red'>Budget Details Already Exists!</font></b>");
+                    $("e").html(" <font color='red'>Budget Details Already Exists!</font>");
                 }else if(req.responseText=='Updated'){
-                    $("e").html(" <b><font color='green'>Budget Details Updated!</font></b>");
+                    $("e").html(" <font color='green'>Budget Details Updated!</font>");
                 //getProjectBudgetSearch();
                 //window.location = "ProjectBudgetDetails.action";
                 }else if(req.responseText=='DirectorStatusUpdated'){
-                    $("e").html(" <b><font color='green'>Budget Details Saved!</font></b>");
+                    $("e").html(" <font color='green'>Budget Details Saved!</font>");
                 //getProjectBudgetSearch();
                 //window.location = "ProjectBudgetDetails.action";
                 }else if(req.responseText=='DirectorStatusFail'){
-                    $("e").html(" <b><font color='green'>Budget Details Failed to Approve!</font></b>");
+                    $("e").html(" <font color='green'>Budget Details Failed to Approve!</font>");
                 //getProjectBudgetSearch();
                 //window.location = "ProjectBudgetDetails.action";
                 }else{
-                    $("e").html(" <b><font color='red'>Error Check Details</font></b>");
+                    $("e").html(" <font color='red'>Error Check Details</font>");
                 }
             } 
         };
@@ -442,7 +444,7 @@ function doBudgetRecordDelete(id){
                         getProjectBudgetSearch();
                         swal("Deleted!", "Deleted Successfully....", "success");
                     }else{
-                        //$("d").html(" <b><font color='red'>Failed to Delete!</font></b>");
+                        //$("d").html(" <font color='red'>Failed to Delete!</font></b>");
                         swal("Sorry!", "Delete Failed....", "Error");
                     }
                 } 
@@ -545,7 +547,7 @@ function validationYearOverlay(evt)
         //alert("enter only numbers ")
         if(rate!=4)
         {
-            $("e").html(" <b><font color='red'>enter only numbers</font></b>");  
+            $("e").html(" <font color='red'>enter only numbers</font>");  
             $("e").show().delay(4000).fadeOut();
         }
         if(iKeyCode == 8)
@@ -597,7 +599,7 @@ function validationYear(evt)
     {
         //alert("enter only numbers ")
         if(rate!=4){
-            $("#budgetValidation").html(" <b><font color='red'>enter only numbers</font></b>");  
+            $("#budgetValidation").html(" <font color='red'>enter only numbers</font>");  
             $("#budgetValidation").show().delay(4000).fadeOut();
         }
         if(iKeyCode == 8)
@@ -640,7 +642,7 @@ function estimateBudgetValidation(evt)
     {
         //alert("enter only numbers ")
        
-        $("e").html(" <b><font color='red'>enter only numbers</font></b>");  
+        $("e").html(" <font color='red'>enter only numbers</font>");  
         $("e").show().delay(4000).fadeOut();
         
         if(iKeyCode == 8)

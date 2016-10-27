@@ -41,7 +41,7 @@ public class ApplicationConstants {
         public static final String LIVING_COUNTRY = "livingCountry";
         public static final String WORK_COUNTRY = "workingCountry";
         public static final String EMAIL = "email";
-        public static final String CONTEXT_PATH="MSB";
+        public static final String CONTEXT_PATH="msb";
 
         public static final String PRIMARYROLE ="primaryrole";
         public static final String PRIMARYROLEVALUE ="primaryrolevalue";

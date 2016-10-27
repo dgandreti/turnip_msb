@@ -46,24 +46,24 @@
         <script>
             $(document).ready(function() {
                 $('#skillListValue').selectivity({
-                    
                     multiple: true,
                     placeholder: 'Type to Search Skills'
                 });
             });
-            
+
         </script>
         <style type="text/css">
             #placement-examples .east { margin-left: 450px; }
         </style>
         <script type="text/javascript">
             $(function() {
-                $('.east').powerTip({ placement: 'e' });
-			
+                $('.east').powerTip({placement: 'e'});
+
             });
         </script>
     </head>
-    <body style="overflow-x: hidden" onload="ConPermanentStateChange();jumper();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="ConPermanentStateChange();
+            jumper();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -98,9 +98,9 @@
                                                 </s:url>
                                                 <s:a href='%{#myUrl}' id="accountName"><s:property value="%{accountName}"/></s:a> 
 
-                                                <div class="backgroundcolor" >
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
+                                                    <div class="backgroundcolor" >
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
                                                             <% String flag = "conSearch";
                                                             %>
                                                             <font color="#ffffff"> Add Contact</font>
@@ -110,14 +110,15 @@
                                                             </s:url>
                                                             <span class="pull-right"><s:a href='%{#myUrl}' id="backToList"><i class="fa fa-undo"></i></s:a></span>
 
-                                                        </h4>
+                                                            </h4>
+                                                        </div>
+
                                                     </div>
+                                                    <span id="actionMessage"></span>
+                                                    <span id="addContactError"> </span> 
+                                                    &nbsp;&nbsp;<span id="InsertContactInfo"></span>
 
-                                                </div>
-                                                <span id="addContactError"> </span> 
-                                                &nbsp;&nbsp;<span id="InsertContactInfo"></span>
-
-                                                <div>
+                                                    <div>
                                                     <s:form name="contactform" action="addContact" cssClass="form-horizontal" theme="simple"  enctype="multipart/form-data" onsubmit="return contactInfoValidation()">
                                                         <div>
                                                             <s:hidden name="AccountSearchOrgId" id="AccountSearchOrgId" value="%{accountSearchID}"/>
@@ -128,14 +129,14 @@
                                                             <div class="inner-reqdiv-elements">
                                                                 <div class=" ">
                                                                     <div class="col-sm-4 required">
-                                                                        <label class="addAcclabelStyle">First Name</label><s:textfield  name="ContactFname"  id="ContactFname" maxLength="28" cssClass="form-control" placeholder="first Name" required="true" onkeyup="contactFirstNameValidation()"/>
+                                                                        <label class="addAcclabelStyle">First Name</label><s:textfield  name="ContactFname"  id="ContactFname" maxLength="28" cssClass="form-control" placeholder="First Name"  onkeyup="contactFirstNameValidation()"/>
                                                                     </div>
                                                                     <div class="col-sm-4">
-                                                                        <label class="addAcclabelStyle">Middle&nbsp;Name</label><s:textfield name="ContactMname"  id="ContactMname" maxLength="28"  cssClass="form-control" placeholder="middle Name" pattern='[A-Za-z\\s]*' onkeypress="return middlename(event);" />
+                                                                        <label class="addAcclabelStyle">Middle&nbsp;Name</label><s:textfield name="ContactMname"  id="ContactMname" maxLength="28"  cssClass="form-control" placeholder="Middle Name" pattern='[A-Za-z\\s]*' onkeypress="return middlename(event);" />
                                                                         <span id="mnameError" class=""></span> 
                                                                     </div>
                                                                     <div class="col-sm-4 required">
-                                                                        <label class="addAcclabelStyle">Last Name</label><s:textfield name="ContactLname"  id="ContactLname" maxLength="28"  cssClass="form-control" placeholder="last Name" required="true" onkeyup="contactLastNameValidation()"/>
+                                                                        <label class="addAcclabelStyle">Last Name</label><s:textfield name="ContactLname"  id="ContactLname" maxLength="28"  cssClass="form-control" placeholder="Last Name"  onkeyup="contactLastNameValidation()"/>
                                                                     </div>
 
 
@@ -146,7 +147,7 @@
                                                                     <div class="col-sm-4 required">
                                                                         <label class="addAcclabelStyle">Email </label>
                                                                         <s:textfield type="text" maxlength="25" n="3" autocomplete="off" cssClass="form-control "
-                                                                                     name="ContactEmail" id="ContactEmail" value="" required="true"  onchange="EmailValidation()" style="padding-right: 150px;"  spellcheck="false" >
+                                                                                     name="ContactEmail" id="ContactEmail" value=""  onchange="EmailValidation()" style="padding-right: 150px;"  spellcheck="false" >
                                                                             <span class="urlDomain">@<s:property value="%{email_ext}" /></span>
                                                                         </s:textfield>
                                                                         <%--label class="addAcclabelStyle"><span style="color:red;">*</span>Email</label><s:textfield cssClass="form-control" placeholder="email" name="ContactEmail" id="ContactEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Must be valid email')"   onchange="try{setCustomValidity('')}catch(e){}" required="true"  onkeyup="EmailValidation()" --%>
@@ -167,7 +168,7 @@
                                                             <div class="inner-reqdiv-elements">
                                                                 <div class=" ">
                                                                     <div class="col-sm-4 required">
-                                                                        <label class="addAcclabelStyle">Office&nbsp;Phone</label><s:textfield id="Officephone" cssClass="form-control" name="Officephone" required="true" type="text" placeholder="Phone #" />
+                                                                        <label class="addAcclabelStyle">Office&nbsp;Phone</label><s:textfield id="Officephone" cssClass="form-control" name="Officephone"  type="text" placeholder="Phone #" />
                                                                     </div>
                                                                     <div class="col-sm-4">
                                                                         <label class="addAcclabelStyle">Mobile Phone</label><s:textfield cssClass="form-control" label="Phone" id="conPhone" name="conPhone" placeholder="Mobile Phone #"  oninvalid="setCustomValidity('Must be valid fn')"  onchange="try{setCustomValidity('')}catch(e){}" onkeyup="pPhoneValidation()" />
@@ -181,23 +182,23 @@
                                                             <div class="inner-reqdiv-elements">
                                                                 <div class=" ">
                                                                     <div class="col-sm-4">
-                                                                        <label class="addAcclabelStyle">Work&nbsp;Location</label><s:select cssClass="form-control SelectBoxStyles" name="workingLocation" id="workingLocation" headerKey="-1" headerValue="Select Work Location" list="workLocations"  tabindex="1"/>
+                                                                        <label class="addAcclabelStyle">Work&nbsp;Location</label><s:select cssClass="form-control SelectBoxStyles" name="workingLocation" id="workingLocation" headerKey="-1" headerValue="Select Work Location" list="workLocations"/>
                                                                     </div>
                                                                     <div class="col-sm-4 required">
-                                                                        <label class="addAcclabelStyle">Title</label><s:textfield cssClass="form-control " name="contactTitle" id="contactTitle" placeholder="Title" required="true" maxLength="30" tabindex="1"/>
+                                                                        <label class="addAcclabelStyle">Title</label><s:textfield cssClass="form-control " name="contactTitle" id="contactTitle" placeholder="Title"  maxLength="30"  onkeyup="titleValidation();"/>
                                                                     </div>
                                                                     <div class="col-sm-4">
-                                                                        <label class="addAcclabelStyle">Industry</label><s:select cssClass="form-control SelectBoxStyles" name="contactIndustry" id="contactIndustry" headerKey="-1" headerValue="Select Industry" list="industryMap"  tabindex="1"/>
+                                                                        <label class="addAcclabelStyle">Industry</label><s:select cssClass="form-control SelectBoxStyles" name="contactIndustry" id="contactIndustry" headerKey="-1" headerValue="Select Industry" list="industryMap" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="inner-reqdiv-elements">
                                                                 <div class=" ">
                                                                     <div class="col-sm-4">
-                                                                        <label class="addAcclabelStyle">Experience</label><s:select cssClass="form-control SelectBoxStyles" name="contactExperience" id="contactExperience" headerKey="-1" headerValue="Select Experience" list="experience"  tabindex="1"/>
+                                                                        <label class="addAcclabelStyle">Experience</label><s:select cssClass="form-control SelectBoxStyles" name="contactExperience" id="contactExperience" headerKey="-1" headerValue="Select Experience" list="experience" />
                                                                     </div>
                                                                     <div class="col-sm-4">
-                                                                        <label class="addAcclabelStyle">SSN&nbsp;Number</label><s:textfield cssClass="form-control " name="contactSsnNo" id="contactSsnNo" placeholder="SSN Number" maxLength="20" tabindex="1"/>
+                                                                        <label class="addAcclabelStyle">SSN&nbsp;Number</label><s:textfield cssClass="form-control " name="contactSsnNo" id="contactSsnNo" placeholder="SSN Number" maxLength="20"/>
                                                                     </div>
 
                                                                 </div>
@@ -215,7 +216,8 @@
                                                             <div class="inner-reqdiv-elements">
                                                                 <div class="col-sm-12 ">
                                                                     <label  class="task-label" style="max-height:10px;">Education</label>
-                                                                    <s:textarea cssClass="titleStyle"   id="contactEducation"  name="contactEducation" placeholder="Education" maxlength="500" cols="100" rows="2" onkeyup="checkCharactersDescription(this)" tabindex="7"/>
+                                                                    <s:textarea cssClass="titleStyle"   id="contactEducation"  name="contactEducation" placeholder="Education" maxlength="500" cols="100" rows="2" onkeyup="CheckRemainingAttachCharacters(this)" tabindex="7"/>
+                                                                    <div id="charRemainAttach"></div>
                                                                 </div>
                                                             </div>
                                                             <!-- Add By Aklakh, start -->
@@ -273,13 +275,11 @@
 
                                         <div class="col-sm-2 pull-right">
                                             <s:submit id="saveContact" type="button" cssStyle="margin:5px 0px;"  value="Save" cssClass="add_searchButton fa fa-floppy-o form-control" theme="simple" tabindex="8"></s:submit>
-
-                                        </div>
-                                        <div class="col-sm-2 pull-right">
-                                            <s:reset  type="button" cssStyle="margin:5px 0px;" cssClass="add_searchButton fa fa-eraser form-control" id="button_manage"  value="Clear" tabindex="8"/>&nbsp;
-
-                                        </div>
-                                        <br/>
+                                            </div>
+                                            <div class="col-sm-2 pull-right">
+                                                <input  type="reset" style="margin:5px 0px;" class="add_searchButton fa fa form-control" id="button_manage"  value="&#xf12d; Clear" tabindex="8" onclick="clearContatForm();"/>&nbsp;
+                                            </div>
+                                            <br/>
                                         <%-- add token to JSP to be used by Token interceptor --%>
                                         <s:token />
                                     </s:form>
@@ -310,9 +310,6 @@
         </div>
     </div>
 </footer><!--/Footer-->
-<script type="text/javascript">
-    $("#InsertContactInfo").show().delay(5000).fadeOut();
-</script>
 <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
 <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
 </body>

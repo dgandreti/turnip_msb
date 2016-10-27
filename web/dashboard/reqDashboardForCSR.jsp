@@ -56,7 +56,7 @@
 
 
     </head>
-    <body onload="getCustomerRequirementsDashBoard();">
+    <body oncontextmenu="return false" onload="getCustomerRequirementsDashBoard();">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

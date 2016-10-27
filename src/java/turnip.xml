@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--
+       Package Name : acc
+       Author       : Divya Gandreti
+       Description  : Turnip Actions.
+    -->
+    <package name= "turnip" namespace="/turnip" extends="default">
+        <action name ="getVendorResourcePage" class="com.mss.msp.turnip.turnipAction" method="getVendorResourcePage">
+            <!--<interceptor-ref name="authorizationcheckStack" />-->
+            <result name="success">vendorResourceDashboard.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        <action name ="vendorResourceDetails" class="com.mss.msp.turnip.turnipAction" method="vendorResourceDetails">
+        </action>
+        <action name ="projectResourceDetails" class="com.mss.msp.turnip.turnipAction" method="projectResourceDetails">
+        </action>
+        <action name ="getClientRequirementsDashboards" class="com.mss.msp.turnip.turnipAction" method="getClientRequirementsDashboards">
+            <!--<interceptor-ref name="authorizationcheckStack" />-->
+            <result name="success">clientRequirementDashboards.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action>
+        
+        <action name ="clientRegionResourceDetails" class="com.mss.msp.turnip.turnipAction" method="getRegionResourcesDashboards">
+            <!--<interceptor-ref name="authorizationcheckStack" />-->
+        </action>
+        <action name ="clientResourceDetails" class="com.mss.msp.turnip.turnipAction" method="clientResourceDetails">
+        </action>
+        
+        <action name ="clientRequirementDetails" class="com.mss.msp.turnip.turnipAction" method="clientRequirementDetails">
+        </action>
+ 
+    </package>
+   
+</struts>

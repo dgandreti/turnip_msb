@@ -28,7 +28,7 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/general/sweetalert.css"/>">
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar.css"/>' type="text/css">
         <link rel="stylesheet" href='<s:url value="/includes/css/general/dhtmlxcalendar_omega.css"/>' type="text/css">
-     
+
 
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/GridNavigation.js"/>"></script>
@@ -43,25 +43,25 @@
         <script language="JavaScript" src='<s:url value="/includes/js/general/dhtmlxcalendar.js"/>'></script>
 
         <script>
-            ;
-            function pagerOption() {
-
-                paginationSize = document.getElementById("paginationOption").value;
-                if (isNaN(paginationSize))
-                    alert(paginationSize);
-
-                pager = new Pager('Utility_logger', parseInt(paginationSize));
-                pager.init();
-                pager.showPageNav('pager', 'pageNavPosition');
-                pager.showPage(1);
-
-            }
-            ;
+//            ;
+//            function pagerOption() {
+//
+//                paginationSize = document.getElementById("paginationOption").value;
+//                if (isNaN(paginationSize))
+//                    alert(paginationSize);
+//
+//                pager = new Pager('Utility_logger', parseInt(paginationSize));
+//                pager.init();
+//                pager.showPageNav('pager', 'pageNavPosition');
+//                pager.showPage(1);
+//
+//            }
+//            ;
         </script>
 
 
     </head>
-    <body style="overflow-x: hidden" onload="doOnLoadExcel();
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="doOnLoadExcel();
             pagerOption()">
         <div id="wrap">
             <header id="header"><!--header-->
@@ -87,13 +87,13 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
 
-                                                    
-                                                        <font color="#ffffff">Selected Content</font>
+
+                                                        <font color="#ffffff">Data&nbsp;Logger</font>
                                                         <s:url var="myUrl" action="getSkillDetails.action">
                                                         </s:url>
                                                         <span class="pull-right"><s:a href='%{#myUrl}'><i class="fa fa-undo"></i></s:a></span>
 
-                                                            <i id="updownArrow" onclick="toggleContent('searchLogger')" class="fa fa-angle-up"></i> 
+                                                          <i id="updownArrow" onclick="toggleContent('searchLogger')" class="fa fa-minus" style="margin-right:18px"></i>
                                                         </h4>
                                                     </div>
 
@@ -104,16 +104,16 @@
                                                     <s:hidden name="sp_res" id="sp_res" value="%{sp_res}"/>
                                                     <s:hidden name="sp_exists" id="sp_exists" value="%{sp_exists}"/>
                                                     <s:hidden name="sp_failure" id="sp_failure" value="%{sp_failure}"/>
-                                                
+
                                                     <s:hidden id="downloadFlag" name="downloadFlag" value="%{downloadFlag}"/>
-                                                  
+
                                                     <s:hidden id="loggerFlag" name="loggerFlag" value="%{loggerFlag}"/>
                                                     <s:if test='downloadFlag=="noAttachment"'>
                                                         <span id="resume"><font style='color:red;font-size:15px;'>No Attachment exists !!</font></span>
-                                                    </s:if>
-                                                    <s:elseif test='downloadFlag=="noFile"'>
+                                                        </s:if>
+                                                        <s:elseif test='downloadFlag=="noFile"'>
                                                         <span id="resume"><font style='color:red;font-size:15px;'>File Not Found !!</font></span>
-                                                    </s:elseif> 
+                                                        </s:elseif> 
 
 
 
@@ -131,15 +131,17 @@
                                                     </s:else> 
                                                     <div class="col-sm-3">
                                                         <label class="labelStyle" id="labelLevelStatusReq">Created Date </label>
-                                                        <s:textfield tabindex="1" cssClass="form-control dateImage" name="createdDate" id="created_Date" value="" onkeypress="return enterDateRepository();"></s:textfield>
+                                                        <s:textfield tabindex="1" cssClass="form-control dateImage" name="createdDate" id="created_Date" placeholder="Created Date" value="" onkeypress="return enterDateRepository();"></s:textfield>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <label class="labelStyle" id="labelLevelStatusReq">Status </label>
                                                         <s:select tabindex="2" id="loggerStatusSearch" cssClass="form-control SelectBoxStyles " name="status" list="#@java.util.LinkedHashMap@{'DF':'---Select---','Success':'Success','Un-Success':'Un-Success'}"></s:select>
                                                         </div>  
-                                                        <div class="col-sm-3">
+                                                        <div class="col-sm-3 pull-right">
+                                                            <div class="pull-right">
                                                             <label class="labelStyle" id="labelLevelStatusReq"></label>
-                                                        <s:submit id="loggerSearchButton"  type="button" value="" cssStyle="margin:5px" tabindex="3" cssClass="add_searchButton form-control"> <i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                        <s:submit id="loggerSearchButton"  type="button" value="" cssStyle="margin:5px" tabindex="3" cssClass="add_searchButton form-control contact_search"> <i class="fa fa-search"></i>&nbsp;Search</s:submit>
+                                                        </div>
                                                         </div>  
                                                 </s:form>
 
@@ -199,7 +201,7 @@
                                                         <div align="right" class="pull-right" id="pageNavPosition" style="margin-right: 0vw;"></div>
                                                     </div>
                                                 </s:form>
-                                                
+
 
                                             </div>
                                         </div>
@@ -228,7 +230,22 @@
         </footer>
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/includes/js/general/popupoverlay.js"/>"></script>
+           <script type="text/javascript" src="<s:url value="/includes/js/general/pagination.js"/>"></script> 
         <script>
+                                                            var recordPage = 10;
+
+                                                            function pagerOption() {
+
+                                                                var paginationSize = document.getElementById("paginationOption").value;
+                                                                if (isNaN(paginationSize))
+                                                                    alert(paginationSize);
+                                                                recordPage = paginationSize;
+
+                                                                $('#Utility_logger').tablePaginate({navigateType: 'navigator'}, recordPage);
+
+                                                            }
+                                                            ;
+                                                            $('#Utility_logger').tablePaginate({navigateType: 'navigator'}, recordPage);
                                                             setTimeout(function() {
                                                                 $('#resume').remove();
                                                             }, 3000);

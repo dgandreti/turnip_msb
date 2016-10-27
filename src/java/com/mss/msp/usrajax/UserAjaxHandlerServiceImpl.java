@@ -293,7 +293,7 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
      *
      * *****************************************************************************
      */
-    public String getEmployeeDetails(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException {
+    public String getEmployeeDetails(UserAjaxHandlerAction userAjaxHandlerAction,String typeofusr) throws ServiceLocatorException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -305,20 +305,29 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
         if (userAjaxHandlerAction.getTechReview().equalsIgnoreCase("TR")) {
             queryString = "SELECT CONCAT(TRIM(u.first_name),'.',TRIM(u.last_name)) AS FullName,u.usr_id FROM users u LEFT OUTER JOIN acc_requirements ar ON(ar.acc_id=u.org_id) LEFT OUTER JOIN usr_miscellaneous m ON(m.usr_id=u.usr_id) WHERE (last_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%' OR first_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%') AND ar.requirement_id=" + userAjaxHandlerAction.getRequirementId() + " AND u.cur_status='Active' LIMIT 30";
         } else if (userAjaxHandlerAction.getProjectID() == 0) {
+           if("VC".equals(typeofusr))
+                    {
+               queryString = " SELECT CONCAT(TRIM(u.first_name),'.',TRIM(u.last_name)) AS FullName,u.usr_id "
+                       + "FROM users u  LEFT OUTER JOIN usr_roles p ON(p.usr_id=u.usr_id) "
+                       + "WHERE role_id=1   AND (last_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%' OR first_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%') AND cur_status='Active' LIMIT 30";      
+                    }
+              else{
             queryString = " SELECT CONCAT(TRIM(u.first_name),'.',TRIM(u.last_name)) AS FullName,u.usr_id FROM users u "
                     + " LEFT OUTER JOIN usr_roles p ON(p.usr_id=u.usr_id)LEFT OUTER JOIN "
                     + " csrorgrel cor ON(cor.csr_id=u.usr_id) WHERE role_id=1"
-                    + " AND cor.org_id=" + userAjaxHandlerAction.getSessionOrgId() + " AND cor.STATUS='Active'"
+                    + " AND cor.org_id=" + userAjaxHandlerAction.getSessionOrgId() + " "
+                    + " AND cor.STATUS='Active'"
                     + " AND (last_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%'"
                     + " OR first_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%')"
                     + " AND cur_status='Active' LIMIT 30";
+              }
         } else {
             queryString = "SELECT CONCAT(TRIM(u.first_name),'.',TRIM(u.last_name)) AS FullName,u.usr_id FROM users u "
                     + "LEFT OUTER JOIN prj_sub_prjteam pt ON(pt.usr_id=u.usr_id) "
                     + "WHERE (last_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%' OR first_name LIKE '" + userAjaxHandlerAction.getEmpName() + "%') "
-                    + "and cur_status='Active' "
+                    + "and cur_status='Active' AND pt.current_status='Active' "
                     + "AND pt.sub_project_id=" + userAjaxHandlerAction.getProjectID() + " "
-                    + "AND org_id=" + userAjaxHandlerAction.getSessionOrgId() + " LIMIT 30";
+                    + " LIMIT 30";
         }
         try {
             connection = ConnectionProvider.getInstance().getConnection();
@@ -1768,7 +1777,7 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
                     userVTO.setIsPrimary("Yes");
                 }
                 userVTO.setStatus(resultSet.getString("uc.status"));
-                userVTO.setCreatedBy(dsdp.getUserNameByUserId(resultSet.getInt("uc.created_by")));
+               // userVTO.setCreatedBy(dsdp.getUserNameByUserId(resultSet.getInt("uc.created_by")));
                 resultMessage += userVTO.getGroupingId() + "|"
                         + userVTO.getEmpId() + "|"
                         + userVTO.getCatogoryGroup() + "|"
@@ -2587,7 +2596,7 @@ public class UserAjaxHandlerServiceImpl implements UserAjaxHandlerService {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         String queryString = "";
-
+        StringBuffer stringBuffer = new StringBuffer();
         System.out.println("********************UserAjaxHandlerServiceImpl :: getQuestion Method Start*********************");
         QuestionVTO questionVTO = null, nextQuestionVTO = null, previousQuestionVTO = null, specificQuestionVTO = null, startQuestionVTO = null, topicQuestionVto = null;
         int empId = 0, examKeyId = 0, answer = 0, attemptedQuestions = 0, questionId = 0, reqId = 0;

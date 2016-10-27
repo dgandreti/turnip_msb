@@ -117,7 +117,7 @@
                 var difference = (addEndDate - addStartDate) / (86400000 * 7);
                 if (difference < 0) {
                     alert("The start date must come before the end date.");
-                    $("errorEduAdd").html(" <b><font color='red'>start date must be less than end date</font></b>.");
+                    $("errorEduAdd").html(" <font color='red'>start date must be less than end date</font>.");
                     $("#fromValue").css("border", "1px solid red");
 
                     $("#toValue").css("border", "1px solid red");
@@ -127,7 +127,7 @@
             ;
         </script>
     </head>
-    <body style="overflow-x: hidden" onload="doOnLoad();
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="doOnLoad();
             init();
             getTaskType();">
         <div id="wrap">
@@ -190,7 +190,7 @@
                                                         </div>
                                                         <div class="col-sm-4" id="csrDiv">
                                                             <label class="labelStylereq" style="color: #56a5ec;">Projects </label>
-                                                            <s:select  id="taskType" name="taskType" cssClass="SelectBoxStyles form-control"  theme="simple" list="{}" onchange="getRelatedNames();" />
+                                                            <s:select  id="taskType" name="taskType" cssClass="SelectBoxStyles form-control"  theme="simple" list="{}" onchange="changeProject();" />
                                                         </div>
 
                                                     </div>
@@ -218,11 +218,11 @@
                                                             <div class="col-sm-4">
                                                                 <label class="labelStylereq" style="color: #56a5ec;">Secondary Assign</label>
                                                                 <s:hidden id="secondaryAssign" value="%{tasksVto.sec_assigned_to}"/>
-                                                                <s:textfield  id="secondaryReport"  name="secondaryAssign" placeholder="SecondaryAssignTo" cssClass="form-control"  theme="simple" onkeyup="getSecondaryAssignedNames();" autocomplete='off' maxLength="30"/>
+                                                                <s:textfield  id="secondaryReport"  name="secondaryAssign" placeholder="SecondaryAssignTo" cssClass="form-control"  theme="simple" onkeyup="getSecondaryAssignedNames();" autocomplete='off' maxLength="30" onblur="removingValidateMsg()"/>
                                                             </div>
                                                         </div>
                                                     </div>
-
+                                                      <s:hidden id="addTaskPage" value="0" name="addTaskPage"/>          
                                                     <div class="inner-addtaskdiv-elements"><span id="validationMessage" /></div>
                                                     <div class="inner-reqdiv-elements">
                                                         <div class="col-sm-12">
@@ -238,7 +238,7 @@
                                                             </div>
                                                             <div class="col-sm-2 pull-right">
 
-                                                            <s:reset type="button" id="resetTaskButton" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser " value="Clear" theme="simple" />
+                                                            <s:reset type="button" id="resetTaskButton" cssStyle="margin:5px 0px;" cssClass="add_searchButton form-control fa fa-eraser " value="Clear" theme="simple" onclick="clearProjects()" />
                                                             <%--<s:submit cssClass="cssbutton task_popup_close" value="AddTask" theme="simple" onclick="addTaskFunction();" />--%>
                                                         </div>
                                                     </div>
@@ -262,9 +262,9 @@
                 </div>
             </div>
         </footer><!--/Footer-->
-         <script type="text/JavaScript">
+<!--         <script type="text/JavaScript">
             $("#validationMessage").show().delay(5000).fadeOut();
-        </script>
+        </script>-->
         <script type="text/JavaScript" src="<s:url value="/includes/js/jquery.scrollUp.min.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">

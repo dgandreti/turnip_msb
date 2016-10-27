@@ -19,7 +19,7 @@ and open the template in the editor.
         </style>
         <link rel="stylesheet" type="text/css" href="<s:url value="/includes/css/onlineExam/onlineExam.css"/>"/>
     </head>
-    <body >
+    <body oncontextmenu="return false">
 
         <!-- Wrapper -->
 

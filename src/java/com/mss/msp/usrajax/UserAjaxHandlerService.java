@@ -18,7 +18,7 @@ public interface UserAjaxHandlerService {
 
     public int doUserRegister(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
 
-    public String getEmployeeDetails(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
+    public String getEmployeeDetails(UserAjaxHandlerAction userAjaxHandlerAction,String typeofusr) throws ServiceLocatorException;
 
     public String getTechEmployeeDetails(UserAjaxHandlerAction userAjaxHandlerAction) throws ServiceLocatorException;
     /*methods for contact address updation by ramakrishna start*/

@@ -29,6 +29,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
  */
 public class RecruitmentAction extends ActionSupport implements ServletRequestAware, ServletResponseAware {
 
+    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RecruitmentAction.class);
     private String requirementStatus;
     private String resultMessage;
     private List ConsultantListDetails;
@@ -73,6 +74,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     private String consult_CAddress2;
     private String consult_CCity;
     private String consult_CCountry;
+    private String yearExperience;
     private int consult_CState;
     private String consult_CZip;
     private String consult_CPhone;
@@ -147,6 +149,16 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     private String visaAttachmentFileName;
     private String visaAttachmentPath;
     private String consultantIdProof;
+    
+    private Map regionName;
+
+    public Map getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(Map regionName) {
+        this.regionName = regionName;
+    }
 
     /* Consultant Activity End*/
     public RecruitmentAction() {
@@ -268,6 +280,16 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
     private String venName;
     private String vendorcomments;
     private String checked;
+    private String primarySkillValue;
+    private String consult_preferredRegion;
+
+    public String getConsult_preferredRegion() {
+        return consult_preferredRegion;
+    }
+
+    public void setConsult_preferredRegion(String consult_preferredRegion) {
+        this.consult_preferredRegion = consult_preferredRegion;
+    }
 
     public String getGridPDFDownload() {
         return gridPDFDownload;
@@ -401,10 +423,12 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
             int orgid = Integer.valueOf(oId);
             setConsult_WCountry(ServiceLocator.getLocationService().getCountryNames());   //  getCountriesNames());
             setIndustry(ServiceLocator.getLookUpHandlerService().getIndustryTypesMap());
+            setReqCategory(dataSourceDataProvider.getInstance().getRequiteCategory(1));
             setExperience(DataSourceDataProvider.getInstance().getYearsOfExp());
             SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
             Map skillsmap = (Map) session.get("skillsmap");
             setSkillValuesMap(skillsmap);
+            setRegionName(dataSourceDataProvider.getInstance().getRegionName());
             resultMessage = SUCCESS;
         } catch (Exception ex) {
             httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
@@ -605,6 +629,8 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
                 setPermanentState(DataSourceDataProvider.getInstance().getPermanentStates(consultantVTO.getConsult_Country()));
                 setCurrentState(DataSourceDataProvider.getInstance().getPermanentStates(consultantVTO.getConsult_CCountry()));
                 setPreState(DataSourceDataProvider.getInstance().getPermanentStates(consultantVTO.getConsult_preferredCountry()));
+                setReqCategory(dataSourceDataProvider.getInstance().getRequiteCategory(1));
+                setRegionName(dataSourceDataProvider.getInstance().getRegionName());
                 resultMessage = SUCCESS;
             } catch (Exception ex) {
                 httpServletRequest.getSession(false).setAttribute("errorMessage:", ex.toString());
@@ -731,7 +757,8 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
      *
      * Author : Divya<dgandreti@miraclesoft.com>
      *
-     * ForUse : getConsultantListDetailsBySearch() getting consultant list by searching.
+     * ForUse : getConsultantListDetailsBySearch() getting consultant list by
+     * searching.
      *
      *
      * *****************************************************************************
@@ -1082,7 +1109,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
      */
     public String techReviewForward() {
         resultType = LOGIN;
-        System.out.println("********************RecruitmentAction :: techReviewForward Method Start*********************");
+        log.info("********************RecruitmentAction :: techReviewForward Method Start*********************");
         int result = 0, mailResult = 0, conMailResult = 0;
         try {
             if (httpServletRequest.getSession(false).getAttribute(ApplicationConstants.USER_ID) != null) {
@@ -1121,7 +1148,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
         } catch (Exception e) {
             resultType = ERROR;
         }
-        System.out.println("********************RecruitmentAction :: techReviewForward Method End*********************");
+        log.info("********************RecruitmentAction :: techReviewForward Method End*********************");
         return null;
     }
 
@@ -1620,6 +1647,7 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
         System.out.println("********************RecruitmentAction :: getVendorRequirementsDashboard Method End*********************");
         return resultMessage;
     }
+
     public void setServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
@@ -3258,5 +3286,21 @@ public class RecruitmentAction extends ActionSupport implements ServletRequestAw
 
     public void setChecked(String checked) {
         this.checked = checked;
+    }
+
+    public String getYearExperience() {
+        return yearExperience;
+    }
+
+    public void setYearExperience(String yearExperience) {
+        this.yearExperience = yearExperience;
+    }
+
+    public String getPrimarySkillValue() {
+        return primarySkillValue;
+    }
+
+    public void setPrimarySkillValue(String primarySkillValue) {
+        this.primarySkillValue = primarySkillValue;
     }
 }

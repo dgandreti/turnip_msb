@@ -607,8 +607,13 @@ public class AccAuthAjaxHandlerServiceImpl implements AccAuthAjaxHandlerService 
 
             connection = ConnectionProvider.getInstance().getConnection();
 
+         if(accAuthAjaxHandlerAction.getRoles()==7 || accAuthAjaxHandlerAction.getRoles()==11)
+            {
+              queryString = "select action_id FROM ac_resources WHERE action_id=" + accAuthAjaxHandlerAction.getActionId() + " and usr_role_id=" + accAuthAjaxHandlerAction.getRoles() + " and org_id=" + accAuthAjaxHandlerAction.getOrgId()+" and groupid ="+accAuthAjaxHandlerAction.getUserGroupId();   
+            }
+            else{
             queryString = "select action_id FROM ac_resources WHERE action_id=" + accAuthAjaxHandlerAction.getActionId() + " and usr_role_id=" + accAuthAjaxHandlerAction.getRoles() + " and org_id=" + accAuthAjaxHandlerAction.getOrgId();
-
+            }
             System.out.println("checkActionExistForResourceOrNot::record exist---------------->" + queryString);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(queryString);

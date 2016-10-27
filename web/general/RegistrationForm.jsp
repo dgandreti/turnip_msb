@@ -38,7 +38,7 @@
 
       
     </head>
-    <body onload="regStateChange(document.getElementById('org_country').id);regStateChange(document.getElementById('country').id);">
+    <body oncontextmenu="return false" onload="regStateChange(document.getElementById('org_country').id);regStateChange(document.getElementById('country').id);">
         <header id="header"><!--header-->
             <div class="header_top" ><!--header_top-->
                 <div class="container">

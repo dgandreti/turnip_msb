@@ -43,7 +43,7 @@
 
 
     </head>
-    <body style="overflow-x: hidden" >
+    <body oncontextmenu="return false" style="overflow-x: hidden" >
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->
@@ -79,7 +79,7 @@
                                                 <s:hidden name="fileExist" value="%{fileExist}"/>
                                                 <s:hidden name="contactAccountType" value="%{contactAccountType}"/>
                                                 <s:hidden name="accountSearchOrgId" value="%{accountSearchOrgId}"/>
-                                                <span id="fileUploading"><fileuplaoderror></fileuplaoderror></span>
+                                                <span id="fileUploadingValidation"><fileuplaoderror></fileuplaoderror></span>
                                                 <div class="col-sm-12">
                                                     <s:if test="fileExist!=''&&fileExist!=null">
                                                         <span id="resume"><font style='color:red;font-size:15px;'>File Name Already Exists!!</font></span>
@@ -89,7 +89,7 @@
                                                 <div class="col-sm-12"><br>
                                                     <div class="col-sm-2"></div>
                                                     <div class="col-sm-5"><br>
-                                                        <s:file  name="xlsfile" cssClass="" style="width:200px" label="Xls File" id="file" tabindex="1"></s:file>
+                                                        <s:file  name="xlsfile" cssClass="" style="width:200px" label="Xls File" id="file" tabindex="1" onchange="return checkExtensionFile(this.id)"></s:file>
                                                             <span style="color:#4E4E4E;font-size: 10px">Upload XLS file1.</span>
                                                         </div>
                                                         <div class="col-sm-5">
@@ -152,8 +152,8 @@
     <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
     <!--/Footer-->
     <script type="text/javascript">
-        $("#fileUploading").show().delay(5000).fadeOut();
-    </script>
+            $("#fileUploadingValidation").show().delay(5000).fadeOut();
+        </script>
     <script>
         setTimeout(function(){              
             $('#resume').remove();

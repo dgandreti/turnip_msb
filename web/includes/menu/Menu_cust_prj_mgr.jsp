@@ -19,9 +19,9 @@
             <div class="panel panel-default left-menu" id="accordian_my">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#homeProjectManager">
+                        <a id="homeCustPMLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#homeProjectManager">
                             <i  class="fa fa-home leftBullet"></i>
-                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
+                            <span class="pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Home
                         </a>
                     </h4>
@@ -51,9 +51,9 @@
             <div class="panel panel-default left-menu" id="accordian_services">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#utilitiesProjectManager">
+                        <a id="utilitiesCustPMLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#utilitiesProjectManager">
                             <i  class="fa fa-cogs leftBullet"></i>
-                            <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
+                            <span class="pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Utilities
 
                         </a>

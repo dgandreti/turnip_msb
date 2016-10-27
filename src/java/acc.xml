@@ -329,6 +329,7 @@
 
         <action name="accountcontactedit" class="com.mss.msp.acc.details.AccountDetailsAction" method="getAccountContactDetailsForEdit">
             <interceptor-ref name="crudStack" />
+              <interceptor-ref name="authorizationcheckStack" />
             <result name="success">AccountContactEdit.jsp</result>
             <result type="redirect" name="login">../../general/login.action</result>
             <result name="error">../exception/403.jsp</result>
@@ -472,6 +473,14 @@
             <result name="input"></result>
             <result name="accessDenied" type="redirect">/general/deneid.action</result>
         </action>
+        <action name="vendorRatingAndReveiw" class="com.mss.msp.vendorReviews.VendorReviewsAction" method="vendorRatingAndReveiw">
+            <result name="success">vendorReviews.jsp</result>
+            <result type="redirect" name="login">../../general/login.action</result>
+            <result name="error">../exception/403.jsp</result>
+            <result name="accessFailed">../exception/AccessFailed.jsp</result>
+        </action> 
+        <action name="getImgPath" class="com.mss.msp.vendorReviews.VendorReviewsAction" method="getImgPath"></action> 
+        <action name="addVendorRatingAndReveiw" class="com.mss.msp.vendorReviews.VendorReviewsAction" method="addVendorRatingAndReveiw"></action>
         <action name="techReviewForward" class="com.mss.msp.recruitment.RecruitmentAction" method="techReviewForward"></action>
         <action name="getSearchTechReviewList" class="com.mss.msp.recruitment.RecruitmentAction" method="getSearchTechReviewList"></action>
         <action name="getConsultDetailsOnOverlay" class="com.mss.msp.recruitment.RecruitmentAction" method="getConsultDetailsOnOverlay"></action>

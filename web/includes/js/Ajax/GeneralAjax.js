@@ -587,7 +587,7 @@ function setsecondary(empName, loginId) {
     if (loginId == primaryAssign)
     {
         //        document.getElementById("UpdateTaskInfo").innerHTML="<font color='red'>Primary Assign To and Secondary Assign To Should not be same</>"        
-        $("editTask").html(" <b><font color='red'>Primary Assign To and Secondary Assign To Should not be same</font></b>").show().delay(5000).fadeOut();
+        $("editTask").html(" <font color='red'>Primary Assign To and Secondary Assign To Should not be same</font>").show().delay(5000).fadeOut();
         document.getElementById("secondaryReport").value = "";
         document.getElementById("secondaryId").value = "";
 
@@ -1410,7 +1410,19 @@ function doUserGroupingMethod() {
     }
     var userId = document.getElementById("userId").value;
     var usrCatType = document.getElementById("usrCatType").value;
-   
+    var addOrUpdate = document.getElementById("addOrUpdate").value;
+    var grouperRoleId = document.getElementById("grouperRoleId").value;
+    // alert(grouperRoleId)
+    //alert(addOrUpdate)
+    if (addOrUpdate == "update")
+    {
+        if (grouperRoleId != 7 && grouperRoleId != 11)
+        {
+            $("userGrouping").html(" <font color='red'>Grouping Can be performed for employee role only</font>.");
+            return false;
+        }
+    }
+
     //  var usrCategoryValue=document.getElementById("usrCategoryValue").value;
 
     var userCatArry = [];
@@ -1423,7 +1435,7 @@ function doUserGroupingMethod() {
     var usrDescription = document.getElementById("usrDescription").value;
     var groupingId = document.getElementById("groupingId").value;
     if (allValidateGrouping(userId, usrCatType, userCatArry, usrStatus, usrCatType, groupingId)) {
-         document.getElementById("loadingUserGrouping").style.display="block"
+        document.getElementById("loadingUserGrouping").style.display = "block"
         var url = '../general/doUserGroupingMethod.action?userId=' + userId +
                 '&userCatArry=' + userCatArry +
                 '&usrStatus=' + usrStatus +
@@ -1439,12 +1451,12 @@ function doUserGroupingMethod() {
                 {
                     // alert("success"+req.responseText)
                     if (req.responseText == "Something were Wrong!") {
-                        $("userGrouping").html(" <b><font color='red'>" + req.responseText + "</font></b>.");
-                        document.getElementById("loadingUserGrouping").style.display="none"
+                        $("userGrouping").html(" <font color='red'>" + req.responseText + "</font>.");
+                        document.getElementById("loadingUserGrouping").style.display = "none"
                         $("userGrouping").show().delay(5000).fadeOut();
                     } else {
-                        $("userGrouping").html(" <b><font color='green'>" + req.responseText + "</font></b>");
-                        document.getElementById("loadingUserGrouping").style.display="none"
+                        $("userGrouping").html(" <font color='green'>" + req.responseText + "</font>");
+                        document.getElementById("loadingUserGrouping").style.display = "none"
                         $("userGrouping").show().delay(5000).fadeOut();
                         if (req.responseText == "Grouping updated successfully.") {
                         } else {
@@ -1457,7 +1469,7 @@ function doUserGroupingMethod() {
                 else
                 {
                     //  alert("Error occured");
-                    $("userGrouping").html(" <b><font color='red'>" + "Please check the Internet connection!" + "</font></b>.");
+                    $("userGrouping").html(" <font color='red'>" + "Please check the Internet connection!" + "</font>.");
                 }
             }
         };
@@ -1500,7 +1512,7 @@ function checkIsExitOrNot() {
                 {
                     // alert("success"+req.responseText)
                     if (req.responseText == "true") {
-                        $("userGrouping").html(" <b><font color='red'>" + "User Already Grouped!" + "</font></b>.");
+                        $("userGrouping").html(" <font color='red'>" + "User Already Grouped!" + "</font>.");
                         document.getElementById("userName").value = "";
                     } else {
 
@@ -1518,27 +1530,27 @@ function allValidateGrouping(userId, usrCatType, userCatArry, usrStatus) {
     var usrName = document.getElementById("userName").value;
     if (usrName.length < 3) {
         userId = document.getElementById("userId").value = 0;
-        $("userGrouping").html("<b><font color='red'>" + "Please Select Proper Name." + "</font></b>");
-       
+        $("userGrouping").html("<font color='red'>" + "Please Select Proper Name." + "</font>");
+
         return flase;
     }
     if (userId == 0) {
-        $("userGrouping").html(" <b><font color='red'>" + "Please Select Proper Name." + "</font></b>");
-      
+        $("userGrouping").html("<font color='red'>" + "Please Select Proper Name." + "</font>");
+
         return flase;
     }
 
     if (usrCatType == -1) {
-        $("userGrouping").html(" <b><font color='red'>" + "Please Select Category Type." + "</font></b>");
-        
+        $("userGrouping").html("<font color='red'>" + "Please Select Category Type." + "</font>");
+
         return flase;
     }
     if (usrStatus == -1) {
-        $("userGrouping").html(" <b><font color='red'>" + "Please Select Status." + "</font></b>");
+        $("userGrouping").html("<font color='red'>" + "Please Select Status." + "</font>");
         return flase;
     }
     if (userCatArry.length == 0) {
-        $("userGrouping").html(" <b><font color='red'>" + "Please Select Categories." + "</font></b>");
+        $("userGrouping").html("<font color='red'>" + "Please Select Categories." + "</font>");
         return flase;
     }
     return true;
@@ -1557,7 +1569,7 @@ function clearGroupingData() {
     //        userCatArry.push($(this).val())=""; 
     //    });
     $("#usrCategoryValue").selectivity('clear');
-    document.getElementById("usrStatus").value = "-1";
+    document.getElementById("usrStatus").value = "Active";
     document.getElementById("usrDescription").value = "";
     document.getElementById("groupingId").value = "0";
     document.getElementById("usrPrimary").checked = false;
@@ -1599,7 +1611,7 @@ function populateCatList(response) {
         var Values = addList[i].split(",");
         {
 
-            $('<option><b>').val(Values[0]).text(Values[1]).appendTo($select);
+            $('<option>').val(Values[0]).text(Values[1]).appendTo($select);
         }
     }
     $('#usrCategoryValue').selectivity({
@@ -1762,6 +1774,19 @@ function addAuthAccOverlayFun()
     }
     // Initialize the plugin    
     $('#addAuthAccOverlay_popup').popup(
+            );
+}
+function authResourceOverlayFun(des)
+{
+    document.getElementById('outputMessageOfauthAcc').innerHTML = des;
+    var specialBox = document.getElementById('authAccBox');
+    if (specialBox.style.display == "block") {
+        specialBox.style.display = "none";
+    } else {
+        specialBox.style.display = "block";
+    }
+    // Initialize the plugin    
+    $('#authAccOverlay_popup').popup(
             );
 }
 //for seeting the action id,action name...from page to overlay hidden form fields
@@ -2115,7 +2140,15 @@ function populategetActionResorucesSearchTable(response) {
                 row.append($("<td><a href='actionResourcesForAddOrUpdate.action?id=" + Values[0] + "&action_id=" + Values[5] + "&action_name=" + Values[6] + "&accountName=" + Values[1] + "&accType=" + Values[7] + "&status=" + Values[3] + "&description=" + Values[4] + "&rollName=" + Values[2] + "&flag=" + updateFlag + "&blockFlag=" + Values[8] + "'  >" + Values[1] + "</td>"));
                 row.append($("<td>" + Values[2] + "</td>"));
                 row.append($("<td>" + Values[3] + "</td>"));
-                row.append($("<td>" + Values[4] + "</td>"));
+
+                //Values[4] is for Description
+                if (Values[4].length > 9) {
+                    row.append($('<td><a href="#" class="authAccOverlay_popup_open" onclick="authResourceOverlayFun(\'' + Values[4] + '\');">' + Values[4].substring(0, 10) + "</td>"));
+                } else {
+                    row.append($("<td>" + Values[4] + "</td>"));
+                }
+
+
                 if (Values[3] == "Active")
                 {
                     row.append($("<td><a href='#' onclick=actionResourceTermination(" + Values[0] + "," + Values[5] + ",\'" + Values[3] + "\')><i class='fa fa-trash-o fa-size'></i></td>"));
@@ -2358,28 +2391,28 @@ function generateInvoice() {
                     //alert("hm"+req.responseText)
                     if (req.responseText == 1)
                     {
-                        $("invoiceGenerarionMessage").html(" <b><font color='green'>" + "Successfully Invoice Generated." + "</font></b>").show().delay(5000).fadeOut();
+                        $("invoiceGenerarionMessage").html(" <font color='green'>" + "Successfully Invoice Generated." + "</font>").show().delay(5000).fadeOut();
                         // alert("success")
                     }
                     else if (req.responseText == -1) {
                         //alert("SOW not Exist")
-                        $("invoiceGenerarionMessage").html(" <b><font color='red'>" + "SOW Need To be Approved." + "</font></b>").show().delay(5000).fadeOut();
+                        $("invoiceGenerarionMessage").html("<font color='red'>" + "SOW Need To be Approved." + "</font>").show().delay(5000).fadeOut();
                     }
                     else if (req.responseText == -2)
                     {
-                        $("invoiceGenerarionMessage").html(" <b><font color='red'>" + "User Not Exist." + "</font></b>").show().delay(5000).fadeOut();
+                        $("invoiceGenerarionMessage").html("<font color='red'>" + "User Not Exist." + "</font>").show().delay(5000).fadeOut();
                         //alert("user not Exist")
                     }
                     else if (req.responseText == -3) {
-                        $("invoiceGenerarionMessage").html(" <b><font color='red'>" + "SOW Not Exist For the User." + "</font></b>").show().delay(5000).fadeOut();
+                        $("invoiceGenerarionMessage").html(" <font color='red'>" + "SOW Not Exist For the User." + "</font>").show().delay(5000).fadeOut();
                         //alert("sow not exist for user")
                     }
                     else if (req.responseText == -4) {
-                        $("invoiceGenerarionMessage").html(" <b><font color='red'>" + "Invoice Already Exist." + "</font></b>").show().delay(5000).fadeOut();
+                        $("invoiceGenerarionMessage").html(" <font color='red'>" + "Invoice Already Exist." + "</font>").show().delay(5000).fadeOut();
                         //alert("invoice already exist")
                     }
                     else if (req.responseText == -5) {
-                        $("invoiceGenerarionMessage").html(" <b><font color='red'>" + "Time Sheet not Found" + "</font></b>").show().delay(5000).fadeOut();
+                        $("invoiceGenerarionMessage").html(" <font color='red'>" + "Time Sheet not Found" + "</font>").show().delay(5000).fadeOut();
                         //alert("Timesheet Not found")
                     }
 
@@ -2427,7 +2460,7 @@ function isvalidationInvoice(invoiceMonth, invoiceYear, invoiceResource, cheked)
     var yyyy = today.getFullYear();
     if (invoiceYear == "") {
         $("#invoiceYearOver").css("border", "1px solid red");
-        $("invoiceGenerarionMessage").html(" <b><font color='red'>Please enter the Year</font></b>.").show().delay(5000).fadeOut();
+        $("invoiceGenerarionMessage").html(" <font color='red'>Please enter the Year</font>.").show().delay(5000).fadeOut();
         return false;
     }
     else {
@@ -2446,13 +2479,13 @@ function isvalidationInvoice(invoiceMonth, invoiceYear, invoiceResource, cheked)
 
         } else
         {
-            $("invoiceGenerarionMessage").html(" <b><font color='red'>Month Not Valid</font></b>.").show().delay(5000).fadeOut();
+            $("invoiceGenerarionMessage").html(" <font color='red'>Month Not Valid</font>.").show().delay(5000).fadeOut();
             return false;
         }
     }
     else
     {
-        $("invoiceGenerarionMessage").html(" <b><font color='red'>Year Not Valid</font></b>.").show().delay(5000).fadeOut();
+        $("invoiceGenerarionMessage").html(" <font color='red'>Year Not Valid</font>.").show().delay(5000).fadeOut();
         return false;
     }
     if (cheked) {
@@ -2464,7 +2497,7 @@ function isvalidationInvoice(invoiceMonth, invoiceYear, invoiceResource, cheked)
         }
         else
         {
-            $("invoiceGenerarionMessage").html(" <b><font color='red'>must be valid email</font></b>.").show().delay(5000).fadeOut();
+            $("invoiceGenerarionMessage").html(" <font color='red'>Must be valid email</font>.").show().delay(5000).fadeOut();
             return false;
         }
     }
@@ -2512,9 +2545,13 @@ function getBalanceAmt() {
         }
         var balAmt;
         //   alert("hell"+amt+".."+paid)
+        if (transNO == "") {
+            $("errorMsg").html(" <font color='red'>Please Enter Transaction Number</font>");
+            return false;
+        }
         if (paid == 0 || paid == "") {
             //  alert("pj")
-            $("errorMsg").html("<font color='red'>Please Enter Paid Amount.</font>");
+            $("errorMsg").html("<font color='red'>Please Enter Paid Amount</font>");
             return false;
         }
 
@@ -2586,7 +2623,7 @@ function regStateChange(id1)
     //alert(country)
     var id = document.getElementById(id1).value;
     if (id == -1) {
-        $("#regValidation").html(" <b><font color=red>Country field is Required</font></b>.");
+        $("#regValidation").html(" <font color=red>Country field is Required</font>.");
         $("#country").css("border", "1px solid red");
     }
     else {
@@ -2631,7 +2668,7 @@ function regStateChanging(data, id1) {
 }
 function orgNameCheck(textBoxId, errorTextId) {
     // alert($(textBoxId).val())
-    //alert(errorTextId)
+    // alert(errorTextId)
     if ($(textBoxId).val() == '') {
         $(errorTextId).html('<span><font color=red>Please enter Vendor name</font></span>');
         $(textBoxId).css('border', '1px solid red');
@@ -2643,7 +2680,7 @@ function orgNameCheck(textBoxId, errorTextId) {
     }
     $.ajax({
         type: 'POST',
-        url: 'MSB/general/orgNameCheck?accountNameCheck=' + $(textBoxId).val(),
+        url: CONTENXT_PATH + '/general/orgNameCheck?accountNameCheck=' + $(textBoxId).val(),
         dataType: 'text',
         success: function(data, stat, xhr) {
             console.log('RESPONSE SAYS ' + data + " " + xhr.getResponseHeader('exists'));
@@ -2692,7 +2729,7 @@ function orgWebAddressCheck(textBoxId, errorTextId) {
     }
     $.ajax({
         type: 'POST',
-        url: 'MSB/general/orgWebAddressCheck?accountURLCheck=' + $(textBoxId).val(),
+        url: CONTENXT_PATH + '/general/orgWebAddressCheck?accountURLCheck=' + $(textBoxId).val(),
         dataType: 'text',
         success: function(data, stat, xhr) {
             console.log('RESPONSE SAYS ' + data + " " + xhr.getResponseHeader('urlexists'));
@@ -2789,7 +2826,7 @@ function regOfficeEmailValidation() {
         $("#officeemail").html("");
         $("#office_emailId").css("border", "1px solid green");
 
-        var url = 'MSB/general/officeEmailCheck.action?ContactEmail=' + email;
+        var url = CONTENXT_PATH + '/general/officeEmailCheck.action?ContactEmail=' + email;
         //alert(url)
         var req = initRequest(url);
         req.onreadystatechange = function() {
@@ -2981,7 +3018,7 @@ function getValidMailExtention() {
     if (mailExtention.match(emailExp))
     {
         //alert("fine")
-        var url = "MSB/general/mailextensionCheck.action?email_ext=" + mailExtention;
+        var url = CONTENXT_PATH + "/general/mailextensionCheck.action?email_ext=" + mailExtention;
         // alert("url-->"+url);
         var req = initRequest(url);
         req.onreadystatechange = function() {
@@ -3017,6 +3054,7 @@ function getValidMailExtention() {
     else {
         $("#orgExtCheckSpan").html("  <font color='red'><br>Please enter valid email extension!</font>");
         $("#orgExtCheckSpan").show().delay(3000).fadeOut();
+        document.getElementById("email_ext").value = "";
         mailExtention.focus();
         return false;
     }
@@ -3157,7 +3195,7 @@ function downloadXLSPendingInoviceList() {
 }
 function sendEmailOfInvoice(invCreatedBy)
 {
-    document.getElementById("invCreatedBy").value=invCreatedBy;
+    document.getElementById("invCreatedBy").value = invCreatedBy;
     var specialBox = document.getElementById('sendEmailOfPendingInvoiceOverlay');
     if (specialBox.style.display == "block") {
         specialBox.style.display = "none";
@@ -3167,4 +3205,7 @@ function sendEmailOfInvoice(invCreatedBy)
     // Initialize the plugin    
     $('#sendEmailOfPendingInvoice_popup').popup(
             );
+}
+function removingValidateMsg() {
+    document.getElementById("validationMessage").innerHTML = "";
 }

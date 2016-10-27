@@ -215,7 +215,7 @@
 
 
 
-    <body style="overflow-x: hidden" onload="loadPopup(); doOnLoad(); init(); getTaskType();">
+    <body style="overflow-x: hidden" oncontextmenu="return false" onload="loadPopup(); doOnLoad(); init(); getTaskType();">
         <div id="wrap">
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
@@ -320,7 +320,15 @@
                                             </s:form>
                                              <div id="loadingTaskSearch" class="loadingImg">
                                                     <span id ="LoadingContent" > <img src="<s:url value="/includes/images/Loader1.gif"/>"   ></span>   ></span>
-                                                </div>                         
+                                                </div>   
+                                               <span id="msg_clr">
+                                                    <%
+                                                        if (request.getParameter("resultMessage") != null) {
+                                                            out.println(request.getParameter("resultMessage"));
+                                                        }
+                                                    %> 
+                                                    </span> 
+                                                
                                             <s:form>
                                                 <div class="emp_Content" id="emp_div" align="center" style="display: none">
                                                     <table id="teamTaskTable" class="responsive CSSTable_task " border="5" cell-spacing="2">
@@ -342,6 +350,7 @@
                                                             <s:iterator value="teamtaskDetails">
                                                                 <s:url var="myUrl" action="../tasks/getTaskDetails.action">
                                                                     <s:param name="taskid"><s:property value="task_id"></s:property></s:param>
+                                                                     <s:param name="myTask">mytaskflag</s:param>
                                                                 </s:url>
                                                                 <tr>
                                                                     <s:hidden id="taskid" name="taskid" value="task_id"/>
@@ -474,6 +483,9 @@
 
             };
             $('#timesheet_results').tablePaginate({navigateType:'navigator'},recordPage);
+        </script>
+         <script>
+        $("#msg_clr").show().delay(5000).fadeOut();
         </script>
     <script type="text/JavaScript" src="<s:url value="/includes/js/general/placeholders.min.js"/>"></script>
         <div style="display: none; position: absolute; top:170px;left:320px;overflow:auto; z-index: 1900000" id="menu-popup">

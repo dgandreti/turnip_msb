@@ -293,8 +293,8 @@ function initSessionTimer() {
                     history.pushState(null, null, 'pagename');
                 });
                 alert('You\'re session has timed out. Please re-login.');
-                window.location = "/MSB/general/logout.action";
-            }, 1800000);   //1800000
+                window.location = "../general/logout.action";
+            }, 1800000);   //1800000 -->30 min
     }
 
     document.onclick = function resetTimeout(){ 

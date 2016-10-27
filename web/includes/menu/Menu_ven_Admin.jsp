@@ -24,7 +24,7 @@
             <div class="panel panel-default left-menu" id="accordian_my">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#homeMenuVenAdmin">
+                        <a id="homeVendorAdminLeftMenu"  data-toggle="collapse" data-parent="#accordian" href="#homeMenuVenAdmin">
                             <i  class="fa fa-home leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Home
@@ -47,7 +47,7 @@
             <div class="panel panel-default left-menu" id="accordian_services">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#dashboardMenuVenAdmin">
+                        <a id="dashboardVendorAdminLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#dashboardMenuVenAdmin">
                             <i  class="fa fa-cogs leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Dashboard
@@ -58,6 +58,7 @@
                     <div class="panel-body">
                         <ul>
                             <li><a id="requirementsDashboardVenAdmin" href="/<%=ApplicationConstants.CONTEXT_PATH%>/vendor/vendorDashboard.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Requirements&nbsp;</a></li>
+                            <li><a id="requirementsDashboardVenEmp" href="/<%=ApplicationConstants.CONTEXT_PATH%>/turnip/getClientRequirementsDashboards.action"><i class="fa fa-bar-chart-o" style="color: blue"></i>&nbsp;Turnip&nbsp;</a></li>
                         </ul>
                     </div>
                 </div>
@@ -65,7 +66,7 @@
             <div class="panel panel-default left-menu" id="accordian_services">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#utilitiesMenuVenAdmin">
+                        <a id="utilitiesVendorAdminLeftMenu" data-toggle="collapse" data-parent="#accordian" href="#utilitiesMenuVenAdmin">
                             <i  class="fa fa-cogs leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Utilities

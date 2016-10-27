@@ -1,3 +1,3 @@
-var CONTENXT_PATH="/MSB";
+var CONTENXT_PATH="/msb";
 
 

@@ -42,7 +42,7 @@
         <script type="text/javascript" src="<s:url value="/includes/js/Ajax/sowAjax.js"/>"></script>
         <script type="text/JavaScript" src="<s:url value="/includes/js/general/jquery.price_format.2.0.min.js"/>"></script>
     </head>
-    <body>
+    <body oncontextmenu="return false">
         <div id="wrap">
             <header id="header"><!--header-->
                 <div class="header_top"><!--header_top-->

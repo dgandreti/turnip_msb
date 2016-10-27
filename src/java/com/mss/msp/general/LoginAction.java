@@ -174,6 +174,10 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
                 }
 
                 String encPwd = SecurityServiceProvider.getEncrypt(getPassword().trim(), dbsalt.trim());
+                System.out.println("--------------------------------------------"
+                        + "-----------------------------------------------------"
+                        + "-----------------------------------------"+encPwd
+                        +"----------------------"+dbPassword);
             
                 if (!"In-Active".equalsIgnoreCase(dbAccStatus)) {
                     if ("Registered".equalsIgnoreCase(dbCurStatus)) {

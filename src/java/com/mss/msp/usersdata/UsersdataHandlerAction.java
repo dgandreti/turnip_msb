@@ -181,7 +181,7 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
     private List actionName;
     private String sessionFirstName;
     private String sessionLastName;
-
+    private int roleId;
     public UsersdataHandlerAction() {
     }
     private DataSourceDataProvider dataSourceDataProvider;
@@ -2041,4 +2041,13 @@ public class UsersdataHandlerAction extends ActionSupport implements ServletRequ
     public void setSessionLastName(String sessionLastName) {
         this.sessionLastName = sessionLastName;
     }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+    
 }

@@ -19,7 +19,7 @@
             <div class="panel panel-default left-menu" id="accordian_my">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#accountsMenuAdmin">
+                        <a id="accountsSALeftMenu" data-toggle="collapse" data-parent="#accordian" href="#accountsMenuAdmin">
                             <i  class="fa fa-briefcase leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Accounts
@@ -41,7 +41,7 @@
            <div class="panel panel-default left-menu" id="accordian_services">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#dashboardMenuAdmin">
+                        <a id="dashboardSALeftMenu" data-toggle="collapse" data-parent="#accordian" href="#dashboardMenuAdmin">
                             <i  class="fa fa-tachometer leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></span>
                             Dashboard
@@ -60,7 +60,7 @@
             <div class="panel panel-default left-menu" id="accordian_team">
                 <div class="panel-heading" >
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#utilitiesMenuAdmin">
+                        <a id="utilitiesSALeftMenu"  data-toggle="collapse" data-parent="#accordian" href="#utilitiesMenuAdmin">
                             <i  class="fa fa-cogs leftBullet"></i>
                             <span class="badge pull-right"><i class="fa fa-sort-asc" style="color: white;"></i></i></span>
                             Utilities
