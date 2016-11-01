@@ -12,14 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        
-        Ranjan
-       
-       
-       Jitendra
-       
-       Divya
-              
+        <table>
+        <h1>Hello</h1>
+        <h2>This is the checking purpose</h2>
+        <h3>Ranjan</h3>
+        <h4>Jitendra</h4>
+        <h5>Divya</h5>
+        </table>
     </body>
 </html>
