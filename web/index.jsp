@@ -19,8 +19,7 @@
           <tr><td>  <h5>Jitendra</h5></td></tr>
           <tr><td>  <h5>Divya</h5></td></tr>
           <tr><td>  <h5>janardhan</h5></td></tr>
-          <tr><td>  <h5>manikanta</h5></td></tr>
-          <tr><td>  <h5>suma varsha</h5></td></tr>
+          
         </table>
     </body>
 </html>
