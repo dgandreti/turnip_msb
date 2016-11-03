@@ -12,8 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <table>
-        <th>Services Bay Team Members</th>
+         <table border="1" bgcolor="cyan" align="center">
+        <th>Services Bay Team Memberss</th>
           <tr><td>  <h3>Ranjan</h3></td></tr>
           <tr><td>  <h4>rajavishnu</h4></td></tr>
           <tr><td>  <h5>Jitendra</h5></td></tr>
